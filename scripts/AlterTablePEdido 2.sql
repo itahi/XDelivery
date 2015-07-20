@@ -1,0 +1,1 @@
+alter table Pedido add CodMotoboy int Foreign key references Entregador(Codigo) null

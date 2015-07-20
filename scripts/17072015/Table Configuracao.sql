@@ -1,0 +1,1 @@
+alter table Configuracao add RegistraCancelamentos bit;

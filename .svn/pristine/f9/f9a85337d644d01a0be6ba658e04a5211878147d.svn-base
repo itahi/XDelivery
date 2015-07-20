@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace DexComanda.Integração
+{
+   public class EnviaSMS_LOCASMS
+    {
+
+       public string EnviaSMSLista(Array iNumeros, string iUser, string iSennha, string iMensagem , string iNomeCampanha)
+       {
+           string IRetorno = "";
+           try
+           {
+               // Lista de Destinatários
+               List<LOCASMS.Destination> Destinatarios = new List<LOCASMS.Destination>();
+
+               // Carregando os Destinatarios do List View
+               foreach (String numeroDestinatario in iNumeros )
+                   Destinatarios.Add(new LOCASMS.Destination() { Number = numeroDestinatario});
+
+               // Montando os Parametros
+               LOCASMS.rSMS Parametros = new LOCASMS.rSMS();
+               Parametros.Destinations = Destinatarios.ToArray();
+
+               // Determinando a Mensagem a ser encaminhada
+               Parametros.Msg = iMensagem;
+
+               // Determinando o Nome da CAmpanha
+               Parametros.Subject = iNomeCampanha;
+
+               // Objeto de Comunicação com o WebService
+               LOCASMS.ServiceSMSSoapClient Client = new LOCASMS.ServiceSMSSoapClient();
+
+               // Acionando o Recurso no WebService
+               IRetorno = Client.SendSMS(iUser, iSennha, Parametros);
+           }
+           catch (Exception erro)
+           {
+
+               MessageBox.Show(erro.InnerException.ToString());
+           }
+
+
+
+           return IRetorno;
+
+       }
+            
+           
+    }
+}

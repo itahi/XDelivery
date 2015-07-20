@@ -1,0 +1,115 @@
+﻿
+using DexComanda.Models;
+using Dominio;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace DexComanda
+{
+    public partial class frmCadastrarFormaPagamento : Form
+    {
+        Conexao con;
+        int rowIndex;
+        int codigo;
+
+        public frmCadastrarFormaPagamento()
+        {
+            InitializeComponent();
+            con = new Conexao();
+            Utils.PopularGrid("FormaPagamento", formaPgtGridView, "spObterFormaPagamento");
+        }
+
+        private void Adicionar(object sender, EventArgs e)
+        {
+            DexComanda.Models.FormasPagamento fp = new DexComanda.Models.FormasPagamento()
+            {
+                Codigo = codigo,
+                Descricao = this.txtNome.Text.ToString()
+            };
+
+
+            con.Insert("spAdicionarFormaPagamento", fp);
+
+            this.txtNome.Text = "";
+            Utils.PopularGrid("FormaPagamento", formaPgtGridView, "spObterFormaPagamento");
+        }
+
+        //Só habilita a edicao trocando os nomes os metodos dos botoes
+        private void Editar(object sender, EventArgs e)
+        {
+            codigo = int.Parse(this.formaPgtGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
+            this.txtNome.Text = this.formaPgtGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
+
+            this.btnAdicionarFP.Text = "Salvar";
+            this.btnAdicionarFP.Click += new System.EventHandler(this.SalvarFP);
+            this.btnAdicionarFP.Click -= new System.EventHandler(this.Adicionar);
+
+            this.btnEditar.Text = "Cancelar";
+            this.btnEditar.Click += new System.EventHandler(this.Cancelar);
+            this.btnEditar.Click -= new System.EventHandler(this.Editar);
+        }
+
+        private void Cancelar(object sender, EventArgs e)
+        {
+
+            Button iButton = (Button)sender;
+
+            if (iButton.Name == "btnEditar")
+            {
+                this.txtNome.Text = "";
+            }
+            this.btnAdicionarFP.Text = "Adicionar";
+            this.btnAdicionarFP.Click += new System.EventHandler(this.Adicionar);
+            this.btnAdicionarFP.Click -= new System.EventHandler(this.SalvarFP);
+            codigo = 0;
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.Click += new System.EventHandler(this.Editar);
+            this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+        }
+
+
+        //Esse metodo é para salvar
+        private void SalvarFP(object sender, EventArgs e)
+        {
+            DexComanda.Models.FormasPagamento fp = new DexComanda.Models.FormasPagamento()
+            {
+                Codigo = codigo,
+                Descricao = this.txtNome.Text.ToString()
+            };
+
+            con.Update("spAlterarFormaPagamento", fp);
+
+            this.btnAdicionarFP.Text = "Adicionar";
+            this.btnAdicionarFP.Click += new System.EventHandler(this.Adicionar);
+            this.btnAdicionarFP.Click -= new System.EventHandler(this.SalvarFP);
+
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.Click += new System.EventHandler(this.Editar);
+            this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+
+            this.txtNome.Text = "";
+            Utils.PopularGrid("FormaPagamento", formaPgtGridView, "spObterFormaPagamento");
+        }
+
+        private void formaPgtGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int total = this.formaPgtGridView.SelectedRows.Count;
+
+            for (int i = 0; i < total; i++)
+            {
+                if (this.formaPgtGridView.Rows[i].Selected)
+                {
+                    rowIndex = this.formaPgtGridView.Rows[i].Index;
+                }
+            }
+        }
+
+    }
+}

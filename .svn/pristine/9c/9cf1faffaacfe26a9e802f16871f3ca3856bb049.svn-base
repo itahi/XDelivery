@@ -1,0 +1,7 @@
+create table XSistemas
+(
+Codigo int not null primary key identity(1,1),
+Data date
+
+
+)

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsRelatorio" targetNamespace="http://tempuri.org/dsRelatorio.xsd" xmlns:mstns="http://tempuri.org/dsRelatorio.xsd" xmlns="http://tempuri.org/dsRelatorio.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="DBExpert_TesteConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="DBExpert_TesteConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.DexComanda.Properties.Settings.GlobalReference.Default.DBExpert_TesteConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vwObterItemsVendidosTableAdapter" GeneratorDataComponentClassName="vwObterItemsVendidosTableAdapter" Name="vwObterItemsVendidos" UserDataComponentName="vwObterItemsVendidosTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="DBExpert_TesteConnectionString (Settings)" DbObjectName="DBExpert_Teste.dbo.vwObterItemsVendidos" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT CodProduto, NomeProduto, Quantidade, PrecoTotalItem FROM dbo.vwObterItemsVendidos</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodProduto" DataSetColumn="CodProduto" />
+              <Mapping SourceColumn="NomeProduto" DataSetColumn="NomeProduto" />
+              <Mapping SourceColumn="Quantidade" DataSetColumn="Quantidade" />
+              <Mapping SourceColumn="PrecoTotalItem" DataSetColumn="PrecoTotalItem" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vwObterPedidosFinalizadosTableAdapter" GeneratorDataComponentClassName="vwObterPedidosFinalizadosTableAdapter" Name="vwObterPedidosFinalizados" UserDataComponentName="vwObterPedidosFinalizadosTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="DBExpert_TesteConnectionString (Settings)" DbObjectName="DBExpert_Teste.dbo.vwObterPedidosFinalizados" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT Codigo, Nome, TotalPedido, FormaPagamento, RealizadoEm, Tipo FROM dbo.vwObterPedidosFinalizados</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Codigo" DataSetColumn="Codigo" />
+              <Mapping SourceColumn="Nome" DataSetColumn="Nome" />
+              <Mapping SourceColumn="TotalPedido" DataSetColumn="TotalPedido" />
+              <Mapping SourceColumn="FormaPagamento" DataSetColumn="FormaPagamento" />
+              <Mapping SourceColumn="RealizadoEm" DataSetColumn="RealizadoEm" />
+              <Mapping SourceColumn="Tipo" DataSetColumn="Tipo" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsRelatorio" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsRelatorio" msprop:Generator_UserDSName="dsRelatorio">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="vwObterItemsVendidos" msprop:Generator_TableClassName="vwObterItemsVendidosDataTable" msprop:Generator_TableVarName="tablevwObterItemsVendidos" msprop:Generator_TablePropName="vwObterItemsVendidos" msprop:Generator_RowDeletingName="vwObterItemsVendidosRowDeleting" msprop:Generator_RowChangingName="vwObterItemsVendidosRowChanging" msprop:Generator_RowEvHandlerName="vwObterItemsVendidosRowChangeEventHandler" msprop:Generator_RowDeletedName="vwObterItemsVendidosRowDeleted" msprop:Generator_UserTableName="vwObterItemsVendidos" msprop:Generator_RowChangedName="vwObterItemsVendidosRowChanged" msprop:Generator_RowEvArgName="vwObterItemsVendidosRowChangeEvent" msprop:Generator_RowClassName="vwObterItemsVendidosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodProduto" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCodProduto" msprop:Generator_ColumnPropNameInRow="CodProduto" msprop:Generator_ColumnPropNameInTable="CodProdutoColumn" msprop:Generator_UserColumnName="CodProduto" type="xs:int" minOccurs="0" />
+              <xs:element name="NomeProduto" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNomeProduto" msprop:Generator_ColumnPropNameInRow="NomeProduto" msprop:Generator_ColumnPropNameInTable="NomeProdutoColumn" msprop:Generator_UserColumnName="NomeProduto" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Quantidade" msprop:Generator_ColumnVarNameInTable="columnQuantidade" msprop:Generator_ColumnPropNameInRow="Quantidade" msprop:Generator_ColumnPropNameInTable="QuantidadeColumn" msprop:Generator_UserColumnName="Quantidade" type="xs:int" minOccurs="0" />
+              <xs:element name="PrecoTotalItem" msprop:Generator_ColumnVarNameInTable="columnPrecoTotalItem" msprop:Generator_ColumnPropNameInRow="PrecoTotalItem" msprop:Generator_ColumnPropNameInTable="PrecoTotalItemColumn" msprop:Generator_UserColumnName="PrecoTotalItem" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="vwObterPedidosFinalizados" msprop:Generator_TableClassName="vwObterPedidosFinalizadosDataTable" msprop:Generator_TableVarName="tablevwObterPedidosFinalizados" msprop:Generator_TablePropName="vwObterPedidosFinalizados" msprop:Generator_RowDeletingName="vwObterPedidosFinalizadosRowDeleting" msprop:Generator_RowChangingName="vwObterPedidosFinalizadosRowChanging" msprop:Generator_RowEvHandlerName="vwObterPedidosFinalizadosRowChangeEventHandler" msprop:Generator_RowDeletedName="vwObterPedidosFinalizadosRowDeleted" msprop:Generator_UserTableName="vwObterPedidosFinalizados" msprop:Generator_RowChangedName="vwObterPedidosFinalizadosRowChanged" msprop:Generator_RowEvArgName="vwObterPedidosFinalizadosRowChangeEvent" msprop:Generator_RowClassName="vwObterPedidosFinalizadosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Codigo" msprop:Generator_ColumnVarNameInTable="columnCodigo" msprop:Generator_ColumnPropNameInRow="Codigo" msprop:Generator_ColumnPropNameInTable="CodigoColumn" msprop:Generator_UserColumnName="Codigo" type="xs:int" />
+              <xs:element name="Nome" msprop:Generator_ColumnVarNameInTable="columnNome" msprop:Generator_ColumnPropNameInRow="Nome" msprop:Generator_ColumnPropNameInTable="NomeColumn" msprop:Generator_UserColumnName="Nome" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TotalPedido" msprop:Generator_ColumnVarNameInTable="columnTotalPedido" msprop:Generator_ColumnPropNameInRow="TotalPedido" msprop:Generator_ColumnPropNameInTable="TotalPedidoColumn" msprop:Generator_UserColumnName="TotalPedido" type="xs:decimal" minOccurs="0" />
+              <xs:element name="FormaPagamento" msprop:Generator_ColumnVarNameInTable="columnFormaPagamento" msprop:Generator_ColumnPropNameInRow="FormaPagamento" msprop:Generator_ColumnPropNameInTable="FormaPagamentoColumn" msprop:Generator_UserColumnName="FormaPagamento" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RealizadoEm" msprop:Generator_ColumnVarNameInTable="columnRealizadoEm" msprop:Generator_ColumnPropNameInRow="RealizadoEm" msprop:Generator_ColumnPropNameInTable="RealizadoEmColumn" msprop:Generator_UserColumnName="RealizadoEm" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Tipo" msprop:Generator_ColumnVarNameInTable="columnTipo" msprop:Generator_ColumnPropNameInRow="Tipo" msprop:Generator_ColumnPropNameInTable="TipoColumn" msprop:Generator_UserColumnName="Tipo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,8 @@
+﻿namespace DexComanda
+{
+    
+    
+    public partial class DBExpertDataSet {
+    }
+}
+

@@ -1,0 +1,180 @@
+﻿
+using DexComanda.Models;
+using Dominio;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace DexComanda
+{
+    public partial class frmCadastrarFormaPagamento : Form
+    {
+        Conexao con;
+        int rowIndex;
+        int codigo;
+
+        public frmCadastrarFormaPagamento()
+        {
+            InitializeComponent();
+            con = new Conexao();
+            Utils.PopularGrid("FormaPagamento", formaPgtGridView, "spObterFormaPagamento");
+        }
+
+        private void Adicionar(object sender, EventArgs e)
+        {
+            DexComanda.Models.FormasPagamento fp = new DexComanda.Models.FormasPagamento()
+            {
+                Codigo = codigo,
+                Descricao = this.txtNome.Text.ToString(),
+                DescontoSN = chkDesconto.Checked
+            };
+
+            if (txtNome.Text !="")
+            {
+                con.Insert("spAdicionarFormaPagamento", fp);
+                Utils.ControlaEventos("Inserir",this.Name);
+                this.txtNome.Text = "";
+                Utils.PopularGrid("FormaPagamento", formaPgtGridView, "spObterFormaPagamento");  
+            }
+            else
+            {
+                MessageBox.Show("Preencha o nome para Continuar", "DexAviso");
+            }
+            
+        }
+
+        //Só habilita a edicao trocando os nomes os metodos dos botoes
+        private void Editar(object sender, EventArgs e)
+        {
+            if (formaPgtGridView.SelectedRows.Count >0)
+            {
+                codigo = int.Parse(this.formaPgtGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
+                this.txtNome.Text = this.formaPgtGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
+                chkDesconto.Checked = Convert.ToBoolean(this.formaPgtGridView.SelectedRows[rowIndex].Cells[2].Value.ToString()); 
+
+                this.btnAdicionarFP.Text = "Salvar";
+                this.btnAdicionarFP.Click += new System.EventHandler(this.SalvarFP);
+                this.btnAdicionarFP.Click -= new System.EventHandler(this.Adicionar);
+
+                this.btnEditar.Text = "Cancelar";
+                this.btnEditar.Click += new System.EventHandler(this.Cancelar);
+                this.btnEditar.Click -= new System.EventHandler(this.Editar); 
+            }
+            else
+            {
+                MessageBox.Show("Selecione um registro para editar", "Dex Aviso");
+            }
+            
+        }
+
+        private void Cancelar(object sender, EventArgs e)
+        {
+
+            Button iButton = (Button)sender;
+
+            if (iButton.Name == "btnEditar")
+            {
+                this.txtNome.Text = "";
+            }
+            this.btnAdicionarFP.Text = "Adicionar";
+            this.btnAdicionarFP.Click += new System.EventHandler(this.Adicionar);
+            this.btnAdicionarFP.Click -= new System.EventHandler(this.SalvarFP);
+            codigo = 0;
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.Click += new System.EventHandler(this.Editar);
+            this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+        }
+
+
+        //Esse metodo é para salvar
+        private void SalvarFP(object sender, EventArgs e)
+        {
+            DexComanda.Models.FormasPagamento fp = new DexComanda.Models.FormasPagamento()
+            {
+                Codigo = codigo,
+                Descricao = this.txtNome.Text.ToString(),
+                DescontoSN =chkDesconto.Checked 
+            };
+
+            con.Update("spAlterarFormaPagamento", fp);
+            Utils.ControlaEventos("Alterar", this.Name);
+
+            this.btnAdicionarFP.Text = "Adicionar";
+            this.btnAdicionarFP.Click += new System.EventHandler(this.Adicionar);
+            this.btnAdicionarFP.Click -= new System.EventHandler(this.SalvarFP);
+
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.Click += new System.EventHandler(this.Editar);
+            this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+
+            this.txtNome.Text = "";
+            Utils.PopularGrid("FormaPagamento", formaPgtGridView, "spObterFormaPagamento");
+        }
+
+        private void formaPgtGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int total = this.formaPgtGridView.SelectedRows.Count;
+
+            for (int i = 0; i < total; i++)
+            {
+                if (this.formaPgtGridView.Rows[i].Selected)
+                {
+                    rowIndex = this.formaPgtGridView.Rows[i].Index;
+                }
+            }
+        }
+
+        private void frmCadastrarFormaPagamento_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.KeyCode == Keys.F12) && (btnAdicionarFP.Text == "Adicionar [F12]"))
+            {
+                Adicionar(sender, e);
+            }
+           
+        }
+
+        private void formaPgtGridView_MouseClick(object sender, MouseEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu m = new ContextMenu();
+                MenuItem ExcluirFP = new MenuItem(" 0 - Excluir Registro");
+                ExcluirFP.Click += DeletarRegistro;
+                m.MenuItems.Add(ExcluirFP);
+
+                int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
+                m.Show(dgv, new Point(e.X, e.Y));
+
+            }
+        }
+        private void DeletarRegistro(object sender, EventArgs e)
+        {
+            if (formaPgtGridView.SelectedRows.Count > 0)
+            {
+                int CodRegistro = int.Parse(this.formaPgtGridView.SelectedCells[0].Value.ToString());
+                con.DeleteAll("FormaPagamento", "spExcluirFormaPagamento", CodRegistro);
+                Utils.ControlaEventos("Excluir",this.Name);
+                MessageBox.Show("Item excluído com sucesso.");
+                Utils.PopularGrid("FormaPagamento", formaPgtGridView, "spObterFormaPagamento");
+
+            }
+            else
+            {
+                MessageBox.Show("Selecione o grupo para excluir");
+            }
+
+        }
+
+        private void frmCadastrarFormaPagamento_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

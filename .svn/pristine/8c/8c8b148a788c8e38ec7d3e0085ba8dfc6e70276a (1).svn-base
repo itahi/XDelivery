@@ -1,0 +1,124 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using DexComanda.Models;
+
+namespace DexComanda
+{
+    public partial class frmCadastrarEntregador : Form
+    {
+        Conexao con;
+        int rowIndex;
+        int codigo;
+
+        public frmCadastrarEntregador()
+        {
+            InitializeComponent();
+            con = new Conexao();
+            ListaEntregadores();
+        }
+        private void ListaEntregadores()
+        {
+            this.EntregGridView.DataSource = null;
+            this.EntregGridView.AutoGenerateColumns = true;
+            this.EntregGridView.DataSource = con.SelectAll("Entregador", "spObterEntregador");
+            this.EntregGridView.DataMember = "Entregador";
+
+        }
+
+        private void AdicionarEntregador(object sender, EventArgs e)
+        {
+            try
+            {
+                Entregador entregador = new Entregador()
+                {
+                    Nome = txtNome.Text,
+                    Comissao = decimal.Parse(txtComissao.Text)
+                };
+                con.Insert("spAdicionarEntregador", entregador);
+                MessageBox.Show("Registro adicionado", "Sucess");
+                ListaEntregadores();
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message);
+            }
+        }
+
+        private void EditarRegistro(object sender, EventArgs e)
+        {
+            codigo = int.Parse(this.EntregGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
+            this.txtNome.Text = this.EntregGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
+            this.txtComissao.Text = this.EntregGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
+
+            this.btnAdicionar.Text = "Salvar";
+            this.btnAdicionar.Click -= new System.EventHandler(this.AdicionarEntregador);
+            this.btnAdicionar.Click += new System.EventHandler(this.AtualizarRegistro);
+
+            this.btnEditar.Text = "Cancelar";
+            this.btnEditar.Click += new System.EventHandler(this.Cancelar);
+            this.btnEditar.Click -= new System.EventHandler(this.EditarRegistro);  
+        }
+
+        private void Cancelar(object sender, EventArgs e)
+        {
+
+            Button iButton = (Button)sender;
+
+            if (iButton.Name == "btnEditarGrupo")
+            {
+                this.txtNome.Text = "";
+            }
+            this.btnAdicionar.Text = "Adicionar";
+            this.btnAdicionar.Click += new System.EventHandler(this.AdicionarEntregador);
+            this.btnAdicionar.Click -= new System.EventHandler(this.AtualizarRegistro);
+
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.Click += new System.EventHandler(this.Cancelar);
+            this.btnEditar.Click -= new System.EventHandler(this.EditarRegistro); 
+        }
+        private void AtualizarRegistro(object sender, EventArgs e)
+        {
+           
+            Entregador entregador = new Entregador()
+            {
+                Codigo = codigo,
+                Nome = txtNome.Text,
+                Comissao = decimal.Parse(txtComissao.Text)
+            };
+
+            con.Update("spAlterarEntregador", entregador);
+
+            this.btnAdicionar.Text = "Adicionar";
+            this.btnAdicionar.Click -= new System.EventHandler(this.AtualizarRegistro);
+
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.Click += new System.EventHandler(this.EditarRegistro);
+            this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+
+            this.txtNome.Text = "";
+            this.txtComissao.Text = "";
+            ListaEntregadores();
+        }
+
+        private void EntregGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int total = this.EntregGridView.SelectedRows.Count;
+
+            for (int i = 0; i < total; i++)
+            {
+                if (this.EntregGridView.Rows[i].Selected)
+                {
+                    rowIndex = this.EntregGridView.Rows[i].Index;
+                }
+            }
+        }
+    }
+}

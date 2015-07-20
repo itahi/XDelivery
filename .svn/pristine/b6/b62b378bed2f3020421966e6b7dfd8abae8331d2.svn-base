@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace DexComanda
+{
+    public partial class frmBuscarProdutoPorGrupo : Form
+    {
+        Conexao con;
+        String gpoProduto;
+        frmCadastrarPedido mainParent;
+        public frmBuscarProdutoPorGrupo(frmCadastrarPedido parent,string GrupoProduto)
+        {
+            con = new Conexao();
+            gpoProduto = GrupoProduto;
+            mainParent = parent;
+            InitializeComponent();
+        }
+
+        private void produtoBindingNavigatorSaveItem_Click(object sender, EventArgs e)
+        {
+            this.Validate();
+            this.produtoBindingSource.EndEdit();
+            this.tableAdapterManager.UpdateAll(this.dBExpertDataSet);
+
+        }
+
+        private void BuscarProdutoPorGrupo_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'dBExpertDataSet.Produto' table. You can move, or remove it, as needed.
+            var produtos = con.SelectProdutoPorGrupo("Produto", "spObterProdutoPorGrupo", gpoProduto);
+            this.lblGrupoProduto.Text = gpoProduto;
+            this.gridViewProdutosPorGrupo.AutoGenerateColumns = true;
+            this.gridViewProdutosPorGrupo.DataSource = produtos;
+            this.gridViewProdutosPorGrupo.DataMember = "Produto";
+
+        }
+
+        private void btnAdicionarProdutoAoPedido_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
