@@ -67,6 +67,19 @@ namespace DexComanda
             frmAdicionarGrupo frm = new frmAdicionarGrupo();
             frm.ShowDialog();
         }
+        private void HistoricoCancelamentos(int iCodPessoa)
+        {
+            int intQuantidadeCancelamento = con.SelectRegistroPorCodigo("HistoricoCancelamentos", "spObterCancelamentoPorPessoa", iCodPessoa).Tables[0].Rows.Count;
+            if (intQuantidadeCancelamento > 0)
+            {
+                DialogResult resultado = MessageBox.Show("Cliente possui " + intQuantidadeCancelamento + "  Cancelamento(s) Deseja visualizar ?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (resultado == DialogResult.Yes)
+                {
+                    frmExibeCancelamentos frm = new frmExibeCancelamentos(iCodPessoa);
+                    frm.ShowDialog();
+                }
+            }
+        }
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -287,6 +300,11 @@ namespace DexComanda
                         DataRow dRow = Pessoa.Tables["Pessoa"].Rows[0];
 
                         int CodigoPessoa = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+
+                        if (Sessions.returnConfig.RegistraCancelamentos)
+                        {
+                            HistoricoCancelamentos(CodigoPessoa);
+                        }
                         this.txtNome.Text = dRow.ItemArray.GetValue(1).ToString();
                         this.txtEndereco.Text = dRow.ItemArray.GetValue(2).ToString();
 
@@ -595,13 +613,13 @@ namespace DexComanda
             {
                 string NomeCliente = (this.pedidosGridView.SelectedCells[0].Value.ToString());
                 int CodUser;
-                int CodPessoa      = int.Parse(this.pedidosGridView.SelectedCells[1].Value.ToString());
+             
                 if (pedidosGridView.SelectedRows.Count > 0)
                 {
                     if (MessageBox.Show("Deseja **CANCELAR** o  pedido do Cliente " + NomeCliente + "?", "Cancelamento de Pedido !!!", MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
-                        int Codigo = int.Parse(this.pedidosGridView.SelectedCells[1].Value.ToString());
-                        cancelPedid.Codigo = Codigo;
+                        int Codigo              = int.Parse(this.pedidosGridView.SelectedCells[1].Value.ToString());
+                        cancelPedid.Codigo      = Codigo;
                         cancelPedid.RealizadoEm = DateTime.Now;
                         int iCodMesa = int.Parse(pedidosGridView.SelectedCells[5].Value.ToString());
 
@@ -613,6 +631,22 @@ namespace DexComanda
                         cancelPedid.status = "Cancelado";
                         if (Sessions.returnConfig.RegistraCancelamentos)
                         {
+                            DataSet dsPedido = null;
+                            DataRow dRow;
+                            int CodPessoa;
+                            try
+                            {
+                                dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", Codigo);
+                                dRow = dsPedido.Tables[0].Rows[0];
+                                CodPessoa = int.Parse(dRow.ItemArray.GetValue(2).ToString());
+                            }
+
+                            finally
+                            {
+                                dsPedido.Dispose();
+                                
+                            }
+                           
                             frmHistoricoCancelamento frm = new frmHistoricoCancelamento();
                             frm.ShowDialog();
 
@@ -629,6 +663,7 @@ namespace DexComanda
                                 con.Insert("spAdicionaHistoricoCancelamento", Hist);
                             }
                         }
+
                         con.Update("spCancelarPedido", cancelPedid);
                         Utils.ControlaEventos("CancPedido", this.Name);
                         MessageBox.Show("Pedido Cancelado com sucesso.");
@@ -852,6 +887,10 @@ namespace DexComanda
             {
                 rowIndex = clientesGridView.CurrentRow.Index;
                 int CodCliente = int.Parse(clientesGridView.Rows[rowIndex].Cells[0].Value.ToString());
+                if (Sessions.returnConfig.RegistraCancelamentos)
+                {
+                    HistoricoCancelamentos(CodCliente);
+                }
                 AbrirPedido(CodCliente);
             }
             catch (Exception xx)
