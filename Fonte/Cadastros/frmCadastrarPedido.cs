@@ -1387,15 +1387,48 @@ namespace DexComanda
         {
             if (Sessions.returnConfig.ProdutoPorCodigo == true)
             {
-                var valorProduto = decimal.Parse("");
-                var valorSabor = decimal.Parse("");
-                var produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
-                var sabor = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(txtCodProduto2.Text)).Tables["Produto"];
+          
+                var valorProduto = decimal.Parse("0.00");
+                var valorSabor = decimal.Parse("0.00");
+                DataTable produto;
+                DataTable sabor;
+               
+                if (txtCodProduto1.Text!="")
+                {
+                     produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
+                }
+                else
+                {
+                     produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxProdutosGrid.SelectedValue.ToString())).Tables["Produto"];
+                }
 
+                if (txtCodProduto2.Text!="")
+                {
+                  sabor= con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(txtCodProduto2.Text)).Tables["Produto"]; 
+                }
+                else
+                {
+                    sabor = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxSabor.SelectedValue.ToString())).Tables["Produto"];
+                }
+
+   
                 if (PromocaoDiasSemana)
                 {
-                    valorProduto = decimal.Parse(produto.Rows[0]["PrecoDesconto"].ToString());
-                    valorSabor = decimal.Parse(sabor.Rows[0]["PrecoDesconto"].ToString());
+                    DiaDaPromocao = produto.Rows[0]["DiaSemana"].ToString();
+                    lol = DiaDaPromocao.Split(new char[] { ';' });
+                    if (DiaDaPromocao.IndexOf(DiaDaSema) > 0)
+                    {
+                        valorProduto = decimal.Parse(produto.Rows[0]["PrecoDesconto"].ToString());
+                        valorSabor = decimal.Parse(produto.Rows[0]["PrecoDesconto"].ToString());
+                    }
+                    else
+                    {
+                        valorProduto = decimal.Parse(produto.Rows[0]["PrecoProduto"].ToString());
+                        valorSabor = decimal.Parse(sabor.Rows[0]["PrecoProduto"].ToString());
+                    }
+                    
+                    CalcularTotalItem();
+                   
                 }
                 else
                 {
@@ -1412,6 +1445,7 @@ namespace DexComanda
                 {
                     this.txtPrecoUnitario.Text = "R$ " + valorSabor;
                 }
+                
             }
             else if (Sessions.returnConfig.ProdutoPorCodigo == false && this.cbxSabor.Text != " ")
             {
@@ -1442,8 +1476,10 @@ namespace DexComanda
                 {
                     this.txtPrecoUnitario.Text = "R$ " + valorSabor;
                 }
+               
             }
-
+            // Calcula o preço total forçando a multiplicação
+            txtPrecoTotal.Text = Convert.ToString(decimal.Parse(txtQuantidade.Text) * decimal.Parse(txtPrecoUnitario.Text.Replace("R$", "")));
         }
 
         internal void changeValorTotal(decimal p)
@@ -1571,7 +1607,9 @@ namespace DexComanda
                     if (produto.Rows.Count > 0)
                     {
                         cbxSabor.Text = produto.Rows[0]["NomeProduto"].ToString();
+                        txtQuantidade.Text = "1";
                         ComparaValores();
+                        
                         //this.txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoProduto"].ToString();
 
                     }

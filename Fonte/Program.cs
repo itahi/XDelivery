@@ -241,7 +241,7 @@ namespace DexComanda
                                    
                                 }
                                 // CNPJ OSVALDO
-                                else if (empresas.CNPJ == "14904501000107"||empresas.CNPJ=="11301588709")
+                                else if (empresas.CNPJ == "14904501000107"||empresas.CNPJ=="11301588709"|| empresas.CNPJ=="10512501000100")
                                 {
                                     Utils.IniciaSistema();
                                 }
