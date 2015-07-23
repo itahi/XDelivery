@@ -65,6 +65,7 @@
             this.txtBanco = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.chkRegCancelamentos = new System.Windows.Forms.CheckBox();
             this.chkUltPedido = new System.Windows.Forms.CheckBox();
             this.chk10Garcon = new System.Windows.Forms.CheckBox();
             this.chkControlaMesas = new System.Windows.Forms.CheckBox();
@@ -134,7 +135,11 @@
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnSalvar = new System.Windows.Forms.Button();
-            this.chkRegCancelamentos = new System.Windows.Forms.CheckBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.txtCaminhoBkp = new System.Windows.Forms.TextBox();
+            this.btnBackup = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -166,7 +171,7 @@
             this.tabControl1.Location = new System.Drawing.Point(8, 9);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(660, 437);
+            this.tabControl1.Size = new System.Drawing.Size(660, 417);
             this.tabControl1.TabIndex = 21;
             // 
             // tabPage1
@@ -176,7 +181,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(652, 411);
+            this.tabPage1.Size = new System.Drawing.Size(652, 391);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Dados Empresa";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -431,6 +436,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnBackup);
+            this.groupBox1.Controls.Add(this.label28);
+            this.groupBox1.Controls.Add(this.txtCaminhoBkp);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.btnConectarAoBanco);
             this.groupBox1.Controls.Add(this.txtServidor);
@@ -438,7 +446,7 @@
             this.groupBox1.Controls.Add(this.txtBanco);
             this.groupBox1.Location = new System.Drawing.Point(6, 259);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(640, 98);
+            this.groupBox1.Size = new System.Drawing.Size(640, 113);
             this.groupBox1.TabIndex = 25;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Servidor/Banco de Dados";
@@ -446,7 +454,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(12, 31);
+            this.label12.Location = new System.Drawing.Point(6, 26);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(49, 13);
             this.label12.TabIndex = 16;
@@ -454,7 +462,7 @@
             // 
             // btnConectarAoBanco
             // 
-            this.btnConectarAoBanco.Location = new System.Drawing.Point(274, 57);
+            this.btnConectarAoBanco.Location = new System.Drawing.Point(124, 79);
             this.btnConectarAoBanco.Name = "btnConectarAoBanco";
             this.btnConectarAoBanco.Size = new System.Drawing.Size(63, 20);
             this.btnConectarAoBanco.TabIndex = 19;
@@ -464,7 +472,7 @@
             // 
             // txtServidor
             // 
-            this.txtServidor.Location = new System.Drawing.Point(79, 31);
+            this.txtServidor.Location = new System.Drawing.Point(64, 19);
             this.txtServidor.Name = "txtServidor";
             this.txtServidor.Size = new System.Drawing.Size(177, 20);
             this.txtServidor.TabIndex = 15;
@@ -472,7 +480,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(12, 57);
+            this.label13.Location = new System.Drawing.Point(14, 56);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(41, 13);
             this.label13.TabIndex = 18;
@@ -480,7 +488,7 @@
             // 
             // txtBanco
             // 
-            this.txtBanco.Location = new System.Drawing.Point(79, 57);
+            this.txtBanco.Location = new System.Drawing.Point(64, 53);
             this.txtBanco.Name = "txtBanco";
             this.txtBanco.Size = new System.Drawing.Size(177, 20);
             this.txtBanco.TabIndex = 17;
@@ -493,7 +501,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(652, 411);
+            this.tabPage3.Size = new System.Drawing.Size(652, 360);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Configurações Gerais";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -514,6 +522,17 @@
             this.groupBox4.TabIndex = 12;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Gerais";
+            // 
+            // chkRegCancelamentos
+            // 
+            this.chkRegCancelamentos.AutoSize = true;
+            this.chkRegCancelamentos.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkRegCancelamentos.Location = new System.Drawing.Point(462, 43);
+            this.chkRegCancelamentos.Name = "chkRegCancelamentos";
+            this.chkRegCancelamentos.Size = new System.Drawing.Size(141, 17);
+            this.chkRegCancelamentos.TabIndex = 15;
+            this.chkRegCancelamentos.Text = "Registra Cancelamentos";
+            this.chkRegCancelamentos.UseVisualStyleBackColor = true;
             // 
             // chkUltPedido
             // 
@@ -864,7 +883,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(652, 411);
+            this.tabPage2.Size = new System.Drawing.Size(652, 360);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Promoções";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -983,7 +1002,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(652, 411);
+            this.tabPage4.Size = new System.Drawing.Size(652, 360);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Licença";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1070,7 +1089,7 @@
             this.tbExibicao.Location = new System.Drawing.Point(4, 22);
             this.tbExibicao.Name = "tbExibicao";
             this.tbExibicao.Padding = new System.Windows.Forms.Padding(3);
-            this.tbExibicao.Size = new System.Drawing.Size(652, 411);
+            this.tbExibicao.Size = new System.Drawing.Size(652, 360);
             this.tbExibicao.TabIndex = 4;
             this.tbExibicao.Text = "Sistema  [Exibição]";
             this.tbExibicao.UseVisualStyleBackColor = true;
@@ -1191,7 +1210,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(592, 452);
+            this.btnCancelar.Location = new System.Drawing.Point(592, 432);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 24;
@@ -1200,7 +1219,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(511, 452);
+            this.btnSalvar.Location = new System.Drawing.Point(511, 433);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(75, 23);
             this.btnSalvar.TabIndex = 23;
@@ -1208,22 +1227,41 @@
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.SalvaConfig);
             // 
-            // chkRegCancelamentos
+            // label28
             // 
-            this.chkRegCancelamentos.AutoSize = true;
-            this.chkRegCancelamentos.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkRegCancelamentos.Location = new System.Drawing.Point(462, 43);
-            this.chkRegCancelamentos.Name = "chkRegCancelamentos";
-            this.chkRegCancelamentos.Size = new System.Drawing.Size(141, 17);
-            this.chkRegCancelamentos.TabIndex = 15;
-            this.chkRegCancelamentos.Text = "Registra Cancelamentos";
-            this.chkRegCancelamentos.UseVisualStyleBackColor = true;
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(271, 22);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(73, 13);
+            this.label28.TabIndex = 21;
+            this.label28.Text = "Caminho Bkp:";
+            // 
+            // txtCaminhoBkp
+            // 
+            this.txtCaminhoBkp.Location = new System.Drawing.Point(347, 19);
+            this.txtCaminhoBkp.Name = "txtCaminhoBkp";
+            this.txtCaminhoBkp.Size = new System.Drawing.Size(278, 20);
+            this.txtCaminhoBkp.TabIndex = 20;
+            // 
+            // btnBackup
+            // 
+            this.btnBackup.Location = new System.Drawing.Point(451, 45);
+            this.btnBackup.Name = "btnBackup";
+            this.btnBackup.Size = new System.Drawing.Size(65, 24);
+            this.btnBackup.TabIndex = 24;
+            this.btnBackup.Text = "Selecionar";
+            this.btnBackup.UseVisualStyleBackColor = true;
+            this.btnBackup.Click += new System.EventHandler(this.SelecionaLocal);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // frmConfiguracoes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(675, 482);
+            this.ClientSize = new System.Drawing.Size(674, 462);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnSalvar);
@@ -1377,6 +1415,11 @@
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.CheckBox chkRegCancelamentos;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.TextBox txtCaminhoBkp;
+        private System.Windows.Forms.Button btnBackup;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
 
     }
 }

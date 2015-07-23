@@ -46,6 +46,49 @@ namespace DexComanda
             }
         }
 
+        // Rotina para efetuar Backup Automátizado do Banco de dados ao Encerrar o Programa
+        public void BackupBanco(string iNomeServidor, string iNomeBanco, string iLocalBackup)
+        {
+            string BackupFileName = iNomeBanco + DateTime.Now.ToShortDateString().Replace("/", "") + ".bkp";
+            string SqlComBackup = @"BACKUP DATABASE " + iNomeBanco + " TO DISK = N'" + iLocalBackup + @"\" + BackupFileName + @"'";
+            SqlConnection SqlConec = null;
+            SqlCommand cmdBkUp = null;
+            try
+            {
+                SqlConec = new SqlConnection(connectionString);
+                cmdBkUp = new SqlCommand(SqlComBackup, SqlConec);
+
+                SqlConec.Open();
+                if (SqlConec.State == ConnectionState.Open)
+                {
+                    try
+                    {
+                        if (cmdBkUp.ExecuteNonQuery() != 0)
+                        {
+
+                            MessageBox.Show("Backup Efetuado em " + iLocalBackup + "\\" + BackupFileName, "Aviso de Segurança");
+                        }
+                    }
+                    catch (Exception erro)
+                    {
+
+                        MessageBox.Show("Backup do banco de dados não foi efetuado a causa do possivel erro é:" + erro.Message);
+                    }
+                   
+                    
+                }
+            }
+            finally
+            {
+                
+                 if (SqlConec.State == ConnectionState.Open)
+                {
+                    SqlConec.Close();
+                }
+            }
+            
+           
+        }
 
         public void OpenConection(string servidor, string banco)
         {
@@ -55,7 +98,7 @@ namespace DexComanda
             {
                 conn.Open();
 
-                MessageBox.Show("(OK) Conectado ao banco de dados.");
+                MessageBox.Show("Conectado ao banco de dados.");
                 // Utils.CriarUsuario(connectionString, "dex", "1234");
 
                 var temp = Directory.GetCurrentDirectory() + @"\ConnectionString_DexComanda.txt";
@@ -68,7 +111,7 @@ namespace DexComanda
             }
             catch (Exception msg)
             {
-                MessageBox.Show(msg + "(Error 40) Não pode ser aberta um conexão com o banco de dados.");
+                MessageBox.Show(msg.Message + "Não pode ser aberta um conexão com o banco de dados.");
             }
         }
 

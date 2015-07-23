@@ -555,6 +555,11 @@ namespace DexComanda
 
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
+            string strServidor    = Sessions.returnEmpresa.Servidor;
+            string strBanco       = Sessions.returnEmpresa.Banco;
+            string strCaminhoBkp  = Sessions.returnEmpresa.CaminhoBackup;
+            con.BackupBanco(strServidor, strBanco, strCaminhoBkp);
+            
             this.Dispose();
             Utils.Kill();
             con.Close();

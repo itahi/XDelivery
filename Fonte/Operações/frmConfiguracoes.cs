@@ -60,7 +60,8 @@ namespace DexComanda
                 Servidor = txtServidor.Text,
                 Banco = txtBanco.Text,
                 DataInicio = DateTime.Now,
-                VersaoBanco= "1"
+                VersaoBanco= "1",
+                CaminhoBackup = txtCaminhoBkp.Text
                 
             };
             // Grava as configurações
@@ -145,7 +146,7 @@ namespace DexComanda
             this.btnSalvar.Click += SalvaConfig;
             if (empresa.Nome != "" && empresa.Contato != "" && empresa.Telefone != "")
             {
-                if (txtViasBalcao.Text != "" && txtViasCozinha.Text != "" && txtViasEntrega.Text != "")
+                if (txtViasBalcao.Text != "" && txtViasCozinha.Text != "" && txtViasEntrega.Text != "" && txtCaminhoBkp.Text!="")
                 {
                     config.ViasEntrega = txtViasEntrega.Text;
                     config.ViasBalcao = txtViasBalcao.Text;
@@ -163,7 +164,7 @@ namespace DexComanda
             }
             else
             {
-                MessageBox.Show("Campos Obrigatórios não preenchidos");
+                MessageBox.Show("Campos Obrigatórios não preenchidos, favor verificar");
             }
         }
 
@@ -186,7 +187,8 @@ namespace DexComanda
                 Servidor = txtServidor.Text,
                 Banco = txtBanco.Text,
                 DataInicio = DateTime.Now,
-                VersaoBanco = "0"
+                VersaoBanco = "0",
+                CaminhoBackup = txtCaminhoBkp.Text
             };
 
            config.cod = 1;
@@ -244,7 +246,7 @@ namespace DexComanda
                con.Insert("spAdicionarUsuarioDefault", usuario);
            }
 
-           if (empresa.Nome != "" && empresa.Contato != "" && empresa.Telefone != "")
+           if (empresa.Nome != "" && empresa.Contato != "" && empresa.Telefone != ""&& txtCaminhoBkp.Text!="")
            {
                this.btnSalvar.Click -= AlterarConfig;
                this.btnSalvar.Click += SalvaConfig;
@@ -323,6 +325,7 @@ namespace DexComanda
                 txtBanco.Text = Linha.ItemArray.GetValue(12).ToString();
                 txtContato.Text = Linha.ItemArray.GetValue(13).ToString();
                 txtServidor.Text = Linha.ItemArray.GetValue(15).ToString();
+                txtCaminhoBkp.Text = Linha.ItemArray.GetValue(16).ToString();
 
                 if (con.IsConnected())
                 {
@@ -470,6 +473,16 @@ namespace DexComanda
         private void txtCaracterImpressora_KeyPress(object sender, KeyPressEventArgs e)
         {
             Utils.SoPermiteNumeros(e);
+        }
+
+        private void SelecionaLocal(object sender, EventArgs e)
+        {
+            FolderBrowserDialog OpenFolder = new FolderBrowserDialog();
+            DialogResult result = OpenFolder.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                txtCaminhoBkp.Text = OpenFolder.SelectedPath.ToString();
+            }
         }
 
     }

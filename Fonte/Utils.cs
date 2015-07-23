@@ -24,6 +24,9 @@ using System.Linq;
 using MySql.Data.MySqlClient;
 using System.IO.Ports;
 using System.Threading;
+using System.IO;
+using Microsoft.SqlServer.Management.Smo;
+using Microsoft.SqlServer.Management.Common;
 namespace DexComanda
 {
     public class Utils
@@ -1037,6 +1040,54 @@ namespace DexComanda
             }
 
         }
+
+
+        // Rotina para efetuar Backup Automátizado do Banco de dados
+        //public static void BackupBanco(string iNomeServidor, string iNomeBanco, string iLocalBackup)
+        //{
+        //    var PatchArquivo = Path.Combine("@E:\\Dados\\BKp.bkp");
+        //    try
+        //    {
+
+        //        var sc = new ServerConnection(iNomeServidor, "sa", "1001");
+        //        var server = new Server(sc);
+
+        //        if (server.Databases[iNomeBanco] != null)
+        //        {
+        //            //Criando o diretorio do Backup
+        //            //if (!Directory.Exists("@"+iLocalBackup))
+        //            //{
+        //            //    Directory.CreateDirectory("@"+iLocalBackup);
+        //            //}
+
+        //            // Criando o objeto Backup
+        //            var bak = new Backup();
+        //            bak.Incremental = false;
+
+        //            bak.Action = BackupActionType.Database;
+        //            //string data = DateTime.Now.Date.ToString("MM-dd-yy");
+        //            bak.BackupSetName = iNomeBanco + "_Backup"+DateTime.Now.ToShortDateString().Replace("/","")+".bkp";
+
+        //            // Definindo o banco de dados a ser salvo
+        //            bak.Database = iNomeBanco;
+                    
+        //            bak.Checksum = true;
+
+        //            // Adcionando um destino para o backup
+        //            BackupDeviceItem destino = new BackupDeviceItem(bak.BackupSetName, DeviceType.File);
+                   
+        //            bak.Devices.Add(destino);
+        //            // Executando o backup
+        //            bak.SqlBackup(server);
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+
+        //    }
+        //}
 
 
     }

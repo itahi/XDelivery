@@ -79,8 +79,12 @@ namespace DexComanda
                             Bairro = dRow.ItemArray.GetValue(9).ToString(),
                             UF = dRow.ItemArray.GetValue(10).ToString(),
                             PontoReferencia = dRow.ItemArray.GetValue(11).ToString(),
+                            Banco = dRow.ItemArray.GetValue(12).ToString(),
                             Contato = dRow.ItemArray.GetValue(13).ToString(),
-                            VersaoBanco = dRow.ItemArray.GetValue(17).ToString(),
+                            Servidor = dRow.ItemArray.GetValue(15).ToString(),
+                            CaminhoBackup = dRow.ItemArray.GetValue(16).ToString(),
+                             
+                          //  VersaoBanco = dRow.ItemArray.GetValue(15).ToString(),
                             DataInicio = Convert.ToDateTime(dRow.ItemArray.GetValue(18).ToString()),
 
                             //  Versao = dRow.ItemArray.GetValue(17).ToString()

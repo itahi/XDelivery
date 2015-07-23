@@ -25,6 +25,7 @@ namespace DexComanda.Models
         public string Banco { get; set; }
         public string VersaoBanco { get; set; }
         public DateTime DataInicio { get; set; }
+        public string CaminhoBackup { get; set; } 
         
         
     }
