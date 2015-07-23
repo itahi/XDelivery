@@ -1,0 +1,4 @@
+H:\# Lazaro\Projetos\XSistemas\xcommanda\XIntegrador\obj\Debug\XIntegrador.csprojResolveAssemblyReference.cache
+H:\# Lazaro\Projetos\XSistemas\xcommanda\XIntegrador\obj\Debug\XIntegrador.Form1.resources
+H:\# Lazaro\Projetos\XSistemas\xcommanda\XIntegrador\obj\Debug\XIntegrador.Properties.Resources.resources
+H:\# Lazaro\Projetos\XSistemas\xcommanda\XIntegrador\obj\Debug\XIntegrador.csproj.GenerateResource.Cache

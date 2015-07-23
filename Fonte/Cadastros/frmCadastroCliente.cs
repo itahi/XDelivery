@@ -203,6 +203,7 @@ namespace DexComanda
                     PontoReferencia = this.txtPontoReferencia.Text,
                     Observacao = this.txtObservacaoCliente.Text,
                     Telefone = this.txtTelefone.Text,
+                    Telefone2 = txtTelefone2.Text,
                     UF = this.txtEstado.Text,
                     TicketFidelidade = 0,
                     CodRegiao = int.Parse(this.cbxRegiao.SelectedValue.ToString()),
@@ -226,21 +227,17 @@ namespace DexComanda
                 if (txtNumero.Text != "")
                 {
                     pessoa.Numero = txtNumero.Text;
+                    con.Insert("spAdicionarClienteDelivery", pessoa);
+                    Utils.ControlaEventos("Inserir", this.Name);
+                    MessageBox.Show("Cliente cadastrado com sucesso.", "Dex Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                    this_FormClosing();
+                    RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
                 }
                 else
                 {
                     MessageBox.Show("Numero não pode ser vazio");
                     txtNumero.Focus();
                 }
-
-                pessoa.Telefone2 = txtTelefone2.Text;
-
-                con.Insert("spAdicionarClienteDelivery", pessoa);
-                Utils.ControlaEventos("Inserir", this.Name);
-                MessageBox.Show("Cliente cadastrado com sucesso.", "Dex Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
-                this_FormClosing();
-                RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
-
 
             }
             catch (Exception err)
