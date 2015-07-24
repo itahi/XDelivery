@@ -183,7 +183,7 @@ namespace DexComanda
         public void Insert(string spName, Object obj)
         {
             SqlParameter codPedido = null;
-
+            SqlParameter CodPessoa = null;
             Type ObjectType = obj.GetType();
             PropertyInfo[] properties = ObjectType.GetProperties();
 
@@ -256,6 +256,21 @@ namespace DexComanda
                 }
 
             }
+            else if (spName=="spAdicionarClienteDelivery")
+            {
+                
+                CodPessoa = new SqlParameter("@Codigo", SqlDbType.Int);
+                CodPessoa.Direction = ParameterDirection.Output;
+                command.Parameters.Add(codPedido);
+               foreach (PropertyInfo propriedade in properties)
+                {
+
+                    Console.WriteLine(propriedade.Name);
+                    command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+
+                }
+
+            }
             else
             {
                 foreach (PropertyInfo propriedade in properties)
@@ -273,6 +288,10 @@ namespace DexComanda
             if (n > 0 && spName == "spAdicionarPedido")
             {
                 lastCodigo = int.Parse(codPedido.Value.ToString());
+            }
+            else if (spName =="spAdicionarClienteDelivery" )
+            {
+               lastCodigo = int.Parse(CodPessoa.Value.ToString()); 
             }
 
         }

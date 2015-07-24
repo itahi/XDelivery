@@ -195,6 +195,7 @@ namespace DexComanda
 
                 Pessoa pessoa = new Pessoa()
                 {
+                    Codigo = 0,
                     Nome = this.txtNomeCliente.Text,
                     Endereco = this.txtEndereco.Text,
                     Bairro = this.txtBairro.Text,
