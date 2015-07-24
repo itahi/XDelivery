@@ -91,7 +91,8 @@ namespace DexComanda
                             FinalizaPedidoSN = Convert.ToBoolean(dv[0].Row["FinalizaPedidoSN"].ToString()),
                             CancelaPedidosSN = Convert.ToBoolean(dv[0].Row["CancelaPedidosSN"].ToString()),
                             AlteraProdutosSN = Convert.ToBoolean(dv[0].Row["AlteraProdutosSN"].ToString()),
-                            DescontoPedidoSN = Convert.ToBoolean(dv[0].Row["DescontoPedidoSN"].ToString()),
+                            DescontoPedidoSN  = Convert.ToBoolean(dv[0].Row["DescontoPedidoSN"].ToString()),
+                            DescontoMax = Convert.ToDouble(dv[0].Row["DescontoMax"].ToString()),
                         };
 
                         Sessions.retunrUsuario = Sessions.returnUsuario;
@@ -149,7 +150,7 @@ namespace DexComanda
                 TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, conexao);
 
                 frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true,"0,00", "", "", TaxaEntrega, false, DateTime.Now, CodPedido, CodPessoa,
-                                                                            "", FormaPagamento, "", "Balcao", iMain);
+                                                                            "", FormaPagamento, "", "Balcao", iMain,0.00M);
                 frmRepetePedido.ShowDialog();
 
 

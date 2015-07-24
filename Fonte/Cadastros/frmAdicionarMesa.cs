@@ -46,6 +46,7 @@ namespace DexComanda.Cadastros
         private void EditarRegistro(object sender, EventArgs e)
         {
             lStatusMesa = 0;
+            cbxStatusMesa.Text = "";
             codigo = int.Parse(this.MesasGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
             this.txtNumeroMesa.Text = this.MesasGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
             lStatusMesa = int.Parse(this.MesasGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());

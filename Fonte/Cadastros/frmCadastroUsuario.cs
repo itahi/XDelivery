@@ -51,7 +51,7 @@ namespace DexComanda
                     AcessaRelatoriosSN = chkAcessaRelat.Checked,
                     FinalizaPedidoSN = chkFechaPedido.Checked,
                     DescontoPedidoSN = chkDescSN.Checked,
-                    DescontoMax  = decimal.Parse(txtDesconto.Text)
+                    DescontoMax  = double.Parse(txtDesconto.Text)
                 };
 
 
@@ -112,32 +112,41 @@ namespace DexComanda
 
         private void SalvarEdicao(object sender, EventArgs e)
         {
-            Usuario user = new Usuario()
+
+            if (txtNomeUsuario.Text!="" && txtSenha.Text !="")
             {
-                Codigo = codigo,
-                Nome = txtNomeUsuario.Text,
-                Senha = usuariosGridView.SelectedRows[rowIndex].Cells[2].Value.ToString(),
-                CancelaPedidosSN = chkCancelaPedidos.Checked,
-                AlteraProdutosSN = chkAlteraProdutos.Checked,
-                AdministradorSN = chkAdministrador.Checked,
-                AcessaRelatoriosSN = chkAcessaRelat.Checked,
-                FinalizaPedidoSN = chkFechaPedido.Checked,
-                DescontoPedidoSN = chkDescSN.Checked,
-                DescontoMax = decimal.Parse(txtDesconto.Text)
-            };
+                Usuario user = new Usuario()
+                {
+                    Codigo = codigo,
+                    Nome = txtNomeUsuario.Text,
+                    Senha = usuariosGridView.SelectedRows[rowIndex].Cells[2].Value.ToString(),
+                    CancelaPedidosSN = chkCancelaPedidos.Checked,
+                    AlteraProdutosSN = chkAlteraProdutos.Checked,
+                    AdministradorSN = chkAdministrador.Checked,
+                    AcessaRelatoriosSN = chkAcessaRelat.Checked,
+                    FinalizaPedidoSN = chkFechaPedido.Checked,
+                    DescontoPedidoSN = chkDescSN.Checked,
+                    DescontoMax = double.Parse(txtDesconto.Text)
+                };
 
-            con.Update("spAlterarUsuario", user);
+                con.Update("spAlterarUsuario", user);
 
-            btnSalvar.Text = " Adicionar";
-            this.btnSalvar.Click += new System.EventHandler(this.AdicionarSalvarUsuario);
-            this.btnSalvar.Click -= new System.EventHandler(this.SalvarEdicao);
+                btnSalvar.Text = " Adicionar";
+                this.btnSalvar.Click += new System.EventHandler(this.AdicionarSalvarUsuario);
+                this.btnSalvar.Click -= new System.EventHandler(this.SalvarEdicao);
 
-            this.btnCancelar.Text = "Editar";
-            this.btnCancelar.Click += new System.EventHandler(this.Editar);
-            this.btnCancelar.Click -= new System.EventHandler(this.CancelarEdicao);
-            Utils.ControlaEventos("Alterar", this.Name);
-            MessageBox.Show("Usuario alterado com sucesso");
-            Utils.LimpaForm(this);
+                this.btnCancelar.Text = "Editar";
+                this.btnCancelar.Click += new System.EventHandler(this.Editar);
+                this.btnCancelar.Click -= new System.EventHandler(this.CancelarEdicao);
+                Utils.ControlaEventos("Alterar", this.Name);
+                MessageBox.Show("Usuario alterado com sucesso");
+                Utils.LimpaForm(this);
+            }
+            else
+            {
+                MessageBox.Show("Campos não podem ficar em branco", "Aviso");
+            }
+            
             
 
         }

@@ -38,9 +38,17 @@ namespace DexComanda
             {
                 Entregador entregador = new Entregador()
                 {
-                    Nome = txtNome.Text,
-                    Comissao = decimal.Parse(txtComissao.Text)
+                    Nome = txtNome.Text
+                    
                 };
+                if (txtComissao.Text!="")
+                {
+                    entregador.Comissao = decimal.Parse(txtComissao.Text);
+                }
+                else
+	            {
+                    entregador.Comissao = 0;
+	            }
                 con.Insert("spAdicionarEntregador", entregador);
                 Utils.ControlaEventos("Inserir", this.Name);
                 MessageBox.Show("Registro adicionado", "Sucesso");

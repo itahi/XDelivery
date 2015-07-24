@@ -17,7 +17,7 @@ namespace DexComanda.Models
         public bool AcessaRelatoriosSN { get; set; }
         public bool DescontoPedidoSN { get; set; }
         public bool FinalizaPedidoSN { get; set; }
-        public decimal DescontoMax { get; set; }
+        public double DescontoMax { get; set; }
 
     }
 }

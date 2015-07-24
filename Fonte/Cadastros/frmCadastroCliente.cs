@@ -275,7 +275,7 @@ namespace DexComanda
 
                         var TaxaEntrega = Utils.RetornaTaxaPorCliente(iCodPessoa, con);
                         frmCadastrarPedido frmCadastrarPedido = new frmCadastrarPedido(false, "0,00", "", "", TaxaEntrega, false, DateTime.Now, 0, int.Parse(dRow.ItemArray.GetValue(0).ToString()),
-                                                                                       "", "", "", "", this.parentMain);
+                                                                                       "", "", "", "", this.parentMain,0.00M);
                         frmCadastrarPedido.ShowDialog();
                     }
                 }

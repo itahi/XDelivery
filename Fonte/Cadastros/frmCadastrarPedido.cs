@@ -64,10 +64,12 @@ namespace DexComanda
         private bool PedidoRepetio;
         private string TrocoPagar;
         private bool FPPermiteDesconto;
+        private decimal dTotalPedido;
+       
         //private int HoraPedido = Sessions.returnPedido.RealizadoEm.Minute;
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido ,string iNumeMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara, string fPagamento, string TipoPedido, string MesaBalcao,
-            Main parent)
+            Main parent, decimal iTotalPedido)
         {
             try
             {
@@ -87,6 +89,7 @@ namespace DexComanda
                 cbxListaMesas.Text = MesaBalcao;
                 DataPed = DataPedido;
                 PedidoRepetio = iPedidoRepetio;
+                dTotalPedido = iTotalPedido;
 
                 timer1.Enabled = IniciaTempo;
                 lblEntrega.Text = Convert.ToString(iTaxaEntrega);
@@ -139,8 +142,6 @@ namespace DexComanda
                 }
                 
             }
-           
-
 
             if (gNUmeroMesa == "")
             {
@@ -534,6 +535,7 @@ namespace DexComanda
 
         private void btnGerarPedido_Click(object sender, EventArgs e)
         {
+           
             try
             {
                 if (AtualizaTroco())
@@ -564,14 +566,38 @@ namespace DexComanda
                         {
                             pedido.TrocoPara = "0.00";
                         }
-                        if (txtDesconto.Text!="")
+
+                        // Validar o Desconto Máximo Por Usuario
+                        if (Sessions.returnUsuario!=null)
                         {
-                            pedido.DescontoValor = decimal.Parse(txtDesconto.Text);
+                            bool PermiteDesconto = Sessions.returnUsuario.DescontoPedidoSN;
+                            double DescMAxPermitido = Sessions.returnUsuario.DescontoMax;
+                            double TotalPedido = double.Parse(lbTotal.Text.Replace("R$", ""));
+
+                            if (txtDesconto.Text != "" && PermiteDesconto)
+                            {
+                                double Cal = 100;
+
+                                double DescCalculado = Double.Parse(txtDesconto.Text) * Cal / TotalPedido;
+
+                            if (DescCalculado < DescMAxPermitido)
+                            {
+                                pedido.DescontoValor = decimal.Parse(txtDesconto.Text);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Desconto máximo do usuário superado , favor verificar", "Aviso ");
+                                return;
+                            }
+
+                            
+                            }
+                            else
+                            {
+                                pedido.DescontoValor = decimal.Parse("0.00");
+                            }
                         }
-                        else
-	                    {
-                            pedido.DescontoValor = decimal.Parse("0.00");
-	                    }
+                        
                         // DataEntrada = pedido.RealizadoEm;
                         if (ContraMesas)
                         {
@@ -892,10 +918,19 @@ namespace DexComanda
             ValorTotal = 0;
             ValorTroco = 0;
 
-            foreach (ItemPedido item in items)
+            if (txtDesconto.Text !="0,00")
             {
-                ValorTotal += item.PrecoTotal;
+                ValorTotal = dTotalPedido;
             }
+            else
+            {
+
+                foreach (ItemPedido item in items)
+                {
+                    ValorTotal += item.PrecoTotal;
+                }
+            }
+          
 
             DataTable dt = new DataTable();
             dt.Columns.Add(new DataColumn("Codigo", typeof(string)));
@@ -2415,18 +2450,27 @@ namespace DexComanda
 
         private void CalculaDesconto(object sender, KeyPressEventArgs e)
         {
+            decimal TotalPedido = ValorTotal;
             if (Utils.SoDecimais(e))
             {
-                if ((txtDesconto.Text != "") && (e.KeyChar == Convert.ToChar(Keys.Enter)))
+                if (decimal.Parse(txtDesconto.Text) < TotalPedido)
                 {
-                    decimal TotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
+                    if ((txtDesconto.Text != "") && (e.KeyChar == Convert.ToChar(Keys.Enter)))
+                    {
+                        TotalPedido = TotalPedido - decimal.Parse(txtDesconto.Text);
+                        txtDesconto.Text = string.Format("{0:#,##0.00}", decimal.Parse(txtDesconto.Text));
+                        lbTotal.Text = "R$" + TotalPedido.ToString();
+                        AtualizaTroco();
 
-                    TotalPedido = TotalPedido - decimal.Parse(txtDesconto.Text);
-                    txtDesconto.Text = string.Format("{0:#,##0.00}", decimal.Parse(txtDesconto.Text));
-                    lbTotal.Text = "R$" + TotalPedido.ToString();
-                    AtualizaTroco();
-
+                    }
+                    
                 }
+                else
+                {
+                    MessageBox.Show("Desconto não pode ser maior que o total do pedido", "Aviso");
+                    return;
+                }
+                
             }
         }
 

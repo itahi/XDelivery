@@ -17,9 +17,11 @@ using DexComanda.Operações;
 
 namespace DexComanda
 {
-    public partial class Main : Form
+  
+    public  partial class Main : Form
     {
         private Conexao con;
+       
         private CancelarPedido cancelPedid;
         private int rowIndex;
         private List<Produto> Produtos;
@@ -153,7 +155,7 @@ namespace DexComanda
            frmCadastrarPedido frm = new frmCadastrarPedido(false, strDescPedido,DvPedido.ItemArray.GetValue(9).ToString(),
                                      strTroco, TaxaServico, true, Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString()),
                                      int.Parse(DvPedido.ItemArray.GetValue(1).ToString()), int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), DvPedido.ItemArray.GetValue(4).ToString(),
-                                     DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(), this);
+                                     DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(), this,decimal.Parse(strTotalPedido));
            frm.ShowDialog();
         }
         private void cadastrarToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -390,7 +392,7 @@ namespace DexComanda
             var TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, con);
 
             frmCadastrarPedido CadPedido = new frmCadastrarPedido(false,"0,00", "", "0.00", TaxaEntrega, false, DateTime.Now, 0, CodPessoa,
-                                                                    "0.00", "", "", "", this);
+                                                                    "0.00", "", "", "", this,0.00M);
             CadPedido.ShowDialog();
             LimpaCampos();
         }
@@ -874,7 +876,7 @@ namespace DexComanda
                 {
                     decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, con);
                     frmCadastrarPedido frm = new frmCadastrarPedido(false,"", "", "0,00", TaxaServico, false, DateTime.Now, 0, CodPessoa, 
-                                                                        "", "", "", "", this);
+                                                                        "", "", "", "", this,0.00M);
                     frm.ShowDialog();
                 }
 
