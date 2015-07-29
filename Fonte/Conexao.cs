@@ -261,13 +261,14 @@ namespace DexComanda
                 
                 CodPessoa = new SqlParameter("@Codigo", SqlDbType.Int);
                 CodPessoa.Direction = ParameterDirection.Output;
-                command.Parameters.Add(codPedido);
+                command.Parameters.Add(CodPessoa);
                foreach (PropertyInfo propriedade in properties)
                 {
-
-                    Console.WriteLine(propriedade.Name);
-                    command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
-
+                    if (!propriedade.Name.Equals("Codigo"))
+                    {
+                        Console.WriteLine(propriedade.Name);
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
                 }
 
             }

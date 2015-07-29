@@ -2273,7 +2273,7 @@ namespace DexComanda
             this.lblEndereco.AutoSize = true;
             this.lblEndereco.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEndereco.ForeColor = System.Drawing.Color.Blue;
-            this.lblEndereco.Location = new System.Drawing.Point(177, 19);
+            this.lblEndereco.Location = new System.Drawing.Point(106, 19);
             this.lblEndereco.Name = "lblEndereco";
             this.lblEndereco.Size = new System.Drawing.Size(13, 18);
             this.lblEndereco.TabIndex = 11;
