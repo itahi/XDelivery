@@ -777,6 +777,8 @@ namespace DexComanda
                     {
                         NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
                         Utils.AtualizaMesa(iCodMesa, NumeroMesa, 1);
+
+                        
                     }
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 

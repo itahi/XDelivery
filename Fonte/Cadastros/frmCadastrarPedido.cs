@@ -853,6 +853,20 @@ namespace DexComanda
                     }
                 }
             }
+            else
+            {
+                ItemPedido ItemPedido = new ItemPedido();
+                Pedido pedido = new Pedido();
+                foreach (ItemPedido  item in items)
+                {
+                    ValorTotal = item.PrecoTotal;
+                }
+                con.Update("spAlterarItemPedido", ItemPedido);
+                con.Update("spAlterarTotalPedido", pedido);
+
+                Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
+                Utils.ControlaEventos("Alterar", this.Name);
+            }
             //  }
         }
 
@@ -1295,30 +1309,29 @@ namespace DexComanda
                     }
                     else
                     {
-                       // i = 0;
                         ItemPedido itemPedidos = new ItemPedido();
-///for (i = 0; i < gridViewItemsPedido.Rows.Count; i++)
-                      //  {
-                            itemPedidos.PrecoTotal = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[3].Value.ToString().Replace("R$", ""));
+
+                            item.PrecoTotal = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[3].Value.ToString().Replace("R$", ""));
                             
                             line += QuebrarString(item.NomeProduto.ToString() + "        " + "Quant." + item.Quantidade.ToString());
-                            line += " R$  : " + itemPedidos.PrecoTotal + "\r\n";
+                            line += " R$  : " + item.PrecoTotal + "\r\n";
 
                             if (item.Item != "")
                             {
                                 line += " Obs:" + QuebrarString(item.Item.ToString());
                             }
-                           // i++;
-                    //    }
-                       
 
                     }
 
                 }
-
-
+               
                 // ev.HasMorePages = true;
                 i++;
+            }
+            ValorTotal = 0;
+            foreach (ItemPedido _item in items)
+            {
+                ValorTotal += _item.PrecoTotal;
             }
             //decimal TotaItems = decimal.Parse(lbTotal.Text.Replace("R$", ""));
            // decimal TotalPago = TotaItems + ValorTroco;
@@ -1536,7 +1549,7 @@ namespace DexComanda
             {
                 troco = decimal.Parse(txtTrocoPara.Text);
             }
-            if (TotalPedido > troco && cbxTrocoParaOK.Checked == false)
+            if (cbxTipoPedido.Text!="1 - Mesa" && TotalPedido > troco && cbxTrocoParaOK.Checked == false)
             {
                 MessageBox.Show("TROCO é menor que o Total do Pedido.");
                 txtTrocoPara.Focus();
@@ -1619,7 +1632,24 @@ namespace DexComanda
                     if (produto.Rows.Count > 0)
                     {
                         cbxProdutosGrid.Text = produto.Rows[0]["NomeProduto"].ToString();
-                        this.txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoProduto"].ToString();
+                        if (PromocaoDiasSemana)
+                        {
+                            DiaDaPromocao = produto.Rows[0]["DiaSemana"].ToString();
+                            lol = DiaDaPromocao.Split(new char[] { ';' });
+                            if (DiaDaPromocao.IndexOf(DiaDaSema) > 0)
+                            {
+                                txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoDesconto"].ToString();
+                            }
+                            else
+                            {
+                                txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoProduto"].ToString();
+                            }
+                        }
+                        else
+                        {
+                            txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoProduto"].ToString();
+                        }
+                      
                         this.txtQuantidade.Text = "1";
                         CalcularTotalItem();
                         this.txtQuantidade.Focus();
@@ -1642,6 +1672,31 @@ namespace DexComanda
                     if (produto.Rows.Count > 0)
                     {
                         cbxSabor.Text = produto.Rows[0]["NomeProduto"].ToString();
+                        if (PromocaoDiasSemana)
+                        {
+                            DiaDaPromocao = produto.Rows[0]["DiaSemana"].ToString();
+                            lol = DiaDaPromocao.Split(new char[] { ';' });
+                            if (DiaDaPromocao.IndexOf(DiaDaSema) > 0)
+                            {
+                                txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoDesconto"].ToString();
+                            }
+                            else
+                            {
+                                txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoProduto"].ToString();
+                            }
+                        }
+                        else
+                        {
+                            txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoProduto"].ToString();
+                        }
+
+                      
+                        this.txtQuantidade.Text = "1";
+                        CalcularTotalItem();
+                        this.txtQuantidade.Focus();
+
+
+                       
                         txtQuantidade.Text = "1";
                         ComparaValores();
                         
@@ -2476,7 +2531,8 @@ namespace DexComanda
 
         private void cmbFPagamento_SelectionChangeCommitted(object sender, EventArgs e)
         {
-
+            Decimal ValorProduto = 0.00M;
+          
             if (PromocaoDiasSemana)
             {
                 DataRow rows;
@@ -2487,17 +2543,17 @@ namespace DexComanda
                 rows = DsFP.Tables[0].Rows[0];
                 FPPermiteDesconto = Convert.ToBoolean(rows.ItemArray.GetValue(2).ToString());
 
+                DataSet dsProduto;
+                DataRow RowsProduto;
+               
+                Decimal TotalAtualizado = 0;
+                int iCodProduto = 0;
+
                 if (!FPPermiteDesconto)
                 {
-                    DataSet dsProduto;
-                    DataRow RowsProduto;
-                    Decimal ValorProduto;
-                    Decimal TotalAtualizado = 0;
-                    int iCodProduto = 0;
-
+                   
                     for (int i = 0; i < gridViewItemsPedido.Rows.Count; i++)
                     {
-                        // MessageBox.Show( gridViewItemsPedido.Rows[i].Cells[0].Value.ToString());
                         iCodProduto = int.Parse(gridViewItemsPedido.Rows[i].Cells[0].Value.ToString());
                         dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", iCodProduto);
                         RowsProduto = dsProduto.Tables[0].Rows[0];
@@ -2511,18 +2567,35 @@ namespace DexComanda
   
                     }
 
-                    lbTotal.Text = "R$ " + Convert.ToString(TotalAtualizado + Convert.ToDecimal(lblEntrega.Text));
-   
-                    //foreach (ItemPedido item in items)
-                    //{
-                    //    for (int i = 0; i < gridViewItemsPedido.Rows.Count; i++)
-                    //    {
-                    //        item.PrecoTotal = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[3].Value.ToString());
-                    //    }
-                        
-                    //}
                 }
+                else 
+                {
+                    for (int intFor = 0; intFor < gridViewItemsPedido.Rows.Count; intFor++)
+                    {
+                        iCodProduto = int.Parse(gridViewItemsPedido.Rows[intFor].Cells[0].Value.ToString());
+                        dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", iCodProduto);
+                        RowsProduto = dsProduto.Tables[0].Rows[0];
+                        if (RowsProduto.ItemArray.GetValue(5).ToString()!="0,00")
+                        {
+                           ValorProduto = decimal.Parse(RowsProduto.ItemArray.GetValue(5).ToString());
+                        }
+                        else
+                        {
+                            ValorProduto = decimal.Parse(RowsProduto.ItemArray.GetValue(1).ToString());
+                        }
+                        
+
+                        gridViewItemsPedido.Rows[intFor].Cells[3].Value = ValorProduto;
+                        gridViewItemsPedido.Rows[intFor].Cells[4].Value = decimal.Parse(gridViewItemsPedido.Rows[intFor].Cells[2].Value.ToString()) * ValorProduto;
+                        decimal TotalLinha = decimal.Parse(gridViewItemsPedido.Rows[intFor].Cells[4].Value.ToString());
+                        TotalAtualizado += TotalLinha;
+                    }
+
+                }
+
+                lbTotal.Text = "R$ " + Convert.ToString(TotalAtualizado + Convert.ToDecimal(lblEntrega.Text));
             }
+            
         }
 
     }
