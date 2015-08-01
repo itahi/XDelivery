@@ -328,7 +328,7 @@ namespace DexComanda
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
                 }
-                else if (spName == "spAlterarItemPedido")
+                else if (spName == "spAlterarItemPedido"|| spName=="spAlteraStatusMesa")
                 {
                     if (!p.Name.Equals("Codigo"))
                     {

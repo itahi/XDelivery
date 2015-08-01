@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarFormaPagamento));
             this.FPGridView = new System.Windows.Forms.DataGridView();
             this.btnEditarFP = new System.Windows.Forms.Button();
             this.btnAdicionar = new System.Windows.Forms.Button();
@@ -110,8 +111,9 @@
             this.Controls.Add(this.btnEditarFP);
             this.Controls.Add(this.btnAdicionar);
             this.Controls.Add(this.FPGridView);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCadastrarFormaPagamento";
-            this.Text = "DEX [ Formas De Pagamento]";
+            this.Text = "[XDelivery]  Formas De Pagamento";
             ((System.ComponentModel.ISupportInitialize)(this.FPGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

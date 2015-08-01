@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadMotivosCancelamento));
             this.label1 = new System.Windows.Forms.Label();
             this.btnEditar = new System.Windows.Forms.Button();
             this.txtNome = new System.Windows.Forms.TextBox();
@@ -124,12 +125,12 @@
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.btnAdicionar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmCadMotivosCancelamento";
-            this.ShowIcon = false;
-            this.Text = "DEX [ Motivos Cancelamento]";
+            this.Text = "[XDelivery] Motivos Cancelamento";
             this.Load += new System.EventHandler(this.frmCadMotivosCancelamento_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadMotivosCancelamento_KeyDown);
             this.panel1.ResumeLayout(false);

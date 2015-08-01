@@ -65,6 +65,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tbHistorico = new System.Windows.Forms.TabPage();
+            this.lblQtd = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.lblData = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.lblMedia = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.lblTotalPedido = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.ItemsPedidoGridView = new System.Windows.Forms.DataGridView();
@@ -73,14 +81,6 @@
             this.btnConsultar = new System.Windows.Forms.Button();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
-            this.label17 = new System.Windows.Forms.Label();
-            this.lblTotalPedido = new System.Windows.Forms.Label();
-            this.lblMedia = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.lblData = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.lblQtd = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tbHistorico.SuspendLayout();
@@ -470,6 +470,78 @@
             this.tbHistorico.Text = "Histórico de Pedidos";
             this.tbHistorico.UseVisualStyleBackColor = true;
             // 
+            // lblQtd
+            // 
+            this.lblQtd.AutoSize = true;
+            this.lblQtd.Location = new System.Drawing.Point(515, 11);
+            this.lblQtd.Name = "lblQtd";
+            this.lblQtd.Size = new System.Drawing.Size(13, 13);
+            this.lblQtd.TabIndex = 15;
+            this.lblQtd.Text = "0";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(429, 10);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(80, 13);
+            this.label19.TabIndex = 14;
+            this.label19.Text = "Quant. Pedidos";
+            // 
+            // lblData
+            // 
+            this.lblData.AutoSize = true;
+            this.lblData.Location = new System.Drawing.Point(515, 62);
+            this.lblData.Name = "lblData";
+            this.lblData.Size = new System.Drawing.Size(65, 13);
+            this.lblData.TabIndex = 13;
+            this.lblData.Text = "01/01/2015";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(455, 62);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(59, 13);
+            this.label22.TabIndex = 12;
+            this.label22.Text = "Ult. Pedido";
+            // 
+            // lblMedia
+            // 
+            this.lblMedia.AutoSize = true;
+            this.lblMedia.Location = new System.Drawing.Point(515, 42);
+            this.lblMedia.Name = "lblMedia";
+            this.lblMedia.Size = new System.Drawing.Size(28, 13);
+            this.lblMedia.TabIndex = 11;
+            this.lblMedia.Text = "0,00";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(475, 42);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(39, 13);
+            this.label20.TabIndex = 10;
+            this.label20.Text = "Média ";
+            // 
+            // lblTotalPedido
+            // 
+            this.lblTotalPedido.AutoSize = true;
+            this.lblTotalPedido.Location = new System.Drawing.Point(515, 26);
+            this.lblTotalPedido.Name = "lblTotalPedido";
+            this.lblTotalPedido.Size = new System.Drawing.Size(28, 13);
+            this.lblTotalPedido.TabIndex = 9;
+            this.lblTotalPedido.Text = "0,00";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(466, 26);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(48, 13);
+            this.label17.TabIndex = 8;
+            this.label17.Text = "Total R$";
+            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -556,78 +628,6 @@
             this.dtInicio.Size = new System.Drawing.Size(82, 20);
             this.dtInicio.TabIndex = 0;
             // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(466, 26);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(48, 13);
-            this.label17.TabIndex = 8;
-            this.label17.Text = "Total R$";
-            // 
-            // lblTotalPedido
-            // 
-            this.lblTotalPedido.AutoSize = true;
-            this.lblTotalPedido.Location = new System.Drawing.Point(515, 26);
-            this.lblTotalPedido.Name = "lblTotalPedido";
-            this.lblTotalPedido.Size = new System.Drawing.Size(28, 13);
-            this.lblTotalPedido.TabIndex = 9;
-            this.lblTotalPedido.Text = "0,00";
-            // 
-            // lblMedia
-            // 
-            this.lblMedia.AutoSize = true;
-            this.lblMedia.Location = new System.Drawing.Point(515, 42);
-            this.lblMedia.Name = "lblMedia";
-            this.lblMedia.Size = new System.Drawing.Size(28, 13);
-            this.lblMedia.TabIndex = 11;
-            this.lblMedia.Text = "0,00";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(475, 42);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(39, 13);
-            this.label20.TabIndex = 10;
-            this.label20.Text = "Média ";
-            // 
-            // lblData
-            // 
-            this.lblData.AutoSize = true;
-            this.lblData.Location = new System.Drawing.Point(515, 62);
-            this.lblData.Name = "lblData";
-            this.lblData.Size = new System.Drawing.Size(65, 13);
-            this.lblData.TabIndex = 13;
-            this.lblData.Text = "01/01/2015";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(455, 62);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(59, 13);
-            this.label22.TabIndex = 12;
-            this.label22.Text = "Ult. Pedido";
-            // 
-            // lblQtd
-            // 
-            this.lblQtd.AutoSize = true;
-            this.lblQtd.Location = new System.Drawing.Point(515, 11);
-            this.lblQtd.Name = "lblQtd";
-            this.lblQtd.Size = new System.Drawing.Size(13, 13);
-            this.lblQtd.TabIndex = 15;
-            this.lblQtd.Text = "0";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(429, 10);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(80, 13);
-            this.label19.TabIndex = 14;
-            this.label19.Text = "Quant. Pedidos";
-            // 
             // frmCadastroCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -639,7 +639,7 @@
             this.MaximizeBox = false;
             this.Name = "frmCadastroCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Cadastro Cliente - DexComanda";
+            this.Text = "[XDelivery] Cadastro Cliente ";
             this.Load += new System.EventHandler(this.frmCadastroCliente_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastroCliente_KeyDown);
             this.tabControl1.ResumeLayout(false);

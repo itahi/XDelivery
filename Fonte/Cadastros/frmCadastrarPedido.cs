@@ -86,7 +86,7 @@ namespace DexComanda
                 txtTrocoPara.Text = tPara;
                 formaPagamento = fPagamento;
                 cbxTipoPedido.Text = TipoPedido;
-                cbxListaMesas.Text = MesaBalcao;
+                cbxListaMesas.Items.Add( MesaBalcao);
                 DataPed = DataPedido;
                 PedidoRepetio = iPedidoRepetio;
                 dTotalPedido = iTotalPedido;
@@ -654,7 +654,7 @@ namespace DexComanda
                         {
                             int CodigoMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
 
-                            Utils.AtualizaMesa(CodigoMesa, cbxListaMesas.Text, 2);
+                            Utils.AtualizaMesa( cbxListaMesas.Text, 2);
                         }
 
 
@@ -846,7 +846,7 @@ namespace DexComanda
                         if (ContraMesas && cbxListaMesas.Visible)
                         {
                             int CodigoMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
-                            Utils.AtualizaMesa(CodigoMesa, cbxListaMesas.Text, 2);
+                            Utils.AtualizaMesa( cbxListaMesas.Text, 2);
                         }
 
                         MessageBox.Show("Pedido alterado com sucesso.", "DexPedidos");
@@ -909,7 +909,7 @@ namespace DexComanda
                 {
                     int CodMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
                     pedido.NumeroMesa = CodMesa;
-                    Utils.AtualizaMesa(CodMesa, cbxListaMesas.Text, 2);
+                    Utils.AtualizaMesa( cbxListaMesas.Text, 2);
                 }
                 con.Delete("spExcluirItemPedido", itemPedido);
                 con.Update("spAlterarTotalPedido", pedido);
@@ -2381,7 +2381,7 @@ namespace DexComanda
             this.MaximizeBox = false;
             this.Name = "frmCadastrarPedido";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "DEX [Cadastrar Pedido]";
+            this.Text = "[XDelivery ] Cadastrar Pedido";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCadastrarPedido_FormClosed);
             this.Load += new System.EventHandler(this.frmCadastrarPedido_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastrarPedido_KeyDown);

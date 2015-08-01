@@ -130,7 +130,7 @@
             this.tableAdapterManager.base_cepTableAdapter = null;
             this.tableAdapterManager.GrupoTableAdapter = null;
             this.tableAdapterManager.ItemsPedidoTableAdapter = null;
-           
+            this.tableAdapterManager.PedidoTableAdapter = null;
             this.tableAdapterManager.PessoaTableAdapter = null;
             this.tableAdapterManager.ProdutoTableAdapter = this.produtoTableAdapter;
             this.tableAdapterManager.UpdateOrder = DexComanda.DBExpertDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
@@ -325,7 +325,7 @@
             this.MaximizeBox = false;
             this.Name = "frmCadastrarProduto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Cadastrar Produto - DexComanda";
+            this.Text = "[XDelivery] Cadastrar Produto ";
             this.Load += new System.EventHandler(this.frmCadastrarProduto_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastrarProduto_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).EndInit();

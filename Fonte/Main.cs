@@ -628,12 +628,12 @@ namespace DexComanda
                         int Codigo              = int.Parse(this.pedidosGridView.SelectedCells[1].Value.ToString());
                         cancelPedid.Codigo      = Codigo;
                         cancelPedid.RealizadoEm = DateTime.Now;
-                        int iCodMesa = int.Parse(pedidosGridView.SelectedCells[5].Value.ToString());
+                        string iCodMesa = pedidosGridView.SelectedCells[5].Value.ToString();
 
-                        if (ControlaMesas && iCodMesa > 0)
+                        if (ControlaMesas && iCodMesa !="0")
                         {
-                            string NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
-                            Utils.AtualizaMesa(iCodMesa, NumeroMesa, 1);
+                         //   string NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
+                            Utils.AtualizaMesa( iCodMesa, 1);
                         }
                         cancelPedid.status = "Cancelado";
                         if (Sessions.returnConfig.RegistraCancelamentos)
@@ -698,9 +698,9 @@ namespace DexComanda
             try
             {
                 bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
-                int codigo, iCodMesa;
+                int codigo;
                 bool Marcado;
-                string NumeroMesa;
+                string NumeroMesa, iCodMesa;
                 
                 if (MessageBox.Show("Deseja ** FINALIZAR ** Todos Pedidos Selecionado?", "Cuidado !!!", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
@@ -712,12 +712,12 @@ namespace DexComanda
                         if (Marcado)
                         {
                             codigo = int.Parse(pedidosGridView.Rows[i].Cells[1].Value.ToString());
-                            iCodMesa = int.Parse(pedidosGridView.Rows[i].Cells[5].Value.ToString());
+                            iCodMesa = pedidosGridView.Rows[i].Cells[5].Value.ToString();
                             // string TipoPedido = pedidosGridView.Rows[i].Cells["PedidoOrigem"].Value.ToString();
-                            if (ControlaMesas && iCodMesa != 0)
+                            if (ControlaMesas && iCodMesa !="0")
                             {
-                                NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
-                                Utils.AtualizaMesa(iCodMesa, NumeroMesa, 1);
+                                //NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
+                                Utils.AtualizaMesa( iCodMesa, 1);
                             }
                             con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 
@@ -775,8 +775,8 @@ namespace DexComanda
                     // string TipoPedido = pedidosGridView.Rows[i].Cells["PedidoOrigem"].Value.ToString();
                     if (ControlaMesas && iCodMesa != 0)
                     {
-                        NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
-                        Utils.AtualizaMesa(iCodMesa, NumeroMesa, 1);
+                      //  NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
+                        Utils.AtualizaMesa(Convert.ToString(iCodMesa), 1);
 
                         
                     }

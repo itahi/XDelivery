@@ -209,6 +209,12 @@
     <Compile Include="Cadastros\frmCadastroRegioes.Designer.cs">
       <DependentUpon>frmCadastroRegioes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operações\frmCaixa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\frmCaixa.Designer.cs">
+      <DependentUpon>frmCaixa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operações\frmConfigurarImpressao.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -325,12 +331,6 @@
     </Compile>
     <Compile Include="Cadastros\frmClieForn.Designer.cs">
       <DependentUpon>frmClieForn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Cadastros\frmEntregador.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Cadastros\frmEntregador.Designer.cs">
-      <DependentUpon>frmEntregador.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\ConversaoDefault.cs" />
     <Compile Include="Models\ValidacaoOFFLINE.cs" />
@@ -468,6 +468,9 @@
     <EmbeddedResource Include="Cadastros\frmCadastroUsuario.resx">
       <DependentUpon>frmCadastroUsuario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Operações\frmCaixa.resx">
+      <DependentUpon>frmCaixa.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmExibeCancelamentos.resx">
       <DependentUpon>frmExibeCancelamentos.cs</DependentUpon>
     </EmbeddedResource>
@@ -514,9 +517,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmConfigurarImpressao.resx">
       <DependentUpon>frmConfigurarImpressao.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\frmEntregador.resx">
-      <DependentUpon>frmEntregador.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmExportacao.resx">
       <DependentUpon>frmExportacao.cs</DependentUpon>

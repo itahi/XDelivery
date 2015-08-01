@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAdicionarMesa));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbxStatusMesa = new System.Windows.Forms.ComboBox();
             this.btnEditar = new System.Windows.Forms.Button();
@@ -147,8 +148,9 @@
             this.ClientSize = new System.Drawing.Size(340, 275);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmAdicionarMesa";
-            this.Text = "Cadastro Mesas";
+            this.Text = "[XDelivery] Cadastro Mesas";
             this.Load += new System.EventHandler(this.frmAdicionarMesa_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

@@ -15,7 +15,6 @@ H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmCadastroR
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmConfiguracoes.resources
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmClieForn.resources
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmConfigurarImpressao.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmEntregador.resources
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmExportacao.resources
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmLicencaOFFLINE.resources
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Relatorios.frmEnvioEmail.resources
@@ -50,3 +49,4 @@ H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Cadastros.frmCadMotivosCancelamento.resources
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.frmHistoricoCancelamento.resources
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.frmExibeCancelamentos.resources
+H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.frmCaixa.resources

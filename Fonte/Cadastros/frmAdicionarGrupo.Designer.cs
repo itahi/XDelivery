@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAdicionarGrupo));
             this.gruposGridView = new System.Windows.Forms.DataGridView();
             this.btnAdicionarGrupo = new System.Windows.Forms.Button();
             this.txbNomeGrupo = new System.Windows.Forms.TextBox();
@@ -102,11 +103,12 @@
             this.Controls.Add(this.txbNomeGrupo);
             this.Controls.Add(this.btnAdicionarGrupo);
             this.Controls.Add(this.gruposGridView);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "frmAdicionarGrupo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "[Dex] Cadastro Grupos ";
+            this.Text = "[XDelivery] Cadastro Grupos ";
             this.Load += new System.EventHandler(this.Main_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmAdicionarGrupo_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.gruposGridView)).EndInit();

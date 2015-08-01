@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarEntregador));
             this.txtNome = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -118,9 +119,10 @@
             this.Controls.Add(this.txtComissao);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtNome);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "frmCadastrarEntregador";
-            this.Text = "DEX [Cadastro Entregador]";
+            this.Text = "[XDelivery] Cadastro Entregador";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastrarEntregador_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.EntregGridView)).EndInit();
             this.ResumeLayout(false);

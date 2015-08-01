@@ -159,12 +159,12 @@ namespace DexComanda
 
         }
 
-        public static void AtualizaMesa(int iCodigo, string iNumeroMesa, int iStatus)
+        public static void AtualizaMesa(string iNumeroMesa, int iStatus)
         {
             conexao = new Conexao();
             Mesas mesas = new Mesas()
             {
-                Codigo = iCodigo,
+               // Codigo = iCodigo,
                 NumeroMesa = iNumeroMesa,
                 StatusMesa = iStatus
             };

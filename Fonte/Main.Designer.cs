@@ -42,6 +42,7 @@
             this.textoPEmailSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.regiõesDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mesasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.motivosCancelamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.relatórioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.porPessoaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,7 +107,9 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.motivosCancelamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.caixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lançamentoAvulsoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.movimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -229,6 +232,13 @@
             this.mesasToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
             this.mesasToolStripMenuItem.Text = "Mesas";
             this.mesasToolStripMenuItem.Click += new System.EventHandler(this.mesasToolStripMenuItem_Click);
+            // 
+            // motivosCancelamentoToolStripMenuItem
+            // 
+            this.motivosCancelamentoToolStripMenuItem.Name = "motivosCancelamentoToolStripMenuItem";
+            this.motivosCancelamentoToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
+            this.motivosCancelamentoToolStripMenuItem.Text = "Motivos Cancelamento";
+            this.motivosCancelamentoToolStripMenuItem.Click += new System.EventHandler(this.motivosCancelamentoToolStripMenuItem_Click);
             // 
             // relatórioToolStripMenuItem
             // 
@@ -364,7 +374,8 @@
             // 
             this.operaçõesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.alteraçõesMultiplasToolStripMenuItem,
-            this.alterarSenhaToolStripMenuItem});
+            this.alterarSenhaToolStripMenuItem,
+            this.caixaToolStripMenuItem});
             this.operaçõesToolStripMenuItem.Name = "operaçõesToolStripMenuItem";
             this.operaçõesToolStripMenuItem.Size = new System.Drawing.Size(96, 25);
             this.operaçõesToolStripMenuItem.Text = "Operações";
@@ -870,12 +881,26 @@
             this.AtualizaGrid.Interval = 10000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // motivosCancelamentoToolStripMenuItem
+            // caixaToolStripMenuItem
             // 
-            this.motivosCancelamentoToolStripMenuItem.Name = "motivosCancelamentoToolStripMenuItem";
-            this.motivosCancelamentoToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
-            this.motivosCancelamentoToolStripMenuItem.Text = "Motivos Cancelamento";
-            this.motivosCancelamentoToolStripMenuItem.Click += new System.EventHandler(this.motivosCancelamentoToolStripMenuItem_Click);
+            this.caixaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lançamentoAvulsoToolStripMenuItem,
+            this.movimentoToolStripMenuItem});
+            this.caixaToolStripMenuItem.Name = "caixaToolStripMenuItem";
+            this.caixaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.caixaToolStripMenuItem.Text = "Caixa";
+            // 
+            // lançamentoAvulsoToolStripMenuItem
+            // 
+            this.lançamentoAvulsoToolStripMenuItem.Name = "lançamentoAvulsoToolStripMenuItem";
+            this.lançamentoAvulsoToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.lançamentoAvulsoToolStripMenuItem.Text = "Lançamento Avulso";
+            // 
+            // movimentoToolStripMenuItem
+            // 
+            this.movimentoToolStripMenuItem.Name = "movimentoToolStripMenuItem";
+            this.movimentoToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.movimentoToolStripMenuItem.Text = "Movimento";
             // 
             // Main
             // 
@@ -1000,5 +1025,8 @@
         private System.Windows.Forms.ToolStripMenuItem geralToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem entregasPorMotoboyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem motivosCancelamentoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem caixaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lançamentoAvulsoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem movimentoToolStripMenuItem;
     }
 }

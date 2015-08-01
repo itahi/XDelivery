@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroRegioes));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnEditar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -164,9 +165,10 @@
             this.ClientSize = new System.Drawing.Size(413, 334);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "frmCadastroRegioes";
-            this.Text = "DEX [ Cadastro de Regiões]";
+            this.Text = "[XDelivery] Cadastro de Regiões";
             this.Load += new System.EventHandler(this.frmCadastroRegioes_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastroRegioes_KeyDown);
             this.groupBox1.ResumeLayout(false);
