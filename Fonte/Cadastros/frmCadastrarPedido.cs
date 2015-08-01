@@ -2302,13 +2302,13 @@ namespace DexComanda
             // 
             this.cbxListaMesas.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbxListaMesas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbxListaMesas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxListaMesas.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxListaMesas.FormattingEnabled = true;
             this.cbxListaMesas.Location = new System.Drawing.Point(566, 100);
             this.cbxListaMesas.Name = "cbxListaMesas";
             this.cbxListaMesas.Size = new System.Drawing.Size(42, 26);
             this.cbxListaMesas.TabIndex = 62;
-            this.cbxListaMesas.Text = "0 - Entrega";
             this.cbxListaMesas.Visible = false;
             // 
             // panel4
