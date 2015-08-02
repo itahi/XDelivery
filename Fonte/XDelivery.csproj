@@ -162,6 +162,18 @@
     <Compile Include="Cadastros\frmCadHistorico.Designer.cs">
       <DependentUpon>frmCadHistorico.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operações\Financeiro\frmFechamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Financeiro\frmFechamento.Designer.cs">
+      <DependentUpon>frmFechamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operações\Financeiro\frmLancamentoCaixa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Financeiro\frmLancamentoCaixa.Designer.cs">
+      <DependentUpon>frmLancamentoCaixa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AtualizaItemsImpresso.cs" />
     <Compile Include="Models\EventosSistema.cs" />
     <Compile Include="Models\HistoricoCancelamento.cs" />
@@ -209,11 +221,11 @@
     <Compile Include="Cadastros\frmCadastroRegioes.Designer.cs">
       <DependentUpon>frmCadastroRegioes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operações\frmCaixa.cs">
+    <Compile Include="Operações\Financeiro\frmCaixaMovimento.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Operações\frmCaixa.Designer.cs">
-      <DependentUpon>frmCaixa.cs</DependentUpon>
+    <Compile Include="Operações\Financeiro\frmCaixaMovimento.Designer.cs">
+      <DependentUpon>frmCaixaMovimento.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\frmConfigurarImpressao.cs">
       <SubType>Form</SubType>
@@ -462,14 +474,20 @@
     <EmbeddedResource Include="Cadastros\frmCadHistorico.resx">
       <DependentUpon>frmCadHistorico.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Financeiro\frmFechamento.resx">
+      <DependentUpon>frmFechamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Financeiro\frmLancamentoCaixa.resx">
+      <DependentUpon>frmLancamentoCaixa.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmAlteraSenha.resx">
       <DependentUpon>frmAlteraSenha.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmCadastroUsuario.resx">
       <DependentUpon>frmCadastroUsuario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Operações\frmCaixa.resx">
-      <DependentUpon>frmCaixa.cs</DependentUpon>
+    <EmbeddedResource Include="Operações\Financeiro\frmCaixaMovimento.resx">
+      <DependentUpon>frmCaixaMovimento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmExibeCancelamentos.resx">
       <DependentUpon>frmExibeCancelamentos.cs</DependentUpon>

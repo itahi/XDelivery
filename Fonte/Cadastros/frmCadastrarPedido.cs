@@ -1331,7 +1331,7 @@ namespace DexComanda
             ValorTotal = 0;
             foreach (ItemPedido _item in items)
             {
-                ValorTotal += _item.PrecoTotal;
+                ValorTotal += _item.PrecoTotal*_item.Quantidade;
             }
             //decimal TotaItems = decimal.Parse(lbTotal.Text.Replace("R$", ""));
            // decimal TotalPago = TotaItems + ValorTroco;

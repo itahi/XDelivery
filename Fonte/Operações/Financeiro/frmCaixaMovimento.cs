@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace DexComanda.Operações
 {
-    public partial class frmCaixa : Form
+    public partial class frmCaixaMovimento : Form
     {
-        public frmCaixa()
+        public frmCaixaMovimento()
         {
             InitializeComponent();
         }

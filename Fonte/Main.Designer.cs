@@ -427,6 +427,7 @@
             this.caixaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lançamentoAvulsoToolStripMenuItem,
             this.movimentoToolStripMenuItem});
+            this.caixaToolStripMenuItem.Enabled = false;
             this.caixaToolStripMenuItem.Name = "caixaToolStripMenuItem";
             this.caixaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.caixaToolStripMenuItem.Text = "Caixa";
@@ -919,7 +920,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "XComanda";
+            this.Text = "[XDelivery] XSistemas  - www.xsistemas.com.br";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_FormClosed);
             this.Load += new System.EventHandler(this.Main_Load);

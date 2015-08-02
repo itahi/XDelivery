@@ -20,5 +20,9 @@ Valor decimal(10,2) not null,
 Historico nvarchar(max),
 Data datetime,
 Tipo char(1),
+CodFormaPagamento int null
 
+Constraint FK_CODFPagamento foreign key (CodFormaPagamento) references FormaPagamento(Codigo)
 )
+
+
