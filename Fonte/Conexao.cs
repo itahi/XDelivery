@@ -763,11 +763,14 @@ namespace DexComanda
         {
             try
             {
-                using (var client = new WebClient())
-                using (var stream = client.OpenRead("http://www.google.com"))
-                {
-                    return true;
-                }
+                int Description;
+
+                return InternetGetConnectedState(out Description, 0);
+                //using (var client = new WebClient())
+                //using (var stream = client.OpenRead("http://www.google.com"))
+                //{
+                //    return true;
+                //}
             }
             catch
             {

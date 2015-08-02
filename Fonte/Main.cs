@@ -1115,7 +1115,18 @@ namespace DexComanda
             while (iPedidosAberto != pedidosGridView.Rows.Count)
             {
                 PopularGrid(false, "Pedido", pedidosGridView);
+
+                for (int i = 0; i < pedidosGridView.Rows.Count; i++)
+                {
+                    if (pedidosGridView.Rows[i].Cells["PedidoOrigem"].Value.ToString() == "Aplicativo")
+                    {
+                        pedidosGridView.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                    }
+                }
             }
+
+
+           
 
             //if (PedidosAberto != null)
             //{
@@ -1297,6 +1308,12 @@ namespace DexComanda
         private void aberturaCaixaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAberturaCaixa frm = new frmAberturaCaixa();
+            frm.ShowDialog();
+        }
+
+        private void lançamentoAvulsoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmLancamentoCaixa frm = new frmLancamentoCaixa();
             frm.ShowDialog();
         }
 

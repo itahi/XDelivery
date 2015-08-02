@@ -69,6 +69,7 @@
             this.FinanceiroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lançamentoAvulsoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.movimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aberturaCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoAtivaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dBExpertDataSet = new DexComanda.DBExpertDataSet();
@@ -111,7 +112,6 @@
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.lblCaixa = new System.Windows.Forms.Label();
-            this.aberturaCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -440,12 +440,20 @@
             this.lançamentoAvulsoToolStripMenuItem.Name = "lançamentoAvulsoToolStripMenuItem";
             this.lançamentoAvulsoToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.lançamentoAvulsoToolStripMenuItem.Text = "Lançamento Avulso";
+            this.lançamentoAvulsoToolStripMenuItem.Click += new System.EventHandler(this.lançamentoAvulsoToolStripMenuItem_Click);
             // 
             // movimentoToolStripMenuItem
             // 
             this.movimentoToolStripMenuItem.Name = "movimentoToolStripMenuItem";
             this.movimentoToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.movimentoToolStripMenuItem.Text = "Movimento";
+            // 
+            // aberturaCaixaToolStripMenuItem
+            // 
+            this.aberturaCaixaToolStripMenuItem.Name = "aberturaCaixaToolStripMenuItem";
+            this.aberturaCaixaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.aberturaCaixaToolStripMenuItem.Text = "Abertura Caixa";
+            this.aberturaCaixaToolStripMenuItem.Click += new System.EventHandler(this.aberturaCaixaToolStripMenuItem_Click);
             // 
             // contatoToolStripMenuItem
             // 
@@ -550,6 +558,7 @@
             // 
             this.pedidosGridView.AllowUserToAddRows = false;
             this.pedidosGridView.AllowUserToDeleteRows = false;
+            this.pedidosGridView.AllowUserToOrderColumns = true;
             this.pedidosGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pedidosGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -920,13 +929,6 @@
             this.lblCaixa.Size = new System.Drawing.Size(128, 20);
             this.lblCaixa.TabIndex = 8;
             this.lblCaixa.Text = "Caixa Fechado";
-            // 
-            // aberturaCaixaToolStripMenuItem
-            // 
-            this.aberturaCaixaToolStripMenuItem.Name = "aberturaCaixaToolStripMenuItem";
-            this.aberturaCaixaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
-            this.aberturaCaixaToolStripMenuItem.Text = "Abertura Caixa";
-            this.aberturaCaixaToolStripMenuItem.Click += new System.EventHandler(this.aberturaCaixaToolStripMenuItem_Click);
             // 
             // Main
             // 

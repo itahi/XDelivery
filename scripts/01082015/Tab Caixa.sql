@@ -1,4 +1,4 @@
---drop table CaixaMovimento 
+--drop table Caixa
 go
 create table Caixa
 (
@@ -6,9 +6,10 @@ Codigo int primary key identity (1,1),
 Data date ,
 CodUsuario int null,
 Historico nvarchar(max),
-Tipo  char(1),
-Valor decimal(10,2)
-
+--Tipo  char(1),
+ValorAbertura decimal(10,2),
+ValorFechamento decimal(10,2),
+Estado bit
 Constraint FK_CODUSERCAIXA foreign  key (CodUsuario) references Usuario(Cod)
 )
 
@@ -24,5 +25,4 @@ CodFormaPagamento int null
 
 Constraint FK_CODFPagamento foreign key (CodFormaPagamento) references FormaPagamento(Codigo)
 )
-
 
