@@ -66,6 +66,9 @@
             this.taxasDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.regiõesDeEntregaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.alterarSenhaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.caixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lançamentoAvulsoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.movimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoAtivaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dBExpertDataSet = new DexComanda.DBExpertDataSet();
@@ -107,9 +110,6 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.caixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lançamentoAvulsoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.movimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -421,6 +421,27 @@
             this.alterarSenhaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.alterarSenhaToolStripMenuItem.Text = "Alterar Senha";
             this.alterarSenhaToolStripMenuItem.Click += new System.EventHandler(this.alterarSenhaToolStripMenuItem_Click);
+            // 
+            // caixaToolStripMenuItem
+            // 
+            this.caixaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lançamentoAvulsoToolStripMenuItem,
+            this.movimentoToolStripMenuItem});
+            this.caixaToolStripMenuItem.Name = "caixaToolStripMenuItem";
+            this.caixaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.caixaToolStripMenuItem.Text = "Caixa";
+            // 
+            // lançamentoAvulsoToolStripMenuItem
+            // 
+            this.lançamentoAvulsoToolStripMenuItem.Name = "lançamentoAvulsoToolStripMenuItem";
+            this.lançamentoAvulsoToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.lançamentoAvulsoToolStripMenuItem.Text = "Lançamento Avulso";
+            // 
+            // movimentoToolStripMenuItem
+            // 
+            this.movimentoToolStripMenuItem.Name = "movimentoToolStripMenuItem";
+            this.movimentoToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.movimentoToolStripMenuItem.Text = "Movimento";
             // 
             // contatoToolStripMenuItem
             // 
@@ -880,27 +901,6 @@
             this.AtualizaGrid.Enabled = true;
             this.AtualizaGrid.Interval = 10000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
-            // 
-            // caixaToolStripMenuItem
-            // 
-            this.caixaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lançamentoAvulsoToolStripMenuItem,
-            this.movimentoToolStripMenuItem});
-            this.caixaToolStripMenuItem.Name = "caixaToolStripMenuItem";
-            this.caixaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
-            this.caixaToolStripMenuItem.Text = "Caixa";
-            // 
-            // lançamentoAvulsoToolStripMenuItem
-            // 
-            this.lançamentoAvulsoToolStripMenuItem.Name = "lançamentoAvulsoToolStripMenuItem";
-            this.lançamentoAvulsoToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-            this.lançamentoAvulsoToolStripMenuItem.Text = "Lançamento Avulso";
-            // 
-            // movimentoToolStripMenuItem
-            // 
-            this.movimentoToolStripMenuItem.Name = "movimentoToolStripMenuItem";
-            this.movimentoToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-            this.movimentoToolStripMenuItem.Text = "Movimento";
             // 
             // Main
             // 
