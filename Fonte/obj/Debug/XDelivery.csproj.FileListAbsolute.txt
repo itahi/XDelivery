@@ -51,3 +51,5 @@ H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\RdlCompile.cache
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\RdlCompile.compiled
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.exe.manifest
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.application
+H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmAberturaCaixa.resources
+H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmCaixaFechamento.resources

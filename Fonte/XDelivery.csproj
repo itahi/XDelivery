@@ -162,6 +162,13 @@
     <Compile Include="Cadastros\frmCadHistorico.Designer.cs">
       <DependentUpon>frmCadHistorico.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Caixa.cs" />
+    <Compile Include="Operações\Financeiro\frmAberturaCaixa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Financeiro\frmAberturaCaixa.Designer.cs">
+      <DependentUpon>frmAberturaCaixa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operações\Financeiro\frmFechamento.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -473,6 +480,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmCadHistorico.resx">
       <DependentUpon>frmCadHistorico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Financeiro\frmAberturaCaixa.resx">
+      <DependentUpon>frmAberturaCaixa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\Financeiro\frmFechamento.resx">
       <DependentUpon>frmFechamento.cs</DependentUpon>

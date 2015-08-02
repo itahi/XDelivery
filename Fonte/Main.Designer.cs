@@ -66,7 +66,7 @@
             this.taxasDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.regiõesDeEntregaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.alterarSenhaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.caixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FinanceiroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lançamentoAvulsoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.movimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -110,6 +110,8 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
+            this.lblCaixa = new System.Windows.Forms.Label();
+            this.aberturaCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -375,7 +377,8 @@
             this.operaçõesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.alteraçõesMultiplasToolStripMenuItem,
             this.alterarSenhaToolStripMenuItem,
-            this.caixaToolStripMenuItem});
+            this.FinanceiroToolStripMenuItem,
+            this.aberturaCaixaToolStripMenuItem});
             this.operaçõesToolStripMenuItem.Name = "operaçõesToolStripMenuItem";
             this.operaçõesToolStripMenuItem.Size = new System.Drawing.Size(96, 25);
             this.operaçõesToolStripMenuItem.Text = "Operações";
@@ -422,15 +425,15 @@
             this.alterarSenhaToolStripMenuItem.Text = "Alterar Senha";
             this.alterarSenhaToolStripMenuItem.Click += new System.EventHandler(this.alterarSenhaToolStripMenuItem_Click);
             // 
-            // caixaToolStripMenuItem
+            // FinanceiroToolStripMenuItem
             // 
-            this.caixaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.FinanceiroToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lançamentoAvulsoToolStripMenuItem,
             this.movimentoToolStripMenuItem});
-            this.caixaToolStripMenuItem.Enabled = false;
-            this.caixaToolStripMenuItem.Name = "caixaToolStripMenuItem";
-            this.caixaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
-            this.caixaToolStripMenuItem.Text = "Caixa";
+            this.FinanceiroToolStripMenuItem.Name = "FinanceiroToolStripMenuItem";
+            this.FinanceiroToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.FinanceiroToolStripMenuItem.Text = "Financeiro";
+            this.FinanceiroToolStripMenuItem.Click += new System.EventHandler(this.caixaToolStripMenuItem_Click);
             // 
             // lançamentoAvulsoToolStripMenuItem
             // 
@@ -724,6 +727,7 @@
             // 
             // btnConsultarTelefone
             // 
+            this.btnConsultarTelefone.Enabled = false;
             this.btnConsultarTelefone.ForeColor = System.Drawing.Color.Black;
             this.btnConsultarTelefone.Location = new System.Drawing.Point(377, 3);
             this.btnConsultarTelefone.Name = "btnConsultarTelefone";
@@ -903,6 +907,27 @@
             this.AtualizaGrid.Interval = 10000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
+            // lblCaixa
+            // 
+            this.lblCaixa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCaixa.AutoSize = true;
+            this.lblCaixa.BackColor = System.Drawing.Color.Black;
+            this.lblCaixa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCaixa.ForeColor = System.Drawing.Color.White;
+            this.lblCaixa.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblCaixa.Location = new System.Drawing.Point(856, 6);
+            this.lblCaixa.Name = "lblCaixa";
+            this.lblCaixa.Size = new System.Drawing.Size(128, 20);
+            this.lblCaixa.TabIndex = 8;
+            this.lblCaixa.Text = "Caixa Fechado";
+            // 
+            // aberturaCaixaToolStripMenuItem
+            // 
+            this.aberturaCaixaToolStripMenuItem.Name = "aberturaCaixaToolStripMenuItem";
+            this.aberturaCaixaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.aberturaCaixaToolStripMenuItem.Text = "Abertura Caixa";
+            this.aberturaCaixaToolStripMenuItem.Click += new System.EventHandler(this.aberturaCaixaToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -910,6 +935,7 @@
             this.BackColor = System.Drawing.Color.Cornsilk;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(992, 663);
+            this.Controls.Add(this.lblCaixa);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.dashboardV01);
             this.Controls.Add(this.menuStrip1);
@@ -1026,8 +1052,10 @@
         private System.Windows.Forms.ToolStripMenuItem geralToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem entregasPorMotoboyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem motivosCancelamentoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem caixaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem FinanceiroToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lançamentoAvulsoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem movimentoToolStripMenuItem;
+        private System.Windows.Forms.Label lblCaixa;
+        private System.Windows.Forms.ToolStripMenuItem aberturaCaixaToolStripMenuItem;
     }
 }

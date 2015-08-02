@@ -49,7 +49,7 @@ namespace DexComanda
         private static DataSet dados;
         private static DataSet mRetornoWS;
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
-        public static Boolean EfetuarLogin(string nomeUsuario, string senha)
+        public static Boolean EfetuarLogin(string nomeUsuario, string senha , bool iAbreFrmPrincipal=true)
         {
 
             if (nomeUsuario.Equals(""))
@@ -96,15 +96,20 @@ namespace DexComanda
                         };
 
                         Sessions.retunrUsuario = Sessions.returnUsuario;
+                        Logado = true;
 
-                        Main principal = new Main();
+                        if (iAbreFrmPrincipal)
+                        {
+                            Main principal = new Main();
 
-                        principal.ShowDialog();
+                            principal.ShowDialog();
+                        }
+                        
 
                     }
                     else
                     {
-                        MessageBox.Show("Usuário ou Senha incorretos.");
+                        MessageBox.Show("Usuário ou Senha incorretos.","[XSistemas] Aviso");
                         Logado = false;
                     }
                 }
@@ -115,7 +120,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    MessageBox.Show("Usuário não encontrado.");
+                    MessageBox.Show("Usuário ou senha incorretos","[XSistemas] Aviso");
                     Logado = false;
                 }
 

@@ -209,6 +209,18 @@ namespace DexComanda
                 }
 
             }
+            else if (spName=="spAbrirCaixa")
+            {
+                foreach (PropertyInfo propriedade in properties)
+                {
+                    if (!propriedade.Name.Equals("Codigo") && !propriedade.Name.Equals("ValorFechamento"))
+                    {
+                        Console.WriteLine(propriedade.Name);
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
+                }
+
+            }
 
             else if (spName == "spAdicionarPedido" )
             {
