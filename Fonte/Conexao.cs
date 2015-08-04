@@ -192,7 +192,7 @@ namespace DexComanda
 
             if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" ||
                 spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
-                spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" ||
+                spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName=="spInserirMovimentoCaixa" ||
                 spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento")
             {
 
@@ -427,6 +427,21 @@ namespace DexComanda
             command = new SqlCommand(ispName, conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Data", iDataRegistro);
+
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, itable);
+
+            return ds;
+        }
+        public DataSet SelectRegistroPorDataCodigo(string itable, string ispName, DateTime iDataRegistro , int iNumero)
+        {
+            command = new SqlCommand(ispName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Data", iDataRegistro);
+            command.Parameters.AddWithValue("@Numero", iNumero);
 
             adapter = new SqlDataAdapter(command);
             adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;

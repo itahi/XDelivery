@@ -163,6 +163,7 @@
       <DependentUpon>frmCadHistorico.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Caixa.cs" />
+    <Compile Include="Models\CaixaMovimento.cs" />
     <Compile Include="Operações\Financeiro\frmAberturaCaixa.cs">
       <SubType>Form</SubType>
     </Compile>

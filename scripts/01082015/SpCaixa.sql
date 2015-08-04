@@ -1,9 +1,11 @@
 create procedure spObterDadosCaixa
-@Data date
+@Data date,
+@Numero varchar(10)
  as 
    begin
      select
 	   ISNULL(Codigo,0) as Codigo,
+	   ISNULL(Numero,1) as Numero,
 	   ISNULL(Data,getdate()) as Data,
 	   ISNULL(CodUsuario,0) as CodUsuario,
 	   ISNULL(Historico,'') as Historico,
@@ -13,7 +15,7 @@ create procedure spObterDadosCaixa
    from 
    Caixa
   where Data = @Data
-
+    and Numero = @Numero 
    end
 go
 create procedure spAbrirCaixa
@@ -21,11 +23,12 @@ create procedure spAbrirCaixa
  @Data date,
  @Estado bit,
  @Historico nvarchar(100),
- @ValorAbertura decimal(10,2)
+ @ValorAbertura decimal(10,2),
+ @Numero varchar(10)
  as
    begin
-     insert into Caixa (CodUsuario,Data,Estado,Historico,ValorAbertura) 
-	             values (@CodUsuario,@Data,@Estado,@Historico,@ValorAbertura) 
+     insert into Caixa (CodUsuario,Data,Estado,Historico,ValorAbertura,Numero) 
+	             values (@CodUsuario,@Data,@Estado,@Historico,@ValorAbertura,@Numero) 
    end
 go
 
@@ -34,7 +37,8 @@ create procedure spFecharCaixa
 @Data date,
 @Estado bit,
 @Historico nvarchar(100),
-@ValorFechamento decimal(10,2)
+@ValorFechamento decimal(10,2),
+@Numero varchar(10)
 as 
   begin
     update Caixa
@@ -44,4 +48,7 @@ as
 	  Estado     = @Estado,
 	  Historico  = @Historico,
 	  ValorFechamento = @ValorFechamento
+
+	  where Data = @Data 
+	  and Numero = @Numero
   end

@@ -44,15 +44,24 @@ namespace DexComanda.Operações.Financeiro
                     Data = dtAbertura.Value,
                     Estado = false /*Caixa Aber*/,
                     Historico = "Abertura Inicial",
-                    ValorAbertura = decimal.Parse(txtValor.Text.Replace(",", "."))
+                    ValorAbertura = decimal.Parse(txtValor.Text.Replace(",", ".")),
+                    Numero     = txtNumCaixa.Text
 
                 };
                 if (CodUser != 0)
                 {
                     caixa.CodUsuario = CodUser;
-                    con.Insert("spAbrirCaixa", caixa);
-                    MessageBox.Show("Caixa aberto", "[XSistemas] Aviso");
-                    Utils.Restart();
+                    if (!Utils.CaixaAberto(DateTime.Now,int.Parse(txtNumCaixa.Text)))
+                    {
+                        con.Insert("spAbrirCaixa", caixa);
+                        MessageBox.Show("Caixa aberto", "[XSistemas] Aviso");
+                        Utils.Restart();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Caixa já esta aberto", "[XSistemas] Aviso");
+                    }
+                   
                 }
                 else
                 {

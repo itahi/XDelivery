@@ -43,11 +43,19 @@
             this.dtMovimento = new System.Windows.Forms.DateTimePicker();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.txtNumCaixa = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbxFormaPagamento = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbxFormaPagamento);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.txtNumCaixa);
             this.groupBox1.Controls.Add(this.txtValor);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
@@ -61,13 +69,13 @@
             this.groupBox1.Controls.Add(this.dtMovimento);
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(458, 163);
+            this.groupBox1.Size = new System.Drawing.Size(458, 180);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
             // txtValor
             // 
-            this.txtValor.Location = new System.Drawing.Point(9, 117);
+            this.txtValor.Location = new System.Drawing.Point(9, 154);
             this.txtValor.Name = "txtValor";
             this.txtValor.Size = new System.Drawing.Size(100, 20);
             this.txtValor.TabIndex = 12;
@@ -75,7 +83,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 101);
+            this.label5.Location = new System.Drawing.Point(6, 138);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(48, 13);
             this.label5.TabIndex = 11;
@@ -84,7 +92,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(235, 14);
+            this.label4.Location = new System.Drawing.Point(317, 16);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(90, 13);
             this.label4.TabIndex = 10;
@@ -93,7 +101,7 @@
             // rbSaida
             // 
             this.rbSaida.AutoSize = true;
-            this.rbSaida.Location = new System.Drawing.Point(316, 30);
+            this.rbSaida.Location = new System.Drawing.Point(398, 32);
             this.rbSaida.Name = "rbSaida";
             this.rbSaida.Size = new System.Drawing.Size(52, 17);
             this.rbSaida.TabIndex = 9;
@@ -104,7 +112,7 @@
             // 
             this.rbEntrada.AutoSize = true;
             this.rbEntrada.Checked = true;
-            this.rbEntrada.Location = new System.Drawing.Point(238, 30);
+            this.rbEntrada.Location = new System.Drawing.Point(320, 32);
             this.rbEntrada.Name = "rbEntrada";
             this.rbEntrada.Size = new System.Drawing.Size(62, 17);
             this.rbEntrada.TabIndex = 8;
@@ -114,7 +122,7 @@
             // 
             // txtDescricao
             // 
-            this.txtDescricao.Location = new System.Drawing.Point(9, 73);
+            this.txtDescricao.Location = new System.Drawing.Point(9, 113);
             this.txtDescricao.Name = "txtDescricao";
             this.txtDescricao.Size = new System.Drawing.Size(423, 20);
             this.txtDescricao.TabIndex = 5;
@@ -122,7 +130,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 57);
+            this.label3.Location = new System.Drawing.Point(6, 97);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(117, 13);
             this.label3.TabIndex = 4;
@@ -164,33 +172,69 @@
             // btnSalvar
             // 
             this.btnSalvar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnSalvar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
             this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalvar.Location = new System.Drawing.Point(123, 169);
+            this.btnSalvar.Location = new System.Drawing.Point(110, 186);
             this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(72, 23);
+            this.btnSalvar.Size = new System.Drawing.Size(85, 23);
             this.btnSalvar.TabIndex = 1;
             this.btnSalvar.Text = "Salvar[F12]";
-            this.btnSalvar.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.btnSalvar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSalvar.UseVisualStyleBackColor = true;
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // btnCancelar
             // 
             this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnCancelar.Location = new System.Drawing.Point(214, 169);
+            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.Location = new System.Drawing.Point(214, 186);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(86, 23);
+            this.btnCancelar.Size = new System.Drawing.Size(107, 23);
             this.btnCancelar.TabIndex = 2;
             this.btnCancelar.Text = "Cancelar[ESC]";
+            this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancelar.UseVisualStyleBackColor = true;
+            // 
+            // txtNumCaixa
+            // 
+            this.txtNumCaixa.Location = new System.Drawing.Point(216, 30);
+            this.txtNumCaixa.Name = "txtNumCaixa";
+            this.txtNumCaixa.Size = new System.Drawing.Size(66, 20);
+            this.txtNumCaixa.TabIndex = 13;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(211, 14);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(47, 13);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "N. Caixa";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 57);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(93, 13);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Forma Pagamento";
+            // 
+            // cbxFormaPagamento
+            // 
+            this.cbxFormaPagamento.FormattingEnabled = true;
+            this.cbxFormaPagamento.Location = new System.Drawing.Point(12, 73);
+            this.cbxFormaPagamento.Name = "cbxFormaPagamento";
+            this.cbxFormaPagamento.Size = new System.Drawing.Size(171, 21);
+            this.cbxFormaPagamento.TabIndex = 17;
             // 
             // frmLancamentoCaixa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnSalvar;
-            this.ClientSize = new System.Drawing.Size(460, 197);
+            this.ClientSize = new System.Drawing.Size(460, 213);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.groupBox1);
@@ -199,6 +243,8 @@
             this.MaximizeBox = false;
             this.Name = "frmLancamentoCaixa";
             this.Text = "[XDelivery] Lançamento Caixa";
+            this.Load += new System.EventHandler(this.frmLancamentoCaixa_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmLancamentoCaixa_KeyDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -221,5 +267,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtNumCaixa;
+        private System.Windows.Forms.ComboBox cbxFormaPagamento;
+        private System.Windows.Forms.Label label7;
     }
 }

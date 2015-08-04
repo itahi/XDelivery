@@ -90,7 +90,7 @@ namespace DexComanda
             if (Sessions.returnUsuario != null)
             {
                 con = new Conexao();
-                iCaixaAberto = con.SelectRegistroPorData("Caixa", "spObterDadosCaixa", DateTime.Now).Tables["Caixa"].Rows.Count;
+                iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now,1).Tables["Caixa"].Rows.Count;
 
                 if (iCaixaAberto > 0)
                 {
@@ -1313,8 +1313,8 @@ namespace DexComanda
 
         private void lançamentoAvulsoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmLancamentoCaixa frm = new frmLancamentoCaixa();
-            frm.ShowDialog();
+            frmLancamentoCaixa frmLan = new frmLancamentoCaixa();
+            frmLan.ShowDialog();
         }
 
 

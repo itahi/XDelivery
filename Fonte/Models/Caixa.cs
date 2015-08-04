@@ -12,6 +12,7 @@ namespace DexComanda.Models
         public DateTime Data { get; set; }
         public int CodUsuario { get; set; }
         public string Historico { get; set; }
+        public string Numero { get; set; }
         public decimal ValorAbertura { get; set; }
         public decimal ValorFechamento { get; set; }
         public bool Estado { get; set; }
