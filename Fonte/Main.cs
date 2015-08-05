@@ -90,9 +90,9 @@ namespace DexComanda
             if (Sessions.returnUsuario != null)
             {
                 con = new Conexao();
-                iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now,1).Tables["Caixa"].Rows.Count;
+                iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now, 1).Tables["Caixa"].Rows.Count;
 
-                if (iCaixaAberto > 0)
+                if (Utils.CaixaAberto(DateTime.Now, 1))
                 {
                     btnConsultarTelefone.Enabled = true;
                     aberturaCaixaToolStripMenuItem.Enabled = false;
@@ -1126,7 +1126,7 @@ namespace DexComanda
             }
 
 
-           
+
 
             //if (PedidosAberto != null)
             //{

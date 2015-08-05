@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCaixaMovimento));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cbxNumCaixa = new System.Windows.Forms.ComboBox();
             this.btnFiltrar = new System.Windows.Forms.Button();
             this.chkFPagamento = new System.Windows.Forms.CheckBox();
             this.rbSaida = new System.Windows.Forms.RadioButton();
@@ -40,19 +42,24 @@
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pedidosGridView = new System.Windows.Forms.DataGridView();
+            this.MovimentosGridView = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
+            this.lblSaidas = new System.Windows.Forms.Label();
+            this.lblLiquido = new System.Windows.Forms.Label();
+            this.lblEntradas = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.cbxNumCaixa = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.cbxFPagamento = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pedidosGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MovimentosGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.cbxFPagamento);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.cbxNumCaixa);
             this.groupBox1.Controls.Add(this.btnFiltrar);
@@ -64,17 +71,33 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.dtFim);
             this.groupBox1.Controls.Add(this.dtInicio);
-            this.groupBox1.Location = new System.Drawing.Point(0, 12);
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(690, 75);
+            this.groupBox1.Size = new System.Drawing.Size(690, 87);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(489, 50);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(33, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Caixa";
+            // 
+            // cbxNumCaixa
+            // 
+            this.cbxNumCaixa.FormattingEnabled = true;
+            this.cbxNumCaixa.Location = new System.Drawing.Point(528, 45);
+            this.cbxNumCaixa.Name = "cbxNumCaixa";
+            this.cbxNumCaixa.Size = new System.Drawing.Size(48, 21);
+            this.cbxNumCaixa.TabIndex = 9;
+            // 
             // btnFiltrar
             // 
             this.btnFiltrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFiltrar.Image = ((System.Drawing.Image)(resources.GetObject("btnFiltrar.Image")));
             this.btnFiltrar.ImageKey = "(none)";
             this.btnFiltrar.Location = new System.Drawing.Point(582, 19);
             this.btnFiltrar.Name = "btnFiltrar";
@@ -88,7 +111,7 @@
             // chkFPagamento
             // 
             this.chkFPagamento.AutoSize = true;
-            this.chkFPagamento.Location = new System.Drawing.Point(270, 49);
+            this.chkFPagamento.Location = new System.Drawing.Point(270, 52);
             this.chkFPagamento.Name = "chkFPagamento";
             this.chkFPagamento.Size = new System.Drawing.Size(172, 17);
             this.chkFPagamento.TabIndex = 7;
@@ -163,90 +186,123 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.pedidosGridView);
+            this.panel1.Controls.Add(this.MovimentosGridView);
             this.panel1.Location = new System.Drawing.Point(0, 93);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(690, 319);
             this.panel1.TabIndex = 1;
             // 
-            // pedidosGridView
+            // MovimentosGridView
             // 
-            this.pedidosGridView.AllowUserToAddRows = false;
-            this.pedidosGridView.AllowUserToDeleteRows = false;
-            this.pedidosGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.pedidosGridView.BackgroundColor = System.Drawing.Color.White;
-            this.pedidosGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.pedidosGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pedidosGridView.Location = new System.Drawing.Point(0, 0);
-            this.pedidosGridView.Name = "pedidosGridView";
-            this.pedidosGridView.ReadOnly = true;
-            this.pedidosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.pedidosGridView.Size = new System.Drawing.Size(690, 319);
-            this.pedidosGridView.TabIndex = 8;
+            this.MovimentosGridView.AllowUserToAddRows = false;
+            this.MovimentosGridView.AllowUserToDeleteRows = false;
+            this.MovimentosGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.MovimentosGridView.BackgroundColor = System.Drawing.Color.White;
+            this.MovimentosGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.MovimentosGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MovimentosGridView.Location = new System.Drawing.Point(0, 0);
+            this.MovimentosGridView.Name = "MovimentosGridView";
+            this.MovimentosGridView.ReadOnly = true;
+            this.MovimentosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.MovimentosGridView.Size = new System.Drawing.Size(690, 319);
+            this.MovimentosGridView.TabIndex = 8;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(441, 421);
+            this.label3.Location = new System.Drawing.Point(190, 421);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 13);
+            this.label3.Size = new System.Drawing.Size(78, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Total $:";
+            this.label3.Text = "Total Saidas $:";
+            // 
+            // lblSaidas
+            // 
+            this.lblSaidas.AutoSize = true;
+            this.lblSaidas.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lblSaidas.Location = new System.Drawing.Point(274, 421);
+            this.lblSaidas.Name = "lblSaidas";
+            this.lblSaidas.Size = new System.Drawing.Size(28, 13);
+            this.lblSaidas.TabIndex = 3;
+            this.lblSaidas.Text = "0,00";
+            // 
+            // lblLiquido
+            // 
+            this.lblLiquido.AutoSize = true;
+            this.lblLiquido.ForeColor = System.Drawing.Color.Red;
+            this.lblLiquido.Location = new System.Drawing.Point(459, 421);
+            this.lblLiquido.Name = "lblLiquido";
+            this.lblLiquido.Size = new System.Drawing.Size(28, 13);
+            this.lblLiquido.TabIndex = 4;
+            this.lblLiquido.Text = "0,00";
+            // 
+            // lblEntradas
+            // 
+            this.lblEntradas.AutoSize = true;
+            this.lblEntradas.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lblEntradas.Location = new System.Drawing.Point(108, 421);
+            this.lblEntradas.Name = "lblEntradas";
+            this.lblEntradas.Size = new System.Drawing.Size(28, 13);
+            this.lblEntradas.TabIndex = 6;
+            this.lblEntradas.Text = "0,00";
+            this.lblEntradas.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 421);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(88, 13);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "Total Entradas $:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label4.Location = new System.Drawing.Point(500, 421);
+            this.label4.Location = new System.Drawing.Point(375, 421);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(28, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "0,00";
+            this.label4.Size = new System.Drawing.Size(61, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Liquido R$:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.Color.Red;
-            this.label5.Location = new System.Drawing.Point(620, 421);
+            this.label5.Location = new System.Drawing.Point(9, 55);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(28, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "0,00";
+            this.label5.Size = new System.Drawing.Size(73, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "F. Pagamento";
             // 
-            // cbxNumCaixa
+            // cbxFPagamento
             // 
-            this.cbxNumCaixa.FormattingEnabled = true;
-            this.cbxNumCaixa.Location = new System.Drawing.Point(528, 45);
-            this.cbxNumCaixa.Name = "cbxNumCaixa";
-            this.cbxNumCaixa.Size = new System.Drawing.Size(48, 21);
-            this.cbxNumCaixa.TabIndex = 9;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(476, 48);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(33, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Caixa";
+            this.cbxFPagamento.FormattingEnabled = true;
+            this.cbxFPagamento.Location = new System.Drawing.Point(88, 52);
+            this.cbxFPagamento.Name = "cbxFPagamento";
+            this.cbxFPagamento.Size = new System.Drawing.Size(166, 21);
+            this.cbxFPagamento.TabIndex = 11;
             // 
             // frmCaixaMovimento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(693, 457);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblEntradas);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.lblLiquido);
+            this.Controls.Add(this.lblSaidas);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCaixaMovimento";
             this.Text = "XDelivery [ Controle de Caixa]";
+            this.Load += new System.EventHandler(this.frmCaixaMovimento_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pedidosGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MovimentosGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -265,12 +321,17 @@
         private System.Windows.Forms.CheckBox chkFPagamento;
         private System.Windows.Forms.Button btnFiltrar;
         private System.Windows.Forms.Panel panel1;
-        public System.Windows.Forms.DataGridView pedidosGridView;
+        public System.Windows.Forms.DataGridView MovimentosGridView;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblLiquido;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbxNumCaixa;
+        private System.Windows.Forms.Label lblEntradas;
+        private System.Windows.Forms.Label label8;
+        protected System.Windows.Forms.Label lblSaidas;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbxFPagamento;
 
     }
 }

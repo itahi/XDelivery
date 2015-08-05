@@ -14,7 +14,7 @@ namespace DexComanda.Operações.Financeiro
     public partial class frmAberturaCaixa : Form
     {
         private Conexao con;
-        private int CodUser ;
+        private int CodUser;
         public frmAberturaCaixa()
         {
             con = new Conexao();
@@ -24,7 +24,7 @@ namespace DexComanda.Operações.Financeiro
         private void frmAberturaCaixa_Load(object sender, EventArgs e)
         {
             dtAbertura.Value = DateTime.Now;
-            if (Sessions.retunrUsuario!=null)
+            if (Sessions.retunrUsuario != null)
             {
                 DataSet dsUser = con.SelectAll("Usuario", "spObterUsuario");
                 cbxFuncionario.DataSource = dsUser.Tables["Usuario"];
@@ -32,12 +32,17 @@ namespace DexComanda.Operações.Financeiro
                 cbxFuncionario.ValueMember = "Codigo";
 
             }
-           
+
+            DataSet dsCaixas = con.SelectAll("CaixaCadastro", "spObterCaixa");
+            cbxCaixas.DataSource = dsCaixas.Tables["CaixaCadastro"];
+            cbxCaixas.DisplayMember = "Numero";
+            cbxCaixas.ValueMember = "Codigo";
+
         }
 
         private void Salvar(object sender, EventArgs e)
         {
-            if (Utils.EfetuarLogin(cbxFuncionario.Text, txtSenha.Text,false))
+            if (Utils.EfetuarLogin(cbxFuncionario.Text, txtSenha.Text, false))
             {
                 Caixa caixa = new Caixa()
                 {
@@ -45,23 +50,18 @@ namespace DexComanda.Operações.Financeiro
                     Estado = false /*Caixa Aber*/,
                     Historico = "Abertura Inicial",
                     ValorAbertura = decimal.Parse(txtValor.Text.Replace(",", ".")),
-                    Numero     = txtNumCaixa.Text
+                    Numero = cbxCaixas.SelectedValue.ToString()
 
                 };
                 if (CodUser != 0)
                 {
                     caixa.CodUsuario = CodUser;
-                    if (!Utils.CaixaAberto(DateTime.Now,int.Parse(txtNumCaixa.Text)))
-                    {
-                        con.Insert("spAbrirCaixa", caixa);
-                        MessageBox.Show("Caixa aberto", "[XSistemas] Aviso");
-                        Utils.Restart();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Caixa já esta aberto", "[XSistemas] Aviso");
-                    }
-                   
+
+                    con.Insert("spAbrirCaixa", caixa);
+                    MessageBox.Show("Caixa aberto", "[XSistemas] Aviso");
+                    Utils.Restart();
+
+
                 }
                 else
                 {
@@ -69,10 +69,10 @@ namespace DexComanda.Operações.Financeiro
                 }
 
             }
-            
-         }
-            
-           
+
+        }
+
+
 
         private void cbxFuncionario_SelectionChangeCommitted(object sender, EventArgs e)
         {

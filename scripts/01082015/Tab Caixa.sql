@@ -6,12 +6,13 @@ Codigo int identity (1,1),
 Data date ,
 CodUsuario int null,
 Historico nvarchar(max),
-Numero varchar(10),
+Numero nvarchar(10),
 --Tipo  char(1),
 ValorAbertura decimal(10,2),
 ValorFechamento decimal(10,2),
 Estado bit
 Constraint FK01_CODUSERCAIXA foreign  key (CodUsuario) references Usuario(Cod),
+Constraint FK02_NUMCAIXA  foreign  key (Numero) references CAIXACADASTRO(NUMERO),
 constraint PK01_CAIXA primary key (Codigo),
 CONSTRAINT UK01_CAIXA UNIQUE(NUMERO,data)
 )

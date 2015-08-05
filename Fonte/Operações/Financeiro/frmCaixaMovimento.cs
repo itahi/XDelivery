@@ -41,8 +41,55 @@ namespace DexComanda.Operações
                 return;
 	        }
 
-            dsMovimentoFiltro = con.SelectCaixaMovimetoFiltro("spObterCaixaMovimetoFiltro", dtInicio.Value, dtFim.Value, iTipo, "", "", cbxNumCaixa.SelectedValue.ToString());
+            dsMovimentoFiltro = con.SelectCaixaMovimetoFiltro("spObterCaixaMovimetoFiltro", dtInicio.Value, dtFim.Value, iTipo, "", "CaixaMovimento", cbxNumCaixa.SelectedValue.ToString());
 
+          
+            MovimentosGridView.DataSource = null;
+            MovimentosGridView.AutoGenerateColumns = true;
+            MovimentosGridView.DataSource = dsMovimentoFiltro;
+            MovimentosGridView.DataMember = "CaixaMovimento";
+            con.Close();
+
+            SomaValores();
+        }
+        private void SomaValores()
+        {
+            decimal vlrSaidas   =0.00M;
+            decimal  vlrEntrada =0.00M;
+            for (int i = 0; i < MovimentosGridView.Rows.Count; i++)
+            {
+                if (MovimentosGridView.Rows[i].Cells[6].Value.ToString() == "Entrada")
+                {
+                    vlrEntrada = vlrEntrada + decimal.Parse(MovimentosGridView.Rows[i].Cells[5].Value.ToString());
+                }
+                else if (MovimentosGridView.Rows[i].Cells[6].Value.ToString() == "Saida")
+                {
+                    vlrSaidas = vlrSaidas + decimal.Parse(MovimentosGridView.Rows[i].Cells[5].Value.ToString());
+                }
+            }
+
+            lblEntradas.Text = vlrEntrada.ToString();
+            lblSaidas.Text = vlrSaidas.ToString();
+            if (rbEntradaSaida.Checked)
+            {
+                lblLiquido.Text = Convert.ToString(vlrEntrada - vlrSaidas); 
+            }
+        }
+
+        private void frmCaixaMovimento_Load(object sender, EventArgs e)
+        {
+            DataSet dsCaixas = con.SelectAll("CaixaCadastro", "spObterCaixa");
+            cbxNumCaixa.DataSource = dsCaixas.Tables["CaixaCadastro"];
+            cbxNumCaixa.DisplayMember = "Numero";
+            cbxNumCaixa.ValueMember = "Codigo";
+
+            cbxFPagamento.DataSource = con.SelectAll("FormaPagamento", "spObterFormaPagamento").Tables["FormaPagamento"];
+            cbxFPagamento.DisplayMember = "Descricao";
+            cbxFPagamento.ValueMember = "Codigo";
+           
+
+
+            
         }
     }
 }

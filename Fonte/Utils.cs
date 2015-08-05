@@ -160,7 +160,7 @@ namespace DexComanda
                 if (erro.Message.ToString() =="There is no row at position 0.")
                 {
                     MessageBox.Show("Numero de caixa Inexiste , favor verificar");
-                    Environment.Exit(0);
+                   // Environment.Exit(0);
                     
                 }
                 else

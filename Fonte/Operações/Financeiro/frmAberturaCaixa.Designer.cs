@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAberturaCaixa));
             this.panel1 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtNumCaixa = new System.Windows.Forms.TextBox();
             this.dtAbertura = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -45,6 +44,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.cbxCaixas = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -53,8 +53,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cbxCaixas);
             this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.txtNumCaixa);
             this.panel1.Controls.Add(this.dtAbertura);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(5, 6);
@@ -72,13 +72,6 @@
             this.label5.Size = new System.Drawing.Size(33, 20);
             this.label5.TabIndex = 6;
             this.label5.Text = "Nº.";
-            // 
-            // txtNumCaixa
-            // 
-            this.txtNumCaixa.Location = new System.Drawing.Point(221, 15);
-            this.txtNumCaixa.Name = "txtNumCaixa";
-            this.txtNumCaixa.Size = new System.Drawing.Size(54, 20);
-            this.txtNumCaixa.TabIndex = 5;
             // 
             // dtAbertura
             // 
@@ -211,6 +204,16 @@
             this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancelar.UseVisualStyleBackColor = true;
             // 
+            // cbxCaixas
+            // 
+            this.cbxCaixas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxCaixas.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cbxCaixas.FormattingEnabled = true;
+            this.cbxCaixas.Location = new System.Drawing.Point(223, 15);
+            this.cbxCaixas.Name = "cbxCaixas";
+            this.cbxCaixas.Size = new System.Drawing.Size(42, 21);
+            this.cbxCaixas.TabIndex = 7;
+            // 
             // frmAberturaCaixa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -256,6 +259,6 @@
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtNumCaixa;
+        private System.Windows.Forms.ComboBox cbxCaixas;
     }
 }

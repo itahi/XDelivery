@@ -143,16 +143,49 @@ namespace DexComanda
             return ds;
         }
 
-        public DataSet SelectCaixaMovimetoFiltro( string spName, DateTime iDataI, DateTime iDataF,string iTipo,string iCdFormaPagt ,string table="CaixaMovimento",string iNumCaixa="1" )
+        public DataSet SelectCaixaMovimetoFiltro( string l, DateTime iDataI, DateTime iDataF,string iTipo,string iCdFormaPagt ,string table="CaixaMovimento",string iNumCaixa="1" )
         {
-            command = new SqlCommand(spName, conn);
-            command.CommandType = CommandType.StoredProcedure;
+            string lSqlConsulta = " select " +
+                                    " CX.Numero as 'Numero Caixa'," +
+                                    " CXM.DATA, " +
+                                    " CXM.Historico, " +
+                                    " CXM.NumeroDocumento, " +
+                                    " FP.Descricao AS 'FORMA PAGAMENTO'," +
+                                    " CXM.Valor, " +
+                                    " case  CXM.Tipo" +
+                                    " when 'E' THEN 'Entrada'" +
+                                    " when 'S' then 'Saida' " +
+                                    " end  " +
+                                    " as  " +
+                                    " 'Tipo Movimento' " +
+                                    " from CaixaMovimento  CXM " +
+                                    " LEFT JOIN FormaPagamento FP ON FP.Codigo = CXM.CodFormaPagamento " +
+                                    " LEFT JOIN Caixa          CX ON CX.Codigo = CXM.CodCaixa " +
+                                " where " +
+                                "  CXM.Data BETWEEN  '" + iDataI.ToShortDateString() + "' AND '" + iDataF.ToShortDateString() + "'";
+
+                                  if (iNumCaixa!="")
+                                     {
+                                    lSqlConsulta = lSqlConsulta + " and CXM.CodCaixa  = '" + iNumCaixa + "'";
+                                     }
+                                  if (iCdFormaPagt!="")
+                                  {
+                                      lSqlConsulta = lSqlConsulta + " and  CXM.CodFormaPagamento = '" + iCdFormaPagt + " '";
+                                  }
+                                  if (iTipo !="ES")
+                                  {
+                                      lSqlConsulta = lSqlConsulta + " and  CXM.Tipo ='"+ iTipo +"'";
+                                  }
+                                     
+         
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
             
-            command.Parameters.AddWithValue("@DataInicio", iDataI);
-            command.Parameters.AddWithValue("@DataFim", iDataF);
-            command.Parameters.AddWithValue("@Tipo", iTipo);
-            command.Parameters.AddWithValue("@CodFormaPagamento", iCdFormaPagt);
-            command.Parameters.AddWithValue("@CodCaixa", iNumCaixa);
+         //   command.Parameters.AddWithValue("@DataInicio", iDataI);
+         //   command.Parameters.AddWithValue("@DataFim", iDataF);
+         //   command.Parameters.AddWithValue("@Tipo", iTipo);
+         ////   command.Parameters.AddWithValue("@CodFormaPagamento", iCdFormaPagt);
+         //   command.Parameters.AddWithValue("@CodCaixa", iNumCaixa);
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, table);
