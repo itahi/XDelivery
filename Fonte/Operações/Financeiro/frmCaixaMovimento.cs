@@ -13,7 +13,7 @@ namespace DexComanda.Operações
     public partial class frmCaixaMovimento : Form
     {
         private Conexao con;
-
+        private DataSet dsMovimentoFiltro;
         public frmCaixaMovimento()
         {
             con = new Conexao();
@@ -22,7 +22,27 @@ namespace DexComanda.Operações
 
         private void ExecutaFiltro(object sender, EventArgs e)
         {
-           // con.SelectCaixaMovimetoFiltro(
+            string iTipo="E";
+            if (rbEntrada.Checked)
+	        {
+		     iTipo = "E";
+	        }
+            else if (rbSaida.Checked)
+	        {
+             iTipo = "S";
+	        }
+            else if (rbEntradaSaida.Checked)
+	        {
+		      iTipo = "ES";
+	        }
+            else
+	        {
+                MessageBox.Show("Selecione o tipo de movimento para filtrar","[XSistemas");
+                return;
+	        }
+
+            dsMovimentoFiltro = con.SelectCaixaMovimetoFiltro("spObterCaixaMovimetoFiltro", dtInicio.Value, dtFim.Value, iTipo, "", "", cbxNumCaixa.SelectedValue.ToString());
+
         }
     }
 }

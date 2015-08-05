@@ -44,6 +44,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.cbxNumCaixa = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pedidosGridView)).BeginInit();
@@ -51,6 +53,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.cbxNumCaixa);
             this.groupBox1.Controls.Add(this.btnFiltrar);
             this.groupBox1.Controls.Add(this.chkFPagamento);
             this.groupBox1.Controls.Add(this.rbSaida);
@@ -84,7 +88,7 @@
             // chkFPagamento
             // 
             this.chkFPagamento.AutoSize = true;
-            this.chkFPagamento.Location = new System.Drawing.Point(270, 52);
+            this.chkFPagamento.Location = new System.Drawing.Point(270, 49);
             this.chkFPagamento.Name = "chkFPagamento";
             this.chkFPagamento.Size = new System.Drawing.Size(172, 17);
             this.chkFPagamento.TabIndex = 7;
@@ -209,6 +213,23 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "0,00";
             // 
+            // cbxNumCaixa
+            // 
+            this.cbxNumCaixa.FormattingEnabled = true;
+            this.cbxNumCaixa.Location = new System.Drawing.Point(528, 45);
+            this.cbxNumCaixa.Name = "cbxNumCaixa";
+            this.cbxNumCaixa.Size = new System.Drawing.Size(48, 21);
+            this.cbxNumCaixa.TabIndex = 9;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(476, 48);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(33, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Caixa";
+            // 
             // frmCaixaMovimento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -248,6 +269,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cbxNumCaixa;
 
     }
 }
