@@ -41,12 +41,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dtMovimento = new System.Windows.Forms.DateTimePicker();
-            this.btnSalvar = new System.Windows.Forms.Button();
-            this.btnCancelar = new System.Windows.Forms.Button();
             this.txtNumCaixa = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.cbxFormaPagamento = new System.Windows.Forms.ComboBox();
+            this.btnSalvar = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,7 +78,7 @@
             this.txtValor.Location = new System.Drawing.Point(9, 154);
             this.txtValor.Name = "txtValor";
             this.txtValor.Size = new System.Drawing.Size(100, 20);
-            this.txtValor.TabIndex = 12;
+            this.txtValor.TabIndex = 7;
             // 
             // label5
             // 
@@ -104,7 +104,7 @@
             this.rbSaida.Location = new System.Drawing.Point(398, 32);
             this.rbSaida.Name = "rbSaida";
             this.rbSaida.Size = new System.Drawing.Size(52, 17);
-            this.rbSaida.TabIndex = 9;
+            this.rbSaida.TabIndex = 4;
             this.rbSaida.Text = "Saida";
             this.rbSaida.UseVisualStyleBackColor = true;
             // 
@@ -115,7 +115,7 @@
             this.rbEntrada.Location = new System.Drawing.Point(320, 32);
             this.rbEntrada.Name = "rbEntrada";
             this.rbEntrada.Size = new System.Drawing.Size(62, 17);
-            this.rbEntrada.TabIndex = 8;
+            this.rbEntrada.TabIndex = 3;
             this.rbEntrada.TabStop = true;
             this.rbEntrada.Text = "Entrada";
             this.rbEntrada.UseVisualStyleBackColor = true;
@@ -125,7 +125,7 @@
             this.txtDescricao.Location = new System.Drawing.Point(9, 113);
             this.txtDescricao.Name = "txtDescricao";
             this.txtDescricao.Size = new System.Drawing.Size(423, 20);
-            this.txtDescricao.TabIndex = 5;
+            this.txtDescricao.TabIndex = 6;
             // 
             // label3
             // 
@@ -141,7 +141,7 @@
             this.txtDocumento.Location = new System.Drawing.Point(110, 30);
             this.txtDocumento.Name = "txtDocumento";
             this.txtDocumento.Size = new System.Drawing.Size(100, 20);
-            this.txtDocumento.TabIndex = 3;
+            this.txtDocumento.TabIndex = 1;
             // 
             // label2
             // 
@@ -169,39 +169,12 @@
             this.dtMovimento.Size = new System.Drawing.Size(83, 20);
             this.dtMovimento.TabIndex = 0;
             // 
-            // btnSalvar
-            // 
-            this.btnSalvar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
-            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalvar.Location = new System.Drawing.Point(110, 186);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(85, 23);
-            this.btnSalvar.TabIndex = 1;
-            this.btnSalvar.Text = "Salvar[F12]";
-            this.btnSalvar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSalvar.UseVisualStyleBackColor = true;
-            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
-            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(214, 186);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(107, 23);
-            this.btnCancelar.TabIndex = 2;
-            this.btnCancelar.Text = "Cancelar[ESC]";
-            this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            // 
             // txtNumCaixa
             // 
             this.txtNumCaixa.Location = new System.Drawing.Point(216, 30);
             this.txtNumCaixa.Name = "txtNumCaixa";
             this.txtNumCaixa.Size = new System.Drawing.Size(66, 20);
-            this.txtNumCaixa.TabIndex = 13;
+            this.txtNumCaixa.TabIndex = 2;
             // 
             // label6
             // 
@@ -227,13 +200,38 @@
             this.cbxFormaPagamento.Location = new System.Drawing.Point(12, 73);
             this.cbxFormaPagamento.Name = "cbxFormaPagamento";
             this.cbxFormaPagamento.Size = new System.Drawing.Size(171, 21);
-            this.cbxFormaPagamento.TabIndex = 17;
+            this.cbxFormaPagamento.TabIndex = 5;
+            // 
+            // btnSalvar
+            // 
+            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
+            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSalvar.Location = new System.Drawing.Point(110, 186);
+            this.btnSalvar.Name = "btnSalvar";
+            this.btnSalvar.Size = new System.Drawing.Size(87, 23);
+            this.btnSalvar.TabIndex = 1;
+            this.btnSalvar.Text = "Salvar[F12]";
+            this.btnSalvar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSalvar.UseVisualStyleBackColor = true;
+            this.btnSalvar.Click += new System.EventHandler(this.Salvar);
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Abort;
+            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.Location = new System.Drawing.Point(216, 186);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(92, 23);
+            this.btnCancelar.TabIndex = 2;
+            this.btnCancelar.Text = "Canc[ESC]";
+            this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCancelar.UseVisualStyleBackColor = true;
             // 
             // frmLancamentoCaixa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnSalvar;
             this.ClientSize = new System.Drawing.Size(460, 213);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnSalvar);
@@ -265,11 +263,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtValor;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btnSalvar;
-        private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtNumCaixa;
         private System.Windows.Forms.ComboBox cbxFormaPagamento;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnSalvar;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }

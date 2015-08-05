@@ -1317,6 +1317,12 @@ namespace DexComanda
             frmLan.ShowDialog();
         }
 
+        private void movimentoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCaixaMovimento frm = new frmCaixaMovimento();
+            frm.ShowDialog();
+        }
+
 
     }
 }

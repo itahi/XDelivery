@@ -12,9 +12,17 @@ namespace DexComanda.Operações
 {
     public partial class frmCaixaMovimento : Form
     {
+        private Conexao con;
+
         public frmCaixaMovimento()
         {
+            con = new Conexao();
             InitializeComponent();
+        }
+
+        private void ExecutaFiltro(object sender, EventArgs e)
+        {
+           // con.SelectCaixaMovimetoFiltro(
         }
     }
 }

@@ -143,6 +143,22 @@ namespace DexComanda
             return ds;
         }
 
+        public DataSet SelectCaixaMovimetoFiltro( string spName, DateTime iDataI, DateTime iDataF,string iTipo,string iCdFormaPagt ,string table="CaixaMovimento",string iNumCaixa="1" )
+        {
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            
+            command.Parameters.AddWithValue("@DataInicio", iDataI);
+            command.Parameters.AddWithValue("@DataFim", iDataF);
+            command.Parameters.AddWithValue("@Tipo", iTipo);
+            command.Parameters.AddWithValue("@CodFormaPagamento", iCdFormaPagt);
+            command.Parameters.AddWithValue("@CodCaixa", iNumCaixa);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+            return ds;
+        }
+
 
 
         public DataSet DeleteAll(string table, string spName, int CodigoDeletar)

@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCaixaMovimento));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnFiltrar = new System.Windows.Forms.Button();
             this.chkFPagamento = new System.Windows.Forms.CheckBox();
             this.rbSaida = new System.Windows.Forms.RadioButton();
             this.rbEntrada = new System.Windows.Forms.RadioButton();
@@ -51,7 +51,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.btnFiltrar);
             this.groupBox1.Controls.Add(this.chkFPagamento);
             this.groupBox1.Controls.Add(this.rbSaida);
             this.groupBox1.Controls.Add(this.rbEntrada);
@@ -67,17 +67,19 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
             // 
-            // button1
+            // btnFiltrar
             // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.ImageKey = "(none)";
-            this.button1.Location = new System.Drawing.Point(582, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(83, 50);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Filtrar";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnFiltrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFiltrar.Image = ((System.Drawing.Image)(resources.GetObject("btnFiltrar.Image")));
+            this.btnFiltrar.ImageKey = "(none)";
+            this.btnFiltrar.Location = new System.Drawing.Point(582, 19);
+            this.btnFiltrar.Name = "btnFiltrar";
+            this.btnFiltrar.Size = new System.Drawing.Size(83, 50);
+            this.btnFiltrar.TabIndex = 8;
+            this.btnFiltrar.Text = "Filtrar";
+            this.btnFiltrar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnFiltrar.UseVisualStyleBackColor = true;
+            this.btnFiltrar.Click += new System.EventHandler(this.ExecutaFiltro);
             // 
             // chkFPagamento
             // 
@@ -96,7 +98,6 @@
             this.rbSaida.Name = "rbSaida";
             this.rbSaida.Size = new System.Drawing.Size(73, 17);
             this.rbSaida.TabIndex = 6;
-            this.rbSaida.TabStop = true;
             this.rbSaida.Text = "Só Saidas";
             this.rbSaida.UseVisualStyleBackColor = true;
             // 
@@ -107,13 +108,13 @@
             this.rbEntrada.Name = "rbEntrada";
             this.rbEntrada.Size = new System.Drawing.Size(83, 17);
             this.rbEntrada.TabIndex = 5;
-            this.rbEntrada.TabStop = true;
             this.rbEntrada.Text = "Só Entradas";
             this.rbEntrada.UseVisualStyleBackColor = true;
             // 
             // rbEntradaSaida
             // 
             this.rbEntradaSaida.AutoSize = true;
+            this.rbEntradaSaida.Checked = true;
             this.rbEntradaSaida.Location = new System.Drawing.Point(270, 26);
             this.rbEntradaSaida.Name = "rbEntradaSaida";
             this.rbEntradaSaida.Size = new System.Drawing.Size(111, 17);
@@ -241,7 +242,7 @@
         private System.Windows.Forms.RadioButton rbEntrada;
         private System.Windows.Forms.RadioButton rbEntradaSaida;
         private System.Windows.Forms.CheckBox chkFPagamento;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnFiltrar;
         private System.Windows.Forms.Panel panel1;
         public System.Windows.Forms.DataGridView pedidosGridView;
         private System.Windows.Forms.Label label3;

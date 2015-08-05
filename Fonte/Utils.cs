@@ -141,17 +141,35 @@ namespace DexComanda
             DataRow dRow;
             DataSet dsCaixa;
             conexao = new Conexao();
-            if (Sessions.returnUsuario != null)
+            try
             {
-                dsCaixa = conexao.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", iDataRegistro,iNumero);
-                dRow = dsCaixa.Tables[0].Rows[0];
-                iRetorno = dRow.ItemArray.GetValue(7).ToString() == Convert.ToString(false);
+                if (Sessions.returnUsuario != null)
+                {
+                    dsCaixa = conexao.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", iDataRegistro, iNumero);
+                    dRow = dsCaixa.Tables[0].Rows[0];
+                    iRetorno = dRow.ItemArray.GetValue(7).ToString() == Convert.ToString(false);
+
+                }
+                else
+                {
+                    iRetorno = true;
+                }
+            }
+            catch (Exception erro)
+            {
+                if (erro.Message.ToString() =="There is no row at position 0.")
+                {
+                    MessageBox.Show("Numero de caixa Inexiste , favor verificar");
+                    Environment.Exit(0);
                     
+                }
+                else
+                {
+                    MessageBox.Show(erro.Message, "[XSistemas] Algo de errado aconteceu");
+                }
+                
             }
-            else
-            {
-                iRetorno = true;
-            }
+           
 
             return iRetorno;
         }

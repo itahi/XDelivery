@@ -29,6 +29,24 @@ namespace DexComanda.Cadastros
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+           
+        }
+
+        private void frmLancamentoCaixa_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12)
+            {
+                Salvar(sender, e);
+            }
+            
+            else if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+        }
+
+        private void Salvar(object sender, EventArgs e)
+        {
             if (Utils.CaixaAberto(Convert.ToDateTime(dtMovimento.Value.ToShortDateString()), int.Parse(txtNumCaixa.Text)))
             {
                 CaixaMovimento cxMovimento = new CaixaMovimento()
@@ -41,11 +59,16 @@ namespace DexComanda.Cadastros
                     NumeroDocumento = txtDocumento.Text
 
                 };
+                if (txtNumCaixa.Text=="" || txtValor.Text =="" )
+                {
+                    MessageBox.Show("Campos obrigatórios não podem ficar vazios");
+                    return;
+                }
                 if (rbEntrada.Checked)
                 {
                     cxMovimento.Tipo = 'E';
                 }
-                else if ( rbSaida.Checked)
+                else if (rbSaida.Checked)
                 {
                     cxMovimento.Tipo = 'S';
                 }
@@ -63,19 +86,7 @@ namespace DexComanda.Cadastros
             else
             {
                 MessageBox.Show("Caixa do dia " + dtMovimento.Value.ToString() + " já foi fechado , lançamento não permitido", "[Xsistemas] Aviso");
-            }
-        }
 
-        private void frmLancamentoCaixa_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F12)
-            {
-                btnSalvar_Click(sender, e);
-            }
-            
-            else if (e.KeyCode == Keys.Escape)
-            {
-                this.Close();
             }
         }
         
