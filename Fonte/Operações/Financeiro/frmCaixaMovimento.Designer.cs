@@ -117,6 +117,7 @@
             this.chkFPagamento.TabIndex = 7;
             this.chkFPagamento.Text = "Agrupar Formas de Pagamento";
             this.chkFPagamento.UseVisualStyleBackColor = true;
+            this.chkFPagamento.CheckedChanged += new System.EventHandler(this.chkFPagamento_CheckedChanged);
             // 
             // rbSaida
             // 

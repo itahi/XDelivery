@@ -23,6 +23,7 @@ namespace DexComanda.Operações
         private void ExecutaFiltro(object sender, EventArgs e)
         {
             string iTipo="E";
+            string iFPagamento="";
             if (rbEntrada.Checked)
 	        {
 		     iTipo = "E";
@@ -35,13 +36,19 @@ namespace DexComanda.Operações
 	        {
 		      iTipo = "ES";
 	        }
+
             else
 	        {
                 MessageBox.Show("Selecione o tipo de movimento para filtrar","[XSistemas");
                 return;
 	        }
 
-            dsMovimentoFiltro = con.SelectCaixaMovimetoFiltro("spObterCaixaMovimetoFiltro", dtInicio.Value, dtFim.Value, iTipo, "", "CaixaMovimento", cbxNumCaixa.SelectedValue.ToString());
+            if (cbxFPagamento.Enabled)
+            {
+                iFPagamento = cbxFPagamento.SelectedValue.ToString();
+            }
+
+            dsMovimentoFiltro = con.SelectCaixaMovimetoFiltro( dtInicio.Value, dtFim.Value, iTipo, iFPagamento, "CaixaMovimento", cbxNumCaixa.SelectedValue.ToString());
 
           
             MovimentosGridView.DataSource = null;
@@ -86,10 +93,12 @@ namespace DexComanda.Operações
             cbxFPagamento.DataSource = con.SelectAll("FormaPagamento", "spObterFormaPagamento").Tables["FormaPagamento"];
             cbxFPagamento.DisplayMember = "Descricao";
             cbxFPagamento.ValueMember = "Codigo";
-           
+    
+        }
 
-
-            
+        private void chkFPagamento_CheckedChanged(object sender, EventArgs e)
+        {
+            cbxFPagamento.Enabled = !chkFPagamento.Checked;
         }
     }
 }

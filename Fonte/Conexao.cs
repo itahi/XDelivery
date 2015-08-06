@@ -143,7 +143,7 @@ namespace DexComanda
             return ds;
         }
 
-        public DataSet SelectCaixaMovimetoFiltro( string l, DateTime iDataI, DateTime iDataF,string iTipo,string iCdFormaPagt ,string table="CaixaMovimento",string iNumCaixa="1" )
+        public DataSet SelectCaixaMovimetoFiltro( DateTime iDataI, DateTime iDataF,string iTipo,string iCdFormaPagt ,string table="CaixaMovimento",string iNumCaixa="1" )
         {
             string lSqlConsulta = " select " +
                                     " CX.Numero as 'Numero Caixa'," +
@@ -180,12 +180,7 @@ namespace DexComanda
          
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
-            
-         //   command.Parameters.AddWithValue("@DataInicio", iDataI);
-         //   command.Parameters.AddWithValue("@DataFim", iDataF);
-         //   command.Parameters.AddWithValue("@Tipo", iTipo);
-         ////   command.Parameters.AddWithValue("@CodFormaPagamento", iCdFormaPagt);
-         //   command.Parameters.AddWithValue("@CodCaixa", iNumCaixa);
+  
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, table);

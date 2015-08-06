@@ -30,243 +30,193 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCaixaFechamento));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtFPagamento1 = new System.Windows.Forms.TextBox();
-            this.txtFpagamento2 = new System.Windows.Forms.TextBox();
-            this.lblfpagamento3 = new System.Windows.Forms.Label();
-            this.txtFpagamento3 = new System.Windows.Forms.TextBox();
-            this.lblFpagamento4 = new System.Windows.Forms.Label();
-            this.txtFpagamento4 = new System.Windows.Forms.TextBox();
-            this.lblfpagamento5 = new System.Windows.Forms.Label();
-            this.txtFPagamento5 = new System.Windows.Forms.TextBox();
-            this.lblfPagamento1 = new System.Windows.Forms.Label();
-            this.lblfpagamento2 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cbxCaixas = new System.Windows.Forms.ComboBox();
+            this.txtDtAbertura = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtDtFechamento = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtUAbertura = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtUFechamento = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtVlrAbertura = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtVlrFechamento = new System.Windows.Forms.TextBox();
+            this.FechamentosGrid = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FechamentosGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.lblfpagamento2);
-            this.groupBox1.Controls.Add(this.lblfPagamento1);
-            this.groupBox1.Controls.Add(this.lblfpagamento5);
-            this.groupBox1.Controls.Add(this.txtFPagamento5);
-            this.groupBox1.Controls.Add(this.lblFpagamento4);
-            this.groupBox1.Controls.Add(this.txtFpagamento4);
-            this.groupBox1.Controls.Add(this.lblfpagamento3);
-            this.groupBox1.Controls.Add(this.txtFpagamento3);
-            this.groupBox1.Controls.Add(this.txtFpagamento2);
-            this.groupBox1.Controls.Add(this.txtFPagamento1);
-            this.groupBox1.Location = new System.Drawing.Point(1, 7);
+            this.groupBox1.Controls.Add(this.FechamentosGrid);
+            this.groupBox1.Location = new System.Drawing.Point(1, 118);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(448, 110);
+            this.groupBox1.Size = new System.Drawing.Size(448, 134);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Valores Somados";
             // 
-            // txtFPagamento1
+            // groupBox3
             // 
-            this.txtFPagamento1.Location = new System.Drawing.Point(16, 33);
-            this.txtFPagamento1.Name = "txtFPagamento1";
-            this.txtFPagamento1.Size = new System.Drawing.Size(110, 20);
-            this.txtFPagamento1.TabIndex = 0;
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.txtVlrFechamento);
+            this.groupBox3.Controls.Add(this.label10);
+            this.groupBox3.Controls.Add(this.txtVlrAbertura);
+            this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Controls.Add(this.txtUFechamento);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.txtUAbertura);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.txtDtFechamento);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.txtDtAbertura);
+            this.groupBox3.Controls.Add(this.cbxCaixas);
+            this.groupBox3.Location = new System.Drawing.Point(1, 3);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(448, 109);
+            this.groupBox3.TabIndex = 12;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Filtro Caixa";
             // 
-            // txtFpagamento2
+            // cbxCaixas
             // 
-            this.txtFpagamento2.Location = new System.Drawing.Point(16, 76);
-            this.txtFpagamento2.Name = "txtFpagamento2";
-            this.txtFpagamento2.Size = new System.Drawing.Size(110, 20);
-            this.txtFpagamento2.TabIndex = 2;
+            this.cbxCaixas.FormattingEnabled = true;
+            this.cbxCaixas.Location = new System.Drawing.Point(10, 26);
+            this.cbxCaixas.Name = "cbxCaixas";
+            this.cbxCaixas.Size = new System.Drawing.Size(66, 21);
+            this.cbxCaixas.TabIndex = 0;
+            this.cbxCaixas.SelectionChangeCommitted += new System.EventHandler(this.FiltraCaixa);
             // 
-            // lblfpagamento3
+            // txtDtAbertura
             // 
-            this.lblfpagamento3.AutoSize = true;
-            this.lblfpagamento3.Location = new System.Drawing.Point(188, 16);
-            this.lblfpagamento3.Name = "lblfpagamento3";
-            this.lblfpagamento3.Size = new System.Drawing.Size(63, 13);
-            this.lblfpagamento3.TabIndex = 5;
-            this.lblfpagamento3.Text = "fpagamento";
+            this.txtDtAbertura.Location = new System.Drawing.Point(211, 26);
+            this.txtDtAbertura.Name = "txtDtAbertura";
+            this.txtDtAbertura.Size = new System.Drawing.Size(86, 20);
+            this.txtDtAbertura.TabIndex = 11;
             // 
-            // txtFpagamento3
+            // label7
             // 
-            this.txtFpagamento3.Location = new System.Drawing.Point(186, 33);
-            this.txtFpagamento3.Name = "txtFpagamento3";
-            this.txtFpagamento3.Size = new System.Drawing.Size(110, 20);
-            this.txtFpagamento3.TabIndex = 4;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(214, 49);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(83, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Dt. Fechamento";
             // 
-            // lblFpagamento4
+            // txtDtFechamento
             // 
-            this.lblFpagamento4.AutoSize = true;
-            this.lblFpagamento4.Location = new System.Drawing.Point(188, 59);
-            this.lblFpagamento4.Name = "lblFpagamento4";
-            this.lblFpagamento4.Size = new System.Drawing.Size(60, 13);
-            this.lblFpagamento4.TabIndex = 7;
-            this.lblFpagamento4.Text = "Vendas em";
+            this.txtDtFechamento.Location = new System.Drawing.Point(210, 68);
+            this.txtDtFechamento.Name = "txtDtFechamento";
+            this.txtDtFechamento.Size = new System.Drawing.Size(86, 20);
+            this.txtDtFechamento.TabIndex = 13;
             // 
-            // txtFpagamento4
+            // label8
             // 
-            this.txtFpagamento4.Location = new System.Drawing.Point(186, 76);
-            this.txtFpagamento4.Name = "txtFpagamento4";
-            this.txtFpagamento4.Size = new System.Drawing.Size(110, 20);
-            this.txtFpagamento4.TabIndex = 6;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(91, 10);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(61, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "U. Abertura";
             // 
-            // lblfpagamento5
+            // txtUAbertura
             // 
-            this.lblfpagamento5.AutoSize = true;
-            this.lblfpagamento5.Location = new System.Drawing.Point(330, 16);
-            this.lblfpagamento5.Name = "lblfpagamento5";
-            this.lblfpagamento5.Size = new System.Drawing.Size(60, 13);
-            this.lblfpagamento5.TabIndex = 9;
-            this.lblfpagamento5.Text = "Vendas em";
+            this.txtUAbertura.Location = new System.Drawing.Point(94, 27);
+            this.txtUAbertura.Name = "txtUAbertura";
+            this.txtUAbertura.Size = new System.Drawing.Size(86, 20);
+            this.txtUAbertura.TabIndex = 15;
             // 
-            // txtFPagamento5
+            // label9
             // 
-            this.txtFPagamento5.Location = new System.Drawing.Point(328, 33);
-            this.txtFPagamento5.Name = "txtFPagamento5";
-            this.txtFPagamento5.Size = new System.Drawing.Size(110, 20);
-            this.txtFPagamento5.TabIndex = 8;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(91, 51);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(80, 13);
+            this.label9.TabIndex = 18;
+            this.label9.Text = "U. Fechamento";
             // 
-            // lblfPagamento1
+            // txtUFechamento
             // 
-            this.lblfPagamento1.AutoSize = true;
-            this.lblfPagamento1.Location = new System.Drawing.Point(13, 17);
-            this.lblfPagamento1.Name = "lblfPagamento1";
-            this.lblfPagamento1.Size = new System.Drawing.Size(69, 13);
-            this.lblfPagamento1.TabIndex = 10;
-            this.lblfPagamento1.Text = "fpagamento1";
+            this.txtUFechamento.Location = new System.Drawing.Point(94, 68);
+            this.txtUFechamento.Name = "txtUFechamento";
+            this.txtUFechamento.Size = new System.Drawing.Size(86, 20);
+            this.txtUFechamento.TabIndex = 17;
             // 
-            // lblfpagamento2
+            // label6
             // 
-            this.lblfpagamento2.AutoSize = true;
-            this.lblfpagamento2.Location = new System.Drawing.Point(13, 60);
-            this.lblfpagamento2.Name = "lblfpagamento2";
-            this.lblfpagamento2.Size = new System.Drawing.Size(69, 13);
-            this.lblfpagamento2.TabIndex = 11;
-            this.lblfpagamento2.Text = "fpagamento1";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(208, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(64, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Dt. Abertura";
             // 
-            // groupBox2
+            // label10
             // 
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.textBox1);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.textBox2);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.textBox3);
-            this.groupBox2.Controls.Add(this.textBox4);
-            this.groupBox2.Controls.Add(this.textBox5);
-            this.groupBox2.Location = new System.Drawing.Point(2, 125);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(448, 110);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Valor Informado";
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(330, 9);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(65, 13);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "Vlr. Abertura";
             // 
-            // label1
+            // txtVlrAbertura
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 60);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 13);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "fpagamento1";
+            this.txtVlrAbertura.Location = new System.Drawing.Point(333, 26);
+            this.txtVlrAbertura.Name = "txtVlrAbertura";
+            this.txtVlrAbertura.Size = new System.Drawing.Size(86, 20);
+            this.txtVlrAbertura.TabIndex = 19;
             // 
-            // label2
+            // label11
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 17);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "fpagamento1";
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(330, 49);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(84, 13);
+            this.label11.TabIndex = 22;
+            this.label11.Text = "Vlr. Fechamento";
             // 
-            // label3
+            // txtVlrFechamento
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(330, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Vendas em";
+            this.txtVlrFechamento.Location = new System.Drawing.Point(333, 68);
+            this.txtVlrFechamento.Name = "txtVlrFechamento";
+            this.txtVlrFechamento.Size = new System.Drawing.Size(86, 20);
+            this.txtVlrFechamento.TabIndex = 21;
             // 
-            // textBox1
+            // FechamentosGrid
             // 
-            this.textBox1.Location = new System.Drawing.Point(328, 33);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(110, 20);
-            this.textBox1.TabIndex = 8;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(188, 59);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Vendas em";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(186, 76);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(110, 20);
-            this.textBox2.TabIndex = 6;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(188, 16);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(63, 13);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "fpagamento";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(186, 33);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(110, 20);
-            this.textBox3.TabIndex = 4;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(16, 76);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(110, 20);
-            this.textBox4.TabIndex = 2;
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(16, 33);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(110, 20);
-            this.textBox5.TabIndex = 0;
+            this.FechamentosGrid.AllowUserToAddRows = false;
+            this.FechamentosGrid.AllowUserToDeleteRows = false;
+            this.FechamentosGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.FechamentosGrid.BackgroundColor = System.Drawing.Color.White;
+            this.FechamentosGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.FechamentosGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FechamentosGrid.Location = new System.Drawing.Point(3, 16);
+            this.FechamentosGrid.Name = "FechamentosGrid";
+            this.FechamentosGrid.ReadOnly = true;
+            this.FechamentosGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.FechamentosGrid.Size = new System.Drawing.Size(442, 115);
+            this.FechamentosGrid.TabIndex = 9;
             // 
             // frmCaixaFechamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(452, 361);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCaixaFechamento";
             this.Text = "[XDelivery] Fechamento Caixa";
+            this.Load += new System.EventHandler(this.frmCaixaFechamento_Load);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FechamentosGrid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -274,26 +224,20 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label lblfpagamento2;
-        private System.Windows.Forms.Label lblfPagamento1;
-        private System.Windows.Forms.Label lblfpagamento5;
-        private System.Windows.Forms.TextBox txtFPagamento5;
-        private System.Windows.Forms.Label lblFpagamento4;
-        private System.Windows.Forms.TextBox txtFpagamento4;
-        private System.Windows.Forms.Label lblfpagamento3;
-        private System.Windows.Forms.TextBox txtFpagamento3;
-        private System.Windows.Forms.TextBox txtFpagamento2;
-        private System.Windows.Forms.TextBox txtFPagamento1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ComboBox cbxCaixas;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtVlrFechamento;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtVlrAbertura;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtUFechamento;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtUAbertura;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtDtFechamento;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtDtAbertura;
+        public System.Windows.Forms.DataGridView FechamentosGrid;
     }
 }
