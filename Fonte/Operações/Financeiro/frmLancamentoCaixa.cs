@@ -22,8 +22,8 @@ namespace DexComanda.Cadastros
 
         private void frmLancamentoCaixa_Load(object sender, EventArgs e)
         {
-            DataSet dsCaixas = con.SelectAll("CaixaCadastro", "spObterCaixa");
-            cbxCaixas.DataSource = dsCaixas.Tables["CaixaCadastro"];
+            DataSet dsCaixas = con.SelectAll("Caixa", "spObterCaixaAberto");
+            cbxCaixas.DataSource = dsCaixas.Tables["Caixa"];
             cbxCaixas.DisplayMember = "Numero";
             cbxCaixas.ValueMember = "Codigo";
             

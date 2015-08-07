@@ -171,6 +171,7 @@
     </Compile>
     <Compile Include="Models\Caixa.cs" />
     <Compile Include="Models\CaixaCadastros.cs" />
+    <Compile Include="Models\CaixaDiferenca.cs" />
     <Compile Include="Models\CaixaMovimento.cs" />
     <Compile Include="Operações\Financeiro\frmAberturaCaixa.cs">
       <SubType>Form</SubType>
@@ -297,7 +298,6 @@
     </Compile>
     <Compile Include="Models\Mesas.cs" />
     <Compile Include="Models\RegioesEntrega.cs" />
-    <Compile Include="Models\UsuarioPermissao.cs" />
     <Compile Include="Operações\Funções\RotinasGlobal.cs" />
     <Compile Include="Relatorios\dsRelatorio.cs">
       <DependentUpon>dsRelatorio.xsd</DependentUpon>
@@ -426,9 +426,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\UsuarioDefault.cs" />
-    <Compile Include="Models\ValidacaoLincenca.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Models\ValidaCPF.cs">
       <SubType>Code</SubType>
     </Compile>

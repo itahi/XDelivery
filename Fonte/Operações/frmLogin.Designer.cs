@@ -36,19 +36,21 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.cbxCaixas = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtUsuario
             // 
-            this.txtUsuario.Location = new System.Drawing.Point(100, 33);
+            this.txtUsuario.Location = new System.Drawing.Point(127, 26);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(156, 20);
             this.txtUsuario.TabIndex = 0;
             // 
             // txtSenha
             // 
-            this.txtSenha.Location = new System.Drawing.Point(100, 76);
+            this.txtSenha.Location = new System.Drawing.Point(127, 55);
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = 'x';
             this.txtSenha.Size = new System.Drawing.Size(156, 20);
@@ -57,7 +59,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(97, 12);
+            this.label1.Location = new System.Drawing.Point(78, 26);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 2;
@@ -65,7 +67,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(85, 102);
+            this.btnSalvar.Location = new System.Drawing.Point(85, 114);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(75, 23);
             this.btnSalvar.TabIndex = 3;
@@ -76,7 +78,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 33);
+            this.pictureBox1.Location = new System.Drawing.Point(8, 26);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(64, 64);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -86,7 +88,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(97, 60);
+            this.label2.Location = new System.Drawing.Point(83, 58);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 5;
@@ -94,7 +96,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(167, 102);
+            this.btnCancelar.Location = new System.Drawing.Point(167, 114);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(89, 23);
             this.btnCancelar.TabIndex = 6;
@@ -102,11 +104,31 @@
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
+            // cbxCaixas
+            // 
+            this.cbxCaixas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxCaixas.FormattingEnabled = true;
+            this.cbxCaixas.Location = new System.Drawing.Point(127, 81);
+            this.cbxCaixas.Name = "cbxCaixas";
+            this.cbxCaixas.Size = new System.Drawing.Size(64, 21);
+            this.cbxCaixas.TabIndex = 8;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(83, 84);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(33, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Caixa";
+            // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(271, 142);
+            this.ClientSize = new System.Drawing.Size(295, 142);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.cbxCaixas);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBox1);
@@ -141,5 +163,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.ComboBox cbxCaixas;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -18,6 +18,7 @@ namespace DexComanda.Models
         public bool DescontoPedidoSN { get; set; }
         public bool FinalizaPedidoSN { get; set; }
         public double DescontoMax { get; set; }
+        public int CaixaLogado { get; set; }
 
     }
 }

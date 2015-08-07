@@ -23,15 +23,21 @@ namespace DexComanda.Cadastros
 
         private void frmCadCaixa_Load(object sender, EventArgs e)
         {
+         
+        }
+
+        private void btnSalvar_Click(object sender, EventArgs e)
+        {
             CaixaCadastros cx = new CaixaCadastros()
             {
-                Data = DateTime.Now,
+                DataCadastro = DateTime.Now,
                 Nome = txtNome.Text,
                 Numero = txtNum.Text
             };
 
             con.Insert("spAdicionarCaixa", cx);
             Utils.ControlaEventos("Cadastro", this.Name);
+            MessageBox.Show("Caixa cadastrado", "[XSistemas] Aviso");
             Utils.LimpaForm(this);
         }
     }

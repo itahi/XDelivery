@@ -50,7 +50,7 @@ namespace DexComanda
         private static DataSet dados;
         private static DataSet mRetornoWS;
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
-        public static Boolean EfetuarLogin(string nomeUsuario, string senha , bool iAbreFrmPrincipal=true)
+        public static Boolean EfetuarLogin(string nomeUsuario, string senha , bool iAbreFrmPrincipal=true , int iNumCaixa=1)
         {
 
             if (nomeUsuario.Equals(""))
@@ -94,6 +94,7 @@ namespace DexComanda
                             AlteraProdutosSN = Convert.ToBoolean(dv[0].Row["AlteraProdutosSN"].ToString()),
                             DescontoPedidoSN  = Convert.ToBoolean(dv[0].Row["DescontoPedidoSN"].ToString()),
                             DescontoMax = Convert.ToDouble(dv[0].Row["DescontoMax"].ToString()),
+                            CaixaLogado = iNumCaixa
                         };
 
                         Sessions.retunrUsuario = Sessions.returnUsuario;
@@ -102,7 +103,7 @@ namespace DexComanda
                         if (iAbreFrmPrincipal)
                         {
                             Main principal = new Main();
-
+                            
                             principal.ShowDialog();
                         }
                         

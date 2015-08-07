@@ -13,24 +13,38 @@ namespace DexComanda
 {
     public partial class frmLogin : Form
     {
-
+        private Conexao con;
+        public string iNumeroCaixaLogado;
         public frmLogin()
         {
-            
+            con = new Conexao();
             InitializeComponent();
         }
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-
+            cbxCaixas.DataSource = con.SelectAll("Caixa", "spObterCaixaAberto").Tables["Caixa"];
+            cbxCaixas.DisplayMember = "Numero";
+            cbxCaixas.ValueMember = "Codigo";
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (Utils.EfetuarLogin(this.txtUsuario.Text.ToString(), this.txtSenha.Text.ToString()))
+            if (cbxCaixas.SelectedValue.ToString()!="")
             {
-                this.Close();
+                int iNumeroCaixa = int.Parse(cbxCaixas.SelectedValue.ToString());
+                if (Utils.EfetuarLogin(this.txtUsuario.Text.ToString(), this.txtSenha.Text.ToString(),true, iNumeroCaixa))
+                {
+                    this.Close();
+                }   
             }
+            else
+            {
+                MessageBox.Show("Selecione o Caixa para entrar", "[XSistemas] Aviso");
+                return;
+            }
+            
+            
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

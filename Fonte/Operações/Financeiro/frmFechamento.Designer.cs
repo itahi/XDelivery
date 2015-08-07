@@ -32,6 +32,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.FechamentosGrid = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.dtFechamento = new System.Windows.Forms.DateTimePicker();
             this.label11 = new System.Windows.Forms.Label();
             this.txtVlrFechamento = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -44,7 +45,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtDtAbertura = new System.Windows.Forms.TextBox();
             this.cbxCaixas = new System.Windows.Forms.ComboBox();
-            this.dtFechamento = new System.Windows.Forms.DateTimePicker();
+            this.btnExecutar = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FechamentosGrid)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -95,6 +97,14 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Filtro Caixa";
             // 
+            // dtFechamento
+            // 
+            this.dtFechamento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtFechamento.Location = new System.Drawing.Point(211, 68);
+            this.dtFechamento.Name = "dtFechamento";
+            this.dtFechamento.Size = new System.Drawing.Size(86, 20);
+            this.dtFechamento.TabIndex = 23;
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -103,6 +113,7 @@
             this.label11.Size = new System.Drawing.Size(84, 13);
             this.label11.TabIndex = 22;
             this.label11.Text = "Vlr. Fechamento";
+            this.label11.Visible = false;
             // 
             // txtVlrFechamento
             // 
@@ -110,6 +121,7 @@
             this.txtVlrFechamento.Name = "txtVlrFechamento";
             this.txtVlrFechamento.Size = new System.Drawing.Size(86, 20);
             this.txtVlrFechamento.TabIndex = 21;
+            this.txtVlrFechamento.Visible = false;
             // 
             // label10
             // 
@@ -195,22 +207,40 @@
             this.cbxCaixas.Name = "cbxCaixas";
             this.cbxCaixas.Size = new System.Drawing.Size(66, 21);
             this.cbxCaixas.TabIndex = 0;
-            this.cbxCaixas.SelectedIndexChanged += new System.EventHandler(this.cbxCaixas_SelectedIndexChanged);
+           
             this.cbxCaixas.SelectionChangeCommitted += new System.EventHandler(this.FiltraCaixa);
             // 
-            // dtFechamento
+            // btnExecutar
             // 
-            this.dtFechamento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtFechamento.Location = new System.Drawing.Point(211, 68);
-            this.dtFechamento.Name = "dtFechamento";
-            this.dtFechamento.Size = new System.Drawing.Size(86, 20);
-            this.dtFechamento.TabIndex = 23;
+            this.btnExecutar.Image = ((System.Drawing.Image)(resources.GetObject("btnExecutar.Image")));
+            this.btnExecutar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExecutar.Location = new System.Drawing.Point(51, 258);
+            this.btnExecutar.Name = "btnExecutar";
+            this.btnExecutar.Size = new System.Drawing.Size(121, 45);
+            this.btnExecutar.TabIndex = 13;
+            this.btnExecutar.Text = "Fechar";
+            this.btnExecutar.UseVisualStyleBackColor = true;
+            this.btnExecutar.Click += new System.EventHandler(this.btnExecutar_Click);
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Abort;
+            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.Location = new System.Drawing.Point(189, 258);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(121, 45);
+            this.btnCancelar.TabIndex = 14;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
             // 
             // frmCaixaFechamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(452, 315);
+            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.btnExecutar);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -243,5 +273,7 @@
         private System.Windows.Forms.TextBox txtDtAbertura;
         public System.Windows.Forms.DataGridView FechamentosGrid;
         private System.Windows.Forms.DateTimePicker dtFechamento;
+        private System.Windows.Forms.Button btnExecutar;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }
