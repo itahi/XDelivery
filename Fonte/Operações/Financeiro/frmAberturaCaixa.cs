@@ -57,8 +57,25 @@ namespace DexComanda.Operações.Financeiro
                 {
                     caixa.CodUsuario = CodUser;
 
+                    CaixaMovimento cxMovi = new CaixaMovimento()
+                    {
+                        CodCaixa = int.Parse(cbxCaixas.SelectedValue.ToString()),
+                        CodFormaPagamento = 3,
+                        Data = caixa.Data,
+                        Historico = "Lançamento abertura",
+                        NumeroDocumento = caixa.Numero,
+                        Tipo = 'E',
+                        Valor = caixa.ValorAbertura,
+                        CodUser = caixa.CodUsuario
+                    };
+
+                    // Lança movimento no Caixa de abertura
                     con.Insert("spAbrirCaixa", caixa);
+                    con.Insert("spInserirMovimentoCaixa", cxMovi);
+                   
                     MessageBox.Show("Caixa aberto", "[XSistemas] Aviso");
+
+                  
                     Utils.Restart();
 
 

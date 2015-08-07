@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAlteraSenha));
             this.txtLogin = new System.Windows.Forms.TextBox();
             this.txtSenhaAntiga = new System.Windows.Forms.TextBox();
             this.txtSenhanova = new System.Windows.Forms.TextBox();
@@ -65,6 +66,8 @@
             // 
             // btnAlteraSenha
             // 
+            this.btnAlteraSenha.Image = ((System.Drawing.Image)(resources.GetObject("btnAlteraSenha.Image")));
+            this.btnAlteraSenha.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAlteraSenha.Location = new System.Drawing.Point(108, 134);
             this.btnAlteraSenha.Name = "btnAlteraSenha";
             this.btnAlteraSenha.Size = new System.Drawing.Size(75, 23);
@@ -112,8 +115,10 @@
             this.Controls.Add(this.txtSenhanova);
             this.Controls.Add(this.txtSenhaAntiga);
             this.Controls.Add(this.txtLogin);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmAlteraSenha";
-            this.Text = "[DEX] Altera senha";
+            this.Text = "[XSistemas] Altera senha";
             this.Load += new System.EventHandler(this.frmAlteraSenha_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

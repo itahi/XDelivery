@@ -111,6 +111,7 @@
             this.Controls.Add(this.btnEditarFP);
             this.Controls.Add(this.btnAdicionar);
             this.Controls.Add(this.FPGridView);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCadastrarFormaPagamento";
             this.Text = "[XDelivery]  Formas De Pagamento";

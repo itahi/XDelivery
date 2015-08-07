@@ -22,6 +22,12 @@ namespace DexComanda.Cadastros
 
         private void frmLancamentoCaixa_Load(object sender, EventArgs e)
         {
+            DataSet dsCaixas = con.SelectAll("CaixaCadastro", "spObterCaixa");
+            cbxCaixas.DataSource = dsCaixas.Tables["CaixaCadastro"];
+            cbxCaixas.DisplayMember = "Numero";
+            cbxCaixas.ValueMember = "Codigo";
+            
+            
             cbxFormaPagamento.DataSource = con.SelectAll("FormaPagamento", "spObterFormaPagamento").Tables["FormaPagamento"];
             cbxFormaPagamento.DisplayMember = "Descricao";
             cbxFormaPagamento.ValueMember = "Codigo";
@@ -47,19 +53,25 @@ namespace DexComanda.Cadastros
 
         private void Salvar(object sender, EventArgs e)
         {
-            if (Utils.CaixaAberto(Convert.ToDateTime(dtMovimento.Value.ToShortDateString()), int.Parse(txtNumCaixa.Text)))
+            int intNumCaixa=1;
+            if (cbxCaixas.SelectedText.ToString()!="")
+            {
+                intNumCaixa =int.Parse(cbxCaixas.SelectedText.ToString());
+            }
+            if (Utils.CaixaAberto(Convert.ToDateTime(dtMovimento.Value.ToShortDateString()), intNumCaixa))
             {
                 CaixaMovimento cxMovimento = new CaixaMovimento()
                 {
-                    CodCaixa = int.Parse(txtNumCaixa.Text),
+                    CodCaixa = intNumCaixa,
                     CodFormaPagamento = int.Parse(cbxFormaPagamento.SelectedValue.ToString()),
                     Data = Convert.ToDateTime(dtMovimento.Value.ToShortDateString()),
+                    CodUser = Sessions.retunrUsuario.Codigo,
                     Historico = txtDescricao.Text,
                     Valor = decimal.Parse(txtValor.Text),
                     NumeroDocumento = txtDocumento.Text
 
                 };
-                if (txtNumCaixa.Text=="" || txtValor.Text =="" )
+                if (intNumCaixa.ToString() == "" || txtValor.Text == "")
                 {
                     MessageBox.Show("Campos obrigatórios não podem ficar vazios");
                     return;

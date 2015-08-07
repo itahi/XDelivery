@@ -352,8 +352,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(454, 397);
             this.Controls.Add(this.tbSelecao);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmEnvioSms";
-            this.Text = "DEX [Envio de SMS ao Cliente]";
+            this.Text = "[XSistemas] Envio de SMS ao Cliente";
             this.Load += new System.EventHandler(this.frmEnvioSms_Load);
             this.tbSelecao.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

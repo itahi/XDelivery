@@ -74,20 +74,20 @@ namespace DexComanda
 
                         MessageBox.Show("Backup do banco de dados não foi efetuado a causa do possivel erro é:" + erro.Message);
                     }
-                   
-                    
+
+
                 }
             }
             finally
             {
-                
-                 if (SqlConec.State == ConnectionState.Open)
+
+                if (SqlConec.State == ConnectionState.Open)
                 {
                     SqlConec.Close();
                 }
             }
-            
-           
+
+
         }
 
         public void OpenConection(string servidor, string banco)
@@ -130,7 +130,7 @@ namespace DexComanda
             return ds;
         }
 
-        public DataSet SelectRegistroPorCodigoPeriodo(string table, string spName, string iCodPessoa,DateTime iDataI , DateTime iDataF)
+        public DataSet SelectRegistroPorCodigoPeriodo(string table, string spName, string iCodPessoa, DateTime iDataI, DateTime iDataF)
         {
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
@@ -143,7 +143,7 @@ namespace DexComanda
             return ds;
         }
 
-        public DataSet SelectCaixaMovimetoFiltro( DateTime iDataI, DateTime iDataF,string iTipo,string iCdFormaPagt ,string table="CaixaMovimento",string iNumCaixa="1" )
+        public DataSet SelectCaixaMovimetoFiltro(string iDataI, string iDataF, string iTipo, string iCdFormaPagt, string table = "CaixaMovimento", string iNumCaixa = "1")
         {
             string lSqlConsulta = " select " +
                                     " CX.Numero as 'Numero Caixa'," +
@@ -162,25 +162,25 @@ namespace DexComanda
                                     " LEFT JOIN FormaPagamento FP ON FP.Codigo = CXM.CodFormaPagamento " +
                                     " LEFT JOIN Caixa          CX ON CX.Codigo = CXM.CodCaixa " +
                                 " where " +
-                                "  CXM.Data BETWEEN  '" + iDataI.ToShortDateString() + "' AND '" + iDataF.ToShortDateString() + "'";
+                                "  CXM.Data BETWEEN  '" + iDataI.ToString() + "' AND '" + iDataF.ToString() + "'";
 
-                                  if (iNumCaixa!="")
-                                     {
-                                    lSqlConsulta = lSqlConsulta + " and CXM.CodCaixa  = '" + iNumCaixa + "'";
-                                     }
-                                  if (iCdFormaPagt!="")
-                                  {
-                                      lSqlConsulta = lSqlConsulta + " and  CXM.CodFormaPagamento = '" + iCdFormaPagt + " '";
-                                  }
-                                  if (iTipo !="ES")
-                                  {
-                                      lSqlConsulta = lSqlConsulta + " and  CXM.Tipo ='"+ iTipo +"'";
-                                  }
-                                     
-         
+            if (iNumCaixa != "")
+            {
+                lSqlConsulta = lSqlConsulta + " and CXM.CodCaixa  = '" + iNumCaixa + "'";
+            }
+            if (iCdFormaPagt != "")
+            {
+                lSqlConsulta = lSqlConsulta + " and  CXM.CodFormaPagamento = '" + iCdFormaPagt + " '";
+            }
+            if (iTipo != "ES")
+            {
+                lSqlConsulta = lSqlConsulta + " and  CXM.Tipo ='" + iTipo + "'";
+            }
+
+
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
-  
+
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, table);
@@ -234,9 +234,9 @@ namespace DexComanda
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
 
-            if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" ||
+            if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" || spName == "spAdicionarCaixa" ||
                 spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
-                spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName=="spInserirMovimentoCaixa" ||
+                spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" ||
                 spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento")
             {
 
@@ -253,7 +253,7 @@ namespace DexComanda
                 }
 
             }
-            else if (spName=="spAbrirCaixa")
+            else if (spName == "spAbrirCaixa")
             {
                 foreach (PropertyInfo propriedade in properties)
                 {
@@ -266,7 +266,7 @@ namespace DexComanda
 
             }
 
-            else if (spName == "spAdicionarPedido" )
+            else if (spName == "spAdicionarPedido")
             {
                 codPedido = new SqlParameter("@Codigo", SqlDbType.Int);
                 codPedido.Direction = ParameterDirection.Output;
@@ -312,13 +312,13 @@ namespace DexComanda
                 }
 
             }
-            else if (spName=="spAdicionarClienteDelivery")
+            else if (spName == "spAdicionarClienteDelivery")
             {
-                
+
                 CodPessoa = new SqlParameter("@Codigo", SqlDbType.Int);
                 CodPessoa.Direction = ParameterDirection.Output;
                 command.Parameters.Add(CodPessoa);
-               foreach (PropertyInfo propriedade in properties)
+                foreach (PropertyInfo propriedade in properties)
                 {
                     if (!propriedade.Name.Equals("Codigo"))
                     {
@@ -346,9 +346,9 @@ namespace DexComanda
             {
                 lastCodigo = int.Parse(codPedido.Value.ToString());
             }
-            else if (spName =="spAdicionarClienteDelivery" )
+            else if (spName == "spAdicionarClienteDelivery")
             {
-               lastCodigo = int.Parse(CodPessoa.Value.ToString()); 
+                lastCodigo = int.Parse(CodPessoa.Value.ToString());
             }
 
         }
@@ -384,7 +384,7 @@ namespace DexComanda
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
                 }
-                else if (spName == "spAlterarItemPedido"|| spName=="spAlteraStatusMesa")
+                else if (spName == "spAlterarItemPedido" || spName == "spAlteraStatusMesa")
                 {
                     if (!p.Name.Equals("Codigo"))
                     {
@@ -480,7 +480,7 @@ namespace DexComanda
 
             return ds;
         }
-        public DataSet SelectRegistroPorDataCodigo(string itable, string ispName, DateTime iDataRegistro , int iNumero)
+        public DataSet SelectRegistroPorDataCodigo(string itable, string ispName, DateTime iDataRegistro, int iNumero)
         {
             command = new SqlCommand(ispName, conn);
             command.CommandType = CommandType.StoredProcedure;
@@ -628,6 +628,22 @@ namespace DexComanda
 
             ds = new DataSet();
             adapter.Fill(ds, table);
+
+            return ds;
+        }
+
+        public DataSet SelectObterRegistroPorString(string iNome, string itable)
+        {
+            string iSqlConsulta = "select * from " + itable;
+
+            command = new SqlCommand(iSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@Nome", iNome);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, itable);
 
             return ds;
         }

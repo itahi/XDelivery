@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCaixaMovimento));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbxFPagamento = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cbxNumCaixa = new System.Windows.Forms.ComboBox();
             this.btnFiltrar = new System.Windows.Forms.Button();
@@ -49,8 +51,6 @@
             this.lblEntradas = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cbxFPagamento = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MovimentosGridView)).BeginInit();
@@ -78,6 +78,24 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 55);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(73, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "F. Pagamento";
+            // 
+            // cbxFPagamento
+            // 
+            this.cbxFPagamento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxFPagamento.FormattingEnabled = true;
+            this.cbxFPagamento.Location = new System.Drawing.Point(88, 52);
+            this.cbxFPagamento.Name = "cbxFPagamento";
+            this.cbxFPagamento.Size = new System.Drawing.Size(166, 21);
+            this.cbxFPagamento.TabIndex = 11;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -89,6 +107,7 @@
             // 
             // cbxNumCaixa
             // 
+            this.cbxNumCaixa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxNumCaixa.FormattingEnabled = true;
             this.cbxNumCaixa.Location = new System.Drawing.Point(528, 45);
             this.cbxNumCaixa.Name = "cbxNumCaixa";
@@ -266,23 +285,6 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "Liquido R$:";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 55);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(73, 13);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "F. Pagamento";
-            // 
-            // cbxFPagamento
-            // 
-            this.cbxFPagamento.FormattingEnabled = true;
-            this.cbxFPagamento.Location = new System.Drawing.Point(88, 52);
-            this.cbxFPagamento.Name = "cbxFPagamento";
-            this.cbxFPagamento.Size = new System.Drawing.Size(166, 21);
-            this.cbxFPagamento.TabIndex = 11;
-            // 
             // frmCaixaMovimento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -296,7 +298,9 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "frmCaixaMovimento";
             this.Text = "XDelivery [ Controle de Caixa]";
             this.Load += new System.EventHandler(this.frmCaixaMovimento_Load);

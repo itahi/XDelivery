@@ -538,140 +538,150 @@ namespace DexComanda
            
             try
             {
-                if (AtualizaTroco())
+                if (cmbFPagamento.SelectedValue.ToString()=="")
                 {
-                    DBExpertDataSet dbExpert = new DBExpertDataSet();
-                    int totalDeItems = this.gridViewItemsPedido.RowCount;
-                    if (totalDeItems == 0)
+                    MessageBox.Show("Formaga de Pagamento não selecionada", "[XSistemas] Aviso");
+                    cmbFPagamento.Focus();
+                    return;
+                }
+                else
+                {
+                    if (AtualizaTroco())
                     {
-                        MessageBox.Show("O Pedido deve contem no mínimo um item.");
-                    }
-                    else
-                    {
-                        var pedido = new Pedido
+                        DBExpertDataSet dbExpert = new DBExpertDataSet();
+                        int totalDeItems = this.gridViewItemsPedido.RowCount;
+                        if (totalDeItems == 0)
                         {
-                            CodPessoa = codPessoa,
-                            TotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", "")),
-                            FormaPagamento = this.cmbFPagamento.Text,
-                            RealizadoEm = DateTime.Now,
-                            Status = "Aberto",
-                            PedidoOrigem = "Balcao",
-                           
-                        };
-                        if (txtTrocoPara.Text!="")
-                        {
-                            pedido.TrocoPara = this.txtTrocoPara.Text;
+                            MessageBox.Show("O Pedido deve contem no mínimo um item.");
                         }
                         else
                         {
-                            pedido.TrocoPara = "0.00";
-                        }
-
-                        // Validar o Desconto Máximo Por Usuario
-                        if (Sessions.returnUsuario!=null)
-                        {
-                            bool PermiteDesconto = Sessions.returnUsuario.DescontoPedidoSN;
-                            double DescMAxPermitido = Sessions.returnUsuario.DescontoMax;
-                            double TotalPedido = double.Parse(lbTotal.Text.Replace("R$", ""));
-
-                            if (txtDesconto.Text != "" && PermiteDesconto)
+                            var pedido = new Pedido
                             {
-                                double Cal = 100;
+                                CodPessoa = codPessoa,
+                                TotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", "")),
+                                FormaPagamento = this.cmbFPagamento.Text,
+                                RealizadoEm = DateTime.Now,
+                                Status = "Aberto",
+                                PedidoOrigem = "Balcao",
 
-                                double DescCalculado = Double.Parse(txtDesconto.Text) * Cal / TotalPedido;
-
-                            if (DescCalculado < DescMAxPermitido)
-                            {
-                                pedido.DescontoValor = decimal.Parse(txtDesconto.Text);
-                            }
-                            else
-                            {
-                                MessageBox.Show("Desconto máximo do usuário superado , favor verificar", "Aviso ");
-                                return;
-                            }
-
-                            
-                            }
-                            else
-                            {
-                                pedido.DescontoValor = decimal.Parse("0.00");
-                            }
-                        }
-                        
-                        // DataEntrada = pedido.RealizadoEm;
-                        if (ContraMesas)
-                        {
-                            if (cbxTipoPedido.Text != "")
-                            {
-                                pedido.Tipo = this.cbxTipoPedido.Text;
-                            }
-                            else
-                            {
-                                MessageBox.Show("Tipo de Pedido não pode ser vazio");
-                                cbxTipoPedido.Focus();
-
-                            }
-
-                        }
-                        else
-                        {
-                            pedido.Tipo = "0 - Entrega";
-                        }
-                        if (cbxListaMesas.Visible)
-                        {
-                            pedido.NumeroMesa = int.Parse(cbxListaMesas.SelectedValue.ToString());
-                            pedido.CodigoMesa = pedido.NumeroMesa;
-                        }
-                        else
-                        {
-                            pedido.NumeroMesa = 0;
-                            //  pedido.CodigoMesa
-                        }
-
-                        con.Insert("spAdicionarPedido", pedido);
-                        //  DataEntrada = DateTime.Now;
-
-                        for (int i = 0; i < items.Count; i++)
-                        {
-                            var itemDoPedido = new ItemPedido()
-                            {
-                                CodPedido = con.getLastCodigo(),
-                                CodProduto = items[i].CodProduto,
-                                NomeProduto = items[i].NomeProduto,
-                                Quantidade = items[i].Quantidade,
-                                PrecoUnitario = items[i].PrecoUnitario,
-                                PrecoTotal = items[i].PrecoTotal,
-                                ImpressoSN = false,
-                                Item = items[i].Item
                             };
-                            con.Insert("spCriarPedido", itemDoPedido);
-                            Utils.ControlaEventos("Inserir", this.Name);
+                            if (txtTrocoPara.Text != "")
+                            {
+                                pedido.TrocoPara = this.txtTrocoPara.Text;
+                            }
+                            else
+                            {
+                                pedido.TrocoPara = "0.00";
+                            }
+
+                            // Validar o Desconto Máximo Por Usuario
+                            if (Sessions.returnUsuario != null)
+                            {
+                                bool PermiteDesconto = Sessions.returnUsuario.DescontoPedidoSN;
+                                double DescMAxPermitido = Sessions.returnUsuario.DescontoMax;
+                                double TotalPedido = double.Parse(lbTotal.Text.Replace("R$", ""));
+
+                                if (txtDesconto.Text != "" && PermiteDesconto)
+                                {
+                                    double Cal = 100;
+
+                                    double DescCalculado = Double.Parse(txtDesconto.Text) * Cal / TotalPedido;
+
+                                    if (DescCalculado < DescMAxPermitido)
+                                    {
+                                        pedido.DescontoValor = decimal.Parse(txtDesconto.Text);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Desconto máximo do usuário superado , favor verificar", "Aviso ");
+                                        return;
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    pedido.DescontoValor = decimal.Parse("0.00");
+                                }
+                            }
+
+                            // DataEntrada = pedido.RealizadoEm;
+                            if (ContraMesas)
+                            {
+                                if (cbxTipoPedido.Text != "")
+                                {
+                                    pedido.Tipo = this.cbxTipoPedido.Text;
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Tipo de Pedido não pode ser vazio");
+                                    cbxTipoPedido.Focus();
+
+                                }
+
+                            }
+                            else
+                            {
+                                pedido.Tipo = "0 - Entrega";
+                            }
+                            if (cbxListaMesas.Visible)
+                            {
+                                pedido.NumeroMesa = int.Parse(cbxListaMesas.SelectedValue.ToString());
+                                pedido.CodigoMesa = pedido.NumeroMesa;
+                            }
+                            else
+                            {
+                                pedido.NumeroMesa = 0;
+                                //  pedido.CodigoMesa
+                            }
+
+                            con.Insert("spAdicionarPedido", pedido);
+                            //  DataEntrada = DateTime.Now;
+
+                            for (int i = 0; i < items.Count; i++)
+                            {
+                                var itemDoPedido = new ItemPedido()
+                                {
+                                    CodPedido = con.getLastCodigo(),
+                                    CodProduto = items[i].CodProduto,
+                                    NomeProduto = items[i].NomeProduto,
+                                    Quantidade = items[i].Quantidade,
+                                    PrecoUnitario = items[i].PrecoUnitario,
+                                    PrecoTotal = items[i].PrecoTotal,
+                                    ImpressoSN = false,
+                                    Item = items[i].Item
+                                };
+                                con.Insert("spCriarPedido", itemDoPedido);
+                                Utils.ControlaEventos("Inserir", this.Name);
+                            }
+
+                            Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
+
+                            if (ContraMesas && cbxListaMesas.Visible && pedido.NumeroMesa != 0)
+                            {
+                                int CodigoMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
+
+                                Utils.AtualizaMesa(cbxListaMesas.Text, 2);
+                            }
+
+
+                            MessageBox.Show("Pedido gerado com sucesso.");
+
+                            if (ContraMesas && cbxTipoPedido.Text == "0 - Entrega")
+                            {
+                                prepareToPrint();
+                            }
+                            else if (!ContraMesas)
+                            {
+                                prepareToPrint();
+                            }
+                            // Fecha o Formulario 
+                            this.Close();
                         }
-
-                        Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
-
-                        if (ContraMesas && cbxListaMesas.Visible && pedido.NumeroMesa != 0)
-                        {
-                            int CodigoMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
-
-                            Utils.AtualizaMesa( cbxListaMesas.Text, 2);
-                        }
-
-
-                        MessageBox.Show("Pedido gerado com sucesso.");
-
-                        if (ContraMesas && cbxTipoPedido.Text == "0 - Entrega")
-                        {
-                            prepareToPrint();
-                        }
-                        else if (!ContraMesas)
-                        {
-                            prepareToPrint();
-                        }
-                        // Fecha o Formulario 
-                        this.Close();
                     }
                 }
+               
             }
             catch (Exception erro)
             {
@@ -2225,6 +2235,7 @@ namespace DexComanda
             // 
             this.cmbFPagamento.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cmbFPagamento.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbFPagamento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFPagamento.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.cmbFPagamento.FormattingEnabled = true;
             this.cmbFPagamento.Location = new System.Drawing.Point(424, 24);
@@ -2376,6 +2387,7 @@ namespace DexComanda
             this.Controls.Add(this.txtQuantidade);
             this.Controls.Add(this.lblGrupo);
             this.Controls.Add(this.cbxTipoProduto);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;

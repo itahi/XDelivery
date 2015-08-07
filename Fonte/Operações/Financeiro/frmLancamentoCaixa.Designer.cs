@@ -30,6 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLancamentoCaixa));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbxCaixas = new System.Windows.Forms.ComboBox();
+            this.cbxFormaPagamento = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.txtValor = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -41,10 +45,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dtMovimento = new System.Windows.Forms.DateTimePicker();
-            this.txtNumCaixa = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cbxFormaPagamento = new System.Windows.Forms.ComboBox();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -52,10 +52,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbxCaixas);
             this.groupBox1.Controls.Add(this.cbxFormaPagamento);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.txtNumCaixa);
             this.groupBox1.Controls.Add(this.txtValor);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
@@ -72,6 +72,42 @@
             this.groupBox1.Size = new System.Drawing.Size(458, 180);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // cbxCaixas
+            // 
+            this.cbxCaixas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxCaixas.FormattingEnabled = true;
+            this.cbxCaixas.Location = new System.Drawing.Point(214, 29);
+            this.cbxCaixas.Name = "cbxCaixas";
+            this.cbxCaixas.Size = new System.Drawing.Size(59, 21);
+            this.cbxCaixas.TabIndex = 17;
+            // 
+            // cbxFormaPagamento
+            // 
+            this.cbxFormaPagamento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxFormaPagamento.FormattingEnabled = true;
+            this.cbxFormaPagamento.Location = new System.Drawing.Point(12, 73);
+            this.cbxFormaPagamento.Name = "cbxFormaPagamento";
+            this.cbxFormaPagamento.Size = new System.Drawing.Size(171, 21);
+            this.cbxFormaPagamento.TabIndex = 5;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 57);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(93, 13);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Forma Pagamento";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(211, 14);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(47, 13);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "N. Caixa";
             // 
             // txtValor
             // 
@@ -169,39 +205,6 @@
             this.dtMovimento.Size = new System.Drawing.Size(83, 20);
             this.dtMovimento.TabIndex = 0;
             // 
-            // txtNumCaixa
-            // 
-            this.txtNumCaixa.Location = new System.Drawing.Point(216, 30);
-            this.txtNumCaixa.Name = "txtNumCaixa";
-            this.txtNumCaixa.Size = new System.Drawing.Size(66, 20);
-            this.txtNumCaixa.TabIndex = 2;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(211, 14);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(47, 13);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "N. Caixa";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 57);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(93, 13);
-            this.label7.TabIndex = 16;
-            this.label7.Text = "Forma Pagamento";
-            // 
-            // cbxFormaPagamento
-            // 
-            this.cbxFormaPagamento.FormattingEnabled = true;
-            this.cbxFormaPagamento.Location = new System.Drawing.Point(12, 73);
-            this.cbxFormaPagamento.Name = "cbxFormaPagamento";
-            this.cbxFormaPagamento.Size = new System.Drawing.Size(171, 21);
-            this.cbxFormaPagamento.TabIndex = 5;
-            // 
             // btnSalvar
             // 
             this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
@@ -236,6 +239,7 @@
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;
@@ -264,10 +268,10 @@
         private System.Windows.Forms.TextBox txtValor;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtNumCaixa;
         private System.Windows.Forms.ComboBox cbxFormaPagamento;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.ComboBox cbxCaixas;
     }
 }

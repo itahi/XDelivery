@@ -1,7 +1,5 @@
 
 
-
-
 create procedure spInserirMovimentoCaixa
 @CodCaixa int,
 @Data datetime,
@@ -9,11 +7,12 @@ create procedure spInserirMovimentoCaixa
 @NumeroDocumento nvarchar(50),
 @CodFormaPagamento int,
 @Valor decimal(10,2),
-@Tipo char(1)
+@Tipo char(1),
+@CodUser int 
 as
   begin
-     insert into CaixaMovimento (CodCaixa,Data,Historico,NumeroDocumento,CodFormaPagamento,Valor,Tipo)
-	        values (@CodCaixa,@Data,@Historico,@NumeroDocumento,@CodFormaPagamento,@Valor,@Tipo)
+     insert into CaixaMovimento (CodCaixa,Data,Historico,NumeroDocumento,CodFormaPagamento,Valor,Tipo,CodUsuario)
+	        values (@CodCaixa,@Data,@Historico,@NumeroDocumento,@CodFormaPagamento,@Valor,@Tipo,@CodUser)
   end
 
 go

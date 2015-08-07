@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAberturaCaixa));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cbxCaixas = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.dtAbertura = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,7 +45,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.cbxCaixas = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -61,6 +61,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(283, 49);
             this.panel1.TabIndex = 0;
+            // 
+            // cbxCaixas
+            // 
+            this.cbxCaixas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxCaixas.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cbxCaixas.FormattingEnabled = true;
+            this.cbxCaixas.Location = new System.Drawing.Point(223, 15);
+            this.cbxCaixas.Name = "cbxCaixas";
+            this.cbxCaixas.Size = new System.Drawing.Size(42, 21);
+            this.cbxCaixas.TabIndex = 7;
             // 
             // label5
             // 
@@ -204,16 +214,6 @@
             this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancelar.UseVisualStyleBackColor = true;
             // 
-            // cbxCaixas
-            // 
-            this.cbxCaixas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxCaixas.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.cbxCaixas.FormattingEnabled = true;
-            this.cbxCaixas.Location = new System.Drawing.Point(223, 15);
-            this.cbxCaixas.Name = "cbxCaixas";
-            this.cbxCaixas.Size = new System.Drawing.Size(42, 21);
-            this.cbxCaixas.TabIndex = 7;
-            // 
             // frmAberturaCaixa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -225,6 +225,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmAberturaCaixa";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

@@ -69,6 +69,7 @@
             this.FinanceiroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lançamentoAvulsoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.movimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cadastroCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aberturaCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoAtivaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,6 +113,7 @@
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.lblCaixa = new System.Windows.Forms.Label();
+            this.fecharCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -429,7 +431,9 @@
             // 
             this.FinanceiroToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lançamentoAvulsoToolStripMenuItem,
-            this.movimentoToolStripMenuItem});
+            this.movimentoToolStripMenuItem,
+            this.cadastroCaixaToolStripMenuItem,
+            this.fecharCaixaToolStripMenuItem});
             this.FinanceiroToolStripMenuItem.Name = "FinanceiroToolStripMenuItem";
             this.FinanceiroToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.FinanceiroToolStripMenuItem.Text = "Financeiro";
@@ -448,6 +452,13 @@
             this.movimentoToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.movimentoToolStripMenuItem.Text = "Movimento";
             this.movimentoToolStripMenuItem.Click += new System.EventHandler(this.movimentoToolStripMenuItem_Click);
+            // 
+            // cadastroCaixaToolStripMenuItem
+            // 
+            this.cadastroCaixaToolStripMenuItem.Name = "cadastroCaixaToolStripMenuItem";
+            this.cadastroCaixaToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.cadastroCaixaToolStripMenuItem.Text = "Cadastro Caixa";
+            this.cadastroCaixaToolStripMenuItem.Click += new System.EventHandler(this.cadastroCaixaToolStripMenuItem_Click);
             // 
             // aberturaCaixaToolStripMenuItem
             // 
@@ -931,6 +942,13 @@
             this.lblCaixa.TabIndex = 8;
             this.lblCaixa.Text = "Caixa Fechado";
             // 
+            // fecharCaixaToolStripMenuItem
+            // 
+            this.fecharCaixaToolStripMenuItem.Name = "fecharCaixaToolStripMenuItem";
+            this.fecharCaixaToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.fecharCaixaToolStripMenuItem.Text = "Fechar Caixa";
+            this.fecharCaixaToolStripMenuItem.Click += new System.EventHandler(this.fecharCaixaToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -943,7 +961,7 @@
             this.Controls.Add(this.dashboardV01);
             this.Controls.Add(this.menuStrip1);
             this.ForeColor = System.Drawing.Color.Cornsilk;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
@@ -1060,5 +1078,7 @@
         private System.Windows.Forms.ToolStripMenuItem movimentoToolStripMenuItem;
         private System.Windows.Forms.Label lblCaixa;
         private System.Windows.Forms.ToolStripMenuItem aberturaCaixaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cadastroCaixaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fecharCaixaToolStripMenuItem;
     }
 }

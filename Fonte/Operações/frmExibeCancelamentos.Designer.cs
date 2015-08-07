@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmExibeCancelamentos));
             this.CancGridView = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.CancGridView)).BeginInit();
             this.SuspendLayout();
@@ -36,6 +37,7 @@
             // 
             this.CancGridView.AllowUserToAddRows = false;
             this.CancGridView.AllowUserToDeleteRows = false;
+            this.CancGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CancGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.CancGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.CancGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -54,11 +56,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(374, 119);
             this.Controls.Add(this.CancGridView);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmExibeCancelamentos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "DEX [ Cancelamentos ]";
+            this.Text = " [XSistemas] Cancelamentos ";
             this.Load += new System.EventHandler(this.frmExibeCancelamentos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.CancGridView)).EndInit();
             this.ResumeLayout(false);

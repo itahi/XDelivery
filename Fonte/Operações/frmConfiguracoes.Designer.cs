@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfiguracoes));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -58,6 +59,9 @@
             this.txtCNPJ = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnBackup = new System.Windows.Forms.Button();
+            this.label28 = new System.Windows.Forms.Label();
+            this.txtCaminhoBkp = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.btnConectarAoBanco = new System.Windows.Forms.Button();
             this.txtServidor = new System.Windows.Forms.TextBox();
@@ -135,9 +139,6 @@
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnSalvar = new System.Windows.Forms.Button();
-            this.label28 = new System.Windows.Forms.Label();
-            this.txtCaminhoBkp = new System.Windows.Forms.TextBox();
-            this.btnBackup = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControl1.SuspendLayout();
@@ -451,6 +452,32 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Servidor/Banco de Dados";
             // 
+            // btnBackup
+            // 
+            this.btnBackup.Location = new System.Drawing.Point(451, 45);
+            this.btnBackup.Name = "btnBackup";
+            this.btnBackup.Size = new System.Drawing.Size(65, 24);
+            this.btnBackup.TabIndex = 24;
+            this.btnBackup.Text = "Selecionar";
+            this.btnBackup.UseVisualStyleBackColor = true;
+            this.btnBackup.Click += new System.EventHandler(this.SelecionaLocal);
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(271, 22);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(73, 13);
+            this.label28.TabIndex = 21;
+            this.label28.Text = "Caminho Bkp:";
+            // 
+            // txtCaminhoBkp
+            // 
+            this.txtCaminhoBkp.Location = new System.Drawing.Point(347, 19);
+            this.txtCaminhoBkp.Name = "txtCaminhoBkp";
+            this.txtCaminhoBkp.Size = new System.Drawing.Size(278, 20);
+            this.txtCaminhoBkp.TabIndex = 20;
+            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -501,7 +528,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(652, 360);
+            this.tabPage3.Size = new System.Drawing.Size(652, 391);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Configurações Gerais";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -883,7 +910,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(652, 360);
+            this.tabPage2.Size = new System.Drawing.Size(652, 391);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Promoções";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1002,7 +1029,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(652, 360);
+            this.tabPage4.Size = new System.Drawing.Size(652, 391);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Licença";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1089,7 +1116,7 @@
             this.tbExibicao.Location = new System.Drawing.Point(4, 22);
             this.tbExibicao.Name = "tbExibicao";
             this.tbExibicao.Padding = new System.Windows.Forms.Padding(3);
-            this.tbExibicao.Size = new System.Drawing.Size(652, 360);
+            this.tbExibicao.Size = new System.Drawing.Size(652, 391);
             this.tbExibicao.TabIndex = 4;
             this.tbExibicao.Text = "Sistema  [Exibição]";
             this.tbExibicao.UseVisualStyleBackColor = true;
@@ -1210,15 +1237,21 @@
             // 
             // btnCancelar
             // 
+            this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancelar.Location = new System.Drawing.Point(592, 432);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 24;
-            this.btnCancelar.Text = "Cancelar Alterações";
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancelar.UseVisualStyleBackColor = true;
             // 
             // btnSalvar
             // 
+            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
+            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSalvar.Location = new System.Drawing.Point(511, 433);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(75, 23);
@@ -1226,32 +1259,6 @@
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.SalvaConfig);
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(271, 22);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(73, 13);
-            this.label28.TabIndex = 21;
-            this.label28.Text = "Caminho Bkp:";
-            // 
-            // txtCaminhoBkp
-            // 
-            this.txtCaminhoBkp.Location = new System.Drawing.Point(347, 19);
-            this.txtCaminhoBkp.Name = "txtCaminhoBkp";
-            this.txtCaminhoBkp.Size = new System.Drawing.Size(278, 20);
-            this.txtCaminhoBkp.TabIndex = 20;
-            // 
-            // btnBackup
-            // 
-            this.btnBackup.Location = new System.Drawing.Point(451, 45);
-            this.btnBackup.Name = "btnBackup";
-            this.btnBackup.Size = new System.Drawing.Size(65, 24);
-            this.btnBackup.TabIndex = 24;
-            this.btnBackup.Text = "Selecionar";
-            this.btnBackup.UseVisualStyleBackColor = true;
-            this.btnBackup.Click += new System.EventHandler(this.SelecionaLocal);
             // 
             // openFileDialog1
             // 
@@ -1265,9 +1272,11 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnSalvar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmConfiguracoes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Configuração - DEX";
+            this.Text = "[XSistemas] Configuração ";
             this.Load += new System.EventHandler(this.frmConfiguracoes_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

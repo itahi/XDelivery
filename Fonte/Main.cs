@@ -14,6 +14,7 @@ using DexComanda.Cadastros;
 using System.Drawing.Printing;
 using DexComanda.Operações;
 using DexComanda.Operações.Financeiro;
+using System.Configuration;
 //using DexComanda.Relatorios.Fechamentos;
 
 namespace DexComanda
@@ -87,6 +88,7 @@ namespace DexComanda
 
         private void Main_Load(object sender, EventArgs e)
         {
+       
             if (Sessions.returnUsuario != null)
             {
                 con = new Conexao();
@@ -825,11 +827,11 @@ namespace DexComanda
                     {
                         //  NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
                         Utils.AtualizaMesa(Convert.ToString(iCodMesa), 1);
-
-
                     }
+                    GravaMOvimentoCaixa();
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 
+                   
 
                     Utils.PopularGrid("Pedido", pedidosGridView, "spObterPedido");
 
@@ -848,7 +850,25 @@ namespace DexComanda
 
 
         }
+        private void GravaMOvimentoCaixa()
+        {
+            // Retornando o IDFpagamento
+            DataSet dsPedido = con.SelectObterRegistroPorString(pedidosGridView.SelectedCells[3].Value.ToString(), "FormaPagamento");
+            DataRow dRow = dsPedido.Tables[0].Rows[0];
+            int iIFormaPagamento = int.Parse(dRow.ItemArray.GetValue(0).ToString());
 
+            CaixaMovimento caixa = new CaixaMovimento()
+            {
+                CodCaixa = 1,
+                CodFormaPagamento = iIFormaPagamento,
+                Data = DateTime.Now,
+                Historico = "Pedido " + pedidosGridView.SelectedCells[1].Value.ToString(),
+                NumeroDocumento = pedidosGridView.SelectedCells[1].Value.ToString(),
+                Tipo = 'E',
+                Valor = decimal.Parse(pedidosGridView.SelectedCells[4].Value.ToString())
+            };
+            con.Insert("spInserirMovimentoCaixa", caixa);
+        }
 
         private void renovarAtivarSistemaToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1320,6 +1340,18 @@ namespace DexComanda
         private void movimentoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCaixaMovimento frm = new frmCaixaMovimento();
+            frm.ShowDialog();
+        }
+
+        private void cadastroCaixaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadCaixa frm = new frmCadCaixa();
+            frm.ShowDialog();
+        }
+
+        private void fecharCaixaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCaixaFechamento frm = new frmCaixaFechamento();
             frm.ShowDialog();
         }
 

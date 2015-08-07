@@ -116,6 +116,7 @@
             this.ClientSize = new System.Drawing.Size(694, 461);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.reportProdutos);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "frmReportProdutos";
             this.Text = "Relatório de Produtos";

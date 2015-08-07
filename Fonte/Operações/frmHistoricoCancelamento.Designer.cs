@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmHistoricoCancelamento));
             this.cbxMotivo = new System.Windows.Forms.ComboBox();
             this.txtObservacao = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -72,11 +73,14 @@
             // 
             // btnAdicionar
             // 
+            this.btnAdicionar.Image = ((System.Drawing.Image)(resources.GetObject("btnAdicionar.Image")));
+            this.btnAdicionar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAdicionar.Location = new System.Drawing.Point(83, 128);
             this.btnAdicionar.Name = "btnAdicionar";
-            this.btnAdicionar.Size = new System.Drawing.Size(75, 23);
+            this.btnAdicionar.Size = new System.Drawing.Size(87, 23);
             this.btnAdicionar.TabIndex = 4;
             this.btnAdicionar.Text = "Salvar [F12]";
+            this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAdicionar.UseVisualStyleBackColor = true;
             this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
             // 
@@ -84,17 +88,19 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(262, 151);
+            this.ClientSize = new System.Drawing.Size(267, 154);
             this.Controls.Add(this.btnAdicionar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtObservacao);
             this.Controls.Add(this.cbxMotivo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmHistoricoCancelamento";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "DEX [ Histórico de Cancelamento]";
+            this.Text = " [XSistemas] Histórico de Cancelamento";
             this.Load += new System.EventHandler(this.frmHistoricoCancelamento_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

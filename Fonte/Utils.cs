@@ -27,6 +27,7 @@ using System.Threading;
 using System.IO;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Common;
+using System.Runtime.InteropServices;
 namespace DexComanda
 {
     public class Utils
@@ -127,13 +128,27 @@ namespace DexComanda
             }
             return Logado;
         }
+        public static void LancarMovimentoCaixa(CaixaMovimento caixa)
+        {
+            caixa = new Models.CaixaMovimento()
+            {
+                CodCaixa = caixa.CodCaixa,
+                CodFormaPagamento = caixa.CodFormaPagamento,
+                Data = caixa.Data,
+                Historico = caixa.Historico,
+                NumeroDocumento = caixa.NumeroDocumento,
+                Tipo = caixa.Tipo,
+                Valor = caixa.Valor
+            };
+            conexao.Insert("spInserirMovimentoCaixa", caixa);
+        }
+        
         public static void IniciaSistema()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Splashcreen());
         }
-
 
         public static bool CaixaAberto(DateTime iDataRegistro , int iNumero)
         {

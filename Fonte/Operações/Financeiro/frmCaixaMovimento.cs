@@ -48,16 +48,25 @@ namespace DexComanda.Operações
                 iFPagamento = cbxFPagamento.SelectedValue.ToString();
             }
 
-            dsMovimentoFiltro = con.SelectCaixaMovimetoFiltro( dtInicio.Value, dtFim.Value, iTipo, iFPagamento, "CaixaMovimento", cbxNumCaixa.SelectedValue.ToString());
+            dsMovimentoFiltro = con.SelectCaixaMovimetoFiltro(dtInicio.Value.ToShortDateString() + " 00:00:00", dtFim.Value.ToShortDateString() + " 23:59:59", iTipo, iFPagamento, "CaixaMovimento", cbxNumCaixa.SelectedValue.ToString());
 
+            if (dsMovimentoFiltro.Tables[0].Rows.Count>0)
+            {
+                MovimentosGridView.DataSource = null;
+                MovimentosGridView.AutoGenerateColumns = true;
+                MovimentosGridView.DataSource = dsMovimentoFiltro;
+                MovimentosGridView.DataMember = "CaixaMovimento";
+                con.Close();
+
+                SomaValores();
+            }
+            else
+            {
+                MessageBox.Show("Não há registros com o filtro selecionado", "[XSistemas] Aviso");
+                return;
+            }
           
-            MovimentosGridView.DataSource = null;
-            MovimentosGridView.AutoGenerateColumns = true;
-            MovimentosGridView.DataSource = dsMovimentoFiltro;
-            MovimentosGridView.DataMember = "CaixaMovimento";
-            con.Close();
-
-            SomaValores();
+          
         }
         private void SomaValores()
         {

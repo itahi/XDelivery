@@ -83,9 +83,9 @@
             reportDataSource1.Value = this.vwObterPedidosFinalizadosBindingSource;
             this.rpvPedidoPorPessoa.LocalReport.DataSources.Add(reportDataSource1);
             this.rpvPedidoPorPessoa.LocalReport.ReportEmbeddedResource = "DexComanda.Relatorios.Fechamentos.RelFechamentoDetalhado.rdlc";
-            this.rpvPedidoPorPessoa.Location = new System.Drawing.Point(13, 46);
+            this.rpvPedidoPorPessoa.Location = new System.Drawing.Point(13, 48);
             this.rpvPedidoPorPessoa.Name = "rpvPedidoPorPessoa";
-            this.rpvPedidoPorPessoa.Size = new System.Drawing.Size(721, 451);
+            this.rpvPedidoPorPessoa.Size = new System.Drawing.Size(723, 451);
             this.rpvPedidoPorPessoa.TabIndex = 3;
             this.rpvPedidoPorPessoa.ZoomMode = Microsoft.Reporting.WinForms.ZoomMode.PageWidth;
             // 
@@ -184,6 +184,7 @@
             this.Controls.Add(this.rpvPedidoPorPessoa);
             this.Controls.Add(this.txtTelefoneCliente);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(753, 536);
             this.MinimumSize = new System.Drawing.Size(753, 536);
