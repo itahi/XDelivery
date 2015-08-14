@@ -81,6 +81,7 @@ namespace DexComanda
         {
             con = new Conexao();
             DiasSelecionados = new List<string>();
+            List<Produtos_Adicionais> ProdAdicionais = new List<Produtos_Adicionais>();
             grpDesconto.Visible = DescontoPordia;
             List<Grupo> grupos = new List<Grupo>();
 
@@ -322,6 +323,22 @@ namespace DexComanda
         private void btnSair_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void BuscaItem(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && txtCodProduto.Text !="")
+            {
+                DataSet DsProdAdicionais = con.SelectRegistroPorCodigo("Produtos_Categoria", "spObterAdicionaisPorCodigo", int.Parse(txtCodProduto.Text));
+                if (DsProdAdicionais.Tables["Produtos_Categoria"].Rows.Count>0)
+                {
+                    DataRow dRowItem = DsProdAdicionais.Tables["Produtos_Categoria"].Rows[0];
+
+                    txtNomeAdicional.Text = dRowItem.ItemArray.GetValue(1).ToString();
+                    txtNomeAdicional.Focus();
+                }
+            }
+            
         }
     }
 }

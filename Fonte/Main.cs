@@ -15,6 +15,8 @@ using System.Drawing.Printing;
 using DexComanda.Operações;
 using DexComanda.Operações.Financeiro;
 using System.Configuration;
+using DexComanda.Integração;
+using System.IO;
 //using DexComanda.Relatorios.Fechamentos;
 
 namespace DexComanda
@@ -23,8 +25,10 @@ namespace DexComanda
     public partial class Main : Form
     {
         private Conexao con;
-
+        private string line = null;
         private CancelarPedido cancelPedid;
+        private Font printFont;
+        private List<ItemPedido> items;
         private int rowIndex;
         private List<Produto> Produtos;
         private Main parentWindow;
@@ -1127,11 +1131,131 @@ namespace DexComanda
             frm.ShowDialog();
         }
 
+        private void ImpressaoAutomatica(int iCodPedido ,string iNumMesa)
+        {
+
+            DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpresso", iCodPedido);
+            if (itemsPedido.Tables[0].Rows.Count>0)
+            {
+                items = new List<ItemPedido>();
+                ItemPedido itemPedido = new ItemPedido();
+
+                for (int i = 0; i < itemsPedido.Tables[0].Rows.Count; i++)
+                {
+
+                    itemPedido = new ItemPedido()
+                    {
+                        CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("CodProduto"),
+                        NomeProduto = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<string>("NomeProduto"),
+                        Quantidade = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("Quantidade"),
+                        PrecoUnitario = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<decimal>("PrecoItem"),
+                        PrecoTotal = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<decimal>("PrecoTotalItem"),
+                        Item = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<string>("Item"),
+                        ImpressoSN = Convert.ToBoolean(itemsPedido.Tables["ItemsPedido"].Rows[i].Field<Boolean>("ImpressoSN"))
+                    };
+
+                    items.Add(itemPedido);
+
+                }
+
+
+
+                int iParam = 0;
+                if (!itemPedido.ImpressoSN)
+                {
+                    foreach (ItemPedido item in items)
+                    {
+
+                        if (iParam == 0)
+                        {
+
+                            line = "MESA  - Nº " + iNumMesa + "\r\n";
+
+                            //         line += QuebrarString("Pedido tipo:" + item.Text);
+                            line += QuebrarString("------------------------------");
+                            line += "Emitido em " + DateTime.Now.ToShortDateString() + "\r\n";
+                            line += " às " + DateTime.Now.ToShortTimeString() + "\r\n";
+                        }
+                        AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
+                        if (!item.ImpressoSN)
+                        {
+                            line += item.NomeProduto.ToString() + ", Quant.:" + item.Quantidade.ToString() + "\r\n";
+                            if (item.Item != "" && item.Item != null)
+                            {
+                                line += "Obs:" + QuebrarString(item.Item.ToString().ToUpper()) + "\r\n";
+                            }
+
+                            Atualiza.CodPedido = iCodPedido;
+                            Atualiza.CodProduto = item.CodProduto;
+                            Atualiza.ImpressoSN = true;
+
+                            con.Update("spInformaItemImpresso", Atualiza);
+                        }
+
+                        iParam++;
+                    }
+                }
+
+                if (line != null)
+                {
+                    EnviaImpressora();
+                }
+            }
+           
+            
+        }
+        private void EnviaImpressora()
+        {
+
+        //    string temp = Directory.GetCurrentDirectory() + @"\" + "ConfigImpressao "+ ".txt";
+            string RetornoTxt = Utils.CriaArquivoTxt("ConfigImpressao", "");
+
+            if (RetornoTxt!="")
+            {
+                string iPortaUSB="", iModelo="";
+
+                
+                string[] words = RetornoTxt.Split(';');
+
+                for (int i = 0; i < words.Length; i++)
+                {
+                    iModelo = words[0];
+                    iPortaUSB = words[1];
+                }
+                int iRetorno;
+                MP2032 bema = new MP2032();
+
+                iRetorno = MP2032.ConfiguraModeloImpressora(int.Parse(iModelo));
+                iRetorno = MP2032.IniciaPorta(iPortaUSB);
+                iRetorno = MP2032.BematechTX(line+"\r\n\r\n");
+                MP2032.AcionaGuilhotina(1);
+            }
+            else
+            {
+                PrintDocument pd = new PrintDocument();
+                pd.PrintPage += new PrintPageEventHandler(this.ImprimirPedidoMesa);
+                pd.Print();
+
+            }
+           
+
+            
+        }
+        public void ImprimirPedidoMesa(object sender, PrintPageEventArgs ev)
+        {
+            printFont = new Font("Arial", int.Parse(Sessions.returnConfig.TamanhoFont));
+            ev.Graphics.DrawString(line, printFont, Brushes.Black, 0, 0);
+            ev.HasMorePages = false;
+
+        }
+
+
         private void AtualizaGrid_Tick(object sender, EventArgs e)
         {
 
             DataSet Dados, PedidosAberto;
 
+       
             int iPedidosAberto = con.SelectAll("Pedido", "spObterPedido").Tables[0].Rows.Count;
 
             while (iPedidosAberto != pedidosGridView.Rows.Count)
@@ -1143,9 +1267,17 @@ namespace DexComanda
                     if (pedidosGridView.Rows[i].Cells["PedidoOrigem"].Value.ToString() == "Aplicativo")
                     {
                         pedidosGridView.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+
                     }
                 }
+  
             }
+
+            for (int intFor = 0; intFor < pedidosGridView.Rows.Count; intFor++)
+            {
+                ImpressaoAutomatica(int.Parse(pedidosGridView.Rows[intFor].Cells["Codigo"].Value.ToString()), pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString()); 
+            }
+            
 
 
 
@@ -1181,6 +1313,26 @@ namespace DexComanda
 
 
 
+        }
+         private string QuebrarString(string texto)
+        {
+            int totalDeCaracters = texto.Length - 1;
+            var TamanhoCaracterImpressao = Sessions.returnConfig.QtdCaracteresImp.ToString();
+            // string textoTratado = "";
+            if (totalDeCaracters > int.Parse(TamanhoCaracterImpressao) - 1)
+            {
+                for (int i = 0, count = 0; i < totalDeCaracters; i++)
+                {
+                    if (!texto[i].Equals(' ') && count >= int.Parse(Sessions.returnConfig.QtdCaracteresImp.ToString()))
+                    {
+                        //texto = texto.Replace(texto, Environment.NewLine);
+                        texto = texto.Insert(i, Environment.NewLine);
+                        count = 0;
+                    }
+                    count++;
+                }
+            }
+            return texto += "\r\r\r\n";
         }
 
         private void AlteraCorLinhas()

@@ -33,7 +33,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -131,7 +131,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
@@ -157,41 +156,17 @@
     <Compile Include="Cadastros\frmAdicionarMesa.Designer.cs">
       <DependentUpon>frmAdicionarMesa.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cadastros\frmCadCaixa.cs">
+    <Compile Include="Cadastros\frmCadCategoria.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cadastros\frmCadCaixa.Designer.cs">
-      <DependentUpon>frmCadCaixa.cs</DependentUpon>
+    <Compile Include="Cadastros\frmCadCategoria.Designer.cs">
+      <DependentUpon>frmCadCategoria.cs</DependentUpon>
     </Compile>
     <Compile Include="Cadastros\frmCadHistorico.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Cadastros\frmCadHistorico.Designer.cs">
       <DependentUpon>frmCadHistorico.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Integração\MP2032.cs" />
-    <Compile Include="Models\Caixa.cs" />
-    <Compile Include="Models\CaixaCadastros.cs" />
-    <Compile Include="Models\CaixaDiferenca.cs" />
-    <Compile Include="Models\CaixaMovimento.cs" />
-    <Compile Include="Models\Produtos_Adicionais.cs" />
-    <Compile Include="Operações\Financeiro\frmAberturaCaixa.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Operações\Financeiro\frmAberturaCaixa.Designer.cs">
-      <DependentUpon>frmAberturaCaixa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operações\Financeiro\frmFechamento.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Operações\Financeiro\frmFechamento.Designer.cs">
-      <DependentUpon>frmFechamento.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operações\Financeiro\frmLancamentoCaixa.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Operações\Financeiro\frmLancamentoCaixa.Designer.cs">
-      <DependentUpon>frmLancamentoCaixa.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AtualizaItemsImpresso.cs" />
     <Compile Include="Models\EventosSistema.cs" />
@@ -240,11 +215,11 @@
     <Compile Include="Cadastros\frmCadastroRegioes.Designer.cs">
       <DependentUpon>frmCadastroRegioes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operações\Financeiro\frmCaixaMovimento.cs">
+    <Compile Include="Operações\frmCaixa.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Operações\Financeiro\frmCaixaMovimento.Designer.cs">
-      <DependentUpon>frmCaixaMovimento.cs</DependentUpon>
+    <Compile Include="Operações\frmCaixa.Designer.cs">
+      <DependentUpon>frmCaixa.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\frmConfigurarImpressao.cs">
       <SubType>Form</SubType>
@@ -300,6 +275,7 @@
     </Compile>
     <Compile Include="Models\Mesas.cs" />
     <Compile Include="Models\RegioesEntrega.cs" />
+    <Compile Include="Models\UsuarioPermissao.cs" />
     <Compile Include="Operações\Funções\RotinasGlobal.cs" />
     <Compile Include="Relatorios\dsRelatorio.cs">
       <DependentUpon>dsRelatorio.xsd</DependentUpon>
@@ -428,6 +404,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\UsuarioDefault.cs" />
+    <Compile Include="Models\ValidacaoLincenca.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\ValidaCPF.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -486,20 +465,11 @@
     <EmbeddedResource Include="Cadastros\frmAdicionarMesa.resx">
       <DependentUpon>frmAdicionarMesa.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\frmCadCaixa.resx">
-      <DependentUpon>frmCadCaixa.cs</DependentUpon>
+    <EmbeddedResource Include="Cadastros\frmCadCategoria.resx">
+      <DependentUpon>frmCadCategoria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmCadHistorico.resx">
       <DependentUpon>frmCadHistorico.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Operações\Financeiro\frmAberturaCaixa.resx">
-      <DependentUpon>frmAberturaCaixa.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Operações\Financeiro\frmFechamento.resx">
-      <DependentUpon>frmFechamento.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Operações\Financeiro\frmLancamentoCaixa.resx">
-      <DependentUpon>frmLancamentoCaixa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmAlteraSenha.resx">
       <DependentUpon>frmAlteraSenha.cs</DependentUpon>
@@ -507,8 +477,8 @@
     <EmbeddedResource Include="Cadastros\frmCadastroUsuario.resx">
       <DependentUpon>frmCadastroUsuario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Operações\Financeiro\frmCaixaMovimento.resx">
-      <DependentUpon>frmCaixaMovimento.cs</DependentUpon>
+    <EmbeddedResource Include="Operações\frmCaixa.resx">
+      <DependentUpon>frmCaixa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmExibeCancelamentos.resx">
       <DependentUpon>frmExibeCancelamentos.cs</DependentUpon>
@@ -928,6 +898,12 @@
     <Content Include="Relatorios\Microsoft.ReportViewer.Common.dll" />
     <Content Include="Relatorios\Microsoft.ReportViewer.ProcessingObjectModel.dll" />
     <Content Include="Relatorios\Microsoft.SqlServer.Types.dll" />
+    <Content Include="Resources\1433819214_Login Manager.ico" />
+    <Content Include="Resources\Cancelamento.ico" />
+    <Content Include="Resources\Categoria.ico" />
+    <Content Include="Resources\cliente.ico" />
+    <Content Include="Resources\entregador.ico" />
+    <Content Include="Resources\FormaPagamento.ico" />
     <Content Include="Resources\login.ico" />
     <Content Include="Resources\login.png" />
     <None Include="Resources\splash.jpg" />
@@ -938,6 +914,11 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Resources\Mesas.ico" />
+    <Content Include="Resources\pedido.ico" />
+    <Content Include="Resources\produto.ico" />
+    <Content Include="Resources\regioes.ico" />
+    <Content Include="Resources\user.ico" />
     <Content Include="Splash.png" />
     <Content Include="XSistemas.ico" />
   </ItemGroup>

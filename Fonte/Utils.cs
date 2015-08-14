@@ -28,6 +28,7 @@ using System.IO;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Common;
 using System.Runtime.InteropServices;
+using System.Collections;
 namespace DexComanda
 {
     public class Utils
@@ -129,6 +130,7 @@ namespace DexComanda
             }
             return Logado;
         }
+       
         public static void LancarMovimentoCaixa(CaixaMovimento caixa)
         {
             caixa = new Models.CaixaMovimento()
@@ -342,12 +344,15 @@ namespace DexComanda
                 {
                     System.IO.File.Create(temp).Close();
                     System.IO.File.AppendAllText(temp, iText);
+                    
                 }
                 else
                 {
-                    System.IO.File.Delete(temp);
-                    System.IO.File.Create(temp).Close();
-                    System.IO.File.AppendAllText(temp, iText);
+
+                    StreamReader tempDex = new StreamReader(temp);
+                    ArrayList arrText = new ArrayList();
+                    iText = tempDex.ReadLine();
+
                 }
             }
             catch (Exception Erro)
