@@ -135,7 +135,7 @@ namespace DexComanda
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@CodPessoa", iCodPessoa);
-            command.Parameters.AddWithValue("@DataInicio", iDataI);
+            command.Parameters.AddWithValue("@DataInicio", iDataI );
             command.Parameters.AddWithValue("@DataFim", iDataF);
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();

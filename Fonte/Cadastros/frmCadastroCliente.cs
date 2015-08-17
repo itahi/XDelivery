@@ -584,8 +584,8 @@ namespace DexComanda
             int intNumeroPedidos;
             decimal strMedia = 0.00M;
             string strDataPedido = DateTime.Now.ToShortDateString();
-            dataInicio = Convert.ToDateTime(dtInicio.Value.ToShortDateString());
-            dataFim = Convert.ToDateTime(dtFim.Value.ToShortDateString());
+            dataInicio = Convert.ToDateTime(dtInicio.Value.ToShortDateString() + " 00:00:00");
+            dataFim = Convert.ToDateTime(dtFim.Value.ToShortDateString() + " 23:59:59");
             this.PedidosGridView.DataSource = null;
             this.PedidosGridView.AutoGenerateColumns = true;
             dsPedidos = con.SelectRegistroPorCodigoPeriodo("Pedido", "spObterPedidosPessoaPorData", Convert.ToString(codigoClienteParaAlterar), dataInicio, dataFim);

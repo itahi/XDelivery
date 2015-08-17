@@ -834,6 +834,7 @@ namespace DexComanda
                         //  NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
                         Utils.AtualizaMesa(Convert.ToString(iCodMesa), 1);
                     }
+
                     GravaMOvimentoCaixa();
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 
@@ -865,13 +866,14 @@ namespace DexComanda
 
             CaixaMovimento caixa = new CaixaMovimento()
             {
-                CodCaixa = 1,
+                CodCaixa = Sessions.retunrUsuario.CaixaLogado,
                 CodFormaPagamento = iIFormaPagamento,
                 Data = DateTime.Now,
                 Historico = "Pedido " + pedidosGridView.SelectedCells[1].Value.ToString(),
                 NumeroDocumento = pedidosGridView.SelectedCells[1].Value.ToString(),
                 Tipo = 'E',
-                Valor = decimal.Parse(pedidosGridView.SelectedCells[4].Value.ToString())
+                Valor = decimal.Parse(pedidosGridView.SelectedCells[4].Value.ToString()),
+                CodUser = Sessions.retunrUsuario.Codigo
             };
             con.Insert("spInserirMovimentoCaixa", caixa);
         }

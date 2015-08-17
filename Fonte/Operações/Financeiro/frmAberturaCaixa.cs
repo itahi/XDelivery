@@ -50,7 +50,7 @@ namespace DexComanda.Operações.Financeiro
                     Estado = false /*Caixa Aber*/,
                     Historico = "Abertura Inicial",
                     ValorAbertura = decimal.Parse(txtValor.Text.Replace(",", ".")),
-                    Numero = cbxCaixas.SelectedValue.ToString()
+                    Numero = cbxCaixas.Text
 
                 };
                 if (CodUser != 0)
@@ -59,8 +59,8 @@ namespace DexComanda.Operações.Financeiro
 
                     CaixaMovimento cxMovi = new CaixaMovimento()
                     {
-                        CodCaixa = int.Parse(cbxCaixas.SelectedValue.ToString()),
-                        CodFormaPagamento = 3,
+                        CodCaixa = int.Parse(caixa.Numero),
+                        CodFormaPagamento = 1,
                         Data = caixa.Data,
                         Historico = "Lançamento abertura",
                         NumeroDocumento = caixa.Numero,

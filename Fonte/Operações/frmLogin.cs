@@ -1,4 +1,5 @@
-﻿using DexComanda.Models;
+﻿using DexComanda.Cadastros;
+using DexComanda.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,28 +24,43 @@ namespace DexComanda
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-            cbxCaixas.DataSource = con.SelectAll("Caixa", "spObterCaixaAberto").Tables["Caixa"];
-            cbxCaixas.DisplayMember = "Numero";
-            cbxCaixas.ValueMember = "Codigo";
+            DataSet dsCaixa = con.SelectAll("CaixaCadastro", "spObterCaixa");
+            if (dsCaixa.Tables[0].Rows.Count > 0)
+            {
+                cbxCaixas.DataSource = dsCaixa.Tables[0];
+                cbxCaixas.DisplayMember = "Numero";
+                cbxCaixas.ValueMember = "Codigo";
+            }
+            else
+            {
+                MessageBox.Show("Não há caixas cadastrados , favor efetuar o cadastro para continuar");
+                frmCadCaixa frm = new frmCadCaixa();
+                frm.ShowDialog();
+                if (frm.DialogResult == DialogResult.OK)
+                {
+                    Utils.Restart();
+                }
+            }
+
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (cbxCaixas.SelectedValue.ToString()!="")
+            if (cbxCaixas.Text != "")
             {
-                int iNumeroCaixa = int.Parse(cbxCaixas.SelectedValue.ToString());
-                if (Utils.EfetuarLogin(this.txtUsuario.Text.ToString(), this.txtSenha.Text.ToString(),true, iNumeroCaixa))
+                int iNumeroCaixa = int.Parse(cbxCaixas.Text );
+                if (Utils.EfetuarLogin(this.txtUsuario.Text.ToString(), this.txtSenha.Text.ToString(), true, iNumeroCaixa))
                 {
                     this.Close();
-                }   
+                }
             }
             else
             {
                 MessageBox.Show("Selecione o Caixa para entrar", "[XSistemas] Aviso");
                 return;
             }
-            
-            
+
+
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -55,7 +71,7 @@ namespace DexComanda
 
         private void frmLogin_KeyPress(object sender, KeyPressEventArgs e)
         {
-           
+
         }
 
         private void frmLogin_KeyDown(object sender, KeyEventArgs e)
@@ -72,7 +88,7 @@ namespace DexComanda
 
         private void frmLogin_FormClosed(object sender, FormClosedEventArgs e)
         {
-            
+
         }
     }
 }

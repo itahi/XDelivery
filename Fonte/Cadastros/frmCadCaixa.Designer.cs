@@ -56,6 +56,7 @@
             // 
             // btnSalvar
             // 
+            this.btnSalvar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
             this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSalvar.Location = new System.Drawing.Point(12, 91);
