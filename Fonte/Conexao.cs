@@ -135,7 +135,7 @@ namespace DexComanda
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@CodPessoa", iCodPessoa);
-            command.Parameters.AddWithValue("@DataInicio", iDataI );
+            command.Parameters.AddWithValue("@DataInicio", iDataI);
             command.Parameters.AddWithValue("@DataFim", iDataF);
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
@@ -253,6 +253,18 @@ namespace DexComanda
                 }
 
             }
+            else if (spName == "spAdicionarUsuario")
+            {
+                foreach (PropertyInfo propriedade in properties)
+                {
+                    if (!propriedade.Name.Equals("CaixaLogado") && !propriedade.Name.Equals("Codigo"))
+                    {
+                        Console.WriteLine(propriedade.Name);
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
+                }
+            }
+
             else if (spName == "spAbrirCaixa")
             {
                 foreach (PropertyInfo propriedade in properties)
@@ -384,13 +396,21 @@ namespace DexComanda
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
                 }
-                else if (spName == "spAlterarItemPedido" || spName == "spAlteraStatusMesa"||spName=="spFecharCaixa")
+                else if (spName == "spAlterarItemPedido" || spName == "spAlteraStatusMesa" || spName == "spFecharCaixa")
                 {
                     if (!p.Name.Equals("Codigo") && !p.Name.Equals("ValorAbertura"))
                     {
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
 
+                }
+                else if (spName == "spAlterarUsuario")
+                {
+
+                    if (!p.Name.Equals("CaixaLogado"))
+                    {
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
                 }
                 else if (spName == "spAdicionarItemAoPedido")
                 {

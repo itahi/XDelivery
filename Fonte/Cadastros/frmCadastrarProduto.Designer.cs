@@ -56,15 +56,15 @@
             this.descricaoProdutoTextBox = new System.Windows.Forms.TextBox();
             this.precoProdutoTextBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btnSair = new System.Windows.Forms.Button();
-            this.btnDoProduto = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.Código = new System.Windows.Forms.Label();
+            this.txtNomeAdicional = new System.Windows.Forms.TextBox();
+            this.txtCodProduto = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.AdicionaisGridView = new System.Windows.Forms.DataGridView();
-            this.txtCodProduto = new System.Windows.Forms.TextBox();
-            this.txtNomeAdicional = new System.Windows.Forms.TextBox();
-            this.Código = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.btnSair = new System.Windows.Forms.Button();
+            this.btnDoProduto = new System.Windows.Forms.Button();
             label1 = new System.Windows.Forms.Label();
             nomeProdutoLabel = new System.Windows.Forms.Label();
             descricaoProdutoLabel = new System.Windows.Forms.Label();
@@ -344,23 +344,47 @@
             this.tabPage2.Text = "Adicionais";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // btnSair
+            // label2
             // 
-            this.btnSair.Location = new System.Drawing.Point(398, 280);
-            this.btnSair.Name = "btnSair";
-            this.btnSair.Size = new System.Drawing.Size(150, 43);
-            this.btnSair.TabIndex = 35;
-            this.btnSair.Text = "Sair [ESC]";
-            this.btnSair.UseVisualStyleBackColor = true;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(110, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Adicionais do Produto";
             // 
-            // btnDoProduto
+            // label3
             // 
-            this.btnDoProduto.Location = new System.Drawing.Point(222, 280);
-            this.btnDoProduto.Name = "btnDoProduto";
-            this.btnDoProduto.Size = new System.Drawing.Size(150, 43);
-            this.btnDoProduto.TabIndex = 34;
-            this.btnDoProduto.Text = "Cadastrar [F12]";
-            this.btnDoProduto.UseVisualStyleBackColor = true;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(100, 3);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Nome ";
+            // 
+            // Código
+            // 
+            this.Código.AutoSize = true;
+            this.Código.Location = new System.Drawing.Point(5, 3);
+            this.Código.Name = "Código";
+            this.Código.Size = new System.Drawing.Size(40, 13);
+            this.Código.TabIndex = 3;
+            this.Código.Text = "Código";
+            // 
+            // txtNomeAdicional
+            // 
+            this.txtNomeAdicional.Location = new System.Drawing.Point(103, 19);
+            this.txtNomeAdicional.Name = "txtNomeAdicional";
+            this.txtNomeAdicional.Size = new System.Drawing.Size(372, 20);
+            this.txtNomeAdicional.TabIndex = 2;
+            // 
+            // txtCodProduto
+            // 
+            this.txtCodProduto.Location = new System.Drawing.Point(8, 19);
+            this.txtCodProduto.Name = "txtCodProduto";
+            this.txtCodProduto.Size = new System.Drawing.Size(80, 20);
+            this.txtCodProduto.TabIndex = 1;
+            this.txtCodProduto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BuscaItem);
             // 
             // panel1
             // 
@@ -385,47 +409,24 @@
             this.AdicionaisGridView.Size = new System.Drawing.Size(536, 178);
             this.AdicionaisGridView.TabIndex = 2;
             // 
-            // txtCodProduto
+            // btnSair
             // 
-            this.txtCodProduto.Location = new System.Drawing.Point(8, 19);
-            this.txtCodProduto.Name = "txtCodProduto";
-            this.txtCodProduto.Size = new System.Drawing.Size(80, 20);
-            this.txtCodProduto.TabIndex = 1;
-            this.txtCodProduto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BuscaItem);
+            this.btnSair.Location = new System.Drawing.Point(398, 280);
+            this.btnSair.Name = "btnSair";
+            this.btnSair.Size = new System.Drawing.Size(150, 43);
+            this.btnSair.TabIndex = 35;
+            this.btnSair.Text = "Sair [ESC]";
+            this.btnSair.UseVisualStyleBackColor = true;
             // 
-            // txtNomeAdicional
+            // btnDoProduto
             // 
-            this.txtNomeAdicional.Location = new System.Drawing.Point(103, 19);
-            this.txtNomeAdicional.Name = "txtNomeAdicional";
-            this.txtNomeAdicional.Size = new System.Drawing.Size(372, 20);
-            this.txtNomeAdicional.TabIndex = 2;
-            // 
-            // Código
-            // 
-            this.Código.AutoSize = true;
-            this.Código.Location = new System.Drawing.Point(5, 3);
-            this.Código.Name = "Código";
-            this.Código.Size = new System.Drawing.Size(40, 13);
-            this.Código.TabIndex = 3;
-            this.Código.Text = "Código";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(100, 3);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Nome ";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 48);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(110, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Adicionais do Produto";
+            this.btnDoProduto.Location = new System.Drawing.Point(222, 280);
+            this.btnDoProduto.Name = "btnDoProduto";
+            this.btnDoProduto.Size = new System.Drawing.Size(150, 43);
+            this.btnDoProduto.TabIndex = 34;
+            this.btnDoProduto.Text = "Cadastrar [F12]";
+            this.btnDoProduto.UseVisualStyleBackColor = true;
+            this.btnDoProduto.Click += new System.EventHandler(this.AdicionarProduto);
             // 
             // frmCadastrarProduto
             // 

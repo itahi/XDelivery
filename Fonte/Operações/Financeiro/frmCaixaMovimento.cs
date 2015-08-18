@@ -48,7 +48,7 @@ namespace DexComanda.Operações
                 iFPagamento = cbxFPagamento.SelectedValue.ToString();
             }
 
-            dsMovimentoFiltro = con.SelectCaixaMovimetoFiltro(dtInicio.Value.ToShortDateString() + " 00:00:00", dtFim.Value.ToShortDateString() + " 23:59:59", iTipo, iFPagamento, "CaixaMovimento", cbxNumCaixa.SelectedValue.ToString());
+            dsMovimentoFiltro = con.SelectCaixaMovimetoFiltro(dtInicio.Value.ToShortDateString() + " 00:00:00", dtFim.Value.ToShortDateString() + " 23:59:59", iTipo, iFPagamento, "CaixaMovimento", cbxNumCaixa.Text);
 
             if (dsMovimentoFiltro.Tables[0].Rows.Count>0)
             {

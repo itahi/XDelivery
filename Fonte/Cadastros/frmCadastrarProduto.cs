@@ -135,7 +135,7 @@ namespace DexComanda
                     {
                         produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text.Replace(".", ","));
                     }
-                    
+
                     con.Insert("spAdicionarProduto", produto);
                 }
                 else
@@ -327,10 +327,10 @@ namespace DexComanda
 
         private void BuscaItem(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && txtCodProduto.Text !="")
+            if (e.KeyCode == Keys.Enter && txtCodProduto.Text != "")
             {
                 DataSet DsProdAdicionais = con.SelectRegistroPorCodigo("Produtos_Categoria", "spObterAdicionaisPorCodigo", int.Parse(txtCodProduto.Text));
-                if (DsProdAdicionais.Tables["Produtos_Categoria"].Rows.Count>0)
+                if (DsProdAdicionais.Tables["Produtos_Categoria"].Rows.Count > 0)
                 {
                     DataRow dRowItem = DsProdAdicionais.Tables["Produtos_Categoria"].Rows[0];
 
@@ -338,7 +338,7 @@ namespace DexComanda
                     txtNomeAdicional.Focus();
                 }
             }
-            
+
         }
     }
 }

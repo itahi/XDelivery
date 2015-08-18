@@ -23,8 +23,8 @@ namespace DexComanda
 
         public frmCadastroUsuario()
         {
-           // this.parentMain = parent;
-           
+            // this.parentMain = parent;
+
             InitializeComponent();
         }
 
@@ -32,12 +32,12 @@ namespace DexComanda
         {
             con = new Conexao();
             Utils.PopularGrid("Usuario", usuariosGridView, "spObterUsuario");
-            
+
         }
 
         private void AdicionarSalvarUsuario(object sender, EventArgs e)
         {
-            if (txtNomeUsuario.Text!="" && txtSenha.Text!="")
+            if (txtNomeUsuario.Text != "")
             {
                 string hashSenha = Utils.EncryptMd5(this.txtNomeUsuario.Text.ToString(), this.txtSenha.Text.ToString());
 
@@ -51,7 +51,7 @@ namespace DexComanda
                     AcessaRelatoriosSN = chkAcessaRelat.Checked,
                     FinalizaPedidoSN = chkFechaPedido.Checked,
                     DescontoPedidoSN = chkDescSN.Checked,
-                    DescontoMax  = double.Parse(txtDesconto.Text)
+                    DescontoMax = double.Parse(txtDesconto.Text)
                 };
 
 
@@ -65,30 +65,30 @@ namespace DexComanda
                 MessageBox.Show("Preecha corretamente os campos para continuar");
 
             }
-           
-          //  this_FormClosing();
+
+            //  this_FormClosing();
         }
         private void this_FormClosing()
         {
-            this.parentMain.PopularGrid(false,"Usuario", usuariosGridView, "spObterUsuario");
+            this.parentMain.PopularGrid(false, "Usuario", usuariosGridView, "spObterUsuario");
             this.Dispose();
         }
- 
+
         private void Editar(object sender, EventArgs e)
         {
             if (usuariosGridView.SelectedRows.Count > 0)
             {
-                codigo                     = int.Parse(this.usuariosGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-                txtNomeUsuario.Text        = this.usuariosGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
-                txtSenha.Enabled            = false;
-                mSenha                      = usuariosGridView.SelectedRows[rowIndex].Cells[2].Value.ToString(); 
-                chkCancelaPedidos.Checked  = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
-                chkAlteraProdutos.Checked  = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
-                chkAdministrador.Checked   = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[5].Value.ToString());
-                chkAcessaRelat.Checked     = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[6].Value.ToString());
-                chkFechaPedido.Checked     = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[7].Value.ToString());
-                chkDescSN.Checked          = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[8].Value.ToString());
-                txtDesconto.Text           = usuariosGridView.SelectedRows[rowIndex].Cells[9].Value.ToString();
+                codigo = int.Parse(this.usuariosGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
+                txtNomeUsuario.Text = this.usuariosGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
+                txtSenha.Enabled = false;
+                mSenha = usuariosGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
+                chkCancelaPedidos.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
+                chkAlteraProdutos.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
+                chkAdministrador.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[5].Value.ToString());
+                chkAcessaRelat.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[6].Value.ToString());
+                chkFechaPedido.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[7].Value.ToString());
+                chkDescSN.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[8].Value.ToString());
+                txtDesconto.Text = usuariosGridView.SelectedRows[rowIndex].Cells[9].Value.ToString();
 
                 btnSalvar.Text = " Salvar ";
                 btnSalvar.Click += new System.EventHandler(this.SalvarEdicao);
@@ -113,7 +113,7 @@ namespace DexComanda
         private void SalvarEdicao(object sender, EventArgs e)
         {
 
-            if (txtNomeUsuario.Text!="" && txtSenha.Text !="")
+            if (txtNomeUsuario.Text != "")
             {
                 Usuario user = new Usuario()
                 {
@@ -146,8 +146,8 @@ namespace DexComanda
             {
                 MessageBox.Show("Campos não podem ficar em branco", "Aviso");
             }
-            
-            
+
+
 
         }
 
@@ -156,7 +156,7 @@ namespace DexComanda
             txtDesconto.Enabled = chkDescSN.Checked;
             if (!chkDescSN.Checked)
             {
-                txtDesconto.Text = "0";  
+                txtDesconto.Text = "0";
             }
         }
     }

@@ -246,6 +246,7 @@ namespace DexComanda
                {
                    Nome = this.txtUsuarioPadrao.Text.ToString(),
                    senha = _senha,
+                   
                };
                con.Insert("spAdicionarUsuarioDefault", usuario);
            }

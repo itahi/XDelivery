@@ -216,12 +216,6 @@
     </Compile>
     <Compile Include="Dominio\Pedido.cs" />
     <Compile Include="Dominio\AtualizarFidelidade.cs" />
-    <Compile Include="Cadastros\frmCadastrarEmpresas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Cadastros\frmCadastrarEmpresas.Designer.cs">
-      <DependentUpon>frmCadastrarEmpresas.cs</DependentUpon>
-    </Compile>
     <Compile Include="Cadastros\frmCadastrarEntregador.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -521,9 +515,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\RelFechamentoDetalhado.rdlc" />
     <EmbeddedResource Include="Relatorios\Fechamentos\RelItemsVendidos.rdlc" />
-    <EmbeddedResource Include="Cadastros\frmCadastrarEmpresas.resx">
-      <DependentUpon>frmCadastrarEmpresas.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmCadastrarEntregador.resx">
       <DependentUpon>frmCadastrarEntregador.cs</DependentUpon>
     </EmbeddedResource>
@@ -765,6 +756,26 @@
       <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
+    <PublishFile Include="Dlls\mp2032.dll">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="Dlls\SiUSBXp.dll">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
     <PublishFile Include="es\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
       <Group>
@@ -922,6 +933,8 @@
     <Content Include="Dlls\Microsoft.ReportViewer.ProcessingObjectModel.dll" />
     <Content Include="Dlls\Microsoft.reportviewer.winforms.dll" />
     <Content Include="Dlls\Microsoft.SqlServer.Types.dll" />
+    <Content Include="Dlls\mp2032.dll" />
+    <Content Include="Dlls\SiUSBXp.dll" />
     <Content Include="HumanAPIClient.dll" />
     <Content Include="Microsoft.ReportViewer.WinForms.dll" />
     <Content Include="MySql\MySql.Data.dll" />

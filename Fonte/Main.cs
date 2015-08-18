@@ -770,7 +770,7 @@ namespace DexComanda
                             codigo = int.Parse(pedidosGridView.Rows[i].Cells[1].Value.ToString());
                             iCodMesa = pedidosGridView.Rows[i].Cells[5].Value.ToString();
                             // string TipoPedido = pedidosGridView.Rows[i].Cells["PedidoOrigem"].Value.ToString();
-                            if (ControlaMesas && iCodMesa != "0")
+                            if (ControlaMesas && iCodMesa != "0" )
                             {
                                 //NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
                                 Utils.AtualizaMesa(iCodMesa, 1);
@@ -835,7 +835,7 @@ namespace DexComanda
                         Utils.AtualizaMesa(Convert.ToString(iCodMesa), 1);
                     }
 
-                    GravaMOvimentoCaixa();
+                   // GravaMOvimentoCaixa();
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 
                    
@@ -860,22 +860,32 @@ namespace DexComanda
         private void GravaMOvimentoCaixa()
         {
             // Retornando o IDFpagamento
-            DataSet dsPedido = con.SelectObterRegistroPorString(pedidosGridView.SelectedCells[3].Value.ToString(), "FormaPagamento");
-            DataRow dRow = dsPedido.Tables[0].Rows[0];
-            int iIFormaPagamento = int.Parse(dRow.ItemArray.GetValue(0).ToString());
-
-            CaixaMovimento caixa = new CaixaMovimento()
+            try
             {
-                CodCaixa = Sessions.retunrUsuario.CaixaLogado,
-                CodFormaPagamento = iIFormaPagamento,
-                Data = DateTime.Now,
-                Historico = "Pedido " + pedidosGridView.SelectedCells[1].Value.ToString(),
-                NumeroDocumento = pedidosGridView.SelectedCells[1].Value.ToString(),
-                Tipo = 'E',
-                Valor = decimal.Parse(pedidosGridView.SelectedCells[4].Value.ToString()),
-                CodUser = Sessions.retunrUsuario.Codigo
-            };
-            con.Insert("spInserirMovimentoCaixa", caixa);
+                DataSet dsPedido = con.SelectObterRegistroPorString(pedidosGridView.SelectedCells[3].Value.ToString(), "FormaPagamento");
+                DataRow dRow = dsPedido.Tables[0].Rows[0];
+                int iIFormaPagamento = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+
+                CaixaMovimento caixa = new CaixaMovimento()
+                {
+                    CodCaixa = Sessions.retunrUsuario.CaixaLogado,
+                    CodFormaPagamento = iIFormaPagamento,
+                    Data = DateTime.Now,
+                    Historico = "Pedido " + pedidosGridView.SelectedCells[1].Value.ToString(),
+                    NumeroDocumento = pedidosGridView.SelectedCells[1].Value.ToString(),
+                    Tipo = 'E',
+                    Valor = decimal.Parse(pedidosGridView.SelectedCells[4].Value.ToString()),
+                    CodUser = Sessions.retunrUsuario.Codigo
+                    
+                };
+                con.Insert("spInserirMovimentoCaixa", caixa);
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message);
+            }
+           
         }
 
         private void renovarAtivarSistemaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1280,39 +1290,6 @@ namespace DexComanda
                 ImpressaoAutomatica(int.Parse(pedidosGridView.Rows[intFor].Cells["Codigo"].Value.ToString()), pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString()); 
             }
             
-
-
-
-
-            //if (PedidosAberto != null)
-            //{
-            //    PedidosEmAberto = PedidosAberto.Tables["Pedido"].Rows.Count;
-
-            //    while (PedidosEmAberto != PedidosContados)
-            //    {
-            //        Dados = Utils.PopularGrid("Pedido", this.pedidosGridView, "spObterPedido");
-            //        PedidosContados = Dados.Tables["Pedido"].Rows.Count;
-
-            //        if (Dados.Tables["Pedido"].Rows.Count > 0)
-            //        {
-            //            string TipoPedido = pedidosGridView.Rows[iPosicao].Cells["PedidoOrigem"].Value.ToString();
-
-            //            if (TipoPedido == "Aplicativo")
-            //            {
-            //                pedidosGridView.Rows[iPosicao].DefaultCellStyle.BackColor = Color.Red;
-            //            }
-
-            //            QtdPedidosAnterior = QtdPedidosAnterior + 1;
-            //            iPosicao = iPosicao + 1;
-
-            //        }
-            //    }
-
-
-
-            //}
-
-
 
 
         }
