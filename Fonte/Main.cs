@@ -835,7 +835,7 @@ namespace DexComanda
                         Utils.AtualizaMesa(Convert.ToString(iCodMesa), 1);
                     }
 
-                   // GravaMOvimentoCaixa();
+                    GravaMOvimentoCaixa();
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 
                    
@@ -1287,7 +1287,7 @@ namespace DexComanda
 
             for (int intFor = 0; intFor < pedidosGridView.Rows.Count; intFor++)
             {
-                ImpressaoAutomatica(int.Parse(pedidosGridView.Rows[intFor].Cells["Codigo"].Value.ToString()), pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString()); 
+                ImpressaoAutomatica(int.Parse(pedidosGridView.Rows[intFor].Cells["Codigo"].Value.ToString()), pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString());
             }
             
 

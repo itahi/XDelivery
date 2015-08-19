@@ -793,6 +793,7 @@ namespace DexComanda
                     if (totalDeItems == 0)
                     {
                         MessageBox.Show("O Pedido deve contem no mínimo um item.");
+                        return;
                     }
                     else
                     {
@@ -865,17 +866,7 @@ namespace DexComanda
             }
             else
             {
-                ItemPedido ItemPedido = new ItemPedido();
-                Pedido pedido = new Pedido();
-                foreach (ItemPedido  item in items)
-                {
-                    ValorTotal = item.PrecoTotal;
-                }
-                con.Update("spAlterarItemPedido", ItemPedido);
-                con.Update("spAlterarTotalPedido", pedido);
-
-                Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
-                Utils.ControlaEventos("Alterar", this.Name);
+                return;
             }
             //  }
         }
