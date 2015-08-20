@@ -61,5 +61,6 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label lblEndereco;
         private System.Windows.Forms.Label lblNomeCliente;
+        private System.Windows.Forms.Button btnCalGarcon;
     }
 }

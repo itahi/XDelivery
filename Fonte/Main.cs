@@ -178,6 +178,7 @@ namespace DexComanda
             string strTotalPedido = DvPedido.ItemArray.GetValue(3).ToString();
             string strDescPedido = DvPedido.ItemArray.GetValue(14).ToString();
             string strTroco = "0,00";
+            double MargemGarcon = double.Parse(DvPedido.ItemArray.GetValue(16).ToString()); 
             if (strTrocoPara != "0.00")
             {
                 strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
@@ -186,7 +187,7 @@ namespace DexComanda
             frmCadastrarPedido frm = new frmCadastrarPedido(false, strDescPedido, DvPedido.ItemArray.GetValue(9).ToString(),
                                       strTroco, TaxaServico, true, Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString()),
                                       int.Parse(DvPedido.ItemArray.GetValue(1).ToString()), int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), DvPedido.ItemArray.GetValue(4).ToString(),
-                                      DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(), this, decimal.Parse(strTotalPedido));
+                                      DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(), this, decimal.Parse(strTotalPedido), MargemGarcon);
             frm.ShowDialog();
         }
         private void cadastrarToolStripMenuItem1_Click(object sender, EventArgs e)

@@ -174,7 +174,9 @@
     <Compile Include="Models\CaixaCadastros.cs" />
     <Compile Include="Models\CaixaDiferenca.cs" />
     <Compile Include="Models\CaixaMovimento.cs" />
+    <Compile Include="Models\DescontoPedido.cs" />
     <Compile Include="Models\Produtos_Adicionais.cs" />
+    <Compile Include="Models\RemoveDezPorcento.cs" />
     <Compile Include="Operações\Financeiro\frmAberturaCaixa.cs">
       <SubType>Form</SubType>
     </Compile>

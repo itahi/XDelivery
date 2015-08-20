@@ -60,7 +60,7 @@ namespace DexComanda.Operações.Financeiro
                     CaixaMovimento cxMovi = new CaixaMovimento()
                     {
                         CodCaixa = int.Parse(caixa.Numero),
-                        CodFormaPagamento = 1,
+                        CodFormaPagamento = 3,
                         Data = caixa.Data,
                         Historico = "Lançamento abertura",
                         NumeroDocumento = caixa.Numero,

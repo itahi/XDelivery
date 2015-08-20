@@ -173,14 +173,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DexComanda.exe" size="3367936">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DexComanda.exe" size="3369984">
       <assemblyIdentity name="DexComanda" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>5KwpoA7GPGp6vkD9IY59d/U4RREYow8N9+5T9Kyhqko=</dsig:DigestValue>
+        <dsig:DigestValue>cWUn/ymh0eMU8c2pLbNdZt6hbWRt5Tw5MhWH0Niu9c0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

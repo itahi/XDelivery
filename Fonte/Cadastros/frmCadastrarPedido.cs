@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Globalization;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
@@ -69,7 +70,7 @@ namespace DexComanda
         //private int HoraPedido = Sessions.returnPedido.RealizadoEm.Minute;
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido ,string iNumeMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara, string fPagamento, string TipoPedido, string MesaBalcao,
-            Main parent, decimal iTotalPedido)
+            Main parent, decimal iTotalPedido,double MargeGarcon = 0.00)
         {
             try
             {
@@ -90,6 +91,10 @@ namespace DexComanda
                 DataPed = DataPedido;
                 PedidoRepetio = iPedidoRepetio;
                 dTotalPedido = iTotalPedido;
+                if (MargeGarcon !=0 || MargeGarcon!=null)
+                {
+                    btnCalGarcon.Text = "Remove 10%";
+                }
 
                 timer1.Enabled = IniciaTempo;
                 lblEntrega.Text = Convert.ToString(iTaxaEntrega);
@@ -133,6 +138,7 @@ namespace DexComanda
 
         private void frmCadastrarPedido_Load(object sender, EventArgs e)
         {
+
             if (Sessions.returnUsuario != null)
             {
                 // Define se o Usuario pode ou não dar Desconto
@@ -1132,11 +1138,14 @@ namespace DexComanda
                     {
                       line += QuebrarString("Sub Total:" + ValorTotal);
                       line += QuebrarString("Desconto :" + txtDesconto.Text);
+                      line += QuebrarString("Tx. Serviço :" + ValorTotal/100);
                       line += QuebrarString("Total Pagar:" + lbTotal.Text); 
                     }
                     else
                     {
-                        line += QuebrarString("Total Pedido:" + ValorTotal);
+                        double vlrTotal = double.Parse(lbTotal.Text) + double.Parse(lbTotal.Text) * 0.1;
+                        line += QuebrarString("Total Pedido:" + vlrTotal);
+                        line += QuebrarString("Tx. Serviço :" + vlrTotal * 0.1);
                     }
                     
                     if (ImprimeLPT)
@@ -1769,6 +1778,7 @@ namespace DexComanda
             this.panel4 = new System.Windows.Forms.Panel();
             this.lblEndereco = new System.Windows.Forms.Label();
             this.lblNomeCliente = new System.Windows.Forms.Label();
+            this.btnCalGarcon = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -2088,6 +2098,7 @@ namespace DexComanda
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel2.Controls.Add(this.btnCalGarcon);
             this.panel2.Controls.Add(this.lblEntrega);
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.lblTroco);
@@ -2347,6 +2358,21 @@ namespace DexComanda
             this.lblNomeCliente.TabIndex = 10;
             this.lblNomeCliente.Text = ".";
             // 
+            // btnCalGarcon
+            // 
+            this.btnCalGarcon.Enabled = false;
+            this.btnCalGarcon.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnCalGarcon.FlatAppearance.BorderSize = 5;
+            this.btnCalGarcon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCalGarcon.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnCalGarcon.Location = new System.Drawing.Point(521, 42);
+            this.btnCalGarcon.Name = "btnCalGarcon";
+            this.btnCalGarcon.Size = new System.Drawing.Size(117, 37);
+            this.btnCalGarcon.TabIndex = 59;
+            this.btnCalGarcon.Text = "Calcula 10%";
+            this.btnCalGarcon.UseVisualStyleBackColor = true;
+            this.btnCalGarcon.Click += new System.EventHandler(this.CalculaGarcon);
+            // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2440,6 +2466,8 @@ namespace DexComanda
 
         private void cbxTipoPedido_SelectedIndexChanged(object sender, EventArgs e)
         {
+            btnCalGarcon.Enabled = cbxTipoPedido.Text == "1 - Mesa";
+
             if (cbxTipoPedido.Text == "1 - Mesa")
             {
                 cbxListaMesas.Visible = true;
@@ -2599,6 +2627,47 @@ namespace DexComanda
                 lbTotal.Text = "R$ " + Convert.ToString(TotalAtualizado + Convert.ToDecimal(lblEntrega.Text));
             }
             
+        }
+
+        private void CalculaGarcon(object sender, EventArgs e)
+        {
+            CultureInfo culture;
+            culture = new CultureInfo("pt-BR");
+            
+            double vlrPedido = double.Parse(lbTotal.Text.Replace("R$",""),culture.NumberFormat);
+            if (btnCalGarcon.Text=="Calcula 10%")
+            {
+                CalculaDezPorCento CalcDezPorcento;
+                CalcDezPorcento = new CalculaDezPorCento()
+                {
+                    Codigo = codPedido,
+                    MargemGarcon = vlrPedido * 0.1
+                };
+                con.Update("spMargemGarcon", CalcDezPorcento);
+            
+                //double dbblTotalPedido = double.Parse(lbTotal.Text.Replace("R$", ""), culture.NumberFormat); ;
+                //lbTotal.Text = Convert.ToString(dbblTotalPedido + dbblTotalPedido * 0.1);
+                btnCalGarcon.Text = "Remove 10%";
+            }
+            else
+            {
+                RemoveDezPorcento removeDez;
+                double vlrPedidoOriginal =0.00;
+                for (int i = 0; i < gridViewItemsPedido.Rows.Count; i++)
+                {
+                    vlrPedidoOriginal = vlrPedidoOriginal + double.Parse(gridViewItemsPedido.Rows[i].Cells[4].Value.ToString().Replace("R$", "")); 
+                }
+                removeDez = new RemoveDezPorcento()
+                {
+                    Codigo = codPedido,
+                    MargemGarcon = 0,
+                    TotalPedido = vlrPedidoOriginal
+                };
+                con.Update("spRemoveDezPorCento", removeDez);
+                btnCalGarcon.Text = "Calcula 10%";
+            }
+            
+           
         }
 
     }
