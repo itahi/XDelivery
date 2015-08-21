@@ -85,6 +85,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.chkLoginSenha = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.grpBematech = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.txtIpImpressora = new System.Windows.Forms.TextBox();
+            this.cbPorta = new System.Windows.Forms.ComboBox();
+            this.cbModeloImp = new System.Windows.Forms.ComboBox();
             this.grpViasImpressao = new System.Windows.Forms.GroupBox();
             this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
@@ -141,11 +146,6 @@
             this.btnSalvar = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.cbModeloImp = new System.Windows.Forms.ComboBox();
-            this.cbPorta = new System.Windows.Forms.ComboBox();
-            this.txtIpImpressora = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -156,6 +156,7 @@
             this.grpLoginSenha.SuspendLayout();
             this.pInfoUserDefault.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.grpBematech.SuspendLayout();
             this.grpViasImpressao.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.grpFidelidade.SuspendLayout();
@@ -165,7 +166,6 @@
             this.panel2.SuspendLayout();
             this.tbExibicao.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -707,7 +707,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.groupBox8);
+            this.groupBox2.Controls.Add(this.grpBematech);
             this.groupBox2.Controls.Add(this.grpViasImpressao);
             this.groupBox2.Controls.Add(this.lblporta);
             this.groupBox2.Controls.Add(this.txtPortaLPT);
@@ -727,6 +727,61 @@
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Impressão";
+            // 
+            // grpBematech
+            // 
+            this.grpBematech.Controls.Add(this.button1);
+            this.grpBematech.Controls.Add(this.txtIpImpressora);
+            this.grpBematech.Controls.Add(this.cbPorta);
+            this.grpBematech.Controls.Add(this.cbModeloImp);
+            this.grpBematech.Enabled = false;
+            this.grpBematech.Location = new System.Drawing.Point(483, 19);
+            this.grpBematech.Name = "grpBematech";
+            this.grpBematech.Size = new System.Drawing.Size(151, 127);
+            this.grpBematech.TabIndex = 28;
+            this.grpBematech.TabStop = false;
+            this.grpBematech.Text = "Bematech Config";
+            // 
+            // button1
+            // 
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.Location = new System.Drawing.Point(26, 90);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 24);
+            this.button1.TabIndex = 24;
+            this.button1.Text = "Salvar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // txtIpImpressora
+            // 
+            this.txtIpImpressora.Location = new System.Drawing.Point(10, 66);
+            this.txtIpImpressora.Name = "txtIpImpressora";
+            this.txtIpImpressora.Size = new System.Drawing.Size(100, 20);
+            this.txtIpImpressora.TabIndex = 5;
+            this.txtIpImpressora.Text = "IP da impressora";
+            this.txtIpImpressora.Visible = false;
+            // 
+            // cbPorta
+            // 
+            this.cbPorta.FormattingEnabled = true;
+            this.cbPorta.Location = new System.Drawing.Point(9, 40);
+            this.cbPorta.Name = "cbPorta";
+            this.cbPorta.Size = new System.Drawing.Size(87, 21);
+            this.cbPorta.TabIndex = 2;
+            this.cbPorta.Text = "Porta";
+            this.cbPorta.SelectedIndexChanged += new System.EventHandler(this.cbPorta_SelectedIndexChanged);
+            // 
+            // cbModeloImp
+            // 
+            this.cbModeloImp.FormattingEnabled = true;
+            this.cbModeloImp.Location = new System.Drawing.Point(9, 14);
+            this.cbModeloImp.Name = "cbModeloImp";
+            this.cbModeloImp.Size = new System.Drawing.Size(132, 21);
+            this.cbModeloImp.TabIndex = 1;
+            this.cbModeloImp.Text = "Modelo da Impressora";
+            this.cbModeloImp.SelectedIndexChanged += new System.EventHandler(this.cbModeloImp_SelectedIndexChanged);
             // 
             // grpViasImpressao
             // 
@@ -1271,60 +1326,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.button1);
-            this.groupBox8.Controls.Add(this.txtIpImpressora);
-            this.groupBox8.Controls.Add(this.cbPorta);
-            this.groupBox8.Controls.Add(this.cbModeloImp);
-            this.groupBox8.Location = new System.Drawing.Point(483, 19);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(151, 127);
-            this.groupBox8.TabIndex = 28;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Bematech Config";
-            // 
-            // cbModeloImp
-            // 
-            this.cbModeloImp.FormattingEnabled = true;
-            this.cbModeloImp.Location = new System.Drawing.Point(9, 14);
-            this.cbModeloImp.Name = "cbModeloImp";
-            this.cbModeloImp.Size = new System.Drawing.Size(132, 21);
-            this.cbModeloImp.TabIndex = 1;
-            this.cbModeloImp.Text = "Modelo da Impressora";
-            this.cbModeloImp.SelectedIndexChanged += new System.EventHandler(this.cbModeloImp_SelectedIndexChanged);
-            // 
-            // cbPorta
-            // 
-            this.cbPorta.FormattingEnabled = true;
-            this.cbPorta.Location = new System.Drawing.Point(9, 40);
-            this.cbPorta.Name = "cbPorta";
-            this.cbPorta.Size = new System.Drawing.Size(87, 21);
-            this.cbPorta.TabIndex = 2;
-            this.cbPorta.Text = "Porta";
-            this.cbPorta.SelectedIndexChanged += new System.EventHandler(this.cbPorta_SelectedIndexChanged);
-            // 
-            // txtIpImpressora
-            // 
-            this.txtIpImpressora.Location = new System.Drawing.Point(10, 66);
-            this.txtIpImpressora.Name = "txtIpImpressora";
-            this.txtIpImpressora.Size = new System.Drawing.Size(100, 20);
-            this.txtIpImpressora.TabIndex = 5;
-            this.txtIpImpressora.Text = "IP da impressora";
-            this.txtIpImpressora.Visible = false;
-            // 
-            // button1
-            // 
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(26, 90);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 24);
-            this.button1.TabIndex = 24;
-            this.button1.Text = "Salvar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
             // frmConfiguracoes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1356,6 +1357,8 @@
             this.pInfoUserDefault.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.grpBematech.ResumeLayout(false);
+            this.grpBematech.PerformLayout();
             this.grpViasImpressao.ResumeLayout(false);
             this.grpViasImpressao.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -1372,8 +1375,6 @@
             this.tbExibicao.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1492,7 +1493,7 @@
         private System.Windows.Forms.Button btnBackup;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.GroupBox grpBematech;
         private System.Windows.Forms.TextBox txtIpImpressora;
         private System.Windows.Forms.ComboBox cbPorta;
         private System.Windows.Forms.ComboBox cbModeloImp;

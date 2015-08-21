@@ -232,7 +232,11 @@ namespace DexComanda
                     Utils.ControlaEventos("Inserir", this.Name);
                     MessageBox.Show("Cliente cadastrado com sucesso.", "Dex Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
                     this_FormClosing();
-                    RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
+                    if (Utils.CaixaAberto(DateTime.Now,Sessions.retunrUsuario.CaixaLogado))
+                    {
+                        RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
+                    }
+                   
                 }
                 else
                 {

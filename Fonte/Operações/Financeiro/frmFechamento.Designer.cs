@@ -207,16 +207,15 @@
             this.cbxCaixas.Name = "cbxCaixas";
             this.cbxCaixas.Size = new System.Drawing.Size(66, 21);
             this.cbxCaixas.TabIndex = 0;
-           
             this.cbxCaixas.SelectionChangeCommitted += new System.EventHandler(this.FiltraCaixa);
             // 
             // btnExecutar
             // 
             this.btnExecutar.Image = ((System.Drawing.Image)(resources.GetObject("btnExecutar.Image")));
             this.btnExecutar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExecutar.Location = new System.Drawing.Point(51, 258);
+            this.btnExecutar.Location = new System.Drawing.Point(94, 258);
             this.btnExecutar.Name = "btnExecutar";
-            this.btnExecutar.Size = new System.Drawing.Size(121, 45);
+            this.btnExecutar.Size = new System.Drawing.Size(121, 57);
             this.btnExecutar.TabIndex = 13;
             this.btnExecutar.Text = "Fechar";
             this.btnExecutar.UseVisualStyleBackColor = true;
@@ -227,9 +226,9 @@
             this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Abort;
             this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(189, 258);
+            this.btnCancelar.Location = new System.Drawing.Point(232, 258);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(121, 45);
+            this.btnCancelar.Size = new System.Drawing.Size(121, 57);
             this.btnCancelar.TabIndex = 14;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;

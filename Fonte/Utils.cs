@@ -633,14 +633,18 @@ namespace DexComanda
         }
 
 
-        public static void PopularGrid(string table, DataGridView gridView)
+        public static DataSet PopularGrid(string table, DataGridView gridView)
         {
             Conexao con = new Conexao();
+            DataSet Dados = con.SelectAll(table, "spObter" + table);
+
             gridView.DataSource = null;
             gridView.AutoGenerateColumns = true;
-            gridView.DataSource = con.SelectAll(table, "spObter" + table);
+            gridView.DataSource = Dados;
             gridView.DataMember = table;
             con.Close();
+            
+            return Dados;
         }
 
         public static void Kill()

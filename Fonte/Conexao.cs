@@ -134,14 +134,54 @@ namespace DexComanda
         {
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@CodPessoa", iCodPessoa);
-            command.Parameters.AddWithValue("@DataInicio", iDataI);
-            command.Parameters.AddWithValue("@DataFim", iDataF);
+            if (spName == "spTotaisCaixa")
+            {
+                command.Parameters.AddWithValue("@Numero", iCodPessoa);
+                command.Parameters.AddWithValue("@Data", iDataI);
+            }
+            else
+            {
+                command.Parameters.AddWithValue("@CodPessoa", iCodPessoa);
+                command.Parameters.AddWithValue("@DataInicio", iDataI);
+                command.Parameters.AddWithValue("@DataFim", iDataF);
+            }
+
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, table);
             return ds;
         }
+        public DataSet SelectCaixaFechamento(string iDataI, string iDataF, string iNumCaixa, string table = "CaixaMovimento")
+        {
+            string lSqlConsulta = " select " +
+                                 " case Tipo "+
+                                 " when 'E' then 'Entradas'"+
+                                 " when 'S' then 'Saidas'"+
+                                 " end"+
+                                 " as 'Tipo Movimento', "+
+                                //" Cx.CodCaixa," +
+                                " Fp.Descricao ," +
+                                " sum(cx.Valor) as 'Total Somado'" +
+                                " from CaixaMovimento CX" +
+                                " left join FormaPagamento FP on FP.Codigo = Cx.CodFormaPagamento" +
+                                " where " +
+                                " CX.CodCaixa = @Numero AND" +
+                                "  CX.Data BETWEEN @DataI AND @DataF"+
+                                " group by CodCaixa,Fp.Descricao,Tipo";
+
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@Numero", iNumCaixa);
+            command.Parameters.AddWithValue("@DataI", iDataI);
+            command.Parameters.AddWithValue("@DataF", iDataF);
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+            return ds;
+        }
+
 
         public DataSet SelectCaixaMovimetoFiltro(string iDataI, string iDataF, string iTipo, string iCdFormaPagt, string table = "CaixaMovimento", string iNumCaixa = "1")
         {

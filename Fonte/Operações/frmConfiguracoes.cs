@@ -453,7 +453,7 @@ namespace DexComanda
 
         private void ImpressoaMatricial(object sender, EventArgs e)
         {
-            lblporta.Visible = txtPortaLPT.Visible = chkImpLPT.Checked;
+            grpBematech.Enabled = txtPortaLPT.Visible = chkImpLPT.Checked;
             if ( chkImpLPT.Checked)
             {
                 lblporta.Focus();
@@ -595,6 +595,7 @@ namespace DexComanda
             if (MP2032.IniciaPorta(Porta) <= 0)
             {
                 MessageBox.Show("Impressora não Configurada");
+                string iArquivo = Utils.CriaArquivoTxt("ConfigImpressao", Convert.ToString(iNumModelo) + ";" + Porta);
             }
             else
             {

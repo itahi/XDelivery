@@ -15,5 +15,6 @@ namespace DexComanda.Models
        public decimal ValorInformado { get; set; }
        public decimal ValorDiferenca { get; set; }
        public int CodUsuario { get; set; }
+       public char Tipo { get; set; }
     }
 }
