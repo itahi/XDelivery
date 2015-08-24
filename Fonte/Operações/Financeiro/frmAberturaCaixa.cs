@@ -24,20 +24,20 @@ namespace DexComanda.Operações.Financeiro
         private void frmAberturaCaixa_Load(object sender, EventArgs e)
         {
             dtAbertura.Value = DateTime.Now;
-            if (Sessions.retunrUsuario != null)
-            {
-                DataSet dsUser = con.SelectAll("Usuario", "spObterUsuario");
-                cbxFuncionario.DataSource = dsUser.Tables["Usuario"];
-                cbxFuncionario.DisplayMember = "Nome";
-                cbxFuncionario.ValueMember = "Codigo";
 
-            }
+          //  cbxFuncionario.Enabled = true;
+            DataSet dsUsuario = con.SelectAll("Usuario", "spObterUsuario");
+            cbxFuncionario.DataSource = dsUsuario.Tables[0];
+            cbxFuncionario.DisplayMember = "Nome";
+            cbxFuncionario.ValueMember = "Codigo";
+            //cbxFuncionario.Enabled = false;
 
             DataSet dsCaixas = con.SelectAll("CaixaCadastro", "spObterCaixa");
             cbxCaixas.DataSource = dsCaixas.Tables["CaixaCadastro"];
             cbxCaixas.DisplayMember = "Numero";
             cbxCaixas.ValueMember = "Codigo";
 
+            cbxFuncionario.Text = Sessions.retunrUsuario.Nome;
         }
 
         private void Salvar(object sender, EventArgs e)
@@ -53,9 +53,9 @@ namespace DexComanda.Operações.Financeiro
                     Numero = cbxCaixas.Text
 
                 };
-                if (CodUser != 0)
+                if (cbxFuncionario.Text != "")
                 {
-                    caixa.CodUsuario = CodUser;
+                    caixa.CodUsuario = Sessions.retunrUsuario.Codigo;
 
                     CaixaMovimento cxMovi = new CaixaMovimento()
                     {
@@ -94,6 +94,11 @@ namespace DexComanda.Operações.Financeiro
         private void cbxFuncionario_SelectionChangeCommitted(object sender, EventArgs e)
         {
             CodUser = int.Parse(cbxFuncionario.SelectedValue.ToString());
+        }
+
+        private void cbxFuncionario_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

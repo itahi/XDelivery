@@ -115,12 +115,14 @@
             // cbxFuncionario
             // 
             this.cbxFuncionario.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxFuncionario.Enabled = false;
             this.cbxFuncionario.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cbxFuncionario.FormattingEnabled = true;
             this.cbxFuncionario.Location = new System.Drawing.Point(84, 14);
             this.cbxFuncionario.Name = "cbxFuncionario";
             this.cbxFuncionario.Size = new System.Drawing.Size(142, 21);
             this.cbxFuncionario.TabIndex = 2;
+            this.cbxFuncionario.SelectedIndexChanged += new System.EventHandler(this.cbxFuncionario_SelectedIndexChanged);
             this.cbxFuncionario.SelectionChangeCommitted += new System.EventHandler(this.cbxFuncionario_SelectionChangeCommitted);
             // 
             // label2

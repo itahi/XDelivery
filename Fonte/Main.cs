@@ -1291,11 +1291,15 @@ namespace DexComanda
                 }
 
             }
-            
-            for (int intFor = 0; intFor < pedidosGridView.Rows.Count; intFor++)
+
+            if (Sessions.returnConfig.ImpViaCozinha)
             {
-                ImpressaoAutomatica(int.Parse(pedidosGridView.Rows[intFor].Cells["Codigo"].Value.ToString()), pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString());
+                for (int intFor = 0; intFor < pedidosGridView.Rows.Count; intFor++)
+                {
+                    ImpressaoAutomatica(int.Parse(pedidosGridView.Rows[intFor].Cells["Codigo"].Value.ToString()), pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString());
+                }
             }
+            
 
 
 

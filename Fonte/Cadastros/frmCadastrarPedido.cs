@@ -952,18 +952,18 @@ namespace DexComanda
             ValorTotal = 0;
             ValorTroco = 0;
 
-            if (txtDesconto.Text != "0,00")
-            {
-                ValorTotal = dTotalPedido;
-            }
-            else
-            {
+            //if (txtDesconto.Text != "0,00")
+            //{
+            //    ValorTotal = dTotalPedido;
+            //}
+            //else
+            //{
 
                 foreach (ItemPedido item in items)
                 {
                     ValorTotal += item.PrecoTotal;
                 }
-            }
+            //}
 
 
             DataTable dt = new DataTable();

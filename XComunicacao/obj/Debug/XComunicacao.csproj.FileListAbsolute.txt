@@ -1,3 +1,0 @@
-H:\# Lazaro\Projetos\XSistemas\xcommanda\XComunicacao\obj\Debug\XComunicacao.frmPrincipal.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\XComunicacao\obj\Debug\XComunicacao.Properties.Resources.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\XComunicacao\obj\Debug\XComunicacao.csproj.GenerateResource.Cache
