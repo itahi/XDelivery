@@ -830,7 +830,7 @@ namespace DexComanda
                         }
                         else
                         {
-                            decimal.Parse(lbTotal.Text.Replace("R$", ""));
+                            pedido.TotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
                         }
 
                         if (ContraMesas)

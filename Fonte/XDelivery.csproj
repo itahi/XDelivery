@@ -440,6 +440,12 @@
     <Compile Include="Relatorios\Clientes\frmReportPessoas.Designer.cs">
       <DependentUpon>frmReportPessoas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.Designer.cs">
+      <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\frmReportProdutos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -515,6 +521,10 @@
     <EmbeddedResource Include="Operações\frmInformaMotoboy.resx">
       <DependentUpon>frmInformaMotoboy.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.resx">
+      <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.rdlc" />
     <EmbeddedResource Include="Relatorios\Fechamentos\RelFechamentoDetalhado.rdlc" />
     <EmbeddedResource Include="Relatorios\Fechamentos\RelItemsVendidos.rdlc" />
     <EmbeddedResource Include="Cadastros\frmCadastrarEntregador.resx">

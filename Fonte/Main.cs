@@ -17,6 +17,7 @@ using DexComanda.Operações.Financeiro;
 using System.Configuration;
 using DexComanda.Integração;
 using System.IO;
+using DexComanda.Relatorios.Fechamentos;
 //using DexComanda.Relatorios.Fechamentos;
 
 namespace DexComanda
@@ -1447,8 +1448,8 @@ namespace DexComanda
 
         private void entregasPorMotoboyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //frmReportPedidosPorMotoboy frm = new frmReportPedidosPorMotoboy();
-            //frm.ShowDialog();
+            frmReportEntregasPorMotoboy frm = new frmReportEntregasPorMotoboy();
+            frm.ShowDialog();
         }
 
         private void txtEndereco_TextChanged(object sender, EventArgs e)

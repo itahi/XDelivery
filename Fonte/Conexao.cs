@@ -181,6 +181,33 @@ namespace DexComanda
             adapter.Fill(ds, table);
             return ds;
         }
+        public DataSet SelectEntregaPorBoy(string iDataI, string iDataF, int CodMotoboy, string table = "Entregador")
+        {
+            string lSqlConsulta = "  select  " +
+                                    " count(P.CodMotoboy) as QuantidadeEntregas," +
+                                    " cast(P.RealizadoEm as date) as RealizadoEm," +
+                                    " (select Codigo from Entregador E where P.CodMotoboy = E.Codigo) as CodMotoboy, " +
+                                    " (select Nome from Entregador E where P.CodMotoboy = E.Codigo) as Nome " +
+                                    " from " +
+                                    " Pedido P " +
+                                    " where P.Finalizado =1  " +
+                                    " and  P.RealizadoEm between'" + iDataI.ToString() + "' and '" + iDataF.ToString() + "'";
+                                      if (CodMotoboy!=0)
+	                                    {
+		                                lSqlConsulta = lSqlConsulta + " and P.CodMotoboy="+ CodMotoboy;
+	                                    }
+                                      lSqlConsulta = lSqlConsulta + "group by P.CodMotoboy,cast(P.RealizadoEm as date)";
+                                    
+
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+            return ds;
+        }
 
 
         public DataSet SelectCaixaMovimetoFiltro(string iDataI, string iDataF, string iTipo, string iCdFormaPagt, string table = "CaixaMovimento", string iNumCaixa = "1")

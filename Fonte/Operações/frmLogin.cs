@@ -46,6 +46,7 @@ namespace DexComanda
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+            
             if (cbxCaixas.Text != "")
             {
                 int iNumeroCaixa = int.Parse(cbxCaixas.Text );

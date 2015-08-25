@@ -130,6 +130,18 @@ namespace DexComanda
             }
             return Logado;
         }
+        public static bool VerificaCaixaAbertoDiaAnterior()
+        {
+            Boolean CaixaAberto = false;
+            DataSet dsCaixa = conexao.SelectRegistroPorData("Caixa", "spObterDadosCaixa", DateTime.Now.AddDays(-1));
+            DataRow dRowCaixa;
+            for (int i = 0; i < dsCaixa.Tables[0].Rows.Count; i++)
+            {
+                dRowCaixa = dsCaixa.Tables[0].Rows[i];
+                CaixaAberto = dRowCaixa.ItemArray.GetValue(7).ToString() == "0";
+            }
+            return CaixaAberto;
+        }
        
         public static void LancarMovimentoCaixa(CaixaMovimento caixa)
         {

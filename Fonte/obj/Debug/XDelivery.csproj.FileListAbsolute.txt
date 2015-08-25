@@ -109,3 +109,4 @@ E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.exe.manifest
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.application
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.exe
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.pdb
+E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Fechamentos.frmReportEntregasPorMotoboy.resources

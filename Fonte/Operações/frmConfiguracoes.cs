@@ -196,7 +196,7 @@ namespace DexComanda
                 CaminhoBackup = txtCaminhoBkp.Text
             };
 
-           config.cod = 1;
+            config.cod = Sessions.returnConfig.cod;
            config.ImpViaCozinha = chkViaCozinha.Checked;
            config.UsaLoginSenha = chkLoginSenha.Checked;
            config.UsaDataNascimento = chkDataNAscimento.Checked ;
