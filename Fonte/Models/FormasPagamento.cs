@@ -11,5 +11,6 @@ namespace DexComanda.Models
         public int Codigo { get; set; }
         public string Descricao { get; set; }
         public Boolean DescontoSN { get; set; }
+        public Boolean GeraFinanceiro { get; set; }
     }
 }

@@ -301,7 +301,7 @@ namespace DexComanda
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
 
-            if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" || spName == "spAdicionarCaixa" ||
+            if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" || spName == "spAdicionarCaixa" || spName=="spAdicionaHistorico"||
                 spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
                 spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" ||
                 spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento")
@@ -777,7 +777,7 @@ namespace DexComanda
 
             return ds;
         }
-
+       
         public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo)
         {
             command = new SqlCommand(spName, conn);
@@ -785,6 +785,10 @@ namespace DexComanda
             if (spName == "spObterCodigoMesa")
             {
                 command.Parameters.AddWithValue("@NumeroMesa", codigo);
+            }
+            else if (spName=="spObterHistoricoPorPessoa")
+            {
+                 command.Parameters.AddWithValue("@CodPessoa", codigo);
             }
             else
             {

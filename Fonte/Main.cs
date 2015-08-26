@@ -821,6 +821,7 @@ namespace DexComanda
             {
                 bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
                 int codigo, iCodMesa;
+                double dblTotalPedido;
                 string NumeroMesa;
                 this.pedidosGridView.SelectedCells[2].Value = true;
 
@@ -829,6 +830,7 @@ namespace DexComanda
                     this.pedidosGridView.SelectedCells[2].Value = true;
                     codigo = int.Parse(pedidosGridView.SelectedCells[1].Value.ToString());
                     iCodMesa = int.Parse(pedidosGridView.SelectedCells[5].Value.ToString());
+                    dblTotalPedido = double.Parse(pedidosGridView.SelectedCells[4].Value.ToString());
 
                     if (Sessions.returnConfig.ControlaEntregador)
                     {
@@ -842,6 +844,14 @@ namespace DexComanda
                         Utils.AtualizaMesa(Convert.ToString(iCodMesa), 1);
                     }
 
+                    // Grava Débito caso o Tipo de Pagamento gerar financeiro 
+
+                    DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
+                    DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
+
+                    Utils.GeraHistorico(DateTime.Now, int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()), dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D');
+
+                    // Grava Movimento De Caixa
                     GravaMOvimentoCaixa();
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 

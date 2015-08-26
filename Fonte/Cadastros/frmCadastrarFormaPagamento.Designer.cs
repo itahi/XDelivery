@@ -35,6 +35,7 @@
             this.txtNomeFP = new System.Windows.Forms.TextBox();
             this.chkDesconto2 = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.chkFinanceiro = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.FPGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -102,9 +103,20 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "Formas de Pagamento";
             // 
+            // chkFinanceiro
+            // 
+            this.chkFinanceiro.AutoSize = true;
+            this.chkFinanceiro.Location = new System.Drawing.Point(132, 34);
+            this.chkFinanceiro.Name = "chkFinanceiro";
+            this.chkFinanceiro.Size = new System.Drawing.Size(107, 17);
+            this.chkFinanceiro.TabIndex = 9;
+            this.chkFinanceiro.Text = "Gera Financeiro?";
+            this.chkFinanceiro.UseVisualStyleBackColor = true;
+            // 
             // frmCadastrarFormaPagamento
             // 
             this.ClientSize = new System.Drawing.Size(273, 343);
+            this.Controls.Add(this.chkFinanceiro);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.chkDesconto2);
             this.Controls.Add(this.txtNomeFP);
@@ -136,5 +148,6 @@
         private System.Windows.Forms.TextBox txtNomeFP;
         private System.Windows.Forms.CheckBox chkDesconto2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox chkFinanceiro;
     }
 }

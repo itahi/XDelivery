@@ -53,7 +53,7 @@ namespace DexComanda
         {
 
             con = new Conexao();
-            dtFim.Value = dtInicio.Value = DateTime.Now;
+            dtLancamento.Value = dtFim.Value = dtInicio.Value = DateTime.Now;
             txtNomeCliente.Focus();
             txtNomeCliente.Select();
             ObterCidadePadrao();
@@ -71,7 +71,7 @@ namespace DexComanda
                     if (Sessions.returnConfig.UsaDataNascimento)
                     {
                         this.txtDataNascimento.Enabled = true;
-                      
+
                     }
                     else
                     {
@@ -232,11 +232,11 @@ namespace DexComanda
                     Utils.ControlaEventos("Inserir", this.Name);
                     MessageBox.Show("Cliente cadastrado com sucesso.", "Dex Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
                     this_FormClosing();
-                    if (Utils.CaixaAberto(DateTime.Now,Sessions.retunrUsuario.CaixaLogado))
+                    if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado))
                     {
                         RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
                     }
-                   
+
                 }
                 else
                 {
@@ -279,7 +279,7 @@ namespace DexComanda
 
                         var TaxaEntrega = Utils.RetornaTaxaPorCliente(iCodPessoa, con);
                         frmCadastrarPedido frmCadastrarPedido = new frmCadastrarPedido(false, "0,00", "", "", TaxaEntrega, false, DateTime.Now, 0, int.Parse(dRow.ItemArray.GetValue(0).ToString()),
-                                                                                       "", "", "", "", this.parentMain,0.00M);
+                                                                                       "", "", "", "", this.parentMain, 0.00M);
                         frmCadastrarPedido.ShowDialog();
                     }
                 }
@@ -593,7 +593,7 @@ namespace DexComanda
             this.PedidosGridView.DataSource = null;
             this.PedidosGridView.AutoGenerateColumns = true;
             dsPedidos = con.SelectRegistroPorCodigoPeriodo("Pedido", "spObterPedidosPessoaPorData", Convert.ToString(codigoClienteParaAlterar), dataInicio, dataFim);
-            if (dsPedidos.Tables[0].Rows.Count>0)
+            if (dsPedidos.Tables[0].Rows.Count > 0)
             {
                 this.PedidosGridView.DataSource = dsPedidos;
                 this.PedidosGridView.DataMember = "Pedido";
@@ -620,7 +620,7 @@ namespace DexComanda
             {
                 MessageBox.Show("Não há registros no periodo informado", "Aviso");
             }
-            
+
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -692,17 +692,72 @@ namespace DexComanda
 
                 for (int i = 0; i < ItemsPedidoGridView.Columns.Count; i++)
                 {
-                    if (ItemsPedidoGridView.Columns[i].HeaderText !="NomeProduto")
+                    if (ItemsPedidoGridView.Columns[i].HeaderText != "NomeProduto")
                     {
                         ItemsPedidoGridView.Columns.RemoveAt(i);
                     }
                 }
                 ItemsPedidoGridView.Refresh();
-                
+
             }
         }
 
+        private void LancarHistorico(object sender, EventArgs e)
+        {
+            double dblTotalCredito = 0.00;
+            double dblTotalDebito = 0.00;
 
+            HistoricoPessoa histPessoa = new HistoricoPessoa()
+            {
+                CodPessoa = codigoClienteParaAlterar,
+                CodUsuario = Sessions.retunrUsuario.Codigo,
+                Data = dtLancamento.Value,
+                Historico = txtHistorico.Text,
+                Valor = double.Parse(txtValor.Text.Replace(",", "."))
 
+            };
+            if (rbCredito.Checked)
+            {
+                histPessoa.Tipo = 'C';
+            }
+            else
+            {
+                histPessoa.Tipo = 'D';
+            }
+            con.Insert("spAdicionaHistorico", histPessoa);
+           // Utils.PopularGrid("HistoricoPessoa", HistoricoGridView, "spObterHistoricoPorPessoa", histPessoa.CodPessoa);
+            CalculaValores();
+        }
+        private void CalculaValores()
+        {
+            double dblTotalCredito = 0.00;
+            double dblTotalDebito = 0.00;
+            for (int i = 0; i < HistoricoGridView.Rows.Count; i++)
+            {
+                if (HistoricoGridView.Rows[i].Cells["Tipo"].Value.ToString() == "D")
+                {
+                    dblTotalDebito = dblTotalDebito + double.Parse(HistoricoGridView.Rows[i].Cells["Valor"].Value.ToString());
+                }
+                else
+                {
+                    dblTotalCredito = dblTotalCredito + double.Parse(HistoricoGridView.Rows[i].Cells["Valor"].Value.ToString());
+                }
+            }
+            lblTotal.Text = Convert.ToString(dblTotalCredito - dblTotalDebito);
+            txtValor.Text = txtHistorico.Text = "";
+        }
+
+        private void btnCons_Click(object sender, EventArgs e)
+        {
+            DataSet dsPedidos = con.SelectRegistroPorCodigoPeriodo("HistoricoPessoa", "spObterHistoricoPorPessoa", Convert.ToString(codigoClienteParaAlterar), dataInicio.Value, dataFim.Value);
+            HistoricoGridView.DataSource = null;
+            HistoricoGridView.AutoGenerateColumns = true;
+            HistoricoGridView.DataSource = dsPedidos;
+            HistoricoGridView.DataMember = "HistoricoPessoa";
+            
+            CalculaValores();
+
+        }
     }
+
 }

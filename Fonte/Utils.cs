@@ -51,7 +51,7 @@ namespace DexComanda
         private static DataSet dados;
         private static DataSet mRetornoWS;
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
-        public static Boolean EfetuarLogin(string nomeUsuario, string senha , bool iAbreFrmPrincipal=true , int iNumCaixa=1)
+        public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1)
         {
 
             if (nomeUsuario.Equals(""))
@@ -93,7 +93,7 @@ namespace DexComanda
                             FinalizaPedidoSN = Convert.ToBoolean(dv[0].Row["FinalizaPedidoSN"].ToString()),
                             CancelaPedidosSN = Convert.ToBoolean(dv[0].Row["CancelaPedidosSN"].ToString()),
                             AlteraProdutosSN = Convert.ToBoolean(dv[0].Row["AlteraProdutosSN"].ToString()),
-                            DescontoPedidoSN  = Convert.ToBoolean(dv[0].Row["DescontoPedidoSN"].ToString()),
+                            DescontoPedidoSN = Convert.ToBoolean(dv[0].Row["DescontoPedidoSN"].ToString()),
                             DescontoMax = Convert.ToDouble(dv[0].Row["DescontoMax"].ToString()),
                             CaixaLogado = iNumCaixa
                         };
@@ -104,15 +104,15 @@ namespace DexComanda
                         if (iAbreFrmPrincipal)
                         {
                             Main principal = new Main();
-                            
+
                             principal.ShowDialog();
                         }
-                        
+
 
                     }
                     else
                     {
-                        MessageBox.Show("Usuário ou Senha incorretos.","[XSistemas] Aviso");
+                        MessageBox.Show("Usuário ou Senha incorretos.", "[XSistemas] Aviso");
                         Logado = false;
                     }
                 }
@@ -123,7 +123,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    MessageBox.Show("Usuário ou senha incorretos","[XSistemas] Aviso");
+                    MessageBox.Show("Usuário ou senha incorretos", "[XSistemas] Aviso");
                     Logado = false;
                 }
 
@@ -142,7 +142,7 @@ namespace DexComanda
             }
             return CaixaAberto;
         }
-       
+
         public static void LancarMovimentoCaixa(CaixaMovimento caixa)
         {
             caixa = new Models.CaixaMovimento()
@@ -157,7 +157,7 @@ namespace DexComanda
             };
             conexao.Insert("spInserirMovimentoCaixa", caixa);
         }
-        
+
         public static void IniciaSistema()
         {
             Application.EnableVisualStyles();
@@ -165,7 +165,7 @@ namespace DexComanda
             Application.Run(new Splashcreen());
         }
 
-        public static bool CaixaAberto(DateTime iDataRegistro , int iNumero)
+        public static bool CaixaAberto(DateTime iDataRegistro, int iNumero)
         {
             bool iRetorno = false;
             DataRow dRow;
@@ -187,19 +187,19 @@ namespace DexComanda
             }
             catch (Exception erro)
             {
-                if (erro.Message.ToString() =="There is no row at position 0.")
+                if (erro.Message.ToString() == "There is no row at position 0.")
                 {
                     MessageBox.Show("Numero de caixa Inexiste , favor verificar");
-                   // Environment.Exit(0);
-                    
+                    // Environment.Exit(0);
+
                 }
                 else
                 {
                     MessageBox.Show(erro.Message, "[XSistemas] Algo de errado aconteceu");
                 }
-                
+
             }
-           
+
 
             return iRetorno;
         }
@@ -221,8 +221,8 @@ namespace DexComanda
                 // Retorna a Taxa de Entrega do cadastro do Cliente
                 TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, conexao);
 
-                frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true,"0,00", "", "", TaxaEntrega, false, DateTime.Now, CodPedido, CodPessoa,
-                                                                            "", FormaPagamento, "", "Balcao", iMain,0.00M);
+                frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", "", "", TaxaEntrega, false, DateTime.Now, CodPedido, CodPessoa,
+                                                                            "", FormaPagamento, "", "Balcao", iMain, 0.00M);
                 frmRepetePedido.ShowDialog();
 
 
@@ -236,7 +236,7 @@ namespace DexComanda
             conexao = new Conexao();
             Mesas mesas = new Mesas()
             {
-               // Codigo = iCodigo,
+                // Codigo = iCodigo,
                 NumeroMesa = iNumeroMesa,
                 StatusMesa = iStatus
             };
@@ -262,7 +262,7 @@ namespace DexComanda
         public static string RetornaNumeroMesa(int iCodigo)
         {
             DataSet iDados;
-            string iRetorno="";
+            string iRetorno = "";
             conexao = new Conexao();
             iDados = conexao.SelectRegistroPorCodigo("Mesas", "spObterNumeroMesa", iCodigo);
             if (iDados != null)
@@ -356,7 +356,7 @@ namespace DexComanda
                 {
                     System.IO.File.Create(temp).Close();
                     System.IO.File.AppendAllText(temp, iText);
-                    
+
                 }
                 else
                 {
@@ -629,11 +629,42 @@ namespace DexComanda
             //Kill();
             Application.Restart();
         }
-
-        public static DataSet PopularGrid(string table, DataGridView gridView, string spName)
+        public static void GeraHistorico(DateTime iData, int iCodPessoa, double iValor, int iCodUsuario, string iHistorico, char iTipo)
         {
             Conexao con = new Conexao();
-            DataSet Dados = con.SelectAll(table, spName);
+
+            DataSet dsFormaPagamento = con.SelectAll("FormaPagamento", "spObterFormaPagamento");
+            DataRow dRowFpagamento = dsFormaPagamento.Tables[0].Rows[0];
+
+            if (Convert.ToBoolean(dRowFpagamento.ItemArray.GetValue(3).ToString()) == true)
+            {
+                HistoricoPessoa hist = new Models.HistoricoPessoa()
+                {
+                    CodPessoa = iCodPessoa,
+                    CodUsuario = iCodUsuario,
+                    Data = iData,
+                    Historico = iHistorico,
+                    Tipo = iTipo,
+                    Valor = iValor
+                };
+                con.Insert("spAdicionaHistorico", hist);
+            }
+        }
+
+
+        public static DataSet PopularGrid(string table, DataGridView gridView, string spName, int CodRegistro = -1)
+        {
+            Conexao con = new Conexao();
+            DataSet Dados = null;
+            if (CodRegistro == -1)
+            {
+                Dados = con.SelectAll(table, spName);
+            }
+            else
+            {
+                Dados = con.SelectRegistroPorCodigo(table, spName, CodRegistro);
+            }
+
 
             gridView.DataSource = null;
             gridView.AutoGenerateColumns = true;
@@ -655,7 +686,7 @@ namespace DexComanda
             gridView.DataSource = Dados;
             gridView.DataMember = table;
             con.Close();
-            
+
             return Dados;
         }
 
@@ -848,7 +879,7 @@ namespace DexComanda
 
                 RegistryKey RegistroKey = Registry.LocalMachine.OpenSubKey("Software", true);
                 RegistroKey = RegistroKey.CreateSubKey("DexSistemas");
-                RegistroKey.SetValue("RegistroDex",lArquivoRegistro);
+                RegistroKey.SetValue("RegistroDex", lArquivoRegistro);
                 RegistroKey.Close();
 
                 Retorno = true;
@@ -870,23 +901,23 @@ namespace DexComanda
         }
         public static bool LeArquivoRegistro()
         {
-            string iRetorno, iRegistroCritografado, strDataLimiteRegistro,strDataLimiteAtual;
+            string iRetorno, iRegistroCritografado, strDataLimiteRegistro, strDataLimiteAtual;
             bool OK = false;
             try
             {
                 //  Utils.RetornaNomePc()+ empresas.CNPJ + empresas.Cidade + empresas.Nome
                 RegistryKey RegistroKey = Registry.LocalMachine.OpenSubKey("Software", true);
-                iRetorno    = RegistroKey.OpenSubKey("DexSistemas", true).GetValue("RegistroDex", true).ToString().ToString();
+                iRetorno = RegistroKey.OpenSubKey("DexSistemas", true).GetValue("RegistroDex", true).ToString().ToString();
                 strDataLimiteRegistro = RegistroKey.OpenSubKey("DexSistemas", true).GetValue("Expiracao", true).ToString().ToString();
-                iRegistroCritografado = CriptografarArquivo(RetornaNomePc()+ Sessions.returnEmpresa.CNPJ + Sessions.returnEmpresa.Cidade + Sessions.returnEmpresa.Nome);
-                    
-                    //CriptoGrafarOnExecute(RetornaNomePc(), Sessions.returnEmpresa.CNPJ + Sessions.returnEmpresa.Cidade + Sessions.returnEmpresa.Nome);
+                iRegistroCritografado = CriptografarArquivo(RetornaNomePc() + Sessions.returnEmpresa.CNPJ + Sessions.returnEmpresa.Cidade + Sessions.returnEmpresa.Nome);
+
+                //CriptoGrafarOnExecute(RetornaNomePc(), Sessions.returnEmpresa.CNPJ + Sessions.returnEmpresa.Cidade + Sessions.returnEmpresa.Nome);
 
                 if (iRegistroCritografado == iRetorno)
                 {
                     OK = true;
                 }
-                
+
             }
             catch (Exception erro)
             {
@@ -905,21 +936,21 @@ namespace DexComanda
             DataRow dRow;
             con = new Conexao();
 
-           dRow =  con.SelectView("vwObterXSistemas", "XSistemas").Tables["XSistemas"].Rows[0];
-           iRetorno = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+            dRow = con.SelectView("vwObterXSistemas", "XSistemas").Tables["XSistemas"].Rows[0];
+            iRetorno = int.Parse(dRow.ItemArray.GetValue(0).ToString());
 
-           iContRegistro = con.SelectRegistroPorData("XSistemas", "spObterDados",DateTime.Now.Date).Tables[0].Rows.Count;
+            iContRegistro = con.SelectRegistroPorData("XSistemas", "spObterDados", DateTime.Now.Date).Tables[0].Rows.Count;
 
-           if ((iRetorno < 5) && (iContRegistro==0))
-           {
-               AtualizaData data = new Models.AtualizaData()
-               {
-                   Data = DateTime.Now.Date,
-                   RegistroMD5 = CriptografarArquivo(iRegistroMD5 + DateTime.Now.ToString())
-               };
-               con.Insert("spInsereRegistro", data);
-           }
-            
+            if ((iRetorno < 5) && (iContRegistro == 0))
+            {
+                AtualizaData data = new Models.AtualizaData()
+                {
+                    Data = DateTime.Now.Date,
+                    RegistroMD5 = CriptografarArquivo(iRegistroMD5 + DateTime.Now.ToString())
+                };
+                con.Insert("spInsereRegistro", data);
+            }
+
             return iRetorno;
 
         }
@@ -1094,11 +1125,11 @@ namespace DexComanda
         {
             decimal iRetorno = 0.00M;
             var Regiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterTaxaPorCliente", iCodPessoa).Tables["RegiaoEntrega"];
-            if (Regiao.Rows.Count>0)
+            if (Regiao.Rows.Count > 0)
             {
-                iRetorno = decimal.Parse(Regiao.Rows[0]["TaxaServico"].ToString()); 
+                iRetorno = decimal.Parse(Regiao.Rows[0]["TaxaServico"].ToString());
             }
-           
+
 
             return iRetorno;
         }
@@ -1150,12 +1181,12 @@ namespace DexComanda
 
         //            // Definindo o banco de dados a ser salvo
         //            bak.Database = iNomeBanco;
-                    
+
         //            bak.Checksum = true;
 
         //            // Adcionando um destino para o backup
         //            BackupDeviceItem destino = new BackupDeviceItem(bak.BackupSetName, DeviceType.File);
-                   
+
         //            bak.Devices.Add(destino);
         //            // Executando o backup
         //            bak.SqlBackup(server);

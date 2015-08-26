@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroCliente));
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tbPrincipal = new System.Windows.Forms.TabPage();
             this.btnAlteraRegiao = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.txtTaxaEntrega = new System.Windows.Forms.TextBox();
@@ -81,16 +81,40 @@
             this.btnConsultar = new System.Windows.Forms.Button();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
+            this.tbCreditoDebito = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rbCredito = new System.Windows.Forms.RadioButton();
+            this.rbDebito = new System.Windows.Forms.RadioButton();
+            this.txtHistorico = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.txtValor = new System.Windows.Forms.TextBox();
+            this.btnLancar = new System.Windows.Forms.Button();
+            this.dtLancamento = new System.Windows.Forms.DateTimePicker();
+            this.label23 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.HistoricoGridView = new System.Windows.Forms.DataGridView();
+            this.label24 = new System.Windows.Forms.Label();
+            this.lblTotal = new System.Windows.Forms.Label();
+            this.btnCons = new System.Windows.Forms.Button();
+            this.dataInicio = new System.Windows.Forms.DateTimePicker();
+            this.dataFim = new System.Windows.Forms.DateTimePicker();
+            this.button2 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tbPrincipal.SuspendLayout();
             this.tbHistorico.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemsPedidoGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PedidosGridView)).BeginInit();
+            this.tbCreditoDebito.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.HistoricoGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tbPrincipal);
+            this.tabControl1.Controls.Add(this.tbCreditoDebito);
             this.tabControl1.Controls.Add(this.tbHistorico);
             this.tabControl1.Location = new System.Drawing.Point(-2, 0);
             this.tabControl1.Name = "tabControl1";
@@ -98,48 +122,48 @@
             this.tabControl1.Size = new System.Drawing.Size(593, 448);
             this.tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // tbPrincipal
             // 
-            this.tabPage1.Controls.Add(this.btnAlteraRegiao);
-            this.tabPage1.Controls.Add(this.label16);
-            this.tabPage1.Controls.Add(this.txtTaxaEntrega);
-            this.tabPage1.Controls.Add(this.txtDataCadastro);
-            this.tabPage1.Controls.Add(this.label15);
-            this.tabPage1.Controls.Add(this.label14);
-            this.tabPage1.Controls.Add(this.cbxRegiao);
-            this.tabPage1.Controls.Add(this.txtDataNascimento);
-            this.tabPage1.Controls.Add(this.txtTelefone2);
-            this.tabPage1.Controls.Add(this.lblTelefone2);
-            this.tabPage1.Controls.Add(this.lblDataNascimento);
-            this.tabPage1.Controls.Add(this.button1);
-            this.tabPage1.Controls.Add(this.txtNumero);
-            this.tabPage1.Controls.Add(this.label10);
-            this.tabPage1.Controls.Add(this.txtEstado);
-            this.tabPage1.Controls.Add(this.label9);
-            this.tabPage1.Controls.Add(this.txtNomeCliente);
-            this.tabPage1.Controls.Add(this.label8);
-            this.tabPage1.Controls.Add(this.txtObservacaoCliente);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.btnAdicionarCliente);
-            this.tabPage1.Controls.Add(this.txtPontoReferencia);
-            this.tabPage1.Controls.Add(this.txtCidade);
-            this.tabPage1.Controls.Add(this.txtBairro);
-            this.tabPage1.Controls.Add(this.txtEndereco);
-            this.tabPage1.Controls.Add(this.txtCEP);
-            this.tabPage1.Controls.Add(this.txtTelefone);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(585, 422);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Dados do Cliente";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tbPrincipal.Controls.Add(this.btnAlteraRegiao);
+            this.tbPrincipal.Controls.Add(this.label16);
+            this.tbPrincipal.Controls.Add(this.txtTaxaEntrega);
+            this.tbPrincipal.Controls.Add(this.txtDataCadastro);
+            this.tbPrincipal.Controls.Add(this.label15);
+            this.tbPrincipal.Controls.Add(this.label14);
+            this.tbPrincipal.Controls.Add(this.cbxRegiao);
+            this.tbPrincipal.Controls.Add(this.txtDataNascimento);
+            this.tbPrincipal.Controls.Add(this.txtTelefone2);
+            this.tbPrincipal.Controls.Add(this.lblTelefone2);
+            this.tbPrincipal.Controls.Add(this.lblDataNascimento);
+            this.tbPrincipal.Controls.Add(this.button1);
+            this.tbPrincipal.Controls.Add(this.txtNumero);
+            this.tbPrincipal.Controls.Add(this.label10);
+            this.tbPrincipal.Controls.Add(this.txtEstado);
+            this.tbPrincipal.Controls.Add(this.label9);
+            this.tbPrincipal.Controls.Add(this.txtNomeCliente);
+            this.tbPrincipal.Controls.Add(this.label8);
+            this.tbPrincipal.Controls.Add(this.txtObservacaoCliente);
+            this.tbPrincipal.Controls.Add(this.label3);
+            this.tbPrincipal.Controls.Add(this.btnAdicionarCliente);
+            this.tbPrincipal.Controls.Add(this.txtPontoReferencia);
+            this.tbPrincipal.Controls.Add(this.txtCidade);
+            this.tbPrincipal.Controls.Add(this.txtBairro);
+            this.tbPrincipal.Controls.Add(this.txtEndereco);
+            this.tbPrincipal.Controls.Add(this.txtCEP);
+            this.tbPrincipal.Controls.Add(this.txtTelefone);
+            this.tbPrincipal.Controls.Add(this.label7);
+            this.tbPrincipal.Controls.Add(this.label6);
+            this.tbPrincipal.Controls.Add(this.label5);
+            this.tbPrincipal.Controls.Add(this.label4);
+            this.tbPrincipal.Controls.Add(this.label2);
+            this.tbPrincipal.Controls.Add(this.label1);
+            this.tbPrincipal.Location = new System.Drawing.Point(4, 22);
+            this.tbPrincipal.Name = "tbPrincipal";
+            this.tbPrincipal.Padding = new System.Windows.Forms.Padding(3);
+            this.tbPrincipal.Size = new System.Drawing.Size(585, 422);
+            this.tbPrincipal.TabIndex = 0;
+            this.tbPrincipal.Text = "Dados do Cliente";
+            this.tbPrincipal.UseVisualStyleBackColor = true;
             // 
             // btnAlteraRegiao
             // 
@@ -491,7 +515,7 @@
             // lblData
             // 
             this.lblData.AutoSize = true;
-            this.lblData.Location = new System.Drawing.Point(515, 62);
+            this.lblData.Location = new System.Drawing.Point(492, 62);
             this.lblData.Name = "lblData";
             this.lblData.Size = new System.Drawing.Size(65, 13);
             this.lblData.TabIndex = 13;
@@ -500,7 +524,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(455, 62);
+            this.label22.Location = new System.Drawing.Point(429, 64);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(59, 13);
             this.label22.TabIndex = 12;
@@ -546,7 +570,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(21, 196);
+            this.label13.Location = new System.Drawing.Point(10, 196);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(181, 24);
             this.label13.TabIndex = 7;
@@ -556,7 +580,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(21, 53);
+            this.label12.Location = new System.Drawing.Point(10, 53);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(86, 24);
             this.label12.TabIndex = 6;
@@ -569,12 +593,12 @@
             this.ItemsPedidoGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.ItemsPedidoGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ItemsPedidoGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ItemsPedidoGridView.Location = new System.Drawing.Point(25, 223);
+            this.ItemsPedidoGridView.Location = new System.Drawing.Point(10, 223);
             this.ItemsPedidoGridView.MultiSelect = false;
             this.ItemsPedidoGridView.Name = "ItemsPedidoGridView";
             this.ItemsPedidoGridView.ReadOnly = true;
             this.ItemsPedidoGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ItemsPedidoGridView.Size = new System.Drawing.Size(553, 181);
+            this.ItemsPedidoGridView.Size = new System.Drawing.Size(568, 181);
             this.ItemsPedidoGridView.TabIndex = 5;
             // 
             // PedidosGridView
@@ -584,12 +608,12 @@
             this.PedidosGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.PedidosGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.PedidosGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.PedidosGridView.Location = new System.Drawing.Point(25, 80);
+            this.PedidosGridView.Location = new System.Drawing.Point(10, 80);
             this.PedidosGridView.MultiSelect = false;
             this.PedidosGridView.Name = "PedidosGridView";
             this.PedidosGridView.ReadOnly = true;
             this.PedidosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.PedidosGridView.Size = new System.Drawing.Size(553, 106);
+            this.PedidosGridView.Size = new System.Drawing.Size(568, 106);
             this.PedidosGridView.TabIndex = 4;
             this.PedidosGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.MostraItems);
             // 
@@ -628,6 +652,213 @@
             this.dtInicio.Size = new System.Drawing.Size(82, 20);
             this.dtInicio.TabIndex = 0;
             // 
+            // tbCreditoDebito
+            // 
+            this.tbCreditoDebito.Controls.Add(this.button2);
+            this.tbCreditoDebito.Controls.Add(this.dataFim);
+            this.tbCreditoDebito.Controls.Add(this.dataInicio);
+            this.tbCreditoDebito.Controls.Add(this.btnCons);
+            this.tbCreditoDebito.Controls.Add(this.lblTotal);
+            this.tbCreditoDebito.Controls.Add(this.label24);
+            this.tbCreditoDebito.Controls.Add(this.panel1);
+            this.tbCreditoDebito.Controls.Add(this.groupBox1);
+            this.tbCreditoDebito.Location = new System.Drawing.Point(4, 22);
+            this.tbCreditoDebito.Name = "tbCreditoDebito";
+            this.tbCreditoDebito.Padding = new System.Windows.Forms.Padding(3);
+            this.tbCreditoDebito.Size = new System.Drawing.Size(585, 422);
+            this.tbCreditoDebito.TabIndex = 2;
+            this.tbCreditoDebito.Text = "Crédito/Débito";
+            this.tbCreditoDebito.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label23);
+            this.groupBox1.Controls.Add(this.dtLancamento);
+            this.groupBox1.Controls.Add(this.btnLancar);
+            this.groupBox1.Controls.Add(this.label21);
+            this.groupBox1.Controls.Add(this.txtValor);
+            this.groupBox1.Controls.Add(this.label18);
+            this.groupBox1.Controls.Add(this.txtHistorico);
+            this.groupBox1.Controls.Add(this.rbDebito);
+            this.groupBox1.Controls.Add(this.rbCredito);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(575, 72);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Lançamento";
+            // 
+            // rbCredito
+            // 
+            this.rbCredito.AutoSize = true;
+            this.rbCredito.Location = new System.Drawing.Point(93, 36);
+            this.rbCredito.Name = "rbCredito";
+            this.rbCredito.Size = new System.Drawing.Size(58, 17);
+            this.rbCredito.TabIndex = 0;
+            this.rbCredito.Text = "Crédito";
+            this.rbCredito.UseVisualStyleBackColor = true;
+            // 
+            // rbDebito
+            // 
+            this.rbDebito.AutoSize = true;
+            this.rbDebito.Checked = true;
+            this.rbDebito.Location = new System.Drawing.Point(92, 13);
+            this.rbDebito.Name = "rbDebito";
+            this.rbDebito.Size = new System.Drawing.Size(56, 17);
+            this.rbDebito.TabIndex = 1;
+            this.rbDebito.TabStop = true;
+            this.rbDebito.Text = "Débito";
+            this.rbDebito.UseVisualStyleBackColor = true;
+            // 
+            // txtHistorico
+            // 
+            this.txtHistorico.Location = new System.Drawing.Point(157, 38);
+            this.txtHistorico.MaxLength = 100;
+            this.txtHistorico.Name = "txtHistorico";
+            this.txtHistorico.Size = new System.Drawing.Size(191, 20);
+            this.txtHistorico.TabIndex = 2;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(154, 18);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(48, 13);
+            this.label18.TabIndex = 3;
+            this.label18.Text = "Histórico";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(351, 18);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(48, 13);
+            this.label21.TabIndex = 5;
+            this.label21.Text = "Valor R$";
+            // 
+            // txtValor
+            // 
+            this.txtValor.Location = new System.Drawing.Point(354, 38);
+            this.txtValor.Name = "txtValor";
+            this.txtValor.Size = new System.Drawing.Size(107, 20);
+            this.txtValor.TabIndex = 4;
+            // 
+            // btnLancar
+            // 
+            this.btnLancar.Image = ((System.Drawing.Image)(resources.GetObject("btnLancar.Image")));
+            this.btnLancar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLancar.Location = new System.Drawing.Point(479, 19);
+            this.btnLancar.Name = "btnLancar";
+            this.btnLancar.Size = new System.Drawing.Size(67, 39);
+            this.btnLancar.TabIndex = 6;
+            this.btnLancar.Text = "Lançar ";
+            this.btnLancar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLancar.UseVisualStyleBackColor = true;
+            this.btnLancar.Click += new System.EventHandler(this.LancarHistorico);
+            // 
+            // dtLancamento
+            // 
+            this.dtLancamento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtLancamento.Location = new System.Drawing.Point(7, 35);
+            this.dtLancamento.Name = "dtLancamento";
+            this.dtLancamento.Size = new System.Drawing.Size(80, 20);
+            this.dtLancamento.TabIndex = 7;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(10, 17);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(59, 13);
+            this.label23.TabIndex = 8;
+            this.label23.Text = "Movimento";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.HistoricoGridView);
+            this.panel1.Location = new System.Drawing.Point(3, 82);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(575, 280);
+            this.panel1.TabIndex = 1;
+            // 
+            // HistoricoGridView
+            // 
+            this.HistoricoGridView.AllowUserToAddRows = false;
+            this.HistoricoGridView.AllowUserToDeleteRows = false;
+            this.HistoricoGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.HistoricoGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.HistoricoGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.HistoricoGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HistoricoGridView.Location = new System.Drawing.Point(0, 0);
+            this.HistoricoGridView.MultiSelect = false;
+            this.HistoricoGridView.Name = "HistoricoGridView";
+            this.HistoricoGridView.ReadOnly = true;
+            this.HistoricoGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.HistoricoGridView.Size = new System.Drawing.Size(575, 280);
+            this.HistoricoGridView.TabIndex = 2;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(447, 392);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(93, 24);
+            this.label24.TabIndex = 2;
+            this.label24.Text = "Total R$:";
+            // 
+            // lblTotal
+            // 
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotal.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblTotal.Location = new System.Drawing.Point(504, 392);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(49, 24);
+            this.lblTotal.TabIndex = 3;
+            this.lblTotal.Text = "0.00";
+            // 
+            // btnCons
+            // 
+            this.btnCons.Image = ((System.Drawing.Image)(resources.GetObject("btnCons.Image")));
+            this.btnCons.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCons.Location = new System.Drawing.Point(211, 368);
+            this.btnCons.Name = "btnCons";
+            this.btnCons.Size = new System.Drawing.Size(84, 39);
+            this.btnCons.TabIndex = 8;
+            this.btnCons.Text = "Consultar";
+            this.btnCons.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCons.UseVisualStyleBackColor = true;
+            this.btnCons.Click += new System.EventHandler(this.btnCons_Click);
+            // 
+            // dataInicio
+            // 
+            this.dataInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dataInicio.Location = new System.Drawing.Point(6, 375);
+            this.dataInicio.Name = "dataInicio";
+            this.dataInicio.Size = new System.Drawing.Size(80, 20);
+            this.dataInicio.TabIndex = 9;
+            // 
+            // dataFim
+            // 
+            this.dataFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dataFim.Location = new System.Drawing.Point(105, 375);
+            this.dataFim.Name = "dataFim";
+            this.dataFim.Size = new System.Drawing.Size(80, 20);
+            this.dataFim.TabIndex = 10;
+            // 
+            // button2
+            // 
+            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
+            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button2.Location = new System.Drawing.Point(318, 368);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(84, 39);
+            this.button2.TabIndex = 11;
+            this.button2.Text = "Imprimir";
+            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // frmCadastroCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -644,12 +875,18 @@
             this.Load += new System.EventHandler(this.frmCadastroCliente_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastroCliente_KeyDown);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.tbPrincipal.ResumeLayout(false);
+            this.tbPrincipal.PerformLayout();
             this.tbHistorico.ResumeLayout(false);
             this.tbHistorico.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemsPedidoGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PedidosGridView)).EndInit();
+            this.tbCreditoDebito.ResumeLayout(false);
+            this.tbCreditoDebito.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.HistoricoGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -657,7 +894,7 @@
         #endregion
 
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tbPrincipal;
         private System.Windows.Forms.MaskedTextBox txtDataNascimento;
         public System.Windows.Forms.TextBox txtTelefone2;
         private System.Windows.Forms.Label lblTelefone2;
@@ -708,6 +945,25 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label lblQtd;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TabPage tbCreditoDebito;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnLancar;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox txtValor;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txtHistorico;
+        private System.Windows.Forms.RadioButton rbDebito;
+        private System.Windows.Forms.RadioButton rbCredito;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.DateTimePicker dtLancamento;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataGridView HistoricoGridView;
+        private System.Windows.Forms.Label lblTotal;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Button btnCons;
+        private System.Windows.Forms.DateTimePicker dataFim;
+        private System.Windows.Forms.DateTimePicker dataInicio;
+        private System.Windows.Forms.Button button2;
 
     }
 }
