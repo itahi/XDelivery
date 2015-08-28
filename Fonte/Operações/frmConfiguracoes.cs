@@ -429,12 +429,12 @@ namespace DexComanda
 
         private void chkFidelidade_CheckedChanged(object sender, EventArgs e)
         {
-            grpFidelidade.Visible = chkFidelidade.Checked;
+            grpFidelidade.Enabled = chkFidelidade.Checked;
         }
 
         private void chkEnviaSms_CheckedChanged(object sender, EventArgs e)
         {
-            grpSms.Visible = chkEnviaSms.Checked;
+            grpSms.Enabled = chkEnviaSms.Checked;
         }
 
         private void chkDescontoDiasemana_CheckedChanged(object sender, EventArgs e)
@@ -453,11 +453,7 @@ namespace DexComanda
 
         private void ImpressoaMatricial(object sender, EventArgs e)
         {
-            grpBematech.Enabled = txtPortaLPT.Visible = chkImpLPT.Checked;
-            if ( chkImpLPT.Checked)
-            {
-                lblporta.Focus();
-            }
+            txtPortaLPT.Enabled = chkImpLPT.Checked;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -544,17 +540,17 @@ namespace DexComanda
             else if (modeloImp == "MP 2000 TH")
             {
                 iNumModelo = MP2032.ConfiguraModeloImpressora(0);
-                iNumModelo = 1;
+                iNumModelo = 0;
             }
             else if (modeloImp == "MP 2100 TH")
             {
                 iRetorno = MP2032.ConfiguraModeloImpressora(0);
-                iNumModelo = 1;
+                iNumModelo = 0;
             }
             else if (modeloImp == "MP 2500 TH")
             {
                 iRetorno = MP2032.ConfiguraModeloImpressora(8);
-                iNumModelo = 8;
+                iNumModelo = 0;
             }
             else if (modeloImp == "MP 4000 TH")
             {

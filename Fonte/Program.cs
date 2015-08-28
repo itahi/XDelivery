@@ -109,6 +109,7 @@ namespace DexComanda
 
                                 Configuracao configs = new Configuracao()
                                  {
+                                     cod                    = int.Parse(config.ItemArray.GetValue(0).ToString()),
                                      ImpViaCozinha          = bool.Parse(config.ItemArray.GetValue(1).ToString()),
                                      UsaDataNascimento      = bool.Parse(config.ItemArray.GetValue(2).ToString()),
                                      UsaLoginSenha          = bool.Parse(config.ItemArray.GetValue(3).ToString()),

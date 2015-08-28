@@ -865,7 +865,6 @@
             this.txtPortaLPT.Name = "txtPortaLPT";
             this.txtPortaLPT.Size = new System.Drawing.Size(51, 20);
             this.txtPortaLPT.TabIndex = 25;
-            this.txtPortaLPT.Visible = false;
             // 
             // lbltempo
             // 
@@ -981,13 +980,13 @@
             // 
             this.grpFidelidade.Controls.Add(this.label23);
             this.grpFidelidade.Controls.Add(this.txtNumeroPedidos);
+            this.grpFidelidade.Enabled = false;
             this.grpFidelidade.Location = new System.Drawing.Point(16, 29);
             this.grpFidelidade.Name = "grpFidelidade";
             this.grpFidelidade.Size = new System.Drawing.Size(238, 72);
             this.grpFidelidade.TabIndex = 4;
             this.grpFidelidade.TabStop = false;
             this.grpFidelidade.Text = "Parametros Fidelidade";
-            this.grpFidelidade.Visible = false;
             // 
             // label23
             // 

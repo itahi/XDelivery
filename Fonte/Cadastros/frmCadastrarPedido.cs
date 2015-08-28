@@ -1060,31 +1060,31 @@ namespace DexComanda
                     }
 
                 }
-                if (ImprimeViaCozinha)
-                {
-                    for (int i = 0; i < QtdViasCozinha; i++)
-                    {
-                        ImpressaoCozinha();
-                        if (ImprimeLPT)
-                        {
-                            SerialPort porta = new SerialPort(PortaImpressa);
-                            porta.Open();
-                            if (porta.IsOpen)
-                            {
-                                porta.WriteLine(line);
-                                porta.Close();
-                            }
-                            //Utils.ImpressaoLPT1(line, PortaImpressa);
-                        }
-                        else
-                        {
-                            pd.PrintPage += new PrintPageEventHandler(this.imprimirViaCozinha);
-                            pd.Print();
-                            pd.PrintPage -= new PrintPageEventHandler(this.imprimirViaCozinha);
-                        }
-                    }
+                //if (ImprimeViaCozinha)
+                //{
+                //    for (int i = 0; i < QtdViasCozinha; i++)
+                //    {
+                //        ImpressaoCozinha();
+                //        if (ImprimeLPT)
+                //        {
+                //            SerialPort porta = new SerialPort(PortaImpressa);
+                //            porta.Open();
+                //            if (porta.IsOpen)
+                //            {
+                //                porta.WriteLine(line);
+                //                porta.Close();
+                //            }
+                //            //Utils.ImpressaoLPT1(line, PortaImpressa);
+                //        }
+                //        else
+                //        {
+                //            pd.PrintPage += new PrintPageEventHandler(this.imprimirViaCozinha);
+                //            pd.Print();
+                //            pd.PrintPage -= new PrintPageEventHandler(this.imprimirViaCozinha);
+                //        }
+                //    }
 
-                }
+                //}
             }
             catch (Exception E)
             {
@@ -1133,7 +1133,7 @@ namespace DexComanda
                         line += QuebrarString(ItemsPedi.PrecoUnitario.ToString());
                         line += QuebrarString(ItemsPedi.Quantidade.ToString());
 
-                        if (ItemsPedi.Item != null && ItemsPedi.Item != "")
+                        if (ItemsPedi.Item != null && ItemsPedi.Item != "" && ItemsPedi.Item!="null")
                         {
                             line += QuebrarString(ItemsPedi.Item.ToString());
                         }

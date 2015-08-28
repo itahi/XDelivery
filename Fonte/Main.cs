@@ -74,8 +74,7 @@ namespace DexComanda
         }
         private void gruposToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAdicionarGrupo frm = new frmAdicionarGrupo();
-            frm.ShowDialog();
+            
         }
         private void HistoricoCancelamentos(int iCodPessoa)
         {
@@ -105,6 +104,7 @@ namespace DexComanda
                 {
                     aberturaCaixaToolStripMenuItem.Enabled = false;
                     lblCaixa.Text = "Caixa Aberto";
+                    lblCaixa.ForeColor = Color.Red;
                 }
 
             }
@@ -1256,8 +1256,16 @@ namespace DexComanda
 
                     iRetorno = MP2032.ConfiguraModeloImpressora(int.Parse(iModelo));
                     iRetorno = MP2032.IniciaPorta(iPortaUSB);
-                    iRetorno = MP2032.BematechTX(line + "\r\n\r\n");
-                    MP2032.AcionaGuilhotina(1);
+                    if (iRetorno ==1)
+                    {
+                        iRetorno = MP2032.BematechTX(line + "\r\n\r\n");
+                        MP2032.AcionaGuilhotina(1);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erro de  conexão impressora" + iModelo +" Porta"+ iPortaUSB);
+                    }
+                    
                 }
             }
             else
@@ -1282,7 +1290,7 @@ namespace DexComanda
 
         private void AtualizaGrid_Tick(object sender, EventArgs e)
         {
-
+            
             //DataSet Dados, PedidosAberto;
 
 
@@ -1307,7 +1315,12 @@ namespace DexComanda
             {
                 for (int intFor = 0; intFor < pedidosGridView.Rows.Count; intFor++)
                 {
-                    ImpressaoAutomatica(int.Parse(pedidosGridView.Rows[intFor].Cells["Codigo"].Value.ToString()), pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString());
+                    Boolean iOrigemExterna = pedidosGridView.Rows[intFor].Cells["PedidoOrigem"].Value.ToString() == "Aplicativo";
+                    if (iOrigemExterna)
+                    {
+                        ImpressaoAutomatica(int.Parse(pedidosGridView.Rows[intFor].Cells["Codigo"].Value.ToString()), pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString()); 
+                    }
+                   
                 }
             }
             
@@ -1512,6 +1525,18 @@ namespace DexComanda
         private void fecharCaixaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCaixaFechamento frm = new frmCaixaFechamento();
+            frm.ShowDialog();
+        }
+
+        private void gruposCategoriasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAdicionarGrupo frm = new frmAdicionarGrupo();
+            frm.ShowDialog();
+        }
+
+        private void adicionaisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadProdutoAdicional frm = new frmCadProdutoAdicional();
             frm.ShowDialog();
         }
 

@@ -750,12 +750,16 @@ namespace DexComanda
         private void btnCons_Click(object sender, EventArgs e)
         {
             DataSet dsPedidos = con.SelectRegistroPorCodigoPeriodo("HistoricoPessoa", "spObterHistoricoPorPessoa", Convert.ToString(codigoClienteParaAlterar), dataInicio.Value, dataFim.Value);
+            if (dsPedidos.Tables[0].Rows.Count>0)
+            {
             HistoricoGridView.DataSource = null;
             HistoricoGridView.AutoGenerateColumns = true;
             HistoricoGridView.DataSource = dsPedidos;
             HistoricoGridView.DataMember = "HistoricoPessoa";
-            
             CalculaValores();
+            btnImprimir.Enabled = true;
+            }
+            
 
         }
     }

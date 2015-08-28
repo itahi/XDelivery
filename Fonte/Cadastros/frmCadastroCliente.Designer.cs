@@ -64,6 +64,25 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.tbCreditoDebito = new System.Windows.Forms.TabPage();
+            this.btnImprimir = new System.Windows.Forms.Button();
+            this.dataFim = new System.Windows.Forms.DateTimePicker();
+            this.dataInicio = new System.Windows.Forms.DateTimePicker();
+            this.btnCons = new System.Windows.Forms.Button();
+            this.lblTotal = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.HistoricoGridView = new System.Windows.Forms.DataGridView();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.dtLancamento = new System.Windows.Forms.DateTimePicker();
+            this.btnLancar = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
+            this.txtValor = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txtHistorico = new System.Windows.Forms.TextBox();
+            this.rbDebito = new System.Windows.Forms.RadioButton();
+            this.rbCredito = new System.Windows.Forms.RadioButton();
             this.tbHistorico = new System.Windows.Forms.TabPage();
             this.lblQtd = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
@@ -81,34 +100,15 @@
             this.btnConsultar = new System.Windows.Forms.Button();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
-            this.tbCreditoDebito = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rbCredito = new System.Windows.Forms.RadioButton();
-            this.rbDebito = new System.Windows.Forms.RadioButton();
-            this.txtHistorico = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.txtValor = new System.Windows.Forms.TextBox();
-            this.btnLancar = new System.Windows.Forms.Button();
-            this.dtLancamento = new System.Windows.Forms.DateTimePicker();
-            this.label23 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.HistoricoGridView = new System.Windows.Forms.DataGridView();
-            this.label24 = new System.Windows.Forms.Label();
-            this.lblTotal = new System.Windows.Forms.Label();
-            this.btnCons = new System.Windows.Forms.Button();
-            this.dataInicio = new System.Windows.Forms.DateTimePicker();
-            this.dataFim = new System.Windows.Forms.DateTimePicker();
-            this.button2 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbPrincipal.SuspendLayout();
+            this.tbCreditoDebito.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.HistoricoGridView)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.tbHistorico.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemsPedidoGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PedidosGridView)).BeginInit();
-            this.tbCreditoDebito.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.HistoricoGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -468,6 +468,214 @@
             this.label1.TabIndex = 26;
             this.label1.Text = "Telefone:";
             // 
+            // tbCreditoDebito
+            // 
+            this.tbCreditoDebito.Controls.Add(this.btnImprimir);
+            this.tbCreditoDebito.Controls.Add(this.dataFim);
+            this.tbCreditoDebito.Controls.Add(this.dataInicio);
+            this.tbCreditoDebito.Controls.Add(this.btnCons);
+            this.tbCreditoDebito.Controls.Add(this.lblTotal);
+            this.tbCreditoDebito.Controls.Add(this.label24);
+            this.tbCreditoDebito.Controls.Add(this.panel1);
+            this.tbCreditoDebito.Controls.Add(this.groupBox1);
+            this.tbCreditoDebito.Location = new System.Drawing.Point(4, 22);
+            this.tbCreditoDebito.Name = "tbCreditoDebito";
+            this.tbCreditoDebito.Padding = new System.Windows.Forms.Padding(3);
+            this.tbCreditoDebito.Size = new System.Drawing.Size(585, 422);
+            this.tbCreditoDebito.TabIndex = 2;
+            this.tbCreditoDebito.Text = "Crédito/Débito";
+            this.tbCreditoDebito.UseVisualStyleBackColor = true;
+            // 
+            // btnImprimir
+            // 
+            this.btnImprimir.Enabled = false;
+            this.btnImprimir.Image = ((System.Drawing.Image)(resources.GetObject("btnImprimir.Image")));
+            this.btnImprimir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnImprimir.Location = new System.Drawing.Point(318, 368);
+            this.btnImprimir.Name = "btnImprimir";
+            this.btnImprimir.Size = new System.Drawing.Size(84, 39);
+            this.btnImprimir.TabIndex = 11;
+            this.btnImprimir.Text = "Imprimir";
+            this.btnImprimir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnImprimir.UseVisualStyleBackColor = true;
+            // 
+            // dataFim
+            // 
+            this.dataFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dataFim.Location = new System.Drawing.Point(105, 375);
+            this.dataFim.Name = "dataFim";
+            this.dataFim.Size = new System.Drawing.Size(80, 20);
+            this.dataFim.TabIndex = 10;
+            // 
+            // dataInicio
+            // 
+            this.dataInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dataInicio.Location = new System.Drawing.Point(6, 375);
+            this.dataInicio.Name = "dataInicio";
+            this.dataInicio.Size = new System.Drawing.Size(80, 20);
+            this.dataInicio.TabIndex = 9;
+            // 
+            // btnCons
+            // 
+            this.btnCons.Image = ((System.Drawing.Image)(resources.GetObject("btnCons.Image")));
+            this.btnCons.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCons.Location = new System.Drawing.Point(211, 368);
+            this.btnCons.Name = "btnCons";
+            this.btnCons.Size = new System.Drawing.Size(84, 39);
+            this.btnCons.TabIndex = 8;
+            this.btnCons.Text = "Consultar";
+            this.btnCons.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCons.UseVisualStyleBackColor = true;
+            this.btnCons.Click += new System.EventHandler(this.btnCons_Click);
+            // 
+            // lblTotal
+            // 
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotal.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblTotal.Location = new System.Drawing.Point(504, 392);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(49, 24);
+            this.lblTotal.TabIndex = 3;
+            this.lblTotal.Text = "0.00";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(447, 392);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(93, 24);
+            this.label24.TabIndex = 2;
+            this.label24.Text = "Total R$:";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.HistoricoGridView);
+            this.panel1.Location = new System.Drawing.Point(3, 82);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(575, 280);
+            this.panel1.TabIndex = 1;
+            // 
+            // HistoricoGridView
+            // 
+            this.HistoricoGridView.AllowUserToAddRows = false;
+            this.HistoricoGridView.AllowUserToDeleteRows = false;
+            this.HistoricoGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.HistoricoGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.HistoricoGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.HistoricoGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HistoricoGridView.Location = new System.Drawing.Point(0, 0);
+            this.HistoricoGridView.MultiSelect = false;
+            this.HistoricoGridView.Name = "HistoricoGridView";
+            this.HistoricoGridView.ReadOnly = true;
+            this.HistoricoGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.HistoricoGridView.Size = new System.Drawing.Size(575, 280);
+            this.HistoricoGridView.TabIndex = 2;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label23);
+            this.groupBox1.Controls.Add(this.dtLancamento);
+            this.groupBox1.Controls.Add(this.btnLancar);
+            this.groupBox1.Controls.Add(this.label21);
+            this.groupBox1.Controls.Add(this.txtValor);
+            this.groupBox1.Controls.Add(this.label18);
+            this.groupBox1.Controls.Add(this.txtHistorico);
+            this.groupBox1.Controls.Add(this.rbDebito);
+            this.groupBox1.Controls.Add(this.rbCredito);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(575, 72);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Lançamento";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(10, 17);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(59, 13);
+            this.label23.TabIndex = 8;
+            this.label23.Text = "Movimento";
+            // 
+            // dtLancamento
+            // 
+            this.dtLancamento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtLancamento.Location = new System.Drawing.Point(7, 35);
+            this.dtLancamento.Name = "dtLancamento";
+            this.dtLancamento.Size = new System.Drawing.Size(80, 20);
+            this.dtLancamento.TabIndex = 7;
+            // 
+            // btnLancar
+            // 
+            this.btnLancar.Image = ((System.Drawing.Image)(resources.GetObject("btnLancar.Image")));
+            this.btnLancar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLancar.Location = new System.Drawing.Point(479, 19);
+            this.btnLancar.Name = "btnLancar";
+            this.btnLancar.Size = new System.Drawing.Size(67, 39);
+            this.btnLancar.TabIndex = 6;
+            this.btnLancar.Text = "Lançar ";
+            this.btnLancar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLancar.UseVisualStyleBackColor = true;
+            this.btnLancar.Click += new System.EventHandler(this.LancarHistorico);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(351, 18);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(48, 13);
+            this.label21.TabIndex = 5;
+            this.label21.Text = "Valor R$";
+            // 
+            // txtValor
+            // 
+            this.txtValor.Location = new System.Drawing.Point(354, 38);
+            this.txtValor.Name = "txtValor";
+            this.txtValor.Size = new System.Drawing.Size(107, 20);
+            this.txtValor.TabIndex = 4;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(154, 18);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(48, 13);
+            this.label18.TabIndex = 3;
+            this.label18.Text = "Histórico";
+            // 
+            // txtHistorico
+            // 
+            this.txtHistorico.Location = new System.Drawing.Point(157, 38);
+            this.txtHistorico.MaxLength = 100;
+            this.txtHistorico.Name = "txtHistorico";
+            this.txtHistorico.Size = new System.Drawing.Size(191, 20);
+            this.txtHistorico.TabIndex = 2;
+            // 
+            // rbDebito
+            // 
+            this.rbDebito.AutoSize = true;
+            this.rbDebito.Checked = true;
+            this.rbDebito.Location = new System.Drawing.Point(92, 13);
+            this.rbDebito.Name = "rbDebito";
+            this.rbDebito.Size = new System.Drawing.Size(56, 17);
+            this.rbDebito.TabIndex = 1;
+            this.rbDebito.TabStop = true;
+            this.rbDebito.Text = "Débito";
+            this.rbDebito.UseVisualStyleBackColor = true;
+            // 
+            // rbCredito
+            // 
+            this.rbCredito.AutoSize = true;
+            this.rbCredito.Location = new System.Drawing.Point(93, 36);
+            this.rbCredito.Name = "rbCredito";
+            this.rbCredito.Size = new System.Drawing.Size(58, 17);
+            this.rbCredito.TabIndex = 0;
+            this.rbCredito.Text = "Crédito";
+            this.rbCredito.UseVisualStyleBackColor = true;
+            // 
             // tbHistorico
             // 
             this.tbHistorico.Controls.Add(this.lblQtd);
@@ -652,213 +860,6 @@
             this.dtInicio.Size = new System.Drawing.Size(82, 20);
             this.dtInicio.TabIndex = 0;
             // 
-            // tbCreditoDebito
-            // 
-            this.tbCreditoDebito.Controls.Add(this.button2);
-            this.tbCreditoDebito.Controls.Add(this.dataFim);
-            this.tbCreditoDebito.Controls.Add(this.dataInicio);
-            this.tbCreditoDebito.Controls.Add(this.btnCons);
-            this.tbCreditoDebito.Controls.Add(this.lblTotal);
-            this.tbCreditoDebito.Controls.Add(this.label24);
-            this.tbCreditoDebito.Controls.Add(this.panel1);
-            this.tbCreditoDebito.Controls.Add(this.groupBox1);
-            this.tbCreditoDebito.Location = new System.Drawing.Point(4, 22);
-            this.tbCreditoDebito.Name = "tbCreditoDebito";
-            this.tbCreditoDebito.Padding = new System.Windows.Forms.Padding(3);
-            this.tbCreditoDebito.Size = new System.Drawing.Size(585, 422);
-            this.tbCreditoDebito.TabIndex = 2;
-            this.tbCreditoDebito.Text = "Crédito/Débito";
-            this.tbCreditoDebito.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label23);
-            this.groupBox1.Controls.Add(this.dtLancamento);
-            this.groupBox1.Controls.Add(this.btnLancar);
-            this.groupBox1.Controls.Add(this.label21);
-            this.groupBox1.Controls.Add(this.txtValor);
-            this.groupBox1.Controls.Add(this.label18);
-            this.groupBox1.Controls.Add(this.txtHistorico);
-            this.groupBox1.Controls.Add(this.rbDebito);
-            this.groupBox1.Controls.Add(this.rbCredito);
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(575, 72);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Lançamento";
-            // 
-            // rbCredito
-            // 
-            this.rbCredito.AutoSize = true;
-            this.rbCredito.Location = new System.Drawing.Point(93, 36);
-            this.rbCredito.Name = "rbCredito";
-            this.rbCredito.Size = new System.Drawing.Size(58, 17);
-            this.rbCredito.TabIndex = 0;
-            this.rbCredito.Text = "Crédito";
-            this.rbCredito.UseVisualStyleBackColor = true;
-            // 
-            // rbDebito
-            // 
-            this.rbDebito.AutoSize = true;
-            this.rbDebito.Checked = true;
-            this.rbDebito.Location = new System.Drawing.Point(92, 13);
-            this.rbDebito.Name = "rbDebito";
-            this.rbDebito.Size = new System.Drawing.Size(56, 17);
-            this.rbDebito.TabIndex = 1;
-            this.rbDebito.TabStop = true;
-            this.rbDebito.Text = "Débito";
-            this.rbDebito.UseVisualStyleBackColor = true;
-            // 
-            // txtHistorico
-            // 
-            this.txtHistorico.Location = new System.Drawing.Point(157, 38);
-            this.txtHistorico.MaxLength = 100;
-            this.txtHistorico.Name = "txtHistorico";
-            this.txtHistorico.Size = new System.Drawing.Size(191, 20);
-            this.txtHistorico.TabIndex = 2;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(154, 18);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(48, 13);
-            this.label18.TabIndex = 3;
-            this.label18.Text = "Histórico";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(351, 18);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(48, 13);
-            this.label21.TabIndex = 5;
-            this.label21.Text = "Valor R$";
-            // 
-            // txtValor
-            // 
-            this.txtValor.Location = new System.Drawing.Point(354, 38);
-            this.txtValor.Name = "txtValor";
-            this.txtValor.Size = new System.Drawing.Size(107, 20);
-            this.txtValor.TabIndex = 4;
-            // 
-            // btnLancar
-            // 
-            this.btnLancar.Image = ((System.Drawing.Image)(resources.GetObject("btnLancar.Image")));
-            this.btnLancar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLancar.Location = new System.Drawing.Point(479, 19);
-            this.btnLancar.Name = "btnLancar";
-            this.btnLancar.Size = new System.Drawing.Size(67, 39);
-            this.btnLancar.TabIndex = 6;
-            this.btnLancar.Text = "Lançar ";
-            this.btnLancar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnLancar.UseVisualStyleBackColor = true;
-            this.btnLancar.Click += new System.EventHandler(this.LancarHistorico);
-            // 
-            // dtLancamento
-            // 
-            this.dtLancamento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtLancamento.Location = new System.Drawing.Point(7, 35);
-            this.dtLancamento.Name = "dtLancamento";
-            this.dtLancamento.Size = new System.Drawing.Size(80, 20);
-            this.dtLancamento.TabIndex = 7;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(10, 17);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(59, 13);
-            this.label23.TabIndex = 8;
-            this.label23.Text = "Movimento";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.HistoricoGridView);
-            this.panel1.Location = new System.Drawing.Point(3, 82);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(575, 280);
-            this.panel1.TabIndex = 1;
-            // 
-            // HistoricoGridView
-            // 
-            this.HistoricoGridView.AllowUserToAddRows = false;
-            this.HistoricoGridView.AllowUserToDeleteRows = false;
-            this.HistoricoGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.HistoricoGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.HistoricoGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.HistoricoGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HistoricoGridView.Location = new System.Drawing.Point(0, 0);
-            this.HistoricoGridView.MultiSelect = false;
-            this.HistoricoGridView.Name = "HistoricoGridView";
-            this.HistoricoGridView.ReadOnly = true;
-            this.HistoricoGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.HistoricoGridView.Size = new System.Drawing.Size(575, 280);
-            this.HistoricoGridView.TabIndex = 2;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(447, 392);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(93, 24);
-            this.label24.TabIndex = 2;
-            this.label24.Text = "Total R$:";
-            // 
-            // lblTotal
-            // 
-            this.lblTotal.AutoSize = true;
-            this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotal.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblTotal.Location = new System.Drawing.Point(504, 392);
-            this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(49, 24);
-            this.lblTotal.TabIndex = 3;
-            this.lblTotal.Text = "0.00";
-            // 
-            // btnCons
-            // 
-            this.btnCons.Image = ((System.Drawing.Image)(resources.GetObject("btnCons.Image")));
-            this.btnCons.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCons.Location = new System.Drawing.Point(211, 368);
-            this.btnCons.Name = "btnCons";
-            this.btnCons.Size = new System.Drawing.Size(84, 39);
-            this.btnCons.TabIndex = 8;
-            this.btnCons.Text = "Consultar";
-            this.btnCons.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCons.UseVisualStyleBackColor = true;
-            this.btnCons.Click += new System.EventHandler(this.btnCons_Click);
-            // 
-            // dataInicio
-            // 
-            this.dataInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dataInicio.Location = new System.Drawing.Point(6, 375);
-            this.dataInicio.Name = "dataInicio";
-            this.dataInicio.Size = new System.Drawing.Size(80, 20);
-            this.dataInicio.TabIndex = 9;
-            // 
-            // dataFim
-            // 
-            this.dataFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dataFim.Location = new System.Drawing.Point(105, 375);
-            this.dataFim.Name = "dataFim";
-            this.dataFim.Size = new System.Drawing.Size(80, 20);
-            this.dataFim.TabIndex = 10;
-            // 
-            // button2
-            // 
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.Location = new System.Drawing.Point(318, 368);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(84, 39);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "Imprimir";
-            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // frmCadastroCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -877,16 +878,16 @@
             this.tabControl1.ResumeLayout(false);
             this.tbPrincipal.ResumeLayout(false);
             this.tbPrincipal.PerformLayout();
+            this.tbCreditoDebito.ResumeLayout(false);
+            this.tbCreditoDebito.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.HistoricoGridView)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.tbHistorico.ResumeLayout(false);
             this.tbHistorico.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemsPedidoGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PedidosGridView)).EndInit();
-            this.tbCreditoDebito.ResumeLayout(false);
-            this.tbCreditoDebito.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.HistoricoGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -963,7 +964,7 @@
         private System.Windows.Forms.Button btnCons;
         private System.Windows.Forms.DateTimePicker dataFim;
         private System.Windows.Forms.DateTimePicker dataInicio;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnImprimir;
 
     }
 }

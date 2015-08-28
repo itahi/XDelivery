@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.cadastrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gruposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.produtosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.empresaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,6 +113,8 @@
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.lblCaixa = new System.Windows.Forms.Label();
+            this.gruposCategoriasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adicionaisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -147,7 +148,6 @@
             // cadastrosToolStripMenuItem
             // 
             this.cadastrosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.gruposToolStripMenuItem,
             this.produtosToolStripMenuItem,
             this.clientesToolStripMenuItem,
             this.empresaToolStripMenuItem,
@@ -163,15 +163,11 @@
             this.cadastrosToolStripMenuItem.Size = new System.Drawing.Size(91, 25);
             this.cadastrosToolStripMenuItem.Text = "Cadastros";
             // 
-            // gruposToolStripMenuItem
-            // 
-            this.gruposToolStripMenuItem.Name = "gruposToolStripMenuItem";
-            this.gruposToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
-            this.gruposToolStripMenuItem.Text = "Grupos";
-            this.gruposToolStripMenuItem.Click += new System.EventHandler(this.gruposToolStripMenuItem_Click);
-            // 
             // produtosToolStripMenuItem
             // 
+            this.produtosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.gruposCategoriasToolStripMenuItem,
+            this.adicionaisToolStripMenuItem});
             this.produtosToolStripMenuItem.Name = "produtosToolStripMenuItem";
             this.produtosToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
             this.produtosToolStripMenuItem.Text = "Produtos";
@@ -948,6 +944,20 @@
             this.lblCaixa.TabIndex = 8;
             this.lblCaixa.Text = "Caixa Fechado";
             // 
+            // gruposCategoriasToolStripMenuItem
+            // 
+            this.gruposCategoriasToolStripMenuItem.Name = "gruposCategoriasToolStripMenuItem";
+            this.gruposCategoriasToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
+            this.gruposCategoriasToolStripMenuItem.Text = "Grupos ( Categorias)";
+            this.gruposCategoriasToolStripMenuItem.Click += new System.EventHandler(this.gruposCategoriasToolStripMenuItem_Click);
+            // 
+            // adicionaisToolStripMenuItem
+            // 
+            this.adicionaisToolStripMenuItem.Name = "adicionaisToolStripMenuItem";
+            this.adicionaisToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
+            this.adicionaisToolStripMenuItem.Text = "Adicionais";
+            this.adicionaisToolStripMenuItem.Click += new System.EventHandler(this.adicionaisToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -999,7 +1009,6 @@
         private System.Windows.Forms.ToolStripMenuItem cadastrosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem produtosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem gruposToolStripMenuItem;
         private DBExpertDataSet dBExpertDataSet;
         private System.Windows.Forms.BindingSource produtoBindingSource;
         private DBExpertDataSetTableAdapters.ProdutoTableAdapter produtoTableAdapter;
@@ -1079,5 +1088,7 @@
         private System.Windows.Forms.ToolStripMenuItem aberturaCaixaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cadastroCaixaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fecharCaixaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gruposCategoriasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem adicionaisToolStripMenuItem;
     }
 }

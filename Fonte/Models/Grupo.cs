@@ -9,5 +9,6 @@ namespace DexComanda.Models
     {
         public int Codigo { get; set; }
         public string NomeGrupo { get; set; }
+        public Boolean ImprimeCozinhaSN { get; set; }
     }
 }
