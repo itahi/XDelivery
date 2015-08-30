@@ -1270,7 +1270,9 @@ namespace DexComanda
             }
             else
             {
-                Utils.ImpressaoMesanova(CodPedido);
+                PrintDocument pd = new PrintDocument();
+                pd.PrintPage += new PrintPageEventHandler(this.ImprimirPedidoMesa);
+                pd.Print();
 
             }
 
