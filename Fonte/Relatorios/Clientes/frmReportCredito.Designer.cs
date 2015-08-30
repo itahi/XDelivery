@@ -1,6 +1,6 @@
 ﻿namespace DexComanda.Relatorios.Clientes
 {
-    partial class frmReportCreditoDebito
+    partial class frmReportCredito
     {
         /// <summary>
         /// Required designer variable.
@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.RelCreditoDebito1 = new DexComanda.RelCreditoDebito();
-            this.RelHistoricoPessoa1 = new DexComanda.RelHistoricoPessoa();
             this.SuspendLayout();
             // 
             // crystalReportViewer1
@@ -41,18 +39,19 @@
             this.crystalReportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.crystalReportViewer1.Location = new System.Drawing.Point(0, 0);
             this.crystalReportViewer1.Name = "crystalReportViewer1";
-            this.crystalReportViewer1.ReportSource = this.RelHistoricoPessoa1;
-            this.crystalReportViewer1.Size = new System.Drawing.Size(476, 425);
+            this.crystalReportViewer1.Size = new System.Drawing.Size(526, 389);
             this.crystalReportViewer1.TabIndex = 0;
+            this.crystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
             // 
-            // frmReportCreditoDebito
+            // frmReportCredito
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(476, 425);
+            this.ClientSize = new System.Drawing.Size(526, 389);
             this.Controls.Add(this.crystalReportViewer1);
-            this.Name = "frmReportCreditoDebito";
+            this.Name = "frmReportCredito";
             this.Text = "[XSistemas]";
+            this.Load += new System.EventHandler(this.frmReportCredito_Load);
             this.ResumeLayout(false);
 
         }
@@ -60,7 +59,5 @@
         #endregion
 
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
-        private RelCreditoDebito RelCreditoDebito1;
-        private RelHistoricoPessoa RelHistoricoPessoa1;
     }
 }

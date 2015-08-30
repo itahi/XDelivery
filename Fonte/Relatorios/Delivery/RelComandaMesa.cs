@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DexComanda {
+namespace DexComanda.Relatorios.Delivery {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -16,14 +16,14 @@ namespace DexComanda {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class RelCreditoDebito : ReportClass {
+    public class RelComandaMesa : ReportClass {
         
-        public RelCreditoDebito() {
+        public RelComandaMesa() {
         }
         
         public override string ResourceName {
             get {
-                return "RelCreditoDebito.rpt";
+                return "RelComandaMesa.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace DexComanda {
         
         public override string FullResourceName {
             get {
-                return "DexComanda.RelCreditoDebito.rpt";
+                return "DexComanda.Relatorios.Delivery.RelComandaMesa.rpt";
             }
             set {
                 // Do nothing
@@ -66,7 +66,7 @@ namespace DexComanda {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section GroupHeaderSection1 {
+        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
             get {
                 return this.ReportDefinition.Sections[2];
             }
@@ -74,7 +74,7 @@ namespace DexComanda {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
+        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
             get {
                 return this.ReportDefinition.Sections[3];
             }
@@ -82,7 +82,7 @@ namespace DexComanda {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection1 {
+        public CrystalDecisions.CrystalReports.Engine.Section Section5 {
             get {
                 return this.ReportDefinition.Sections[4];
             }
@@ -90,49 +90,17 @@ namespace DexComanda {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
-            get {
-                return this.ReportDefinition.Sections[5];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section5 {
-            get {
-                return this.ReportDefinition.Sections[6];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_CodPessoa {
+        public CrystalDecisions.Shared.IParameterField Parameter_Codigo {
             get {
                 return this.DataDefinition.ParameterFields[0];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_DataInicio {
-            get {
-                return this.DataDefinition.ParameterFields[1];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_DataFim {
-            get {
-                return this.DataDefinition.ParameterFields[2];
             }
         }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedRelCreditoDebito : Component, ICachedReport {
+    public class CachedRelComandaMesa : Component, ICachedReport {
         
-        public CachedRelCreditoDebito() {
+        public CachedRelComandaMesa() {
         }
         
         [Browsable(false)]
@@ -169,7 +137,7 @@ namespace DexComanda {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            RelCreditoDebito rpt = new RelCreditoDebito();
+            RelComandaMesa rpt = new RelComandaMesa();
             rpt.Site = this.Site;
             return rpt;
         }

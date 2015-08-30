@@ -29,6 +29,7 @@ using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Common;
 using System.Runtime.InteropServices;
 using System.Collections;
+using DexComanda.Relatorios.Delivery;
 namespace DexComanda
 {
     public class Utils
@@ -142,7 +143,40 @@ namespace DexComanda
             }
             return CaixaAberto;
         }
+        public static void ImpressaoEntreganova(int iCodPedido)
+        {
+            RelDelivery report;
+            try
+            {
+                report = new RelDelivery();
+                report.SetDatabaseLogon("sa", "1001");
+                report.SetParameterValue("@Codigo", iCodPedido);
+                report.PrintToPrinter(0, false, 0, 0);
+            }
+            catch (Exception erro)
+            {
 
+                MessageBox.Show(erro.InnerException.Message);
+            }
+            
+        }
+        public static void ImpressaoMesanova(int iCodPedido)
+        {
+            RelComandaMesa report;
+            try
+            {
+                report = new RelComandaMesa();
+                report.SetDatabaseLogon("sa", "1001");
+                report.SetParameterValue("@Codigo", iCodPedido);
+                report.PrintToPrinter(0, false, 0, 0);
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.InnerException.Message);
+            }
+
+        }
         public static void LancarMovimentoCaixa(CaixaMovimento caixa)
         {
             caixa = new Models.CaixaMovimento()

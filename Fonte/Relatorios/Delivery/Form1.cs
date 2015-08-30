@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DexComanda.Relatorios.Clientes
+namespace DexComanda.Relatorios.Delivery
 {
-    public partial class frmReportCreditoDebito : Form
+    public partial class Form1 : Form
     {
-        public frmReportCreditoDebito()
+        public Form1()
         {
             InitializeComponent();
         }

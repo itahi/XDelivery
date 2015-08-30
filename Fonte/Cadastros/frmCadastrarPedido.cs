@@ -1,5 +1,6 @@
 ﻿
 using DexComanda.Models;
+using DexComanda.Relatorios.Delivery;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -1044,19 +1045,30 @@ namespace DexComanda
                 // Imprimindo via Entrega
                 if (ImprimeViaEntrega && cbxTipoPedido.Text == "0 - Entrega")
                 {
+                    int iCodigo;
                     for (int i = 0; i < QtViasEntrega; i++)
                     {
-                        ImpressaoEntrega();
-                        if (ImprimeLPT)
+                        if (con.getLastCodigo() != 0)
                         {
-                            Utils.ImpressaoSerial(line, PortaImpressa, 115200);
+                            iCodigo = con.getLastCodigo();
                         }
                         else
                         {
-                            pd.PrintPage += new PrintPageEventHandler(this.imprimirViaEntrega);
-                            pd.Print();
-                            pd.PrintPage -= new PrintPageEventHandler(this.imprimirViaEntrega);
+                            iCodigo = codPedido;
                         }
+                        Utils.ImpressaoEntreganova(iCodigo);
+                        
+                        //ImpressaoEntrega();
+                        //if (ImprimeLPT)
+                        //{
+                        //    Utils.ImpressaoSerial(line, PortaImpressa, 115200);
+                        //}
+                        //else
+                        //{
+                        //    pd.PrintPage += new PrintPageEventHandler(this.imprimirViaEntrega);
+                        //    pd.Print();
+                        //    pd.PrintPage -= new PrintPageEventHandler(this.imprimirViaEntrega);
+                        //}
                     }
 
                 }

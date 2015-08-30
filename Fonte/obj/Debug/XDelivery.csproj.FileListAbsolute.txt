@@ -54,20 +54,11 @@ H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.application
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmAberturaCaixa.resources
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmCaixaFechamento.resources
 H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Cadastros.frmCadCaixa.resources
-E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.config
-E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.manifest
-E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.application
-E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe
-E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.pdb
-E:\#Projetos\XDelivery\Fonte\bin\Debug\EntityFramework.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\HumanAPIClient.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.QualityTools.Testing.Fakes.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\MySql.Data.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\EntityFramework.xml
 E:\#Projetos\XDelivery\Fonte\obj\Debug\XDelivery.csprojResolveAssemblyReference.cache
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmAdicionarMesa.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmCadCaixa.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmCadMotivosCancelamento.resources
+E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmCadProdutoAdicional.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmAberturaCaixa.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmCaixaFechamento.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmLancamentoCaixa.resources
@@ -77,6 +68,8 @@ E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmCaixaMovimento.
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmExibeCancelamentos.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmHistoricoCancelamento.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmInformaMotoboy.resources
+E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmReportCredito.resources
+E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Fechamentos.frmReportEntregasPorMotoboy.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmCadastrarEntregador.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmCadastrarFormaPagamento.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmCadastrarPedido.resources
@@ -105,10 +98,18 @@ E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Splashcreen.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\XDelivery.csproj.GenerateResource.Cache
 E:\#Projetos\XDelivery\Fonte\obj\Debug\RdlCompile.cache
 E:\#Projetos\XDelivery\Fonte\obj\Debug\RdlCompile.compiled
+E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.config
+E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.manifest
+E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.application
+E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe
+E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.pdb
+E:\#Projetos\XDelivery\Fonte\bin\Debug\EntityFramework.dll
+E:\#Projetos\XDelivery\Fonte\bin\Debug\HumanAPIClient.dll
+E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.QualityTools.Testing.Fakes.dll
+E:\#Projetos\XDelivery\Fonte\bin\Debug\MySql.Data.dll
+E:\#Projetos\XDelivery\Fonte\bin\Debug\EntityFramework.xml
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.exe.manifest
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.application
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.exe
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.pdb
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Fechamentos.frmReportEntregasPorMotoboy.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmCadProdutoAdicional.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmReportCreditoDebito.resources
+E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Delivery.Form1.resources

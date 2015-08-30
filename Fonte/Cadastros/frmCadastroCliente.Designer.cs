@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroCliente));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbPrincipal = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
             this.btnAlteraRegiao = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.txtTaxaEntrega = new System.Windows.Forms.TextBox();
@@ -124,6 +125,7 @@
             // 
             // tbPrincipal
             // 
+            this.tbPrincipal.Controls.Add(this.button2);
             this.tbPrincipal.Controls.Add(this.btnAlteraRegiao);
             this.tbPrincipal.Controls.Add(this.label16);
             this.tbPrincipal.Controls.Add(this.txtTaxaEntrega);
@@ -164,6 +166,16 @@
             this.tbPrincipal.TabIndex = 0;
             this.tbPrincipal.Text = "Dados do Cliente";
             this.tbPrincipal.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(489, 330);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 59;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // btnAlteraRegiao
             // 
@@ -498,6 +510,7 @@
             this.btnImprimir.Text = "Imprimir";
             this.btnImprimir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnImprimir.UseVisualStyleBackColor = true;
+            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
             // dataFim
             // 
@@ -965,6 +978,7 @@
         private System.Windows.Forms.DateTimePicker dataFim;
         private System.Windows.Forms.DateTimePicker dataInicio;
         private System.Windows.Forms.Button btnImprimir;
+        private System.Windows.Forms.Button button2;
 
     }
 }

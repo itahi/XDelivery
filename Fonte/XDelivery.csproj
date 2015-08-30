@@ -310,11 +310,29 @@
     <Compile Include="Models\Mesas.cs" />
     <Compile Include="Models\RegioesEntrega.cs" />
     <Compile Include="Operações\Funções\RotinasGlobal.cs" />
-    <Compile Include="Relatorios\Clientes\frmReportCreditoDebito.cs">
+    <Compile Include="Relatorios\Clientes\frmReportCredito.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Relatorios\Clientes\frmReportCreditoDebito.Designer.cs">
-      <DependentUpon>frmReportCreditoDebito.cs</DependentUpon>
+    <Compile Include="Relatorios\Clientes\frmReportCredito.Designer.cs">
+      <DependentUpon>frmReportCredito.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\RelCreditoDebito.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelCreditoDebito.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelComandaMesa.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelComandaMesa.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\dsRelatorio.cs">
       <DependentUpon>dsRelatorio.xsd</DependentUpon>
@@ -491,16 +509,11 @@
     <Compile Include="Relatorios\Fechamentos\frmReportVendasPorProduto.Designer.cs">
       <DependentUpon>frmReportVendasPorProduto.cs</DependentUpon>
     </Compile>
-    <Compile Include="RelCreditoDebito.cs">
+    <Compile Include="Relatorios\Delivery\RelDelivery.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RelCreditoDebito.rpt</DependentUpon>
+      <DependentUpon>RelDelivery.rpt</DependentUpon>
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="RelHistoricoPessoa.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RelHistoricoPessoa.rpt</DependentUpon>
     </Compile>
     <Compile Include="Service References\LOCASMS\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -554,8 +567,19 @@
     <EmbeddedResource Include="Operações\frmInformaMotoboy.resx">
       <DependentUpon>frmInformaMotoboy.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Clientes\frmReportCreditoDebito.resx">
-      <DependentUpon>frmReportCreditoDebito.cs</DependentUpon>
+    <EmbeddedResource Include="Relatorios\Clientes\frmReportCredito.resx">
+      <DependentUpon>frmReportCredito.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Clientes\RelCreditoDebito.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelCreditoDebito.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesa.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelComandaMesa.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.resx">
       <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
@@ -639,13 +663,9 @@
     <EmbeddedResource Include="Operações\Splashcreen.resx">
       <DependentUpon>Splashcreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RelCreditoDebito.rpt">
+    <EmbeddedResource Include="Relatorios\Delivery\RelDelivery.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelCreditoDebito.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RelHistoricoPessoa.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelHistoricoPessoa.cs</LastGenOutput>
+      <LastGenOutput>RelDelivery.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="DBExpertDataSet.xsc">
       <DependentUpon>DBExpertDataSet.xsd</DependentUpon>

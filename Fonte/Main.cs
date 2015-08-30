@@ -1224,13 +1224,13 @@ namespace DexComanda
 
                 if (line != null)
                 {
-                    EnviaImpressora();
+                    EnviaImpressora(iCodPedido);
                 }
             }
 
 
         }
-        private void EnviaImpressora()
+        private void EnviaImpressora(int CodPedido)
         {
 
             string RetornoTxt = Directory.GetCurrentDirectory() + @"\" + "ConfigImpressao" + ".txt";
@@ -1270,9 +1270,7 @@ namespace DexComanda
             }
             else
             {
-                PrintDocument pd = new PrintDocument();
-                pd.PrintPage += new PrintPageEventHandler(this.ImprimirPedidoMesa);
-                pd.Print();
+                Utils.ImpressaoMesanova(CodPedido);
 
             }
 
@@ -1318,9 +1316,9 @@ namespace DexComanda
                     Boolean iOrigemExterna = pedidosGridView.Rows[intFor].Cells["PedidoOrigem"].Value.ToString() == "Aplicativo";
                     if (iOrigemExterna)
                     {
-                        ImpressaoAutomatica(int.Parse(pedidosGridView.Rows[intFor].Cells["Codigo"].Value.ToString()), pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString()); 
+                        ImpressaoAutomatica(int.Parse(pedidosGridView.Rows[intFor].Cells["Codigo"].Value.ToString()), pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString());
                     }
-                   
+
                 }
             }
             

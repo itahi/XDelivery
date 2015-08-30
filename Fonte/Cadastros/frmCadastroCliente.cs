@@ -10,7 +10,9 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using DexComanda.Models;
 using DexComanda.Integração;
-
+using DexComanda.Relatorios.Clientes;
+using DexComanda.Relatorios.Delivery;
+using CrystalDecisions.Shared;
 namespace DexComanda
 {
     public partial class frmCadastroCliente : Form
@@ -761,6 +763,31 @@ namespace DexComanda
             }
             
 
+        }
+
+        private void btnImprimir_Click(object sender, EventArgs e)
+        {
+            frmReportCredito frm = new frmReportCredito(codigoClienteParaAlterar, dataInicio.Value, dataFim.Value);
+          //  frm.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+             RelDelivery  report;
+             int iCodigo = 4441;
+            try
+            {
+                report = new RelDelivery();
+                report.SetDatabaseLogon("sa", "1001");
+                report.SetParameterValue("@Codigo", iCodigo);
+                report.PrintToPrinter(0, false, 0, 0);
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.InnerException.Message);
+            }
+            
         }
     }
 
