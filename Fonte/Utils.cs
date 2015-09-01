@@ -143,22 +143,42 @@ namespace DexComanda
             }
             return CaixaAberto;
         }
-        public static void ImpressaoEntreganova(int iCodPedido)
+        public static string ImpressaoEntreganova(int iCodPedido, Boolean iExport = false)
         {
+            string iRetorno = ""; ;
             RelDelivery report;
             try
             {
                 report = new RelDelivery();
                 report.SetDatabaseLogon("sa", "1001");
                 report.SetParameterValue("@Codigo", iCodPedido);
-                report.PrintToPrinter(0, false, 0, 0);
+                if (iExport)
+                {
+                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
+                    reportExport.DiskFileName = Directory.GetCurrentDirectory()+@"\RelDelivery.txt";
+
+                    report.ExportOptions.ExportDestinationType =
+	                CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+                    report.ExportOptions.ExportFormatType =
+	                CrystalDecisions.Shared.ExportFormatType.Text;
+
+                    report.ExportOptions.DestinationOptions = reportExport;
+                    report.Export();
+                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
+                }
+                else
+                {
+                    report.PrintToPrinter(0, false, 0, 0);
+                }
             }
             catch (Exception erro)
             {
 
                 MessageBox.Show(erro.InnerException.Message);
             }
-            
+            return iRetorno;  
         }
         public static void ImpressaoMesanova(int iCodPedido)
         {

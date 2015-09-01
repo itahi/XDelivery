@@ -332,6 +332,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelFechametoMesa.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\dsRelatorio.cs">
       <DependentUpon>dsRelatorio.xsd</DependentUpon>
@@ -481,6 +482,12 @@
     </Compile>
     <Compile Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.Designer.cs">
       <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\RelItemsVendidos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelItemsVendidos.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\frmReportProdutos.cs">
       <SubType>Form</SubType>
@@ -643,6 +650,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\frmReportPessoas.resx">
       <DependentUpon>frmReportPessoas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\RelItemsVendidos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelItemsVendidos.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\frmReportProdutos.resx">
       <DependentUpon>frmReportProdutos.cs</DependentUpon>

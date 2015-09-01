@@ -37,8 +37,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtdtFim = new System.Windows.Forms.DateTimePicker();
             this.btnConsultar = new System.Windows.Forms.Button();
-            this.rptProdutosVenda = new Microsoft.Reporting.WinForms.ReportViewer();
             this.vwObterItemsVendidosTableAdapter = new DexComanda.Relatorios.dsRelatorioTableAdapters.vwObterItemsVendidosTableAdapter();
+            this.rptProdutosVenda = new Microsoft.Reporting.WinForms.ReportViewer();
             ((System.ComponentModel.ISupportInitialize)(this.vwObterItemsVendidosBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dsRelatorio)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -107,6 +107,10 @@
             this.btnConsultar.UseVisualStyleBackColor = true;
             this.btnConsultar.Click += new System.EventHandler(this.GeraReport);
             // 
+            // vwObterItemsVendidosTableAdapter
+            // 
+            this.vwObterItemsVendidosTableAdapter.ClearBeforeFill = true;
+            // 
             // rptProdutosVenda
             // 
             this.rptProdutosVenda.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -119,10 +123,6 @@
             this.rptProdutosVenda.Name = "rptProdutosVenda";
             this.rptProdutosVenda.Size = new System.Drawing.Size(821, 378);
             this.rptProdutosVenda.TabIndex = 1;
-            // 
-            // vwObterItemsVendidosTableAdapter
-            // 
-            this.vwObterItemsVendidosTableAdapter.ClearBeforeFill = true;
             // 
             // frmReportVendasPorProduto
             // 
@@ -147,7 +147,6 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private Microsoft.Reporting.WinForms.ReportViewer rptProdutosVenda;
         private System.Windows.Forms.Button btnConsultar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker txtdtFim;
@@ -155,5 +154,6 @@
         private System.Windows.Forms.BindingSource vwObterItemsVendidosBindingSource;
         private dsRelatorio dsRelatorio;
         private dsRelatorioTableAdapters.vwObterItemsVendidosTableAdapter vwObterItemsVendidosTableAdapter;
+        private Microsoft.Reporting.WinForms.ReportViewer rptProdutosVenda;
     }
 }

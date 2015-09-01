@@ -1056,19 +1056,17 @@ namespace DexComanda
                         {
                             iCodigo = codPedido;
                         }
-                        Utils.ImpressaoEntreganova(iCodigo);
-                        
-                        //ImpressaoEntrega();
-                        //if (ImprimeLPT)
-                        //{
-                        //    Utils.ImpressaoSerial(line, PortaImpressa, 115200);
-                        //}
-                        //else
-                        //{
-                        //    pd.PrintPage += new PrintPageEventHandler(this.imprimirViaEntrega);
-                        //    pd.Print();
-                        //    pd.PrintPage -= new PrintPageEventHandler(this.imprimirViaEntrega);
-                        //}
+
+                        string iRetorno = Utils.ImpressaoEntreganova(iCodigo, ImprimeLPT);
+
+                        if (ImprimeLPT && iRetorno!="")
+                        {
+                            StreamReader tempDex = new StreamReader(iRetorno);
+                            string sLine = "";
+                            sLine = tempDex.ReadToEnd();
+                            Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
+                        }
+                      
                     }
 
                 }

@@ -22,7 +22,13 @@ namespace DexComanda
 
         private void frmAlteraSenha_Load(object sender, EventArgs e)
         {
-            txtLogin.Text = Sessions.retunrUsuario.Nome;
+            DataSet dsUsuarios = con.SelectAll("Usuario", "spObterUsuario");
+            cbxLogin.DataSource = dsUsuarios.Tables[0];
+            cbxLogin.ValueMember = "Codigo";
+            cbxLogin.DisplayMember = "Nome";
+
+            cbxLogin.Enabled = Sessions.retunrUsuario.AdministradorSN;
+            cbxLogin.Text = Sessions.retunrUsuario.Nome;
 
         }
 
@@ -32,12 +38,12 @@ namespace DexComanda
             {
                 string iSenhaAntiga = Sessions.retunrUsuario.Senha;
 
-                if (Utils.EncryptMd5(txtLogin.Text,txtSenhaAntiga.Text )==iSenhaAntiga )
+                if (Utils.EncryptMd5(cbxLogin.Text, txtSenhaAntiga.Text) == iSenhaAntiga)
                 {
                     AlteraSenha user = new AlteraSenha()
                     {
                         Codigo = Sessions.retunrUsuario.Codigo,
-                        Senha = Utils.EncryptMd5(txtLogin.Text, txtSenhanova.Text)
+                        Senha = Utils.EncryptMd5(cbxLogin.Text, txtSenhanova.Text)
                     };
 
                     con.Update("spAlterarSenha", user);

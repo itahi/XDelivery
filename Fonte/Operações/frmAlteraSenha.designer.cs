@@ -29,22 +29,14 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAlteraSenha));
-            this.txtLogin = new System.Windows.Forms.TextBox();
             this.txtSenhaAntiga = new System.Windows.Forms.TextBox();
             this.txtSenhanova = new System.Windows.Forms.TextBox();
             this.btnAlteraSenha = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.cbxLogin = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
-            // 
-            // txtLogin
-            // 
-            this.txtLogin.Enabled = false;
-            this.txtLogin.Location = new System.Drawing.Point(60, 28);
-            this.txtLogin.Name = "txtLogin";
-            this.txtLogin.Size = new System.Drawing.Size(176, 20);
-            this.txtLogin.TabIndex = 0;
             // 
             // txtSenhaAntiga
             // 
@@ -90,9 +82,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(112, 51);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 13);
+            this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Senha Antiga";
+            this.label2.Text = "Senha Atual";
             // 
             // label3
             // 
@@ -103,18 +95,26 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Nova Senha";
             // 
+            // cbxLogin
+            // 
+            this.cbxLogin.FormattingEnabled = true;
+            this.cbxLogin.Location = new System.Drawing.Point(62, 27);
+            this.cbxLogin.Name = "cbxLogin";
+            this.cbxLogin.Size = new System.Drawing.Size(174, 21);
+            this.cbxLogin.TabIndex = 7;
+            // 
             // frmAlteraSenha
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(302, 167);
+            this.Controls.Add(this.cbxLogin);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnAlteraSenha);
             this.Controls.Add(this.txtSenhanova);
             this.Controls.Add(this.txtSenhaAntiga);
-            this.Controls.Add(this.txtLogin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmAlteraSenha";
@@ -127,12 +127,12 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtLogin;
         private System.Windows.Forms.TextBox txtSenhaAntiga;
         private System.Windows.Forms.TextBox txtSenhanova;
         private System.Windows.Forms.Button btnAlteraSenha;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cbxLogin;
     }
 }

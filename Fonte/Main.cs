@@ -1258,6 +1258,7 @@ namespace DexComanda
                     iRetorno = MP2032.IniciaPorta(iPortaUSB);
                     if (iRetorno ==1)
                     {
+                        MP2032.FormataTX(line, 2, 0, 0, 1, 0); 
                         iRetorno = MP2032.BematechTX(line + "\r\n\r\n");
                         MP2032.AcionaGuilhotina(1);
                     }
@@ -1451,7 +1452,7 @@ namespace DexComanda
         {
             bool blSelecionado = Convert.ToBoolean(pedidosGridView.SelectedCells[2].Value);
             //if (pedidosGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 )
             {
                 if (pedidosGridView.Rows[e.RowIndex].Cells[2].Value != null)
                 {
