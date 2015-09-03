@@ -36,6 +36,7 @@
             this.chkDesconto2 = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.chkFinanceiro = new System.Windows.Forms.CheckBox();
+            this.chkOnline = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.FPGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,7 +47,7 @@
             this.FPGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.FPGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.FPGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.FPGridView.Location = new System.Drawing.Point(3, 147);
+            this.FPGridView.Location = new System.Drawing.Point(3, 173);
             this.FPGridView.MultiSelect = false;
             this.FPGridView.Name = "FPGridView";
             this.FPGridView.ReadOnly = true;
@@ -57,7 +58,7 @@
             // 
             // btnEditarFP
             // 
-            this.btnEditarFP.Location = new System.Drawing.Point(139, 93);
+            this.btnEditarFP.Location = new System.Drawing.Point(132, 119);
             this.btnEditarFP.Name = "btnEditarFP";
             this.btnEditarFP.Size = new System.Drawing.Size(124, 48);
             this.btnEditarFP.TabIndex = 5;
@@ -67,7 +68,7 @@
             // 
             // btnAdicionar
             // 
-            this.btnAdicionar.Location = new System.Drawing.Point(3, 93);
+            this.btnAdicionar.Location = new System.Drawing.Point(1, 119);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(108, 48);
             this.btnAdicionar.TabIndex = 4;
@@ -78,7 +79,7 @@
             // txtNomeFP
             // 
             this.txtNomeFP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNomeFP.Location = new System.Drawing.Point(1, 61);
+            this.txtNomeFP.Location = new System.Drawing.Point(1, 87);
             this.txtNomeFP.Name = "txtNomeFP";
             this.txtNomeFP.Size = new System.Drawing.Size(235, 26);
             this.txtNomeFP.TabIndex = 6;
@@ -86,7 +87,7 @@
             // chkDesconto2
             // 
             this.chkDesconto2.AutoSize = true;
-            this.chkDesconto2.Location = new System.Drawing.Point(10, 34);
+            this.chkDesconto2.Location = new System.Drawing.Point(3, 39);
             this.chkDesconto2.Name = "chkDesconto2";
             this.chkDesconto2.Size = new System.Drawing.Size(116, 17);
             this.chkDesconto2.TabIndex = 7;
@@ -106,16 +107,27 @@
             // chkFinanceiro
             // 
             this.chkFinanceiro.AutoSize = true;
-            this.chkFinanceiro.Location = new System.Drawing.Point(132, 34);
+            this.chkFinanceiro.Location = new System.Drawing.Point(129, 39);
             this.chkFinanceiro.Name = "chkFinanceiro";
             this.chkFinanceiro.Size = new System.Drawing.Size(107, 17);
             this.chkFinanceiro.TabIndex = 9;
             this.chkFinanceiro.Text = "Gera Financeiro?";
             this.chkFinanceiro.UseVisualStyleBackColor = true;
             // 
+            // chkOnline
+            // 
+            this.chkOnline.AutoSize = true;
+            this.chkOnline.Location = new System.Drawing.Point(3, 62);
+            this.chkOnline.Name = "chkOnline";
+            this.chkOnline.Size = new System.Drawing.Size(62, 17);
+            this.chkOnline.TabIndex = 10;
+            this.chkOnline.Text = "Online?";
+            this.chkOnline.UseVisualStyleBackColor = true;
+            // 
             // frmCadastrarFormaPagamento
             // 
-            this.ClientSize = new System.Drawing.Size(273, 343);
+            this.ClientSize = new System.Drawing.Size(272, 369);
+            this.Controls.Add(this.chkOnline);
             this.Controls.Add(this.chkFinanceiro);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.chkDesconto2);
@@ -149,5 +161,6 @@
         private System.Windows.Forms.CheckBox chkDesconto2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkFinanceiro;
+        private System.Windows.Forms.CheckBox chkOnline;
     }
 }

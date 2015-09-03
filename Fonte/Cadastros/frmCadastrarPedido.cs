@@ -1070,31 +1070,40 @@ namespace DexComanda
                     }
 
                 }
-                //if (ImprimeViaCozinha)
-                //{
-                //    for (int i = 0; i < QtdViasCozinha; i++)
-                //    {
-                //        ImpressaoCozinha();
-                //        if (ImprimeLPT)
-                //        {
-                //            SerialPort porta = new SerialPort(PortaImpressa);
-                //            porta.Open();
-                //            if (porta.IsOpen)
-                //            {
-                //                porta.WriteLine(line);
-                //                porta.Close();
-                //            }
-                //            //Utils.ImpressaoLPT1(line, PortaImpressa);
-                //        }
-                //        else
-                //        {
-                //            pd.PrintPage += new PrintPageEventHandler(this.imprimirViaCozinha);
-                //            pd.Print();
-                //            pd.PrintPage -= new PrintPageEventHandler(this.imprimirViaCozinha);
-                //        }
-                //    }
+                if (ImprimeViaCozinha)
+                {
+                    int iCodigo;
+                    for (int i = 0; i < QtdViasCozinha; i++)
+                    {
+                        if (con.getLastCodigo() != 0)
+                        {
+                            iCodigo = con.getLastCodigo();
+                        }
+                        else
+                        {
+                            iCodigo = codPedido;
+                        }
 
-                //}
+                        string iRetorno = Utils.ImpressaoCozihanova(iCodigo, false, 1);
+                        //ImpressaoCozinha();
+                        if (ImprimeLPT && iRetorno!="")
+                        {
+
+                            StreamReader tempDex = new StreamReader(iRetorno);
+                            string sLine = "";
+                            sLine = tempDex.ReadToEnd();
+                            Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
+                            
+                        }
+                        //else
+                        //{
+                        //    pd.PrintPage += new PrintPageEventHandler(this.imprimirViaCozinha);
+                        //    pd.Print();
+                        //    pd.PrintPage -= new PrintPageEventHandler(this.imprimirViaCozinha);
+                        //}
+                    }
+
+                }
             }
             catch (Exception E)
             {

@@ -12,5 +12,6 @@ namespace DexComanda.Models
         public string Descricao { get; set; }
         public Boolean DescontoSN { get; set; }
         public Boolean GeraFinanceiro { get; set; }
+        public Boolean OnlineSN { get; set; }
     }
 }

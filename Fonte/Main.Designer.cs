@@ -73,6 +73,7 @@
             this.cadastroCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fecharCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aberturaCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sincronizaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoAtivaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dBExpertDataSet = new DexComanda.DBExpertDataSet();
@@ -390,7 +391,8 @@
             this.alteraçõesMultiplasToolStripMenuItem,
             this.alterarSenhaToolStripMenuItem,
             this.FinanceiroToolStripMenuItem,
-            this.aberturaCaixaToolStripMenuItem});
+            this.aberturaCaixaToolStripMenuItem,
+            this.sincronizaçãoToolStripMenuItem});
             this.operaçõesToolStripMenuItem.Name = "operaçõesToolStripMenuItem";
             this.operaçõesToolStripMenuItem.Size = new System.Drawing.Size(96, 25);
             this.operaçõesToolStripMenuItem.Text = "Operações";
@@ -483,6 +485,13 @@
             this.aberturaCaixaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.aberturaCaixaToolStripMenuItem.Text = "Abertura Caixa";
             this.aberturaCaixaToolStripMenuItem.Click += new System.EventHandler(this.aberturaCaixaToolStripMenuItem_Click);
+            // 
+            // sincronizaçãoToolStripMenuItem
+            // 
+            this.sincronizaçãoToolStripMenuItem.Name = "sincronizaçãoToolStripMenuItem";
+            this.sincronizaçãoToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.sincronizaçãoToolStripMenuItem.Text = "Sincronização";
+            this.sincronizaçãoToolStripMenuItem.Click += new System.EventHandler(this.sincronizaçãoToolStripMenuItem_Click);
             // 
             // contatoToolStripMenuItem
             // 
@@ -1090,5 +1099,6 @@
         private System.Windows.Forms.ToolStripMenuItem fecharCaixaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gruposCategoriasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adicionaisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sincronizaçãoToolStripMenuItem;
     }
 }

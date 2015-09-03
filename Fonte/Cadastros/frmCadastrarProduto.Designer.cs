@@ -65,6 +65,7 @@
             this.AdicionaisGridView = new System.Windows.Forms.DataGridView();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnDoProduto = new System.Windows.Forms.Button();
+            this.chkOnline = new System.Windows.Forms.CheckBox();
             label1 = new System.Windows.Forms.Label();
             nomeProdutoLabel = new System.Windows.Forms.Label();
             descricaoProdutoLabel = new System.Windows.Forms.Label();
@@ -162,6 +163,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.chkOnline);
             this.tabPage1.Controls.Add(this.chkAtivo);
             this.tabPage1.Controls.Add(this.grpDesconto);
             this.tabPage1.Controls.Add(this.cbxGrupoProduto);
@@ -185,7 +187,7 @@
             this.chkAtivo.AutoSize = true;
             this.chkAtivo.Checked = true;
             this.chkAtivo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAtivo.Location = new System.Drawing.Point(435, 2);
+            this.chkAtivo.Location = new System.Drawing.Point(357, 2);
             this.chkAtivo.Name = "chkAtivo";
             this.chkAtivo.Size = new System.Drawing.Size(59, 17);
             this.chkAtivo.TabIndex = 34;
@@ -428,6 +430,16 @@
             this.btnDoProduto.UseVisualStyleBackColor = true;
             this.btnDoProduto.Click += new System.EventHandler(this.AdicionarProduto);
             // 
+            // chkOnline
+            // 
+            this.chkOnline.AutoSize = true;
+            this.chkOnline.Location = new System.Drawing.Point(422, 3);
+            this.chkOnline.Name = "chkOnline";
+            this.chkOnline.Size = new System.Drawing.Size(96, 17);
+            this.chkOnline.TabIndex = 35;
+            this.chkOnline.Text = "Venda Online?";
+            this.chkOnline.UseVisualStyleBackColor = true;
+            // 
             // frmCadastrarProduto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -491,5 +503,6 @@
         private System.Windows.Forms.Label Código;
         private System.Windows.Forms.TextBox txtNomeAdicional;
         private System.Windows.Forms.TextBox txtCodProduto;
+        private System.Windows.Forms.CheckBox chkOnline;
     }
 }

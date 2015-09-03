@@ -134,6 +134,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dlls\Reports.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -309,6 +313,12 @@
     </Compile>
     <Compile Include="Models\Mesas.cs" />
     <Compile Include="Models\RegioesEntrega.cs" />
+    <Compile Include="Operações\frmSincronizacao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\frmSincronizacao.Designer.cs">
+      <DependentUpon>frmSincronizacao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operações\Funções\RotinasGlobal.cs" />
     <Compile Include="Relatorios\Clientes\frmReportCredito.cs">
       <SubType>Form</SubType>
@@ -326,6 +336,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelComandaMesa.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelDelivey_Mesa.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelDelivey_Mesa.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Delivery\RelFechametoMesa.cs">
@@ -573,6 +589,9 @@
     <EmbeddedResource Include="Operações\frmInformaMotoboy.resx">
       <DependentUpon>frmInformaMotoboy.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Operações\frmSincronizacao.resx">
+      <DependentUpon>frmSincronizacao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\frmReportCredito.resx">
       <DependentUpon>frmReportCredito.cs</DependentUpon>
     </EmbeddedResource>
@@ -583,6 +602,10 @@
     <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesa.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelComandaMesa.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelDelivey_Mesa.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDelivey_Mesa.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelFechametoMesa.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

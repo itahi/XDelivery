@@ -35,6 +35,7 @@
             this.btnEditarGrupo = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.chkImprimeCozinha = new System.Windows.Forms.CheckBox();
+            this.chkOnline = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.gruposGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,7 +46,7 @@
             this.gruposGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gruposGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.gruposGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gruposGridView.Location = new System.Drawing.Point(4, 94);
+            this.gruposGridView.Location = new System.Drawing.Point(4, 111);
             this.gruposGridView.MultiSelect = false;
             this.gruposGridView.Name = "gruposGridView";
             this.gruposGridView.ReadOnly = true;
@@ -57,7 +58,7 @@
             // 
             // btnAdicionarGrupo
             // 
-            this.btnAdicionarGrupo.Location = new System.Drawing.Point(6, 53);
+            this.btnAdicionarGrupo.Location = new System.Drawing.Point(4, 70);
             this.btnAdicionarGrupo.Name = "btnAdicionarGrupo";
             this.btnAdicionarGrupo.Size = new System.Drawing.Size(114, 35);
             this.btnAdicionarGrupo.TabIndex = 2;
@@ -68,7 +69,7 @@
             // txbNomeGrupo
             // 
             this.txbNomeGrupo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txbNomeGrupo.Location = new System.Drawing.Point(4, 23);
+            this.txbNomeGrupo.Location = new System.Drawing.Point(4, 38);
             this.txbNomeGrupo.Name = "txbNomeGrupo";
             this.txbNomeGrupo.Size = new System.Drawing.Size(266, 26);
             this.txbNomeGrupo.TabIndex = 1;
@@ -76,7 +77,7 @@
             // 
             // btnEditarGrupo
             // 
-            this.btnEditarGrupo.Location = new System.Drawing.Point(142, 53);
+            this.btnEditarGrupo.Location = new System.Drawing.Point(140, 70);
             this.btnEditarGrupo.Name = "btnEditarGrupo";
             this.btnEditarGrupo.Size = new System.Drawing.Size(130, 35);
             this.btnEditarGrupo.TabIndex = 3;
@@ -88,7 +89,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 3);
+            this.label1.Location = new System.Drawing.Point(1, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(85, 13);
             this.label1.TabIndex = 5;
@@ -97,18 +98,29 @@
             // chkImprimeCozinha
             // 
             this.chkImprimeCozinha.AutoSize = true;
-            this.chkImprimeCozinha.Location = new System.Drawing.Point(161, 3);
+            this.chkImprimeCozinha.Location = new System.Drawing.Point(97, 3);
             this.chkImprimeCozinha.Name = "chkImprimeCozinha";
             this.chkImprimeCozinha.Size = new System.Drawing.Size(109, 17);
             this.chkImprimeCozinha.TabIndex = 6;
             this.chkImprimeCozinha.Text = "Imprime Cozinha?";
             this.chkImprimeCozinha.UseVisualStyleBackColor = true;
             // 
+            // chkOnline
+            // 
+            this.chkOnline.AutoSize = true;
+            this.chkOnline.Location = new System.Drawing.Point(212, 3);
+            this.chkOnline.Name = "chkOnline";
+            this.chkOnline.Size = new System.Drawing.Size(62, 17);
+            this.chkOnline.TabIndex = 11;
+            this.chkOnline.Text = "Online?";
+            this.chkOnline.UseVisualStyleBackColor = true;
+            // 
             // frmAdicionarGrupo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(286, 302);
+            this.ClientSize = new System.Drawing.Size(286, 319);
+            this.Controls.Add(this.chkOnline);
             this.Controls.Add(this.chkImprimeCozinha);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnEditarGrupo);
@@ -138,5 +150,6 @@
         private System.Windows.Forms.Button btnEditarGrupo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chkImprimeCozinha;
+        private System.Windows.Forms.CheckBox chkOnline;
     }
 }

@@ -209,10 +209,20 @@ namespace DexComanda
                     Telefone2 = txtTelefone2.Text,
                     UF = this.txtEstado.Text,
                     TicketFidelidade = 0,
-                    CodRegiao = int.Parse(this.cbxRegiao.SelectedValue.ToString()),
+                    
                     DataCadastro = DateTime.Now
 
                 };
+                if (cbxRegiao.SelectedValue.ToString()!="")
+	             {
+                     pessoa.CodRegiao = int.Parse(this.cbxRegiao.SelectedValue.ToString());
+               	}
+                else
+	            {
+                    MessageBox.Show("Região de entrega não selecionada, favor vericicar","[XSistemas]");
+                    return;
+	            }
+               
                 if (txtDataNascimento.Visible && txtDataNascimento.Text == "  /  /")
                 {
                     //pessoa.DataNascimento = Convert.ToDateTime(txtDataNascimento.Text);
@@ -727,7 +737,7 @@ namespace DexComanda
                 histPessoa.Tipo = 'D';
             }
             con.Insert("spAdicionaHistorico", histPessoa);
-           // Utils.PopularGrid("HistoricoPessoa", HistoricoGridView, "spObterHistoricoPorPessoa", histPessoa.CodPessoa);
+            // Utils.PopularGrid("HistoricoPessoa", HistoricoGridView, "spObterHistoricoPorPessoa", histPessoa.CodPessoa);
             CalculaValores();
         }
         private void CalculaValores()
@@ -752,29 +762,29 @@ namespace DexComanda
         private void btnCons_Click(object sender, EventArgs e)
         {
             DataSet dsPedidos = con.SelectRegistroPorCodigoPeriodo("HistoricoPessoa", "spObterHistoricoPorPessoa", Convert.ToString(codigoClienteParaAlterar), dataInicio.Value, dataFim.Value);
-            if (dsPedidos.Tables[0].Rows.Count>0)
+            if (dsPedidos.Tables[0].Rows.Count > 0)
             {
-            HistoricoGridView.DataSource = null;
-            HistoricoGridView.AutoGenerateColumns = true;
-            HistoricoGridView.DataSource = dsPedidos;
-            HistoricoGridView.DataMember = "HistoricoPessoa";
-            CalculaValores();
-            btnImprimir.Enabled = true;
+                HistoricoGridView.DataSource = null;
+                HistoricoGridView.AutoGenerateColumns = true;
+                HistoricoGridView.DataSource = dsPedidos;
+                HistoricoGridView.DataMember = "HistoricoPessoa";
+                CalculaValores();
+                btnImprimir.Enabled = true;
             }
-            
+
 
         }
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
             frmReportCredito frm = new frmReportCredito(codigoClienteParaAlterar, dataInicio.Value, dataFim.Value);
-          //  frm.ShowDialog();
+            //  frm.ShowDialog();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-             RelDelivery  report;
-             int iCodigo = 4441;
+            RelDelivery report;
+            int iCodigo = 4441;
             try
             {
                 report = new RelDelivery();
@@ -787,7 +797,7 @@ namespace DexComanda
 
                 MessageBox.Show(erro.InnerException.Message);
             }
-            
+
         }
     }
 

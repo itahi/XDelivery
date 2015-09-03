@@ -181,6 +181,19 @@ namespace DexComanda
             adapter.Fill(ds, table);
             return ds;
         }
+        public DataSet SelectRegistroONline(string iNomeTable)
+        {
+            string lSqlConsulta = " select * from " + iNomeTable + " where OnlineSN=1 ";// and AtivoSN=1";
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, iNomeTable);
+            return ds;
+
+        }
         public DataSet SelectEntregaPorBoy(string iDataI, string iDataF, int CodMotoboy, string table = "Entregador")
         {
             string lSqlConsulta = "  select  " +

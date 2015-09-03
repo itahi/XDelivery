@@ -38,7 +38,8 @@ namespace DexComanda
                 Grupo grupo = new Grupo()
                 {
                     NomeGrupo = this.txbNomeGrupo.Text,
-                    ImprimeCozinhaSN = chkImprimeCozinha.Checked
+                    ImprimeCozinhaSN = chkImprimeCozinha.Checked,
+                    OnlineSN =chkOnline.Checked
                 };
                 if (txbNomeGrupo.Text !="")
                 {
@@ -65,6 +66,8 @@ namespace DexComanda
             codigo = int.Parse(this.gruposGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
             this.txbNomeGrupo.Text = this.gruposGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
             chkImprimeCozinha.Checked =Convert.ToBoolean( this.gruposGridView.SelectedRows[rowIndex].Cells[2].Value.ToString());
+            chkOnline.Checked = Convert.ToBoolean(this.gruposGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
+
             this.btnAdicionarGrupo.Text = "Salvar [F12]";
             this.btnAdicionarGrupo.Click += new System.EventHandler(this.SalvarGrupo);
             this.btnAdicionarGrupo.Click -= new System.EventHandler(this.AdicionarGrupo);
@@ -99,7 +102,8 @@ namespace DexComanda
             {
                 Codigo = codigo,
                 NomeGrupo = this.txbNomeGrupo.Text,
-                ImprimeCozinhaSN = chkImprimeCozinha.Checked
+                ImprimeCozinhaSN = chkImprimeCozinha.Checked,
+                OnlineSN = chkOnline.Checked
             };
             if (txbNomeGrupo.Text !="")
             {

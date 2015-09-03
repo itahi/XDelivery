@@ -59,6 +59,8 @@
             this.txtCNPJ = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.txtURL = new System.Windows.Forms.TextBox();
             this.btnBackup = new System.Windows.Forms.Button();
             this.label28 = new System.Windows.Forms.Label();
             this.txtCaminhoBkp = new System.Windows.Forms.TextBox();
@@ -443,6 +445,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label29);
+            this.groupBox1.Controls.Add(this.txtURL);
             this.groupBox1.Controls.Add(this.btnBackup);
             this.groupBox1.Controls.Add(this.label28);
             this.groupBox1.Controls.Add(this.txtCaminhoBkp);
@@ -458,9 +462,25 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Servidor/Banco de Dados";
             // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(268, 22);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(53, 13);
+            this.label29.TabIndex = 26;
+            this.label29.Text = "URL WS:";
+            // 
+            // txtURL
+            // 
+            this.txtURL.Location = new System.Drawing.Point(347, 19);
+            this.txtURL.Name = "txtURL";
+            this.txtURL.Size = new System.Drawing.Size(278, 20);
+            this.txtURL.TabIndex = 25;
+            // 
             // btnBackup
             // 
-            this.btnBackup.Location = new System.Drawing.Point(451, 45);
+            this.btnBackup.Location = new System.Drawing.Point(451, 75);
             this.btnBackup.Name = "btnBackup";
             this.btnBackup.Size = new System.Drawing.Size(65, 24);
             this.btnBackup.TabIndex = 24;
@@ -471,7 +491,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(271, 22);
+            this.label28.Location = new System.Drawing.Point(268, 56);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(73, 13);
             this.label28.TabIndex = 21;
@@ -479,7 +499,7 @@
             // 
             // txtCaminhoBkp
             // 
-            this.txtCaminhoBkp.Location = new System.Drawing.Point(347, 19);
+            this.txtCaminhoBkp.Location = new System.Drawing.Point(347, 53);
             this.txtCaminhoBkp.Name = "txtCaminhoBkp";
             this.txtCaminhoBkp.Size = new System.Drawing.Size(278, 20);
             this.txtCaminhoBkp.TabIndex = 20;
@@ -549,9 +569,9 @@
             this.groupBox4.Controls.Add(this.chkProdutoCodigo);
             this.groupBox4.Controls.Add(this.chkEntregadores);
             this.groupBox4.Controls.Add(this.chkDataNAscimento);
-            this.groupBox4.Location = new System.Drawing.Point(7, 21);
+            this.groupBox4.Location = new System.Drawing.Point(7, 6);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(639, 66);
+            this.groupBox4.Size = new System.Drawing.Size(639, 74);
             this.groupBox4.TabIndex = 12;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Gerais";
@@ -643,7 +663,7 @@
             // 
             this.grpLoginSenha.Controls.Add(this.pInfoUserDefault);
             this.grpLoginSenha.Controls.Add(this.chkLoginSenha);
-            this.grpLoginSenha.Location = new System.Drawing.Point(6, 104);
+            this.grpLoginSenha.Location = new System.Drawing.Point(7, 86);
             this.grpLoginSenha.Name = "grpLoginSenha";
             this.grpLoginSenha.Size = new System.Drawing.Size(640, 60);
             this.grpLoginSenha.TabIndex = 11;
@@ -721,7 +741,7 @@
             this.groupBox2.Controls.Add(this.chkViaCozinha);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.txtCaracterImpressora);
-            this.groupBox2.Location = new System.Drawing.Point(6, 170);
+            this.groupBox2.Location = new System.Drawing.Point(7, 152);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(640, 152);
             this.groupBox2.TabIndex = 10;
@@ -942,6 +962,7 @@
             this.chkViaCozinha.TabIndex = 5;
             this.chkViaCozinha.Text = "Imprimir via Cozinha?";
             this.chkViaCozinha.UseVisualStyleBackColor = true;
+            this.chkViaCozinha.CheckedChanged += new System.EventHandler(this.chkViaCozinha_CheckedChanged);
             // 
             // label2
             // 
@@ -1497,6 +1518,8 @@
         private System.Windows.Forms.ComboBox cbPorta;
         private System.Windows.Forms.ComboBox cbModeloImp;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.TextBox txtURL;
 
     }
 }

@@ -1309,7 +1309,7 @@ namespace DexComanda
 
                     }
                 }
-
+                Utils.PopularGrid("Pedido", pedidosGridView);
             }
 
             if (Sessions.returnConfig.ImpViaCozinha)
@@ -1538,6 +1538,12 @@ namespace DexComanda
         private void adicionaisToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCadProdutoAdicional frm = new frmCadProdutoAdicional();
+            frm.ShowDialog();
+        }
+
+        private void sincronizaçãoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmSincronizacao frm = new frmSincronizacao();
             frm.ShowDialog();
         }
 

@@ -33,11 +33,9 @@
             this.btnEditar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.txtEntrega = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtBairro = new System.Windows.Forms.TextBox();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtCEP = new System.Windows.Forms.TextBox();
+            this.txtRegiao = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.RegioesGridView = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
@@ -50,21 +48,19 @@
             this.groupBox1.Controls.Add(this.btnEditar);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txtEntrega);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.txtBairro);
             this.groupBox1.Controls.Add(this.btnSalvar);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txtCEP);
+            this.groupBox1.Controls.Add(this.txtRegiao);
             this.groupBox1.Location = new System.Drawing.Point(1, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(400, 130);
+            this.groupBox1.Size = new System.Drawing.Size(232, 147);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cadastro ";
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(308, 84);
+            this.btnEditar.Location = new System.Drawing.Point(124, 101);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(86, 40);
             this.btnEditar.TabIndex = 4;
@@ -75,7 +71,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(201, 25);
+            this.label3.Location = new System.Drawing.Point(11, 55);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(71, 13);
             this.label3.TabIndex = 6;
@@ -83,30 +79,14 @@
             // 
             // txtEntrega
             // 
-            this.txtEntrega.Location = new System.Drawing.Point(201, 41);
+            this.txtEntrega.Location = new System.Drawing.Point(11, 71);
             this.txtEntrega.Name = "txtEntrega";
             this.txtEntrega.Size = new System.Drawing.Size(93, 20);
             this.txtEntrega.TabIndex = 1;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 68);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Bairro";
-            // 
-            // txtBairro
-            // 
-            this.txtBairro.Location = new System.Drawing.Point(14, 84);
-            this.txtBairro.Name = "txtBairro";
-            this.txtBairro.Size = new System.Drawing.Size(161, 20);
-            this.txtBairro.TabIndex = 2;
-            // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(308, 25);
+            this.btnSalvar.Location = new System.Drawing.Point(14, 104);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(86, 37);
             this.btnSalvar.TabIndex = 3;
@@ -117,26 +97,26 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 25);
+            this.label1.Location = new System.Drawing.Point(11, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Nome Região";
             // 
-            // txtCEP
+            // txtRegiao
             // 
-            this.txtCEP.Location = new System.Drawing.Point(11, 41);
-            this.txtCEP.Name = "txtCEP";
-            this.txtCEP.Size = new System.Drawing.Size(164, 20);
-            this.txtCEP.TabIndex = 0;
-            this.txtCEP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ConsultarCEP);
+            this.txtRegiao.Location = new System.Drawing.Point(11, 32);
+            this.txtRegiao.Name = "txtRegiao";
+            this.txtRegiao.Size = new System.Drawing.Size(164, 20);
+            this.txtRegiao.TabIndex = 0;
+            this.txtRegiao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ConsultarCEP);
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.RegioesGridView);
-            this.groupBox2.Location = new System.Drawing.Point(1, 148);
+            this.groupBox2.Location = new System.Drawing.Point(1, 155);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(400, 174);
+            this.groupBox2.Size = new System.Drawing.Size(232, 174);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Lista de Regiões";
@@ -154,7 +134,7 @@
             this.RegioesGridView.Name = "RegioesGridView";
             this.RegioesGridView.ReadOnly = true;
             this.RegioesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.RegioesGridView.Size = new System.Drawing.Size(394, 155);
+            this.RegioesGridView.Size = new System.Drawing.Size(226, 155);
             this.RegioesGridView.TabIndex = 3;
             this.RegioesGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RegioesGridView_CellClick);
             // 
@@ -162,7 +142,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(413, 334);
+            this.ClientSize = new System.Drawing.Size(248, 333);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -186,11 +166,9 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtEntrega;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtBairro;
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtCEP;
+        private System.Windows.Forms.TextBox txtRegiao;
         private System.Windows.Forms.DataGridView RegioesGridView;
         private System.Windows.Forms.Button btnEditar;
     }

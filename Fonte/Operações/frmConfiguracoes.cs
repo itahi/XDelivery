@@ -65,7 +65,8 @@ namespace DexComanda
                 Banco = txtBanco.Text,
                 DataInicio = DateTime.Now,
                 VersaoBanco= "1",
-                CaminhoBackup = txtCaminhoBkp.Text
+                CaminhoBackup = txtCaminhoBkp.Text,
+                UrlServidor = txtURL.Text
                 
             };
             // Grava as configurações
@@ -149,10 +150,9 @@ namespace DexComanda
 
             this.btnSalvar.Click -= AlterarConfig;
             this.btnSalvar.Click += SalvaConfig;
-            if (empresa.Nome != "" && empresa.Contato != "" && empresa.Telefone != "")
+            if (empresa.Nome != "" && empresa.Contato != "" && empresa.Telefone != "" && txtViasBalcao.Text != "" && txtViasCozinha.Text != "" && txtViasEntrega.Text != "" && txtCaminhoBkp.Text!="")
             {
-                if (txtViasBalcao.Text != "" && txtViasCozinha.Text != "" && txtViasEntrega.Text != "" && txtCaminhoBkp.Text!="")
-                {
+                
                     config.ViasEntrega = txtViasEntrega.Text;
                     config.ViasBalcao = txtViasBalcao.Text;
                     config.ViasCozinha = txtViasCozinha.Text;
@@ -161,11 +161,8 @@ namespace DexComanda
                    // MessageBox.Show("Empresa Adicionada com sucesso");
                     con.Insert("spAdicionarConfiguracao", config);
                     MessageBox.Show("Configuração adicionada com sucesso.");
-
                     Utils.Restart();
 
-                }
-                
             }
             else
             {
@@ -193,7 +190,8 @@ namespace DexComanda
                 Banco = txtBanco.Text,
                 DataInicio = DateTime.Now,
                 VersaoBanco = "0",
-                CaminhoBackup = txtCaminhoBkp.Text
+                CaminhoBackup = txtCaminhoBkp.Text,
+                UrlServidor =txtURL.Text
             };
 
             config.cod = Sessions.returnConfig.cod;
@@ -598,6 +596,18 @@ namespace DexComanda
                 string iArquivo = Utils.CriaArquivoTxt("ConfigImpressao", Convert.ToString(iNumModelo)+";"+ Porta);
             }
             
+        }
+
+        private void chkViaCozinha_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkViaCozinha.Checked)
+            {
+                txtViasCozinha.Text = "1";
+            }
+            else
+            {
+                txtViasCozinha.Text = "0";
+            }
         }
 
         

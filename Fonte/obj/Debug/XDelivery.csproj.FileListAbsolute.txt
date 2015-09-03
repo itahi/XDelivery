@@ -112,3 +112,9 @@ E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.exe.manifest
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.application
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.exe
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.pdb
+E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmSincronizacao.resources
+E:\#Projetos\XDelivery\Fonte\bin\Debug\RestSharp.dll
+E:\#Projetos\XDelivery\Fonte\bin\Debug\RestSharp.xml
+F:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.config
+F:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.exe
+F:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.pdb

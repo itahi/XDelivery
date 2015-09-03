@@ -143,7 +143,7 @@ namespace DexComanda
             }
             return CaixaAberto;
         }
-        public static string ImpressaoEntreganova(int iCodPedido, Boolean iExport = false)
+        public static string ImpressaoEntreganova(int iCodPedido, Boolean iExport = false,int iNumCopias=0)
         {
             string iRetorno = ""; ;
             RelDelivery report;
@@ -170,7 +170,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    report.PrintToPrinter(0, false, 0, 0);
+                    report.PrintToPrinter(iNumCopias, false, 0, 0);
                 }
             }
             catch (Exception erro)
@@ -180,7 +180,44 @@ namespace DexComanda
             }
             return iRetorno;  
         }
-        public static void ImpressaoMesanova(int iCodPedido)
+        public static string ImpressaoCozihanova(int iCodPedido, Boolean iExport = false,int iNumCopias=0)
+        {
+            string iRetorno = ""; ;
+            RelDelivey_Mesa report;
+            try
+            {
+                report = new RelDelivey_Mesa();
+                report.SetDatabaseLogon("sa", "1001");
+                report.SetParameterValue("@Codigo", iCodPedido);
+                if (iExport)
+                {
+                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
+                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery_Mesa.txt";
+
+                    report.ExportOptions.ExportDestinationType =
+                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+                    report.ExportOptions.ExportFormatType =
+                    CrystalDecisions.Shared.ExportFormatType.Text;
+
+                    report.ExportOptions.DestinationOptions = reportExport;
+                    report.Export();
+                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery_Mesa.txt";
+                }
+                else
+                {
+                    report.PrintToPrinter(iNumCopias, false, 0, 0);
+                }
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.InnerException.Message);
+            }
+            return iRetorno;
+        }
+        public static void ImpressaoMesanova(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
         {
             RelComandaMesa report;
             try

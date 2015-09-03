@@ -120,14 +120,11 @@
   <metadata name="txtLogradouro.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="txtLogradouro.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
-        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAAsOAAALDgFAvuFBAAACH0lEQVQ4T5WTS28SURiGx2XH
+        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAAsMAAALDAE/QCLIAAACH0lEQVQ4T5WTS28SURiGx2XH
         tOrGhUscMY2SJlIzoAQilwWBhUvjQtMag6Em8BdMk6LBG1CmQNOFSxZGMGljY0rLJdpELhsbi7YVmlkS
         G0hkAcLrN8fEYWFGPcmzOu/7nO+czHDKcjqdZ2w220WXy2X1er3X/8BNt9t9y+Px3FAyDodDz4rKEgRh
         4mRw4xv/4BBz0SwajQaazeZv9g8O4Pf74bDbEQqFMBt+Cf7+xlf9lPEqE4iiRRybl8E9BeaWSxgMBhgO
@@ -159,7 +156,7 @@
   <data name="btnSalvar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
-        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAAsPAAALDwGS+QOlAAACH0lEQVQ4T5WTS28SURiGx2XH
+        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAAsNAAALDQHtB8AsAAACH0lEQVQ4T5WTS28SURiGx2XH
         tOrGhUscMY2SJlIzoAQilwWBhUvjQtMag6Em8BdMk6LBG1CmQNOFSxZGMGljY0rLJdpELhsbi7YVmlkS
         G0hkAcLrN8fEYWFGPcmzOu/7nO+czHDKcjqdZ2w220WXy2X1er3X/8BNt9t9y+Px3FAyDodDz4rKEgRh
         4mRw4xv/4BBz0SwajQaazeZv9g8O4Pf74bDbEQqFMBt+Cf7+xlf9lPEqE4iiRRybl8E9BeaWSxgMBhgO

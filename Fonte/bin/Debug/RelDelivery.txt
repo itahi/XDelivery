@@ -3,39 +3,39 @@
 
         TÔ FRITO! FRANGUINHO
 
-29/08/2015  21:4   Pedido Nº 5.442
+02/09/2015  18:5   Pedido Nº 6.452
 
 Produtos do Pedido
 
 Nome              Qtd.     Total Item
-ACAI 300 ML          1     7,90
-nullE NOME 
-PRODUTO GRADE 
-COM CARACTERE
-ACAI 300 ML          1     7,90
-null
-
-COCA COLA 1.5 L      1     6,00
-null
-
-CALABRESA GG         1     10,00
-null
+COCA COLA 600 ML     1     4,50
 
 
-Qtd Item    4,00 Total It  31,80
+CALABRESA P          1     24,20
+
+
+Meia E HEXA G /      1     42,40
+sem  milhoCOLA 
+1.5 L
+
+Qtd Item    3,00 Total It  71,10
                  Tx Entreg 0,00
 
-Troca PS/ Troco  Total Ped 36,80
-Forma Pgt
+Troca P100,00    Total Ped 76,10
+Forma Pgt DINHEIRO
 
              Dados do Client
-Lázaro
+JUSSARA
+
+RUA DIÓGENES MALACARNE
+N.º 956
+Bairr PRAIA DA COSTA
+Cidade VILA VELHA
+Tel. 9881290
 
 
-N.º
-Bairr
-Cidade
-Tel. 9976380
+
+
 
 
 

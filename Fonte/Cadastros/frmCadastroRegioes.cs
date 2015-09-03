@@ -58,9 +58,9 @@ namespace DexComanda
         private void Editar(object sender, EventArgs e)
         {
             codigo = int.Parse(this.RegioesGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-            txtBairro.Text = (this.RegioesGridView.SelectedRows[rowIndex].Cells[1].Value.ToString());
+        //    txtBairro.Text = (this.RegioesGridView.SelectedRows[rowIndex].Cells[1].Value.ToString());
             txtEntrega.Text = (this.RegioesGridView.SelectedRows[rowIndex].Cells[2].Value.ToString());
-            txtCEP.Text = (this.RegioesGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
+            txtRegiao.Text = (this.RegioesGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
 
 
             this.btnSalvar.Text = "Salvar [F12]";
@@ -74,33 +74,43 @@ namespace DexComanda
 
         private void SalvarRegiao(object sender, EventArgs e)
         {
-            RegioesEntrega regioes = new RegioesEntrega()
+            try
             {
-                Codigo = codigo,
-                NomeRegiao = txtCEP.Text,
-                Bairro = txtBairro.Text.ToUpper(),
-                TaxaServico = Convert.ToDecimal(this.txtEntrega.Text.Replace(".", ","))
+                if (txtRegiao.Text.Trim() != "" || txtEntrega.Text.Trim() != "")
+                {
+                    RegioesEntrega regioes = new RegioesEntrega()
+                    {
+                        Codigo = codigo,
+                        NomeRegiao = txtRegiao.Text,
+                        Bairro = "",// txtBairro.Text.ToUpper(),
+                        TaxaServico = Convert.ToDecimal(this.txtEntrega.Text.Replace(".", ","))
 
-            };
-            if (txtCEP.Text!="" && txtEntrega.Text !="")
-            {
-                con.Update("spAlteraRegiao", regioes);
-                Utils.ControlaEventos("Altera", this.Name);
-                this.btnSalvar.Text = "Adicionar [F12]";
-                this.btnSalvar.Click += new System.EventHandler(this.AdicionarRegiao);
-                this.btnSalvar.Click -= new System.EventHandler(this.SalvarRegiao);
+                    };
 
-                this.btnEditar.Text = "Editar [F11]";
-                this.btnEditar.Click += new System.EventHandler(this.Editar);
-                this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+                    con.Update("spAlteraRegiao", regioes);
+                    Utils.ControlaEventos("Altera", this.Name);
+                    this.btnSalvar.Text = "Adicionar [F12]";
+                    this.btnSalvar.Click += new System.EventHandler(this.AdicionarRegiao);
+                    this.btnSalvar.Click -= new System.EventHandler(this.SalvarRegiao);
 
-                Utils.LimpaForm(this);
-                ListaRegioes(); 
+                    this.btnEditar.Text = "Editar [F11]";
+                    this.btnEditar.Click += new System.EventHandler(this.Editar);
+                    this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+
+                    Utils.LimpaForm(this);
+                    ListaRegioes();
+                }
+                else
+                {
+                    MessageBox.Show("Preencha corretamento os campos para continuar", "Dex Aviso");
+                }
             }
-            else
+            catch (Exception erro)
             {
-                MessageBox.Show("Preencha corretamento os campos para continuar", "Dex Aviso");
+
+                MessageBox.Show(erro.InnerException.Message);
             }
+            
            
         }
         private void Cancelar(object sender, EventArgs e)
@@ -130,19 +140,20 @@ namespace DexComanda
         {
             try
             {
+                if (txtRegiao.Text.Trim() != "" || txtEntrega.Text.Trim() != "")
+                {
                 RegioesEntrega regioes = new RegioesEntrega()
                 {
-                    NomeRegiao = txtCEP.Text,
-                    Bairro = txtBairro.Text.ToUpper(),
+                    NomeRegiao = txtRegiao.Text,
+                    Bairro = "",//txtBairro.Text.ToUpper(),
                     TaxaServico = Convert.ToDecimal(this.txtEntrega.Text.Replace(".", ","))
 
                 };
-                if (txtCEP.Text != "" && txtEntrega.Text != "")
-                  {
+                
                     con.Insert("spAdicionaRegiao", regioes);
-                    Utils.ControlaEventos("Inseri", this.Name);
+                    Utils.ControlaEventos("Inserie", this.Name);
                     Utils.LimpaForm(this);
-                    txtCEP.Focus();
+                    txtRegiao.Focus();
                     ListaRegioes();
                   }
                 else

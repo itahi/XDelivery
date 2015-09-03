@@ -33,7 +33,8 @@ namespace DexComanda
                 Codigo = codigo,
                 Descricao = this.txtNomeFP.Text.ToString(),
                 DescontoSN = chkDesconto2.Checked,
-                GeraFinanceiro = chkFinanceiro.Checked
+                GeraFinanceiro = chkFinanceiro.Checked,
+                OnlineSN  = chkOnline.Checked
             };
 
             if (txtNomeFP.Text != "")
@@ -58,7 +59,8 @@ namespace DexComanda
                 codigo = int.Parse(this.FPGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
                 this.txtNomeFP.Text = this.FPGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
                 chkDesconto2.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[2].Value.ToString());
-                chkFinanceiro.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[3].Value.ToString()); 
+                chkFinanceiro.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
+                chkOnline.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[4].Value.ToString()); 
 
                 this.btnAdicionar.Text = "Salvar";
                 this.btnAdicionar.Click += new System.EventHandler(this.SalvarFP);
@@ -102,7 +104,8 @@ namespace DexComanda
                 Codigo      = codigo,
                 Descricao   = this.txtNomeFP.Text.ToString(),
                 DescontoSN  = chkDesconto2.Checked ,
-                GeraFinanceiro = chkFinanceiro.Checked
+                GeraFinanceiro = chkFinanceiro.Checked,
+                OnlineSN = chkOnline.Checked
             };
 
             con.Update("spAlterarFormaPagamento", fp);

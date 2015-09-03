@@ -16,5 +16,6 @@ namespace DexComanda.Models
         public string DiaSemana { get; set; }
         public decimal PrecoDesconto { get; set; }
         public bool AtivoSN { get; set; }
+        public bool OnlineSN { get; set; }
     }
 }
