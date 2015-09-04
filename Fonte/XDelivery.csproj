@@ -33,7 +33,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -184,6 +184,11 @@
     </Compile>
     <Compile Include="Cadastros\frmCadProdutoAdicional.Designer.cs">
       <DependentUpon>frmCadProdutoAdicional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBExpert_TesteDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBExpert_TesteDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Integração\MP2032.cs" />
     <Compile Include="Models\Caixa.cs" />
@@ -711,6 +716,17 @@
     </None>
     <None Include="DBExpertDataSet.xss">
       <DependentUpon>DBExpertDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DBExpert_TesteDataSet.xsc">
+      <DependentUpon>DBExpert_TesteDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DBExpert_TesteDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DBExpert_TesteDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DBExpert_TesteDataSet.xss">
+      <DependentUpon>DBExpert_TesteDataSet.xsd</DependentUpon>
     </None>
     <None Include="Dlls\Microsoft.QualityTools.Testing.Fakes.dl" />
     <None Include="Dlls\Microsoft.ReportViewer.WinForms.dl" />

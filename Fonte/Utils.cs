@@ -30,6 +30,8 @@ using Microsoft.SqlServer.Management.Common;
 using System.Runtime.InteropServices;
 using System.Collections;
 using DexComanda.Relatorios.Delivery;
+using CrystalDecisions.Shared;
+using CrystalDecisions.CrystalReports.Engine;
 namespace DexComanda
 {
     public class Utils
@@ -146,11 +148,32 @@ namespace DexComanda
         public static string ImpressaoEntreganova(int iCodPedido, Boolean iExport = false,int iNumCopias=0)
         {
             string iRetorno = ""; ;
+           
             RelDelivery report;
             try
             {
                 report = new RelDelivery();
-                report.SetDatabaseLogon("sa", "1001");
+                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+
+               
+                
                 report.SetParameterValue("@Codigo", iCodPedido);
                 if (iExport)
                 {
@@ -187,7 +210,25 @@ namespace DexComanda
             try
             {
                 report = new RelDelivey_Mesa();
-                report.SetDatabaseLogon("sa", "1001");
+                
+                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery_Mesa.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
                 report.SetParameterValue("@Codigo", iCodPedido);
                 if (iExport)
                 {
