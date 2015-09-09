@@ -32,6 +32,7 @@ using System.Collections;
 using DexComanda.Relatorios.Delivery;
 using CrystalDecisions.Shared;
 using CrystalDecisions.CrystalReports.Engine;
+using System.Diagnostics;
 namespace DexComanda
 {
     public class Utils
@@ -53,6 +54,10 @@ namespace DexComanda
         private static MySqlDataAdapter MysqlDataAdapter;
         private static DataSet dados;
         private static DataSet mRetornoWS;
+        private static TableLogOnInfos crtableLogoninfos;
+        private static TableLogOnInfo crtableLogoninfo;
+        private static ConnectionInfo crConnectionInfo;
+        private static Tables CrTables;
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
         public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1)
         {
@@ -206,17 +211,17 @@ namespace DexComanda
         public static string ImpressaoCozihanova(int iCodPedido, Boolean iExport = false,int iNumCopias=0)
         {
             string iRetorno = ""; ;
-            RelDelivey_Mesa report;
+            RelDelivey_Cozinha report;
             try
             {
-                report = new RelDelivey_Mesa();
+                report = new RelDelivey_Cozinha();
                 
-                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
-                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
-                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                crtableLogoninfos = new TableLogOnInfos();
+                crtableLogoninfo = new TableLogOnInfo();
+                crConnectionInfo = new ConnectionInfo();
                 Tables CrTables;
 
-                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery_Mesa.rpt");
+                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivey_Cozinha.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
                 crConnectionInfo.UserID = "sa";
@@ -234,7 +239,7 @@ namespace DexComanda
                 {
                     CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
                     new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery_Mesa.txt";
+                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivey_Cozinha.txt";
 
                     report.ExportOptions.ExportDestinationType =
                     CrystalDecisions.Shared.ExportDestinationType.DiskFile;
@@ -244,7 +249,7 @@ namespace DexComanda
 
                     report.ExportOptions.DestinationOptions = reportExport;
                     report.Export();
-                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery_Mesa.txt";
+                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivey_Cozinha.txt";
                 }
                 else
                 {
@@ -274,6 +279,61 @@ namespace DexComanda
                 MessageBox.Show(erro.InnerException.Message);
             }
 
+        }
+        public static string ImpressaMesaNova(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
+        {
+            string iRetorno = ""; ;
+            RelComandaMesa report;
+            try
+            {
+                report = new RelComandaMesa();
+
+                crtableLogoninfos = new TableLogOnInfos();
+                crtableLogoninfo = new TableLogOnInfo();
+                crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+                report.SetParameterValue("@Codigo", iCodPedido);
+                if (iExport)
+                {
+                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
+                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelComandaMesa.txt";
+
+                    report.ExportOptions.ExportDestinationType =
+                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+                    report.ExportOptions.ExportFormatType =
+                    CrystalDecisions.Shared.ExportFormatType.Text;
+
+                    report.ExportOptions.DestinationOptions = reportExport;
+                    report.Export();
+                    iRetorno = Directory.GetCurrentDirectory() + @"\RelComandaMesa.txt";
+                }
+                else
+                {
+                    report.PrintToPrinter(iNumCopias, false, 0, 0);
+                }
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.InnerException.Message);
+            }
+            return iRetorno;
         }
         public static void LancarMovimentoCaixa(CaixaMovimento caixa)
         {
@@ -1109,14 +1169,19 @@ namespace DexComanda
             return iContraSenha;
         }
 
-        public static string ServicoSQLATIVO()
+        public static string ServicoSQLATIVO(string iNomePC)
         {
             string status = "";
             // string command = "SELECT * FROM sys.databases WHERE name = 'DbExpert'";
             try
             {
-
-                ServiceController MeuServico = new ServiceController("MSSQLSERVER");
+                iNomePC = iNomePC.Replace("Data Source=", "");
+                
+                //Process[] remoteByName = Process.GetProcessesByName("MySQL", "NomeMaquina");
+               // MSSQLSERVER
+                //// 2. Using an IP address to specify the machineName parameter.
+                //Process[] ipByName = Process.GetProcessesByName("notepad", "192.168.xx.x");
+                ServiceController MeuServico = new ServiceController("MSSQLSERVER", iNomePC);
 
                 status = MeuServico.Status.ToString();
 

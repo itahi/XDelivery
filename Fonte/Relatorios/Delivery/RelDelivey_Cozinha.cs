@@ -16,14 +16,14 @@ namespace DexComanda.Relatorios.Delivery {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class RelDelivey_Mesa : ReportClass {
+    public class RelDelivey_Cozinha : ReportClass {
         
-        public RelDelivey_Mesa() {
+        public RelDelivey_Cozinha() {
         }
         
         public override string ResourceName {
             get {
-                return "RelDelivey_Mesa.rpt";
+                return "RelDelivey_Cozinha.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace DexComanda.Relatorios.Delivery {
         
         public override string FullResourceName {
             get {
-                return "DexComanda.Relatorios.Delivery.RelDelivey_Mesa.rpt";
+                return "DexComanda.Relatorios.Delivery.RelDelivey_Cozinha.rpt";
             }
             set {
                 // Do nothing
@@ -98,9 +98,9 @@ namespace DexComanda.Relatorios.Delivery {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedRelDelivey_Mesa : Component, ICachedReport {
+    public class CachedRelDelivey_Cozinha : Component, ICachedReport {
         
-        public CachedRelDelivey_Mesa() {
+        public CachedRelDelivey_Cozinha() {
         }
         
         [Browsable(false)]
@@ -137,7 +137,7 @@ namespace DexComanda.Relatorios.Delivery {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            RelDelivey_Mesa rpt = new RelDelivey_Mesa();
+            RelDelivey_Cozinha rpt = new RelDelivey_Cozinha();
             rpt.Site = this.Site;
             return rpt;
         }

@@ -58,10 +58,8 @@ namespace DexComanda
         private void Editar(object sender, EventArgs e)
         {
             codigo = int.Parse(this.RegioesGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-        //    txtBairro.Text = (this.RegioesGridView.SelectedRows[rowIndex].Cells[1].Value.ToString());
-            txtEntrega.Text = (this.RegioesGridView.SelectedRows[rowIndex].Cells[2].Value.ToString());
-            txtRegiao.Text = (this.RegioesGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
-
+            txtEntrega.Text = (this.RegioesGridView.SelectedRows[rowIndex].Cells[1].Value.ToString());
+            txtRegiao.Text = (this.RegioesGridView.SelectedRows[rowIndex].Cells[2].Value.ToString());
 
             this.btnSalvar.Text = "Salvar [F12]";
             this.btnSalvar.Click += new System.EventHandler(this.SalvarRegiao);
@@ -82,8 +80,8 @@ namespace DexComanda
                     {
                         Codigo = codigo,
                         NomeRegiao = txtRegiao.Text,
-                        Bairro = "",// txtBairro.Text.ToUpper(),
-                        TaxaServico = Convert.ToDecimal(this.txtEntrega.Text.Replace(".", ","))
+                        TaxaServico = Convert.ToDecimal(this.txtEntrega.Text.Replace(".", ",")),
+                        DataAlteracao = DateTime.Now
 
                     };
 
@@ -145,8 +143,8 @@ namespace DexComanda
                 RegioesEntrega regioes = new RegioesEntrega()
                 {
                     NomeRegiao = txtRegiao.Text,
-                    Bairro = "",//txtBairro.Text.ToUpper(),
-                    TaxaServico = Convert.ToDecimal(this.txtEntrega.Text.Replace(".", ","))
+                    TaxaServico = Convert.ToDecimal(this.txtEntrega.Text.Replace(".", ",")),
+                    DataAlteracao = DateTime.Now
 
                 };
                 

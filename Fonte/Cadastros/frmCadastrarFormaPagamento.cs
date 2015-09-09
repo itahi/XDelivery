@@ -34,7 +34,8 @@ namespace DexComanda
                 Descricao = this.txtNomeFP.Text.ToString(),
                 DescontoSN = chkDesconto2.Checked,
                 GeraFinanceiro = chkFinanceiro.Checked,
-                OnlineSN  = chkOnline.Checked
+                OnlineSN  = chkOnline.Checked,
+                DataAlteracao =DateTime.Now
             };
 
             if (txtNomeFP.Text != "")
@@ -105,7 +106,8 @@ namespace DexComanda
                 Descricao   = this.txtNomeFP.Text.ToString(),
                 DescontoSN  = chkDesconto2.Checked ,
                 GeraFinanceiro = chkFinanceiro.Checked,
-                OnlineSN = chkOnline.Checked
+                OnlineSN = chkOnline.Checked,
+                DataAlteracao = DateTime.Now
             };
 
             con.Update("spAlterarFormaPagamento", fp);

@@ -528,7 +528,7 @@ namespace DexComanda
                     };
                     if (DescontoDia)
                     {
-                        produto.AtivoSN = Convert.ToBoolean(produtosGridView.SelectedCells[8].Value.ToString());
+                        produto.AtivoSN = Convert.ToBoolean(produtosGridView.SelectedCells[7].Value.ToString());
                         if (produto.PrecoDesconto.ToString() != "" || produto.PrecoDesconto != null)
                         {
                             produto.PrecoDesconto = decimal.Parse(produtosGridView.SelectedCells[5].Value.ToString());
@@ -1187,8 +1187,8 @@ namespace DexComanda
                 }
 
                 int iParam = 0;
-                if (!itemPedido.ImpressoSN)
-                {
+              //  if (!itemPedido.ImpressoSN)
+               // {
                     foreach (ItemPedido item in items)
                     {
 
@@ -1203,24 +1203,26 @@ namespace DexComanda
                             line += " às " + DateTime.Now.ToShortTimeString() + "\r\n";
                         }
                         AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
-                        if (!item.ImpressoSN)
-                        {
-                            line += item.NomeProduto.ToString() + ", Quant.:" + item.Quantidade.ToString() + "\r\n";
-                            if (item.Item != "" && item.Item != null)
-                            {
-                                line += "Obs:" + QuebrarString(item.Item.ToString().ToUpper()) + "\r\n";
-                            }
+                        Atualiza.CodPedido = iCodPedido;
+                        Atualiza.CodProduto = item.CodProduto;
+                        Atualiza.ImpressoSN = true;
 
-                            Atualiza.CodPedido = iCodPedido;
-                            Atualiza.CodProduto = item.CodProduto;
-                            Atualiza.ImpressoSN = true;
+                        con.Update("spInformaItemImpresso", Atualiza);
+                        Utils.ImpressaMesaNova(iCodPedido, false, 0);
+                     //   if (!item.ImpressoSN)
+                      //  {
+                            //line += item.NomeProduto.ToString() + ", Quant.:" + item.Quantidade.ToString() + "\r\n";
+                            //if (item.Item != "" && item.Item != null)
+                            //{
+                            //    line += "Obs:" + QuebrarString(item.Item.ToString().ToUpper()) + "\r\n";
+                            //}
 
-                            con.Update("spInformaItemImpresso", Atualiza);
-                        }
+                            
+                      //  }
 
                         iParam++;
                     }
-                }
+            //    }
 
                 if (line != null)
                 {

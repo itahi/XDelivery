@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.prgBarCategoria = new System.Windows.Forms.ProgressBar();
-            this.prgBarProduto = new System.Windows.Forms.ProgressBar();
-            this.prgBarpagamento = new System.Windows.Forms.ProgressBar();
             this.prgBarRegiao = new System.Windows.Forms.ProgressBar();
+            this.prgBarpagamento = new System.Windows.Forms.ProgressBar();
+            this.prgBarProduto = new System.Windows.Forms.ProgressBar();
+            this.prgBarCategoria = new System.Windows.Forms.ProgressBar();
+            this.chkRegiaoEntrega = new System.Windows.Forms.CheckBox();
+            this.chkFPagamento = new System.Windows.Forms.CheckBox();
+            this.chkProdutos = new System.Windows.Forms.CheckBox();
+            this.chkCategorias = new System.Windows.Forms.CheckBox();
             this.btnSincronizar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -47,10 +47,10 @@
             this.groupBox1.Controls.Add(this.prgBarpagamento);
             this.groupBox1.Controls.Add(this.prgBarProduto);
             this.groupBox1.Controls.Add(this.prgBarCategoria);
-            this.groupBox1.Controls.Add(this.checkBox4);
-            this.groupBox1.Controls.Add(this.checkBox3);
-            this.groupBox1.Controls.Add(this.checkBox2);
-            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.chkRegiaoEntrega);
+            this.groupBox1.Controls.Add(this.chkFPagamento);
+            this.groupBox1.Controls.Add(this.chkProdutos);
+            this.groupBox1.Controls.Add(this.chkCategorias);
             this.groupBox1.Location = new System.Drawing.Point(0, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(243, 129);
@@ -58,59 +58,12 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cadastros a Sincronizar";
             // 
-            // checkBox1
+            // prgBarRegiao
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 19);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(76, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Categorias";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(6, 45);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(68, 17);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Produtos";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(6, 68);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(117, 17);
-            this.checkBox3.TabIndex = 2;
-            this.checkBox3.Text = "Forma Pagamentos";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(6, 91);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(105, 17);
-            this.checkBox4.TabIndex = 3;
-            this.checkBox4.Text = "Regioes Entrega";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // prgBarCategoria
-            // 
-            this.prgBarCategoria.Location = new System.Drawing.Point(129, 19);
-            this.prgBarCategoria.Name = "prgBarCategoria";
-            this.prgBarCategoria.Size = new System.Drawing.Size(100, 16);
-            this.prgBarCategoria.TabIndex = 4;
-            // 
-            // prgBarProduto
-            // 
-            this.prgBarProduto.Location = new System.Drawing.Point(129, 46);
-            this.prgBarProduto.Name = "prgBarProduto";
-            this.prgBarProduto.Size = new System.Drawing.Size(100, 16);
-            this.prgBarProduto.TabIndex = 5;
+            this.prgBarRegiao.Location = new System.Drawing.Point(129, 90);
+            this.prgBarRegiao.Name = "prgBarRegiao";
+            this.prgBarRegiao.Size = new System.Drawing.Size(100, 16);
+            this.prgBarRegiao.TabIndex = 7;
             // 
             // prgBarpagamento
             // 
@@ -119,12 +72,59 @@
             this.prgBarpagamento.Size = new System.Drawing.Size(100, 16);
             this.prgBarpagamento.TabIndex = 6;
             // 
-            // prgBarRegiao
+            // prgBarProduto
             // 
-            this.prgBarRegiao.Location = new System.Drawing.Point(129, 90);
-            this.prgBarRegiao.Name = "prgBarRegiao";
-            this.prgBarRegiao.Size = new System.Drawing.Size(100, 16);
-            this.prgBarRegiao.TabIndex = 7;
+            this.prgBarProduto.Location = new System.Drawing.Point(129, 46);
+            this.prgBarProduto.Name = "prgBarProduto";
+            this.prgBarProduto.Size = new System.Drawing.Size(100, 16);
+            this.prgBarProduto.TabIndex = 5;
+            // 
+            // prgBarCategoria
+            // 
+            this.prgBarCategoria.Location = new System.Drawing.Point(129, 19);
+            this.prgBarCategoria.Name = "prgBarCategoria";
+            this.prgBarCategoria.Size = new System.Drawing.Size(100, 16);
+            this.prgBarCategoria.TabIndex = 4;
+            // 
+            // chkRegiaoEntrega
+            // 
+            this.chkRegiaoEntrega.AutoSize = true;
+            this.chkRegiaoEntrega.Location = new System.Drawing.Point(6, 91);
+            this.chkRegiaoEntrega.Name = "chkRegiaoEntrega";
+            this.chkRegiaoEntrega.Size = new System.Drawing.Size(105, 17);
+            this.chkRegiaoEntrega.TabIndex = 3;
+            this.chkRegiaoEntrega.Text = "Regioes Entrega";
+            this.chkRegiaoEntrega.UseVisualStyleBackColor = true;
+            // 
+            // chkFPagamento
+            // 
+            this.chkFPagamento.AutoSize = true;
+            this.chkFPagamento.Location = new System.Drawing.Point(6, 68);
+            this.chkFPagamento.Name = "chkFPagamento";
+            this.chkFPagamento.Size = new System.Drawing.Size(117, 17);
+            this.chkFPagamento.TabIndex = 2;
+            this.chkFPagamento.Text = "Forma Pagamentos";
+            this.chkFPagamento.UseVisualStyleBackColor = true;
+            // 
+            // chkProdutos
+            // 
+            this.chkProdutos.AutoSize = true;
+            this.chkProdutos.Location = new System.Drawing.Point(6, 45);
+            this.chkProdutos.Name = "chkProdutos";
+            this.chkProdutos.Size = new System.Drawing.Size(68, 17);
+            this.chkProdutos.TabIndex = 1;
+            this.chkProdutos.Text = "Produtos";
+            this.chkProdutos.UseVisualStyleBackColor = true;
+            // 
+            // chkCategorias
+            // 
+            this.chkCategorias.AutoSize = true;
+            this.chkCategorias.Location = new System.Drawing.Point(6, 19);
+            this.chkCategorias.Name = "chkCategorias";
+            this.chkCategorias.Size = new System.Drawing.Size(76, 17);
+            this.chkCategorias.TabIndex = 0;
+            this.chkCategorias.Text = "Categorias";
+            this.chkCategorias.UseVisualStyleBackColor = true;
             // 
             // btnSincronizar
             // 
@@ -154,10 +154,10 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkRegiaoEntrega;
+        private System.Windows.Forms.CheckBox chkFPagamento;
+        private System.Windows.Forms.CheckBox chkProdutos;
+        private System.Windows.Forms.CheckBox chkCategorias;
         private System.Windows.Forms.ProgressBar prgBarRegiao;
         private System.Windows.Forms.ProgressBar prgBarpagamento;
         private System.Windows.Forms.ProgressBar prgBarProduto;

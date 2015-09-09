@@ -343,10 +343,10 @@
       <DependentUpon>RelComandaMesa.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Relatorios\Delivery\RelDelivey_Mesa.cs">
+    <Compile Include="Relatorios\Delivery\RelDelivey_Cozinha.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RelDelivey_Mesa.rpt</DependentUpon>
+      <DependentUpon>RelDelivey_Cozinha.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Delivery\RelFechametoMesa.cs">
@@ -608,9 +608,9 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelComandaMesa.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Delivery\RelDelivey_Mesa.rpt">
+    <EmbeddedResource Include="Relatorios\Delivery\RelDelivey_Cozinha.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelDelivey_Mesa.cs</LastGenOutput>
+      <LastGenOutput>RelDelivey_Cozinha.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelFechametoMesa.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

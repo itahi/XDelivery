@@ -11,5 +11,6 @@ namespace DexComanda.Models
         public string NomeGrupo { get; set; }
         public Boolean ImprimeCozinhaSN { get; set; }
         public Boolean OnlineSN { get; set; }
+        public DateTime DataAlteracao { get; set; }
     }
 }

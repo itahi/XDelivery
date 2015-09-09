@@ -126,7 +126,8 @@ namespace DexComanda
                     Descricao = this.descricaoProdutoTextBox.Text,
                     Preco = Convert.ToDecimal(this.precoProdutoTextBox.Text.Replace(".", ",")),
                     GrupoProduto = this.cbxGrupoProduto.Text,
-                    OnlineSN = chkOnline.Checked
+                    OnlineSN = chkOnline.Checked,
+                    DataAlteracao = DateTime.Now
                 };
 
                 if (DescontoPordia)
@@ -214,6 +215,7 @@ namespace DexComanda
                     GrupoProduto = grupoProduto,
                     AtivoSN = AtivoS,
                     OnlineSN = chkOnline.Checked,
+                    DataAlteracao = DateTime.Now
                 };
                 if (DescontoPordia)
                 {

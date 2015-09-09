@@ -57,8 +57,9 @@ namespace DexComanda
 
 
                     Conexao.connectionString = sLine;
+                    string[] words = sLine.Split(';');
                     //Verifica se o Serviço do SQLSERVER está Ativo para inicia-lo
-                    Utils.ServicoSQLATIVO();
+                    Utils.ServicoSQLATIVO(words[0]);
 
                     con = new Conexao();
                     DataSet servidor = con.SelectAll("Empresa", "spObterEmpresa");

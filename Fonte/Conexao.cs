@@ -183,7 +183,7 @@ namespace DexComanda
         }
         public DataSet SelectRegistroONline(string iNomeTable)
         {
-            string lSqlConsulta = " select * from " + iNomeTable + " where OnlineSN=1 ";// and AtivoSN=1";
+            string lSqlConsulta = " select * from " + iNomeTable + " where OnlineSN=1 and DataAlteracao>DataSincronismo ";// and AtivoSN=1";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -193,6 +193,15 @@ namespace DexComanda
             adapter.Fill(ds, iNomeTable);
             return ds;
 
+        }
+        public void AtualizaDataSincronismo(string iNomeTable , int iCodigo)
+        {
+            string lSqlConsulta = " update " + iNomeTable + " set DataSincronismo=GetDate() where Codigo="+iCodigo;// and AtivoSN=1";
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.ExecuteNonQuery();
+           
         }
         public DataSet SelectEntregaPorBoy(string iDataI, string iDataF, int CodMotoboy, string table = "Entregador")
         {

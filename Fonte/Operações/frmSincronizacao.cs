@@ -28,45 +28,88 @@ namespace DexComanda.Operações
         {
             iParamToken = Convert.ToString(DateTime.Now).Replace("/", "").Replace(":", "").Replace(" ", "").Substring(0, 11) + "Adminx";
             iParamToken = Utils.CriptografarArquivo(iParamToken.Trim());
+            iParamToken = iParamToken.ToLower();
 
             try
             {
-                CadastraCategorias(ObterCategorias());
+                if (chkCategorias.Checked)
+                {
+                    CadastraCategorias(ObterCategorias());
+                }
+                if (chkProdutos.Checked)
+                {
+                    CadastraFormaPagamento(ObterFormaPagamento());
+                }
+                if (chkFPagamento.Checked)
+                {
+                    
+                }
+                if (chkRegiaoEntrega.Checked)
+                {
+                    
+                }
+                
 
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
-
+        private DataSet ObterFormaPagamento()
+        {
+            return con.SelectRegistroONline("FormaPagamento");
+        }
         private DataSet ObterCategorias()
         {
             return con.SelectRegistroONline("Grupo");
-
         }
-        private void CadastraCategorias(DataSet dsCategorias)
+        private void CadastraCategorias(DataSet ds)
         {
             RestClient client = new RestClient("http://xfood.xsistemas.com.br/");
             RestRequest request = new RestRequest("ws/categorias/set", Method.POST);
-            listGrupos = new List<Grupo>();
-            var grupos = new Grupo();
-            for (int i = 0; i < dsCategorias.Tables[0].Rows.Count; i++)
+
+            prgBarCategoria.Maximum = ds.Tables[0].Rows.Count;
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                 grupos = new Grupo()
-                 {
-                     Codigo = dsCategorias.Tables["Grupo"].Rows[i].Field<int>("Codigo"),
-                     NomeGrupo = dsCategorias.Tables["Grupo"].Rows[i].Field<string>("NomeGrupo"),
-                 };
-
-                listGrupos.Add(grupos);
+                string inome = ds.Tables["Grupo"].Rows[i].Field<string>("NomeGrupo");
+                int iCod = ds.Tables["Grupo"].Rows[i].Field<int>("Codigo");
+                request.AddParameter("token", iParamToken);
+                request.AddParameter("nomeCategoria", inome);
+                request.AddParameter("idReferencia", iCod);
+                RestResponse response = (RestResponse)client.Execute(request);
+                prgBarCategoria.Value = i + 1;
+                if (response.Content.ToString() == "true")
+                {
+                    con.AtualizaDataSincronismo("Grupo", iCod);
+                }
+                
             }
-            request.AddParameter("token", iParamToken);
-            request.AddParameter("token", grupos);
-
-            RestResponse response = (RestResponse)client.Execute(request);
-
         }
+        private void CadastraFormaPagamento(DataSet ds)
+        {
+            RestClient client = new RestClient("http://xfood.xsistemas.com.br/");
+            RestRequest request = new RestRequest("ws/formapagamento/set", Method.POST);
+
+            prgBarpagamento.Maximum = ds.Tables[0].Rows.Count;
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                string inome = ds.Tables["FormaPagamento"].Rows[i].Field<string>("Nome");
+                int iCod = ds.Tables["FormaPagamento"].Rows[i].Field<int>("Codigo");
+                request.AddParameter("token", iParamToken);
+                request.AddParameter("nomeformapagamento", inome);
+                request.AddParameter("idReferencia", iCod);
+                RestResponse response = (RestResponse)client.Execute(request);
+                prgBarpagamento.Value = i + 1;
+                if (response.Content.ToString() == "true")
+                {
+                    con.AtualizaDataSincronismo("FormaPagamento", iCod);
+                }
+            }
+        }
+
+
     }
 }
+

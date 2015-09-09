@@ -17,5 +17,6 @@ namespace DexComanda.Models
         public decimal PrecoDesconto { get; set; }
         public bool AtivoSN { get; set; }
         public bool OnlineSN { get; set; }
+        public DateTime DataAlteracao { get; set; }
     }
 }

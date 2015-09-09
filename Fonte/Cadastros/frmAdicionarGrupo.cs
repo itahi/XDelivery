@@ -39,7 +39,8 @@ namespace DexComanda
                 {
                     NomeGrupo = this.txbNomeGrupo.Text,
                     ImprimeCozinhaSN = chkImprimeCozinha.Checked,
-                    OnlineSN =chkOnline.Checked
+                    OnlineSN =chkOnline.Checked,
+                    DataAlteracao = DateTime.Now
                 };
                 if (txbNomeGrupo.Text !="")
                 {
@@ -103,7 +104,8 @@ namespace DexComanda
                 Codigo = codigo,
                 NomeGrupo = this.txbNomeGrupo.Text,
                 ImprimeCozinhaSN = chkImprimeCozinha.Checked,
-                OnlineSN = chkOnline.Checked
+                OnlineSN = chkOnline.Checked,
+                DataAlteracao = DateTime.Now
             };
             if (txbNomeGrupo.Text !="")
             {

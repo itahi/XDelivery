@@ -11,7 +11,7 @@ namespace DexComanda.Models
     {
         public int Codigo { get; set; }
         public string NomeRegiao { get; set; }
-        public string Bairro { get; set; }
         public decimal TaxaServico { get; set; }
+        public DateTime DataAlteracao { get; set; }
     }
 }
