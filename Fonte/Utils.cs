@@ -335,6 +335,61 @@ namespace DexComanda
             }
             return iRetorno;
         }
+        public static string ImpressaoFechamentoNovo(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
+        {
+            string iRetorno = ""; ;
+            RelFechametoMesa report;
+            try
+            {
+                report = new RelFechametoMesa();
+
+                crtableLogoninfos = new TableLogOnInfos();
+                crtableLogoninfo = new TableLogOnInfo();
+                crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                report.Load(Directory.GetCurrentDirectory() + @"\RelFechametoMesa.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+                report.SetParameterValue("@Codigo", iCodPedido);
+                if (iExport)
+                {
+                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
+                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelFechametoMesa.txt";
+
+                    report.ExportOptions.ExportDestinationType =
+                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+                    report.ExportOptions.ExportFormatType =
+                    CrystalDecisions.Shared.ExportFormatType.Text;
+
+                    report.ExportOptions.DestinationOptions = reportExport;
+                    report.Export();
+                    iRetorno = Directory.GetCurrentDirectory() + @"\RelFechametoMesa.txt";
+                }
+                else
+                {
+                    report.PrintToPrinter(iNumCopias, false, 0, 0);
+                }
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.InnerException.Message);
+            }
+            return iRetorno;
+        }
         public static void LancarMovimentoCaixa(CaixaMovimento caixa)
         {
             caixa = new Models.CaixaMovimento()

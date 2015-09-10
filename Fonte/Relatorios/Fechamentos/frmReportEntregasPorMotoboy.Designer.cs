@@ -29,7 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource3 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            this.spEntregasPorBoyDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dsRelatorio = new DexComanda.Relatorios.dsRelatorio();
             this.panel1 = new System.Windows.Forms.Panel();
             this.reportViewEntregas = new Microsoft.Reporting.WinForms.ReportViewer();
             this.grpFiltro = new System.Windows.Forms.GroupBox();
@@ -41,14 +43,22 @@
             this.label3 = new System.Windows.Forms.Label();
             this.dataInicio = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
-            this.dsRelatorio = new DexComanda.Relatorios.dsRelatorio();
-            this.spEntregasPorBoyDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.spEntregasPorBoyDataTableAdapter = new DexComanda.Relatorios.dsRelatorioTableAdapters.spEntregasPorBoyDataTableAdapter();
+            ((System.ComponentModel.ISupportInitialize)(this.spEntregasPorBoyDataBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dsRelatorio)).BeginInit();
             this.panel1.SuspendLayout();
             this.grpFiltro.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dsRelatorio)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spEntregasPorBoyDataBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // spEntregasPorBoyDataBindingSource
+            // 
+            this.spEntregasPorBoyDataBindingSource.DataMember = "spEntregasPorBoyData";
+            this.spEntregasPorBoyDataBindingSource.DataSource = this.dsRelatorio;
+            // 
+            // dsRelatorio
+            // 
+            this.dsRelatorio.DataSetName = "dsRelatorio";
+            this.dsRelatorio.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // panel1
             // 
@@ -61,9 +71,9 @@
             // reportViewEntregas
             // 
             this.reportViewEntregas.Dock = System.Windows.Forms.DockStyle.Fill;
-            reportDataSource3.Name = "dsEntregasPorEntregador";
-            reportDataSource3.Value = this.spEntregasPorBoyDataBindingSource;
-            this.reportViewEntregas.LocalReport.DataSources.Add(reportDataSource3);
+            reportDataSource1.Name = "dsEntregasPorEntregador";
+            reportDataSource1.Value = this.spEntregasPorBoyDataBindingSource;
+            this.reportViewEntregas.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewEntregas.LocalReport.ReportEmbeddedResource = "DexComanda.Relatorios.Fechamentos.RelEntregasPorMotoboy.rdlc";
             this.reportViewEntregas.Location = new System.Drawing.Point(0, 0);
             this.reportViewEntregas.Name = "reportViewEntregas";
@@ -90,6 +100,8 @@
             // chkTodos
             // 
             this.chkTodos.AutoSize = true;
+            this.chkTodos.Checked = true;
+            this.chkTodos.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkTodos.Location = new System.Drawing.Point(463, 47);
             this.chkTodos.Name = "chkTodos";
             this.chkTodos.Size = new System.Drawing.Size(56, 17);
@@ -164,16 +176,6 @@
             this.label2.TabIndex = 14;
             this.label2.Text = "Período:";
             // 
-            // dsRelatorio
-            // 
-            this.dsRelatorio.DataSetName = "dsRelatorio";
-            this.dsRelatorio.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // spEntregasPorBoyDataBindingSource
-            // 
-            this.spEntregasPorBoyDataBindingSource.DataMember = "spEntregasPorBoyData";
-            this.spEntregasPorBoyDataBindingSource.DataSource = this.dsRelatorio;
-            // 
             // spEntregasPorBoyDataTableAdapter
             // 
             this.spEntregasPorBoyDataTableAdapter.ClearBeforeFill = true;
@@ -188,11 +190,11 @@
             this.Name = "frmReportEntregasPorMotoboy";
             this.Text = "[XSistemas] Entregas por Motoboy";
             this.Load += new System.EventHandler(this.frmReportEntregasPorMotoboy_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.spEntregasPorBoyDataBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dsRelatorio)).EndInit();
             this.panel1.ResumeLayout(false);
             this.grpFiltro.ResumeLayout(false);
             this.grpFiltro.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dsRelatorio)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spEntregasPorBoyDataBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -824,7 +824,7 @@ namespace DexComanda
                             Tipo = cbxTipoPedido.Text,
 
                         };
-                        if (DMargemGarco!=0.00M)
+                        if (DMargemGarco != 0.00M)
                         {
                             decimal dTotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
                             pedido.TotalPedido = dTotalPedido + DMargemGarco;
@@ -854,16 +854,16 @@ namespace DexComanda
 
                         var ValorPedidoTotal = ValorTotal + decimal.Parse(lblEntrega.Text);
 
-                         if (DMargemGarco!=0.00M)
-	                    {
-                             decimal TotalMesaGeral = DMargemGarco +ValorPedidoTotal ;
-                             this.lbTotal.Text = "R$ " + TotalMesaGeral.ToString();
-	                    }
+                        if (DMargemGarco != 0.00M)
+                        {
+                            decimal TotalMesaGeral = DMargemGarco + ValorPedidoTotal;
+                            this.lbTotal.Text = "R$ " + TotalMesaGeral.ToString();
+                        }
                         else
-	                        {
-                              this.lbTotal.Text = "R$ " + ValorPedidoTotal;
-	                        }
-                        
+                        {
+                            this.lbTotal.Text = "R$ " + ValorPedidoTotal;
+                        }
+
                         this.lblTroco.Text = "R$ " + TrocoPagar;
 
                         con.Update("spAlterarItemPedido", itemPedido);
@@ -960,10 +960,10 @@ namespace DexComanda
             //else
             //{
 
-                foreach (ItemPedido item in items)
-                {
-                    ValorTotal += item.PrecoTotal;
-                }
+            foreach (ItemPedido item in items)
+            {
+                ValorTotal += item.PrecoTotal;
+            }
             //}
 
 
@@ -1001,43 +1001,32 @@ namespace DexComanda
         {
             try
             {
-                printFont = new Font("Arial", int.Parse(TamanhoFont));
-                printFontCozinha = new Font("Arial", int.Parse(TamanhoFont));
-                PrintDocument pd = new PrintDocument();
+                //printFont = new Font("Arial", int.Parse(TamanhoFont));
+                //printFontCozinha = new Font("Arial", int.Parse(TamanhoFont));
+                //PrintDocument pd = new PrintDocument();
 
 
                 if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa" || cbxTipoPedido.Text == "2 - Balcao")
                 {
-                    for (int i = 0; i < QtdViasBalcao; i++)
+                    int iCodigo;
+                    if (con.getLastCodigo() != 0)
                     {
-                        ImprimePedidoMesa();
-                        // ImpressaoCozinha();
-
-
-                        // Configuração para imprimir em Impressoras LPT1
-                        if (ImprimeLPT)
-                        {
-                            SerialPort porta = new SerialPort(PortaImpressa);
-                            porta.Open();
-                            if (porta.IsOpen)
-                            {
-                                porta.WriteLine(line);
-                                porta.Close();
-                            }
-                            else
-                            {
-                                // Tenta novamente
-                                prepareToPrint();
-                            }
-                        }
-                        else
-                        {
-                            pd.PrintPage += new PrintPageEventHandler(this.ImprimirPedidoMesa);
-                            pd.Print();
-                            pd.PrintPage -= new PrintPageEventHandler(this.ImprimirPedidoMesa);
-                        }
+                        iCodigo = con.getLastCodigo();
+                    }
+                    else
+                    {
+                        iCodigo = codPedido;
                     }
 
+                    string iRetorno = Utils.ImpressaoFechamentoNovo(iCodigo, ImprimeLPT,QtdViasBalcao);
+
+                    if (ImprimeLPT && iRetorno != "")
+                    {
+                        StreamReader tempDex = new StreamReader(iRetorno);
+                        string sLine = "";
+                        sLine = tempDex.ReadToEnd();
+                        Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
+                    }
 
                 }
 
@@ -1057,16 +1046,16 @@ namespace DexComanda
                             iCodigo = codPedido;
                         }
 
-                        string iRetorno = Utils.ImpressaoEntreganova(iCodigo, ImprimeLPT);
+                        string iRetorno = Utils.ImpressaoEntreganova(iCodigo, ImprimeLPT,QtViasEntrega);
 
-                        if (ImprimeLPT && iRetorno!="")
+                        if (ImprimeLPT && iRetorno != "")
                         {
                             StreamReader tempDex = new StreamReader(iRetorno);
                             string sLine = "";
                             sLine = tempDex.ReadToEnd();
                             Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
                         }
-                      
+
                     }
 
                 }
@@ -1084,16 +1073,16 @@ namespace DexComanda
                             iCodigo = codPedido;
                         }
 
-                        string iRetorno = Utils.ImpressaoCozihanova(iCodigo, false, 1);
+                        string iRetorno = Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
                         //ImpressaoCozinha();
-                        if (ImprimeLPT && iRetorno!="")
+                        if (ImprimeLPT && iRetorno != "")
                         {
 
                             StreamReader tempDex = new StreamReader(iRetorno);
                             string sLine = "";
                             sLine = tempDex.ReadToEnd();
                             Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
-                            
+
                         }
                         //else
                         //{
@@ -1152,7 +1141,7 @@ namespace DexComanda
                         line += QuebrarString(ItemsPedi.PrecoUnitario.ToString());
                         line += QuebrarString(ItemsPedi.Quantidade.ToString());
 
-                        if (ItemsPedi.Item != null && ItemsPedi.Item != "" && ItemsPedi.Item!="null")
+                        if (ItemsPedi.Item != null && ItemsPedi.Item != "" && ItemsPedi.Item != "null")
                         {
                             line += QuebrarString(ItemsPedi.Item.ToString());
                         }
@@ -1168,7 +1157,7 @@ namespace DexComanda
                         line += QuebrarString("Desconto :" + txtDesconto.Text);
                         line += QuebrarString("Total Pedido:" + lbTotal.Text);
                         line += QuebrarString("Tx. Serviço :" + DMargemGarco);
-                        
+
                     }
                     else
                     {
