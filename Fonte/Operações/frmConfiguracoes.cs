@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Drawing.Printing;
 using System.IO.Ports;
 using DexComanda.Integração;
+using System.Configuration;
 namespace DexComanda
 {
     public partial class frmConfiguracoes : Form
@@ -608,6 +609,155 @@ namespace DexComanda
             {
                 txtViasCozinha.Text = "0";
             }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void SalvarConfigProduto(object sender, EventArgs e)
+        {
+            string strConfiProduto = "Codigo";
+          
+            if (chkNomeProd.Checked)
+            {
+                strConfiProduto = strConfiProduto + ",NomeProduto";
+            }
+            if (chkDescricao.Checked)
+            {
+                strConfiProduto = strConfiProduto + ",DescricaoProduto";
+            }
+            if (chkPreco.Checked)
+            {
+                strConfiProduto = strConfiProduto + ",PrecoProduto";
+            }
+            if (chkPrDesconto.Checked)
+            {
+                strConfiProduto = strConfiProduto + ",PrecoDesconto";
+            }
+            if (chkGrupo.Checked)
+            {
+                strConfiProduto = strConfiProduto + ",GrupoProduto";
+            }
+            if (chkAtivo.Checked)
+            {
+                strConfiProduto = strConfiProduto + ",AtivoSN";
+            }
+            if (chkDtAlteracao.Checked)
+            {
+             strConfiProduto = strConfiProduto + ",DataAlteracao";   
+            }
+            if (chkDtSincronismo.Checked)
+            {
+                strConfiProduto = strConfiProduto + ",DataSincronismo";
+            }
+
+            Utils.SalvarConfiguracao("GridProduto", strConfiProduto);
+           
+        }
+
+        private void SalvarConfigPedido(object sender, EventArgs e)
+        {
+            string strConfigPedido = "Codigo";
+            if (chkCodPedido.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",Codigo";
+            }
+            if (chkTotal.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",TotalPedido";
+            }
+            if (chkTrocoPara.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",TrocoPara";
+            }
+            if (chkFormaPagamento.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",FormaPagamento";
+            }
+            if (chkFinalizado.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",Finalizado";
+            }
+            if (chkDataPedido.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",RealizadoEM";
+            }
+            if (chkTipo.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",Tipo";
+            }
+            if (chkNumeroMesa.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",NumeroMesa";
+            }
+            if (chkstatus.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",status";
+            }
+            if (chkOrigem.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",PedidoOrigem";
+            }
+            if (chkDesconto.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",DescontoValor";
+            }
+
+            Utils.SalvarConfiguracao("GridPedido", strConfigPedido);
+        }
+
+        private void btnSalvarConfigPessoas_Click(object sender, EventArgs e)
+        {
+            string strConfiPessoa = "Codigo";
+
+            if (chkNomePessoa.Checked)
+            {
+                strConfiPessoa = strConfiPessoa + ",Nome";
+            }
+            if (chkEndereco.Checked)
+            {
+                strConfiPessoa = strConfiPessoa + ",Endereco";
+            }
+            if (chkBairro.Checked)
+            {
+                strConfiPessoa = strConfiPessoa + ",Bairro";
+            }
+            if (chkCidade.Checked)
+            {
+                strConfiPessoa = strConfiPessoa + ",Cidade";
+            }
+            if (chkUF.Checked)
+            {
+                strConfiPessoa = strConfiPessoa + ",UF";
+            }
+            if (chkPreferencia.Checked)
+            {
+                strConfiPessoa = strConfiPessoa + ",PontoReferencia";
+            }
+            if (chkTicket.Checked)
+            {
+                strConfiPessoa = strConfiPessoa + ",TicketFidelidade";
+            }
+            if (chkNUmero.Checked)
+            {
+                strConfiPessoa = strConfiPessoa + ",Numero";
+            }
+            if (chkCep.Checked)
+            {
+                strConfiPessoa = strConfiPessoa + ",Cep";
+            }
+            if (chkTelefone.Checked)
+            {
+                strConfiPessoa = strConfiPessoa + ",Telefone";
+            }
+            if (chkTelefone2.Checked)
+            {
+                strConfiPessoa = strConfiPessoa + ",Telefone2";
+            }
+
+            Utils.SalvarConfiguracao("GridPessoa", strConfiPessoa);
         }
 
         

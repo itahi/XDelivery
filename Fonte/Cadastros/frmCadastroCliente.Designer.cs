@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroCliente));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbPrincipal = new System.Windows.Forms.TabPage();
-            this.button2 = new System.Windows.Forms.Button();
             this.btnAlteraRegiao = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.txtTaxaEntrega = new System.Windows.Forms.TextBox();
@@ -125,7 +124,6 @@
             // 
             // tbPrincipal
             // 
-            this.tbPrincipal.Controls.Add(this.button2);
             this.tbPrincipal.Controls.Add(this.btnAlteraRegiao);
             this.tbPrincipal.Controls.Add(this.label16);
             this.tbPrincipal.Controls.Add(this.txtTaxaEntrega);
@@ -167,19 +165,9 @@
             this.tbPrincipal.Text = "Dados do Cliente";
             this.tbPrincipal.UseVisualStyleBackColor = true;
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(489, 330);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 59;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // btnAlteraRegiao
             // 
-            this.btnAlteraRegiao.Location = new System.Drawing.Point(389, 327);
+            this.btnAlteraRegiao.Location = new System.Drawing.Point(490, 307);
             this.btnAlteraRegiao.Name = "btnAlteraRegiao";
             this.btnAlteraRegiao.Size = new System.Drawing.Size(83, 25);
             this.btnAlteraRegiao.TabIndex = 58;
@@ -190,7 +178,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(293, 314);
+            this.label16.Location = new System.Drawing.Point(395, 294);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(71, 13);
             this.label16.TabIndex = 57;
@@ -199,10 +187,10 @@
             // txtTaxaEntrega
             // 
             this.txtTaxaEntrega.Enabled = false;
-            this.txtTaxaEntrega.Location = new System.Drawing.Point(297, 330);
+            this.txtTaxaEntrega.Location = new System.Drawing.Point(398, 310);
             this.txtTaxaEntrega.Name = "txtTaxaEntrega";
             this.txtTaxaEntrega.Size = new System.Drawing.Size(86, 20);
-            this.txtTaxaEntrega.TabIndex = 56;
+            this.txtTaxaEntrega.TabIndex = 44;
             // 
             // txtDataCadastro
             // 
@@ -226,7 +214,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(137, 313);
+            this.label14.Location = new System.Drawing.Point(236, 291);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(96, 13);
             this.label14.TabIndex = 53;
@@ -237,20 +225,20 @@
             this.cbxRegiao.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbxRegiao.DisplayMember = "NomeRegiao";
             this.cbxRegiao.FormattingEnabled = true;
-            this.cbxRegiao.Location = new System.Drawing.Point(140, 329);
+            this.cbxRegiao.Location = new System.Drawing.Point(239, 307);
             this.cbxRegiao.Name = "cbxRegiao";
             this.cbxRegiao.Size = new System.Drawing.Size(148, 21);
-            this.cbxRegiao.TabIndex = 52;
+            this.cbxRegiao.TabIndex = 43;
             this.cbxRegiao.ValueMember = "Codigo";
             this.cbxRegiao.SelectedIndexChanged += new System.EventHandler(this.cbxRegiao_SelectedIndexChanged);
             // 
             // txtDataNascimento
             // 
-            this.txtDataNascimento.Location = new System.Drawing.Point(17, 329);
+            this.txtDataNascimento.Location = new System.Drawing.Point(140, 307);
             this.txtDataNascimento.Mask = "00/00/0000";
             this.txtDataNascimento.Name = "txtDataNascimento";
             this.txtDataNascimento.Size = new System.Drawing.Size(84, 20);
-            this.txtDataNascimento.TabIndex = 51;
+            this.txtDataNascimento.TabIndex = 42;
             this.txtDataNascimento.ValidatingType = typeof(System.DateTime);
             // 
             // txtTelefone2
@@ -275,7 +263,7 @@
             // lblDataNascimento
             // 
             this.lblDataNascimento.AutoSize = true;
-            this.lblDataNascimento.Location = new System.Drawing.Point(14, 313);
+            this.lblDataNascimento.Location = new System.Drawing.Point(117, 291);
             this.lblDataNascimento.Name = "lblDataNascimento";
             this.lblDataNascimento.Size = new System.Drawing.Size(107, 13);
             this.lblDataNascimento.TabIndex = 48;
@@ -350,7 +338,7 @@
             this.txtObservacaoCliente.Multiline = true;
             this.txtObservacaoCliente.Name = "txtObservacaoCliente";
             this.txtObservacaoCliente.Size = new System.Drawing.Size(272, 82);
-            this.txtObservacaoCliente.TabIndex = 40;
+            this.txtObservacaoCliente.TabIndex = 41;
             // 
             // label3
             // 
@@ -366,7 +354,7 @@
             this.btnAdicionarCliente.Location = new System.Drawing.Point(301, 392);
             this.btnAdicionarCliente.Name = "btnAdicionarCliente";
             this.btnAdicionarCliente.Size = new System.Drawing.Size(143, 29);
-            this.btnAdicionarCliente.TabIndex = 42;
+            this.btnAdicionarCliente.TabIndex = 45;
             this.btnAdicionarCliente.Text = "Salvar [F12]";
             this.btnAdicionarCliente.UseVisualStyleBackColor = true;
             this.btnAdicionarCliente.Click += new System.EventHandler(this.AdicionarCliente);
@@ -378,7 +366,7 @@
             this.txtPontoReferencia.Multiline = true;
             this.txtPontoReferencia.Name = "txtPontoReferencia";
             this.txtPontoReferencia.Size = new System.Drawing.Size(272, 82);
-            this.txtPontoReferencia.TabIndex = 41;
+            this.txtPontoReferencia.TabIndex = 40;
             // 
             // txtCidade
             // 
@@ -978,7 +966,6 @@
         private System.Windows.Forms.DateTimePicker dataFim;
         private System.Windows.Forms.DateTimePicker dataInicio;
         private System.Windows.Forms.Button btnImprimir;
-        private System.Windows.Forms.Button button2;
 
     }
 }

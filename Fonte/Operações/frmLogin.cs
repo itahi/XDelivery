@@ -52,7 +52,10 @@ namespace DexComanda
                 int iNumeroCaixa = int.Parse(cbxCaixas.Text );
                 if (Utils.EfetuarLogin(this.txtUsuario.Text.ToString(), this.txtSenha.Text.ToString(), true, iNumeroCaixa))
                 {
-                    this.Close();
+                    
+                    Main frmPrincipal = new Main();
+                    this.Hide();
+                    frmPrincipal.ShowDialog();
                 }
             }
             else
@@ -90,6 +93,14 @@ namespace DexComanda
         private void frmLogin_FormClosed(object sender, FormClosedEventArgs e)
         {
 
+        }
+
+        private void txtSenha_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (txtSenha.Text!="" && e.KeyChar == Convert.ToChar(Keys.Enter) )
+            {
+                btnSalvar_Click(sender, e);
+            }
         }
     }
 }

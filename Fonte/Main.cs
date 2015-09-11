@@ -18,6 +18,7 @@ using System.Configuration;
 using DexComanda.Integração;
 using System.IO;
 using DexComanda.Relatorios.Fechamentos;
+using Microsoft.VisualBasic;
 //using DexComanda.Relatorios.Fechamentos;
 
 namespace DexComanda
@@ -94,6 +95,7 @@ namespace DexComanda
         private void Main_Load(object sender, EventArgs e)
         {
 
+            string iSelectProduto = ConfigurationManager.AppSettings["GridProduto"];
             if (Sessions.returnUsuario != null)
             {
                 con = new Conexao();
@@ -242,7 +244,7 @@ namespace DexComanda
         {
             // Integração.EnviaSMS_LOCASMS Enviar = new Integração.EnviaSMS_LOCASMS();
             // Enviar.EnviaSMSLista(clientesGridView, "27981667827", "549636", "MEnsage");
-            BuscarCliente();
+            BuscarCliente(txbTelefoneCliente.Text);
         }
 
         public void ConsultarClienteParaEdicao(object sender, KeyEventArgs e)
@@ -304,7 +306,7 @@ namespace DexComanda
         }
 
 
-        private void BuscarCliente()
+        private void BuscarCliente(string iTelefone)
         {
             try
             {
@@ -312,7 +314,7 @@ namespace DexComanda
                 {
                     if (iCaixaAberto > 0)
                     {
-                        AbreTelaPedido();
+                        AbreTelaPedido(iTelefone);
                     }
                     else
                     {
@@ -322,7 +324,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    AbreTelaPedido();
+                    AbreTelaPedido(iTelefone);
                 }
 
 
@@ -335,12 +337,12 @@ namespace DexComanda
             }
         }
 
-        private void AbreTelaPedido()
+        private void AbreTelaPedido(string iTelefone)
         {
 
-            if (txbTelefoneCliente.Text != "")
+            if (iTelefone != "")
             {
-                var telefone = this.txbTelefoneCliente.Text;
+                var telefone = iTelefone;
                 //  DBExpertDataSet dbExpert = new DBExpertDataSet();
 
                 DataSet pessoaTelefone = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", telefone);
@@ -447,8 +449,18 @@ namespace DexComanda
         }
         private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmEnvioEmail frmCadClieForn = new frmEnvioEmail();
-            frmCadClieForn.ShowDialog();
+            string strValor = Interaction.InputBox("Informe o Telefone do cliente a ser cadastrado, sem pontos ou traços", "[xSistemas]", "", 100, 200);
+
+            if (strValor != "")
+            {
+                BuscarCliente(strValor);
+            }
+            else
+            {
+                MessageBox.Show("[xSistemas]", "o Preenchimento do campo é obrigatório");
+                return;
+            }
+
         }
 
         private void IniciaPedido(int CodPessoa)
@@ -581,7 +593,7 @@ namespace DexComanda
 
             if (e.KeyCode == Keys.Enter)
             {
-                BuscarCliente();
+                BuscarCliente(txbTelefoneCliente.Text);
             }
 
         }
@@ -1106,7 +1118,7 @@ namespace DexComanda
         {
             if (e.KeyCode == Keys.F12)
             {
-                BuscarCliente();
+                BuscarCliente(txbTelefoneCliente.Text);
             }
         }
 
@@ -1192,16 +1204,16 @@ namespace DexComanda
                     //items.Add(itemPedido);
                 }
 
-               // int iParam = 0;
+                // int iParam = 0;
                 //  if (!itemPedido.ImpressoSN)
                 // {
-               
+
                 //foreach (ItemPedido item in items)
                 //{
-                    
+
 
                 //}
-                
+
 
                 if (ImprimeLPT && lRetorno != "")
                 {
@@ -1260,7 +1272,6 @@ namespace DexComanda
 
         private void AtualizaGrid_Tick(object sender, EventArgs e)
         {
-
             //DataSet Dados, PedidosAberto;
 
 

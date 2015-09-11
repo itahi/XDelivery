@@ -33,7 +33,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -706,6 +706,7 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDelivery.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="DBExpertDataSet.xsc">
       <DependentUpon>DBExpertDataSet.xsd</DependentUpon>
     </None>
@@ -842,11 +843,6 @@
     <None Include="Relatorios\Microsoft.QualityTools.Testing.Fakes.dl" />
     <None Include="Relatorios\Microsoft.ReportViewer.WinForms.dl" />
     <None Include="Service References\LOCASMS\ServiceSms.wsdl" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

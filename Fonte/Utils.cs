@@ -33,6 +33,7 @@ using DexComanda.Relatorios.Delivery;
 using CrystalDecisions.Shared;
 using CrystalDecisions.CrystalReports.Engine;
 using System.Diagnostics;
+using System.Configuration;
 namespace DexComanda
 {
     public class Utils
@@ -108,13 +109,6 @@ namespace DexComanda
 
                         Sessions.retunrUsuario = Sessions.returnUsuario;
                         Logado = true;
-
-                        if (iAbreFrmPrincipal)
-                        {
-                            Main principal = new Main();
-
-                            principal.ShowDialog();
-                        }
 
 
                     }
@@ -198,7 +192,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    report.PrintToPrinter(iNumCopias, false, 0, 0);
+                    report.PrintToPrinter(0, false, 0, 0);
                 }
             }
             catch (Exception erro)
@@ -263,23 +257,7 @@ namespace DexComanda
             }
             return iRetorno;
         }
-        public static void ImpressaoMesanova(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
-        {
-            RelComandaMesa report;
-            try
-            {
-                report = new RelComandaMesa();
-                report.SetDatabaseLogon("sa", "1001");
-                report.SetParameterValue("@Codigo", iCodPedido);
-                report.PrintToPrinter(0, false, 0, 0);
-            }
-            catch (Exception erro)
-            {
-
-                MessageBox.Show(erro.InnerException.Message);
-            }
-
-        }
+        
         public static string ImpressaMesaNova(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
@@ -325,7 +303,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    report.PrintToPrinter(iNumCopias, false, 0, 0);
+                    report.PrintToPrinter(0, false, 0, 0);
                 }
             }
             catch (Exception erro)
@@ -1403,6 +1381,25 @@ namespace DexComanda
             }
 
         }
+        public static void SalvarConfiguracao(string iChave, string iValue)
+        {
+            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+               // Add an Application Setting.
+            config.AppSettings.Settings.Remove(iChave);
+            config.AppSettings.Settings.Add(iChave, iValue);
+           
+            // Save the configuration file.
+            //config.Save(ConfigurationSaveMode.Full);
+            string meuProcesso = Process.GetCurrentProcess().ProcessName;
+            config.Save(ConfigurationSaveMode.Full);
+           
+            // Force a reload of a changed section.
+            ConfigurationManager.RefreshSection("appSettings");
+
+
+
+        }
 
 
         // Rotina para efetuar Backup Automátizado do Banco de dados
@@ -1454,4 +1451,5 @@ namespace DexComanda
 
 
     }
+
 }

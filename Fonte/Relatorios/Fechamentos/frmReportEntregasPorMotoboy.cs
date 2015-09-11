@@ -25,7 +25,9 @@ namespace DexComanda.Relatorios.Fechamentos
 
         private void frmReportEntregasPorMotoboy_Load(object sender, EventArgs e)
         {
-           
+            cbxEntregador.DataSource = con.SelectAll("Entregador", "spObterEntregadores").Tables["Entregador"];
+            cbxEntregador.DisplayMember = "Nome";
+            cbxEntregador.ValueMember = "Codigo";
         }
 
         private void Consultar(object sender, EventArgs e)

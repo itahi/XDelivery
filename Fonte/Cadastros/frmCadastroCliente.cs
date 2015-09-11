@@ -144,7 +144,6 @@ namespace DexComanda
         private void ConsultarEnderecoPorCep(object sender, KeyEventArgs e)
         {
 
-
             if (txtCEP.Text.Length == 8)
             {
                 ObterCidadePadrao();

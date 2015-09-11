@@ -21,6 +21,7 @@ namespace DexComanda
         private MySqlCommand MysqlCommand;
         private MySqlConnection MysqlConnection;
         private MySqlDataAdapter MysqlDataAdapter;
+     //   private const int CmysqlTimeOut = 50000;
         private static string dataMember;
         private DataSet ds;
         private DataSet Dados;
@@ -874,12 +875,13 @@ namespace DexComanda
             try
             {
                 MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
+               // MysqlCommand.CommandTimeout = CmysqlTimeOut;
                 MysqlConnection.Open();
                 if (MysqlConnection.State == ConnectionState.Open)
                 {
 
                     MysqlCommand = new MySqlCommand("select cnpj,AtivoSN,NomePC,MACPC from Licenca where cnpj='" + CNPJ + "' and NomePC='" + iNomePC + "' and MACPC='" + iMAC + "'", MysqlConnection);
-
+                    
                     MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
                     MysqlDataAdapter.Fill(ds, "Licenca");
                     if (ds.Tables["Licenca"].Rows.Count > 0)
@@ -913,7 +915,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    MessageBox.Show("Sem conexão com o servidor central para validação da Licença , tente novamente  reiniciando o sistema", "Dex Erro ");
+                    MessageBox.Show("Sem conexão com o servidor central para validação da Licença , tente novamente  reiniciando o sistema", "[xSistemas] Erro ");
                 }
 
             }
@@ -928,6 +930,7 @@ namespace DexComanda
             try
             {
                 MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
+               // MysqlCommand.CommandTimeout = CmysqlTimeOut;
                 MysqlConnection.Open();
                 MysqlCommand = new MySqlCommand("insert into Licenca(CNPJ,AtivoSN,Nome,DataLiberacao,DataExpiracao) values " + CNPJ + ", " + AtivoSN + " ," + NomeEmpresa + ", " + dataLiberacao + " ," + DataExpiracao, MysqlConnection);
                 MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);

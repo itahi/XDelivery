@@ -98,7 +98,6 @@ E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Splashcreen.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\XDelivery.csproj.GenerateResource.Cache
 E:\#Projetos\XDelivery\Fonte\obj\Debug\RdlCompile.cache
 E:\#Projetos\XDelivery\Fonte\obj\Debug\RdlCompile.compiled
-E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.config
 E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.manifest
 E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.application
 E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe
@@ -121,3 +120,4 @@ F:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.pdb
 G:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.config
 G:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.exe
 G:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.pdb
+E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.config

@@ -38,6 +38,7 @@
             // 
             // cbxMotivo
             // 
+            this.cbxMotivo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxMotivo.FormattingEnabled = true;
             this.cbxMotivo.Location = new System.Drawing.Point(12, 21);
             this.cbxMotivo.Name = "cbxMotivo";
