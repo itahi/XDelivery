@@ -231,8 +231,6 @@ namespace DexComanda
             adapter.Fill(ds, table);
             return ds;
         }
-
-
         public DataSet SelectCaixaMovimetoFiltro(string iDataI, string iDataF, string iTipo, string iCdFormaPagt, string table = "CaixaMovimento", string iNumCaixa = "1")
         {
             string lSqlConsulta = " select " +
@@ -276,12 +274,8 @@ namespace DexComanda
             adapter.Fill(ds, table);
             return ds;
         }
-
-
-
         public DataSet DeleteAll(string table, string spName, int CodigoDeletar)
         {
-
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Codigo", CodigoDeletar);
@@ -314,6 +308,17 @@ namespace DexComanda
 
         }
 
+        public DataSet SelectPuro(string iTable)
+        {
+            string iSql = "select * from " + iTable;
+            command = new SqlCommand(iSql, conn);
+            command.CommandType = CommandType.Text;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, iTable);
+            return ds;
+        }
+
         public void Insert(string spName, Object obj)
         {
             SqlParameter codPedido = null;
@@ -342,6 +347,16 @@ namespace DexComanda
                     }
                 }
 
+            }
+            else if (spName == "spAdicionarOpcao")
+            {
+                foreach (PropertyInfo propriedade in properties)
+                {
+                    if (!propriedade.Name.Equals("DataSincronismo") && !propriedade.Name.Equals("Codigo"))
+                    {
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
+                }
             }
             else if (spName == "spAdicionarUsuario")
             {
@@ -475,6 +490,13 @@ namespace DexComanda
                 if (spName == "spAlterarTotalPedido")
                 {
                     if (p.Name.Equals("Codigo") || p.Name.Equals("TotalPedido") || p.Name.Equals("Tipo") || p.Name.Equals("NumeroMesa"))
+                    {
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
+                }
+                else if (spName=="spAlteraOpcao")
+                {
+                    if (!p.Name.Equals("DataSincronismo"))
                     {
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }

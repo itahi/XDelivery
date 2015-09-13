@@ -116,6 +116,7 @@
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.lblCaixa = new System.Windows.Forms.Label();
+            this.opçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -168,7 +169,8 @@
             // 
             this.produtosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gruposCategoriasToolStripMenuItem,
-            this.adicionaisToolStripMenuItem});
+            this.adicionaisToolStripMenuItem,
+            this.opçãoToolStripMenuItem});
             this.produtosToolStripMenuItem.Name = "produtosToolStripMenuItem";
             this.produtosToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
             this.produtosToolStripMenuItem.Text = "Produtos";
@@ -968,6 +970,13 @@
             this.lblCaixa.TabIndex = 8;
             this.lblCaixa.Text = "Caixa Fechado";
             // 
+            // opçãoToolStripMenuItem
+            // 
+            this.opçãoToolStripMenuItem.Name = "opçãoToolStripMenuItem";
+            this.opçãoToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
+            this.opçãoToolStripMenuItem.Text = "Opção";
+            this.opçãoToolStripMenuItem.Click += new System.EventHandler(this.opçãoToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1101,5 +1110,6 @@
         private System.Windows.Forms.ToolStripMenuItem gruposCategoriasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adicionaisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sincronizaçãoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem opçãoToolStripMenuItem;
     }
 }

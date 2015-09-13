@@ -19,6 +19,7 @@ using DexComanda.Integração;
 using System.IO;
 using DexComanda.Relatorios.Fechamentos;
 using Microsoft.VisualBasic;
+using DexComanda.Cadastros.Produto;
 //using DexComanda.Relatorios.Fechamentos;
 
 namespace DexComanda
@@ -1524,6 +1525,12 @@ namespace DexComanda
         private void sincronizaçãoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmSincronizacao frm = new frmSincronizacao();
+            frm.ShowDialog();
+        }
+
+        private void opçãoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadOpcao frm = new frmCadOpcao();
             frm.ShowDialog();
         }
 

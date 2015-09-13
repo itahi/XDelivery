@@ -1001,11 +1001,6 @@ namespace DexComanda
         {
             try
             {
-                //printFont = new Font("Arial", int.Parse(TamanhoFont));
-                //printFontCozinha = new Font("Arial", int.Parse(TamanhoFont));
-                //PrintDocument pd = new PrintDocument();
-
-
                 if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa" || cbxTipoPedido.Text == "2 - Balcao")
                 {
                     int iCodigo;
@@ -1035,6 +1030,7 @@ namespace DexComanda
                 if (ImprimeViaEntrega && cbxTipoPedido.Text == "0 - Entrega")
                 {
                     int iCodigo;
+                    string iRetorno;
                     for (int i = 0; i < QtViasEntrega; i++)
                     {
                         if (con.getLastCodigo() != 0)
@@ -1046,7 +1042,15 @@ namespace DexComanda
                             iCodigo = codPedido;
                         }
 
-                        string iRetorno = Utils.ImpressaoEntreganova(iCodigo, ImprimeLPT,QtViasEntrega);
+                        if (Sessions.returnConfig.QtdCaracteresImp<=30)
+                        {
+                             iRetorno = Utils.ImpressaoEntreganova_20(iCodigo, ImprimeLPT, QtViasEntrega);
+                        }
+                        else
+                        {
+                             iRetorno = Utils.ImpressaoEntreganova(iCodigo, ImprimeLPT, QtViasEntrega);
+                        }
+                       
 
                         if (ImprimeLPT && iRetorno != "")
                         {
@@ -1059,7 +1063,7 @@ namespace DexComanda
                     }
 
                 }
-                if (ImprimeViaCozinha)
+                if (ImprimeViaCozinha && cbxTipoPedido.Text == "0 - Entrega")
                 {
                     int iCodigo;
                     for (int i = 0; i < QtdViasCozinha; i++)
@@ -1427,6 +1431,8 @@ namespace DexComanda
             {
                 prepareToPrint();
             }
+
+           
         }
         private void cbxMeiaPizza_CheckedChanged(object sender, EventArgs e)
         {

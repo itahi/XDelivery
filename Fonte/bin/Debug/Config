@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<configuration>
-    <appSettings file="">
-        <clear />
-        <add key="GridProduto" value="Codigo,NomeProduto,PrecoProduto,PrecoDesconto,GrupoProduto,AtivoSN" />
-    </appSettings>
-</configuration>

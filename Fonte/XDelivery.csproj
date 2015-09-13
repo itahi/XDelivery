@@ -185,6 +185,12 @@
     <Compile Include="Cadastros\frmCadProdutoAdicional.Designer.cs">
       <DependentUpon>frmCadProdutoAdicional.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cadastros\Produto\frmCadOpcao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Produto\frmCadOpcao.Designer.cs">
+      <DependentUpon>frmCadOpcao.cs</DependentUpon>
+    </Compile>
     <Compile Include="DBExpert_TesteDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -197,6 +203,7 @@
     <Compile Include="Models\CaixaMovimento.cs" />
     <Compile Include="Models\DescontoPedido.cs" />
     <Compile Include="Models\HistoricoPessoa.cs" />
+    <Compile Include="Models\Opcao.cs" />
     <Compile Include="Models\Produtos_Adicionais.cs" />
     <Compile Include="Models\RemoveDezPorcento.cs" />
     <Compile Include="Operações\Financeiro\frmAberturaCaixa.cs">
@@ -337,6 +344,12 @@
       <DependentUpon>RelCreditoDebito.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Delivery\RelDelivery_20.cs">
+      <DependentUpon>RelDelivery_20.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Relatorios\Delivery\RelComandaMesa.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -386,16 +399,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBExpertDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Cadastros\frmAdicionarGrupo.cs">
+    <Compile Include="Cadastros\Produto\frmAdicionarGrupo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cadastros\frmAdicionarGrupo.Designer.cs">
+    <Compile Include="Cadastros\Produto\frmAdicionarGrupo.Designer.cs">
       <DependentUpon>frmAdicionarGrupo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cadastros\frmCadastrarProduto.cs">
+    <Compile Include="Cadastros\Produto\frmCadastrarProduto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cadastros\frmCadastrarProduto.Designer.cs">
+    <Compile Include="Cadastros\Produto\frmCadastrarProduto.Designer.cs">
       <DependentUpon>frmCadastrarProduto.cs</DependentUpon>
     </Compile>
     <Compile Include="Cadastros\frmCadastroCliente.cs">
@@ -567,6 +580,9 @@
     <EmbeddedResource Include="Cadastros\frmCadProdutoAdicional.resx">
       <DependentUpon>frmCadProdutoAdicional.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\Produto\frmCadOpcao.resx">
+      <DependentUpon>frmCadOpcao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Operações\Financeiro\frmAberturaCaixa.resx">
       <DependentUpon>frmAberturaCaixa.cs</DependentUpon>
     </EmbeddedResource>
@@ -604,6 +620,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelCreditoDebito.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelDelivery_20.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDelivery_20.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesa.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelComandaMesa.cs</LastGenOutput>
@@ -631,10 +651,10 @@
     <EmbeddedResource Include="Cadastros\frmCadastrarPedido.resx">
       <DependentUpon>frmCadastrarPedido.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\frmAdicionarGrupo.resx">
+    <EmbeddedResource Include="Cadastros\Produto\frmAdicionarGrupo.resx">
       <DependentUpon>frmAdicionarGrupo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\frmCadastrarProduto.resx">
+    <EmbeddedResource Include="Cadastros\Produto\frmCadastrarProduto.resx">
       <DependentUpon>frmCadastrarProduto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmCadastroCliente.resx">

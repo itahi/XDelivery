@@ -157,7 +157,7 @@ namespace DexComanda
                 ConnectionInfo crConnectionInfo = new ConnectionInfo();
                 Tables CrTables;
 
-                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
+                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery_20.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
                 crConnectionInfo.UserID = "sa";
@@ -202,9 +202,68 @@ namespace DexComanda
             }
             return iRetorno;  
         }
+        public static string ImpressaoEntreganova_20(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
+        {
+            string iRetorno = ""; ;
+
+            RelDelivery_20 report;
+            try
+            {
+                report = new RelDelivery_20();
+                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery_20.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+
+
+
+                report.SetParameterValue("@Codigo", iCodPedido);
+                if (iExport)
+                {
+                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
+                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
+
+                    report.ExportOptions.ExportDestinationType =
+                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+                    report.ExportOptions.ExportFormatType =
+                    CrystalDecisions.Shared.ExportFormatType.Text;
+
+                    report.ExportOptions.DestinationOptions = reportExport;
+                    report.Export();
+                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
+                }
+                else
+                {
+                    report.PrintToPrinter(0, false, 0, 0);
+                }
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.InnerException.Message);
+            }
+            return iRetorno;
+        }
         public static string ImpressaoCozihanova(int iCodPedido, Boolean iExport = false,int iNumCopias=0)
         {
             string iRetorno = ""; ;
+           
             RelDelivey_Cozinha report;
             try
             {
@@ -257,7 +316,12 @@ namespace DexComanda
             }
             return iRetorno;
         }
-        
+        /// <summary>
+        /// Função para imprimir Pedido
+        /// </summary>
+        /// <param name="iCodPedido">Inteiro Código do Pedido a ser impresso</param>
+        ///  <param name="iExport">Boolean Código do Pedido a ser impresso</param>
+        /// <returns>String do Pedido para impressoras Matriciais quando iExpport for True.</returns>
         public static string ImpressaMesaNova(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
