@@ -204,7 +204,7 @@
     <Compile Include="Models\DescontoPedido.cs" />
     <Compile Include="Models\HistoricoPessoa.cs" />
     <Compile Include="Models\Opcao.cs" />
-    <Compile Include="Models\Produtos_Adicionais.cs" />
+    <Compile Include="Models\Produto_Opcao.cs" />
     <Compile Include="Models\RemoveDezPorcento.cs" />
     <Compile Include="Operações\Financeiro\frmAberturaCaixa.cs">
       <SubType>Form</SubType>
@@ -362,10 +362,10 @@
       <DependentUpon>RelDelivey_Cozinha.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Relatorios\Delivery\RelFechametoMesa.cs">
+    <Compile Include="Relatorios\Delivery\RelFechamentoMesa.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RelFechametoMesa.rpt</DependentUpon>
+      <DependentUpon>RelFechamentoMesa.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\dsRelatorio.cs">
@@ -399,11 +399,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBExpertDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Cadastros\Produto\frmAdicionarGrupo.cs">
+    <Compile Include="Cadastros\Produto\frmCategoria.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cadastros\Produto\frmAdicionarGrupo.Designer.cs">
-      <DependentUpon>frmAdicionarGrupo.cs</DependentUpon>
+    <Compile Include="Cadastros\Produto\frmCategoria.Designer.cs">
+      <DependentUpon>frmCategoria.cs</DependentUpon>
     </Compile>
     <Compile Include="Cadastros\Produto\frmCadastrarProduto.cs">
       <SubType>Form</SubType>
@@ -632,9 +632,9 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDelivey_Cozinha.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Delivery\RelFechametoMesa.rpt">
+    <EmbeddedResource Include="Relatorios\Delivery\RelFechamentoMesa.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelFechametoMesa.cs</LastGenOutput>
+      <LastGenOutput>RelFechamentoMesa.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.resx">
       <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
@@ -651,8 +651,8 @@
     <EmbeddedResource Include="Cadastros\frmCadastrarPedido.resx">
       <DependentUpon>frmCadastrarPedido.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\Produto\frmAdicionarGrupo.resx">
-      <DependentUpon>frmAdicionarGrupo.cs</DependentUpon>
+    <EmbeddedResource Include="Cadastros\Produto\frmCategoria.resx">
+      <DependentUpon>frmCategoria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Produto\frmCadastrarProduto.resx">
       <DependentUpon>frmCadastrarProduto.cs</DependentUpon>

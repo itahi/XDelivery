@@ -157,7 +157,7 @@ namespace DexComanda
                 ConnectionInfo crConnectionInfo = new ConnectionInfo();
                 Tables CrTables;
 
-                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery_20.rpt");
+                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
                 crConnectionInfo.UserID = "sa";
@@ -236,7 +236,7 @@ namespace DexComanda
                 {
                     CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
                     new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
+                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery_20.txt";
 
                     report.ExportOptions.ExportDestinationType =
                     CrystalDecisions.Shared.ExportDestinationType.DiskFile;
@@ -246,7 +246,7 @@ namespace DexComanda
 
                     report.ExportOptions.DestinationOptions = reportExport;
                     report.Export();
-                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
+                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery_20.txt";
                 }
                 else
                 {
@@ -380,17 +380,17 @@ namespace DexComanda
         public static string ImpressaoFechamentoNovo(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
-            RelFechametoMesa report;
+            RelFechamentoMesa report;
             try
             {
-                report = new RelFechametoMesa();
+                report = new RelFechamentoMesa();
 
                 crtableLogoninfos = new TableLogOnInfos();
                 crtableLogoninfo = new TableLogOnInfo();
                 crConnectionInfo = new ConnectionInfo();
                 Tables CrTables;
 
-                report.Load(Directory.GetCurrentDirectory() + @"\RelFechametoMesa.rpt");
+                report.Load(Directory.GetCurrentDirectory() + @"\RelFechamentoMesa.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
                 crConnectionInfo.UserID = "sa";
@@ -408,7 +408,7 @@ namespace DexComanda
                 {
                     CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
                     new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelFechametoMesa.txt";
+                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelFechamentoMesa.txt";
 
                     report.ExportOptions.ExportDestinationType =
                     CrystalDecisions.Shared.ExportDestinationType.DiskFile;
@@ -418,11 +418,11 @@ namespace DexComanda
 
                     report.ExportOptions.DestinationOptions = reportExport;
                     report.Export();
-                    iRetorno = Directory.GetCurrentDirectory() + @"\RelFechametoMesa.txt";
+                    iRetorno = Directory.GetCurrentDirectory() + @"\RelFechamentoMesa.txt";
                 }
                 else
                 {
-                    report.PrintToPrinter(iNumCopias, false, 0, 0);
+                    report.PrintToPrinter(0, false, 0, 0);
                 }
             }
             catch (Exception erro)
@@ -918,11 +918,11 @@ namespace DexComanda
             //Kill();
             Application.Restart();
         }
-        public static void GeraHistorico(DateTime iData, int iCodPessoa, double iValor, int iCodUsuario, string iHistorico, char iTipo)
+        public static void GeraHistorico(DateTime iData, int iCodPessoa, double iValor, int iCodUsuario, string iHistorico, char iTipo,string iFormaPagamento)
         {
             Conexao con = new Conexao();
 
-            DataSet dsFormaPagamento = con.SelectAll("FormaPagamento", "spObterFormaPagamento");
+            DataSet dsFormaPagamento = con.SelectObterFormaPagamentoPorNOme(iFormaPagamento, "FormaPagamento");
             DataRow dRowFpagamento = dsFormaPagamento.Tables[0].Rows[0];
 
             if (Convert.ToBoolean(dRowFpagamento.ItemArray.GetValue(3).ToString()) == true)

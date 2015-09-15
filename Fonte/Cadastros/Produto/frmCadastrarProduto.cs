@@ -15,6 +15,7 @@ namespace DexComanda
     {
         private Conexao con;
         private Main parentMain;
+        private int rowIndex;
         private Produto produto;
         private int codigoProdutoParaAlterar;
         private bool DescontoPordia = Sessions.returnConfig.DescontoDiaSemana;
@@ -81,7 +82,7 @@ namespace DexComanda
         {
             con = new Conexao();
             DiasSelecionados = new List<string>();
-            List<Produtos_Adicionais> ProdAdicionais = new List<Produtos_Adicionais>();
+        //    List<Produtos_Adicionais> ProdAdicionais = new List<Produtos_Adicionais>();
             grpDesconto.Visible = DescontoPordia;
             List<Grupo> grupos = new List<Grupo>();
 
@@ -337,9 +338,61 @@ namespace DexComanda
 
         private void ListaOpcao(object sender, EventArgs e)
         {
+            
+            
             this.cbxOpcao.DataSource = con.SelectAll("Opcao", "spObterOpcao").Tables["Opcao"];
             this.cbxOpcao.DisplayMember = "Nome";
             this.cbxOpcao.ValueMember = "Codigo";
+        }
+
+        private void AdicionarOpcao(object sender, EventArgs e)
+        {
+            Produto_Opcao prodOpcao = new Produto_Opcao()
+            {
+                CodProduto = codigoProdutoParaAlterar,
+                CodOpcao = int.Parse(cbxOpcao.SelectedValue.ToString()),
+                Preco = decimal.Parse(txtPrecoOpcao.Text),
+                DataCadastro = DateTime.Now
+            };
+            con.Insert("spAdicionarOpcaProduto", prodOpcao);
+            ListaOpcaoProduto();
+            
+
+        }
+
+        private void ListaOpcaoProduto()
+        {
+
+            AdicionaisGridView.DataSource = con.SelectOpcaoProduto(Convert.ToString(codigoProdutoParaAlterar));
+            AdicionaisGridView.AutoGenerateColumns = true;
+            AdicionaisGridView.DataMember = "Produto_Opcao";
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e)
+        {
+            ListaOpcaoProduto();
+        }
+
+        private void EditarLinha(object sender, MouseEventArgs e)
+        {
+            if (AdicionaisGridView.SelectedRows.Count>0)
+            {
+                btnAdicionarOpcao.Text = "Salvar";
+               // cbxOpcao.Text    = AdicionaisGridView.SelectedRows
+            }
+        }
+
+        private void AdicionaisGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int total = this.AdicionaisGridView.SelectedRows.Count;
+
+            for (int i = 0; i < total; i++)
+            {
+                if (this.AdicionaisGridView.Rows[i].Selected)
+                {
+                    rowIndex = this.AdicionaisGridView.Rows[i].Index;
+                }
+            }
         }
     }
 }

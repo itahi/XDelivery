@@ -1013,7 +1013,7 @@ namespace DexComanda
                         iCodigo = codPedido;
                     }
 
-                    string iRetorno = Utils.ImpressaoFechamentoNovo(iCodigo, ImprimeLPT,QtdViasBalcao);
+                    string iRetorno = Utils.ImpressaoFechamentoNovo(iCodigo, ImprimeLPT, QtdViasBalcao);
 
                     if (ImprimeLPT && iRetorno != "")
                     {
@@ -1042,15 +1042,15 @@ namespace DexComanda
                             iCodigo = codPedido;
                         }
 
-                        if (Sessions.returnConfig.QtdCaracteresImp<=30)
+                        if (Sessions.returnConfig.QtdCaracteresImp <= 30)
                         {
-                             iRetorno = Utils.ImpressaoEntreganova_20(iCodigo, ImprimeLPT, QtViasEntrega);
+                            iRetorno = Utils.ImpressaoEntreganova_20(iCodigo, ImprimeLPT, QtViasEntrega);
                         }
                         else
                         {
-                             iRetorno = Utils.ImpressaoEntreganova(iCodigo, ImprimeLPT, QtViasEntrega);
+                            iRetorno = Utils.ImpressaoEntreganova(iCodigo, ImprimeLPT, QtViasEntrega);
                         }
-                       
+
 
                         if (ImprimeLPT && iRetorno != "")
                         {
@@ -1063,7 +1063,7 @@ namespace DexComanda
                     }
 
                 }
-                if (ImprimeViaCozinha && cbxTipoPedido.Text == "0 - Entrega")
+                if (ImprimeViaEntrega && cbxTipoPedido.Text == "1 - Mesa")
                 {
                     int iCodigo;
                     for (int i = 0; i < QtdViasCozinha; i++)
@@ -1427,12 +1427,8 @@ namespace DexComanda
         }
         private void btnReimprimir_Click(object sender, EventArgs e)
         {
-            if (debug == true)
-            {
-                prepareToPrint();
-            }
+            prepareToPrint();
 
-           
         }
         private void cbxMeiaPizza_CheckedChanged(object sender, EventArgs e)
         {

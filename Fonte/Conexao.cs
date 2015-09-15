@@ -318,6 +318,22 @@ namespace DexComanda
             adapter.Fill(ds, iTable);
             return ds;
         }
+        public DataSet SelectOpcaoProduto(string iCodProduto)
+        {
+            string iSql = " select PO.Preco,OP.Nome  "+
+                          "  from Produto_Opcao PO " +
+                          " left join Opcao OP on OP.Codigo = PO.CodOpcao " +
+                          " where " +
+                          " PO.CodProduto = @CodProduto";
+
+            command = new SqlCommand(iSql, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@CodProduto", iCodProduto);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto_Opcao");
+            return ds;
+        }
 
         public void Insert(string spName, Object obj)
         {
@@ -332,7 +348,7 @@ namespace DexComanda
             if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" || spName == "spAdicionarCaixa" || spName=="spAdicionaHistorico"||
                 spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
                 spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" ||
-                spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento")
+                spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento"||spName=="spAdicionarOpcaProduto")
             {
 
                 foreach (PropertyInfo propriedade in properties)
@@ -779,7 +795,21 @@ namespace DexComanda
 
             return ds;
         }
+        public DataSet SelectObterFormaPagamentoPorNOme(string iNomeFP, string itable)
+        {
+            string iSqlConsulta = "spObterFPNOme";
 
+            command = new SqlCommand(iSqlConsulta, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Nome", iNomeFP);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, itable);
+
+            return ds;
+        }
         public DataSet InsertCep(string table, string spName, CepUtil cep)
         {
 

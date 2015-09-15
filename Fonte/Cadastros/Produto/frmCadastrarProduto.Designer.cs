@@ -57,16 +57,16 @@
             this.descricaoProdutoTextBox = new System.Windows.Forms.TextBox();
             this.precoProdutoTextBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnAdicionarOpcao = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtPrecoOpcao = new System.Windows.Forms.TextBox();
+            this.cbxOpcao = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.AdicionaisGridView = new System.Windows.Forms.DataGridView();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnDoProduto = new System.Windows.Forms.Button();
-            this.cbxOpcao = new System.Windows.Forms.ComboBox();
-            this.txtPreco = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.btnAdicioar = new System.Windows.Forms.Button();
             label1 = new System.Windows.Forms.Label();
             nomeProdutoLabel = new System.Windows.Forms.Label();
             descricaoProdutoLabel = new System.Windows.Forms.Label();
@@ -343,9 +343,9 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.btnAdicioar);
+            this.tabPage2.Controls.Add(this.btnAdicionarOpcao);
             this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.txtPreco);
+            this.tabPage2.Controls.Add(this.txtPrecoOpcao);
             this.tabPage2.Controls.Add(this.cbxOpcao);
             this.tabPage2.Controls.Add(this.label2);
             this.tabPage2.Controls.Add(this.label3);
@@ -357,6 +357,47 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Adicionais";
             this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // btnAdicionarOpcao
+            // 
+            this.btnAdicionarOpcao.Image = ((System.Drawing.Image)(resources.GetObject("btnAdicionarOpcao.Image")));
+            this.btnAdicionarOpcao.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAdicionarOpcao.Location = new System.Drawing.Point(330, 19);
+            this.btnAdicionarOpcao.Name = "btnAdicionarOpcao";
+            this.btnAdicionarOpcao.Size = new System.Drawing.Size(75, 26);
+            this.btnAdicionarOpcao.TabIndex = 29;
+            this.btnAdicionarOpcao.Text = "Adicionar";
+            this.btnAdicionarOpcao.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAdicionarOpcao.UseVisualStyleBackColor = true;
+            this.btnAdicionarOpcao.Click += new System.EventHandler(this.AdicionarOpcao);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(215, 3);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 28;
+            this.label4.Text = "Preço";
+            // 
+            // txtPrecoOpcao
+            // 
+            this.txtPrecoOpcao.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPrecoOpcao.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecoOpcao.Location = new System.Drawing.Point(218, 19);
+            this.txtPrecoOpcao.Name = "txtPrecoOpcao";
+            this.txtPrecoOpcao.Size = new System.Drawing.Size(92, 26);
+            this.txtPrecoOpcao.TabIndex = 27;
+            // 
+            // cbxOpcao
+            // 
+            this.cbxOpcao.FormattingEnabled = true;
+            this.cbxOpcao.Location = new System.Drawing.Point(11, 24);
+            this.cbxOpcao.Name = "cbxOpcao";
+            this.cbxOpcao.Size = new System.Drawing.Size(191, 21);
+            this.cbxOpcao.TabIndex = 6;
+            this.cbxOpcao.Click += new System.EventHandler(this.ListaOpcao);
             // 
             // label2
             // 
@@ -388,6 +429,7 @@
             // 
             this.AdicionaisGridView.AllowUserToAddRows = false;
             this.AdicionaisGridView.AllowUserToDeleteRows = false;
+            this.AdicionaisGridView.AllowUserToOrderColumns = true;
             this.AdicionaisGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.AdicionaisGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.AdicionaisGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -395,9 +437,12 @@
             this.AdicionaisGridView.Location = new System.Drawing.Point(0, 0);
             this.AdicionaisGridView.MultiSelect = false;
             this.AdicionaisGridView.Name = "AdicionaisGridView";
+            this.AdicionaisGridView.ReadOnly = true;
             this.AdicionaisGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.AdicionaisGridView.Size = new System.Drawing.Size(536, 178);
             this.AdicionaisGridView.TabIndex = 2;
+            this.AdicionaisGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AdicionaisGridView_CellClick);
+            this.AdicionaisGridView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EditarLinha);
             // 
             // btnSair
             // 
@@ -417,45 +462,6 @@
             this.btnDoProduto.Text = "Cadastrar [F12]";
             this.btnDoProduto.UseVisualStyleBackColor = true;
             this.btnDoProduto.Click += new System.EventHandler(this.AdicionarProduto);
-            // 
-            // cbxOpcao
-            // 
-            this.cbxOpcao.FormattingEnabled = true;
-            this.cbxOpcao.Location = new System.Drawing.Point(11, 24);
-            this.cbxOpcao.Name = "cbxOpcao";
-            this.cbxOpcao.Size = new System.Drawing.Size(191, 21);
-            this.cbxOpcao.TabIndex = 6;
-            this.cbxOpcao.Click += new System.EventHandler(this.ListaOpcao);
-            // 
-            // txtPreco
-            // 
-            this.txtPreco.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
-            this.txtPreco.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPreco.Location = new System.Drawing.Point(218, 19);
-            this.txtPreco.Name = "txtPreco";
-            this.txtPreco.Size = new System.Drawing.Size(92, 26);
-            this.txtPreco.TabIndex = 27;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(215, 3);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 28;
-            this.label4.Text = "Preço";
-            // 
-            // btnAdicioar
-            // 
-            this.btnAdicioar.Image = ((System.Drawing.Image)(resources.GetObject("btnAdicioar.Image")));
-            this.btnAdicioar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAdicioar.Location = new System.Drawing.Point(330, 19);
-            this.btnAdicioar.Name = "btnAdicioar";
-            this.btnAdicioar.Size = new System.Drawing.Size(75, 23);
-            this.btnAdicioar.TabIndex = 29;
-            this.btnAdicioar.Text = "Adicionar";
-            this.btnAdicioar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAdicioar.UseVisualStyleBackColor = true;
             // 
             // frmCadastrarProduto
             // 
@@ -520,7 +526,7 @@
         private System.Windows.Forms.CheckBox chkOnline;
         private System.Windows.Forms.ComboBox cbxOpcao;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtPreco;
-        private System.Windows.Forms.Button btnAdicioar;
+        private System.Windows.Forms.TextBox txtPrecoOpcao;
+        private System.Windows.Forms.Button btnAdicionarOpcao;
     }
 }

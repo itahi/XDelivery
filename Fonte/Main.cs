@@ -862,8 +862,8 @@ namespace DexComanda
 
                     DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
                     DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
-
-                    Utils.GeraHistorico(DateTime.Now, int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()), dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D');
+                    string  strFormaPagamento  = dRowPedido.ItemArray.GetValue(5).ToString();
+                    Utils.GeraHistorico(DateTime.Now, int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()), dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D', strFormaPagamento);
 
                     // Grava Movimento De Caixa
                     GravaMOvimentoCaixa();
