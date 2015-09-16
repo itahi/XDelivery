@@ -57,6 +57,7 @@
             this.descricaoProdutoTextBox = new System.Windows.Forms.TextBox();
             this.precoProdutoTextBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnEditar = new System.Windows.Forms.Button();
             this.btnAdicionarOpcao = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.txtPrecoOpcao = new System.Windows.Forms.TextBox();
@@ -343,6 +344,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnEditar);
             this.tabPage2.Controls.Add(this.btnAdicionarOpcao);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.txtPrecoOpcao);
@@ -358,6 +360,19 @@
             this.tabPage2.Text = "Adicionais";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // btnEditar
+            // 
+            this.btnEditar.Image = ((System.Drawing.Image)(resources.GetObject("btnEditar.Image")));
+            this.btnEditar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEditar.Location = new System.Drawing.Point(411, 19);
+            this.btnEditar.Name = "btnEditar";
+            this.btnEditar.Size = new System.Drawing.Size(63, 26);
+            this.btnEditar.TabIndex = 30;
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnEditar.UseVisualStyleBackColor = true;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnAdicionarOpcao
             // 
@@ -442,6 +457,7 @@
             this.AdicionaisGridView.Size = new System.Drawing.Size(536, 178);
             this.AdicionaisGridView.TabIndex = 2;
             this.AdicionaisGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AdicionaisGridView_CellClick);
+            this.AdicionaisGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AdicionaisGridView_MouseClick);
             this.AdicionaisGridView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EditarLinha);
             // 
             // btnSair
@@ -528,5 +544,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtPrecoOpcao;
         private System.Windows.Forms.Button btnAdicionarOpcao;
+        private System.Windows.Forms.Button btnEditar;
     }
 }

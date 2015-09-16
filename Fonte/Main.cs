@@ -846,7 +846,7 @@ namespace DexComanda
                     iCodMesa = int.Parse(pedidosGridView.SelectedCells[5].Value.ToString());
                     dblTotalPedido = double.Parse(pedidosGridView.SelectedCells[4].Value.ToString());
 
-                    if (Sessions.returnConfig.ControlaEntregador)
+                    if (Sessions.returnConfig.ControlaEntregador && iCodMesa==0)
                     {
                         InformaMotoboyPedido(codigo);
                     }

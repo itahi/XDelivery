@@ -31,6 +31,7 @@ namespace DexComanda
         public decimal ValorTotal;
         public decimal ValorTroco;
         private List<ItemPedido> items;
+        private Pedido pedido;
         private Main parentWindow;
         private int codigoItemParaAlterar;
         private int rowIndex;
@@ -141,6 +142,10 @@ namespace DexComanda
             this.cbxListaMesas.DisplayMember = "NumeroMesa";
             this.cbxListaMesas.ValueMember = "Codigo";
 
+        }
+        private void CarregaOpcoesProduto(int iCodProduto)
+        {
+            con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcoesProduto", iCodProduto);
         }
 
         private void frmCadastrarPedido_Load(object sender, EventArgs e)
@@ -698,6 +703,43 @@ namespace DexComanda
                 MessageBox.Show("Não foi possivel gravar o pedido " + erro.Message);
             }
         }
+        private void AtualizaTotalPedido()
+        {
+             pedido = new Pedido()
+            {
+                Codigo = codPedido,
+
+                TrocoPara = this.txtTrocoPara.Text,
+                FormaPagamento = this.cmbFPagamento.Text,
+                RealizadoEm = DateTime.Now,
+                Tipo = cbxTipoPedido.Text,
+
+            };
+            if (DMargemGarco != 0.00M)
+            {
+                decimal dTotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
+                pedido.TotalPedido = dTotalPedido + DMargemGarco;
+            }
+            else
+            {
+                pedido.TotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
+            }
+
+            if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa")
+            {
+                pedido.Tipo = cbxTipoPedido.Text;
+                pedido.NumeroMesa = int.Parse(cbxListaMesas.Text);
+                pedido.PedidoOrigem = pedido.PedidoOrigem;
+            }
+            else
+            {
+                pedido.Tipo = "Entrega";
+                //   pedido.NumeroMesa = null;
+            }
+
+            con.Update("spAlterarTotalPedido", pedido);
+            Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
+        }
         private void gridViewItemsPedido_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             DataGridView dgv = sender as DataGridView;
@@ -814,37 +856,7 @@ namespace DexComanda
 
                         };
 
-                        var pedido = new Pedido()
-                        {
-                            Codigo = codPedido,
-
-                            TrocoPara = this.txtTrocoPara.Text,
-                            FormaPagamento = this.cmbFPagamento.Text,
-                            RealizadoEm = DateTime.Now,
-                            Tipo = cbxTipoPedido.Text,
-
-                        };
-                        if (DMargemGarco != 0.00M)
-                        {
-                            decimal dTotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
-                            pedido.TotalPedido = dTotalPedido + DMargemGarco;
-                        }
-                        else
-                        {
-                            pedido.TotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
-                        }
-
-                        if (ContraMesas)
-                        {
-                            pedido.Tipo = cbxTipoPedido.Text;
-                            pedido.NumeroMesa = int.Parse(cbxListaMesas.Text);
-                            pedido.PedidoOrigem = pedido.PedidoOrigem;
-                        }
-                        else
-                        {
-                            pedido.Tipo = "Entrega";
-                            //   pedido.NumeroMesa = null;
-                        }
+                        
 
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value = itemPedido.NomeProduto;
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value = itemPedido.Quantidade;
@@ -865,11 +877,9 @@ namespace DexComanda
                         }
 
                         this.lblTroco.Text = "R$ " + TrocoPagar;
-
+                        AtualizaTotalPedido();
                         con.Update("spAlterarItemPedido", itemPedido);
-                        con.Update("spAlterarTotalPedido", pedido);
-
-                        Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
+                     
                         Utils.ControlaEventos("Alterar", this.Name);
 
                         this.cbxProdutosGrid.Text = "";
@@ -1770,6 +1780,7 @@ namespace DexComanda
             this.lblDescricaoDoItem = new System.Windows.Forms.Label();
             this.btnReimprimir = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnCalGarcon = new System.Windows.Forms.Button();
             this.lblEntrega = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.lblTroco = new System.Windows.Forms.Label();
@@ -1791,7 +1802,7 @@ namespace DexComanda
             this.panel4 = new System.Windows.Forms.Panel();
             this.lblEndereco = new System.Windows.Forms.Label();
             this.lblNomeCliente = new System.Windows.Forms.Label();
-            this.btnCalGarcon = new System.Windows.Forms.Button();
+            this.panel5 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -1949,7 +1960,7 @@ namespace DexComanda
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(754, 43);
+            this.panel1.Size = new System.Drawing.Size(997, 43);
             this.panel1.TabIndex = 41;
             // 
             // lblTempo
@@ -1966,7 +1977,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(451, 5);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -2121,11 +2132,25 @@ namespace DexComanda
             this.panel2.Controls.Add(this.lbTotalPedido);
             this.panel2.Controls.Add(this.btnReimprimir);
             this.panel2.Controls.Add(this.btnGerarPedido);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 440);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(754, 82);
             this.panel2.TabIndex = 42;
+            // 
+            // btnCalGarcon
+            // 
+            this.btnCalGarcon.Enabled = false;
+            this.btnCalGarcon.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnCalGarcon.FlatAppearance.BorderSize = 5;
+            this.btnCalGarcon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCalGarcon.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnCalGarcon.Location = new System.Drawing.Point(521, 42);
+            this.btnCalGarcon.Name = "btnCalGarcon";
+            this.btnCalGarcon.Size = new System.Drawing.Size(117, 37);
+            this.btnCalGarcon.TabIndex = 59;
+            this.btnCalGarcon.Text = "Calcula 10%";
+            this.btnCalGarcon.UseVisualStyleBackColor = true;
+            this.btnCalGarcon.Click += new System.EventHandler(this.CalculaGarcon);
             // 
             // lblEntrega
             // 
@@ -2346,7 +2371,7 @@ namespace DexComanda
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 43);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(754, 43);
+            this.panel4.Size = new System.Drawing.Size(997, 43);
             this.panel4.TabIndex = 63;
             // 
             // lblEndereco
@@ -2371,27 +2396,20 @@ namespace DexComanda
             this.lblNomeCliente.TabIndex = 10;
             this.lblNomeCliente.Text = ".";
             // 
-            // btnCalGarcon
+            // panel5
             // 
-            this.btnCalGarcon.Enabled = false;
-            this.btnCalGarcon.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnCalGarcon.FlatAppearance.BorderSize = 5;
-            this.btnCalGarcon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCalGarcon.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnCalGarcon.Location = new System.Drawing.Point(521, 42);
-            this.btnCalGarcon.Name = "btnCalGarcon";
-            this.btnCalGarcon.Size = new System.Drawing.Size(117, 37);
-            this.btnCalGarcon.TabIndex = 59;
-            this.btnCalGarcon.Text = "Calcula 10%";
-            this.btnCalGarcon.UseVisualStyleBackColor = true;
-            this.btnCalGarcon.Click += new System.EventHandler(this.CalculaGarcon);
+            this.panel5.Location = new System.Drawing.Point(760, 100);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(225, 419);
+            this.panel5.TabIndex = 64;
             // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(754, 522);
+            this.ClientSize = new System.Drawing.Size(997, 522);
+            this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.cbxListaMesas);
             this.Controls.Add(this.cbxTipoPedido);
@@ -2556,13 +2574,16 @@ namespace DexComanda
                 {
                     if ((txtDesconto.Text != "") && (e.KeyChar == Convert.ToChar(Keys.Enter)))
                     {
+                        TotalPedido = TotalPedido + decimal.Parse(lblEntrega.Text);
                         TotalPedido = TotalPedido - decimal.Parse(txtDesconto.Text);
                         txtDesconto.Text = string.Format("{0:#,##0.00}", decimal.Parse(txtDesconto.Text));
-                        lbTotal.Text = "R$" + TotalPedido.ToString();
+                        lbTotal.Text = "R$" + TotalPedido.ToString() ;
                         AtualizaTroco();
-
+                        AtualizaTotalPedido();
                     }
 
+
+                    
                 }
                 else
                 {

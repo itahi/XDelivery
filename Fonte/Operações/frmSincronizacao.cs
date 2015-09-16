@@ -34,22 +34,13 @@ namespace DexComanda.Operações
             {
                 if (chkCategorias.Checked)
                 {
-                    CadastraCategorias(ObterCategorias());
+                    CadastraCategorias(ObterDados("Grupo"));
                 }
                 if (chkProdutos.Checked)
                 {
-                    CadastraFormaPagamento(ObterFormaPagamento());
+                    CadastrarProduto(ObterDados("Produto"));
                 }
-                if (chkFPagamento.Checked)
-                {
-                    
-                }
-                if (chkRegiaoEntrega.Checked)
-                {
-                    
-                }
-                
-
+       
             }
             catch (Exception)
             {
@@ -57,17 +48,13 @@ namespace DexComanda.Operações
                 throw;
             }
         }
-        private DataSet ObterFormaPagamento()
+        private DataSet ObterDados(string iNomeTable)
         {
-            return con.SelectRegistroONline("FormaPagamento");
-        }
-        private DataSet ObterCategorias()
-        {
-            return con.SelectRegistroONline("Grupo");
+            return con.SelectRegistroONline(iNomeTable);
         }
         private void CadastraCategorias(DataSet ds)
         {
-            RestClient client = new RestClient("http://xfood.xsistemas.com.br/");
+            RestClient client = new RestClient("http://www.evecimar.com/");
             RestRequest request = new RestRequest("ws/categorias/set", Method.POST);
 
             prgBarCategoria.Maximum = ds.Tables[0].Rows.Count;
@@ -80,12 +67,49 @@ namespace DexComanda.Operações
                 request.AddParameter("idReferencia", iCod);
                 RestResponse response = (RestResponse)client.Execute(request);
                 prgBarCategoria.Value = i + 1;
+              
                 if (response.Content.ToString() == "true")
                 {
                     con.AtualizaDataSincronismo("Grupo", iCod);
                 }
                 
             }
+        }
+        private void CadastrarProduto(DataSet ds)
+        {
+            RestClient client = new RestClient("http://www.evecimar.com/");
+            RestRequest request = new RestRequest("ws/produto/set", Method.POST);
+            prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                decimal  prProduto = ds.Tables["Produto"].Rows[i].Field<decimal>("PrecoProduto");
+                request.AddParameter("token", iParamToken);
+                request.AddParameter("idReferencia", ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
+                request.AddParameter("nome", ds.Tables["Produto"].Rows[i].Field<string>("NomeProduto"));
+                request.AddParameter("preco", prProduto);
+                //request.AddParameter("idReferenciaCategoria",10);
+                request.AddParameter("idReferenciaCategoria", RetornaIDCategoria(ds.Tables["Produto"].Rows[i].Field<string>("GrupoProduto")));
+                request.AddParameter("descricao", ds.Tables["Produto"].Rows[i].Field<string>("DescricaoProduto"));
+               // request.AddParameter("imagem", "  ");
+               // request.AddParameter("lista", " "); 
+                prgBarProduto.Value = i + 1;
+
+                RestResponse response = (RestResponse)client.Execute(request);
+              
+                if (response.Content.ToString() == "true")
+                {
+                    con.AtualizaDataSincronismo("Produto", ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
+                }
+            }
+
+        }
+
+        private int RetornaIDCategoria(string iNomeCategoria)
+        {
+            DataSet dsGrupo = con.SelectRegistroPorNome("@Nome", "Grupo", "spObterGrupoPorNome", iNomeCategoria);
+            DataRow dRowProduto = dsGrupo.Tables[0].Rows[0];
+
+            return int.Parse(dRowProduto.ItemArray.GetValue(0).ToString());
         }
         private void CadastraFormaPagamento(DataSet ds)
         {

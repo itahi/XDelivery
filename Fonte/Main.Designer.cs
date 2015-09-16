@@ -35,6 +35,7 @@
             this.produtosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gruposCategoriasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adicionaisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.opçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.empresaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuáriosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,7 +117,6 @@
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.lblCaixa = new System.Windows.Forms.Label();
-            this.opçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -189,6 +189,13 @@
             this.adicionaisToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
             this.adicionaisToolStripMenuItem.Text = "Adicionais";
             this.adicionaisToolStripMenuItem.Click += new System.EventHandler(this.adicionaisToolStripMenuItem_Click);
+            // 
+            // opçãoToolStripMenuItem
+            // 
+            this.opçãoToolStripMenuItem.Name = "opçãoToolStripMenuItem";
+            this.opçãoToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
+            this.opçãoToolStripMenuItem.Text = "Opção";
+            this.opçãoToolStripMenuItem.Click += new System.EventHandler(this.opçãoToolStripMenuItem_Click);
             // 
             // clientesToolStripMenuItem
             // 
@@ -490,7 +497,6 @@
             // 
             // sincronizaçãoToolStripMenuItem
             // 
-            this.sincronizaçãoToolStripMenuItem.Enabled = false;
             this.sincronizaçãoToolStripMenuItem.Name = "sincronizaçãoToolStripMenuItem";
             this.sincronizaçãoToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.sincronizaçãoToolStripMenuItem.Text = "Sincronização";
@@ -969,13 +975,6 @@
             this.lblCaixa.Size = new System.Drawing.Size(128, 20);
             this.lblCaixa.TabIndex = 8;
             this.lblCaixa.Text = "Caixa Fechado";
-            // 
-            // opçãoToolStripMenuItem
-            // 
-            this.opçãoToolStripMenuItem.Name = "opçãoToolStripMenuItem";
-            this.opçãoToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
-            this.opçãoToolStripMenuItem.Text = "Opção";
-            this.opçãoToolStripMenuItem.Click += new System.EventHandler(this.opçãoToolStripMenuItem_Click);
             // 
             // Main
             // 

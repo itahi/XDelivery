@@ -1,1 +1,1 @@
-Data Source=LAZARO-PC\SQLEXPRESS2012;Initial Catalog=DBExpert_Teste; User ID=dex; Password=1234; Trusted_Connection=False; 
+Data Source=LAZARO-PC\SQLEXPRESS2012;Initial Catalog=DbExpert_Teste; User ID=dex; Password=1234; Trusted_Connection=False; 

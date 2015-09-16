@@ -184,7 +184,7 @@ namespace DexComanda
         }
         public DataSet SelectRegistroONline(string iNomeTable)
         {
-            string lSqlConsulta = " select * from " + iNomeTable + " where OnlineSN=1 and DataAlteracao>DataSincronismo ";// and AtivoSN=1";
+            string lSqlConsulta = " select * from " + iNomeTable + " where OnlineSN=1 and DataAlteracao>DataSincronismo or DataSincronismo is null";// and AtivoSN=1";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -320,7 +320,7 @@ namespace DexComanda
         }
         public DataSet SelectOpcaoProduto(string iCodProduto)
         {
-            string iSql = " select PO.Preco,OP.Nome  "+
+            string iSql = " select PO.CODOPCAO, PO.Preco,OP.Nome  "+
                           "  from Produto_Opcao PO " +
                           " left join Opcao OP on OP.Codigo = PO.CodOpcao " +
                           " where " +
@@ -510,6 +510,13 @@ namespace DexComanda
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
                 }
+                //else if (spName=="spAlterarOpcaoProduto")
+                //{
+                //    if (!p.Name.Equals("DataSincronismo") ||!p.Name.Equals("Codigo"))
+                //    {
+                //        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                //    }
+                //}
                 else if (spName=="spAlteraOpcao")
                 {
                     if (!p.Name.Equals("DataSincronismo"))
@@ -577,24 +584,24 @@ namespace DexComanda
             //int pIndex = 0;
             foreach (PropertyInfo p in properties)
             {
-                if (!p.Name.Equals("Codigo"))
-                {
+                
                     if (spName == "spExcluirItemPedido")
                     {
                         if (p.Name.Equals("CodProduto") || p.Name.Equals("CodPedido"))
                         {
+                            if (!p.Name.Equals("Codigo"))
+                            {
                             command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                            }
                         }
                     }
 
-
-                    //else if (spName == "spExcluirProduto")
-                    //{
-
-                    //   command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
-
-                    //}
-
+                else if (spName=="spExcluirOpcaoProduto")
+                {
+                    if (p.Name.Equals("CodProduto") || p.Name.Equals("CodOpcao"))
+                    {
+                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
                 }
             }
             int n = command.ExecuteNonQuery();
