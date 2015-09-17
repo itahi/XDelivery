@@ -117,6 +117,7 @@
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.lblCaixa = new System.Windows.Forms.Label();
+            this.bairrosPorRegiãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -244,6 +245,8 @@
             // 
             // regiõesDeEntregaToolStripMenuItem
             // 
+            this.regiõesDeEntregaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bairrosPorRegiãoToolStripMenuItem});
             this.regiõesDeEntregaToolStripMenuItem.Name = "regiõesDeEntregaToolStripMenuItem";
             this.regiõesDeEntregaToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
             this.regiõesDeEntregaToolStripMenuItem.Text = "Regiões de Entrega";
@@ -976,6 +979,13 @@
             this.lblCaixa.TabIndex = 8;
             this.lblCaixa.Text = "Caixa Fechado";
             // 
+            // bairrosPorRegiãoToolStripMenuItem
+            // 
+            this.bairrosPorRegiãoToolStripMenuItem.Name = "bairrosPorRegiãoToolStripMenuItem";
+            this.bairrosPorRegiãoToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            this.bairrosPorRegiãoToolStripMenuItem.Text = "Bairros por Região";
+            this.bairrosPorRegiãoToolStripMenuItem.Click += new System.EventHandler(this.bairrosPorRegiãoToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1110,5 +1120,6 @@
         private System.Windows.Forms.ToolStripMenuItem adicionaisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sincronizaçãoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem opçãoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bairrosPorRegiãoToolStripMenuItem;
     }
 }

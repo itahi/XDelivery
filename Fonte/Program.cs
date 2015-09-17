@@ -87,6 +87,7 @@ namespace DexComanda
                              
                           //  VersaoBanco = dRow.ItemArray.GetValue(15).ToString(),
                             DataInicio = Convert.ToDateTime(dRow.ItemArray.GetValue(18).ToString()),
+                            UrlServidor = dRow.ItemArray.GetValue(19).ToString()
 
                             //  Versao = dRow.ItemArray.GetValue(17).ToString()
                         };

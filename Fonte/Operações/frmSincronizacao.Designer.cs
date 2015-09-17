@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.prgbarOpcao = new System.Windows.Forms.ProgressBar();
+            this.chkOpcao = new System.Windows.Forms.CheckBox();
             this.prgBarRegiao = new System.Windows.Forms.ProgressBar();
             this.prgBarpagamento = new System.Windows.Forms.ProgressBar();
             this.prgBarProduto = new System.Windows.Forms.ProgressBar();
@@ -38,11 +40,17 @@
             this.chkProdutos = new System.Windows.Forms.CheckBox();
             this.chkCategorias = new System.Windows.Forms.CheckBox();
             this.btnSincronizar = new System.Windows.Forms.Button();
+            this.prgBarOpcaoProduto = new System.Windows.Forms.ProgressBar();
+            this.chkOpcaoProduto = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.prgBarOpcaoProduto);
+            this.groupBox1.Controls.Add(this.chkOpcaoProduto);
+            this.groupBox1.Controls.Add(this.prgbarOpcao);
+            this.groupBox1.Controls.Add(this.chkOpcao);
             this.groupBox1.Controls.Add(this.prgBarRegiao);
             this.groupBox1.Controls.Add(this.prgBarpagamento);
             this.groupBox1.Controls.Add(this.prgBarProduto);
@@ -53,21 +61,38 @@
             this.groupBox1.Controls.Add(this.chkCategorias);
             this.groupBox1.Location = new System.Drawing.Point(0, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(243, 129);
+            this.groupBox1.Size = new System.Drawing.Size(243, 185);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cadastros a Sincronizar";
             // 
+            // prgbarOpcao
+            // 
+            this.prgbarOpcao.Location = new System.Drawing.Point(129, 68);
+            this.prgbarOpcao.Name = "prgbarOpcao";
+            this.prgbarOpcao.Size = new System.Drawing.Size(100, 16);
+            this.prgbarOpcao.TabIndex = 9;
+            // 
+            // chkOpcao
+            // 
+            this.chkOpcao.AutoSize = true;
+            this.chkOpcao.Location = new System.Drawing.Point(6, 67);
+            this.chkOpcao.Name = "chkOpcao";
+            this.chkOpcao.Size = new System.Drawing.Size(63, 17);
+            this.chkOpcao.TabIndex = 8;
+            this.chkOpcao.Text = "Opções";
+            this.chkOpcao.UseVisualStyleBackColor = true;
+            // 
             // prgBarRegiao
             // 
-            this.prgBarRegiao.Location = new System.Drawing.Point(129, 90);
+            this.prgBarRegiao.Location = new System.Drawing.Point(129, 112);
             this.prgBarRegiao.Name = "prgBarRegiao";
             this.prgBarRegiao.Size = new System.Drawing.Size(100, 16);
             this.prgBarRegiao.TabIndex = 7;
             // 
             // prgBarpagamento
             // 
-            this.prgBarpagamento.Location = new System.Drawing.Point(129, 68);
+            this.prgBarpagamento.Location = new System.Drawing.Point(129, 90);
             this.prgBarpagamento.Name = "prgBarpagamento";
             this.prgBarpagamento.Size = new System.Drawing.Size(100, 16);
             this.prgBarpagamento.TabIndex = 6;
@@ -89,7 +114,7 @@
             // chkRegiaoEntrega
             // 
             this.chkRegiaoEntrega.AutoSize = true;
-            this.chkRegiaoEntrega.Location = new System.Drawing.Point(6, 91);
+            this.chkRegiaoEntrega.Location = new System.Drawing.Point(6, 113);
             this.chkRegiaoEntrega.Name = "chkRegiaoEntrega";
             this.chkRegiaoEntrega.Size = new System.Drawing.Size(105, 17);
             this.chkRegiaoEntrega.TabIndex = 3;
@@ -99,7 +124,7 @@
             // chkFPagamento
             // 
             this.chkFPagamento.AutoSize = true;
-            this.chkFPagamento.Location = new System.Drawing.Point(6, 68);
+            this.chkFPagamento.Location = new System.Drawing.Point(6, 90);
             this.chkFPagamento.Name = "chkFPagamento";
             this.chkFPagamento.Size = new System.Drawing.Size(117, 17);
             this.chkFPagamento.TabIndex = 2;
@@ -128,7 +153,7 @@
             // 
             // btnSincronizar
             // 
-            this.btnSincronizar.Location = new System.Drawing.Point(75, 138);
+            this.btnSincronizar.Location = new System.Drawing.Point(77, 194);
             this.btnSincronizar.Name = "btnSincronizar";
             this.btnSincronizar.Size = new System.Drawing.Size(75, 23);
             this.btnSincronizar.TabIndex = 1;
@@ -136,11 +161,28 @@
             this.btnSincronizar.UseVisualStyleBackColor = true;
             this.btnSincronizar.Click += new System.EventHandler(this.Sincroniza);
             // 
+            // prgBarOpcaoProduto
+            // 
+            this.prgBarOpcaoProduto.Location = new System.Drawing.Point(129, 135);
+            this.prgBarOpcaoProduto.Name = "prgBarOpcaoProduto";
+            this.prgBarOpcaoProduto.Size = new System.Drawing.Size(100, 16);
+            this.prgBarOpcaoProduto.TabIndex = 11;
+            // 
+            // chkOpcaoProduto
+            // 
+            this.chkOpcaoProduto.AutoSize = true;
+            this.chkOpcaoProduto.Location = new System.Drawing.Point(6, 136);
+            this.chkOpcaoProduto.Name = "chkOpcaoProduto";
+            this.chkOpcaoProduto.Size = new System.Drawing.Size(118, 17);
+            this.chkOpcaoProduto.TabIndex = 10;
+            this.chkOpcaoProduto.Text = "Opções do Produto";
+            this.chkOpcaoProduto.UseVisualStyleBackColor = true;
+            // 
             // frmSincronizacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(248, 173);
+            this.ClientSize = new System.Drawing.Size(248, 220);
             this.Controls.Add(this.btnSincronizar);
             this.Controls.Add(this.groupBox1);
             this.Name = "frmSincronizacao";
@@ -163,6 +205,10 @@
         private System.Windows.Forms.ProgressBar prgBarProduto;
         private System.Windows.Forms.ProgressBar prgBarCategoria;
         private System.Windows.Forms.Button btnSincronizar;
+        private System.Windows.Forms.ProgressBar prgbarOpcao;
+        private System.Windows.Forms.CheckBox chkOpcao;
+        private System.Windows.Forms.ProgressBar prgBarOpcaoProduto;
+        private System.Windows.Forms.CheckBox chkOpcaoProduto;
 
     }
 }

@@ -13,6 +13,7 @@ namespace DexComanda.Models
        public string Tipo { get; set; }
        public DateTime DataCadastro { get; set; }
        public DateTime DataSincronismo { get; set; }
+       public Boolean OnlineSN { get; set; }
 
     }
 }

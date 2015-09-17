@@ -1534,6 +1534,12 @@ namespace DexComanda
             frm.ShowDialog();
         }
 
+        private void bairrosPorRegiãoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmBairrosRegiao frm = new frmBairrosRegiao();
+            frm.ShowDialog();
+        }
+
 
     }
 }

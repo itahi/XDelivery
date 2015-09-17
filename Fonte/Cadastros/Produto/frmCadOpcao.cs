@@ -32,7 +32,8 @@ namespace DexComanda.Cadastros.Produto
                     {
                         DataCadastro = DateTime.Now,
                         Nome = txtNome.Text,
-                        Tipo = cbxTipo.Text
+                        Tipo = cbxTipo.Text,
+                        OnlineSN = true
 
                     };
                     con.Insert("spAdicionarOpcao", opcao);

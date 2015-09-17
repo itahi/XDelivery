@@ -167,6 +167,12 @@
     <Compile Include="Cadastros\frmAdicionarMesa.Designer.cs">
       <DependentUpon>frmAdicionarMesa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cadastros\RegiaoEntrega\frmBairrosRegiao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\RegiaoEntrega\frmBairrosRegiao.Designer.cs">
+      <DependentUpon>frmBairrosRegiao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cadastros\frmCadCaixa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -205,6 +211,7 @@
     <Compile Include="Models\HistoricoPessoa.cs" />
     <Compile Include="Models\Opcao.cs" />
     <Compile Include="Models\Produto_Opcao.cs" />
+    <Compile Include="Models\RegiaoEntrega_Bairros.cs" />
     <Compile Include="Models\RemoveDezPorcento.cs" />
     <Compile Include="Operações\Financeiro\frmAberturaCaixa.cs">
       <SubType>Form</SubType>
@@ -259,10 +266,10 @@
     <Compile Include="Cadastros\frmCadastroEmailSMS.Designer.cs">
       <DependentUpon>frmCadastroEmailSMS.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cadastros\frmCadastroRegioes.cs">
+    <Compile Include="Cadastros\RegiaoEntrega\frmCadastroRegioes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cadastros\frmCadastroRegioes.Designer.cs">
+    <Compile Include="Cadastros\RegiaoEntrega\frmCadastroRegioes.Designer.cs">
       <DependentUpon>frmCadastroRegioes.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\Financeiro\frmCaixaMovimento.cs">
@@ -571,6 +578,9 @@
     <EmbeddedResource Include="Cadastros\frmAdicionarMesa.resx">
       <DependentUpon>frmAdicionarMesa.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\RegiaoEntrega\frmBairrosRegiao.resx">
+      <DependentUpon>frmBairrosRegiao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmCadCaixa.resx">
       <DependentUpon>frmCadCaixa.cs</DependentUpon>
     </EmbeddedResource>
@@ -663,7 +673,7 @@
     <EmbeddedResource Include="Cadastros\frmCadastroEmailSMS.resx">
       <DependentUpon>frmCadastroEmailSMS.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\frmCadastroRegioes.resx">
+    <EmbeddedResource Include="Cadastros\RegiaoEntrega\frmCadastroRegioes.resx">
       <DependentUpon>frmCadastroRegioes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmConfiguracoes.resx">

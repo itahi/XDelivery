@@ -195,6 +195,38 @@ namespace DexComanda
             return ds;
 
         }
+        public DataSet RetornaCEPporBairro(string iNomeBairro,Boolean iCidadePadrao)
+        {
+            string lSqlConsulta = "select cep,bairro cep from base_cep where cep="+iNomeBairro;
+            if (iCidadePadrao)
+            {
+                lSqlConsulta = lSqlConsulta + " and cidade='"+ Sessions.returnEmpresa.Cidade+"'";
+            }
+            
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "base_cep");
+            return ds;
+
+        }
+
+        //public DataSet SelectObterOpcaoProduto()
+        //{
+        //    string lSqlConsulta = "";
+
+        //    command = new SqlCommand(lSqlConsulta, conn);
+        //    command.CommandType = CommandType.Text;
+
+        //    adapter = new SqlDataAdapter(command);
+        //    ds = new DataSet();
+        //    adapter.Fill(ds, "Produto_Opcao");
+        //    return ds;
+
+        //}
         public void AtualizaDataSincronismo(string iNomeTable , int iCodigo)
         {
             string lSqlConsulta = " update " + iNomeTable + " set DataSincronismo=GetDate() where Codigo="+iCodigo;// and AtivoSN=1";
@@ -203,6 +235,15 @@ namespace DexComanda
             command.CommandType = CommandType.Text;
             command.ExecuteNonQuery();
            
+        }
+        public void AtualizaDataSincronismo(string iNomeTable, int iCodProduto , int iCodOpcao)
+        {
+            string lSqlConsulta = " update " + iNomeTable + " set DataSincronismo=GetDate() where CodProduto=" + iCodProduto +" and CodOpcao="+iCodOpcao;// and AtivoSN=1";
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.ExecuteNonQuery();
+
         }
         public DataSet SelectEntregaPorBoy(string iDataI, string iDataF, int CodMotoboy, string table = "Entregador")
         {
@@ -363,6 +404,16 @@ namespace DexComanda
                     }
                 }
 
+            }
+            else if (spName=="spAdicionaBairrosRegiao")
+            {
+                foreach (PropertyInfo propriedade in properties)
+                {
+                    if (!propriedade.Name.Equals("DataSincronismo") )
+                    {
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
+                }
             }
             else if (spName == "spAdicionarOpcao")
             {
@@ -564,6 +615,13 @@ namespace DexComanda
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
 
+                }
+                else if (spName=="spAlterarBairrosRegiao")
+                {
+                     if (!p.Name.Equals("DataSincronismo"))
+                    {
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
                 }
                 else
                 {

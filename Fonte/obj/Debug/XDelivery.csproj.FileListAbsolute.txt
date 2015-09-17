@@ -122,3 +122,4 @@ G:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.exe
 G:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.pdb
 E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.config
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Produto.frmCadOpcao.resources
+E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmBairrosRegiao.resources
