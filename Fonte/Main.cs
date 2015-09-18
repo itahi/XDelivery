@@ -1218,17 +1218,19 @@ namespace DexComanda
 
                 if (ImprimeLPT && lRetorno != "")
                 {
+                    StreamReader tempDex = new StreamReader(lRetorno);
+                    line = tempDex.ReadToEnd();
+
                     string RetornoTxt = Directory.GetCurrentDirectory() + @"\" + "ConfigImpressao" + ".txt";
                     if (System.IO.File.Exists(RetornoTxt))
                     {
-                        StreamReader tempDex = new StreamReader(RetornoTxt);
+                         tempDex = new StreamReader(RetornoTxt);
+                       // line = tempDex.ReadLine();
                         RetornoTxt = tempDex.ReadLine();
 
                         if (RetornoTxt != "")
                         {
                             string iPortaUSB = "", iModelo = "";
-
-
                             string[] words = RetornoTxt.Split(';');
 
                             for (int i = 0; i < words.Length; i++)
@@ -1238,19 +1240,28 @@ namespace DexComanda
                             }
                             int iRetorno;
                             MP2032 bema = new MP2032();
+                            try
+                            {
+                                iRetorno = MP2032.ConfiguraModeloImpressora(int.Parse(iModelo));
+                                iRetorno = MP2032.IniciaPorta(iPortaUSB);
+                                if (iRetorno == 1)
+                                {
+                                    MP2032.FormataTX(line, 2, 0, 0, 1, 0);
+                                    iRetorno = MP2032.BematechTX(line + "\r\n\r\n");
+                                    MP2032.AcionaGuilhotina(1);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Erro de  conexão impressora" + iModelo + " Porta" + iPortaUSB);
+                                }
+                            }
+                            catch (Exception erro)
+                            {
 
-                            iRetorno = MP2032.ConfiguraModeloImpressora(int.Parse(iModelo));
-                            iRetorno = MP2032.IniciaPorta(iPortaUSB);
-                            if (iRetorno == 1)
-                            {
-                                MP2032.FormataTX(line, 2, 0, 0, 1, 0);
-                                iRetorno = MP2032.BematechTX(line + "\r\n\r\n");
-                                MP2032.AcionaGuilhotina(1);
+                                MessageBox.Show(erro.Message);
                             }
-                            else
-                            {
-                                MessageBox.Show("Erro de  conexão impressora" + iModelo + " Porta" + iPortaUSB);
-                            }
+
+                           
 
                         }
                     }

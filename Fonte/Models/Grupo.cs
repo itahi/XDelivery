@@ -9,7 +9,6 @@ namespace DexComanda.Models
     {
         public int Codigo { get; set; }
         public string NomeGrupo { get; set; }
-        public string NomeAnterior { get; set; }
         public Boolean ImprimeCozinhaSN { get; set; }
         public Boolean OnlineSN { get; set; }
         public DateTime DataAlteracao { get; set; }

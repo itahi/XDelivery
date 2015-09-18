@@ -84,7 +84,7 @@ namespace DexComanda
                             Contato = dRow.ItemArray.GetValue(13).ToString(),
                             Servidor = dRow.ItemArray.GetValue(15).ToString(),
                             CaminhoBackup = dRow.ItemArray.GetValue(16).ToString(),
-                             
+                            
                           //  VersaoBanco = dRow.ItemArray.GetValue(15).ToString(),
                             DataInicio = Convert.ToDateTime(dRow.ItemArray.GetValue(18).ToString()),
                             UrlServidor = dRow.ItemArray.GetValue(19).ToString()
@@ -129,7 +129,7 @@ namespace DexComanda
                                      EnviaSMS               = bool.Parse(config.ItemArray.GetValue(23).ToString()),
                                      RepeteUltimoPedido     = bool.Parse(config.ItemArray.GetValue(27).ToString()),
                                      RegistraCancelamentos  = bool.Parse(config.ItemArray.GetValue(28).ToString()),
-
+                                     
                                  };
                                 if (config.ItemArray.GetValue(4).ToString() != "")
                                 {

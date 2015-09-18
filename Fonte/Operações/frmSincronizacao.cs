@@ -44,9 +44,13 @@ namespace DexComanda.Operações
                 }
                 if (chkOpcao.Checked)
                 {
-                  //  CadastrarOpcaoProduto(1);
+                
                     CadastrarOpcao(ObterDados("Opcao"));
 
+                }
+                if (chkRegiaoEntrega.Checked)
+                {
+                    CadastraRegioes(con.RetornaRegiao());
                 }
 
             }
@@ -62,7 +66,29 @@ namespace DexComanda.Operações
         }
 
 
+        private void CadastraRegioes(DataSet ds)
+        {
+            RestClient client = new RestClient(iUrlWS);
+            RestRequest request = new RestRequest("ws/regiaoEntrega/set", Method.POST);
 
+            prgBarRegiao.Maximum = ds.Tables[0].Rows.Count;
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                request.AddParameter("token", iParamToken);
+                request.AddParameter("cep", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("CEP"));
+                request.AddParameter("nome", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("NomeRegiao"));
+                request.AddParameter("valor", ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("TaxaServico"));
+                request.AddParameter("referencia_id", ds.Tables["RegiaoEntrega"].Rows[i].Field<int>("Codigo"));
+                RestResponse response = (RestResponse)client.Execute(request);
+                prgBarRegiao.Value = i + 1;
+
+                if (response.Content.ToString()== "true")
+                {
+                    con.AtualizaDataSincronismo("RegiaoEntrega", ds.Tables[0].Rows[i].Field<int>("Codigo"));
+                }
+
+            }
+        }
         private void CadastrarOpcao(DataSet ds)
         {
             RestClient client = new RestClient(iUrlWS);

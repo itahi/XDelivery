@@ -195,6 +195,23 @@ namespace DexComanda
             return ds;
 
         }
+        public DataSet RetornaRegiao()
+        {
+            string lSqlConsulta = " select RG.Codigo, RG.NomeRegiao,RG.TaxaServico" +
+                                  "  ,RB.CEP " +
+                                  "   from RegiaoEntrega RG " +
+                                   "  left join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo " +
+                                  "   WHERE RG.DataAlteracao > RG.DataSincronismo OR RG.DataSincronismo IS NULL";
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "RegiaoEntrega");
+            return ds;
+
+        }
         public DataSet RetornaCEPporBairro(string iNomeBairro,Boolean iCidadePadrao)
         {
             string lSqlConsulta = "select cep,bairro cep from base_cep where cep="+iNomeBairro;
@@ -229,6 +246,7 @@ namespace DexComanda
         //}
         public void AtualizaDataSincronismo(string iNomeTable , int iCodigo)
         {
+
             string lSqlConsulta = " update " + iNomeTable + " set DataSincronismo=GetDate() where Codigo="+iCodigo;// and AtivoSN=1";
 
             command = new SqlCommand(lSqlConsulta, conn);
@@ -404,6 +422,16 @@ namespace DexComanda
                     }
                 }
 
+            }
+            else if (spName=="spAdicionarGrupo")
+            {
+                foreach (PropertyInfo propriedade in properties)
+                {
+                    if (!propriedade.Name.Equals("DataSincronismo")&& !propriedade.Name.Equals("Codigo") )
+                    {
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
+                }
             }
             else if (spName=="spAdicionaBairrosRegiao")
             {
