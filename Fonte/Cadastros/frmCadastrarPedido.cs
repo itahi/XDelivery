@@ -32,6 +32,7 @@ namespace DexComanda
         public decimal ValorTroco;
         private List<ItemPedido> items;
         private Pedido pedido;
+        private string iTotalItem;
         private Main parentWindow;
         private int codigoItemParaAlterar;
         private int rowIndex;
@@ -302,6 +303,9 @@ namespace DexComanda
         private void cbxProdutosGrid_SelectedIndexChanged(object sender, EventArgs e)
         {
             var produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxProdutosGrid.SelectedValue.ToString())).Tables["Produto"];
+
+            MontaMenuOpcoes(int.Parse(this.cbxProdutosGrid.SelectedValue.ToString()));
+
             this.txtQuantidade.Text = "1";
             var ValorProduto = "";
             if (PromocaoDiasSemana)
@@ -375,7 +379,8 @@ namespace DexComanda
 
 
             }
-            //  }
+            // Pega o Preço unitário selecionado
+            iTotalItem = txtPrecoUnitario.Text;
         }
         private void SemMeiaPizza()
         {
@@ -419,6 +424,86 @@ namespace DexComanda
             {
                 itemNome = this.cbxProdutosGrid.Text;
                 return false;
+            }
+        }
+
+        private void EscondeTamanhos()
+        {
+            foreach (System.Windows.Forms.Control ctrControl in grpBoxTamanhos.Controls)
+            {
+                 if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))
+                {
+                    //Unselect all RadioButtons
+                    ((System.Windows.Forms.RadioButton)ctrControl).Visible = false;
+                }
+            }
+        }
+        private void MontaMenuOpcoes(int iCodProduto)
+        {
+            DataSet dsOpcoes = con.RetornaOpcoesProduto(iCodProduto);
+            DataRow dRowOpcoes;
+          //  Utils.LimpaForm(grpBoxTamanhos);
+            EscondeTamanhos();
+            chkListAdicionais.Items.Clear();
+            if (dsOpcoes.Tables[0].Rows.Count > 0)
+            {
+               
+                for (int i = 0; i < dsOpcoes.Tables[0].Rows.Count; i++)
+                {
+                    string lnome = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();
+                    string lTipo = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo");
+                    decimal lPreco = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
+
+                    if (lTipo.Equals("Selecao unica"))
+                    {
+
+                        if (!radioButton1.Visible)
+                        {
+                            radioButton1.Text = lnome + "(+" + lPreco + ")";
+                            radioButton1.Tag = lPreco;
+                            radioButton1.Visible = true;
+                            // grpBoxTamanhos.Controls.Add(rb);
+                        }
+                        else if (!radioButton2.Visible)
+                        {
+                            radioButton2.Text = lnome + "(+" + lPreco + ")";
+                            radioButton2.Tag = lPreco;
+                            radioButton2.Visible = true;
+                        }
+                        else if (!radioButton3.Visible)
+                        {
+                            radioButton3.Text = lnome + "(+" + lPreco + ")";
+                            radioButton3.Tag = lPreco;
+                            radioButton3.Visible = true;
+
+                        }
+                        else if (!radioButton4.Visible)
+                        {
+                            radioButton4.Text = lnome + "(+" + lPreco + ")";
+                            radioButton4.Tag = lPreco;
+                            radioButton4.Visible = true;
+                        }
+                        else if (!radioButton5.Visible)
+                        {
+                            radioButton5.Text = lnome + "(+" + lPreco + ")";
+                            radioButton5.Tag = lPreco;
+                            radioButton5.Visible = true;
+                        }
+                        else if (!radioButton6.Visible)
+                        {
+                            radioButton6.Text = lnome + "(+" + lPreco + ")";
+                            radioButton6.Tag = lPreco;
+                            radioButton6.Visible = true;
+                        }
+
+                    }
+                    if (lTipo.Equals("Multipla Selecao"))
+                    {
+                        chkListAdicionais.Items.Add(lnome+"(+"+lPreco+")", false);
+                    }
+
+                }
+               
             }
         }
         private void btnAdicionarItemNoPedido_Click(object sender, EventArgs e)
@@ -705,16 +790,16 @@ namespace DexComanda
         }
         private void AtualizaTotalPedido()
         {
-             pedido = new Pedido()
-            {
-                Codigo = codPedido,
+            pedido = new Pedido()
+           {
+               Codigo = codPedido,
 
-                TrocoPara = this.txtTrocoPara.Text,
-                FormaPagamento = this.cmbFPagamento.Text,
-                RealizadoEm = DateTime.Now,
-                Tipo = cbxTipoPedido.Text,
+               TrocoPara = this.txtTrocoPara.Text,
+               FormaPagamento = this.cmbFPagamento.Text,
+               RealizadoEm = DateTime.Now,
+               Tipo = cbxTipoPedido.Text,
 
-            };
+           };
             if (DMargemGarco != 0.00M)
             {
                 decimal dTotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
@@ -856,7 +941,7 @@ namespace DexComanda
 
                         };
 
-                        
+
 
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value = itemPedido.NomeProduto;
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value = itemPedido.Quantidade;
@@ -879,7 +964,7 @@ namespace DexComanda
                         this.lblTroco.Text = "R$ " + TrocoPagar;
                         AtualizaTotalPedido();
                         con.Update("spAlterarItemPedido", itemPedido);
-                     
+
                         Utils.ControlaEventos("Alterar", this.Name);
 
                         this.cbxProdutosGrid.Text = "";
@@ -1475,22 +1560,28 @@ namespace DexComanda
                 DataTable produto;
                 DataTable sabor;
 
+               
+
                 if (txtCodProduto1.Text != "")
                 {
                     produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
+                    MontaMenuOpcoes(int.Parse(txtCodProduto1.Text));
                 }
                 else
                 {
                     produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxProdutosGrid.SelectedValue.ToString())).Tables["Produto"];
+                    MontaMenuOpcoes(int.Parse(this.cbxProdutosGrid.SelectedValue.ToString()));
                 }
 
                 if (txtCodProduto2.Text != "")
                 {
                     sabor = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(txtCodProduto2.Text)).Tables["Produto"];
+                     MontaMenuOpcoes(int.Parse(txtCodProduto2.Text));
                 }
                 else
                 {
                     sabor = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxSabor.SelectedValue.ToString())).Tables["Produto"];
+                    int.Parse(this.cbxSabor.SelectedValue.ToString());
                 }
 
 
@@ -1662,8 +1753,11 @@ namespace DexComanda
                 if (txtCodProduto1.Text != "")
                 {
                     var produto = con.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
+
+
                     if (produto.Rows.Count > 0)
                     {
+                        MontaMenuOpcoes(int.Parse(txtCodProduto1.Text));
                         cbxProdutosGrid.Text = produto.Rows[0]["NomeProduto"].ToString();
                         if (PromocaoDiasSemana)
                         {
@@ -1704,6 +1798,7 @@ namespace DexComanda
                     var produto = con.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", int.Parse(txtCodProduto2.Text)).Tables["Produto"];
                     if (produto.Rows.Count > 0)
                     {
+                        MontaMenuOpcoes(int.Parse(txtCodProduto2.Text));
                         cbxSabor.Text = produto.Rows[0]["NomeProduto"].ToString();
                         if (PromocaoDiasSemana)
                         {
@@ -1803,6 +1898,16 @@ namespace DexComanda
             this.lblEndereco = new System.Windows.Forms.Label();
             this.lblNomeCliente = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.grpBoxTamanhos = new System.Windows.Forms.GroupBox();
+            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.label9 = new System.Windows.Forms.Label();
+            this.chkListAdicionais = new System.Windows.Forms.CheckedListBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -1810,6 +1915,8 @@ namespace DexComanda
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.grpBoxTamanhos.SuspendLayout();
             this.SuspendLayout();
             // 
             // dBExpertDataSet
@@ -1967,7 +2074,7 @@ namespace DexComanda
             // 
             this.lblTempo.AutoSize = true;
             this.lblTempo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTempo.Location = new System.Drawing.Point(357, 9);
+            this.lblTempo.Location = new System.Drawing.Point(645, 11);
             this.lblTempo.Name = "lblTempo";
             this.lblTempo.Size = new System.Drawing.Size(79, 20);
             this.lblTempo.TabIndex = 11;
@@ -1979,7 +2086,7 @@ namespace DexComanda
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
             this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFidelidade.Location = new System.Drawing.Point(451, 5);
+            this.lblFidelidade.Location = new System.Drawing.Point(749, 6);
             this.lblFidelidade.Name = "lblFidelidade";
             this.lblFidelidade.Size = new System.Drawing.Size(241, 32);
             this.lblFidelidade.TabIndex = 10;
@@ -2398,10 +2505,134 @@ namespace DexComanda
             // 
             // panel5
             // 
-            this.panel5.Location = new System.Drawing.Point(760, 100);
+            this.panel5.Controls.Add(this.grpBoxTamanhos);
+            this.panel5.Controls.Add(this.label9);
+            this.panel5.Controls.Add(this.chkListAdicionais);
+            this.panel5.Location = new System.Drawing.Point(760, 119);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(225, 419);
+            this.panel5.Size = new System.Drawing.Size(225, 401);
             this.panel5.TabIndex = 64;
+            // 
+            // grpBoxTamanhos
+            // 
+            this.grpBoxTamanhos.Controls.Add(this.radioButton6);
+            this.grpBoxTamanhos.Controls.Add(this.radioButton5);
+            this.grpBoxTamanhos.Controls.Add(this.radioButton4);
+            this.grpBoxTamanhos.Controls.Add(this.radioButton3);
+            this.grpBoxTamanhos.Controls.Add(this.radioButton2);
+            this.grpBoxTamanhos.Controls.Add(this.radioButton1);
+            this.grpBoxTamanhos.Location = new System.Drawing.Point(6, 3);
+            this.grpBoxTamanhos.Name = "grpBoxTamanhos";
+            this.grpBoxTamanhos.Size = new System.Drawing.Size(213, 100);
+            this.grpBoxTamanhos.TabIndex = 34;
+            this.grpBoxTamanhos.TabStop = false;
+            this.grpBoxTamanhos.Text = "Tamanhos";
+            // 
+            // radioButton6
+            // 
+            this.radioButton6.AutoSize = true;
+            this.radioButton6.Location = new System.Drawing.Point(112, 73);
+            this.radioButton6.Name = "radioButton6";
+            this.radioButton6.Size = new System.Drawing.Size(40, 17);
+            this.radioButton6.TabIndex = 77;
+            this.radioButton6.TabStop = true;
+            this.radioButton6.Text = "rb6";
+            this.radioButton6.UseVisualStyleBackColor = true;
+            this.radioButton6.Visible = false;
+            this.radioButton6.Click += new System.EventHandler(this.radioButton6_Click);
+            // 
+            // radioButton5
+            // 
+            this.radioButton5.AutoSize = true;
+            this.radioButton5.Location = new System.Drawing.Point(112, 42);
+            this.radioButton5.Name = "radioButton5";
+            this.radioButton5.Size = new System.Drawing.Size(40, 17);
+            this.radioButton5.TabIndex = 76;
+            this.radioButton5.TabStop = true;
+            this.radioButton5.Text = "rb5";
+            this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioButton5.Visible = false;
+            this.radioButton5.Click += new System.EventHandler(this.radioButton5_Click);
+            // 
+            // radioButton4
+            // 
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Location = new System.Drawing.Point(112, 18);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(40, 17);
+            this.radioButton4.TabIndex = 75;
+            this.radioButton4.TabStop = true;
+            this.radioButton4.Text = "rb4";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioButton4.Visible = false;
+            this.radioButton4.Click += new System.EventHandler(this.radioButton4_Click);
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(12, 73);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(40, 17);
+            this.radioButton3.TabIndex = 74;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "rb3";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.Visible = false;
+            this.radioButton3.Click += new System.EventHandler(this.radioButton3_Click);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(12, 41);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(40, 17);
+            this.radioButton2.TabIndex = 73;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "rb2";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.Visible = false;
+            this.radioButton2.Click += new System.EventHandler(this.radioButton2_Click);
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(12, 18);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(40, 17);
+            this.radioButton1.TabIndex = 72;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "rb1";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.Visible = false;
+            this.radioButton1.Click += new System.EventHandler(this.radioButton1_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 116);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(55, 13);
+            this.label9.TabIndex = 33;
+            this.label9.Text = "Adicionais";
+            // 
+            // chkListAdicionais
+            // 
+            this.chkListAdicionais.FormattingEnabled = true;
+            this.chkListAdicionais.Location = new System.Drawing.Point(3, 132);
+            this.chkListAdicionais.Name = "chkListAdicionais";
+            this.chkListAdicionais.Size = new System.Drawing.Size(216, 259);
+            this.chkListAdicionais.TabIndex = 0;
+            this.chkListAdicionais.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkListAdicionais_ItemCheck);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(757, 100);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(146, 16);
+            this.label6.TabIndex = 65;
+            this.label6.Text = "Opções do Produto:";
             // 
             // frmCadastrarPedido
             // 
@@ -2409,6 +2640,7 @@ namespace DexComanda
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(997, 522);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.cbxListaMesas);
@@ -2456,6 +2688,10 @@ namespace DexComanda
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            this.grpBoxTamanhos.ResumeLayout(false);
+            this.grpBoxTamanhos.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2577,13 +2813,13 @@ namespace DexComanda
                         TotalPedido = TotalPedido + decimal.Parse(lblEntrega.Text);
                         TotalPedido = TotalPedido - decimal.Parse(txtDesconto.Text);
                         txtDesconto.Text = string.Format("{0:#,##0.00}", decimal.Parse(txtDesconto.Text));
-                        lbTotal.Text = "R$" + TotalPedido.ToString() ;
+                        lbTotal.Text = "R$" + TotalPedido.ToString();
                         AtualizaTroco();
                         AtualizaTotalPedido();
                     }
 
 
-                    
+
                 }
                 else
                 {
@@ -2704,6 +2940,73 @@ namespace DexComanda
 
 
         }
+
+        private void radioButton1_Click(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                decimal lPreco = decimal.Parse(radioButton1.Tag.ToString());
+                txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
+                CalcularTotalItem();    
+            }
+        }
+
+        private void radioButton2_Click(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked)
+            {
+                decimal lPreco = decimal.Parse(radioButton2.Tag.ToString());
+                txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
+                CalcularTotalItem();
+            }
+        }
+
+        private void radioButton3_Click(object sender, EventArgs e)
+        {
+            if (radioButton3.Checked)
+            {
+                decimal lPreco = decimal.Parse(radioButton3.Tag.ToString());
+                txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
+                CalcularTotalItem();
+            }
+        }
+
+        private void radioButton4_Click(object sender, EventArgs e)
+        {
+            if (radioButton4.Checked)
+            {
+                decimal lPreco = decimal.Parse(radioButton4.Tag.ToString());
+                txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
+                CalcularTotalItem();
+            }
+        }
+
+        private void radioButton5_Click(object sender, EventArgs e)
+        {
+            if (radioButton5.Checked)
+            {
+                decimal lPreco = decimal.Parse(radioButton5.Tag.ToString());
+                txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
+                CalcularTotalItem();
+            }
+        }
+
+        private void radioButton6_Click(object sender, EventArgs e)
+        {
+            if (radioButton6.Checked)
+            {
+                decimal lPreco = decimal.Parse(radioButton6.Tag.ToString());
+                txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
+                CalcularTotalItem();
+            }
+        }
+
+        private void chkListAdicionais_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            
+        }
+
+        
 
     }
 }

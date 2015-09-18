@@ -301,6 +301,7 @@
             // 
             this.txtEstado.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtEstado.Location = new System.Drawing.Point(478, 146);
+            this.txtEstado.MaxLength = 2;
             this.txtEstado.Name = "txtEstado";
             this.txtEstado.Size = new System.Drawing.Size(95, 29);
             this.txtEstado.TabIndex = 39;
@@ -318,6 +319,7 @@
             // 
             this.txtNomeCliente.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNomeCliente.Location = new System.Drawing.Point(15, 25);
+            this.txtNomeCliente.MaxLength = 100;
             this.txtNomeCliente.Name = "txtNomeCliente";
             this.txtNomeCliente.Size = new System.Drawing.Size(276, 29);
             this.txtNomeCliente.TabIndex = 28;
@@ -335,6 +337,7 @@
             // 
             this.txtObservacaoCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtObservacaoCliente.Location = new System.Drawing.Point(297, 209);
+            this.txtObservacaoCliente.MaxLength = 50;
             this.txtObservacaoCliente.Multiline = true;
             this.txtObservacaoCliente.Name = "txtObservacaoCliente";
             this.txtObservacaoCliente.Size = new System.Drawing.Size(272, 82);
@@ -363,6 +366,7 @@
             // 
             this.txtPontoReferencia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPontoReferencia.Location = new System.Drawing.Point(16, 209);
+            this.txtPontoReferencia.MaxLength = 50;
             this.txtPontoReferencia.Multiline = true;
             this.txtPontoReferencia.Name = "txtPontoReferencia";
             this.txtPontoReferencia.Size = new System.Drawing.Size(272, 82);
@@ -380,6 +384,7 @@
             // 
             this.txtBairro.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBairro.Location = new System.Drawing.Point(15, 146);
+            this.txtBairro.MaxLength = 100;
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(276, 29);
             this.txtBairro.TabIndex = 37;
@@ -388,6 +393,7 @@
             // 
             this.txtEndereco.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtEndereco.Location = new System.Drawing.Point(140, 88);
+            this.txtEndereco.MaxLength = 100;
             this.txtEndereco.Multiline = true;
             this.txtEndereco.Name = "txtEndereco";
             this.txtEndereco.Size = new System.Drawing.Size(356, 30);

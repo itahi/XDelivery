@@ -30,7 +30,7 @@ namespace DexComanda.Cadastros.Produto
                 {
                     Opcao opcao = new Opcao()
                     {
-                        DataCadastro = DateTime.Now,
+                        DataAlteracao = DateTime.Now,
                         Nome = txtNome.Text,
                         Tipo = cbxTipo.Text,
                         OnlineSN = true
@@ -118,7 +118,7 @@ namespace DexComanda.Cadastros.Produto
                     Codigo = codigoAlterarDeletar,
                     Nome = txtNome.Text,
                     Tipo = cbxTipo.Text,
-                    DataCadastro= DateTime.Now
+                    DataAlteracao= DateTime.Now
                 };
                 con.Update("spAlteraOpcao", opcao);
                 Utils.LimpaForm(this);

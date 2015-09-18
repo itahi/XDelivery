@@ -130,6 +130,22 @@ namespace DexComanda
             adapter.Fill(ds, table);
             return ds;
         }
+         public  DataSet RetornaOpcoesProduto(int iDProduto)
+        {
+            string lSqlConsulta = " select Op.Nome,Op.Tipo,Prod.Preco "+
+                                  "  from  Produto_Opcao Prod " +
+                                  "  join Opcao Op  on Op.Codigo = Prod.CodOpcao  " +
+                                  "  where Prod.CodProduto=@CodProduto";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@CodProduto", iDProduto);
+    
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto_Opcao");
+            return ds;
+        }
 
         public DataSet SelectRegistroPorCodigoPeriodo(string table, string spName, string iCodPessoa, DateTime iDataI, DateTime iDataF)
         {

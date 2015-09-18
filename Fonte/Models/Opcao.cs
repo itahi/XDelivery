@@ -11,7 +11,7 @@ namespace DexComanda.Models
        public int Codigo { get; set; }
        public string Nome { get; set; }
        public string Tipo { get; set; }
-       public DateTime DataCadastro { get; set; }
+       public DateTime DataAlteracao { get; set; }
        public DateTime DataSincronismo { get; set; }
        public Boolean OnlineSN { get; set; }
 

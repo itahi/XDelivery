@@ -63,5 +63,15 @@
         private System.Windows.Forms.Label lblNomeCliente;
         private System.Windows.Forms.Button btnCalGarcon;
         private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.CheckedListBox chkListAdicionais;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.GroupBox grpBoxTamanhos;
+        private System.Windows.Forms.RadioButton radioButton6;
+        private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
     }
 }

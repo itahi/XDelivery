@@ -132,6 +132,7 @@ namespace DexComanda
             }
             return Logado;
         }
+       
         public static bool VerificaCaixaAbertoDiaAnterior()
         {
             Boolean CaixaAberto = false;
