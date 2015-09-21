@@ -12,6 +12,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -33,6 +34,7 @@ namespace DexComanda
         private List<ItemPedido> items;
         private Pedido pedido;
         private string iTotalItem;
+        private string iNomeProd;
         private Main parentWindow;
         private int codigoItemParaAlterar;
         private int rowIndex;
@@ -70,6 +72,10 @@ namespace DexComanda
         private bool FPPermiteDesconto;
         private decimal dTotalPedido;
         private decimal DMargemGarco = 0.00M;
+        private string lnome;
+        private string lNomeOpcao;
+        private string lTipo;
+        private decimal lPreco;
 
         //private int HoraPedido = Sessions.returnPedido.RealizadoEm.Minute;
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, string iNumeMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
@@ -229,7 +235,7 @@ namespace DexComanda
 
                 DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsPedido", codPedido);
 
-                for (int i = 0; i < itemsPedido.Tables[0].Rows.Count; i++)
+                for (int i = 0; i < itemsPedido.Tables["ItemsPedido"].Rows.Count; i++)
                 {
                     var itemPedido = new ItemPedido()
                     {
@@ -381,6 +387,7 @@ namespace DexComanda
             }
             // Pega o Preço unitário selecionado
             iTotalItem = txtPrecoUnitario.Text;
+            iNomeProd = cbxProdutosGrid.Text;
         }
         private void SemMeiaPizza()
         {
@@ -450,18 +457,20 @@ namespace DexComanda
                
                 for (int i = 0; i < dsOpcoes.Tables[0].Rows.Count; i++)
                 {
-                    string lnome = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();
-                    string lTipo = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo");
-                    decimal lPreco = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
+                     lnome = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();
+                     lTipo = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo");
+                     lPreco = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
 
                     if (lTipo.Equals("Selecao unica"))
                     {
-
+                        lNomeOpcao = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();
                         if (!radioButton1.Visible)
                         {
                             radioButton1.Text = lnome + "(+" + lPreco + ")";
                             radioButton1.Tag = lPreco;
                             radioButton1.Visible = true;
+                            // Padrão vim marcado sempre o primeiro Item
+                            radioButton1.Checked = true;
                             // grpBoxTamanhos.Controls.Add(rb);
                         }
                         else if (!radioButton2.Visible)
@@ -505,6 +514,18 @@ namespace DexComanda
                 }
                
             }
+        }
+        private void InsereOpcaoItems(int iCodPedido, int iCodProduto, int iCodOpcao, string iObservacao)
+        {
+            OpcaoItem opcao = new OpcaoItem()
+            {
+                CodOpcao = iCodOpcao,
+                CodPedido = iCodPedido,
+                CodProduto = iCodProduto,
+                Observacao = iObservacao
+            };
+            con.Insert("spAdicionarOpcaoPedido", opcao);
+
         }
         private void btnAdicionarItemNoPedido_Click(object sender, EventArgs e)
         {
@@ -2744,6 +2765,11 @@ namespace DexComanda
             {
                 cbxListaMesas.Visible = false;
             }
+
+            if (cbxTipoPedido.Text!="0 - Entrega")
+            {
+                lblEntrega.Text = "0,00";
+            }
         }
 
         private void cbxTrocoParaOK_CheckedChanged(object sender, EventArgs e)
@@ -2940,6 +2966,18 @@ namespace DexComanda
 
 
         }
+        private string ObterSomenteLetras(string istring)
+        {
+            string ire;
+            return Regex.Replace(istring, "[^a-zA-Z á]+", "");
+          //   return ire;
+        }
+        private string ObterSomenteNumerosReais(string iValue)
+        {
+            string ire;
+            ire = Regex.Replace(iValue, "[^0-9 ,]+", "");
+            return ire;
+        }
 
         private void radioButton1_Click(object sender, EventArgs e)
         {
@@ -2947,6 +2985,7 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton1.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
+                cbxProdutosGrid.Text = iNomeProd +" "+ObterSomenteLetras(radioButton1.Text);
                 CalcularTotalItem();    
             }
         }
@@ -2957,6 +2996,8 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton2.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
+                cbxProdutosGrid.Text = iNomeProd + " " + ObterSomenteLetras(radioButton2.Text);
+            
                 CalcularTotalItem();
             }
         }
@@ -2967,6 +3008,7 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton3.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
+                cbxProdutosGrid.Text = iNomeProd + " " + ObterSomenteLetras(radioButton3.Text);
                 CalcularTotalItem();
             }
         }
@@ -2977,6 +3019,8 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton4.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
+                cbxProdutosGrid.Text = iNomeProd + " " + ObterSomenteLetras(radioButton4.Text);
+              
                 CalcularTotalItem();
             }
         }
@@ -2987,6 +3031,8 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton5.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
+                cbxProdutosGrid.Text = iNomeProd + " " + ObterSomenteLetras(radioButton5.Text);
+              
                 CalcularTotalItem();
             }
         }
@@ -2997,13 +3043,36 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton6.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
+                cbxProdutosGrid.Text = iNomeProd + " " + ObterSomenteLetras(radioButton6.Text);
                 CalcularTotalItem();
             }
         }
+      
 
         private void chkListAdicionais_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            
+            if (e.CurrentValue ==CheckState.Unchecked)
+            {
+                txtItemDescricao.Text = txtItemDescricao.Text + " + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString());
+                decimal iValorItem = decimal.Parse(txtPrecoUnitario.Text.Replace("R$",""));
+                decimal iValorAdicional =decimal.Parse( ObterSomenteNumerosReais(chkListAdicionais.SelectedItem.ToString()));
+                decimal iValor = iValorItem + iValorAdicional;
+                txtPrecoUnitario.Text = Convert.ToString(iValor);
+                
+                CalcularTotalItem();
+            }
+            else
+            {
+                txtItemDescricao.Text = txtItemDescricao.Text.Replace(ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString()), string.Empty);
+                txtItemDescricao.Text = txtItemDescricao.Text.Replace("+", string.Empty);
+                decimal iValorItem = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
+                decimal iValorAdicional = decimal.Parse(ObterSomenteNumerosReais(chkListAdicionais.SelectedItem.ToString()));
+                decimal iValor = iValorItem - iValorAdicional;
+
+                txtPrecoUnitario.Text = Convert.ToString(iValor);
+
+                CalcularTotalItem();
+            }
         }
 
         

@@ -180,7 +180,7 @@ namespace DexComanda
                                 if (servidor.Tables["Empresa"].Rows.Count > 0)
                                 {
                                     // DataSet Licenca = con.Liberacao(Sessions.returnEmpresa.CNPJ);
-                                    if (con.Liberacao(Sessions.returnEmpresa.CNPJ,NomePC,MAcPC)!=null)
+                                    if (con.Liberacao(Sessions.returnEmpresa.Nome,Sessions.returnEmpresa.CNPJ,NomePC,MAcPC)!=null)
                                     {
                                         // Cria Registro Para Usar Off
                                         Utils.GravaRegistro(Utils.RetornaNomePc() + empresas.CNPJ + empresas.Cidade + empresas.Nome);

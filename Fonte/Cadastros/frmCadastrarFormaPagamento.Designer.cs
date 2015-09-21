@@ -137,7 +137,9 @@
             this.Controls.Add(this.FPGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "frmCadastrarFormaPagamento";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[XDelivery]  Formas De Pagamento";
             ((System.ComponentModel.ISupportInitialize)(this.FPGridView)).EndInit();
             this.ResumeLayout(false);

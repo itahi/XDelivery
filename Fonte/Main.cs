@@ -1309,7 +1309,8 @@ namespace DexComanda
                 for (int intFor = 0; intFor < pedidosGridView.Rows.Count; intFor++)
                 {
                     Boolean iOrigemExterna = pedidosGridView.Rows[intFor].Cells["PedidoOrigem"].Value.ToString() == "Aplicativo";
-                    if (iOrigemExterna)
+                    Boolean iMesa          =pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString() != "0";
+                    if (iOrigemExterna && iMesa)
                     {
                         ImpressaoAutomatica(int.Parse(pedidosGridView.Rows[intFor].Cells["Codigo"].Value.ToString()), pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString());
                     }

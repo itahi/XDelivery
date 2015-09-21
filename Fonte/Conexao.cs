@@ -1028,7 +1028,7 @@ namespace DexComanda
 
             return ds;
         }
-        public DataSet Liberacao(string CNPJ, string iNomePC, string iMAC)
+        public DataSet Liberacao(string iNomeEmpresa ,string CNPJ, string iNomePC, string iMAC)
         {
             int Tabela;
             Boolean AtivoSn = false;
@@ -1083,6 +1083,12 @@ namespace DexComanda
             catch (Exception e)
             {
                 MessageBox.Show("Erro na validação da licença" + e.Message);
+                int intAbriu5Vezes = Utils.ContaRegistro(iNomeEmpresa + CNPJ);
+                if (intAbriu5Vezes >= 5)
+                {
+                    MessageBox.Show(" Não foi possivel validar seu acesso o sistema  será encerrado!");
+                    Utils.Kill(); 
+                }
             }
             return ds;
         }
