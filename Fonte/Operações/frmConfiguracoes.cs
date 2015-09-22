@@ -235,11 +235,7 @@ namespace DexComanda
                config.PortaLPT = "0";
            }
 
-           //config.ImpressoraEntrega = cbxEntregas.Text;
-           //config.ImpressoraCozinha = cbxCozinha.Text;
-           //config.ImpressoraCopaBalcao = cbxMesas.Text;
-
-           if (chkLoginSenha.Checked)
+           if (chkLoginSenha.Checked && txtUsuarioPadrao.Text!="" && txtSenha.Text!="")
            {
                string _senha = Utils.EncryptMd5(this.txtUsuarioPadrao.Text.ToString(), this.txtSenhaPadrao.Text.ToString());
                UsuarioDefault usuario = new UsuarioDefault()

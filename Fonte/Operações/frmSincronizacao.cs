@@ -44,9 +44,7 @@ namespace DexComanda.Operações
                 }
                 if (chkOpcao.Checked)
                 {
-                
                     CadastrarOpcao(ObterDados("Opcao"));
-
                 }
                 if (chkRegiaoEntrega.Checked)
                 {
@@ -195,6 +193,7 @@ namespace DexComanda.Operações
             RestRequest request = new RestRequest("ws/produto/opcao/set", Method.POST);
 
             DataSet ds = con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcaoProdutoCodigo", iCodProduto);
+            int iCodOpcao=0;
             if (ds.Tables[0].Rows.Count > 0)
             {
                 int iCodProd = ds.Tables["Produto_Opcao"].Rows[0].Field<int>("CodProduto");
@@ -205,18 +204,16 @@ namespace DexComanda.Operações
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
 
-                    int iCod = ds.Tables["Produto_Opcao"].Rows[i].Field<int>("CodOpcao");
+                    iCodOpcao = ds.Tables["Produto_Opcao"].Rows[i].Field<int>("CodOpcao");
                     decimal iprice = ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
-                    request.AddParameter("opcao["+iCod+"]", iprice); //Pronto
+                    request.AddParameter("opcao[" + iCodOpcao + "]", iprice); //Pronto
                 }
 
-
-               
                 RestResponse response = (RestResponse)client.Execute(request);
-                prgBarpagamento.Value = prgBarpagamento.Value + 1;
+
                 if (response.Content.ToString() == "true")
                 {
-                    con.AtualizaDataSincronismo("Produto_Opcao", iCodProd);
+                    con.AtualizaDataSincronismo("Produto_Opcao", iCodProd, iCodOpcao);
 
                 }
             }

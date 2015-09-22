@@ -260,19 +260,21 @@ namespace DexComanda
         //    return ds;
 
         //}
-        public void AtualizaDataSincronismo(string iNomeTable , int iCodigo)
+
+      
+        public void AtualizaDataSincronismo(string iNomeTable, int iCodigo, string iDataAtualizar="DataSincronismo")
         {
 
-            string lSqlConsulta = " update " + iNomeTable + " set DataSincronismo=GetDate() where Codigo="+iCodigo;// and AtivoSN=1";
+            string lSqlConsulta = " update " + iNomeTable + " set "+iDataAtualizar+"=GetDate() where Codigo="+iCodigo;// and AtivoSN=1";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.ExecuteNonQuery();
            
         }
-        public void AtualizaDataSincronismo(string iNomeTable, int iCodProduto , int iCodOpcao)
+        public void AtualizaDataSincronismo(string iNomeTable, int iCodProduto, int iCodOpcao, string iDataAtualizar = "DataSincronismo")
         {
-            string lSqlConsulta = " update " + iNomeTable + " set DataSincronismo=GetDate() where CodProduto=" + iCodProduto +" and CodOpcao="+iCodOpcao;// and AtivoSN=1";
+            string lSqlConsulta = " update " + iNomeTable + " set "+iDataAtualizar+"=GetDate() where CodProduto=" + iCodProduto +" and CodOpcao="+iCodOpcao;// and AtivoSN=1";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;

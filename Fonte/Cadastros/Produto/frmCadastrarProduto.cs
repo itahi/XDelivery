@@ -353,9 +353,10 @@ namespace DexComanda
                 CodProduto = codigoProdutoParaAlterar,
                 CodOpcao = int.Parse(cbxOpcao.SelectedValue.ToString()),
                 Preco = decimal.Parse(txtPrecoOpcao.Text),
-                DataCadastro = DateTime.Now
+                DataAlteracao = DateTime.Now
             };
             con.Insert("spAdicionarOpcaProduto", prodOpcao);
+            con.AtualizaDataSincronismo("Produto", codigoProdutoParaAlterar, "DataAlteracao");
             txtPrecoOpcao.Text = "";
             cbxOpcao.Text = "";
             ListaOpcaoProduto();
@@ -416,12 +417,13 @@ namespace DexComanda
             {
               CodOpcao = codigoOpcao,
               CodProduto = codigoProdutoParaAlterar,
-              DataCadastro = DateTime.Now,
+              DataAlteracao = DateTime.Now,
               Preco = decimal.Parse(txtPrecoOpcao.Text)
             };
             if (txtPrecoOpcao.Text != "")
             {
                 con.Update("spAlterarOpcaoProduto", opcaoProd);
+                con.AtualizaDataSincronismo("Produto", codigoProdutoParaAlterar, "DataAlteracao");
                 txtPrecoOpcao.Text = "";
                 cbxOpcao.Text = "";
                 Utils.ControlaEventos("Alterar", this.Name);
@@ -451,36 +453,50 @@ namespace DexComanda
             {
                 ContextMenu m = new ContextMenu();
                 MenuItem Excluir = new MenuItem(" 0 - Excluir Opcao ");
+                MenuItem Excluir2 = new MenuItem("  ");
                 Excluir.Click += DeletarRegistro;
                 m.MenuItems.Add(Excluir);
+                m.MenuItems.Add(Excluir2);
 
                 int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
                 m.Show(dgv, new Point(e.X, e.Y));
 
             }
+
+
+         
         }
         private void DeletarRegistro(object sender, EventArgs e)
         {
-            if (AdicionaisGridView.SelectedRows.Count > 0)
+            try
             {
-               
-                 Produto_Opcao prod = new Produto_Opcao()
-                 {
-                      CodProduto = codigoProdutoParaAlterar,
-                     CodOpcao = int.Parse(this.AdicionaisGridView.SelectedCells[0].Value.ToString())
-                    
-                 };
-                con.Delete("spExcluirOpcaoProduto",prod);
-             
-                Utils.ControlaEventos("Excluir", this.Name);
-                MessageBox.Show("Item excluído com sucesso.");
-                ListaOpcaoProduto();
+                if (AdicionaisGridView.SelectedRows.Count > 0)
+                {
 
+                    Produto_Opcao prod = new Produto_Opcao()
+                    {
+                        CodProduto = codigoProdutoParaAlterar,
+                        CodOpcao = int.Parse(this.AdicionaisGridView.SelectedCells[0].Value.ToString())
+
+                    };
+                    con.Delete("spExcluirOpcaoProduto", prod);
+                   
+                    Utils.ControlaEventos("Excluir", this.Name);
+                    MessageBox.Show("Item excluído com sucesso.");
+                    ListaOpcaoProduto();
+
+                }
+                else
+                {
+                    MessageBox.Show("Selecione o registro para excluir");
+                }
             }
-            else
+            catch (Exception erro)
             {
-                MessageBox.Show("Selecione o grupo para excluir");
+
+                MessageBox.Show(erro.Message);
             }
+            
 
         }
     }

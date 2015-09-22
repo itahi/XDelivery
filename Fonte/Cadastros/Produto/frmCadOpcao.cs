@@ -64,19 +64,31 @@ namespace DexComanda.Cadastros.Produto
         }
         private void DeletaRegistro(object sender, EventArgs e)
         {
-            if (OpcaoGridView.SelectedRows.Count > 0)
+            try
             {
-                codigoAlterarDeletar = int.Parse(this.OpcaoGridView.SelectedCells[0].Value.ToString());
-                con.DeleteAll("Opcao", "spExcluirOpcao", codigoAlterarDeletar);
-                Utils.ControlaEventos("Excluir", this.Name);
-                MessageBox.Show("Item excluído com sucesso.");
-                ListaOpcao();
+                if (OpcaoGridView.SelectedRows.Count > 0)
+                {
+                    codigoAlterarDeletar = int.Parse(this.OpcaoGridView.SelectedCells[0].Value.ToString());
+                    con.DeleteAll("Opcao", "spExcluirOpcao", codigoAlterarDeletar);
+                    Utils.ControlaEventos("Excluir", this.Name);
+                    MessageBox.Show("Item excluído com sucesso.");
+                    ListaOpcao();
 
+                }
+                else
+                {
+                    MessageBox.Show("Selecione o grupo para excluir");
+                }
             }
-            else
+            catch (Exception erro)
             {
-                MessageBox.Show("Selecione o grupo para excluir");
+
+                if (erro.Message.Contains("A instrução DELETE conflitou"))
+                {
+                    MessageBox.Show("Não foi possivel deletar o registro pois o mesmo está sendo usando em algum produto", "xSistemas ");
+                }
             }
+            
 
         }
 
@@ -122,6 +134,15 @@ namespace DexComanda.Cadastros.Produto
                 };
                 con.Update("spAlteraOpcao", opcao);
                 Utils.LimpaForm(this);
+
+                this.btnAdicionar.Text = "Adicionar";
+                this.btnAdicionar.Click += new System.EventHandler(this.CadastraOpcao);
+                this.btnAdicionar.Click -= new System.EventHandler(this.Salvar);
+
+                this.btnEditar.Text = "Editar";
+                this.btnEditar.Click += new System.EventHandler(this.EditarOpcao);
+                this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+              
                 ListaOpcao();
 
             }

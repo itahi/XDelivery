@@ -13,5 +13,6 @@ namespace DexComanda.Models
         public string NomeRegiao { get; set; }
         public decimal TaxaServico { get; set; }
         public DateTime DataAlteracao { get; set; }
+        public Boolean OnlineSN { get; set; }
     }
 }

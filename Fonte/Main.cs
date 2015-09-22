@@ -637,11 +637,34 @@ namespace DexComanda
             string strServidor = Sessions.returnEmpresa.Servidor;
             string strBanco = Sessions.returnEmpresa.Banco;
             string strCaminhoBkp = Sessions.returnEmpresa.CaminhoBackup;
+            VerificaRegistroASincronizar();
             con.BackupBanco(strServidor, strBanco, strCaminhoBkp);
 
             this.Dispose();
             Utils.Kill();
             con.Close();
+        }
+
+        private void VerificaRegistroASincronizar()
+        {
+           DataSet dsProduto = con.SelectRegistroONline("Produto");
+           DataSet dsOpcao = con.SelectRegistroONline("Opcao");
+           DataSet dsProdutOpcao = con.SelectRegistroONline("Produto_Opcao");
+           DataSet dsFormaPagamento = con.SelectRegistroONline("FormaPagamento");
+           DataSet dsGrupo = con.SelectRegistroONline("Grupo");
+         //  DataSet dsRegiaoEntrega = con.SelectRegistroONline("RegiaoEntrega");
+
+
+           if (dsProduto.Tables[0].Rows.Count > 0 || dsOpcao.Tables[0].Rows.Count > 0 || dsProdutOpcao.Tables[0].Rows.Count > 0 || dsFormaPagamento.Tables[0].Rows.Count > 0 || dsGrupo.Tables[0].Rows.Count > 0)
+           {
+              DialogResult resposta =  MessageBox.Show("Há registros que precisam ser sincronizados com o servidor , deseja fazer isso agora?", "[xSistemas]",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+              if (resposta == DialogResult.Yes)
+              {
+                  frmSincronizacao frm = new frmSincronizacao();
+                  frm.ShowDialog();
+              }
+           }
+
         }
 
         private void formasDePagamentoToolStripMenuItem_Click(object sender, EventArgs e)

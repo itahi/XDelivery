@@ -73,7 +73,7 @@ namespace DexComanda.Operações.Financeiro
                     con.Insert("spAbrirCaixa", caixa);
                     con.Insert("spInserirMovimentoCaixa", cxMovi);
                    
-                    MessageBox.Show("Caixa aberto", "[XSistemas] Aviso");
+                    MessageBox.Show("Caixa aberto", "[xSistemas] Aviso");
 
                   
                     Utils.Restart();
@@ -82,7 +82,7 @@ namespace DexComanda.Operações.Financeiro
                 }
                 else
                 {
-                    MessageBox.Show("Usuario não selecionado", "[XSistemas] Aviso");
+                    MessageBox.Show("Usuario não selecionado", "[xSistemas] Aviso");
                 }
 
             }
