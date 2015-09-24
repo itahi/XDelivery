@@ -104,13 +104,13 @@ namespace DexComanda.Cadastros.Produto
 
             this.btnEditar.Text = "Cancelar [ESC]";
             this.btnEditar.Click += new System.EventHandler(this.Cancelar);
-            //this.btnEditar.Click -= new System.EventHandler(this.EditarGrupo);
+            this.btnEditar.Click -= new System.EventHandler(this.EditarOpcao);
         }
         private void Cancelar(object sender, EventArgs e)
         {
             Button iButton = (Button)sender;
 
-            if (iButton.Name == "btnEditarGrupo")
+            if (iButton.Name == "btnEditar")
             {
                 Utils.LimpaForm(this);
             }
@@ -118,7 +118,7 @@ namespace DexComanda.Cadastros.Produto
             this.btnAdicionar.Click += new System.EventHandler(this.CadastraOpcao);
          
             this.btnEditar.Text = "Editar";
-            this.btnEditar.Click += new System.EventHandler(this.Salvar);
+            this.btnEditar.Click += new System.EventHandler(this.EditarOpcao);
             this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
         }
         private void Salvar(object sender, EventArgs e)

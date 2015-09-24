@@ -23,7 +23,7 @@ namespace DexComanda
         {
             InitializeComponent();
             con = new Conexao();
-            Utils.PopularGrid("FormaPagamento", FPGridView, "spObterFormaPagamento");
+            Utils.PopularGrid_SP("FormaPagamento", FPGridView, "spObterFormaPagamento");
         }
 
         private void Adicionar(object sender, EventArgs e)
@@ -43,7 +43,7 @@ namespace DexComanda
                 con.Insert("spAdicionarFormaPagamento", fp);
                 Utils.ControlaEventos("Inserir",this.Name);
                 Utils.LimpaForm(this);
-                Utils.PopularGrid("FormaPagamento", FPGridView, "spObterFormaPagamento");  
+                Utils.PopularGrid_SP("FormaPagamento", FPGridView, "spObterFormaPagamento");
             }
             else
             {
@@ -122,7 +122,7 @@ namespace DexComanda
             this.btnEditarFP.Click -= new System.EventHandler(this.Cancelar);
 
             this.txtNomeFP.Text = "";
-            Utils.PopularGrid("FormaPagamento", FPGridView, "spObterFormaPagamento");
+            Utils.PopularGrid_SP("FormaPagamento", FPGridView, "spObterFormaPagamento");
         }
 
         private void formaPgtGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -155,7 +155,7 @@ namespace DexComanda
                 con.DeleteAll("FormaPagamento", "spExcluirFormaPagamento", CodRegistro);
                 Utils.ControlaEventos("Excluir",this.Name);
                 MessageBox.Show("Item excluído com sucesso.");
-                Utils.PopularGrid("FormaPagamento", FPGridView, "spObterFormaPagamento");
+                Utils.PopularGrid_SP("FormaPagamento", FPGridView, "spObterFormaPagamento");
 
             }
             else
@@ -180,6 +180,11 @@ namespace DexComanda
                 int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
                 m.Show(dgv, new Point(e.X, e.Y));
             }
+
+        }
+
+        private void frmCadastrarFormaPagamento_Load(object sender, EventArgs e)
+        {
 
         }
             

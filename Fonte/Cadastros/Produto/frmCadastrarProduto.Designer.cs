@@ -162,6 +162,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(550, 273);
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
             // 
             // tabPage1
             // 
@@ -407,6 +408,7 @@
             // 
             // cbxOpcao
             // 
+            this.cbxOpcao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxOpcao.FormattingEnabled = true;
             this.cbxOpcao.Location = new System.Drawing.Point(11, 24);
             this.cbxOpcao.Name = "cbxOpcao";

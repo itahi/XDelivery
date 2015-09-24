@@ -40,9 +40,11 @@ namespace DexComanda.Relatorios.Clientes
                 CrTable.ApplyLogOnInfo(crtableLogoninfo);
             }
 
-            report.Parameter_CodPessoa.Attributes.Add("@CodPessoa", iCodPessoa);
-            report.Parameter_DataInicio.Attributes.Add("@DataInicio", iDtInici);
-            report.Parameter_DataFim.Attributes.Add("@DataFim", idtFim);
+            report.SetParameterValue("@CodPessoa", iCodPessoa);
+            report.SetParameterValue("@DataInicio", iDtInici);
+            report.SetParameterValue("@DataFim", idtFim);
+
+           
             report.PrintToPrinter(0, true, 0, 0);
         }
 

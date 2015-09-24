@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DexComanda;
+using System.Configuration;
 
 namespace DexComanda
 {
@@ -24,9 +25,10 @@ namespace DexComanda
         private static Conexao con;
         private static DataRow dRow;
         private static DataRow config;
+
         //   private static Empresa empresa;
 
-        private static bool Liberado;
+      
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -62,6 +64,12 @@ namespace DexComanda
                     Utils.ServicoSQLATIVO(words[0]);
 
                     con = new Conexao();
+
+                    // Le o arquivo de configuração para montar a grid
+                    Sessions.SqlProduto = ConfigurationManager.AppSettings["GridProduto"];
+                    Sessions.SqlPedido = ConfigurationManager.AppSettings["GridPedido"];
+                    Sessions.SqlPessoa = ConfigurationManager.AppSettings["GridPessoa"];
+                    // Fim da montagem
                     DataSet servidor = con.SelectAll("Empresa", "spObterEmpresa");
                     if (servidor.Tables["Empresa"].Rows.Count > 0)
                     {

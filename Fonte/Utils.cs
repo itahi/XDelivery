@@ -145,7 +145,7 @@ namespace DexComanda
             }
             return CaixaAberto;
         }
-        public static string ImpressaoEntreganova(int iCodPedido, Boolean iExport = false,int iNumCopias=0)
+        public static string ImpressaoEntreganova(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
            
@@ -158,7 +158,7 @@ namespace DexComanda
                 ConnectionInfo crConnectionInfo = new ConnectionInfo();
                 Tables CrTables;
 
-                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
+               report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
                 crConnectionInfo.UserID = "sa";
@@ -172,9 +172,8 @@ namespace DexComanda
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
 
-               
-                
                 report.SetParameterValue("@Codigo", iCodPedido);
+            
                 if (iExport)
                 {
                     CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
@@ -229,7 +228,6 @@ namespace DexComanda
                     crtableLogoninfo.ConnectionInfo = crConnectionInfo;
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
-
 
 
                 report.SetParameterValue("@Codigo", iCodPedido);
@@ -323,7 +321,7 @@ namespace DexComanda
         /// <param name="iCodPedido">Inteiro Código do Pedido a ser impresso</param>
         ///  <param name="iExport">Boolean Código do Pedido a ser impresso</param>
         /// <returns>String do Pedido para impressoras Matriciais quando iExpport for True.</returns>
-        public static string ImpressaMesaNova(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
+        public static string ImpressaMesaNova(int iCodPedido,Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
             RelComandaMesa report;
@@ -350,6 +348,7 @@ namespace DexComanda
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
                 report.SetParameterValue("@Codigo", iCodPedido);
+              
                 if (iExport)
                 {
                     CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
@@ -420,6 +419,61 @@ namespace DexComanda
                     report.ExportOptions.DestinationOptions = reportExport;
                     report.Export();
                     iRetorno = Directory.GetCurrentDirectory() + @"\RelFechamentoMesa.txt";
+                }
+                else
+                {
+                    report.PrintToPrinter(0, false, 0, 0);
+                }
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.InnerException.Message);
+            }
+            return iRetorno;
+        }
+        public static string ImpressaoBalcao(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
+        {
+            string iRetorno = ""; ;
+            RelBalcao report;
+            try
+            {
+                report = new RelBalcao();
+
+                crtableLogoninfos = new TableLogOnInfos();
+                crtableLogoninfo = new TableLogOnInfo();
+                crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                report.Load(Directory.GetCurrentDirectory() + @"\RelBalcao.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+                report.SetParameterValue("@Codigo", iCodPedido);
+                if (iExport)
+                {
+                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
+                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelBalcao.txt";
+
+                    report.ExportOptions.ExportDestinationType =
+                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+                    report.ExportOptions.ExportFormatType =
+                    CrystalDecisions.Shared.ExportFormatType.Text;
+
+                    report.ExportOptions.DestinationOptions = reportExport;
+                    report.Export();
+                    iRetorno = Directory.GetCurrentDirectory() + @"\RelBalcao.txt";
                 }
                 else
                 {
@@ -919,7 +973,7 @@ namespace DexComanda
             //Kill();
             Application.Restart();
         }
-        public static void GeraHistorico(DateTime iData, int iCodPessoa, double iValor, int iCodUsuario, string iHistorico, char iTipo,string iFormaPagamento)
+        public static void GeraHistorico(DateTime iData, int iCodPessoa, decimal iValor, int iCodUsuario, string iHistorico, char iTipo,string iFormaPagamento)
         {
             Conexao con = new Conexao();
 
@@ -935,14 +989,42 @@ namespace DexComanda
                     Data = iData,
                     Historico = iHistorico,
                     Tipo = iTipo,
-                    Valor = iValor
+                    Valor =iValor
                 };
                 con.Insert("spAdicionaHistorico", hist);
             }
         }
 
+        public static DataSet PopularGrid(string table, DataGridView gridView, string iParametrosConsulta)
+        {
+            Conexao con = new Conexao();
+            DataSet Dados = null;
+            Dados = con.SelectMontaGrid(table, iParametrosConsulta);
 
-        public static DataSet PopularGrid(string table, DataGridView gridView, string spName, int CodRegistro = -1)
+            gridView.DataSource = null;
+            gridView.AutoGenerateColumns = true;
+            gridView.DataSource = Dados;
+            gridView.DataMember = table;
+            con.Close();
+
+            return Dados;
+        }
+        public static DataSet PopulaGrid_Novo(string table, DataGridView gridView, string iParametrosConsulta, bool iAtivo = true)
+        {
+            Conexao con = new Conexao();
+            DataSet Dados = null;
+            Dados = con.SelectMontaGrid(table, iParametrosConsulta, iAtivo);
+
+            gridView.DataSource = null;
+            gridView.AutoGenerateColumns = true;
+            gridView.DataSource = Dados;
+            gridView.DataMember = table;
+            con.Close();
+
+            return Dados;
+        }
+
+        public static DataSet PopularGrid_SP(string table, DataGridView gridView, string spName, int CodRegistro = -1 )
         {
             Conexao con = new Conexao();
             DataSet Dados = null;
@@ -950,6 +1032,7 @@ namespace DexComanda
             {
                 Dados = con.SelectAll(table, spName);
             }
+          
             else
             {
                 Dados = con.SelectRegistroPorCodigo(table, spName, CodRegistro);
@@ -1460,7 +1543,7 @@ namespace DexComanda
             config.Save(ConfigurationSaveMode.Full);
            
             // Force a reload of a changed section.
-            ConfigurationManager.RefreshSection("appSettings");
+        //    ConfigurationManager.RefreshSection("appSettings");
 
 
 

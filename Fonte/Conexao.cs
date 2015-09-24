@@ -183,7 +183,7 @@ namespace DexComanda
                                 " left join FormaPagamento FP on FP.Codigo = Cx.CodFormaPagamento" +
                                 " where " +
                                 " CX.CodCaixa = @Numero AND" +
-                                "  CX.Data BETWEEN @DataI AND @DataF"+
+                                "  CX.Data BETWEEN @DataI  AND @DataF "+
                                 " group by CodCaixa,Fp.Descricao,Tipo";
 
 
@@ -388,6 +388,44 @@ namespace DexComanda
         public DataSet SelectPuro(string iTable)
         {
             string iSql = "select * from " + iTable;
+            command = new SqlCommand(iSql, conn);
+            command.CommandType = CommandType.Text;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, iTable);
+            return ds;
+        }
+        public DataSet SelectMontaGrid(string iTable , string iParametrosConsulta,Boolean iAtivos=true)
+        {
+            string iSql,iSubSelect;
+           
+            if (iParametrosConsulta!=null)
+            {
+                iSql = "select " + iParametrosConsulta + " from " + iTable;
+                if (iTable=="Pedido")
+                {
+                    iSql = iSql +  " Pd where Finalizado = 0 and [status] ='Aberto' ORDER BY Pd.Codigo DESC";
+                }
+                if (iTable=="Produto")
+                {
+                    if (iAtivos )
+                    {
+                        iSql = iSql + " where AtivoSN=1";  
+                    }
+                    else
+                    {
+                        iSql = iSql + " where AtivoSN=0"; 
+                    }
+                    
+                }
+
+            }
+            else
+            {
+                iSql = "select * from " + iTable;
+            }
+
+            
             command = new SqlCommand(iSql, conn);
             command.CommandType = CommandType.Text;
             adapter = new SqlDataAdapter(command);
@@ -893,7 +931,7 @@ namespace DexComanda
 
         public DataSet SelectObterRegistroPorString(string iNome, string itable)
         {
-            string iSqlConsulta = "select * from " + itable;
+            string iSqlConsulta = "select * from " + itable + " where ";
 
             command = new SqlCommand(iSqlConsulta, conn);
             command.CommandType = CommandType.Text;

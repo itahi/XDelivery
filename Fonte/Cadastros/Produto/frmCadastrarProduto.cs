@@ -28,9 +28,60 @@ namespace DexComanda
         {
             InitializeComponent();
             this.parentMain = parent;
+            parentMain = new Main();
             DiasSelecionados = new List<string>();
             grpDesconto.Visible = DescontoPordia;
 
+        }
+        public frmCadastrarProduto(int CodProduto ,string iNomeProduto, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
+                                   decimal iPrecoPromocao, string iDiasPromocao)
+        {
+            InitializeComponent();
+            codigoProdutoParaAlterar = CodProduto;
+            if (iDiasPromocao != "")
+            {
+                grpDesconto.Visible = DescontoPordia;
+                txtPrecoDesconto.Text = iPrecoPromocao.ToString();
+
+                string[] lol = iDiasPromocao.Split(new char[] { ';' });
+
+                if (lol.Contains("Monday"))
+                {
+                    chkSegunda.Checked = true;
+                }
+                if (lol.Contains("Tuesday"))
+                {
+                    chkTerca.Checked = true;
+                }
+                if (lol.Contains("Wednesday "))
+                {
+                    ChkQuarta.Checked = true;
+                }
+                if (lol.Contains("Thursday"))
+                {
+                    chkQuinta.Checked = true;
+                }
+                if (lol.Contains("Friday"))
+                {
+                    ChkSexta.Checked = true;
+                }
+                if (lol.Contains("Sunday"))
+                {
+                    chkDomingo.Checked = true;
+                }
+
+            }
+            nomeProdutoTextBox.Text = iNomeProduto;
+            precoProdutoTextBox.Text = iPreco.ToString();
+            cbxGrupoProduto.Text = iGrupo;
+            descricaoProdutoTextBox.Text = iDescricao;
+            chkAtivo.Checked = true;
+            chkOnline.Checked = iVendaOnline;
+    
+            this.btnDoProduto.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
+            this.btnDoProduto.Text = "Alterar [F12]";
+            this.btnDoProduto.Click -= AdicionarProduto;
+            this.btnDoProduto.Click += AlterarProduto;
         }
 
         public frmCadastrarProduto(Produto prod, Main parent)
@@ -83,7 +134,7 @@ namespace DexComanda
         {
             con = new Conexao();
             DiasSelecionados = new List<string>();
-        //    List<Produtos_Adicionais> ProdAdicionais = new List<Produtos_Adicionais>();
+            //    List<Produtos_Adicionais> ProdAdicionais = new List<Produtos_Adicionais>();
             grpDesconto.Visible = DescontoPordia;
             List<Grupo> grupos = new List<Grupo>();
 
@@ -121,6 +172,11 @@ namespace DexComanda
         {
             try
             {
+                if (nomeProdutoTextBox.Text.Trim() == "" || precoProdutoTextBox.Text.Trim() == "" || cbxGrupoProduto.Text.Trim() == "")
+                {
+                    MessageBox.Show("Campos obrigátórios não preenchidos");
+                    return;
+                }
                 Produto produto = new Produto()
                 {
                     Nome = this.nomeProdutoTextBox.Text,
@@ -202,28 +258,30 @@ namespace DexComanda
         {
             try
             {
-                var nome = this.nomeProdutoTextBox.Text;
-                var descricao = this.descricaoProdutoTextBox.Text;
-                var preco = Convert.ToDecimal(this.precoProdutoTextBox.Text.Replace(".", ","));
-                var grupoProduto = this.cbxGrupoProduto.Text;
-                var AtivoS = this.chkAtivo.Checked;
-
+                if (nomeProdutoTextBox.Text.Trim() == "" || precoProdutoTextBox.Text.Trim() == "" || cbxGrupoProduto.Text.Trim() == "")
+                {
+                    MessageBox.Show("Campos obrigátórios não preenchidos");
+                    return;
+                }
                 Produto produto = new Produto()
                 {
                     Codigo = codigoProdutoParaAlterar,
-                    Nome = nome,
-                    Descricao = descricao,
-                    Preco = preco,
-                    GrupoProduto = grupoProduto,
-                    AtivoSN = AtivoS,
+                    Nome = nomeProdutoTextBox.Text,
+                    Descricao = descricaoProdutoTextBox.Text,
+                    Preco = Convert.ToDecimal(this.precoProdutoTextBox.Text.Replace(".", ",")),
+                    GrupoProduto = cbxGrupoProduto.Text,
+                    AtivoSN = chkAtivo.Checked,
                     OnlineSN = chkOnline.Checked,
                     DataAlteracao = DateTime.Now
                 };
                 if (DescontoPordia)
                 {
                     produto.DiaSemana = DiasSelecinado();
-                    produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text.Replace(".", ","));
-
+                    if (txtPrecoDesconto.Text != "")
+                    {
+                        produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text.Replace(".", ","));
+                    }
+                   
                     con.Update("spAlterarProduto", produto);
                 }
                 else
@@ -237,8 +295,8 @@ namespace DexComanda
                 this.btnDoProduto.Text = "Cadastrar [F12]";
                 this.btnDoProduto.Click -= AlterarProduto;
                 this.btnDoProduto.Click += AdicionarProduto;
-                ClearForm(this);
                 this_FormClosing();
+                ClearForm(this);
                 Utils.ControlaEventos("Alterar", this.Name);
                 MessageBox.Show("Produto alterado com sucesso.");
 
@@ -298,16 +356,9 @@ namespace DexComanda
         }
         private void this_FormClosing()
         {
-            if (PromocaoDiasSemana)
-            {
-                Utils.PopularGrid("Produto", this.parentMain.produtosGridView);
-            }
-            else
-            {
-                Utils.PopularGrid("Produto", this.parentMain.produtosGridView, "spObterProdutoSemDesconto");
-            }
-            //this.parentMain.PopularGrid("Produto", this.parentMain.produtosGridView);
-            //this.Dispose();
+            parentMain = new Main();
+            Utils.PopulaGrid_Novo("Produto", parentMain.produtosGridView, Sessions.SqlProduto);
+
         }
 
         private void frmCadastrarProduto_KeyDown(object sender, KeyEventArgs e)
@@ -333,14 +384,14 @@ namespace DexComanda
 
         private void BuscaItem(object sender, KeyEventArgs e)
         {
-           
+
 
         }
 
         private void ListaOpcao(object sender, EventArgs e)
         {
-            
-            
+
+
             this.cbxOpcao.DataSource = con.SelectAll("Opcao", "spObterOpcao").Tables["Opcao"];
             this.cbxOpcao.DisplayMember = "Nome";
             this.cbxOpcao.ValueMember = "Codigo";
@@ -360,7 +411,7 @@ namespace DexComanda
             txtPrecoOpcao.Text = "";
             cbxOpcao.Text = "";
             ListaOpcaoProduto();
-            
+
 
         }
 
@@ -379,7 +430,7 @@ namespace DexComanda
 
         private void EditarLinha(object sender, MouseEventArgs e)
         {
-           
+
         }
 
         private void AdicionaisGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -401,7 +452,7 @@ namespace DexComanda
             codigoOpcao = int.Parse(this.AdicionaisGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
             txtPrecoOpcao.Text = AdicionaisGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
             this.cbxOpcao.Text = this.AdicionaisGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
-            
+
 
             this.btnAdicionarOpcao.Text = "Salvar";
             this.btnAdicionarOpcao.Click += new System.EventHandler(this.SalvarRegistro);
@@ -415,10 +466,10 @@ namespace DexComanda
         {
             Produto_Opcao opcaoProd = new Produto_Opcao()
             {
-              CodOpcao = codigoOpcao,
-              CodProduto = codigoProdutoParaAlterar,
-              DataAlteracao = DateTime.Now,
-              Preco = decimal.Parse(txtPrecoOpcao.Text)
+                CodOpcao = codigoOpcao,
+                CodProduto = codigoProdutoParaAlterar,
+                DataAlteracao = DateTime.Now,
+                Preco = decimal.Parse(txtPrecoOpcao.Text)
             };
             if (txtPrecoOpcao.Text != "")
             {
@@ -464,7 +515,7 @@ namespace DexComanda
             }
 
 
-         
+
         }
         private void DeletarRegistro(object sender, EventArgs e)
         {
@@ -480,7 +531,7 @@ namespace DexComanda
 
                     };
                     con.Delete("spExcluirOpcaoProduto", prod);
-                   
+
                     Utils.ControlaEventos("Excluir", this.Name);
                     MessageBox.Show("Item excluído com sucesso.");
                     ListaOpcaoProduto();
@@ -496,8 +547,13 @@ namespace DexComanda
 
                 MessageBox.Show(erro.Message);
             }
-            
 
+
+        }
+
+        private void tabControl1_Click(object sender, EventArgs e)
+        {
+            ListaOpcaoProduto();
         }
     }
 }

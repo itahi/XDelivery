@@ -11,7 +11,7 @@ namespace DexComanda.Models
         public int Codigo { get; set; }
         public int CodPessoa { get; set; }
         public char Tipo { get; set; }
-        public double Valor { get; set; }
+        public decimal Valor { get; set; }
         public DateTime Data { get; set; }
         public string Historico { get; set; }
         public int CodUsuario { get; set; }

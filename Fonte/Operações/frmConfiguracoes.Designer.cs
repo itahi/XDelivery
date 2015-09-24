@@ -1497,6 +1497,9 @@
             // chkFinalizado
             // 
             this.chkFinalizado.AutoSize = true;
+            this.chkFinalizado.Checked = true;
+            this.chkFinalizado.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkFinalizado.Enabled = false;
             this.chkFinalizado.Location = new System.Drawing.Point(13, 128);
             this.chkFinalizado.Name = "chkFinalizado";
             this.chkFinalizado.Size = new System.Drawing.Size(73, 17);

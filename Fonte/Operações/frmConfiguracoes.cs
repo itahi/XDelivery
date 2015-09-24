@@ -655,15 +655,20 @@ namespace DexComanda
 
         private void SalvarConfigPedido(object sender, EventArgs e)
         {
-            string strConfigPedido = "Codigo";
-            if (chkCodPedido.Checked)
+            string strConfigPedido = "Codigo,";
+            if (chkNomeCliente.Checked)
             {
-                strConfigPedido = strConfigPedido + ",Codigo";
+                strConfigPedido = strConfigPedido + "(select Nome from Pessoa P where P.Codigo = Pd.CodPessoa) as 'Nome Cliente'"; 
+            }
+            if (chkFinalizado.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",Finalizado";
             }
             if (chkTotal.Checked)
             {
                 strConfigPedido = strConfigPedido + ",TotalPedido";
             }
+          
             if (chkTrocoPara.Checked)
             {
                 strConfigPedido = strConfigPedido + ",TrocoPara";
@@ -672,10 +677,7 @@ namespace DexComanda
             {
                 strConfigPedido = strConfigPedido + ",FormaPagamento";
             }
-            if (chkFinalizado.Checked)
-            {
-                strConfigPedido = strConfigPedido + ",Finalizado";
-            }
+           
             if (chkDataPedido.Checked)
             {
                 strConfigPedido = strConfigPedido + ",RealizadoEM";

@@ -32,7 +32,7 @@ namespace DexComanda
         {
             InitializeComponent();
             this.parentMain = parent;
-            CarregaRegiao("");
+            CarregaRegiao(0);
 
             // ObterCidadePadrao();
             //ObterCidadePadrao();
@@ -49,6 +49,34 @@ namespace DexComanda
             txtNomeCliente.Select();
             //ObterCidadePadrao();
             // ObterCidadePadrao();
+        }
+     
+        public frmCadastroCliente(int iCodPessoa, string iNomeCliente, string iTelefone, string iTelefone2,
+                              string iCEP, string iEndereco, string inumero, string iBairro, string iCidade,
+                              string iEstado, string iPontoReferencia, string iObservacao, int iCodRegiao,
+                              string iDataCadastro, string iDataNascimento)
+        {
+            InitializeComponent();
+
+            codigoClienteParaAlterar = iCodPessoa;
+            txtNomeCliente.Text = iNomeCliente;
+            txtTelefone.Text = iTelefone;
+            txtTelefone2.Text = iTelefone2;
+            txtCEP.Text = iCEP;
+            txtEndereco.Text = iEndereco;
+            txtNumero.Text = inumero;
+            txtBairro.Text = iBairro;
+            txtCidade.Text = iCidade;
+            txtEstado.Text = iEstado;
+            txtPontoReferencia.Text = iPontoReferencia;
+            txtObservacaoCliente.Text = iObservacao;
+            txtDataCadastro.Text = iDataCadastro;
+            txtDataNascimento.Text = iDataNascimento;
+            CarregaRegiao(iCodRegiao);
+
+            this.btnAdicionarCliente.Text = "Alterar [F12]";
+            this.btnAdicionarCliente.Click -= AdicionarCliente;
+            this.btnAdicionarCliente.Click += AlterarCliente;
         }
 
         private void frmCadastroCliente_Load(object sender, EventArgs e)
@@ -109,15 +137,15 @@ namespace DexComanda
                         txtTelefone2.Text = RowsClientes.ItemArray.GetValue(11).ToString();
                     }
                     //Carrega as Regioes de Entrega previamente cadastradas // 
-                    CarregaRegiao(cbxRegiao.Text);
+                    CarregaRegiao(int.Parse(RowsClientes.ItemArray.GetValue(0).ToString()));
                 }
 
             }
         }
 
-        private void CarregaRegiao(string iCodRegiacao)
+        private void CarregaRegiao(int iCodRegiao)
         {
-            if (iCodRegiacao == "")
+            if (iCodRegiao == 0)
             {
                 Conexao con = new Conexao();
 
@@ -127,13 +155,13 @@ namespace DexComanda
             }
             else
             {
-                var Regiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", int.Parse(iCodRegiacao));
+                Conexao con = new Conexao();
+                var Regiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", iCodRegiao);
                 DataRow Lista = Regiao.Tables["RegiaoEntrega"].Rows[0];
 
                 mCodRegiao = int.Parse(Lista.ItemArray.GetValue(0).ToString());
-                txtTaxaEntrega.Text = Lista.ItemArray.GetValue(2).ToString();
-
-                cbxRegiao.Text = Lista.ItemArray.GetValue(3).ToString();
+                txtTaxaEntrega.Text = Lista.ItemArray.GetValue(1).ToString();
+                cbxRegiao.Text = Lista.ItemArray.GetValue(2).ToString();
             }
 
 
@@ -242,7 +270,7 @@ namespace DexComanda
                     con.Insert("spAdicionarClienteDelivery", pessoa);
                     Utils.ControlaEventos("Inserir", this.Name);
                     MessageBox.Show("Cliente cadastrado com sucesso.", "Dex Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
-                    this_FormClosing();
+                  //  this_FormClosing();
                     if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado))
                     {
                         RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
@@ -359,9 +387,8 @@ namespace DexComanda
                 con.Update("spAlterarPessoa", pessoa);
                 Utils.ControlaEventos("Altera", this.Name);
                 MessageBox.Show("Cliente alterado com sucesso.");
-
                 this_FormClosing();
-                //ClearForm(this);
+                ClearForm(this);
             }
             catch (Exception ex)
             {
@@ -369,11 +396,11 @@ namespace DexComanda
                 MessageBox.Show("Registro não foi gravado , favor verificar " + ex.Message);
             }
         }
-
         private void this_FormClosing()
         {
-            Utils.PopularGrid("Pessoa", this.parentMain.clientesGridView, "spObterPessoas");
-            this.Dispose();
+            parentMain = new Main();
+            Utils.PopulaGrid_Novo("Pessoa", parentMain.produtosGridView, Sessions.SqlPessoa);
+
         }
         private void CadastraCEP()
         {
@@ -687,7 +714,7 @@ namespace DexComanda
 
         private void AlteraRegiao(object sender, EventArgs e)
         {
-            CarregaRegiao("");
+            CarregaRegiao(0);
         }
 
         private void MostraItems(object sender, DataGridViewCellMouseEventArgs e)
@@ -724,7 +751,7 @@ namespace DexComanda
                 CodUsuario = Sessions.retunrUsuario.Codigo,
                 Data = dtLancamento.Value,
                 Historico = txtHistorico.Text,
-                Valor = double.Parse(txtValor.Text.Replace(",", "."))
+                Valor = decimal.Parse(txtValor.Text.Replace(",", "."))
 
             };
             if (rbCredito.Checked)

@@ -34,8 +34,8 @@
             this.cadastrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.produtosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gruposCategoriasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.adicionaisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.opçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.produtoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.empresaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuáriosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -118,6 +118,7 @@
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.lblCaixa = new System.Windows.Forms.Label();
+            this.regiãoDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -170,12 +171,11 @@
             // 
             this.produtosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gruposCategoriasToolStripMenuItem,
-            this.adicionaisToolStripMenuItem,
-            this.opçãoToolStripMenuItem});
+            this.opçãoToolStripMenuItem,
+            this.produtoToolStripMenuItem});
             this.produtosToolStripMenuItem.Name = "produtosToolStripMenuItem";
             this.produtosToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
-            this.produtosToolStripMenuItem.Text = "Produtos";
-            this.produtosToolStripMenuItem.Click += new System.EventHandler(this.produtosToolStripMenuItem_Click);
+            this.produtosToolStripMenuItem.Text = "Items";
             // 
             // gruposCategoriasToolStripMenuItem
             // 
@@ -184,19 +184,19 @@
             this.gruposCategoriasToolStripMenuItem.Text = "Grupos ( Categorias)";
             this.gruposCategoriasToolStripMenuItem.Click += new System.EventHandler(this.gruposCategoriasToolStripMenuItem_Click);
             // 
-            // adicionaisToolStripMenuItem
-            // 
-            this.adicionaisToolStripMenuItem.Name = "adicionaisToolStripMenuItem";
-            this.adicionaisToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
-            this.adicionaisToolStripMenuItem.Text = "Adicionais";
-            this.adicionaisToolStripMenuItem.Click += new System.EventHandler(this.adicionaisToolStripMenuItem_Click);
-            // 
             // opçãoToolStripMenuItem
             // 
             this.opçãoToolStripMenuItem.Name = "opçãoToolStripMenuItem";
             this.opçãoToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
             this.opçãoToolStripMenuItem.Text = "Opção";
             this.opçãoToolStripMenuItem.Click += new System.EventHandler(this.opçãoToolStripMenuItem_Click);
+            // 
+            // produtoToolStripMenuItem
+            // 
+            this.produtoToolStripMenuItem.Name = "produtoToolStripMenuItem";
+            this.produtoToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
+            this.produtoToolStripMenuItem.Text = "Produto";
+            this.produtoToolStripMenuItem.Click += new System.EventHandler(this.produtoToolStripMenuItem_Click);
             // 
             // clientesToolStripMenuItem
             // 
@@ -246,10 +246,11 @@
             // regiõesDeEntregaToolStripMenuItem
             // 
             this.regiõesDeEntregaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.regiãoDeEntregaToolStripMenuItem,
             this.bairrosPorRegiãoToolStripMenuItem});
             this.regiõesDeEntregaToolStripMenuItem.Name = "regiõesDeEntregaToolStripMenuItem";
             this.regiõesDeEntregaToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
-            this.regiõesDeEntregaToolStripMenuItem.Text = "Regiões de Entrega";
+            this.regiõesDeEntregaToolStripMenuItem.Text = "Regiões";
             this.regiõesDeEntregaToolStripMenuItem.Click += new System.EventHandler(this.regiõesDeEntregaToolStripMenuItem_Click);
             // 
             // bairrosPorRegiãoToolStripMenuItem
@@ -615,7 +616,6 @@
             // 
             this.pedidosGridView.AllowUserToAddRows = false;
             this.pedidosGridView.AllowUserToDeleteRows = false;
-            this.pedidosGridView.AllowUserToOrderColumns = true;
             this.pedidosGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pedidosGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -986,6 +986,13 @@
             this.lblCaixa.TabIndex = 8;
             this.lblCaixa.Text = "Caixa Fechado";
             // 
+            // regiãoDeEntregaToolStripMenuItem
+            // 
+            this.regiãoDeEntregaToolStripMenuItem.Name = "regiãoDeEntregaToolStripMenuItem";
+            this.regiãoDeEntregaToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            this.regiãoDeEntregaToolStripMenuItem.Text = "Região de Entrega";
+            this.regiãoDeEntregaToolStripMenuItem.Click += new System.EventHandler(this.regiãoDeEntregaToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1117,9 +1124,10 @@
         private System.Windows.Forms.ToolStripMenuItem cadastroCaixaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fecharCaixaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gruposCategoriasToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem adicionaisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sincronizaçãoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem opçãoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bairrosPorRegiãoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem produtoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem regiãoDeEntregaToolStripMenuItem;
     }
 }

@@ -92,11 +92,11 @@ namespace DexComanda
                 }
             }
         }
-
+        // private string Mo
         private void Main_Load(object sender, EventArgs e)
         {
 
-            string iSelectProduto = ConfigurationManager.AppSettings["GridProduto"];
+
             if (Sessions.returnUsuario != null)
             {
                 con = new Conexao();
@@ -121,22 +121,10 @@ namespace DexComanda
 
             this.txbTelefoneCliente.Focus();
             con = new Conexao();
-            if (!DescontoDia)
-            {
-                Utils.PopularGrid("Produto", this.produtosGridView, "spObterProdutoSemDesconto");
 
-            }
-            else
-            {
-                Utils.PopularGrid("Produto", this.produtosGridView);
-            }
-
-            Utils.PopularGrid("Pedido", this.pedidosGridView);
-            // Altera a cor da linha pra identificar o pedido
-            // AlteraCorLinhas();
-
-            Utils.PopularGrid("Pessoas", this.clientesGridView);
-
+            Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
+            Utils.PopularGrid("Pedido", pedidosGridView, Sessions.SqlPedido);
+            Utils.PopularGrid("Pessoa", clientesGridView, Sessions.SqlPessoa);
             MontaMenu();
 
         }
@@ -199,11 +187,7 @@ namespace DexComanda
             frm.ShowDialog();
         }
 
-        private void produtosToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmCadastrarProduto frm = new frmCadastrarProduto(this);
-            frm.ShowDialog();
-        }
+     
 
         public void PopularGrid(Boolean iFechandoRegistro, string table, DataGridView gridView)
         {
@@ -524,43 +508,58 @@ namespace DexComanda
             this.clientesGridView.DataSource = con.SelectAll("Pessoa", "spObterPessoas");
             this.clientesGridView.DataMember = "Pessoa";
         }
+        private void CarregaProduto(int iCodProduto)
+        {
+            //Carrega Produto
+            DataSet dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", iCodProduto);
+
+            DataRow dRowProduto = dsProduto.Tables["Produto"].Rows[0];
+
+            frmCadastrarProduto frm = new frmCadastrarProduto(int.Parse(dRowProduto.ItemArray.GetValue(7).ToString()), dRowProduto.ItemArray.GetValue(0).ToString(), dRowProduto.ItemArray.GetValue(3).ToString(),
+                                                              decimal.Parse(dRowProduto.ItemArray.GetValue(1).ToString()), dRowProduto.ItemArray.GetValue(2).ToString(),
+                                                              Convert.ToBoolean(dRowProduto.ItemArray.GetValue(6).ToString()), decimal.Parse(dRowProduto.ItemArray.GetValue(5).ToString()), dRowProduto.ItemArray.GetValue(4).ToString());
+            frm.StartPosition = FormStartPosition.CenterParent;
+            frm.ShowDialog();
+
+        }
 
         private void EditarProduto(object sender, DataGridViewCellMouseEventArgs e)
         {
             try
             {
-                if (produtosGridView.SelectedCells.Count > 0)
-                {
-                    var produto = new Produto()
-                    {
-                        Codigo = int.Parse(produtosGridView.SelectedCells[0].Value.ToString()),
-                        Nome = (produtosGridView.SelectedCells[1].Value.ToString()),
-                        Descricao = (produtosGridView.SelectedCells[2].Value.ToString()),
-                        Preco = decimal.Parse(produtosGridView.SelectedCells[3].Value.ToString()),
-                        GrupoProduto = (produtosGridView.SelectedCells[4].Value.ToString()),
+                CarregaProduto(int.Parse(produtosGridView.SelectedCells[0].Value.ToString()));
+                //if (produtosGridView.SelectedCells.Count > 0)
+                //{
+                //    var produto = new Produto()
+                //    {
+                //        Codigo = int.Parse(produtosGridView.SelectedCells[0].Value.ToString()),
+                //        Nome = (produtosGridView.SelectedCells[1].Value.ToString()),
+                //        Descricao = (produtosGridView.SelectedCells[2].Value.ToString()),
+                //        Preco = decimal.Parse(produtosGridView.SelectedCells[3].Value.ToString()),
+                //        GrupoProduto = (produtosGridView.SelectedCells[4].Value.ToString()),
 
-                    };
-                    if (DescontoDia)
-                    {
-                        produto.AtivoSN = Convert.ToBoolean(produtosGridView.SelectedCells[7].Value.ToString());
-                        if (produto.PrecoDesconto.ToString() != "" || produto.PrecoDesconto != null)
-                        {
-                            produto.PrecoDesconto = decimal.Parse(produtosGridView.SelectedCells[5].Value.ToString());
-                        }
-                        if (produto.DiaSemana != "" || produto.DiaSemana != null)
-                        {
-                            produto.DiaSemana = (produtosGridView.SelectedCells[6].Value.ToString());
-                        }
-                    }
-                    else
-                    {
-                        produto.AtivoSN = Convert.ToBoolean(produtosGridView.SelectedCells[5].Value.ToString());
-                    }
+                //    };
+                //    if (DescontoDia)
+                //    {
+                //        produto.AtivoSN = Convert.ToBoolean(produtosGridView.SelectedCells[7].Value.ToString());
+                //        if (produto.PrecoDesconto.ToString() != "" || produto.PrecoDesconto != null)
+                //        {
+                //            produto.PrecoDesconto = decimal.Parse(produtosGridView.SelectedCells[5].Value.ToString());
+                //        }
+                //        if (produto.DiaSemana != "" || produto.DiaSemana != null)
+                //        {
+                //            produto.DiaSemana = (produtosGridView.SelectedCells[6].Value.ToString());
+                //        }
+                //    }
+                //    else
+                //    {
+                //        produto.AtivoSN = Convert.ToBoolean(produtosGridView.SelectedCells[5].Value.ToString());
+                //    }
 
-                    frmCadastrarProduto frm = new frmCadastrarProduto(produto, this);
-                    frm.StartPosition = FormStartPosition.CenterParent;
-                    frm.Show();
-                }
+                //    frmCadastrarProduto frm = new frmCadastrarProduto(produto, this);
+                //    frm.StartPosition = FormStartPosition.CenterParent;
+                //    frm.Show();
+                //}
             }
             catch (Exception erro)
             {
@@ -574,18 +573,21 @@ namespace DexComanda
         {
             if (clientesGridView.SelectedCells.Count > 0)
             {
-                var pessoa = new Pessoa()
-                {
-                    Codigo = int.Parse(clientesGridView.SelectedCells[0].Value.ToString()),
-                    DataNascimento = Convert.ToDateTime(clientesGridView.SelectedCells[11].Value.ToString()),
-                    DataCadastro = Convert.ToDateTime(clientesGridView.SelectedCells[13].Value.ToString()),
-                };
 
-                frmCadastroCliente frm = new frmCadastroCliente(pessoa, this);
+                DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", int.Parse(clientesGridView.SelectedCells[0].Value.ToString()));
+                DataRow dRowPessoa = dsPessoa.Tables["Pessoa"].Rows[0];
+
+                frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
+                                                                  dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
+                                                                  , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
+                                                                  , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString());
+
+
                 frm.StartPosition = FormStartPosition.CenterParent;
                 frm.Show();
             }
         }
+
 
 
 
@@ -637,7 +639,7 @@ namespace DexComanda
             string strServidor = Sessions.returnEmpresa.Servidor;
             string strBanco = Sessions.returnEmpresa.Banco;
             string strCaminhoBkp = Sessions.returnEmpresa.CaminhoBackup;
-            VerificaRegistroASincronizar();
+            //  VerificaRegistroASincronizar();
             con.BackupBanco(strServidor, strBanco, strCaminhoBkp);
 
             this.Dispose();
@@ -647,23 +649,23 @@ namespace DexComanda
 
         private void VerificaRegistroASincronizar()
         {
-           DataSet dsProduto = con.SelectRegistroONline("Produto");
-           DataSet dsOpcao = con.SelectRegistroONline("Opcao");
-           DataSet dsProdutOpcao = con.SelectRegistroONline("Produto_Opcao");
-           DataSet dsFormaPagamento = con.SelectRegistroONline("FormaPagamento");
-           DataSet dsGrupo = con.SelectRegistroONline("Grupo");
-         //  DataSet dsRegiaoEntrega = con.SelectRegistroONline("RegiaoEntrega");
+            DataSet dsProduto = con.SelectRegistroONline("Produto");
+            DataSet dsOpcao = con.SelectRegistroONline("Opcao");
+            DataSet dsProdutOpcao = con.SelectRegistroONline("Produto_Opcao");
+            DataSet dsFormaPagamento = con.SelectRegistroONline("FormaPagamento");
+            DataSet dsGrupo = con.SelectRegistroONline("Grupo");
+            //  DataSet dsRegiaoEntrega = con.SelectRegistroONline("RegiaoEntrega");
 
 
-           if (dsProduto.Tables[0].Rows.Count > 0 || dsOpcao.Tables[0].Rows.Count > 0 || dsProdutOpcao.Tables[0].Rows.Count > 0 || dsFormaPagamento.Tables[0].Rows.Count > 0 || dsGrupo.Tables[0].Rows.Count > 0)
-           {
-              DialogResult resposta =  MessageBox.Show("Há registros que precisam ser sincronizados com o servidor , deseja fazer isso agora?", "[xSistemas]",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
-              if (resposta == DialogResult.Yes)
-              {
-                  frmSincronizacao frm = new frmSincronizacao();
-                  frm.ShowDialog();
-              }
-           }
+            if (dsProduto.Tables[0].Rows.Count > 0 || dsOpcao.Tables[0].Rows.Count > 0 || dsProdutOpcao.Tables[0].Rows.Count > 0 || dsFormaPagamento.Tables[0].Rows.Count > 0 || dsGrupo.Tables[0].Rows.Count > 0)
+            {
+                DialogResult resposta = MessageBox.Show("Há registros que precisam ser sincronizados com o servidor , deseja fazer isso agora?", "[xSistemas]", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (resposta == DialogResult.Yes)
+                {
+                    frmSincronizacao frm = new frmSincronizacao();
+                    frm.ShowDialog();
+                }
+            }
 
         }
 
@@ -684,7 +686,8 @@ namespace DexComanda
                         int Codigo = int.Parse(this.produtosGridView.SelectedCells[0].Value.ToString());
                         con.DeleteAll("Produto", "spExcluirProduto", Codigo);
                         MessageBox.Show("Item excluído com sucesso.");
-                        Utils.PopularGrid("Produto", produtosGridView);
+                        Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
+
                     }
                 }
                 else
@@ -718,17 +721,22 @@ namespace DexComanda
         {
             try
             {
-                string NomeCliente = (this.pedidosGridView.SelectedCells[0].Value.ToString());
+                string NomeCliente = (this.pedidosGridView.CurrentRow.Cells["Nome Cliente"].Value.ToString());
                 int CodUser;
 
                 if (pedidosGridView.SelectedRows.Count > 0)
                 {
                     if (MessageBox.Show("Deseja **CANCELAR** o  pedido do Cliente " + NomeCliente + "?", "Cancelamento de Pedido !!!", MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
-                        int Codigo = int.Parse(this.pedidosGridView.SelectedCells[1].Value.ToString());
+                        int Codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+
+                        DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", Codigo);
+                        DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
+
                         cancelPedid.Codigo = Codigo;
                         cancelPedid.RealizadoEm = DateTime.Now;
-                        string iCodMesa = pedidosGridView.SelectedCells[5].Value.ToString();
+
+                        string iCodMesa = dRowPedido.ItemArray.GetValue(9).ToString();
 
                         if (ControlaMesas && iCodMesa != "0")
                         {
@@ -738,14 +746,23 @@ namespace DexComanda
                         cancelPedid.status = "Cancelado";
                         if (Sessions.returnConfig.RegistraCancelamentos)
                         {
-                            DataSet dsPedido = null;
-                            DataRow dRow;
+                            frmHistoricoCancelamento frm = new frmHistoricoCancelamento();
                             int CodPessoa;
                             try
                             {
-                                dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", Codigo);
-                                dRow = dsPedido.Tables[0].Rows[0];
-                                CodPessoa = int.Parse(dRow.ItemArray.GetValue(2).ToString());
+                                frm.ShowDialog();
+                                if (frm.DialogResult == DialogResult.OK)
+                                {
+                                    HistoricoCancelamento Hist = new HistoricoCancelamento()
+                                    {
+                                        CodMotivo = frm.CodMotivo,
+                                        CodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()),
+                                        Data = DateTime.Now,
+                                        Motivo = frm.ObsCancelamento
+                                    };
+
+                                    con.Insert("spAdicionaHistoricoCancelamento", Hist);
+                                }
                             }
 
                             finally
@@ -754,27 +771,13 @@ namespace DexComanda
 
                             }
 
-                            frmHistoricoCancelamento frm = new frmHistoricoCancelamento();
-                            frm.ShowDialog();
 
-                            if (frm.DialogResult == DialogResult.OK)
-                            {
-                                HistoricoCancelamento Hist = new HistoricoCancelamento()
-                                {
-                                    CodMotivo = frm.CodMotivo,
-                                    CodPessoa = CodPessoa,
-                                    Data = DateTime.Now,
-                                    Motivo = frm.ObsCancelamento
-                                };
-
-                                con.Insert("spAdicionaHistoricoCancelamento", Hist);
-                            }
                         }
 
                         con.Update("spCancelarPedido", cancelPedid);
                         Utils.ControlaEventos("CancPedido", this.Name);
                         MessageBox.Show("Pedido Cancelado com sucesso.");
-                        Utils.PopularGrid("Pedido", pedidosGridView, "spObterPedido");
+                        Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
                     }
                 }
                 else
@@ -786,11 +789,6 @@ namespace DexComanda
             {
                 MessageBox.Show("Não foi possivel **CANCELAR O PEDIDO**" + ER.Message);
             }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Usuário não possui permissão para **CANCELAR** pedidos, deseja solicitar acesso do administrador?");
-            //}
         }
 
         private void FinalizaTodos(object sender, EventArgs e)
@@ -804,19 +802,23 @@ namespace DexComanda
 
                 if (MessageBox.Show("Deseja ** FINALIZAR ** Todos Pedidos Selecionado?", "Cuidado !!!", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
+                   
 
                     for (int i = 0; i < pedidosGridView.Rows.Count; i++)
                     {
-                        Marcado = Convert.ToBoolean(pedidosGridView.Rows[i].Cells[2].Value);
+                        Marcado = Convert.ToBoolean(this.pedidosGridView.Rows[i].Cells["Finalizado"].Value.ToString());
 
                         if (Marcado)
                         {
-                            codigo = int.Parse(pedidosGridView.Rows[i].Cells[1].Value.ToString());
-                            iCodMesa = pedidosGridView.Rows[i].Cells[5].Value.ToString();
-                            // string TipoPedido = pedidosGridView.Rows[i].Cells["PedidoOrigem"].Value.ToString();
+                            codigo = int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString());
+                                //int.Parse(pedidosGridView.CurrentRow[i].Cells["Codigo"].Value.ToString());
+
+                            DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
+                            DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
+
+                            iCodMesa = dRowPedido.ItemArray.GetValue(9).ToString();
                             if (ControlaMesas && iCodMesa != "0")
                             {
-                                //NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
                                 Utils.AtualizaMesa(iCodMesa, 1);
                             }
                             con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
@@ -824,8 +826,9 @@ namespace DexComanda
                         }
 
                     }
+                    
 
-                    Utils.PopularGrid("Pedido", pedidosGridView, "spObterPedido");
+                    Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
                 }
 
 
@@ -858,18 +861,20 @@ namespace DexComanda
             {
                 bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
                 int codigo, iCodMesa;
-                double dblTotalPedido;
+                decimal dblTotalPedido;
                 string NumeroMesa;
-                this.pedidosGridView.SelectedCells[2].Value = true;
+                // this.pedidosGridView.SelectedCells[2].Value = true;
 
                 if (MessageBox.Show("Deseja ** FINALIZAR ** este pedido?", "Cuidado !!!", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-                    this.pedidosGridView.SelectedCells[2].Value = true;
-                    codigo = int.Parse(pedidosGridView.SelectedCells[1].Value.ToString());
-                    iCodMesa = int.Parse(pedidosGridView.SelectedCells[5].Value.ToString());
-                    dblTotalPedido = double.Parse(pedidosGridView.SelectedCells[4].Value.ToString());
+                    codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+                    DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
+                    DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
 
-                    if (Sessions.returnConfig.ControlaEntregador && iCodMesa==0)
+                    iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(9).ToString());
+                    dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
+
+                    if (Sessions.returnConfig.ControlaEntregador && iCodMesa == 0)
                     {
                         InformaMotoboyPedido(codigo);
                     }
@@ -883,23 +888,20 @@ namespace DexComanda
 
                     // Grava Débito caso o Tipo de Pagamento gerar financeiro 
 
-                    DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
-                    DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
-                    string  strFormaPagamento  = dRowPedido.ItemArray.GetValue(5).ToString();
+                    string strFormaPagamento = dRowPedido.ItemArray.GetValue(5).ToString();
                     Utils.GeraHistorico(DateTime.Now, int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()), dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D', strFormaPagamento);
 
                     // Grava Movimento De Caixa
-                    GravaMOvimentoCaixa();
+                    GravaMOvimentoCaixa(strFormaPagamento, dblTotalPedido, codigo);
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 
 
 
-                    Utils.PopularGrid("Pedido", pedidosGridView, "spObterPedido");
+                    Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
 
                 }
                 else
                 {
-                    this.pedidosGridView.SelectedCells[6].Value = false;
                     LimpaCampos();
                 }
 
@@ -911,12 +913,12 @@ namespace DexComanda
 
 
         }
-        private void GravaMOvimentoCaixa()
+        private void GravaMOvimentoCaixa(string iFPagamento, decimal iValor, int iCodPedido)
         {
             // Retornando o IDFpagamento
             try
             {
-                DataSet dsPedido = con.SelectObterRegistroPorString(pedidosGridView.SelectedCells[3].Value.ToString(), "FormaPagamento");
+                DataSet dsPedido = con.SelectObterFormaPagamentoPorNOme(iFPagamento, "FormaPagamento");
                 DataRow dRow = dsPedido.Tables[0].Rows[0];
                 int iIFormaPagamento = int.Parse(dRow.ItemArray.GetValue(0).ToString());
 
@@ -925,10 +927,10 @@ namespace DexComanda
                     CodCaixa = Sessions.retunrUsuario.CaixaLogado,
                     CodFormaPagamento = iIFormaPagamento,
                     Data = DateTime.Now,
-                    Historico = "Pedido " + pedidosGridView.SelectedCells[1].Value.ToString(),
-                    NumeroDocumento = pedidosGridView.SelectedCells[1].Value.ToString(),
+                    Historico = "Pedido " + iCodPedido,
+                    NumeroDocumento = iCodPedido.ToString(),
                     Tipo = 'E',
-                    Valor = decimal.Parse(pedidosGridView.SelectedCells[4].Value.ToString()),
+                    Valor = iValor,
                     CodUser = Sessions.retunrUsuario.Codigo
 
                 };
@@ -1148,40 +1150,40 @@ namespace DexComanda
 
         private void regiõesDeEntregaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmCadastroRegioes frm = new frmCadastroRegioes();
-            frm.ShowDialog();
+          
         }
 
         private void ListaProdInativos(object sender, EventArgs e)
         {
-            if (chkProdutosInativos.Checked && !DescontoDia)
-            {
-                // Carrega produtos Inativos e Sem Desconto
-                Utils.PopularGrid("Produto", this.produtosGridView, "spObterProdutosInativosSemDesconto");
-            }
+            Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto, !chkProdutosInativos.Checked);
+            //if (chkProdutosInativos.Checked && !DescontoDia)
+            //{
+            //    // Carrega produtos Inativos e Sem Desconto
+            //    Utils.PopularGrid("Produto", this.produtosGridView, "spObterProdutosInativosSemDesconto");
+            //}
 
-            else if (!chkProdutosInativos.Checked && DescontoDia)
-            {
-                // Carrega Produtos Inativos Com Desconto
-                Utils.PopularGrid("Produto", this.produtosGridView);
-            }
+            //else if (!chkProdutosInativos.Checked && DescontoDia)
+            //{
+            //    // Carrega Produtos Inativos Com Desconto
+            //    Utils.PopularGrid("Produto", this.produtosGridView);
+            //}
 
 
-            else if (chkProdutosInativos.Checked && !DescontoDia)
-            {
-                // Carrega Produtos Ativos e Com Desconto
-                Utils.PopularGrid("Produto", this.produtosGridView, "spObterProdutosInativosSemDesconto");
-            }
+            //else if (chkProdutosInativos.Checked && !DescontoDia)
+            //{
+            //    // Carrega Produtos Ativos e Com Desconto
+            //    Utils.PopularGrid("Produto", this.produtosGridView, "spObterProdutosInativosSemDesconto");
+            //}
 
-            else if (!chkProdutosInativos.Checked && !DescontoDia)
-            {
-                Utils.PopularGrid("Produto", this.produtosGridView, "spObterProdutosAtivosSemDesconto");
-            }
+            //else if (!chkProdutosInativos.Checked && !DescontoDia)
+            //{
+            //    Utils.PopularGrid("Produto", this.produtosGridView, "spObterProdutosAtivosSemDesconto");
+            //}
 
-            else if (chkProdutosInativos.Checked && DescontoDia)
-            {
-                Utils.PopularGrid("Produto", this.produtosGridView, "spObterProdutosInativos");
-            }
+            //else if (chkProdutosInativos.Checked && DescontoDia)
+            //{
+            //    Utils.PopularGrid("Produto", this.produtosGridView, "spObterProdutosInativos");
+            //}
 
 
         }
@@ -1247,8 +1249,8 @@ namespace DexComanda
                     string RetornoTxt = Directory.GetCurrentDirectory() + @"\" + "ConfigImpressao" + ".txt";
                     if (System.IO.File.Exists(RetornoTxt))
                     {
-                         tempDex = new StreamReader(RetornoTxt);
-                       // line = tempDex.ReadLine();
+                        tempDex = new StreamReader(RetornoTxt);
+                        // line = tempDex.ReadLine();
                         RetornoTxt = tempDex.ReadLine();
 
                         if (RetornoTxt != "")
@@ -1284,7 +1286,7 @@ namespace DexComanda
                                 MessageBox.Show(erro.Message);
                             }
 
-                           
+
 
                         }
                     }
@@ -1309,37 +1311,44 @@ namespace DexComanda
         {
             //DataSet Dados, PedidosAberto;
 
-
-            int iPedidosAberto = con.SelectAll("Pedido", "spObterPedido").Tables[0].Rows.Count;
+            DataSet dsPedidosAbertos = con.SelectAll("Pedido", "spObterPedido");
+            int iPedidosAberto = dsPedidosAbertos.Tables[0].Rows.Count;
 
             while (iPedidosAberto != pedidosGridView.Rows.Count)
             {
-                PopularGrid(false, "Pedido", pedidosGridView);
+                Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
 
-                for (int i = 0; i < pedidosGridView.Rows.Count; i++)
-                {
-                    if (pedidosGridView.Rows[i].Cells["PedidoOrigem"].Value.ToString() == "Aplicativo")
-                    {
-                        pedidosGridView.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                
+                // PopularGrid(false, "Pedido", pedidosGridView);
 
-                    }
-                }
-                Utils.PopularGrid("Pedido", pedidosGridView);
+                //for (int i = 0; i < pedidosGridView.Rows.Count; i++)
+                //{
+                //    if (pedidosGridView.Rows[i].Cells["PedidoOrigem"].Value.ToString() == "Aplicativo")
+                //    {
+                //        pedidosGridView.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+
+                //    }
+                //}
+                //Utils.PopularGrid("Pedido", pedidosGridView);
+
+              
             }
-
             if (Sessions.returnConfig.ImpViaCozinha)
             {
-                for (int intFor = 0; intFor < pedidosGridView.Rows.Count; intFor++)
+                for (int i = 0; i < dsPedidosAbertos.Tables[0].Rows.Count; i++)
                 {
-                    Boolean iOrigemExterna = pedidosGridView.Rows[intFor].Cells["PedidoOrigem"].Value.ToString() == "Aplicativo";
-                    Boolean iMesa          =pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString() != "0";
+                    DataRow dRowPedido = dsPedidosAbertos.Tables[0].Rows[i];
+                    Boolean iOrigemExterna = dRowPedido.ItemArray.GetValue(6).ToString() == "Aplicativo";
+                    Boolean iMesa = dRowPedido.ItemArray.GetValue(5).ToString() != "0";
                     if (iOrigemExterna && iMesa)
                     {
-                        ImpressaoAutomatica(int.Parse(pedidosGridView.Rows[intFor].Cells["Codigo"].Value.ToString()), pedidosGridView.Rows[intFor].Cells["NumeroMesa"].Value.ToString());
+                        ImpressaoAutomatica(int.Parse(dRowPedido.ItemArray.GetValue(1).ToString()), dRowPedido.ItemArray.GetValue(5).ToString());
                     }
-
                 }
+
             }
+
+
 
 
 
@@ -1408,7 +1417,7 @@ namespace DexComanda
                 /* Code here */
                 if (pedidosGridView.SelectedCells.Count > 0 && e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
-                    codigo = int.Parse(pedidosGridView.SelectedCells[1].Value.ToString());
+                    codigo = int.Parse(pedidosGridView.SelectedCells[0].Value.ToString());
                     CarregaPedido(codigo);
 
                 }
@@ -1466,19 +1475,19 @@ namespace DexComanda
 
         private void MarcaPEdidos(object sender, DataGridViewCellEventArgs e)
         {
-            bool blSelecionado = Convert.ToBoolean(pedidosGridView.SelectedCells[2].Value);
+            bool blSelecionado = Convert.ToBoolean(this.pedidosGridView.CurrentRow.Cells["Finalizado"].Value.ToString());
             //if (pedidosGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             if (e.RowIndex >= 0)
             {
-                if (pedidosGridView.Rows[e.RowIndex].Cells[2].Value != null)
+                if (pedidosGridView.CurrentRow.Cells["Finalizado"].Value.ToString() != null)
                 {
                     if (blSelecionado)
                     {
-                        pedidosGridView.SelectedCells[2].Value = false;
+                        pedidosGridView.CurrentRow.Cells["Finalizado"].Value = false;
                     }
                     else
                     {
-                        pedidosGridView.SelectedCells[2].Value = true;
+                        pedidosGridView.CurrentRow.Cells["Finalizado"].Value = true;
                     }
                 }
 
@@ -1572,6 +1581,18 @@ namespace DexComanda
         private void bairrosPorRegiãoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmBairrosRegiao frm = new frmBairrosRegiao();
+            frm.ShowDialog();
+        }
+
+        private void produtoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadastrarProduto frm = new frmCadastrarProduto(this);
+            frm.ShowDialog();
+        }
+
+        private void regiãoDeEntregaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadastroRegioes frm = new frmCadastroRegioes();
             frm.ShowDialog();
         }
 

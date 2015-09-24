@@ -76,6 +76,7 @@ namespace DexComanda
         private string lNomeOpcao;
         private string lTipo;
         private decimal lPreco;
+        private decimal dcTaxaEntrega;
 
         //private int HoraPedido = Sessions.returnPedido.RealizadoEm.Minute;
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, string iNumeMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
@@ -112,6 +113,8 @@ namespace DexComanda
                 }
 
                 timer1.Enabled = IniciaTempo;
+                dcTaxaEntrega = iTaxaEntrega;
+            
                 lblEntrega.Text = Convert.ToString(iTaxaEntrega);
                 if (iTroco != "0,00")
                 {
@@ -161,10 +164,7 @@ namespace DexComanda
             if (Sessions.returnUsuario != null)
             {
                 // Define se o Usuario pode ou não dar Desconto
-                if (Sessions.retunrUsuario.DescontoPedidoSN)
-                {
-                    txtDesconto.Enabled = Sessions.returnUsuario.DescontoPedidoSN;
-                }
+                txtDesconto.Enabled = Sessions.returnUsuario.DescontoPedidoSN;
             }
 
             if (gNUmeroMesa == "")
@@ -469,8 +469,7 @@ namespace DexComanda
                             radioButton1.Text = lnome + "(+" + lPreco + ")";
                             radioButton1.Tag = lPreco;
                             radioButton1.Visible = true;
-                            // Padrão vim marcado sempre o primeiro Item
-                            radioButton1.Checked = true;
+                            
                             // grpBoxTamanhos.Controls.Add(rb);
                         }
                         else if (!radioButton2.Visible)
@@ -527,11 +526,21 @@ namespace DexComanda
             con.Insert("spAdicionarOpcaoPedido", opcao);
 
         }
+      
         private void btnAdicionarItemNoPedido_Click(object sender, EventArgs e)
         {
             try
             {
+                if (radioButton1.Visible && !radioButton1.Checked && !radioButton2.Checked && !radioButton3.Checked
+                    && !radioButton4.Checked && !radioButton5.Checked && !radioButton6.Checked)
+                {
+                    MessageBox.Show("É obrigatório selecionar o tamanho ", "[xSistemas]", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                
                 MeiaPizza();
+
+
                 if (txtQuantidade.Text != "")
                 {
                     var quantidade = int.Parse(this.txtQuantidade.Text.ToString());
@@ -548,7 +557,7 @@ namespace DexComanda
                         }
                         var pedido = new Pedido()
                         {
-                            TotalPedido = ValorTotal + decimal.Parse(lblEntrega.Text),
+                            TotalPedido = ValorTotal + decimal.Parse(lblEntrega.Text.Replace("R$","")),
                             TrocoPara = "R$" + this.txtTrocoPara.Text,
                             FormaPagamento = this.cmbFPagamento.Text,
                             RealizadoEm = DateTime.Now
@@ -556,7 +565,7 @@ namespace DexComanda
                         };
 
                         pedido.Tipo = cbxTipoPedido.Text;
-                        if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa/Balcao")
+                        if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa")
                         {
                             pedido.Tipo = cbxTipoPedido.Text;
                             pedido.NumeroMesa = int.Parse(cbxListaMesas.Text);
@@ -776,7 +785,8 @@ namespace DexComanda
                                 Utils.ControlaEventos("Inserir", this.Name);
                             }
 
-                            Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
+
+                           
 
                             if (ContraMesas && cbxListaMesas.Visible && pedido.NumeroMesa != 0)
                             {
@@ -787,6 +797,7 @@ namespace DexComanda
 
 
                             MessageBox.Show("Pedido gerado com sucesso.");
+                          
 
                             if (ContraMesas && cbxTipoPedido.Text == "0 - Entrega")
                             {
@@ -854,6 +865,7 @@ namespace DexComanda
                 rowIndex = dgv.CurrentRow.Index;
 
                 int codItem = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
+                MontaMenuOpcoes(codItem);
                 var itemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codigoItemParaAlterar);
                 string itemNome = this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
 
@@ -910,6 +922,13 @@ namespace DexComanda
             //{
             ValorTotal = 0;
             ValorTroco = 0;
+            if (radioButton1.Visible && !radioButton1.Checked && !radioButton2.Checked && !radioButton3.Checked
+                     && !radioButton4.Checked && !radioButton5.Checked && !radioButton6.Checked)
+            {
+                MessageBox.Show("É obrigatório selecionar o tamanho ", "[xSistemas]", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             if (!this.txtQuantidade.Text.Equals("")
                     && !this.txtPrecoUnitario.Text.Equals("") && !this.txtPrecoTotal.Text.Equals(""))
             {
@@ -1110,14 +1129,14 @@ namespace DexComanda
 
             this.gridViewItemsPedido.AutoGenerateColumns = true;
             this.gridViewItemsPedido.DataSource = dt;
-            this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + Convert.ToDecimal(lblEntrega.Text));
+            this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + Convert.ToDecimal(lblEntrega.Text.Replace("R$","")));
             this.lblTroco.Text = Convert.ToString(lblTroco.Text);
         }
         private void prepareToPrint()
         {
             try
             {
-                if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa" || cbxTipoPedido.Text == "2 - Balcao")
+                if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa")
                 {
                     int iCodigo;
                     if (con.getLastCodigo() != 0)
@@ -1140,7 +1159,29 @@ namespace DexComanda
                     }
 
                 }
+                // Impressão de Venda Balcão
+                if (cbxTipoPedido.Text == "2 - Balcao")
+                {
+                    int iCodigo;
+                    if (con.getLastCodigo() != 0)
+                    {
+                        iCodigo = con.getLastCodigo();
+                    }
+                    else
+                    {
+                        iCodigo = codPedido;
+                    }
 
+                    string iRetorno = Utils.ImpressaoBalcao(iCodigo, ImprimeLPT, QtdViasBalcao);
+
+                    if (ImprimeLPT && iRetorno != "")
+                    {
+                        StreamReader tempDex = new StreamReader(iRetorno);
+                        string sLine = "";
+                        sLine = tempDex.ReadToEnd();
+                        Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
+                    }
+                }
 
                 // Imprimindo via Entrega
                 if (ImprimeViaEntrega && cbxTipoPedido.Text == "0 - Entrega")
@@ -1230,125 +1271,125 @@ namespace DexComanda
             }
 
         }
-        private void ImprimePedidoMesa()
-        {
-            int i = 0;
-            int TempoPermanencia = DateTime.Now.Hour - parentWindow.DataPedido.Hour;
-            ValorTotal = 0;
-            foreach (ItemPedido item in items)
-            {
-                if (i == 0)
-                {
-                    line = QuebrarString(Sessions.returnEmpresa.Nome);
-                    line += QuebrarString(Sessions.returnEmpresa.Telefone);
-                    line += QuebrarString(Sessions.returnEmpresa.Telefone2);
-                    line += QuebrarString(Sessions.returnEmpresa.Endereco + ", " + Sessions.returnEmpresa.Cidade + " - " + Sessions.returnEmpresa.Bairro);
-                    line += QuebrarString("------------------------------------------");
-                    line += QuebrarString(" ** NÃO VALE COMO DOCUMENTO FISCAL **");
-                    if (codPedido.ToString() == "0")
-                    {
-                        line += QuebrarString("Documento Nº " + con.getLastCodigo());
-                    }
-                    else
-                    {
-                        line += QuebrarString("Documento Nº " + codPedido);
-                    }
-                    line += QuebrarString("Mesa:" + cbxListaMesas.Text);
-                    line += QuebrarString("--------------------");
-                    foreach (ItemPedido ItemsPedi in items)
-                    {
-                        line += QuebrarString(ItemsPedi.NomeProduto.ToString());
-                        line += QuebrarString(ItemsPedi.PrecoUnitario.ToString());
-                        line += QuebrarString(ItemsPedi.Quantidade.ToString());
+        //private void ImprimePedidoMesa()
+        //{
+        //    int i = 0;
+        //    int TempoPermanencia = DateTime.Now.Hour - parentWindow.DataPedido.Hour;
+        //    ValorTotal = 0;
+        //    foreach (ItemPedido item in items)
+        //    {
+        //        if (i == 0)
+        //        {
+        //            line = QuebrarString(Sessions.returnEmpresa.Nome);
+        //            line += QuebrarString(Sessions.returnEmpresa.Telefone);
+        //            line += QuebrarString(Sessions.returnEmpresa.Telefone2);
+        //            line += QuebrarString(Sessions.returnEmpresa.Endereco + ", " + Sessions.returnEmpresa.Cidade + " - " + Sessions.returnEmpresa.Bairro);
+        //            line += QuebrarString("------------------------------------------");
+        //            line += QuebrarString(" ** NÃO VALE COMO DOCUMENTO FISCAL **");
+        //            if (codPedido.ToString() == "0")
+        //            {
+        //                line += QuebrarString("Documento Nº " + con.getLastCodigo());
+        //            }
+        //            else
+        //            {
+        //                line += QuebrarString("Documento Nº " + codPedido);
+        //            }
+        //            line += QuebrarString("Mesa:" + cbxListaMesas.Text);
+        //            line += QuebrarString("--------------------");
+        //            foreach (ItemPedido ItemsPedi in items)
+        //            {
+        //                line += QuebrarString(ItemsPedi.NomeProduto.ToString());
+        //                line += QuebrarString(ItemsPedi.PrecoUnitario.ToString());
+        //                line += QuebrarString(ItemsPedi.Quantidade.ToString());
 
-                        if (ItemsPedi.Item != null && ItemsPedi.Item != "" && ItemsPedi.Item != "null")
-                        {
-                            line += QuebrarString(ItemsPedi.Item.ToString());
-                        }
+        //                if (ItemsPedi.Item != null && ItemsPedi.Item != "" && ItemsPedi.Item != "null")
+        //                {
+        //                    line += QuebrarString(ItemsPedi.Item.ToString());
+        //                }
 
-                        ValorTotal = ValorTotal + ItemsPedi.PrecoTotal;
+        //                ValorTotal = ValorTotal + ItemsPedi.PrecoTotal;
 
-                    }
-                    CultureInfo culture;
-                    culture = new CultureInfo("pt-BR");
-                    if (txtDesconto.Text != "0,00")
-                    {
-                        line += QuebrarString("Sub Total:" + ValorTotal);
-                        line += QuebrarString("Desconto :" + txtDesconto.Text);
-                        line += QuebrarString("Total Pedido:" + lbTotal.Text);
-                        line += QuebrarString("Tx. Serviço :" + DMargemGarco);
+        //            }
+        //            CultureInfo culture;
+        //            culture = new CultureInfo("pt-BR");
+        //            if (txtDesconto.Text != "0,00")
+        //            {
+        //                line += QuebrarString("Sub Total:" + ValorTotal);
+        //                line += QuebrarString("Desconto :" + txtDesconto.Text);
+        //                line += QuebrarString("Total Pedido:" + lbTotal.Text);
+        //                line += QuebrarString("Tx. Serviço :" + DMargemGarco);
 
-                    }
-                    else
-                    {
-                        line += QuebrarString("Sub Total:" + ValorTotal);
-                        line += QuebrarString("Total Pedido:" + lbTotal.Text);
-                        line += QuebrarString("Tx. Serviço :" + DMargemGarco);
-                    }
+        //            }
+        //            else
+        //            {
+        //                line += QuebrarString("Sub Total:" + ValorTotal);
+        //                line += QuebrarString("Total Pedido:" + lbTotal.Text);
+        //                line += QuebrarString("Tx. Serviço :" + DMargemGarco);
+        //            }
 
-                    if (ImprimeLPT)
-                    {
-                        Utils.CriaArquivoTxt("Impressao", line);
-                    }
+        //            if (ImprimeLPT)
+        //            {
+        //                Utils.CriaArquivoTxt("Impressao", line);
+        //            }
 
-                    i++;
+        //            i++;
 
-                }
-            }
-        }
-        private void ImpressaoCozinha()
-        {
-            line = null;
-            int i = 0;
+        //        }
+        //    }
+        //}
+        //private void ImpressaoCozinha()
+        //{
+        //    line = null;
+        //    int i = 0;
 
-            foreach (ItemPedido item in items)
-            {
+        //    foreach (ItemPedido item in items)
+        //    {
 
-                if (i == 0)
-                {
-                    if (codPedido.ToString() == "0")
-                    {
-                        line = "X COMMANDA - COZINHA - Nº " + con.getLastCodigo() + "\r\n";
-                    }
-                    else
-                    {
-                        line = "X COMMANDA - COZINHA - Nº " + codPedido + "\r\n";
-                    }
-                    line += QuebrarString("Pedido tipo:" + cbxTipoPedido.Text);
-                    line += QuebrarString("------------------------------");
-                    line += "Emitido em " + DateTime.Now.ToShortDateString() + "\r\n";
-                    line += " às " + DateTime.Now.ToShortTimeString() + "\r\n";
-                }
-                AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
-                if (!item.ImpressoSN)
-                {
-                    line += item.NomeProduto.ToString() + ", Quant.:" + item.Quantidade.ToString() + "\r\n";
-                    if (item.Item != "" && item.Item != null)
-                    {
-                        line += "Obs:" + QuebrarString(item.Item.ToString().ToUpper()) + "\r\n";
-                    }
+        //        if (i == 0)
+        //        {
+        //            if (codPedido.ToString() == "0")
+        //            {
+        //                line = "X COMMANDA - COZINHA - Nº " + con.getLastCodigo() + "\r\n";
+        //            }
+        //            else
+        //            {
+        //                line = "X COMMANDA - COZINHA - Nº " + codPedido + "\r\n";
+        //            }
+        //            line += QuebrarString("Pedido tipo:" + cbxTipoPedido.Text);
+        //            line += QuebrarString("------------------------------");
+        //            line += "Emitido em " + DateTime.Now.ToShortDateString() + "\r\n";
+        //            line += " às " + DateTime.Now.ToShortTimeString() + "\r\n";
+        //        }
+        //        AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
+        //        if (!item.ImpressoSN)
+        //        {
+        //            line += item.NomeProduto.ToString() + ", Quant.:" + item.Quantidade.ToString() + "\r\n";
+        //            if (item.Item != "" && item.Item != null)
+        //            {
+        //                line += "Obs:" + QuebrarString(item.Item.ToString().ToUpper()) + "\r\n";
+        //            }
 
-                    Atualiza.CodPedido = codPedido;
-                    Atualiza.CodProduto = item.CodProduto;
-                    Atualiza.ImpressoSN = true;
+        //            Atualiza.CodPedido = codPedido;
+        //            Atualiza.CodProduto = item.CodProduto;
+        //            Atualiza.ImpressoSN = true;
 
-                    con.Update("spInformaItemImpresso", Atualiza);
-                }
+        //            con.Update("spInformaItemImpresso", Atualiza);
+        //        }
 
 
-                //ev.Graphics.DrawString(line, printFontCozinha, Brushes.Black, 0, 0);
-                //ev.HasMorePages = false;
-                i++;
-                if (ImprimeLPT)
-                {
-                    Utils.CriaArquivoTxt("Impressao", line);
-                }
+        //        //ev.Graphics.DrawString(line, printFontCozinha, Brushes.Black, 0, 0);
+        //        //ev.HasMorePages = false;
+        //        i++;
+        //        if (ImprimeLPT)
+        //        {
+        //            Utils.CriaArquivoTxt("Impressao", line);
+        //        }
 
-                // MP2032.BMP2032.AcionaGuilhotina(1);
-            }
-            //ev.HasMorePages = false;
+        //        // MP2032.BMP2032.AcionaGuilhotina(1);
+        //    }
+        //    //ev.HasMorePages = false;
 
-        }
+        //}
         private void imprimirViaCozinha(object sender, PrintPageEventArgs ev)
         {
             //  ImpressaoCozinha();
@@ -1359,159 +1400,159 @@ namespace DexComanda
 
             }
         }
-        private void ImpressaoEntrega()
-        {
-            int i = 0;
-            foreach (ItemPedido item in items)
-            {
-                string strLinhaCodigo, strLinhaDataHora;
-                if (i == 0)
-                {
-                    strLinhaDataHora = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + "\r\n\n";
+        //private void ImpressaoEntrega()
+        //{
+        //    int i = 0;
+        //    foreach (ItemPedido item in items)
+        //    {
+        //        string strLinhaCodigo, strLinhaDataHora;
+        //        if (i == 0)
+        //        {
+        //            strLinhaDataHora = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + "\r\n\n";
 
-                    if (Sessions.returnEmpresa.CNPJ == "21207218000191")
-                    {
-                        line = QuebrarString(Sessions.returnEmpresa.Nome);
-                    }
-                    else
-                    {
-                        line = QuebrarString(Sessions.returnEmpresa.Nome);
-                        line += QuebrarString(Sessions.returnEmpresa.Telefone + " / " + Sessions.returnEmpresa.Telefone2);
-                        line += QuebrarString(Sessions.returnEmpresa.Endereco + ", " + Sessions.returnEmpresa.Cidade + " - " + Sessions.returnEmpresa.Bairro);
+        //            if (Sessions.returnEmpresa.CNPJ == "21207218000191")
+        //            {
+        //                line = QuebrarString(Sessions.returnEmpresa.Nome);
+        //            }
+        //            else
+        //            {
+        //                line = QuebrarString(Sessions.returnEmpresa.Nome);
+        //                line += QuebrarString(Sessions.returnEmpresa.Telefone + " / " + Sessions.returnEmpresa.Telefone2);
+        //                line += QuebrarString(Sessions.returnEmpresa.Endereco + ", " + Sessions.returnEmpresa.Cidade + " - " + Sessions.returnEmpresa.Bairro);
 
-                    }
+        //            }
 
-                    if (con.getLastCodigo().ToString() == "0")
-                    {
-                        strLinhaCodigo = "PEDIDO:" + codPedido;
-                    }
-                    else
-                    {
-                        strLinhaCodigo = "PEDIDO:" + con.getLastCodigo();
-                    }
-                    line += strLinhaCodigo + "   " + strLinhaDataHora;
-                    if (ControlaFidelidade)
-                    {
-                        line += QuebrarString("Tick Fidelidade -" + NumeroPedidos + "/" + PedidosParaFidelidade);
-                    }
+        //            if (con.getLastCodigo().ToString() == "0")
+        //            {
+        //                strLinhaCodigo = "PEDIDO:" + codPedido;
+        //            }
+        //            else
+        //            {
+        //                strLinhaCodigo = "PEDIDO:" + con.getLastCodigo();
+        //            }
+        //            line += strLinhaCodigo + "   " + strLinhaDataHora;
+        //            if (ControlaFidelidade)
+        //            {
+        //                line += QuebrarString("Tick Fidelidade -" + NumeroPedidos + "/" + PedidosParaFidelidade);
+        //            }
 
-                    line += "-----------------------------------------------------------\r\n";
-                    line += "Nome  :";
-                    line += QuebrarString(pCliente.Nome);
-                    if (QuebrarString(pCliente.Telefone2.ToString()) != "0")
-                    {
-                        line += QuebrarString("Tel  : " + pCliente.Telefone.ToString());
-                        line += QuebrarString("Tel  :" + pCliente.Telefone2.ToString());
-                    }
-                    else
-                    {
-                        line += "Tel :";
-                        line += pCliente.Telefone.ToString();
-                    }
-                    line += QuebrarString("End.: " + pCliente.Endereco + QuebrarString("," + pCliente.Numero.ToString()));
-                    if (pCliente.Observacao.ToString() != "")
-                    {
-                        line += "Obs:";
-                        line += QuebrarString(pCliente.Observacao) + "\r\n";
-                    }
-                    line += QuebrarString("Bairro:" + pCliente.Bairro);
-                    if (pCliente.PontoReferencia != "")
-                    {
-                        line += QuebrarString("REF.:");
-                        line += QuebrarString(pCliente.PontoReferencia) + "\r\n";
-                    }
-                    if (pCliente.Observacao != "")
-                    {
-                        line += QuebrarString("Obs.:");
-                        line += QuebrarString(pCliente.Observacao);
-                    }
+        //            line += "-----------------------------------------------------------\r\n";
+        //            line += "Nome  :";
+        //            line += QuebrarString(pCliente.Nome);
+        //            if (QuebrarString(pCliente.Telefone2.ToString()) != "0")
+        //            {
+        //                line += QuebrarString("Tel  : " + pCliente.Telefone.ToString());
+        //                line += QuebrarString("Tel  :" + pCliente.Telefone2.ToString());
+        //            }
+        //            else
+        //            {
+        //                line += "Tel :";
+        //                line += pCliente.Telefone.ToString();
+        //            }
+        //            line += QuebrarString("End.: " + pCliente.Endereco + QuebrarString("," + pCliente.Numero.ToString()));
+        //            if (pCliente.Observacao.ToString() != "")
+        //            {
+        //                line += "Obs:";
+        //                line += QuebrarString(pCliente.Observacao) + "\r\n";
+        //            }
+        //            line += QuebrarString("Bairro:" + pCliente.Bairro);
+        //            if (pCliente.PontoReferencia != "")
+        //            {
+        //                line += QuebrarString("REF.:");
+        //                line += QuebrarString(pCliente.PontoReferencia) + "\r\n";
+        //            }
+        //            if (pCliente.Observacao != "")
+        //            {
+        //                line += QuebrarString("Obs.:");
+        //                line += QuebrarString(pCliente.Observacao);
+        //            }
 
-                    line += "-----------------------------------------------------------\r\n";
+        //            line += "-----------------------------------------------------------\r\n";
 
-                }
+        //        }
 
-                if (PromocaoDiasSemana && DiaDaPromocao.IndexOf(DiaDaSema) > 0 && FPPermiteDesconto)
-                {
-                    line += QuebrarString("**Preço Promocional**");
-                    line += QuebrarString(item.NomeProduto.ToString() + "        " + "Quant." + item.Quantidade.ToString());
-                    line += " R$: " + item.PrecoTotal + "\r\n";
-                    if (item.Item != "")
-                    {
-                        line += " Obs:" + QuebrarString(item.Item.ToString()) + "\r\n";
-                    }
-                }
-                else
-                {
-                    if (CNPJRETORNO == "18367525000125")
-                    {
-                        line += QuebrarString(item.NomeProduto.ToString());
-                        line += "Quant." + QuebrarString(item.Quantidade.ToString());
-                        line += " R$  : " + item.PrecoTotal + "\r\n";
-                        if (item.Item != "")
-                        {
-                            line += " Obs:" + QuebrarString(item.Item.ToString());
-                        }
-                    }
-                    else
-                    {
-                        ItemPedido itemPedidos = new ItemPedido();
+        //        if (PromocaoDiasSemana && DiaDaPromocao.IndexOf(DiaDaSema) > 0 && FPPermiteDesconto)
+        //        {
+        //            line += QuebrarString("**Preço Promocional**");
+        //            line += QuebrarString(item.NomeProduto.ToString() + "        " + "Quant." + item.Quantidade.ToString());
+        //            line += " R$: " + item.PrecoTotal + "\r\n";
+        //            if (item.Item != "")
+        //            {
+        //                line += " Obs:" + QuebrarString(item.Item.ToString()) + "\r\n";
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (CNPJRETORNO == "18367525000125")
+        //            {
+        //                line += QuebrarString(item.NomeProduto.ToString());
+        //                line += "Quant." + QuebrarString(item.Quantidade.ToString());
+        //                line += " R$  : " + item.PrecoTotal + "\r\n";
+        //                if (item.Item != "")
+        //                {
+        //                    line += " Obs:" + QuebrarString(item.Item.ToString());
+        //                }
+        //            }
+        //            else
+        //            {
+        //                ItemPedido itemPedidos = new ItemPedido();
 
-                        item.PrecoTotal = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[3].Value.ToString().Replace("R$", ""));
+        //                item.PrecoTotal = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[3].Value.ToString().Replace("R$", ""));
 
-                        line += QuebrarString(item.NomeProduto.ToString() + "        " + "Quant." + item.Quantidade.ToString());
-                        line += " R$  : " + item.PrecoTotal + "\r\n";
+        //                line += QuebrarString(item.NomeProduto.ToString() + "        " + "Quant." + item.Quantidade.ToString());
+        //                line += " R$  : " + item.PrecoTotal + "\r\n";
 
-                        if (item.Item != "")
-                        {
-                            line += " Obs:" + QuebrarString(item.Item.ToString());
-                        }
+        //                if (item.Item != "")
+        //                {
+        //                    line += " Obs:" + QuebrarString(item.Item.ToString());
+        //                }
 
-                    }
+        //            }
 
-                }
+        //        }
 
-                // ev.HasMorePages = true;
-                i++;
-            }
-            ValorTotal = 0;
-            foreach (ItemPedido _item in items)
-            {
-                ValorTotal += _item.PrecoTotal * _item.Quantidade;
-            }
-            //decimal TotaItems = decimal.Parse(lbTotal.Text.Replace("R$", ""));
-            // decimal TotalPago = TotaItems + ValorTroco;
-            var TotalPedido = ValorTotal + decimal.Parse(lblEntrega.Text);
-            line += "-----------------------------------------------------------\r\n";
-            line += QuebrarString("Tx. Serv     :" + lblEntrega.Text);
-            line += QuebrarString("Total Itens  :" + ValorTotal);
-            line += QuebrarString("F. Pagamento :" + cmbFPagamento.Text);
-            if (txtDesconto.Text != "0,00")
-            {
-                line += QuebrarString("Desconto   :" + txtDesconto.Text);
-            }
-            line += QuebrarString("Total Pedido :" + TotalPedido);
-            line += QuebrarString("Troco Para   :" + txtTrocoPara.Text + " - Troco:" + lblTroco.Text);
-            if (ControlaFidelidade && lblFidelidade.Visible)
-            {
-                line += "-----------------------------------------------------------\r\n";
-                line += QuebrarString(" Parabens você é nosso cliente Fiel , este e seu pedido N.:" + NumeroPedidos.ToString()) + "\r\n";
-            }
-            if (ControlaPrevisao)
-            {
-                line += QuebrarString("Previsão de Entrega:  " + DataPed.AddMinutes(TempPrevisto).ToShortTimeString()) + "\r\n";
-            }
-            line += "Obrigado Pela Preferencia \r\n\n";
+        //        // ev.HasMorePages = true;
+        //        i++;
+        //    }
+        //    ValorTotal = 0;
+        //    foreach (ItemPedido _item in items)
+        //    {
+        //        ValorTotal += _item.PrecoTotal * _item.Quantidade;
+        //    }
+        //    //decimal TotaItems = decimal.Parse(lbTotal.Text.Replace("R$", ""));
+        //    // decimal TotalPago = TotaItems + ValorTroco;
+        //    var TotalPedido = ValorTotal + decimal.Parse(lblEntrega.Text);
+        //    line += "-----------------------------------------------------------\r\n";
+        //    line += QuebrarString("Tx. Serv     :" + lblEntrega.Text);
+        //    line += QuebrarString("Total Itens  :" + ValorTotal);
+        //    line += QuebrarString("F. Pagamento :" + cmbFPagamento.Text);
+        //    if (txtDesconto.Text != "0,00")
+        //    {
+        //        line += QuebrarString("Desconto   :" + txtDesconto.Text);
+        //    }
+        //    line += QuebrarString("Total Pedido :" + TotalPedido);
+        //    line += QuebrarString("Troco Para   :" + txtTrocoPara.Text + " - Troco:" + lblTroco.Text);
+        //    if (ControlaFidelidade && lblFidelidade.Visible)
+        //    {
+        //        line += "-----------------------------------------------------------\r\n";
+        //        line += QuebrarString(" Parabens você é nosso cliente Fiel , este e seu pedido N.:" + NumeroPedidos.ToString()) + "\r\n";
+        //    }
+        //    if (ControlaPrevisao)
+        //    {
+        //        line += QuebrarString("Previsão de Entrega:  " + DataPed.AddMinutes(TempPrevisto).ToShortTimeString()) + "\r\n";
+        //    }
+        //    line += "Obrigado Pela Preferencia \r\n\n";
 
-            //ev.Graphics.DrawString(line, printFont, Brushes.Black, 0, 0);
-            //ev.HasMorePages = false;
-            if (ImprimeLPT)
-            {
-                Utils.CriaArquivoTxt("Impressao", line);
-            }
+        //    //ev.Graphics.DrawString(line, printFont, Brushes.Black, 0, 0);
+        //    //ev.HasMorePages = false;
+        //    if (ImprimeLPT)
+        //    {
+        //        Utils.CriaArquivoTxt("Impressao", line);
+        //    }
 
-            i++;
+        //    i++;
 
-        }
+        //}
         private void imprimirViaEntrega(object sender, PrintPageEventArgs ev)
         {
             if (!ImprimeLPT)
@@ -1755,6 +1796,7 @@ namespace DexComanda
 
         private void frmCadastrarPedido_FormClosed(object sender, FormClosedEventArgs e)
         {
+            Utils.PopulaGrid_Novo("Pedido", parentWindow.pedidosGridView, Sessions.SqlPedido);
             this.Dispose();
         }
 
@@ -2105,7 +2147,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(749, 6);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -2765,11 +2807,22 @@ namespace DexComanda
             {
                 cbxListaMesas.Visible = false;
             }
-
-            if (cbxTipoPedido.Text != "0 - Entrega")
+            CalculaTaxaEntrega(cbxTipoPedido.Text == "0 - Entrega");
+       
+        }
+        private void CalculaTaxaEntrega(Boolean iCalcula)
+        {
+            if (!iCalcula)
             {
-                lblEntrega.Text = "0,00";
+               // decimal iValorSemTaxa = decimal.Parse(lbTotal.Text) - lblEntrega.Text);
+                this.lbTotal.Text = "R$ " + Convert.ToString(decimal.Parse(lbTotal.Text.Replace("R$", "")) - decimal.Parse(lblEntrega.Text.Replace("R$", "")));
+                lblEntrega.Text = "R$ 0,00 ";
             }
+            else
+            {
+                this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + dcTaxaEntrega);
+            }
+            
         }
 
         private void cbxTrocoParaOK_CheckedChanged(object sender, EventArgs e)
@@ -2970,7 +3023,7 @@ namespace DexComanda
         {
             string iReturn;
 
-            iReturn = Regex.Replace(istring, "[^a-zA-Z á]+", "");
+            iReturn = Regex.Replace(istring, "[^a-zA-Z áéíóú]+", "");
 
 
             return iReturn;

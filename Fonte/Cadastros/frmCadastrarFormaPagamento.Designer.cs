@@ -141,6 +141,7 @@
             this.Name = "frmCadastrarFormaPagamento";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[XDelivery]  Formas De Pagamento";
+            this.Load += new System.EventHandler(this.frmCadastrarFormaPagamento_Load);
             ((System.ComponentModel.ISupportInitialize)(this.FPGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

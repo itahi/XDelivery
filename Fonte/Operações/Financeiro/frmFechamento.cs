@@ -15,7 +15,7 @@ namespace DexComanda.Operações.Financeiro
     {
         private Conexao con;
         private string iDataFiltro;
-        private decimal vlrValorInformado, vlrValorSomado,vlrValorTotal;
+        private decimal vlrValorInformado, vlrValorSomado, vlrValorTotal;
         public frmCaixaFechamento()
         {
             con = new Conexao();
@@ -24,9 +24,7 @@ namespace DexComanda.Operações.Financeiro
 
         private void frmCaixaFechamento_Load(object sender, EventArgs e)
         {
-            cbxCaixas.DataSource = con.SelectAll("CaixaCadastro", "spObterCaixa").Tables["CaixaCadastro"];
-            cbxCaixas.DisplayMember = "Numero";
-            cbxCaixas.ValueMember = "Codigo";
+
         }
 
         private void FiltraCaixa(object sender, EventArgs e)
@@ -49,17 +47,18 @@ namespace DexComanda.Operações.Financeiro
         private void ConsultaMovimentoCaixa()
         {
             decimal vlrEntrada = 0.00M;
-              decimal vlrSaida=0.00M;
-            DataSet dsMovimento = con.SelectCaixaFechamento(iDataFiltro + " 00:00:00",iDataFiltro + " 23:59:59", cbxCaixas.Text,"CaixaMovimento");
+            decimal vlrSaida = 0.00M;
+            DataSet dsMovimento = con.SelectCaixaFechamento(iDataFiltro + " 00:00:00", iDataFiltro + " 23:59:59", cbxCaixas.Text, "CaixaMovimento");
 
             if (dsMovimento.Tables[0].Rows.Count > 0)
             {
+
                 FechamentosGrid.DataSource = null;
                 FechamentosGrid.AutoGenerateColumns = true;
                 FechamentosGrid.DataSource = dsMovimento;
                 FechamentosGrid.DataMember = "CaixaMovimento";
 
-                for (int i = 0; i < FechamentosGrid.Columns.Count-1; i++)
+                for (int i = 0; i < FechamentosGrid.Rows.Count; i++)
                 {
                     if (FechamentosGrid.Rows[i].Cells["Tipo Movimento"].Value.ToString() == "Entradas")
                     {
@@ -71,22 +70,22 @@ namespace DexComanda.Operações.Financeiro
                     }
                 }
 
-                
+
                 vlrValorTotal = vlrEntrada - vlrSaida;
-                
-                FechamentosGrid.Columns.Add("ValorInformado", "ValorInformado");
-                FechamentosGrid.Refresh();
+
+                if (!FechamentosGrid.Columns.Contains("ValorInformado"))
+                {
+                    FechamentosGrid.Columns.Add("ValorInformado", "ValorInformado");
+                    FechamentosGrid.Refresh();
+                }
+
                 con.Close();
             }
-            //for (int i = 0; i < FechamentosGrid.Rows.Count; i++)
-            //{
-            //    vlrValorTotal = vlrValorTotal + decimal.Parse(FechamentosGrid.Rows[i].Cells[2].Value.ToString());
-            //}
 
         }
         private void btnExecutar_Click(object sender, EventArgs e)
         {
-            
+
 
             for (int i = 0; i < FechamentosGrid.Rows.Count; i++)
             {
@@ -94,27 +93,27 @@ namespace DexComanda.Operações.Financeiro
                 vlrValorInformado = decimal.Parse(FechamentosGrid.Rows[i].Cells["ValorInformado"].Value.ToString());
                 if (vlrValorSomado != vlrValorInformado)
                 {
-                     DialogResult resultado = MessageBox.Show("Há uma diferença entre o valor somado e o valor informado do caixa! Deseja continuar?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                     if (resultado == DialogResult.Yes)
-                     {
-                         CaixaDiferenca caixaD = new CaixaDiferenca()
-                         {
-                             CodUsuario = Sessions.retunrUsuario.Codigo,
-                             Data = DateTime.Now,
-                             NumeroCaixa = cbxCaixas.Text,
-                             ValorInformado = vlrValorInformado,
-                             ValorSomado = vlrValorSomado,
-                             ValorDiferenca = vlrValorSomado - vlrValorInformado,
-                             Tipo = Convert.ToChar(FechamentosGrid.Rows[i].Cells["Tipo Movimento"].Value.ToString().Substring(0,1))
+                    DialogResult resultado = MessageBox.Show("Há uma diferença entre o valor somado e o valor informado do caixa! Deseja continuar?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (resultado == DialogResult.Yes)
+                    {
+                        CaixaDiferenca caixaD = new CaixaDiferenca()
+                        {
+                            CodUsuario = Sessions.retunrUsuario.Codigo,
+                            Data = DateTime.Now,
+                            NumeroCaixa = cbxCaixas.Text,
+                            ValorInformado = vlrValorInformado,
+                            ValorSomado = vlrValorSomado,
+                            ValorDiferenca = vlrValorSomado - vlrValorInformado,
+                            Tipo = Convert.ToChar(FechamentosGrid.Rows[i].Cells["Tipo Movimento"].Value.ToString().Substring(0, 1))
 
-                         };
-                         con.Insert("spAdicionaDiferenca", caixaD);
-                         vlrValorTotal = vlrValorTotal + vlrValorSomado;
-                     }
-                     else
-                     {
-                         return;
-                     }
+                        };
+                        con.Insert("spAdicionaDiferenca", caixaD);
+                        vlrValorTotal = vlrValorTotal + vlrValorSomado;
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
 
             }
@@ -122,24 +121,30 @@ namespace DexComanda.Operações.Financeiro
         }
         private void FechaCaixa()
         {
-            DialogResult resultado = MessageBox.Show("Deseja finalizar o Caixa Nº: " + cbxCaixas.Text +" Essa operação não poderá ser desfeita , os movimentos serão lançados apenas no próximo dia! Deseja continuar?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-              if (resultado == DialogResult.Yes)
-              {
-                  Caixa caixa = new Caixa()
-                  {
-                      CodUsuario = Sessions.retunrUsuario.Codigo,
-                      Data = DateTime.Now,
-                      Estado = true,
-                      Historico = "Fechamento Caixa",
-                      Numero = cbxCaixas.Text,
-                      ValorFechamento = vlrValorTotal,
+            DialogResult resultado = MessageBox.Show("Deseja finalizar o Caixa Nº: " + cbxCaixas.Text + " Essa operação não poderá ser desfeita , os movimentos serão lançados apenas no próximo dia! Deseja continuar?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (resultado == DialogResult.Yes)
+            {
+                Caixa caixa = new Caixa()
+                {
+                    CodUsuario = Sessions.retunrUsuario.Codigo,
+                    Data = DateTime.Now,
+                    Estado = true,
+                    Historico = "Fechamento Caixa",
+                    Numero = cbxCaixas.Text,
+                    ValorFechamento = vlrValorTotal,
 
-                  };
-                  con.Update("spFecharCaixa", caixa);
-                  Utils.Restart();
-              }
+                };
+                con.Update("spFecharCaixa", caixa);
+                Utils.Restart();
+            }
 
-           
+        }
+
+        private void cbxCaixas_Click(object sender, EventArgs e)
+        {
+            cbxCaixas.DataSource = con.SelectAll("CaixaCadastro", "spObterCaixa").Tables["CaixaCadastro"];
+            cbxCaixas.DisplayMember = "Numero";
+            cbxCaixas.ValueMember = "Codigo";
         }
     }
 }
