@@ -135,7 +135,7 @@ namespace DexComanda
                 config.QtdCaracteresImp = int.Parse(txtCaracterImpressora.Text.ToString());
             }
             
-            if (chkLoginSenha.Checked)
+            if (chkLoginSenha.Checked && txtUsuarioPadrao.Text.Trim()!="" && txtSenhaPadrao.Text.Trim()!="")
             {
                 string _senha = Utils.EncryptMd5(this.txtUsuarioPadrao.Text.ToString(), this.txtSenhaPadrao.Text.ToString());
                 Usuario usuario = new Usuario()
@@ -235,7 +235,7 @@ namespace DexComanda
                config.PortaLPT = "0";
            }
 
-           if (chkLoginSenha.Checked && txtUsuarioPadrao.Text!="" && txtSenha.Text!="")
+           if (chkLoginSenha.Checked && txtUsuarioPadrao.Text.Trim() != "" && txtSenhaPadrao.Text.Trim() != "")
            {
                string _senha = Utils.EncryptMd5(this.txtUsuarioPadrao.Text.ToString(), this.txtSenhaPadrao.Text.ToString());
                UsuarioDefault usuario = new UsuarioDefault()

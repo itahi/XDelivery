@@ -124,6 +124,7 @@
             this.KeyPreview = true;
             this.Name = "frmCadastrarEntregador";
             this.Text = "[XDelivery] Cadastro Entregador";
+            this.Load += new System.EventHandler(this.frmCadastrarEntregador_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastrarEntregador_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.EntregGridView)).EndInit();
             this.ResumeLayout(false);

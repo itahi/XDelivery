@@ -675,7 +675,10 @@ namespace DexComanda
                 }
                 else
                 {
-                    if (AtualizaTroco())
+                    //ds System.Windows.Forms.KeyEventArgs = new Windows.Forms.KeyEventArgs();
+
+                  //   Boolean ivalida = object.ReferenceEquals(e,System.Windows.Forms.KeyEventArgs.Equals(Keys.F5));
+                     if (AtualizaTroco(false))
                     {
                         DBExpertDataSet dbExpert = new DBExpertDataSet();
                         int totalDeItems = this.gridViewItemsPedido.RowCount;
@@ -1726,49 +1729,58 @@ namespace DexComanda
             AtualizaTroco();
         }
 
-        private Boolean AtualizaTroco()
+        private Boolean AtualizaTroco(Boolean SemTroco=false)
         {
-            decimal troco = 0.00M;
             bool Ok;
-            decimal TotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
-            if (this.txtTrocoPara.Text != "")
+            if (!SemTroco)
             {
-                troco = decimal.Parse(txtTrocoPara.Text);
-            }
-            if (cbxTipoPedido.Text != "1 - Mesa" && TotalPedido > troco && cbxTrocoParaOK.Checked == false)
-            {
-                MessageBox.Show("TROCO é menor que o Total do Pedido.");
-                txtTrocoPara.Focus();
-                txtTrocoPara.BackColor = Color.Aqua;
-                // txtTrocoPara.Font.Style = Font.Bold;
-                Ok = false;
-            }
-            else
-            {
-                var pedido = new Pedido()
+                decimal troco = 0.00M;
+                
+                decimal TotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
+                if (this.txtTrocoPara.Text != "")
                 {
-                    Codigo = codPedido,
-                    TotalPedido = TotalPedido,
-                    TrocoPara = this.txtTrocoPara.Text,
-                    FormaPagamento = this.cmbFPagamento.Text
-                };
-
-                if (cbxTrocoParaOK.Checked == false && !troco.Equals("0,00"))
+                    troco = decimal.Parse(txtTrocoPara.Text);
+                }
+                if (cbxTipoPedido.Text != "1 - Mesa" && TotalPedido > troco && cbxTrocoParaOK.Checked == false)
                 {
-                    ValorTroco = decimal.Parse(this.txtTrocoPara.Text.ToString()) - TotalPedido;
-                    this.lblTroco.Text = "R$ " + Convert.ToString(ValorTroco);
+                    MessageBox.Show("TROCO é menor que o Total do Pedido.");
+                    txtTrocoPara.Focus();
+                    txtTrocoPara.BackColor = Color.Aqua;
+                    // txtTrocoPara.Font.Style = Font.Bold;
+                    Ok = false;
                 }
                 else
                 {
-                    ValorTroco = 0.00M;
-                    this.lblTroco.Text = "R$ " + Convert.ToString(ValorTroco);
-                }
+                    var pedido = new Pedido()
+                    {
+                        Codigo = codPedido,
+                        TotalPedido = TotalPedido,
+                        TrocoPara = this.txtTrocoPara.Text,
+                        FormaPagamento = this.cmbFPagamento.Text
+                    };
 
-                con.Update("spAlterarTrocoParaFormaPagamento", pedido);
-                Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
-                //   MessageBox.Show("Troco e/ou Forma de pagamento atualizados");
+                    if (cbxTrocoParaOK.Checked == false && !troco.Equals("0,00"))
+                    {
+                        ValorTroco = decimal.Parse(this.txtTrocoPara.Text.ToString()) - TotalPedido;
+                        this.lblTroco.Text = "R$ " + Convert.ToString(ValorTroco);
+                    }
+                    else
+                    {
+                        ValorTroco = 0.00M;
+                        this.lblTroco.Text = "R$ " + Convert.ToString(ValorTroco);
+                    }
+
+                    con.Update("spAlterarTrocoParaFormaPagamento", pedido);
+                    Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
+                    //   MessageBox.Show("Troco e/ou Forma de pagamento atualizados");
+                    Ok = true;
+                }
+            }
+            else
+            {
                 Ok = true;
             }
+            
             return Ok;
         }
 
@@ -1971,6 +1983,7 @@ namespace DexComanda
             this.label9 = new System.Windows.Forms.Label();
             this.chkListAdicionais = new System.Windows.Forms.CheckedListBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -2292,6 +2305,7 @@ namespace DexComanda
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.btnCalGarcon);
             this.panel2.Controls.Add(this.lblEntrega);
             this.panel2.Controls.Add(this.label8);
@@ -2697,6 +2711,17 @@ namespace DexComanda
             this.label6.TabIndex = 65;
             this.label6.Text = "Opções do Produto:";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.DarkSlateGray;
+            this.label10.Location = new System.Drawing.Point(3, 54);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(151, 18);
+            this.label10.TabIndex = 60;
+            this.label10.Text = "[F5] Gerar S/Troco";
+            // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2837,7 +2862,7 @@ namespace DexComanda
 
         private void frmCadastrarPedido_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.F12 && btnGerarPedido.Text == "Gerar [F12]")
+            if (e.KeyCode == Keys.F12 || e.KeyCode == Keys.F5 && btnGerarPedido.Text == "Gerar [F12]")
             {
                 btnGerarPedido_Click(sender, e);
             }

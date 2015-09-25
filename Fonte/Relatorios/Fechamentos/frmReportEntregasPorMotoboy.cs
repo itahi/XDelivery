@@ -33,18 +33,18 @@ namespace DexComanda.Relatorios.Fechamentos
         private void Consultar(object sender, EventArgs e)
         {
 
-            //DataSet dsEntregas = con.SelectEntregaPorBoy(dataInicio.Value.ToShortDateString() + " 00:00:00", dataFim.Value.ToShortDateString() + " 23:59:59", int.Parse(cbxEntregador.SelectedValue.ToString()));
-            //if (dsEntregas.Tables[0].Rows.Count>0)
-            //{
-            //    DataView dvEntregas = dsEntregas.Tables[0].DefaultView;
-            //    spEntregasPorBoyDataBindingSource.DataSource = dvEntregas;
-            //    reportViewEntregas.RefreshReport();
+            DataSet dsEntregas = con.SelectEntregaPorBoy(dataInicio.Value.ToShortDateString() + " 00:00:00", dataFim.Value.ToShortDateString() + " 23:59:59", int.Parse(cbxEntregador.SelectedValue.ToString()));
+            if (dsEntregas.Tables[0].Rows.Count > 0)
+            {
+                DataView dvEntregas = dsEntregas.Tables[0].DefaultView;
+                spEntregasPorBoyDataBindingSource.DataSource = dvEntregas;
+                reportViewEntregas.RefreshReport();
 
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Não há registros com o filtro informado", "[XSistemas]");
-            //}
+            }
+            else
+            {
+                MessageBox.Show("Não há registros com o filtro informado", "[XSistemas]");
+            }
         }
 
         private void cbxEntregador_SelectedIndexChanged(object sender, EventArgs e)

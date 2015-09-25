@@ -31,7 +31,7 @@ namespace DexComanda
         private void frmCadastroUsuario_Load(object sender, EventArgs e)
         {
             con = new Conexao();
-            Utils.PopularGrid("Usuario", usuariosGridView, "spObterUsuario");
+            Utils.PopularGrid_SP("Usuario", usuariosGridView, "spObterUsuario");
 
         }
 
@@ -58,7 +58,7 @@ namespace DexComanda
                 con.Insert("spAdicionarUsuario", usuario);
                 MessageBox.Show("Usuario cadastrado com sucesso");
                 Utils.ControlaEventos("Inserir", this.Name);
-                Utils.PopularGrid("Usuario", usuariosGridView, "spObterUsuario");
+                Utils.PopularGrid_SP("Usuario", usuariosGridView, "spObterUsuario");
             }
             else
             {
@@ -107,7 +107,7 @@ namespace DexComanda
         private void CancelarEdicao(object sender, EventArgs e)
         {
             Utils.LimpaForm(this);
-            Utils.PopularGrid("Usuario", usuariosGridView);
+            Utils.PopularGrid_SP("Usuario", usuariosGridView, "spObterUsuario");
         }
 
         private void SalvarEdicao(object sender, EventArgs e)

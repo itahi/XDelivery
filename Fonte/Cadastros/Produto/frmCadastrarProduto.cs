@@ -28,7 +28,7 @@ namespace DexComanda
         {
             InitializeComponent();
             this.parentMain = parent;
-            parentMain = new Main();
+          //  parentMain = new Main();
             DiasSelecionados = new List<string>();
             grpDesconto.Visible = DescontoPordia;
 

@@ -1206,6 +1206,7 @@ namespace DexComanda
             DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpresso", iCodPedido);
             if (itemsPedido.Tables[0].Rows.Count > 0)
             {
+               
                 items = new List<ItemPedido>();
                 ItemPedido itemPedido = new ItemPedido();
                 string lRetorno = Utils.ImpressaMesaNova(iCodPedido, ImprimeLPT, 0);
@@ -1312,9 +1313,9 @@ namespace DexComanda
             //DataSet Dados, PedidosAberto;
 
             DataSet dsPedidosAbertos = con.SelectAll("Pedido", "spObterPedido");
-            int iPedidosAberto = dsPedidosAbertos.Tables[0].Rows.Count;
+            int iPedidosAberto = dsPedidosAbertos.Tables["Pedido"].Rows.Count;
 
-            while (iPedidosAberto != pedidosGridView.Rows.Count)
+            if (iPedidosAberto != pedidosGridView.Rows.Count)
             {
                 Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
 
@@ -1335,8 +1336,10 @@ namespace DexComanda
             }
             if (Sessions.returnConfig.ImpViaCozinha)
             {
-                for (int i = 0; i < dsPedidosAbertos.Tables[0].Rows.Count; i++)
+               
+                for (int i = 0; i < pedidosGridView.Rows.Count; i++)
                 {
+                  
                     DataRow dRowPedido = dsPedidosAbertos.Tables[0].Rows[i];
                     Boolean iOrigemExterna = dRowPedido.ItemArray.GetValue(6).ToString() == "Aplicativo";
                     Boolean iMesa = dRowPedido.ItemArray.GetValue(5).ToString() != "0";

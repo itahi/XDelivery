@@ -148,5 +148,10 @@ namespace DexComanda
                 EditarRegistro(sender, e);
             }
         }
+
+        private void frmCadastrarEntregador_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
