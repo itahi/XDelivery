@@ -43,6 +43,7 @@
             this.formasDePagamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textoPEmailSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.regiõesDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.regiãoDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bairrosPorRegiãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mesasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.motivosCancelamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -118,7 +119,6 @@
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.lblCaixa = new System.Windows.Forms.Label();
-            this.regiãoDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -252,6 +252,13 @@
             this.regiõesDeEntregaToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
             this.regiõesDeEntregaToolStripMenuItem.Text = "Regiões";
             this.regiõesDeEntregaToolStripMenuItem.Click += new System.EventHandler(this.regiõesDeEntregaToolStripMenuItem_Click);
+            // 
+            // regiãoDeEntregaToolStripMenuItem
+            // 
+            this.regiãoDeEntregaToolStripMenuItem.Name = "regiãoDeEntregaToolStripMenuItem";
+            this.regiãoDeEntregaToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            this.regiãoDeEntregaToolStripMenuItem.Text = "Região de Entrega";
+            this.regiãoDeEntregaToolStripMenuItem.Click += new System.EventHandler(this.regiãoDeEntregaToolStripMenuItem_Click);
             // 
             // bairrosPorRegiãoToolStripMenuItem
             // 
@@ -968,7 +975,6 @@
             // 
             // AtualizaGrid
             // 
-            this.AtualizaGrid.Enabled = true;
             this.AtualizaGrid.Interval = 10000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
@@ -985,13 +991,6 @@
             this.lblCaixa.Size = new System.Drawing.Size(128, 20);
             this.lblCaixa.TabIndex = 8;
             this.lblCaixa.Text = "Caixa Fechado";
-            // 
-            // regiãoDeEntregaToolStripMenuItem
-            // 
-            this.regiãoDeEntregaToolStripMenuItem.Name = "regiãoDeEntregaToolStripMenuItem";
-            this.regiãoDeEntregaToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
-            this.regiãoDeEntregaToolStripMenuItem.Text = "Região de Entrega";
-            this.regiãoDeEntregaToolStripMenuItem.Click += new System.EventHandler(this.regiãoDeEntregaToolStripMenuItem_Click);
             // 
             // Main
             // 

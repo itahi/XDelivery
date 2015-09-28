@@ -21,7 +21,7 @@ namespace DexComanda
         private MySqlCommand MysqlCommand;
         private MySqlConnection MysqlConnection;
         private MySqlDataAdapter MysqlDataAdapter;
-     //   private const int CmysqlTimeOut = 50000;
+        //   private const int CmysqlTimeOut = 50000;
         private static string dataMember;
         private DataSet ds;
         private DataSet Dados;
@@ -130,20 +130,76 @@ namespace DexComanda
             adapter.Fill(ds, table);
             return ds;
         }
-         public  DataSet RetornaOpcoesProduto(int iDProduto)
+        public DataSet RetornaOpcoesProduto(int iDProduto)
         {
-            string lSqlConsulta = " select Op.Nome,Op.Tipo,Prod.Preco "+
+            string lSqlConsulta = " select Op.Nome,Op.Tipo,Prod.Preco " +
                                   "  from  Produto_Opcao Prod " +
                                   "  join Opcao Op  on Op.Codigo = Prod.CodOpcao  " +
                                   "  where Prod.CodProduto=@CodProduto";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@CodProduto", iDProduto);
-    
+
 
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, "Produto_Opcao");
+            return ds;
+        }
+        public DataSet RetornaListaPessoasSMS(DateTime iData1, DateTime iData2, Boolean iAniversariante, Boolean iSemPedido, Boolean iTodos)
+        {
+            string lSqlConsulta="";
+
+            command = new SqlCommand();
+            
+            try
+            {
+                if (iSemPedido)
+                {
+                    lSqlConsulta = "select Telefone,Nome from Pessoa P" +
+                                  "  where  " +
+                                  "  P.Codigo not in ( Select Codigo from Pedido where RealizadoEm between @Data1 and @Data2 )" +
+                                  "  and" +
+                                  "  SUBSTRING(Telefone,0,2) = 9 " +
+                                  "  or SUBSTRING(Telefone,0,2) =8";
+
+
+                    command.Parameters.AddWithValue("@Data1", iData1);
+                    command.Parameters.AddWithValue("@Data2", iData2);
+                }
+                else if (iAniversariante)
+                {
+                    lSqlConsulta = "select Telefone,Nome from Pessoa P " +
+                                  "  where  " +
+                                  "  Cast(DataNascimento as date) between @Data1 anda @Data2 " +
+                                  "  and " +
+                                  "  SUBSTRING(Telefone,0,2) = 9 " +
+                                  "  or SUBSTRING(Telefone,0,2) =8 ";
+
+                    command.Parameters.AddWithValue("@Data1", iData1);
+                    command.Parameters.AddWithValue("@Data2", iData2);
+                }
+                else if (iTodos)
+                {
+                    lSqlConsulta = "select Telefone,Nome from Pessoa P" +
+                                   " where  " +
+                                   " SUBSTRING(Telefone,0,2) = 9 " +
+                                   " or SUBSTRING(Telefone,0,2) =8  " +
+                                   " and DATALENGTH(Telefone) >=8";
+                }
+            }
+            catch (Exception erro)
+            {
+                
+                throw;
+            }
+
+            command.CommandText = lSqlConsulta;
+            command.Connection = conn;
+            command.CommandType = CommandType.Text;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Pessoa");
             return ds;
         }
 
@@ -171,19 +227,19 @@ namespace DexComanda
         public DataSet SelectCaixaFechamento(string iDataI, string iDataF, string iNumCaixa, string table = "CaixaMovimento")
         {
             string lSqlConsulta = " select " +
-                                 " case Tipo "+
-                                 " when 'E' then 'Entradas'"+
-                                 " when 'S' then 'Saidas'"+
-                                 " end"+
-                                 " as 'Tipo Movimento', "+
-                                //" Cx.CodCaixa," +
+                                 " case Tipo " +
+                                 " when 'E' then 'Entradas'" +
+                                 " when 'S' then 'Saidas'" +
+                                 " end" +
+                                 " as 'Tipo Movimento', " +
+                //" Cx.CodCaixa," +
                                 " Fp.Descricao ," +
                                 " sum(cx.Valor) as 'Total Somado'" +
                                 " from CaixaMovimento CX" +
                                 " left join FormaPagamento FP on FP.Codigo = Cx.CodFormaPagamento" +
                                 " where " +
                                 " CX.CodCaixa = @Numero AND" +
-                                "  CX.Data BETWEEN @DataI  AND @DataF "+
+                                "  CX.Data BETWEEN @DataI  AND @DataF " +
                                 " group by CodCaixa,Fp.Descricao,Tipo";
 
 
@@ -228,14 +284,14 @@ namespace DexComanda
             return ds;
 
         }
-        public DataSet RetornaCEPporBairro(string iNomeBairro,Boolean iCidadePadrao)
+        public DataSet RetornaCEPporBairro(string iNomeBairro, Boolean iCidadePadrao)
         {
-            string lSqlConsulta = "select cep,bairro cep from base_cep where cep="+iNomeBairro;
+            string lSqlConsulta = "select cep,bairro cep from base_cep where cep=" + iNomeBairro;
             if (iCidadePadrao)
             {
-                lSqlConsulta = lSqlConsulta + " and cidade='"+ Sessions.returnEmpresa.Cidade+"'";
+                lSqlConsulta = lSqlConsulta + " and cidade='" + Sessions.returnEmpresa.Cidade + "'";
             }
-            
+
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -261,20 +317,20 @@ namespace DexComanda
 
         //}
 
-      
-        public void AtualizaDataSincronismo(string iNomeTable, int iCodigo, string iDataAtualizar="DataSincronismo")
+
+        public void AtualizaDataSincronismo(string iNomeTable, int iCodigo, string iDataAtualizar = "DataSincronismo")
         {
 
-            string lSqlConsulta = " update " + iNomeTable + " set "+iDataAtualizar+"=GetDate() where Codigo="+iCodigo;// and AtivoSN=1";
+            string lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where Codigo=" + iCodigo;// and AtivoSN=1";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.ExecuteNonQuery();
-           
+
         }
         public void AtualizaDataSincronismo(string iNomeTable, int iCodProduto, int iCodOpcao, string iDataAtualizar = "DataSincronismo")
         {
-            string lSqlConsulta = " update " + iNomeTable + " set "+iDataAtualizar+"=GetDate() where CodProduto=" + iCodProduto +" and CodOpcao="+iCodOpcao;// and AtivoSN=1";
+            string lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where CodProduto=" + iCodProduto + " and CodOpcao=" + iCodOpcao;// and AtivoSN=1";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -292,12 +348,12 @@ namespace DexComanda
                                     " Pedido P " +
                                     " where P.Finalizado =1  " +
                                     " and  P.RealizadoEm between'" + iDataI.ToString() + "' and '" + iDataF.ToString() + "'";
-                                      if (CodMotoboy!=0)
-	                                    {
-		                                lSqlConsulta = lSqlConsulta + " and P.CodMotoboy="+ CodMotoboy;
-	                                    }
-                                      lSqlConsulta = lSqlConsulta + "group by P.CodMotoboy,cast(P.RealizadoEm as date)";
-                                    
+            if (CodMotoboy != 0)
+            {
+                lSqlConsulta = lSqlConsulta + " and P.CodMotoboy=" + CodMotoboy;
+            }
+            lSqlConsulta = lSqlConsulta + "group by P.CodMotoboy,cast(P.RealizadoEm as date)";
+
 
 
             command = new SqlCommand(lSqlConsulta, conn);
@@ -395,28 +451,28 @@ namespace DexComanda
             adapter.Fill(ds, iTable);
             return ds;
         }
-        public DataSet SelectMontaGrid(string iTable , string iParametrosConsulta,Boolean iAtivos=true)
+        public DataSet SelectMontaGrid(string iTable, string iParametrosConsulta, Boolean iAtivos = true)
         {
-            string iSql,iSubSelect;
-           
-            if (iParametrosConsulta!=null)
+            string iSql, iSubSelect;
+
+            if (iParametrosConsulta != null)
             {
                 iSql = "select " + iParametrosConsulta + " from " + iTable;
-                if (iTable=="Pedido")
+                if (iTable == "Pedido")
                 {
-                    iSql = iSql +  " Pd where Finalizado = 0 and [status] ='Aberto' ORDER BY Pd.Codigo DESC";
+                    iSql = iSql + " Pd where Finalizado = 0 and [status] ='Aberto' ORDER BY Pd.Codigo DESC";
                 }
-                if (iTable=="Produto")
+                if (iTable == "Produto")
                 {
-                    if (iAtivos )
+                    if (iAtivos)
                     {
-                        iSql = iSql + " where AtivoSN=1";  
+                        iSql = iSql + " where AtivoSN=1";
                     }
                     else
                     {
-                        iSql = iSql + " where AtivoSN=0"; 
+                        iSql = iSql + " where AtivoSN=0";
                     }
-                    
+
                 }
 
             }
@@ -425,7 +481,7 @@ namespace DexComanda
                 iSql = "select * from " + iTable;
             }
 
-            
+
             command = new SqlCommand(iSql, conn);
             command.CommandType = CommandType.Text;
             adapter = new SqlDataAdapter(command);
@@ -435,7 +491,7 @@ namespace DexComanda
         }
         public DataSet SelectOpcaoProduto(string iCodProduto)
         {
-            string iSql = " select PO.CODOPCAO, PO.Preco,OP.Nome  "+
+            string iSql = " select PO.CODOPCAO, PO.Preco,OP.Nome  " +
                           "  from Produto_Opcao PO " +
                           " left join Opcao OP on OP.Codigo = PO.CodOpcao " +
                           " where " +
@@ -460,10 +516,10 @@ namespace DexComanda
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
 
-            if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" || spName == "spAdicionarCaixa" || spName=="spAdicionaHistorico"||
+            if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" || spName == "spAdicionarCaixa" || spName == "spAdicionaHistorico" ||
                 spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
                 spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" ||
-                spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento"||spName=="spAdicionarOpcaProduto")
+                spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento" || spName == "spAdicionarOpcaProduto")
             {
 
                 foreach (PropertyInfo propriedade in properties)
@@ -479,21 +535,21 @@ namespace DexComanda
                 }
 
             }
-            else if (spName=="spAdicionarGrupo")
+            else if (spName == "spAdicionarGrupo")
             {
                 foreach (PropertyInfo propriedade in properties)
                 {
-                    if (!propriedade.Name.Equals("DataSincronismo")&& !propriedade.Name.Equals("Codigo") )
+                    if (!propriedade.Name.Equals("DataSincronismo") && !propriedade.Name.Equals("Codigo"))
                     {
                         command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
                     }
                 }
             }
-            else if (spName=="spAdicionaBairrosRegiao")
+            else if (spName == "spAdicionaBairrosRegiao")
             {
                 foreach (PropertyInfo propriedade in properties)
                 {
-                    if (!propriedade.Name.Equals("DataSincronismo") )
+                    if (!propriedade.Name.Equals("DataSincronismo"))
                     {
                         command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
                     }
@@ -652,7 +708,7 @@ namespace DexComanda
                 //        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                 //    }
                 //}
-                else if (spName=="spAlteraOpcao")
+                else if (spName == "spAlteraOpcao")
                 {
                     if (!p.Name.Equals("DataSincronismo"))
                     {
@@ -700,9 +756,9 @@ namespace DexComanda
                     }
 
                 }
-                else if (spName=="spAlterarBairrosRegiao")
+                else if (spName == "spAlterarBairrosRegiao")
                 {
-                     if (!p.Name.Equals("DataSincronismo"))
+                    if (!p.Name.Equals("DataSincronismo"))
                     {
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
@@ -726,23 +782,23 @@ namespace DexComanda
             //int pIndex = 0;
             foreach (PropertyInfo p in properties)
             {
-                
-                    if (spName == "spExcluirItemPedido")
+
+                if (spName == "spExcluirItemPedido")
+                {
+                    if (p.Name.Equals("CodProduto") || p.Name.Equals("CodPedido"))
                     {
-                        if (p.Name.Equals("CodProduto") || p.Name.Equals("CodPedido"))
+                        if (!p.Name.Equals("Codigo"))
                         {
-                            if (!p.Name.Equals("Codigo"))
-                            {
                             command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
-                            }
                         }
                     }
+                }
 
-                else if (spName=="spExcluirOpcaoProduto")
+                else if (spName == "spExcluirOpcaoProduto")
                 {
                     if (p.Name.Equals("CodProduto") || p.Name.Equals("CodOpcao"))
                     {
-                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
                 }
             }
@@ -1001,7 +1057,7 @@ namespace DexComanda
 
             return ds;
         }
-       
+
         public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo)
         {
             command = new SqlCommand(spName, conn);
@@ -1010,9 +1066,9 @@ namespace DexComanda
             {
                 command.Parameters.AddWithValue("@NumeroMesa", codigo);
             }
-            else if (spName=="spObterHistoricoPorPessoa")
+            else if (spName == "spObterHistoricoPorPessoa")
             {
-                 command.Parameters.AddWithValue("@CodPessoa", codigo);
+                command.Parameters.AddWithValue("@CodPessoa", codigo);
             }
             else
             {
@@ -1068,7 +1124,7 @@ namespace DexComanda
 
             return ds;
         }
-        public DataSet Liberacao(string iNomeEmpresa ,string CNPJ, string iNomePC, string iMAC)
+        public DataSet Liberacao(string iNomeEmpresa, string CNPJ, string iNomePC, string iMAC)
         {
             int Tabela;
             Boolean AtivoSn = false;
@@ -1076,13 +1132,13 @@ namespace DexComanda
             try
             {
                 MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
-               // MysqlCommand.CommandTimeout = CmysqlTimeOut;
+                // MysqlCommand.CommandTimeout = CmysqlTimeOut;
                 MysqlConnection.Open();
                 if (MysqlConnection.State == ConnectionState.Open)
                 {
 
                     MysqlCommand = new MySqlCommand("select cnpj,AtivoSN,NomePC,MACPC from Licenca where cnpj='" + CNPJ + "' and NomePC='" + iNomePC + "' and MACPC='" + iMAC + "'", MysqlConnection);
-                    
+
                     MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
                     MysqlDataAdapter.Fill(ds, "Licenca");
                     if (ds.Tables["Licenca"].Rows.Count > 0)
@@ -1127,7 +1183,7 @@ namespace DexComanda
                 if (intAbriu5Vezes >= 5)
                 {
                     MessageBox.Show(" Não foi possivel validar seu acesso o sistema  será encerrado!");
-                    Utils.Kill(); 
+                    Utils.Kill();
                 }
             }
             return ds;
@@ -1137,7 +1193,7 @@ namespace DexComanda
             try
             {
                 MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
-               // MysqlCommand.CommandTimeout = CmysqlTimeOut;
+                // MysqlCommand.CommandTimeout = CmysqlTimeOut;
                 MysqlConnection.Open();
                 MysqlCommand = new MySqlCommand("insert into Licenca(CNPJ,AtivoSN,Nome,DataLiberacao,DataExpiracao) values " + CNPJ + ", " + AtivoSN + " ," + NomeEmpresa + ", " + dataLiberacao + " ," + DataExpiracao, MysqlConnection);
                 MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);

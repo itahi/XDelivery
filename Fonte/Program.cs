@@ -74,7 +74,6 @@ namespace DexComanda
                     if (servidor.Tables["Empresa"].Rows.Count > 0)
                     {
                         dRow = servidor.Tables["Empresa"].Rows[0];
-
                         Empresa empresas = new Empresa()
                         {
                             Nome = dRow.ItemArray.GetValue(1).ToString(),

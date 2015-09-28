@@ -34,6 +34,7 @@ using CrystalDecisions.Shared;
 using CrystalDecisions.CrystalReports.Engine;
 using System.Diagnostics;
 using System.Configuration;
+using DexComanda.Relatorios.Clientes;
 namespace DexComanda
 {
     public class Utils
@@ -133,6 +134,7 @@ namespace DexComanda
             return Logado;
         }
        
+       
         public static bool VerificaCaixaAbertoDiaAnterior()
         {
             Boolean CaixaAberto = false;
@@ -145,7 +147,47 @@ namespace DexComanda
             }
             return CaixaAberto;
         }
-        public static string ImpressaoEntreganova(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
+        public static void ImprimirHistoricoCliente(int iCodPessoa, DateTime iDtInici, DateTime idtFim)
+        {
+            RelHistoricoCliente report;
+            try
+            {
+                report = new RelHistoricoCliente();
+
+                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                report.Load(Directory.GetCurrentDirectory() + @"\RelHistoricoCliente.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+
+                report.SetParameterValue("@CodPessoa", iCodPessoa);
+                report.SetParameterValue("@DataInicio", iDtInici.Date);
+                report.SetParameterValue("@DataFim", idtFim.Date);
+
+
+                report.PrintToPrinter(0, true, 0, 0);
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message);
+            }
+            
+        }
+        public static string ImpressaoEntreganova(int iCodPedido,decimal iValorPago, Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
            
@@ -158,7 +200,7 @@ namespace DexComanda
                 ConnectionInfo crConnectionInfo = new ConnectionInfo();
                 Tables CrTables;
 
-               report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
+                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
                 crConnectionInfo.UserID = "sa";
@@ -173,6 +215,7 @@ namespace DexComanda
                 }
 
                 report.SetParameterValue("@Codigo", iCodPedido);
+                report.SetParameterValue("ValorPago", iValorPago);
             
                 if (iExport)
                 {
@@ -202,7 +245,7 @@ namespace DexComanda
             }
             return iRetorno;  
         }
-        public static string ImpressaoEntreganova_20(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
+        public static string ImpressaoEntreganova_20(int iCodPedido,decimal iValorPago, Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
 
@@ -231,6 +274,7 @@ namespace DexComanda
 
 
                 report.SetParameterValue("@Codigo", iCodPedido);
+                report.SetParameterValue("ValorPago", iValorPago);
                 if (iExport)
                 {
                     CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
@@ -830,23 +874,18 @@ namespace DexComanda
 
             return RetornoServ = retorno[0].ToString();
         }
-        public static int ClientesAniversariantes(string iDataInicial, string iDataFinal, string iMessagem, string iPorta)
+        public static int EnviaSMS_LOCASMS(DataSet ds, string iMessagem,string iNomeCampanha,string iUser,string iSenha)
         {
-            conexao = new Conexao();
-            DBExpertDataSet dbExpert = new DBExpertDataSet();
-            DataInicial = Convert.ToDateTime(iDataInicial + "/" + DateTime.Now.Year + " 00:00:00");
-            DataFinal = Convert.ToDateTime(iDataFinal + "/" + DateTime.Now.Year + " 23:59:59");
-            DataSet ListaClientes = conexao.SelectObterAniversariantes("Pessoa", "spObterAnivesariantes", DataInicial, DataFinal);
-            TotalSelecionado = ListaClientes.Tables["Pessoa"].Rows.Count;
-            DialogResult resultado = MessageBox.Show("O Sistema enviará SMS para " + TotalSelecionado + " Clientes , deseja continuar?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+          
+            DialogResult resultado = MessageBox.Show("O Sistema enviará SMS para " + ds.Tables[0].Rows.Count + " Clientes , deseja continuar?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (resultado == DialogResult.Yes)
             {
-                System.String[] Telefone = new System.String[TotalSelecionado];
+                System.String[] Telefone = new System.String[ds.Tables[0].Rows.Count];
 
-                for (int i = 0; i < ListaClientes.Tables["Pessoa"].Rows.Count; i++)
+                for (int i = 0; i < ds.Tables["Pessoa"].Rows.Count; i++)
                 {
-                    DataRow dRow = ListaClientes.Tables["Pessoa"].Rows[i];
+                    DataRow dRow = ds.Tables["Pessoa"].Rows[i];
                     string iNumero = dRow.ItemArray.GetValue(0).ToString();
                     NomeCliente = dRow.ItemArray.GetValue(1).ToString();
 
@@ -866,14 +905,23 @@ namespace DexComanda
                 }
 
                 Integração.EnviaSMS_LOCASMS EnviarSMS = new EnviaSMS_LOCASMS();
-                Array IRetorno = new Array[2];
-                IRetorno = EnviarSMS.EnviaSMSLista(Telefone, "27981667827", "546936", iMessagem, "ClientesAniversariantes" + iDataInicial + iDataFinal);
+                
+                string strRetorno, strQuantidadeEnvio,iText;
 
-                MessageBox.Show("Sms enviados e confirmados " + IRetorno, "Envio de SMS");
+                 iText= EnviarSMS.EnviaSMSLista(Telefone, iUser, "123", iMessagem, iNomeCampanha);
+
+                 string[] IRetorno = iText.Split(',');
+                
+                for (int i = 0; i < IRetorno.Length; i++)
+                {
+                    strRetorno = IRetorno[0].ToString();
+                }
+              //  MessageBox.Show("Resultado"IRetorno[0].ToStr);
             }
 
             return TotalSelecionado;
         }
+        
         public static bool EHCelular(string iNumero)
         {
             bool IRETORNO = false;

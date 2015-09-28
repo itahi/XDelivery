@@ -10,7 +10,7 @@ namespace DexComanda.Integração
    public class EnviaSMS_LOCASMS
     {
 
-       public Array EnviaSMSLista(Array iNumeros, string iUser, string iSennha, string iMensagem , string iNomeCampanha)
+       public string EnviaSMSLista(Array iNumeros, string iUser, string iSennha, string iMensagem , string iNomeCampanha)
        {
            Array[] IRetorno = new Array[2];
            try
@@ -50,12 +50,10 @@ namespace DexComanda.Integração
            catch (Exception erro)
            {
 
-               MessageBox.Show(erro.InnerException.ToString());
+               MessageBox.Show("Erro ao enviar os SMS"+erro.Message);
            }
 
-
-
-           return IRetorno;
+           return IRetorno.ToString();
 
        }
             

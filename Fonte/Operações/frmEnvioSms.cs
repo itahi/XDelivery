@@ -16,6 +16,8 @@ using HumanAPIClient.Service;
 using HumanAPIClient.Model;
 using DexComanda.Models;
 using DexComanda;
+using DexComanda.Integração;
+using System.Configuration;
 namespace DexComanda
 {
     public partial class frmEnvioSms : Form
@@ -29,10 +31,12 @@ namespace DexComanda
         private string NomeEmpresa;
         private string NomeCliente;
         private int TotalSelecionado;
+        private string pLogin;
+        private string pSenha;
 
         public frmEnvioSms()
         {
-             
+
             InitializeComponent();
             con = new Conexao();
             NomeEmpresa = Sessions.returnEmpresa.Nome;
@@ -41,6 +45,26 @@ namespace DexComanda
 
         private void frmEnvioSms_Load(object sender, EventArgs e)
         {
+            try
+            {
+                string Itext = ConfigurationManager.AppSettings["ConfigSMS"];
+
+                string[] words = Itext.Split(',');
+                for (int i = 0; i < words.Length-1; i++)
+                {
+                    pLogin = words[0];
+                    pSenha = words[1];
+                }
+
+            }
+            catch (Exception erro)
+            {
+
+                throw;
+            }
+
+
+
             // MultipleSending Cliente = new MultipleSending("xsistemas", "XJzaDYXQ");
             lblRestante.Text = Convert.ToString(150 - NomeEmpresa.ToString().Length);
 
@@ -48,55 +72,49 @@ namespace DexComanda
 
         private void EnviarSMS(object sender, EventArgs e)
         {
-                
+
             this.Cursor = Cursors.WaitCursor;
-            if (rbAniversariantes.Checked == false && rbSemPedidos.Checked == false && txtMensagem.Text != "")
+            DataSet dsLista;
+            dsLista = new DataSet();
+            if (!rbAniversariantes.Checked && !rbSemPedidos.Checked && txtMensagem.Text != "" && !chkTodosClientes.Checked)
+            {
+                MessageBox.Show("Selecione primeiro para que grupo enviará as mensagems", "Aviso XCommanda");
+                return;
+            }
+            else
+            {
+                if (rbAniversariantes.Checked)
                 {
-                    MessageBox.Show("Selecione primeiro para que grupo enviará as mensagems", "Aviso XCommanda");
-                }
-                else
-                {
-                    if (rbAniversariantes.Checked)
+                    if (txtDataFinal.Text.Replace("  /", "") != "" || txtDataFinal.Text.Replace("  /", "") != "")
                     {
-                        if (txtDataFinal.Text.Replace("  /", "") != "" || txtDataFinal.Text.Replace("  /", "") != "")
-                        {
-
-                            lbl.Text= Convert.ToString(Utils.ClientesAniversariantes(txtDataInicial.Text, txtDataFinal.Text, txtMensagem.Text,cbxPorta.Text));
-                        }
-                        else
-                        {
-                            MessageBox.Show("Preencha o periodo para enviar", "Aviso XCommada");
-                        }
-
+                        dsLista = con.RetornaListaPessoasSMS(Convert.ToDateTime(txtDataInicial.Text), Convert.ToDateTime(txtDataFinal.Text), true, false, false);
                     }
-                    else if (rbSemPedidos.Checked)
+                    else
                     {
-                        lbl.Text= Convert.ToString(Utils.ClientesSemPedidos(txtDataInicial.Text, txtDataFinal.Text, txtMensagem.Text, cbxPorta.Text));
-                    }
-                    else if (chkTodosClientes.Checked)
-                    {
-                        
+                        MessageBox.Show("Preencha o periodo para enviar", "Aviso XCommada");
                     }
 
                 }
+                else if (rbSemPedidos.Checked)
+                {
+                    if (txtDataInicial2.Text.Replace("  /", "") != "" || txtDataFinal2.Text.Replace("  /", "") != "")
+                    {
+                        dsLista = con.RetornaListaPessoasSMS(Convert.ToDateTime(txtDataInicial2.Text), Convert.ToDateTime(txtDataFinal2.Text), false, true, false);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Preencha o periodo para enviar", "Aviso XCommada");
+                    }
+                }
 
-            lbl.Text = Convert.ToString(TotalSelecionado);
-            this.Cursor = Cursors.Default;
-        }
-            
-        
+            }
+            if (dsLista.Tables[0].Rows.Count > 0)
+            {
 
-        private void SelecionarClientesEnvio(object sender, EventArgs e)
-        {
-            
-        }
-
-
-      
-
-        private void ContadorCaracters(object sender, EventArgs e)
-        {
-           
+                Utils.EnviaSMS_LOCASMS(dsLista, txtMensagem.Text, "Teste", pLogin, pSenha);
+                lbl.Text = Convert.ToString(TotalSelecionado);
+                this.Cursor = Cursors.Default;
+            }
         }
 
         private void txtMensagem_KeyDown(object sender, KeyEventArgs e)
@@ -104,11 +122,11 @@ namespace DexComanda
             int TotalCaracteres = 150 - NomeEmpresa.Length;
             int TotalContado = txtMensagem.Text.Length;
 
-            if (txtMensagem.Text !="")
+            if (txtMensagem.Text != "")
             {
-                lblRestante.Text = Convert.ToString(TotalCaracteres - TotalContado);  
+                lblRestante.Text = Convert.ToString(TotalCaracteres - TotalContado);
             }
-            
+
         }
         private string AdicionaNomeCliente(string iMensagem)
         {
@@ -124,7 +142,7 @@ namespace DexComanda
         {
 
         }
- 
+
 
     }
 }

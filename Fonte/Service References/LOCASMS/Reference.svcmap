@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8f178366-c8d0-4a33-9a35-a8edac53e691" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ed6e9a47-ddc6-45ef-8aee-cbf202af275e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,8 +22,8 @@
     <MetadataSource Address="http://209.133.196.250/painel/ServiceSms.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ServiceSms.disco" MetadataType="Disco" ID="888aa00f-ed4d-48d5-af8a-7750341d3c38" SourceId="1" SourceUrl="http://209.133.196.250/painel/ServiceSms.asmx?disco" />
-    <MetadataFile FileName="ServiceSms.wsdl" MetadataType="Wsdl" ID="4d197c4d-ecd0-482f-8f9b-d0b518000943" SourceId="1" SourceUrl="http://209.133.196.250/painel/ServiceSms.asmx?wsdl" />
+    <MetadataFile FileName="ServiceSms.disco" MetadataType="Disco" ID="08154c01-f1bc-47f8-92b0-bf52bfd8f5eb" SourceId="1" SourceUrl="http://209.133.196.250/painel/ServiceSms.asmx?disco" />
+    <MetadataFile FileName="ServiceSms.wsdl" MetadataType="Wsdl" ID="6c317782-639f-4503-bbde-f2d04e7c0a8a" SourceId="1" SourceUrl="http://209.133.196.250/painel/ServiceSms.asmx?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

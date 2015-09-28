@@ -138,9 +138,9 @@ namespace DexComanda
             grpDesconto.Visible = DescontoPordia;
             List<Grupo> grupos = new List<Grupo>();
 
-            this.cbxGrupoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupo").Tables["Grupo"];
-            this.cbxGrupoProduto.DisplayMember = "NomeGrupo";
-            this.cbxGrupoProduto.ValueMember = "Codigo";
+            //this.cbxGrupoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupo").Tables["Grupo"];
+            //this.cbxGrupoProduto.DisplayMember = "NomeGrupo";
+            //this.cbxGrupoProduto.ValueMember = "Codigo";
 
             if (produto != null)
             {
@@ -399,18 +399,28 @@ namespace DexComanda
 
         private void AdicionarOpcao(object sender, EventArgs e)
         {
-            Produto_Opcao prodOpcao = new Produto_Opcao()
+            if (txtPrecoOpcao.Text.Trim() != "" || cbxOpcao.SelectedValue.ToString()!="")
             {
-                CodProduto = codigoProdutoParaAlterar,
-                CodOpcao = int.Parse(cbxOpcao.SelectedValue.ToString()),
-                Preco = decimal.Parse(txtPrecoOpcao.Text),
-                DataAlteracao = DateTime.Now
-            };
-            con.Insert("spAdicionarOpcaProduto", prodOpcao);
-            con.AtualizaDataSincronismo("Produto", codigoProdutoParaAlterar, "DataAlteracao");
-            txtPrecoOpcao.Text = "";
-            cbxOpcao.Text = "";
-            ListaOpcaoProduto();
+                Produto_Opcao prodOpcao = new Produto_Opcao()
+                {
+                    CodProduto = codigoProdutoParaAlterar,
+                    CodOpcao = int.Parse(cbxOpcao.SelectedValue.ToString()),
+                    Preco = decimal.Parse(txtPrecoOpcao.Text),
+                    DataAlteracao = DateTime.Now
+                };
+                con.Insert("spAdicionarOpcaProduto", prodOpcao);
+                con.AtualizaDataSincronismo("Produto", codigoProdutoParaAlterar, "DataAlteracao");
+                txtPrecoOpcao.Text = "";
+                cbxOpcao.Text = "";
+                ListaOpcaoProduto();
+            }
+            else
+            {
+                MessageBox.Show("Campos obrigatórios não podem ser vazios");
+                return;
+            }
+            
+            
 
 
         }
@@ -554,6 +564,13 @@ namespace DexComanda
         private void tabControl1_Click(object sender, EventArgs e)
         {
             ListaOpcaoProduto();
+        }
+
+        private void cbxGrupoProduto_Click(object sender, EventArgs e)
+        {
+            this.cbxGrupoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupo").Tables["Grupo"];
+            this.cbxGrupoProduto.DisplayMember = "NomeGrupo";
+            this.cbxGrupoProduto.ValueMember = "Codigo";
         }
     }
 }

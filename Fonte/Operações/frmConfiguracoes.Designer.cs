@@ -177,6 +177,7 @@
             this.btnSalvar = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnSalvarSMS = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -1058,17 +1059,17 @@
             // 
             // grpSms
             // 
+            this.grpSms.Controls.Add(this.btnSalvarSMS);
             this.grpSms.Controls.Add(this.label21);
             this.grpSms.Controls.Add(this.label6);
             this.grpSms.Controls.Add(this.txtSenha);
             this.grpSms.Controls.Add(this.txtLogin);
             this.grpSms.Location = new System.Drawing.Point(16, 130);
             this.grpSms.Name = "grpSms";
-            this.grpSms.Size = new System.Drawing.Size(238, 93);
+            this.grpSms.Size = new System.Drawing.Size(238, 100);
             this.grpSms.TabIndex = 3;
             this.grpSms.TabStop = false;
             this.grpSms.Text = "Dados Envio Sms";
-            this.grpSms.Visible = false;
             // 
             // label21
             // 
@@ -1712,6 +1713,18 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // btnSalvarSMS
+            // 
+            this.btnSalvarSMS.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvarSMS.Image")));
+            this.btnSalvarSMS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSalvarSMS.Location = new System.Drawing.Point(98, 71);
+            this.btnSalvarSMS.Name = "btnSalvarSMS";
+            this.btnSalvarSMS.Size = new System.Drawing.Size(75, 23);
+            this.btnSalvarSMS.TabIndex = 24;
+            this.btnSalvarSMS.Text = "Salvar";
+            this.btnSalvarSMS.UseVisualStyleBackColor = true;
+            this.btnSalvarSMS.Click += new System.EventHandler(this.btnSalvarSMS_Click);
+            // 
             // frmConfiguracoes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1920,6 +1933,7 @@
         private System.Windows.Forms.CheckBox chkTelefone2;
         private System.Windows.Forms.CheckBox chkTelefone;
         private System.Windows.Forms.CheckBox chkCep;
+        private System.Windows.Forms.Button btnSalvarSMS;
 
     }
 }

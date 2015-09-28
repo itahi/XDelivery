@@ -80,7 +80,7 @@ namespace DexComanda.Operações
                 RestResponse response = (RestResponse)client.Execute(request);
                 prgBarRegiao.Value = i + 1;
 
-                if (response.Content.ToString()== "true")
+                if (response.Content.ToString() == "true")
                 {
                     con.AtualizaDataSincronismo("RegiaoEntrega", ds.Tables[0].Rows[i].Field<int>("Codigo"));
                 }
@@ -104,6 +104,10 @@ namespace DexComanda.Operações
                 else if (ds.Tables["Opcao"].Rows[i].Field<string>("Tipo") == "Multipla Selecao")
                 {
                     iTipoOpcao = 2;
+                }
+                else
+                {
+                    iTipoOpcao = 3;
                 }
 
                 request.AddParameter("token", iParamToken);
@@ -176,12 +180,12 @@ namespace DexComanda.Operações
 
         private int RetornaIDCategoria(string iNomeCategoria)
         {
-            int iIDReturn=1;
+            int iIDReturn = 1;
             DataSet dsGrupo = con.SelectRegistroPorNome("@Nome", "Grupo", "spObterGrupoPorNome", iNomeCategoria);
-            if (dsGrupo.Tables[0].Rows.Count>0)
+            if (dsGrupo.Tables[0].Rows.Count > 0)
             {
                 DataRow dRowProduto = dsGrupo.Tables[0].Rows[0];
-                 iIDReturn = int.Parse(dRowProduto.ItemArray.GetValue(0).ToString());
+                iIDReturn = int.Parse(dRowProduto.ItemArray.GetValue(0).ToString());
             }
 
             return iIDReturn;
@@ -193,17 +197,16 @@ namespace DexComanda.Operações
             RestRequest request = new RestRequest("ws/produto/opcao/set", Method.POST);
 
             DataSet ds = con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcaoProdutoCodigo", iCodProduto);
-            int iCodOpcao=0;
+            int iCodOpcao = 0;
             if (ds.Tables[0].Rows.Count > 0)
             {
                 int iCodProd = ds.Tables["Produto_Opcao"].Rows[0].Field<int>("CodProduto");
                 string[] opcao = new string[ds.Tables[0].Rows.Count];
                 request.AddParameter("token", iParamToken);
                 request.AddParameter("referenciaId", iCodProd);
-                
+
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-
                     iCodOpcao = ds.Tables["Produto_Opcao"].Rows[i].Field<int>("CodOpcao");
                     decimal iprice = ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
                     request.AddParameter("opcao[" + iCodOpcao + "]", iprice); //Pronto

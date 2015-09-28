@@ -89,7 +89,6 @@ E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmExibeCancelamen
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmHistoricoCancelamento.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmInformaMotoboy.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmSincronizacao.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmReportCredito.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Fechamentos.frmReportEntregasPorMotoboy.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmCadastrarEntregador.resources
 E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmCadastrarFormaPagamento.resources

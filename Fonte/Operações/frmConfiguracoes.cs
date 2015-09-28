@@ -328,7 +328,7 @@ namespace DexComanda
                 txtViasBalcao.Text = Sessions.returnConfig.ViasBalcao;
                 chkUltPedido.Checked = Sessions.returnConfig.RepeteUltimoPedido;
                 chkRegCancelamentos.Checked = Sessions.returnConfig.RegistraCancelamentos;
-
+                
                 this.btnSalvar.Text = "Alterar";
                 this.btnSalvar.Click -= SalvaConfig;
                 this.btnSalvar.Click += AlterarConfig;
@@ -353,6 +353,8 @@ namespace DexComanda
                 txtContato.Text = Linha.ItemArray.GetValue(13).ToString();
                 txtServidor.Text = Linha.ItemArray.GetValue(15).ToString();
                 txtCaminhoBkp.Text = Linha.ItemArray.GetValue(16).ToString();
+                txtURL.Text = Sessions.returnEmpresa.UrlServidor;
+
 
                 if (con.IsConnected())
                 {
@@ -756,6 +758,12 @@ namespace DexComanda
             }
 
             Utils.SalvarConfiguracao("GridPessoa", strConfiPessoa);
+        }
+
+        private void btnSalvarSMS_Click(object sender, EventArgs e)
+        {
+            Utils.SalvarConfiguracao("ConfigSMS", txtLogin.Text + "," + txtSenha.Text);
+            MessageBox.Show("Senha gravada", "[xSistemas]");
         }
 
         

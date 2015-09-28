@@ -742,6 +742,11 @@ namespace DexComanda
 
         private void LancarHistorico(object sender, EventArgs e)
         {
+            if (txtValor.Text.Trim()=="" || txtHistorico.Text.Trim()=="")
+            {
+                MessageBox.Show("Campos obrigatórios não podem ser vazios");
+                return;
+            }
             double dblTotalCredito = 0.00;
             double dblTotalDebito = 0.00;
 
@@ -774,11 +779,11 @@ namespace DexComanda
             {
                 if (HistoricoGridView.Rows[i].Cells["Tipo"].Value.ToString() == "D")
                 {
-                    dblTotalDebito = dblTotalDebito + double.Parse(HistoricoGridView.Rows[i].Cells["Valor"].Value.ToString());
+                    dblTotalDebito = dblTotalDebito + double.Parse(HistoricoGridView.Rows[i].Cells["Debito"].Value.ToString());
                 }
                 else
                 {
-                    dblTotalCredito = dblTotalCredito + double.Parse(HistoricoGridView.Rows[i].Cells["Valor"].Value.ToString());
+                    dblTotalCredito = dblTotalCredito + double.Parse(HistoricoGridView.Rows[i].Cells["Credito"].Value.ToString());
                 }
             }
             lblTotal.Text = Convert.ToString(dblTotalCredito - dblTotalDebito);
@@ -803,7 +808,7 @@ namespace DexComanda
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            frmReportCredito frm = new frmReportCredito(codigoClienteParaAlterar, dataInicio.Value, dataFim.Value);
+            Utils.ImprimirHistoricoCliente(codigoClienteParaAlterar,dataInicio.Value,dataFim.Value);
             //  frm.ShowDialog();
         }
 

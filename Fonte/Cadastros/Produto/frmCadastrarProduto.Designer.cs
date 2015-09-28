@@ -314,6 +314,7 @@
             this.cbxGrupoProduto.Name = "cbxGrupoProduto";
             this.cbxGrupoProduto.Size = new System.Drawing.Size(186, 26);
             this.cbxGrupoProduto.TabIndex = 24;
+            this.cbxGrupoProduto.Click += new System.EventHandler(this.cbxGrupoProduto_Click);
             // 
             // nomeProdutoTextBox
             // 

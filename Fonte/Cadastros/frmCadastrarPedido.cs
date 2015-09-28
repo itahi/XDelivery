@@ -1201,14 +1201,15 @@ namespace DexComanda
                         {
                             iCodigo = codPedido;
                         }
-
+                        
                         if (Sessions.returnConfig.QtdCaracteresImp <= 30)
                         {
-                            iRetorno = Utils.ImpressaoEntreganova_20(iCodigo, ImprimeLPT, QtViasEntrega);
+                           
+                            iRetorno = Utils.ImpressaoEntreganova_20(iCodigo,decimal.Parse(lblTroco.Text.Replace("R$","")), ImprimeLPT, QtViasEntrega);
                         }
                         else
                         {
-                            iRetorno = Utils.ImpressaoEntreganova(iCodigo, ImprimeLPT, QtViasEntrega);
+                            iRetorno = Utils.ImpressaoEntreganova(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), ImprimeLPT, QtViasEntrega);
                         }
 
 
@@ -1223,7 +1224,7 @@ namespace DexComanda
                     }
 
                 }
-                if (ImprimeViaEntrega && cbxTipoPedido.Text == "1 - Mesa")
+                if (ImprimeViaCozinha && cbxTipoPedido.Text == "0 - Entrega")
                 {
                     int iCodigo;
                     for (int i = 0; i < QtdViasCozinha; i++)
@@ -1950,6 +1951,7 @@ namespace DexComanda
             this.lblDescricaoDoItem = new System.Windows.Forms.Label();
             this.btnReimprimir = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
             this.btnCalGarcon = new System.Windows.Forms.Button();
             this.lblEntrega = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -1983,7 +1985,6 @@ namespace DexComanda
             this.label9 = new System.Windows.Forms.Label();
             this.chkListAdicionais = new System.Windows.Forms.CheckedListBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -2143,7 +2144,7 @@ namespace DexComanda
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(997, 43);
+            this.panel1.Size = new System.Drawing.Size(1051, 43);
             this.panel1.TabIndex = 41;
             // 
             // lblTempo
@@ -2320,6 +2321,17 @@ namespace DexComanda
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(754, 82);
             this.panel2.TabIndex = 42;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.DarkSlateGray;
+            this.label10.Location = new System.Drawing.Point(3, 54);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(138, 16);
+            this.label10.TabIndex = 60;
+            this.label10.Text = "[F5] Gerar S/Troco";
             // 
             // btnCalGarcon
             // 
@@ -2550,12 +2562,13 @@ namespace DexComanda
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel4.Controls.Add(this.label6);
             this.panel4.Controls.Add(this.lblEndereco);
             this.panel4.Controls.Add(this.lblNomeCliente);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 43);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(997, 43);
+            this.panel4.Size = new System.Drawing.Size(1051, 43);
             this.panel4.TabIndex = 63;
             // 
             // lblEndereco
@@ -2585,9 +2598,9 @@ namespace DexComanda
             this.panel5.Controls.Add(this.grpBoxTamanhos);
             this.panel5.Controls.Add(this.label9);
             this.panel5.Controls.Add(this.chkListAdicionais);
-            this.panel5.Location = new System.Drawing.Point(760, 119);
+            this.panel5.Location = new System.Drawing.Point(760, 89);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(225, 401);
+            this.panel5.Size = new System.Drawing.Size(279, 431);
             this.panel5.TabIndex = 64;
             // 
             // grpBoxTamanhos
@@ -2600,7 +2613,7 @@ namespace DexComanda
             this.grpBoxTamanhos.Controls.Add(this.radioButton1);
             this.grpBoxTamanhos.Location = new System.Drawing.Point(6, 3);
             this.grpBoxTamanhos.Name = "grpBoxTamanhos";
-            this.grpBoxTamanhos.Size = new System.Drawing.Size(213, 100);
+            this.grpBoxTamanhos.Size = new System.Drawing.Size(270, 125);
             this.grpBoxTamanhos.TabIndex = 34;
             this.grpBoxTamanhos.TabStop = false;
             this.grpBoxTamanhos.Text = "Tamanhos";
@@ -2608,7 +2621,7 @@ namespace DexComanda
             // radioButton6
             // 
             this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(112, 73);
+            this.radioButton6.Location = new System.Drawing.Point(139, 77);
             this.radioButton6.Name = "radioButton6";
             this.radioButton6.Size = new System.Drawing.Size(40, 17);
             this.radioButton6.TabIndex = 77;
@@ -2621,7 +2634,7 @@ namespace DexComanda
             // radioButton5
             // 
             this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(112, 42);
+            this.radioButton5.Location = new System.Drawing.Point(139, 45);
             this.radioButton5.Name = "radioButton5";
             this.radioButton5.Size = new System.Drawing.Size(40, 17);
             this.radioButton5.TabIndex = 76;
@@ -2634,7 +2647,7 @@ namespace DexComanda
             // radioButton4
             // 
             this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(112, 18);
+            this.radioButton4.Location = new System.Drawing.Point(139, 18);
             this.radioButton4.Name = "radioButton4";
             this.radioButton4.Size = new System.Drawing.Size(40, 17);
             this.radioButton4.TabIndex = 75;
@@ -2686,7 +2699,7 @@ namespace DexComanda
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 116);
+            this.label9.Location = new System.Drawing.Point(3, 138);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(55, 13);
             this.label9.TabIndex = 33;
@@ -2695,9 +2708,9 @@ namespace DexComanda
             // chkListAdicionais
             // 
             this.chkListAdicionais.FormattingEnabled = true;
-            this.chkListAdicionais.Location = new System.Drawing.Point(3, 132);
+            this.chkListAdicionais.Location = new System.Drawing.Point(3, 154);
             this.chkListAdicionais.Name = "chkListAdicionais";
-            this.chkListAdicionais.Size = new System.Drawing.Size(216, 259);
+            this.chkListAdicionais.Size = new System.Drawing.Size(273, 274);
             this.chkListAdicionais.TabIndex = 0;
             this.chkListAdicionais.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkListAdicionais_ItemCheck);
             // 
@@ -2705,30 +2718,18 @@ namespace DexComanda
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(757, 100);
+            this.label6.Location = new System.Drawing.Point(761, 21);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(146, 16);
             this.label6.TabIndex = 65;
             this.label6.Text = "Opções do Produto:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.DarkSlateGray;
-            this.label10.Location = new System.Drawing.Point(3, 54);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(151, 18);
-            this.label10.TabIndex = 60;
-            this.label10.Text = "[F5] Gerar S/Troco";
             // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(997, 522);
-            this.Controls.Add(this.label6);
+            this.ClientSize = new System.Drawing.Size(1051, 522);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.cbxListaMesas);
@@ -3066,7 +3067,7 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton1.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
-                cbxProdutosGrid.Text = iNomeProd + " " + ObterSomenteLetras(radioButton1.Text);
+                cbxProdutosGrid.Text = iNomeProd + " " + ObterSomenteLetras(radioButton1.Text.PadRight(5,'C'));
                 CalcularTotalItem();
             }
         }

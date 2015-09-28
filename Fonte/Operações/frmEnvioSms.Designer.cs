@@ -147,7 +147,6 @@
             this.lblRestante.Size = new System.Drawing.Size(25, 13);
             this.lblRestante.TabIndex = 11;
             this.lblRestante.Text = "145";
-            this.lblRestante.TextChanged += new System.EventHandler(this.ContadorCaracters);
             // 
             // label3
             // 
@@ -211,18 +210,19 @@
             // chkTodosClientes
             // 
             this.chkTodosClientes.AutoSize = true;
-            this.chkTodosClientes.Location = new System.Drawing.Point(155, 19);
+            this.chkTodosClientes.Location = new System.Drawing.Point(170, 144);
             this.chkTodosClientes.Name = "chkTodosClientes";
             this.chkTodosClientes.Size = new System.Drawing.Size(96, 17);
             this.chkTodosClientes.TabIndex = 13;
             this.chkTodosClientes.Text = "Todos Clientes";
+            this.chkTodosClientes.UseMnemonic = false;
             this.chkTodosClientes.UseVisualStyleBackColor = true;
-            this.chkTodosClientes.Visible = false;
             this.chkTodosClientes.CheckedChanged += new System.EventHandler(this.chkTodosClientes_CheckedChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Enabled = false;
             this.label2.Location = new System.Drawing.Point(272, 145);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(68, 13);
@@ -231,6 +231,7 @@
             // 
             // cbxPorta
             // 
+            this.cbxPorta.Enabled = false;
             this.cbxPorta.FormattingEnabled = true;
             this.cbxPorta.Items.AddRange(new object[] {
             "COM1",
