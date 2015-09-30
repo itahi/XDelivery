@@ -74,5 +74,6 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.Label label10;
+        private Relatorios.Clientes.CachedRelCreditoDebito cachedRelCreditoDebito1;
     }
 }

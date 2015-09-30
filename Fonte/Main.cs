@@ -170,6 +170,7 @@ namespace DexComanda
             string strDescPedido = DvPedido.ItemArray.GetValue(14).ToString();
             string strTroco = "0,00";
             decimal MargemGarcon = decimal.Parse(DvPedido.ItemArray.GetValue(16).ToString());
+           
             if (strTrocoPara != "0.00")
             {
                 strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
@@ -517,7 +518,8 @@ namespace DexComanda
 
             frmCadastrarProduto frm = new frmCadastrarProduto(int.Parse(dRowProduto.ItemArray.GetValue(7).ToString()), dRowProduto.ItemArray.GetValue(0).ToString(), dRowProduto.ItemArray.GetValue(3).ToString(),
                                                               decimal.Parse(dRowProduto.ItemArray.GetValue(1).ToString()), dRowProduto.ItemArray.GetValue(2).ToString(),
-                                                              Convert.ToBoolean(dRowProduto.ItemArray.GetValue(6).ToString()), decimal.Parse(dRowProduto.ItemArray.GetValue(5).ToString()), dRowProduto.ItemArray.GetValue(4).ToString());
+                                                              Convert.ToBoolean(dRowProduto.ItemArray.GetValue(6).ToString()), decimal.Parse(dRowProduto.ItemArray.GetValue(5).ToString()),
+                                                              dRowProduto.ItemArray.GetValue(4).ToString(), dRowProduto.ItemArray.GetValue(8).ToString());
             frm.StartPosition = FormStartPosition.CenterParent;
             frm.ShowDialog();
 
@@ -528,6 +530,7 @@ namespace DexComanda
             try
             {
                 CarregaProduto(int.Parse(produtosGridView.SelectedCells[0].Value.ToString()));
+                Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
                 //if (produtosGridView.SelectedCells.Count > 0)
                 //{
                 //    var produto = new Produto()
@@ -585,6 +588,7 @@ namespace DexComanda
 
                 frm.StartPosition = FormStartPosition.CenterParent;
                 frm.Show();
+                Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
             }
         }
 
@@ -1340,10 +1344,10 @@ namespace DexComanda
                 for (int i = 0; i < pedidosGridView.Rows.Count; i++)
                 {
                   
-                    DataRow dRowPedido = dsPedidosAbertos.Tables[0].Rows[i];
-                    Boolean iOrigemExterna = dRowPedido.ItemArray.GetValue(6).ToString() == "Aplicativo";
+                    DataRow dRowPedido = dsPedidosAbertos.Tables[0].Rows[0];
+                  //  Boolean iOrigemExterna = dRowPedido.ItemArray.GetValue(6).ToString() == "Aplicativo";
                     Boolean iMesa = dRowPedido.ItemArray.GetValue(5).ToString() != "0";
-                    if (iOrigemExterna && iMesa)
+                    if (iMesa)
                     {
                         ImpressaoAutomatica(int.Parse(dRowPedido.ItemArray.GetValue(1).ToString()), dRowPedido.ItemArray.GetValue(5).ToString());
                     }
@@ -1422,7 +1426,7 @@ namespace DexComanda
                 {
                     codigo = int.Parse(pedidosGridView.SelectedCells[0].Value.ToString());
                     CarregaPedido(codigo);
-
+                    Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
                 }
 
             }

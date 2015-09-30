@@ -38,6 +38,7 @@ namespace DexComanda
         private Main parentWindow;
         private int codigoItemParaAlterar;
         private int rowIndex;
+        private int MaxOpcaoProduto;
         private Font printFont;
         private Font printFontCozinha;
         private Pessoa pCliente;
@@ -114,7 +115,7 @@ namespace DexComanda
 
                 timer1.Enabled = IniciaTempo;
                 dcTaxaEntrega = iTaxaEntrega;
-            
+
                 lblEntrega.Text = Convert.ToString(iTaxaEntrega);
                 if (iTroco != "0,00")
                 {
@@ -449,14 +450,15 @@ namespace DexComanda
         {
             DataSet dsOpcoes = con.RetornaOpcoesProduto(iCodProduto);
             DataRow dRowOpcoes;
+
             //  Utils.LimpaForm(grpBoxTamanhos);
             EscondeTamanhos();
             chkListAdicionais.Items.Clear();
             if (dsOpcoes.Tables[0].Rows.Count > 0)
             {
-
                 for (int i = 0; i < dsOpcoes.Tables[0].Rows.Count; i++)
                 {
+                    MaxOpcaoProduto = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<int>("MaxOpcao");
                     lnome = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();
                     lTipo = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo");
                     lPreco = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
@@ -466,40 +468,41 @@ namespace DexComanda
                         lNomeOpcao = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();
                         if (!radioButton1.Visible)
                         {
-                            radioButton1.Text = lnome + "(+" + lPreco + ")";
+                            radioButton1.Text = lnome;// + "(+" + lPreco + ")";
                             radioButton1.Tag = lPreco;
                             radioButton1.Visible = true;
-                            
+
                             // grpBoxTamanhos.Controls.Add(rb);
                         }
                         else if (!radioButton2.Visible)
                         {
-                            radioButton2.Text = lnome + "(+" + lPreco + ")";
+                            radioButton2.Text = lnome;// + "(+" + lPreco + ")";+ "(+" + lPreco + ")";
+
                             radioButton2.Tag = lPreco;
                             radioButton2.Visible = true;
                         }
                         else if (!radioButton3.Visible)
                         {
-                            radioButton3.Text = lnome + "(+" + lPreco + ")";
+                            radioButton3.Text = lnome;// + "(+" + lPreco + ")";+ "(+" + lPreco + ")";
                             radioButton3.Tag = lPreco;
                             radioButton3.Visible = true;
 
                         }
                         else if (!radioButton4.Visible)
                         {
-                            radioButton4.Text = lnome + "(+" + lPreco + ")";
+                            radioButton4.Text = lnome;// + "(+" + lPreco + ")";+ "(+" + lPreco + ")";
                             radioButton4.Tag = lPreco;
                             radioButton4.Visible = true;
                         }
                         else if (!radioButton5.Visible)
                         {
-                            radioButton5.Text = lnome + "(+" + lPreco + ")";
+                            radioButton5.Text = lnome;// + "(+" + lPreco + ")"; + "(+" + lPreco + ")";
                             radioButton5.Tag = lPreco;
                             radioButton5.Visible = true;
                         }
                         else if (!radioButton6.Visible)
                         {
-                            radioButton6.Text = lnome + "(+" + lPreco + ")";
+                            radioButton6.Text = lnome;// + "(+" + lPreco + ")"; + "(+" + lPreco + ")";
                             radioButton6.Tag = lPreco;
                             radioButton6.Visible = true;
                         }
@@ -508,25 +511,26 @@ namespace DexComanda
                     if (lTipo.Equals("Multipla Selecao"))
                     {
                         chkListAdicionais.Items.Add(lnome + "(+" + lPreco + ")", false);
+
                     }
 
                 }
 
             }
         }
-        private void InsereOpcaoItems(int iCodPedido, int iCodProduto, int iCodOpcao, string iObservacao)
-        {
-            OpcaoItem opcao = new OpcaoItem()
-            {
-                CodOpcao = iCodOpcao,
-                CodPedido = iCodPedido,
-                CodProduto = iCodProduto,
-                Observacao = iObservacao
-            };
-            con.Insert("spAdicionarOpcaoPedido", opcao);
+        //private void InsereOpcaoItems(int iCodPedido, int iCodProduto, int iCodOpcao, string iObservacao)
+        //{
+        //    OpcaoItem opcao = new OpcaoItem()
+        //    {
+        //        CodOpcao = iCodOpcao,
+        //        CodPedido = iCodPedido,
+        //        CodProduto = iCodProduto,
+        //        Observacao = iObservacao
+        //    };
+        //    con.Insert("spAdicionarOpcaoPedido", opcao);
 
-        }
-      
+        //}
+
         private void btnAdicionarItemNoPedido_Click(object sender, EventArgs e)
         {
             try
@@ -537,7 +541,7 @@ namespace DexComanda
                     MessageBox.Show("É obrigatório selecionar o tamanho ", "[xSistemas]", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
-                
+
                 MeiaPizza();
 
 
@@ -557,7 +561,7 @@ namespace DexComanda
                         }
                         var pedido = new Pedido()
                         {
-                            TotalPedido = ValorTotal + decimal.Parse(lblEntrega.Text.Replace("R$","")),
+                            TotalPedido = ValorTotal + decimal.Parse(lblEntrega.Text.Replace("R$", "")),
                             TrocoPara = "R$" + this.txtTrocoPara.Text,
                             FormaPagamento = this.cmbFPagamento.Text,
                             RealizadoEm = DateTime.Now
@@ -677,8 +681,9 @@ namespace DexComanda
                 {
                     //ds System.Windows.Forms.KeyEventArgs = new Windows.Forms.KeyEventArgs();
 
-                  //   Boolean ivalida = object.ReferenceEquals(e,System.Windows.Forms.KeyEventArgs.Equals(Keys.F5));
-                     if (AtualizaTroco(false))
+                    //   Boolean ivalida = object.ReferenceEquals(e,System.Windows.Forms.KeyEventArgs.Equals(Keys.F5));
+                  
+                    if (AtualizaTroco(false))
                     {
                         DBExpertDataSet dbExpert = new DBExpertDataSet();
                         int totalDeItems = this.gridViewItemsPedido.RowCount;
@@ -789,7 +794,7 @@ namespace DexComanda
                             }
 
 
-                           
+
 
                             if (ContraMesas && cbxListaMesas.Visible && pedido.NumeroMesa != 0)
                             {
@@ -800,7 +805,7 @@ namespace DexComanda
 
 
                             MessageBox.Show("Pedido gerado com sucesso.");
-                          
+
 
                             if (ContraMesas && cbxTipoPedido.Text == "0 - Entrega")
                             {
@@ -1132,7 +1137,7 @@ namespace DexComanda
 
             this.gridViewItemsPedido.AutoGenerateColumns = true;
             this.gridViewItemsPedido.DataSource = dt;
-            this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + Convert.ToDecimal(lblEntrega.Text.Replace("R$","")));
+            this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + Convert.ToDecimal(lblEntrega.Text.Replace("R$", "")));
             this.lblTroco.Text = Convert.ToString(lblTroco.Text);
         }
         private void prepareToPrint()
@@ -1201,11 +1206,11 @@ namespace DexComanda
                         {
                             iCodigo = codPedido;
                         }
-                        
+
                         if (Sessions.returnConfig.QtdCaracteresImp <= 30)
                         {
-                           
-                            iRetorno = Utils.ImpressaoEntreganova_20(iCodigo,decimal.Parse(lblTroco.Text.Replace("R$","")), ImprimeLPT, QtViasEntrega);
+
+                            iRetorno = Utils.ImpressaoEntreganova_20(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), ImprimeLPT, QtViasEntrega);
                         }
                         else
                         {
@@ -1730,13 +1735,13 @@ namespace DexComanda
             AtualizaTroco();
         }
 
-        private Boolean AtualizaTroco(Boolean SemTroco=false)
+        private Boolean AtualizaTroco(Boolean SemTroco = false)
         {
             bool Ok;
             if (!SemTroco)
             {
                 decimal troco = 0.00M;
-                
+
                 decimal TotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
                 if (this.txtTrocoPara.Text != "")
                 {
@@ -1781,7 +1786,7 @@ namespace DexComanda
             {
                 Ok = true;
             }
-            
+
             return Ok;
         }
 
@@ -1972,6 +1977,7 @@ namespace DexComanda
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.cbxListaMesas = new System.Windows.Forms.ComboBox();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
             this.lblEndereco = new System.Windows.Forms.Label();
             this.lblNomeCliente = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -1984,7 +1990,7 @@ namespace DexComanda
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.label9 = new System.Windows.Forms.Label();
             this.chkListAdicionais = new System.Windows.Forms.CheckedListBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.cachedRelCreditoDebito1 = new DexComanda.Relatorios.Clientes.CachedRelCreditoDebito();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -2571,6 +2577,16 @@ namespace DexComanda
             this.panel4.Size = new System.Drawing.Size(1051, 43);
             this.panel4.TabIndex = 63;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(761, 21);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(146, 16);
+            this.label6.TabIndex = 65;
+            this.label6.Text = "Opções do Produto:";
+            // 
             // lblEndereco
             // 
             this.lblEndereco.AutoSize = true;
@@ -2621,7 +2637,7 @@ namespace DexComanda
             // radioButton6
             // 
             this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(139, 77);
+            this.radioButton6.Location = new System.Drawing.Point(129, 91);
             this.radioButton6.Name = "radioButton6";
             this.radioButton6.Size = new System.Drawing.Size(40, 17);
             this.radioButton6.TabIndex = 77;
@@ -2634,7 +2650,7 @@ namespace DexComanda
             // radioButton5
             // 
             this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(139, 45);
+            this.radioButton5.Location = new System.Drawing.Point(129, 50);
             this.radioButton5.Name = "radioButton5";
             this.radioButton5.Size = new System.Drawing.Size(40, 17);
             this.radioButton5.TabIndex = 76;
@@ -2647,7 +2663,7 @@ namespace DexComanda
             // radioButton4
             // 
             this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(139, 18);
+            this.radioButton4.Location = new System.Drawing.Point(129, 18);
             this.radioButton4.Name = "radioButton4";
             this.radioButton4.Size = new System.Drawing.Size(40, 17);
             this.radioButton4.TabIndex = 75;
@@ -2660,7 +2676,7 @@ namespace DexComanda
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(12, 73);
+            this.radioButton3.Location = new System.Drawing.Point(12, 91);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(40, 17);
             this.radioButton3.TabIndex = 74;
@@ -2673,7 +2689,7 @@ namespace DexComanda
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(12, 41);
+            this.radioButton2.Location = new System.Drawing.Point(12, 50);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(40, 17);
             this.radioButton2.TabIndex = 73;
@@ -2707,22 +2723,17 @@ namespace DexComanda
             // 
             // chkListAdicionais
             // 
+            this.chkListAdicionais.CheckOnClick = true;
             this.chkListAdicionais.FormattingEnabled = true;
             this.chkListAdicionais.Location = new System.Drawing.Point(3, 154);
             this.chkListAdicionais.Name = "chkListAdicionais";
             this.chkListAdicionais.Size = new System.Drawing.Size(273, 274);
             this.chkListAdicionais.TabIndex = 0;
             this.chkListAdicionais.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkListAdicionais_ItemCheck);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(761, 21);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(146, 16);
-            this.label6.TabIndex = 65;
-            this.label6.Text = "Opções do Produto:";
+            this.chkListAdicionais.Click += new System.EventHandler(this.chkListAdicionais_Click);
+            this.chkListAdicionais.SelectedIndexChanged += new System.EventHandler(this.chkListAdicionais_SelectedIndexChanged);
+            this.chkListAdicionais.SelectedValueChanged += new System.EventHandler(this.chkListAdicionais_SelectedValueChanged);
+            this.chkListAdicionais.MouseDown += new System.Windows.Forms.MouseEventHandler(this.chkListAdicionais_MouseDown);
             // 
             // frmCadastrarPedido
             // 
@@ -2834,13 +2845,13 @@ namespace DexComanda
                 cbxListaMesas.Visible = false;
             }
             CalculaTaxaEntrega(cbxTipoPedido.Text == "0 - Entrega");
-       
+
         }
         private void CalculaTaxaEntrega(Boolean iCalcula)
         {
             if (!iCalcula)
             {
-               // decimal iValorSemTaxa = decimal.Parse(lbTotal.Text) - lblEntrega.Text);
+                // decimal iValorSemTaxa = decimal.Parse(lbTotal.Text) - lblEntrega.Text);
                 this.lbTotal.Text = "R$ " + Convert.ToString(decimal.Parse(lbTotal.Text.Replace("R$", "")) - decimal.Parse(lblEntrega.Text.Replace("R$", "")));
                 lblEntrega.Text = "R$ 0,00 ";
             }
@@ -2848,7 +2859,7 @@ namespace DexComanda
             {
                 this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + dcTaxaEntrega);
             }
-            
+
         }
 
         private void cbxTrocoParaOK_CheckedChanged(object sender, EventArgs e)
@@ -3067,7 +3078,7 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton1.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
-                cbxProdutosGrid.Text = iNomeProd + " " + ObterSomenteLetras(radioButton1.Text.PadRight(5,'C'));
+                cbxProdutosGrid.Text = iNomeProd + " " + radioButton1.Text;
                 CalcularTotalItem();
             }
         }
@@ -3078,7 +3089,7 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton2.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
-                cbxProdutosGrid.Text = iNomeProd + " " + ObterSomenteLetras(radioButton2.Text);
+                cbxProdutosGrid.Text = iNomeProd + " " +radioButton2.Text;
 
                 CalcularTotalItem();
             }
@@ -3090,7 +3101,7 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton3.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
-                cbxProdutosGrid.Text = iNomeProd + " " + ObterSomenteLetras(radioButton3.Text);
+                cbxProdutosGrid.Text = iNomeProd + " " + radioButton3.Text;
                 CalcularTotalItem();
             }
         }
@@ -3101,7 +3112,7 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton4.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
-                cbxProdutosGrid.Text = iNomeProd + " " + ObterSomenteLetras(radioButton4.Text);
+                cbxProdutosGrid.Text = iNomeProd + " " + radioButton4.Text;
 
                 CalcularTotalItem();
             }
@@ -3113,7 +3124,7 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton5.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
-                cbxProdutosGrid.Text = iNomeProd + " " + ObterSomenteLetras(radioButton5.Text);
+                cbxProdutosGrid.Text = iNomeProd + " " +radioButton5.Text;
 
                 CalcularTotalItem();
             }
@@ -3125,7 +3136,7 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton6.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + decimal.Parse(iTotalItem.Replace("R$", "")));
-                cbxProdutosGrid.Text = iNomeProd + " " + ObterSomenteLetras(radioButton6.Text);
+                cbxProdutosGrid.Text = iNomeProd + " " + radioButton6.Text;
                 CalcularTotalItem();
             }
         }
@@ -3133,7 +3144,19 @@ namespace DexComanda
 
         private void chkListAdicionais_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (e.CurrentValue == CheckState.Unchecked)
+            if (MaxOpcaoProduto>0)
+            {
+                if (chkListAdicionais.CheckedItems.Count + 1 > MaxOpcaoProduto && e.NewValue == CheckState.Checked)
+                {
+                    chkListAdicionais.SetSelected(e.Index, false);
+                    chkListAdicionais.SetItemCheckState(e.Index, CheckState.Unchecked);
+                    MessageBox.Show("Esse produto só permite " + MaxOpcaoProduto + " Adicionais");
+                    return;
+                }
+            }
+            
+
+            if (e.CurrentValue == CheckState.Unchecked )
             {
                 txtItemDescricao.Text = txtItemDescricao.Text + " + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString());
                 decimal iValorItem = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
@@ -3143,9 +3166,9 @@ namespace DexComanda
 
                 CalcularTotalItem();
             }
-            else
+            else if (txtItemDescricao.Text.Contains(ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString())))
             {
-                txtItemDescricao.Text = txtItemDescricao.Text.Replace(" + "+ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString()), string.Empty);
+                txtItemDescricao.Text = txtItemDescricao.Text.Replace(" + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString()), string.Empty);
                 // txtItemDescricao.Text = txtItemDescricao.Text.Replace("+", string.Empty);
                 decimal iValorItem = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
                 decimal iValorAdicional = decimal.Parse(ObterSomenteNumerosReais(chkListAdicionais.SelectedItem.ToString()));
@@ -3155,6 +3178,29 @@ namespace DexComanda
 
                 CalcularTotalItem();
             }
+        }
+
+        private void chkListAdicionais_SelectedValueChanged(object sender, EventArgs e)
+        {
+
+
+
+        }
+
+        private void chkListAdicionais_Click(object sender, EventArgs e)
+        {
+            
+
+        }
+
+        private void chkListAdicionais_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void chkListAdicionais_MouseDown(object sender, MouseEventArgs e)
+        {
+
         }
 
 

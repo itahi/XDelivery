@@ -270,11 +270,13 @@ namespace DexComanda
                     con.Insert("spAdicionarClienteDelivery", pessoa);
                     Utils.ControlaEventos("Inserir", this.Name);
                     MessageBox.Show("Cliente cadastrado com sucesso.", "Dex Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                    
                   //  this_FormClosing();
                     if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado))
                     {
                         RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
                     }
+                   
 
                 }
                 else
@@ -387,8 +389,8 @@ namespace DexComanda
                 con.Update("spAlterarPessoa", pessoa);
                 Utils.ControlaEventos("Altera", this.Name);
                 MessageBox.Show("Cliente alterado com sucesso.");
-                this_FormClosing();
-                ClearForm(this);
+              //  this_FormClosing();
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -396,12 +398,12 @@ namespace DexComanda
                 MessageBox.Show("Registro não foi gravado , favor verificar " + ex.Message);
             }
         }
-        private void this_FormClosing()
-        {
-            parentMain = new Main();
-            Utils.PopulaGrid_Novo("Pessoa", parentMain.produtosGridView, Sessions.SqlPessoa);
+        //private void this_FormClosing()
+        //{
+        //    parentMain = new Main();
+        //    Utils.PopulaGrid_Novo("Pessoa", parentMain.produtosGridView, Sessions.SqlPessoa);
 
-        }
+        //}
         private void CadastraCEP()
         {
             DataSet Cep = con.SelectAll("base_cep", "spObterMaiorCEP");

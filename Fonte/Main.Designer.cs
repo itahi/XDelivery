@@ -975,6 +975,7 @@
             // 
             // AtualizaGrid
             // 
+            this.AtualizaGrid.Enabled = true;
             this.AtualizaGrid.Interval = 10000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 

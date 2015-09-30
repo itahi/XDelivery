@@ -34,7 +34,7 @@ namespace DexComanda
 
         }
         public frmCadastrarProduto(int CodProduto ,string iNomeProduto, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
-                                   decimal iPrecoPromocao, string iDiasPromocao)
+                                   decimal iPrecoPromocao, string iDiasPromocao,string iMaxAdicionais)
         {
             InitializeComponent();
             codigoProdutoParaAlterar = CodProduto;
@@ -77,6 +77,7 @@ namespace DexComanda
             descricaoProdutoTextBox.Text = iDescricao;
             chkAtivo.Checked = true;
             chkOnline.Checked = iVendaOnline;
+            txtMaxAdicionais.Text = iMaxAdicionais;
     
             this.btnDoProduto.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
             this.btnDoProduto.Text = "Alterar [F12]";
@@ -170,6 +171,7 @@ namespace DexComanda
 
         private void AdicionarProduto(object sender, EventArgs e)
         {
+           // int iMaxAdicionais = 0;
             try
             {
                 if (nomeProdutoTextBox.Text.Trim() == "" || precoProdutoTextBox.Text.Trim() == "" || cbxGrupoProduto.Text.Trim() == "")
@@ -187,7 +189,14 @@ namespace DexComanda
                     OnlineSN = chkOnline.Checked,
                     DataAlteracao = DateTime.Now
                 };
-
+                if (txtMaxAdicionais.Text.Trim()!="")
+                {
+                    produto.MaximoAdicionais = int.Parse(txtMaxAdicionais.Text);
+                }
+                else
+                {
+                    produto.MaximoAdicionais = 0;
+                }
                 if (DescontoPordia)
                 {
                     produto.DiaSemana = DiasSelecinado();
@@ -274,6 +283,14 @@ namespace DexComanda
                     OnlineSN = chkOnline.Checked,
                     DataAlteracao = DateTime.Now
                 };
+                if (txtMaxAdicionais.Text.Trim() != "")
+                {
+                    produto.MaximoAdicionais = int.Parse(txtMaxAdicionais.Text);
+                }
+                else
+                {
+                    produto.MaximoAdicionais = 0;
+                }
                 if (DescontoPordia)
                 {
                     produto.DiaSemana = DiasSelecinado();
@@ -295,14 +312,11 @@ namespace DexComanda
                 this.btnDoProduto.Text = "Cadastrar [F12]";
                 this.btnDoProduto.Click -= AlterarProduto;
                 this.btnDoProduto.Click += AdicionarProduto;
-                this_FormClosing();
+             //   this_FormClosing();
                 ClearForm(this);
                 Utils.ControlaEventos("Alterar", this.Name);
                 MessageBox.Show("Produto alterado com sucesso.");
-
-                nomeProdutoTextBox.Text = "";
-                txtPrecoDesconto.Text = "";
-                this.nomeProdutoTextBox.Focus();
+                this.Close();
             }
             catch (Exception erro)
             {
@@ -356,7 +370,7 @@ namespace DexComanda
         }
         private void this_FormClosing()
         {
-            parentMain = new Main();
+           // parentMain = new Main();
             Utils.PopulaGrid_Novo("Produto", parentMain.produtosGridView, Sessions.SqlProduto);
 
         }
@@ -571,6 +585,42 @@ namespace DexComanda
             this.cbxGrupoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupo").Tables["Grupo"];
             this.cbxGrupoProduto.DisplayMember = "NomeGrupo";
             this.cbxGrupoProduto.ValueMember = "Codigo";
+        }
+
+        private void precoProdutoTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar!= Convert.ToChar(Keys.Back))
+            {
+                Utils.SomenteNumeroReais(precoProdutoTextBox.Text);
+            }
+            
+        }
+
+        private void txtMaxAdicionais_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoPermiteNumeros(e);
+        }
+
+        private void txtPrecoDesconto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != Convert.ToChar(Keys.Back))
+            {
+                Utils.SomenteNumeroReais(precoProdutoTextBox.Text);
+            }
+            
+        }
+
+        private void txtPrecoOpcao_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != Convert.ToChar(Keys.Back))
+            {
+                Utils.SomenteNumeroReais(precoProdutoTextBox.Text);
+            }
+        }
+
+        private void btnSair_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

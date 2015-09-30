@@ -147,6 +147,17 @@ namespace DexComanda
             }
             return CaixaAberto;
         }
+        public static void SomenteNumeroReais(string iText)
+        {
+            System.Text.RegularExpressions.Regex num = new System.Text.RegularExpressions.Regex("[^0-9 , ]");
+
+            if (num.IsMatch(iText))
+            {
+                MessageBox.Show("Esse é um campo numérico");
+                return;
+            }
+           
+        }
         public static void ImprimirHistoricoCliente(int iCodPessoa, DateTime iDtInici, DateTime idtFim)
         {
             RelHistoricoCliente report;
@@ -434,6 +445,7 @@ namespace DexComanda
                 crConnectionInfo = new ConnectionInfo();
                 Tables CrTables;
 
+              
                 report.Load(Directory.GetCurrentDirectory() + @"\RelFechamentoMesa.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;

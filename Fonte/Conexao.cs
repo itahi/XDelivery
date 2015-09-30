@@ -132,7 +132,8 @@ namespace DexComanda
         }
         public DataSet RetornaOpcoesProduto(int iDProduto)
         {
-            string lSqlConsulta = " select Op.Nome,Op.Tipo,Prod.Preco " +
+            string lSqlConsulta = " select Op.Nome,Op.Tipo,Prod.Preco ," +
+                                  " isnull((select MaximoAdicionais from Produto P where P.Codigo=Prod.CodProduto),0 )as MaxOpcao"+ 
                                   "  from  Produto_Opcao Prod " +
                                   "  join Opcao Op  on Op.Codigo = Prod.CodOpcao  " +
                                   "  where Prod.CodProduto=@CodProduto";

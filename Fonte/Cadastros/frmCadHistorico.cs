@@ -44,7 +44,7 @@ namespace DexComanda.Cadastros
 
                 con.Insert("spAdicionaMotivoCancelamento", motivoCancelamento);
                 Utils.ControlaEventos("Inserir", this.Name);
-                Utils.PopularGrid("MotivoCancelamento", MotivosGridView,"spObterMotivoCancelamento");
+                Utils.PopularGrid_SP("MotivoCancelamento", MotivosGridView,"spObterMotivoCancelamento");
                 
             }
             catch (Exception ex)
