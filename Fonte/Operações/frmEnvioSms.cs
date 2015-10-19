@@ -50,7 +50,7 @@ namespace DexComanda
                 string Itext = ConfigurationManager.AppSettings["ConfigSMS"];
 
                 string[] words = Itext.Split(',');
-                for (int i = 0; i < words.Length-1; i++)
+                for (int i = 0; i < words.Length - 1; i++)
                 {
                     pLogin = words[0];
                     pSenha = words[1];
@@ -106,6 +106,10 @@ namespace DexComanda
                         MessageBox.Show("Preencha o periodo para enviar", "Aviso XCommada");
                     }
                 }
+                if (chkTodosClientes.Checked)
+                {
+                     dsLista = con.RetornaListaPessoasSMS(DateTime.Now, DateTime.Now, false, false, true);
+                }
 
             }
             if (dsLista.Tables[0].Rows.Count > 0)
@@ -143,6 +147,23 @@ namespace DexComanda
 
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DataSet dsOpcao = con.SelectAdicionalLanche();
 
+            DataSet dsLanches = con.SelectLanches();
+            for (int i = 0; i < dsLanches.Tables[0].Rows.Count; i++)
+            {
+                Produto_Opcao prodOP = new Produto_Opcao()
+                {
+                    CodOpcao = dsOpcao.Tables["Opcao"].Rows[i].Field<int>("Codigo"),
+                    CodProduto = dsLanches.Tables["Produto"].Rows[i].Field<int>("Codigo"),
+                    DataAlteracao = DateTime.Now,
+                    Preco = 0
+                };
+                con.Insert("spAdicionarOpcaProduto", prodOP);
+
+            }
+        }
     }
 }

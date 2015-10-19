@@ -146,7 +146,7 @@
             this.lblRestante.Name = "lblRestante";
             this.lblRestante.Size = new System.Drawing.Size(25, 13);
             this.lblRestante.TabIndex = 11;
-            this.lblRestante.Text = "145";
+            this.lblRestante.Text = "155";
             // 
             // label3
             // 

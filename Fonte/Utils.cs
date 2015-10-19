@@ -147,17 +147,6 @@ namespace DexComanda
             }
             return CaixaAberto;
         }
-        public static void SomenteNumeroReais(string iText)
-        {
-            System.Text.RegularExpressions.Regex num = new System.Text.RegularExpressions.Regex("[^0-9 , ]");
-
-            if (num.IsMatch(iText))
-            {
-                MessageBox.Show("Esse é um campo numérico");
-                return;
-            }
-           
-        }
         public static void ImprimirHistoricoCliente(int iCodPessoa, DateTime iDtInici, DateTime idtFim)
         {
             RelHistoricoCliente report;
@@ -445,7 +434,6 @@ namespace DexComanda
                 crConnectionInfo = new ConnectionInfo();
                 Tables CrTables;
 
-              
                 report.Load(Directory.GetCurrentDirectory() + @"\RelFechamentoMesa.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
@@ -478,7 +466,8 @@ namespace DexComanda
                 }
                 else
                 {
-                    report.PrintToPrinter(0, false, 0, 0);
+                  
+                    report.PrintToPrinter(0, true, 0, 0);
                 }
             }
             catch (Exception erro)
@@ -901,8 +890,8 @@ namespace DexComanda
                     string iNumero = dRow.ItemArray.GetValue(0).ToString();
                     NomeCliente = dRow.ItemArray.GetValue(1).ToString();
 
-                    if (EHCelular(iNumero))
-                    {
+                    //if (EHCelular(iNumero))
+                    //{
                         if (iNumero.Length == 8)
                         {
                             Telefone[i] = "279" + iNumero;
@@ -912,7 +901,7 @@ namespace DexComanda
                             Telefone[i] = "27" + iNumero;
                         }
 
-                    }
+                    //}
 
                 }
 
@@ -920,7 +909,7 @@ namespace DexComanda
                 
                 string strRetorno, strQuantidadeEnvio,iText;
 
-                 iText= EnviarSMS.EnviaSMSLista(Telefone, iUser, "123", iMessagem, iNomeCampanha);
+                 iText= EnviarSMS.EnviaSMSLista(Telefone, iUser, iSenha, iMessagem, iNomeCampanha);
 
                  string[] IRetorno = iText.Split(',');
                 
@@ -1417,7 +1406,6 @@ namespace DexComanda
             try
             {
                 iNomePC = iNomePC.Replace("Data Source=", "");
-                
                 //Process[] remoteByName = Process.GetProcessesByName("MySQL", "NomeMaquina");
                // MSSQLSERVER
                 //// 2. Using an IP address to specify the machineName parameter.

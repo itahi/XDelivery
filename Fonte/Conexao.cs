@@ -132,11 +132,12 @@ namespace DexComanda
         }
         public DataSet RetornaOpcoesProduto(int iDProduto)
         {
-            string lSqlConsulta = " select Op.Nome,Op.Tipo,Prod.Preco ," +
-                                  " isnull((select MaximoAdicionais from Produto P where P.Codigo=Prod.CodProduto),0 )as MaxOpcao"+ 
+            string lSqlConsulta = " select Op.Nome,Op.Tipo,Prod.Preco, " +
+                                  " isnull((select MaximoAdicionais from Produto P where P.Codigo = Prod.CodProduto),0) as MaximoAdicionais"+
                                   "  from  Produto_Opcao Prod " +
                                   "  join Opcao Op  on Op.Codigo = Prod.CodOpcao  " +
-                                  "  where Prod.CodProduto=@CodProduto";
+                                  "  where Prod.CodProduto=@CodProduto "+
+                                  "  order by Nome";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@CodProduto", iDProduto);
@@ -147,6 +148,31 @@ namespace DexComanda
             adapter.Fill(ds, "Produto_Opcao");
             return ds;
         }
+        public DataSet SelectAdicionalLanche()
+        {
+            string lSqlConsulta = " select * from Opcao "+
+                                  "  where Tipo = 'Texto livre'";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+           
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Opcao");
+            return ds;
+        }
+        public DataSet SelectLanches()
+        {
+            string lSqlConsulta = "select * from Produto ";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto");
+            return ds;
+        }
+
+
         public DataSet RetornaListaPessoasSMS(DateTime iData1, DateTime iData2, Boolean iAniversariante, Boolean iSemPedido, Boolean iTodos)
         {
             string lSqlConsulta="";
@@ -160,9 +186,9 @@ namespace DexComanda
                     lSqlConsulta = "select Telefone,Nome from Pessoa P" +
                                   "  where  " +
                                   "  P.Codigo not in ( Select Codigo from Pedido where RealizadoEm between @Data1 and @Data2 )" +
-                                  "  and" +
-                                  "  SUBSTRING(Telefone,0,2) = 9 " +
-                                  "  or SUBSTRING(Telefone,0,2) =8";
+                                  "  and " +
+                                  "  (SUBSTRING(Telefone,0,2) = 9 " +
+                                  "  or SUBSTRING(Telefone,0,2) =8)";
 
 
                     command.Parameters.AddWithValue("@Data1", iData1);
@@ -172,21 +198,21 @@ namespace DexComanda
                 {
                     lSqlConsulta = "select Telefone,Nome from Pessoa P " +
                                   "  where  " +
-                                  "  Cast(DataNascimento as date) between @Data1 anda @Data2 " +
+                                  "  Cast(DataNascimento as date) between @Data1 and @Data2 " +
                                   "  and " +
-                                  "  SUBSTRING(Telefone,0,2) = 9 " +
-                                  "  or SUBSTRING(Telefone,0,2) =8 ";
+                                  "  (SUBSTRING(Telefone,0,2) = 9 " +
+                                  "  or SUBSTRING(Telefone,0,2) =8 )";
 
                     command.Parameters.AddWithValue("@Data1", iData1);
                     command.Parameters.AddWithValue("@Data2", iData2);
                 }
                 else if (iTodos)
                 {
-                    lSqlConsulta = "select Telefone,Nome from Pessoa P" +
+                    lSqlConsulta = "select top 2000 Telefone,Nome from Pessoa P" +
                                    " where  " +
-                                   " SUBSTRING(Telefone,0,2) = 9 " +
+                                   " (SUBSTRING(Telefone,0,2) = 9 " +
                                    " or SUBSTRING(Telefone,0,2) =8  " +
-                                   " and DATALENGTH(Telefone) >=8";
+                                   " and DATALENGTH(Telefone) >=8)   and Codigo >26349";
                 }
             }
             catch (Exception erro)
@@ -257,7 +283,7 @@ namespace DexComanda
         }
         public DataSet SelectRegistroONline(string iNomeTable)
         {
-            string lSqlConsulta = " select * from " + iNomeTable + " where OnlineSN=1 and DataAlteracao>DataSincronismo or DataSincronismo is null";// and AtivoSN=1";
+            string lSqlConsulta = " select * from " + iNomeTable + " where DataAlteracao>DataSincronismo or DataSincronismo is null";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -268,13 +294,14 @@ namespace DexComanda
             return ds;
 
         }
+
         public DataSet RetornaRegiao()
         {
             string lSqlConsulta = " select RG.Codigo, RG.NomeRegiao,RG.TaxaServico" +
-                                  "  ,RB.CEP " +
+                                  "  ,RB.CEP ,RG.OnlineSN" +
                                   "   from RegiaoEntrega RG " +
                                    "  left join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo " +
-                                  "   WHERE RG.DataAlteracao > RG.DataSincronismo OR RG.DataSincronismo IS NULL";
+                                  "   WHERE RG.DataAlteracao > RG.DataSincronismo";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -344,9 +371,11 @@ namespace DexComanda
                                     " count(P.CodMotoboy) as QuantidadeEntregas," +
                                     " cast(P.RealizadoEm as date) as RealizadoEm," +
                                     " (select Codigo from Entregador E where P.CodMotoboy = E.Codigo) as CodMotoboy, " +
-                                    " (select Nome from Entregador E where P.CodMotoboy = E.Codigo) as Nome " +
+                                    " (select Nome from Entregador E where P.CodMotoboy = E.Codigo) as Nome," +
+                                    " (select NomeRegiao from RegiaoEntrega R where R.Codigo = Pes.CodRegiao) as Regiao"+
                                     " from " +
                                     " Pedido P " +
+                                    " left join Pessoa Pes on Pes.Codigo = P.CodPessoa "+
                                     " where P.Finalizado =1  " +
                                     " and  P.RealizadoEm between'" + iDataI.ToString() + "' and '" + iDataF.ToString() + "'";
             if (CodMotoboy != 0)
@@ -419,6 +448,18 @@ namespace DexComanda
 
             return ds;
         }
+        public DataSet DeleteBairroRegiao(string itable, string ispName, int iCodRegiao,string iCEP)
+        {
+            command = new SqlCommand(ispName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@CodRegiao", iCodRegiao);
+            command.Parameters.AddWithValue("@CEP", iCEP);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, itable);
+
+            return ds;
+        }
         public DataSet LimpaTabela(string table, string spName)
         {
             command = new SqlCommand(spName, conn);
@@ -467,7 +508,7 @@ namespace DexComanda
                 {
                     if (iAtivos)
                     {
-                        iSql = iSql + " where AtivoSN=1";
+                        iSql = iSql + " where AtivoSN=1 ";
                     }
                     else
                     {
@@ -511,6 +552,7 @@ namespace DexComanda
         {
             SqlParameter codPedido = null;
             SqlParameter CodPessoa = null;
+         //   SqlParameter CodOpcao = null;
             Type ObjectType = obj.GetType();
             PropertyInfo[] properties = ObjectType.GetProperties();
 
@@ -607,6 +649,22 @@ namespace DexComanda
                 }
 
             }
+            //else if (spName == "spAdicionarOpcao")
+            //{
+            //    CodOpcao = new SqlParameter("@Codigo", SqlDbType.Int);
+            //    CodOpcao.Direction = ParameterDirection.Output;
+            //    command.Parameters.Add(CodOpcao);
+
+            //    foreach (PropertyInfo propriedade in properties)
+            //    {
+            //        if (!propriedade.Name.Equals("Codigo") && !propriedade.Name.Equals("DataSincronismo"))
+            //        {
+            //            Console.WriteLine(propriedade.Name);
+            //            command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+            //        }
+            //    }
+
+            //}
             else if (spName == "spCriarPedido" || spName == "spAdicionaHistoricoCancelamento")
             {
 
@@ -675,6 +733,10 @@ namespace DexComanda
             {
                 lastCodigo = int.Parse(CodPessoa.Value.ToString());
             }
+            //else if (spName == "spAdicionarOpcao")
+            //{
+            //    lastCodigo = int.Parse(CodOpcao.Value.ToString());
+            //}
 
         }
 
@@ -960,6 +1022,7 @@ namespace DexComanda
             if (spName.Equals("spObterProdutoCompleto") || spName.Equals("spObterProdutoPorCodigo"))
             {
                 command.Parameters.AddWithValue("@Codigo", codigo);
+                command.Parameters.AddWithValue("@AtivoSN", true);
             }
             adapter = new SqlDataAdapter(command);
             adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
@@ -1074,6 +1137,33 @@ namespace DexComanda
             else
             {
                 command.Parameters.AddWithValue("@Codigo", codigo);
+               
+            }
+
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+        public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo, Boolean AtivoSN)
+        {
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            if (spName == "spObterCodigoMesa")
+            {
+                command.Parameters.AddWithValue("@NumeroMesa", codigo);
+            }
+            else if (spName == "spObterHistoricoPorPessoa")
+            {
+                command.Parameters.AddWithValue("@CodPessoa", codigo);
+            }
+            else
+            {
+                command.Parameters.AddWithValue("@Codigo", codigo);
+                command.Parameters.AddWithValue("@AtivoSN", AtivoSN);
             }
 
             adapter = new SqlDataAdapter(command);

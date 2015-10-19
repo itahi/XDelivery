@@ -38,7 +38,7 @@ namespace DexComanda.Relatorios.Fechamentos
             {
                 DataView dvEntregas = dsEntregas.Tables[0].DefaultView;
                 spEntregasPorBoyDataBindingSource.DataSource = dvEntregas;
-                reportViewEntregas.RefreshReport();
+              //  reportViewEntregas.RefreshReport();
 
             }
             else

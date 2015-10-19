@@ -24,13 +24,17 @@ namespace DexComanda.Operações
             con = new Conexao();
             listGrupos = new List<Grupo>();
         }
-
-        private void Sincroniza(object sender, EventArgs e)
+        private void GerarToken()
         {
-            iUrlWS = Sessions.returnEmpresa.UrlServidor;
+           
             iParamToken = Convert.ToString(DateTime.Now).Replace("/", "").Replace(":", "").Replace(" ", "").Substring(0, 11) + "Adminx";
             iParamToken = Utils.CriptografarArquivo(iParamToken.Trim());
             iParamToken = iParamToken.ToLower();
+        }
+        private void Sincroniza(object sender, EventArgs e)
+        {
+            iUrlWS = Sessions.returnEmpresa.UrlServidor;
+            GerarToken();
 
             try
             {
@@ -52,10 +56,10 @@ namespace DexComanda.Operações
                 }
 
             }
-            catch (Exception)
+            catch (Exception erro)
             {
 
-                throw;
+                MessageBox.Show("Erro ao sincronizar " + erro.Message);
             }
         }
         private DataSet ObterDados(string iNomeTable)
@@ -77,6 +81,7 @@ namespace DexComanda.Operações
                 request.AddParameter("nome", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("NomeRegiao"));
                 request.AddParameter("valor", ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("TaxaServico"));
                 request.AddParameter("referencia_id", ds.Tables["RegiaoEntrega"].Rows[i].Field<int>("Codigo"));
+                request.AddParameter("ativo", Convert.ToInt16( ds.Tables["RegiaoEntrega"].Rows[i].Field<Boolean>("OnlineSN")));
                 RestResponse response = (RestResponse)client.Execute(request);
                 prgBarRegiao.Value = i + 1;
 
@@ -84,6 +89,7 @@ namespace DexComanda.Operações
                 {
                     con.AtualizaDataSincronismo("RegiaoEntrega", ds.Tables[0].Rows[i].Field<int>("Codigo"));
                 }
+               
 
             }
         }
@@ -120,8 +126,8 @@ namespace DexComanda.Operações
                 if (response.Content.ToString() == "true")
                 {
                     con.AtualizaDataSincronismo("Opcao", ds.Tables["Opcao"].Rows[i].Field<int>("Codigo"));
-
                 }
+             
 
             }
         }
@@ -131,12 +137,16 @@ namespace DexComanda.Operações
             RestRequest request = new RestRequest("ws/categorias/set", Method.POST);
 
             prgBarCategoria.Maximum = ds.Tables[0].Rows.Count;
+            GerarToken();
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                string inome = ds.Tables["Grupo"].Rows[i].Field<string>("NomeGrupo");
-                int iCod = ds.Tables["Grupo"].Rows[i].Field<int>("Codigo");
+                string inome =  ds.Tables["Grupo"].Rows[i].Field<string>("NomeGrupo");
+                int iCod     =  ds.Tables["Grupo"].Rows[i].Field<int>("Codigo");
+                int AtivoSN  =  Convert.ToInt16(ds.Tables["Grupo"].Rows[i].Field<Boolean>("OnlineSN"));
+
                 request.AddParameter("token", iParamToken);
                 request.AddParameter("nomeCategoria", inome);
+                request.AddParameter("ativo", AtivoSN);
                 request.AddParameter("idReferencia", iCod);
                 RestResponse response = (RestResponse)client.Execute(request);
                 prgBarCategoria.Value = i + 1;
@@ -145,6 +155,7 @@ namespace DexComanda.Operações
                 {
                     con.AtualizaDataSincronismo("Grupo", iCod);
                 }
+                
 
             }
         }
@@ -163,6 +174,8 @@ namespace DexComanda.Operações
                 //request.AddParameter("idReferenciaCategoria",10);
                 request.AddParameter("idReferenciaCategoria", RetornaIDCategoria(ds.Tables["Produto"].Rows[i].Field<string>("GrupoProduto")));
                 request.AddParameter("descricao", ds.Tables["Produto"].Rows[i].Field<string>("DescricaoProduto"));
+                request.AddParameter("ativo", Convert.ToInt32(ds.Tables["Produto"].Rows[i].Field<Boolean>("OnlineSN")));
+                request.AddParameter("maxOptions", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
                 // request.AddParameter("imagem", "  ");
                 // request.AddParameter("lista", " "); 
                 prgBarProduto.Value = i + 1;
@@ -174,6 +187,7 @@ namespace DexComanda.Operações
                     con.AtualizaDataSincronismo("Produto", ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
                     CadastrarOpcaoProduto(ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
                 }
+              
             }
 
         }
@@ -193,33 +207,42 @@ namespace DexComanda.Operações
 
         private void CadastrarOpcaoProduto(int iCodProduto)
         {
-            RestClient client = new RestClient(iUrlWS);
-            RestRequest request = new RestRequest("ws/produto/opcao/set", Method.POST);
-
-            DataSet ds = con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcaoProdutoCodigo", iCodProduto);
-            int iCodOpcao = 0;
-            if (ds.Tables[0].Rows.Count > 0)
+            
+            try
             {
-                int iCodProd = ds.Tables["Produto_Opcao"].Rows[0].Field<int>("CodProduto");
-                string[] opcao = new string[ds.Tables[0].Rows.Count];
-                request.AddParameter("token", iParamToken);
-                request.AddParameter("referenciaId", iCodProd);
-
-                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                RestClient client = new RestClient(iUrlWS);
+                RestRequest request = new RestRequest("ws/produto/opcao/set", Method.POST);
+                DataSet ds = con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcaoProdutoCodigo", iCodProduto);
+                int iCodOpcao = 0;
+                if (ds.Tables[0].Rows.Count > 0)
                 {
-                    iCodOpcao = ds.Tables["Produto_Opcao"].Rows[i].Field<int>("CodOpcao");
-                    decimal iprice = ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
-                    request.AddParameter("opcao[" + iCodOpcao + "]", iprice); //Pronto
-                }
+                    int iCodProd = ds.Tables["Produto_Opcao"].Rows[0].Field<int>("CodProduto");
+                    string[] opcao = new string[ds.Tables[0].Rows.Count];
+                    request.AddParameter("token", iParamToken);
+                    request.AddParameter("referenciaId", iCodProd);
 
-                RestResponse response = (RestResponse)client.Execute(request);
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        iCodOpcao = ds.Tables["Produto_Opcao"].Rows[i].Field<int>("CodOpcao");
+                        decimal iprice = ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
+                        request.AddParameter("opcao[" + iCodOpcao + "]", iprice);
+                    }
 
-                if (response.Content.ToString() == "true")
-                {
-                    con.AtualizaDataSincronismo("Produto_Opcao", iCodProd, iCodOpcao);
+                    RestResponse response = (RestResponse)client.Execute(request);
 
+                    if (response.Content.ToString() == "true")
+                    {
+                        con.AtualizaDataSincronismo("Produto_Opcao", iCodProd, iCodOpcao);
+                    }
+                    
                 }
             }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show("Erro ao cadastrar opção do Produto" + erro.Message);
+            }
+            
 
         }
         private void CadastraFormaPagamento(DataSet ds)
@@ -240,6 +263,10 @@ namespace DexComanda.Operações
                 if (response.Content.ToString() == "true")
                 {
                     con.AtualizaDataSincronismo("FormaPagamento", iCod);
+                }
+                else
+                {
+                    ds.Tables[0].Rows.Add(-1);
                 }
             }
         }

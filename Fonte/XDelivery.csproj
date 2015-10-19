@@ -185,12 +185,6 @@
     <Compile Include="Cadastros\frmCadHistorico.Designer.cs">
       <DependentUpon>frmCadHistorico.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cadastros\frmCadProdutoAdicional.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Cadastros\frmCadProdutoAdicional.Designer.cs">
-      <DependentUpon>frmCadProdutoAdicional.cs</DependentUpon>
-    </Compile>
     <Compile Include="Cadastros\Produto\frmCadOpcao.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -309,6 +303,12 @@
     <Compile Include="Operações\frmInformaMotoboy.Designer.cs">
       <DependentUpon>frmInformaMotoboy.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operações\frmLancaEstoque.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\frmLancaEstoque.Designer.cs">
+      <DependentUpon>frmLancaEstoque.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operações\frmLicencaOFFLINE.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -384,7 +384,6 @@
     </Compile>
     <Compile Include="Relatorios\dsRelatorio.cs">
       <DependentUpon>dsRelatorio.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\dsRelatorio.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -406,7 +405,6 @@
     <Compile Include="Conexao.cs" />
     <Compile Include="DBExpertDataSet.cs">
       <DependentUpon>DBExpertDataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DBExpertDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -531,6 +529,12 @@
     <Compile Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.Designer.cs">
       <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelEntregasPorMotoboy.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Fechamentos\RelItemsVendidos.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -594,9 +598,6 @@
     <EmbeddedResource Include="Cadastros\frmCadHistorico.resx">
       <DependentUpon>frmCadHistorico.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\frmCadProdutoAdicional.resx">
-      <DependentUpon>frmCadProdutoAdicional.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Produto\frmCadOpcao.resx">
       <DependentUpon>frmCadOpcao.cs</DependentUpon>
     </EmbeddedResource>
@@ -626,6 +627,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmInformaMotoboy.resx">
       <DependentUpon>frmInformaMotoboy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operações\frmLancaEstoque.resx">
+      <DependentUpon>frmLancaEstoque.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmSincronizacao.resx">
       <DependentUpon>frmSincronizacao.cs</DependentUpon>
@@ -661,7 +665,10 @@
     <EmbeddedResource Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.resx">
       <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.rdlc" />
+    <EmbeddedResource Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelEntregasPorMotoboy.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\RelFechamentoDetalhado.rdlc" />
     <EmbeddedResource Include="Relatorios\Fechamentos\RelItemsVendidos.rdlc" />
     <EmbeddedResource Include="Cadastros\frmCadastrarEntregador.resx">

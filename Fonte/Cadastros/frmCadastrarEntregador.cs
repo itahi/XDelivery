@@ -41,7 +41,7 @@ namespace DexComanda
                     Nome = txtNome.Text
                     
                 };
-                if (txtComissao.Text!="")
+                if (txtComissao.Text.Trim()!="")
                 {
                     entregador.Comissao = decimal.Parse(txtComissao.Text);
                 }

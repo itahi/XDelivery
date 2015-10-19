@@ -77,6 +77,9 @@ namespace DexComanda
             this.btnAdicionarCliente.Text = "Alterar [F12]";
             this.btnAdicionarCliente.Click -= AdicionarCliente;
             this.btnAdicionarCliente.Click += AlterarCliente;
+
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.Show();
         }
 
         private void frmCadastroCliente_Load(object sender, EventArgs e)
@@ -270,13 +273,13 @@ namespace DexComanda
                     con.Insert("spAdicionarClienteDelivery", pessoa);
                     Utils.ControlaEventos("Inserir", this.Name);
                     MessageBox.Show("Cliente cadastrado com sucesso.", "Dex Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                    this.Close();
                     
                   //  this_FormClosing();
                     if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado))
                     {
                         RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
                     }
-                   
 
                 }
                 else
@@ -297,6 +300,7 @@ namespace DexComanda
         {
             try
             {
+                this.Close(); 
                 DialogResult resultado = MessageBox.Show("Deseja realizar um Pedido para pessoa cadastrada?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (resultado == DialogResult.Yes)
                 {
@@ -304,7 +308,7 @@ namespace DexComanda
                     DataSet pessoaTelefone = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", telefone);
                     if ((pessoaTelefone.Tables["Pessoa"].Rows.Count == 0))
                     {
-
+                        RealizarPedidoAgora(telefone);
                     }
                     else
                     {
@@ -389,7 +393,6 @@ namespace DexComanda
                 con.Update("spAlterarPessoa", pessoa);
                 Utils.ControlaEventos("Altera", this.Name);
                 MessageBox.Show("Cliente alterado com sucesso.");
-              //  this_FormClosing();
                 this.Close();
             }
             catch (Exception ex)
@@ -398,12 +401,12 @@ namespace DexComanda
                 MessageBox.Show("Registro não foi gravado , favor verificar " + ex.Message);
             }
         }
-        //private void this_FormClosing()
-        //{
-        //    parentMain = new Main();
-        //    Utils.PopulaGrid_Novo("Pessoa", parentMain.produtosGridView, Sessions.SqlPessoa);
+        private void this_FormClosing()
+        {
+            parentMain = new Main();
+            Utils.PopulaGrid_Novo("Pessoa", parentMain.produtosGridView, Sessions.SqlPessoa);
 
-        //}
+        }
         private void CadastraCEP()
         {
             DataSet Cep = con.SelectAll("base_cep", "spObterMaiorCEP");

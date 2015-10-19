@@ -29,11 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             this.spEntregasPorBoyDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dsRelatorio = new DexComanda.Relatorios.dsRelatorio();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.reportViewEntregas = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.grpFiltro = new System.Windows.Forms.GroupBox();
             this.chkTodos = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -62,23 +61,26 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.reportViewEntregas);
+            this.panel1.Controls.Add(this.crystalReportViewer1);
             this.panel1.Location = new System.Drawing.Point(4, 75);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(575, 420);
             this.panel1.TabIndex = 0;
             // 
-            // reportViewEntregas
+            // crystalReportViewer1
             // 
-            this.reportViewEntregas.Dock = System.Windows.Forms.DockStyle.Fill;
-            reportDataSource1.Name = "dsEntregasPorEntregador";
-            reportDataSource1.Value = this.spEntregasPorBoyDataBindingSource;
-            this.reportViewEntregas.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewEntregas.LocalReport.ReportEmbeddedResource = "DexComanda.Relatorios.Fechamentos.RelEntregasPorMotoboy.rdlc";
-            this.reportViewEntregas.Location = new System.Drawing.Point(0, 0);
-            this.reportViewEntregas.Name = "reportViewEntregas";
-            this.reportViewEntregas.Size = new System.Drawing.Size(575, 420);
-            this.reportViewEntregas.TabIndex = 0;
+            this.crystalReportViewer1.ActiveViewIndex = 0;
+            this.crystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.crystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.crystalReportViewer1.DisplayStatusBar = false;
+            this.crystalReportViewer1.DisplayToolbar = false;
+            this.crystalReportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.crystalReportViewer1.Location = new System.Drawing.Point(0, 0);
+            this.crystalReportViewer1.Name = "crystalReportViewer1";
+            this.crystalReportViewer1.ReportSource = "E:\\#Projetos\\XDelivery\\Fonte\\Relatorios\\Fechamentos\\RelEntregasPorMotoboy.rpt";
+            this.crystalReportViewer1.Size = new System.Drawing.Size(575, 420);
+            this.crystalReportViewer1.TabIndex = 0;
+            this.crystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
             // 
             // grpFiltro
             // 
@@ -187,8 +189,9 @@
             this.ClientSize = new System.Drawing.Size(586, 497);
             this.Controls.Add(this.grpFiltro);
             this.Controls.Add(this.panel1);
+            this.MaximizeBox = false;
             this.Name = "frmReportEntregasPorMotoboy";
-            this.Text = "[XSistemas] Entregas por Motoboy";
+            this.Text = "s";
             this.Load += new System.EventHandler(this.frmReportEntregasPorMotoboy_Load);
             ((System.ComponentModel.ISupportInitialize)(this.spEntregasPorBoyDataBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dsRelatorio)).EndInit();
@@ -202,7 +205,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewEntregas;
         private System.Windows.Forms.GroupBox grpFiltro;
         private System.Windows.Forms.CheckBox chkTodos;
         private System.Windows.Forms.Label label4;
@@ -215,6 +217,7 @@
         private System.Windows.Forms.BindingSource spEntregasPorBoyDataBindingSource;
         private dsRelatorio dsRelatorio;
         private dsRelatorioTableAdapters.spEntregasPorBoyDataTableAdapter spEntregasPorBoyDataTableAdapter;
+        private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
 
     }
 }

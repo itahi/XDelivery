@@ -85,7 +85,6 @@
             // 
             // dtAbertura
             // 
-            this.dtAbertura.Enabled = false;
             this.dtAbertura.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtAbertura.Location = new System.Drawing.Point(84, 15);
             this.dtAbertura.Name = "dtAbertura";

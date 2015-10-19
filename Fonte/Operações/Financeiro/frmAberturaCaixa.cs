@@ -49,7 +49,7 @@ namespace DexComanda.Operações.Financeiro
                     Data = dtAbertura.Value,
                     Estado = false /*Caixa Aber*/,
                     Historico = "Abertura Inicial",
-                    ValorAbertura = decimal.Parse(txtValor.Text.Replace(",", ".")),
+                    ValorAbertura = decimal.Parse(txtValor.Text),
                     Numero = cbxCaixas.Text
 
                 };

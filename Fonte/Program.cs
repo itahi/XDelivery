@@ -28,7 +28,7 @@ namespace DexComanda
 
         //   private static Empresa empresa;
 
-      
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -60,8 +60,9 @@ namespace DexComanda
 
                     Conexao.connectionString = sLine;
                     string[] words = sLine.Split(';');
+                    string[] iText = words[0].Split('\'');
                     //Verifica se o Serviço do SQLSERVER está Ativo para inicia-lo
-                    Utils.ServicoSQLATIVO(words[0]);
+                    Utils.ServicoSQLATIVO(iText[0]);
 
                     con = new Conexao();
 
@@ -91,8 +92,8 @@ namespace DexComanda
                             Contato = dRow.ItemArray.GetValue(13).ToString(),
                             Servidor = dRow.ItemArray.GetValue(15).ToString(),
                             CaminhoBackup = dRow.ItemArray.GetValue(16).ToString(),
-                            
-                          //  VersaoBanco = dRow.ItemArray.GetValue(15).ToString(),
+
+                            //  VersaoBanco = dRow.ItemArray.GetValue(15).ToString(),
                             DataInicio = Convert.ToDateTime(dRow.ItemArray.GetValue(18).ToString()),
                             UrlServidor = dRow.ItemArray.GetValue(19).ToString()
 
@@ -118,25 +119,25 @@ namespace DexComanda
 
                                 Configuracao configs = new Configuracao()
                                  {
-                                     cod                    = int.Parse(config.ItemArray.GetValue(0).ToString()),
-                                     ImpViaCozinha          = bool.Parse(config.ItemArray.GetValue(1).ToString()),
-                                     UsaDataNascimento      = bool.Parse(config.ItemArray.GetValue(2).ToString()),
-                                     UsaLoginSenha          = bool.Parse(config.ItemArray.GetValue(3).ToString()),
-                                     ControlaEntregador     = bool.Parse(config.ItemArray.GetValue(5).ToString()),
-                                     ProdutoPorCodigo       = bool.Parse(config.ItemArray.GetValue(6).ToString()),
-                                     Usa2Telefones          = bool.Parse(config.ItemArray.GetValue(7).ToString()),
-                                     UsaControleMesa        = bool.Parse(config.ItemArray.GetValue(9).ToString()),
-                                     ImprimeViaEntrega      = bool.Parse(config.ItemArray.GetValue(10).ToString()),
-                                     ControlaFidelidade     = bool.Parse(config.ItemArray.GetValue(11).ToString()),
-                                     PedidosParaFidelidade  = int.Parse(config.ItemArray.GetValue(12).ToString()),
-                                     DescontoDiaSemana      = bool.Parse(config.ItemArray.GetValue(13).ToString()),
-                                     PrevisaoEntregaSN      = bool.Parse(config.ItemArray.GetValue(14).ToString()),
-                                     CobraTaxaGarcon        = bool.Parse(config.ItemArray.GetValue(19).ToString()),
-                                     ImpLPT                 = bool.Parse(config.ItemArray.GetValue(21).ToString()),
-                                     EnviaSMS               = bool.Parse(config.ItemArray.GetValue(23).ToString()),
-                                     RepeteUltimoPedido     = bool.Parse(config.ItemArray.GetValue(27).ToString()),
-                                     RegistraCancelamentos  = bool.Parse(config.ItemArray.GetValue(28).ToString()),
-                                     
+                                     cod = int.Parse(config.ItemArray.GetValue(0).ToString()),
+                                     ImpViaCozinha = bool.Parse(config.ItemArray.GetValue(1).ToString()),
+                                     UsaDataNascimento = bool.Parse(config.ItemArray.GetValue(2).ToString()),
+                                     UsaLoginSenha = bool.Parse(config.ItemArray.GetValue(3).ToString()),
+                                     ControlaEntregador = bool.Parse(config.ItemArray.GetValue(5).ToString()),
+                                     ProdutoPorCodigo = bool.Parse(config.ItemArray.GetValue(6).ToString()),
+                                     Usa2Telefones = bool.Parse(config.ItemArray.GetValue(7).ToString()),
+                                     UsaControleMesa = bool.Parse(config.ItemArray.GetValue(9).ToString()),
+                                     ImprimeViaEntrega = bool.Parse(config.ItemArray.GetValue(10).ToString()),
+                                     ControlaFidelidade = bool.Parse(config.ItemArray.GetValue(11).ToString()),
+                                     PedidosParaFidelidade = int.Parse(config.ItemArray.GetValue(12).ToString()),
+                                     DescontoDiaSemana = bool.Parse(config.ItemArray.GetValue(13).ToString()),
+                                     PrevisaoEntregaSN = bool.Parse(config.ItemArray.GetValue(14).ToString()),
+                                     CobraTaxaGarcon = bool.Parse(config.ItemArray.GetValue(19).ToString()),
+                                     ImpLPT = bool.Parse(config.ItemArray.GetValue(21).ToString()),
+                                     EnviaSMS = bool.Parse(config.ItemArray.GetValue(23).ToString()),
+                                     RepeteUltimoPedido = bool.Parse(config.ItemArray.GetValue(27).ToString()),
+                                     RegistraCancelamentos = bool.Parse(config.ItemArray.GetValue(28).ToString()),
+
                                  };
                                 if (config.ItemArray.GetValue(4).ToString() != "")
                                 {
@@ -179,7 +180,7 @@ namespace DexComanda
                             string Cnpj = empresas.CNPJ;
                             string MAcPC = Utils.EnderecoMAC();
                             string NomePC = Utils.RetornaNomePc();
-                             
+
 
                             //Caso tenha internet ele valida a Licença
                             if (con.IsConnected() == true)
@@ -187,7 +188,7 @@ namespace DexComanda
                                 if (servidor.Tables["Empresa"].Rows.Count > 0)
                                 {
                                     // DataSet Licenca = con.Liberacao(Sessions.returnEmpresa.CNPJ);
-                                    if (con.Liberacao(Sessions.returnEmpresa.Nome,Sessions.returnEmpresa.CNPJ,NomePC,MAcPC)!=null)
+                                    if (con.Liberacao(Sessions.returnEmpresa.Nome, Sessions.returnEmpresa.CNPJ, NomePC, MAcPC) != null)
                                     {
                                         // Cria Registro Para Usar Off
                                         Utils.GravaRegistro(Utils.RetornaNomePc() + empresas.CNPJ + empresas.Cidade + empresas.Nome);
@@ -195,10 +196,10 @@ namespace DexComanda
 
                                         // Verifica se Abriu o Sistema 5 dias sem internet e limpa dando mais 5 dias  
                                         int intAbriu5Vezes = Utils.ContaRegistro(empresas.Nome + empresas.CNPJ);
-                                         if (intAbriu5Vezes>=5)
-                                         {
-                                             con.LimpaTabela("XSistemas", "spCalculaSistema");
-                                         }
+                                        if (intAbriu5Vezes >= 5)
+                                        {
+                                            con.LimpaTabela("XSistemas", "spCalculaSistema");
+                                        }
                                         Utils.IniciaSistema();
 
                                     }
@@ -244,19 +245,19 @@ namespace DexComanda
                                 if (Utils.LeArquivoRegistro())
                                 {
                                     int intAbriu5Vezes = Utils.ContaRegistro(empresas.Nome + empresas.CNPJ);
-                                    if (intAbriu5Vezes<5)
+                                    if (intAbriu5Vezes < 5)
                                     {
-                                        Utils.IniciaSistema();  
+                                        Utils.IniciaSistema();
                                     }
                                     else
                                     {
-                                        MessageBox.Show("Voce precisa se conectar a Internet para obter uma nova Licença","Aviso Importante");
+                                        MessageBox.Show("Voce precisa se conectar a Internet para obter uma nova Licença", "Aviso Importante");
                                         Application.Exit();
                                     }
-                                   
+
                                 }
                                 // CNPJ OSVALDO
-                                else if (empresas.CNPJ == "14904501000107"||empresas.CNPJ=="11301588709"|| empresas.CNPJ=="10512501000100")
+                                else if (empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "10512501000100")
                                 {
                                     Utils.IniciaSistema();
                                 }
