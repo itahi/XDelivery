@@ -135,6 +135,7 @@ namespace DexComanda
         {
             con = new Conexao();
             DiasSelecionados = new List<string>();
+            tabPage2.IsAccessible = btnDoProduto.Text == "Alterar [F12]";
             //    List<Produtos_Adicionais> ProdAdicionais = new List<Produtos_Adicionais>();
             grpDesconto.Visible = DescontoPordia;
             List<Grupo> grupos = new List<Grupo>();
@@ -468,7 +469,7 @@ namespace DexComanda
 
             codigoOpcao = int.Parse(this.AdicionaisGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
             txtPrecoOpcao.Text = AdicionaisGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
-            this.cbxOpcao.Text = this.AdicionaisGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
+            this.cbxOpcao.SelectedText = this.AdicionaisGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
 
 
             this.btnAdicionarOpcao.Text = "Salvar";

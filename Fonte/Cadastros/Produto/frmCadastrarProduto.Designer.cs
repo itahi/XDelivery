@@ -34,14 +34,15 @@
             System.Windows.Forms.Label descricaoProdutoLabel;
             System.Windows.Forms.Label precoProdutoLabel;
             System.Windows.Forms.Label grupoProdutoLabel;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarProduto));
             System.Windows.Forms.Label label5;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarProduto));
             this.dBExpertDataSet = new DexComanda.DBExpertDataSet();
             this.produtoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.produtoTableAdapter = new DexComanda.DBExpertDataSetTableAdapters.ProdutoTableAdapter();
             this.tableAdapterManager = new DexComanda.DBExpertDataSetTableAdapters.TableAdapterManager();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtMaxAdicionais = new System.Windows.Forms.TextBox();
             this.chkOnline = new System.Windows.Forms.CheckBox();
             this.chkAtivo = new System.Windows.Forms.CheckBox();
             this.grpDesconto = new System.Windows.Forms.GroupBox();
@@ -69,7 +70,6 @@
             this.AdicionaisGridView = new System.Windows.Forms.DataGridView();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnDoProduto = new System.Windows.Forms.Button();
-            this.txtMaxAdicionais = new System.Windows.Forms.TextBox();
             label1 = new System.Windows.Forms.Label();
             nomeProdutoLabel = new System.Windows.Forms.Label();
             descricaoProdutoLabel = new System.Windows.Forms.Label();
@@ -131,6 +131,15 @@
             grupoProdutoLabel.TabIndex = 31;
             grupoProdutoLabel.Text = "Grupo Produto:";
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(6, 71);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(81, 13);
+            label5.TabIndex = 37;
+            label5.Text = "Max. Adicionais";
+            // 
             // dBExpertDataSet
             // 
             this.dBExpertDataSet.DataSetName = "DBExpertDataSet";
@@ -189,6 +198,15 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Produto";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // txtMaxAdicionais
+            // 
+            this.txtMaxAdicionais.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtMaxAdicionais.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMaxAdicionais.Location = new System.Drawing.Point(9, 88);
+            this.txtMaxAdicionais.Name = "txtMaxAdicionais";
+            this.txtMaxAdicionais.Size = new System.Drawing.Size(92, 26);
+            this.txtMaxAdicionais.TabIndex = 36;
             // 
             // chkOnline
             // 
@@ -362,7 +380,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(542, 247);
+            this.tabPage2.Size = new System.Drawing.Size(542, 274);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Adicionais";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -486,24 +504,6 @@
             this.btnDoProduto.Text = "Cadastrar [F12]";
             this.btnDoProduto.UseVisualStyleBackColor = true;
             this.btnDoProduto.Click += new System.EventHandler(this.AdicionarProduto);
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(6, 71);
-            label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(81, 13);
-            label5.TabIndex = 37;
-            label5.Text = "Max. Adicionais";
-            // 
-            // txtMaxAdicionais
-            // 
-            this.txtMaxAdicionais.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
-            this.txtMaxAdicionais.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxAdicionais.Location = new System.Drawing.Point(9, 88);
-            this.txtMaxAdicionais.Name = "txtMaxAdicionais";
-            this.txtMaxAdicionais.Size = new System.Drawing.Size(92, 26);
-            this.txtMaxAdicionais.TabIndex = 36;
             // 
             // frmCadastrarProduto
             // 

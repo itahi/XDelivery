@@ -529,6 +529,7 @@
             this.controleDeEstoqueToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lançarMovimentoToolStripMenuItem,
             this.consultaMovimentoToolStripMenuItem});
+            this.controleDeEstoqueToolStripMenuItem.Enabled = false;
             this.controleDeEstoqueToolStripMenuItem.Name = "controleDeEstoqueToolStripMenuItem";
             this.controleDeEstoqueToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.controleDeEstoqueToolStripMenuItem.Text = "Controle de Estoque";

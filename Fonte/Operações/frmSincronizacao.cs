@@ -38,17 +38,12 @@ namespace DexComanda.Operações
 
             try
             {
-                if (chkCategorias.Checked)
-                {
-                    CadastraCategorias(ObterDados("Grupo"));
-                }
+               
                 if (chkProdutos.Checked)
                 {
-                    CadastrarProduto(ObterDados("Produto"));
-                }
-                if (chkOpcao.Checked)
-                {
+                    CadastraCategorias(ObterDados("Grupo"));
                     CadastrarOpcao(ObterDados("Opcao"));
+                    CadastrarProduto(ObterDados("Produto"));
                 }
                 if (chkRegiaoEntrega.Checked)
                 {
@@ -97,8 +92,9 @@ namespace DexComanda.Operações
         {
             RestClient client = new RestClient(iUrlWS);
             RestRequest request = new RestRequest("ws/opcoes/set", Method.POST);
-            prgbarOpcao.Value = 0;
-            prgbarOpcao.Maximum = ds.Tables[0].Rows.Count;
+            prgBarProduto.Value = 0;
+            prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
+            MudaLabel("Opções");
             // CadastrarOpcaoProduto(ds.Tables["Opcao"].Rows[i].Field<int>("Codigo"));
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
@@ -121,7 +117,7 @@ namespace DexComanda.Operações
                 request.AddParameter("nome", ds.Tables["Opcao"].Rows[i].Field<string>("Nome"));
                 request.AddParameter("referenciaId", ds.Tables["Opcao"].Rows[i].Field<int>("Codigo"));
                 RestResponse response = (RestResponse)client.Execute(request);
-                prgbarOpcao.Value = i + 1;
+                prgBarProduto.Value = i + 1;
 
                 if (response.Content.ToString() == "true")
                 {
@@ -131,12 +127,18 @@ namespace DexComanda.Operações
 
             }
         }
+        private void MudaLabel(string iNomeTabela)
+        {
+            lblSincronismo.Visible = true;
+            lblSincronismo.Text = "Sincronizando " + iNomeTabela;
+        }
         private void CadastraCategorias(DataSet ds)
         {
             RestClient client = new RestClient(iUrlWS);
             RestRequest request = new RestRequest("ws/categorias/set", Method.POST);
-
-            prgBarCategoria.Maximum = ds.Tables[0].Rows.Count;
+            prgBarProduto.Value = 0;
+            prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
+            MudaLabel("Grupo");
             GerarToken();
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
@@ -149,7 +151,7 @@ namespace DexComanda.Operações
                 request.AddParameter("ativo", AtivoSN);
                 request.AddParameter("idReferencia", iCod);
                 RestResponse response = (RestResponse)client.Execute(request);
-                prgBarCategoria.Value = i + 1;
+                prgBarProduto.Value = i + 1;
 
                 if (response.Content.ToString() == "true")
                 {
@@ -163,6 +165,8 @@ namespace DexComanda.Operações
         {
             RestClient client = new RestClient(iUrlWS);
             RestRequest request = new RestRequest("ws/produto/set", Method.POST);
+            MudaLabel("Produto");
+            prgBarProduto.Value = 0;
             prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
@@ -214,6 +218,7 @@ namespace DexComanda.Operações
                 RestRequest request = new RestRequest("ws/produto/opcao/set", Method.POST);
                 DataSet ds = con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcaoProdutoCodigo", iCodProduto);
                 int iCodOpcao = 0;
+                MudaLabel("Opcoes/Adicionais");
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     int iCodProd = ds.Tables["Produto_Opcao"].Rows[0].Field<int>("CodProduto");

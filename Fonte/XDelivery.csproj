@@ -303,10 +303,10 @@
     <Compile Include="Operações\frmInformaMotoboy.Designer.cs">
       <DependentUpon>frmInformaMotoboy.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operações\frmLancaEstoque.cs">
+    <Compile Include="Operações\Estoque\frmLancaEstoque.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Operações\frmLancaEstoque.Designer.cs">
+    <Compile Include="Operações\Estoque\frmLancaEstoque.Designer.cs">
       <DependentUpon>frmLancaEstoque.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\frmLicencaOFFLINE.cs">
@@ -628,7 +628,7 @@
     <EmbeddedResource Include="Operações\frmInformaMotoboy.resx">
       <DependentUpon>frmInformaMotoboy.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Operações\frmLancaEstoque.resx">
+    <EmbeddedResource Include="Operações\Estoque\frmLancaEstoque.resx">
       <DependentUpon>frmLancaEstoque.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmSincronizacao.resx">
