@@ -1,4 +1,5 @@
 ﻿using DexComanda.Models;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -38,17 +39,27 @@ namespace DexComanda.Operações
 
             try
             {
+                if (txtPercentualDesconto.Text=="")
+                {
+                    MessageBox.Show("Campo percentual desconto não pode ser vazio");
+                    return;
+                }
+                else
+                {
+                    if (chkProdutos.Checked)
+                    {
+                        CadastraCategorias(ObterDados("Grupo"));
+                        CadastrarOpcao(ObterDados("Opcao"));
+                        CadastrarProduto(ObterDados("Produto"));
+                    }
+                    if (chkRegiaoEntrega.Checked)
+                    {
+                        CadastraRegioes(con.RetornaRegiao());
+                    }
+                    CadastrarDesconto(decimal.Parse(txtPercentualDesconto.Text));
+                }
                
-                if (chkProdutos.Checked)
-                {
-                    CadastraCategorias(ObterDados("Grupo"));
-                    CadastrarOpcao(ObterDados("Opcao"));
-                    CadastrarProduto(ObterDados("Produto"));
-                }
-                if (chkRegiaoEntrega.Checked)
-                {
-                    CadastraRegioes(con.RetornaRegiao());
-                }
+                
 
             }
             catch (Exception erro)
@@ -62,6 +73,36 @@ namespace DexComanda.Operações
             return con.SelectRegistroONline(iNomeTable);
         }
 
+        private void CadastrarDesconto(decimal iValorDescont)
+        {
+            RestClient client = new RestClient(iUrlWS);
+            RestRequest request = new RestRequest("ws/total/desconto", Method.POST);
+            request.AddParameter("token", iParamToken);
+            request.AddParameter("status", Convert.ToInt16(chkDesconto.Checked));
+            request.AddParameter("ordemExibicao", 4);
+            string iFormasPagamento = "";
+            if (chkDinheiro.Checked)
+            {
+                iFormasPagamento = "1";
+            }
+            if (chkCartao.Checked)
+            {
+                iFormasPagamento = "2";
+            }
+            if (chkCartao.Checked && chkDinheiro.Checked)
+            {
+                iFormasPagamento = "1,2";
+            }
+            request.AddParameter("formasPagamento", iFormasPagamento);
+            request.AddParameter("percentualDesconto",int.Parse(txtPercentualDesconto.Text));
+            RestResponse response = (RestResponse)client.Execute(request);
+
+            ReturnPadrao lRetorno = new ReturnPadrao();
+            lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+            //  lblReturn.Visible = lRetorno.status;
+            lblReturn.Visible = true;
+            lblReturn.Text = lRetorno.msg;
+        }
 
         private void CadastraRegioes(DataSet ds)
         {
@@ -269,14 +310,14 @@ namespace DexComanda.Operações
                 {
                     con.AtualizaDataSincronismo("FormaPagamento", iCod);
                 }
-                else
-                {
-                    ds.Tables[0].Rows.Add(-1);
-                }
+              
             }
         }
 
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
 
+        }
     }
 }
 

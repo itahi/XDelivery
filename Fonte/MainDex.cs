@@ -49,20 +49,33 @@ namespace DexComanda
             Conexao con;
             con = new Conexao();
             DataSet dsOpcao = con.SelectAdicionalLanche();
-
             DataSet dsLanches = con.SelectLanches();
-            for (int i = 0; i < dsLanches.Tables[0].Rows.Count; i++)
+            try
             {
-                Produto_Opcao prodOP = new Produto_Opcao()
+      
+                for (int i = 0; i < dsLanches.Tables[0].Rows.Count; i++)
                 {
-                    CodOpcao = dsOpcao.Tables["Opcao"].Rows[0].Field<int>("Codigo"),
-                    CodProduto = dsLanches.Tables["Produto"].Rows[i].Field<int>("Codigo"),
-                    DataAlteracao = DateTime.Now,
-                    Preco = 0
-                };
-                con.Insert("spAdicionarOpcaProduto", prodOP);
+                    for (int intFor = 0; intFor < dsOpcao.Tables[0].Rows.Count; intFor++)
+                    {
+                        Produto_Opcao prodOP = new Produto_Opcao()
+                        {
+                            CodOpcao = dsOpcao.Tables["Produto_Opcao"].Rows[intFor].Field<int>("CodOpcao"),
+                            CodProduto = dsLanches.Tables["Produto"].Rows[i].Field<int>("Codigo"),
+                            DataAlteracao = DateTime.Now,
+                            Preco =  dsOpcao.Tables["Produto_Opcao"].Rows[intFor].Field<decimal>("Preco"),
+                        };
+                        con.Insert("spAdicionarOpcaProduto", prodOP);
+                    }
+                   
 
+                }
             }
+            catch (Exception erro)
+            {
+
+                throw;
+            }
+            
         }
     }
 }

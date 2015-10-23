@@ -37,11 +37,19 @@
             this.chkProdutos = new System.Windows.Forms.CheckBox();
             this.btnSincronizar = new System.Windows.Forms.Button();
             this.lblSincronismo = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtPercentualDesconto = new System.Windows.Forms.TextBox();
+            this.chkDesconto = new System.Windows.Forms.CheckBox();
+            this.lblReturn = new System.Windows.Forms.Label();
+            this.chkDinheiro = new System.Windows.Forms.CheckBox();
+            this.chkCartao = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.prgBarRegiao);
             this.groupBox1.Controls.Add(this.prgBarpagamento);
             this.groupBox1.Controls.Add(this.prgBarProduto);
@@ -50,7 +58,7 @@
             this.groupBox1.Controls.Add(this.chkProdutos);
             this.groupBox1.Location = new System.Drawing.Point(0, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(260, 99);
+            this.groupBox1.Size = new System.Drawing.Size(260, 157);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cadastros a Sincronizar";
@@ -109,7 +117,7 @@
             // 
             // btnSincronizar
             // 
-            this.btnSincronizar.Location = new System.Drawing.Point(91, 129);
+            this.btnSincronizar.Location = new System.Drawing.Point(90, 179);
             this.btnSincronizar.Name = "btnSincronizar";
             this.btnSincronizar.Size = new System.Drawing.Size(75, 23);
             this.btnSincronizar.TabIndex = 1;
@@ -120,17 +128,80 @@
             // lblSincronismo
             // 
             this.lblSincronismo.AutoSize = true;
-            this.lblSincronismo.Location = new System.Drawing.Point(88, 108);
+            this.lblSincronismo.Location = new System.Drawing.Point(51, 163);
             this.lblSincronismo.Name = "lblSincronismo";
-            this.lblSincronismo.Size = new System.Drawing.Size(0, 13);
+            this.lblSincronismo.Size = new System.Drawing.Size(23, 13);
             this.lblSincronismo.TabIndex = 2;
+            this.lblSincronismo.Text = "labl";
             this.lblSincronismo.Visible = false;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.chkCartao);
+            this.groupBox2.Controls.Add(this.chkDinheiro);
+            this.groupBox2.Controls.Add(this.lblReturn);
+            this.groupBox2.Controls.Add(this.chkDesconto);
+            this.groupBox2.Controls.Add(this.txtPercentualDesconto);
+            this.groupBox2.Location = new System.Drawing.Point(6, 84);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(248, 67);
+            this.groupBox2.TabIndex = 11;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Parametros Desconto";
+            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // txtPercentualDesconto
+            // 
+            this.txtPercentualDesconto.Location = new System.Drawing.Point(123, 17);
+            this.txtPercentualDesconto.Name = "txtPercentualDesconto";
+            this.txtPercentualDesconto.Size = new System.Drawing.Size(45, 20);
+            this.txtPercentualDesconto.TabIndex = 9;
+            // 
+            // chkDesconto
+            // 
+            this.chkDesconto.AutoSize = true;
+            this.chkDesconto.Location = new System.Drawing.Point(6, 19);
+            this.chkDesconto.Name = "chkDesconto";
+            this.chkDesconto.Size = new System.Drawing.Size(105, 17);
+            this.chkDesconto.TabIndex = 11;
+            this.chkDesconto.Text = "Ativa Desconto?";
+            this.chkDesconto.UseVisualStyleBackColor = true;
+            // 
+            // lblReturn
+            // 
+            this.lblReturn.AutoSize = true;
+            this.lblReturn.Location = new System.Drawing.Point(6, 51);
+            this.lblReturn.Name = "lblReturn";
+            this.lblReturn.Size = new System.Drawing.Size(17, 13);
+            this.lblReturn.TabIndex = 12;
+            this.lblReturn.Text = "lbl";
+            this.lblReturn.Visible = false;
+            // 
+            // chkDinheiro
+            // 
+            this.chkDinheiro.AutoSize = true;
+            this.chkDinheiro.Location = new System.Drawing.Point(174, 20);
+            this.chkDinheiro.Name = "chkDinheiro";
+            this.chkDinheiro.Size = new System.Drawing.Size(51, 17);
+            this.chkDinheiro.TabIndex = 13;
+            this.chkDinheiro.Text = "Dinh.";
+            this.chkDinheiro.UseVisualStyleBackColor = true;
+            // 
+            // chkCartao
+            // 
+            this.chkCartao.AutoSize = true;
+            this.chkCartao.Location = new System.Drawing.Point(174, 47);
+            this.chkCartao.Name = "chkCartao";
+            this.chkCartao.Size = new System.Drawing.Size(62, 17);
+            this.chkCartao.TabIndex = 14;
+            this.chkCartao.Text = "Cartões";
+            this.chkCartao.UseVisualStyleBackColor = true;
             // 
             // frmSincronizacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(272, 154);
+            this.ClientSize = new System.Drawing.Size(270, 204);
             this.Controls.Add(this.lblSincronismo);
             this.Controls.Add(this.btnSincronizar);
             this.Controls.Add(this.groupBox1);
@@ -138,6 +209,8 @@
             this.Text = "[XSistemas] Sincronizacao";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -154,5 +227,11 @@
         private System.Windows.Forms.ProgressBar prgBarProduto;
         private System.Windows.Forms.Button btnSincronizar;
         private System.Windows.Forms.Label lblSincronismo;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox chkDesconto;
+        private System.Windows.Forms.TextBox txtPercentualDesconto;
+        private System.Windows.Forms.Label lblReturn;
+        private System.Windows.Forms.CheckBox chkCartao;
+        private System.Windows.Forms.CheckBox chkDinheiro;
     }
 }

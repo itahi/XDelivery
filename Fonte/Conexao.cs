@@ -150,19 +150,22 @@ namespace DexComanda
         }
         public DataSet SelectAdicionalLanche()
         {
-            string lSqlConsulta = " select * from Opcao "+
-                                  "  where Tipo = 'Texto livre'";
+            // string lSqlConsulta = " select * from Opcao  where Tipo='Texto Livre'  ";
+            //   "  where Tipo = 'Texto livre'";
+            string lSqlConsulta = "select  p.CodOpcao,P.Preco from Produto_Opcao P " +
+                                  "  left join Opcao O on O.Codigo = P.CodOpcao " +
+                                  "  where O.Tipo = 'Multipla Selecao' ";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
            
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
-            adapter.Fill(ds, "Opcao");
+            adapter.Fill(ds, "Produto_Opcao");
             return ds;
         }
         public DataSet SelectLanches()
         {
-            string lSqlConsulta = "select * from Produto ";
+            string lSqlConsulta = "select * from Produto where GrupoProduto='LANCHES' AND CODIGO >1 ";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
 

@@ -938,7 +938,8 @@
             this.cbxBuscarPor.FormattingEnabled = true;
             this.cbxBuscarPor.Items.AddRange(new object[] {
             "Nome",
-            "Telefone"});
+            "Telefone",
+            "Endereço"});
             this.cbxBuscarPor.Location = new System.Drawing.Point(4, 4);
             this.cbxBuscarPor.Name = "cbxBuscarPor";
             this.cbxBuscarPor.Size = new System.Drawing.Size(121, 30);

@@ -254,9 +254,13 @@ namespace DexComanda
                             {
                                 query = "Nome LIKE '%" + valor + "%'";
                             }
-                            else
+                            else if (propriedade.Equals("Telefone"))
                             {
                                 query = "Telefone ='" + valor + "'";
+                            }
+                            else
+                            {
+                                query = "Endereco like '%" + valor + "%' or Bairro like '%" + valor +"%'";
                             }
 
                             var dv = result.Tables[0].DefaultView;
