@@ -39,13 +39,6 @@ namespace DexComanda.Operações
 
             try
             {
-                if (txtPercentualDesconto.Text=="")
-                {
-                    MessageBox.Show("Campo percentual desconto não pode ser vazio");
-                    return;
-                }
-                else
-                {
                     if (chkProdutos.Checked)
                     {
                         CadastraCategorias(ObterDados("Grupo"));
@@ -56,10 +49,16 @@ namespace DexComanda.Operações
                     {
                         CadastraRegioes(con.RetornaRegiao());
                     }
-                    CadastrarDesconto(decimal.Parse(txtPercentualDesconto.Text));
+                double iPerceDesconto;
+                if (txtPercentualDesconto.Text!="")
+                {
+                    iPerceDesconto = double.Parse(txtPercentualDesconto.Text);
                 }
-               
-                
+                else
+                {
+                    iPerceDesconto = 0;
+                }
+                    CadastrarDesconto(iPerceDesconto);
 
             }
             catch (Exception erro)
@@ -73,14 +72,20 @@ namespace DexComanda.Operações
             return con.SelectRegistroONline(iNomeTable);
         }
 
-        private void CadastrarDesconto(decimal iValorDescont)
+        private void CadastrarDesconto(double iValorDescont=0)
         {
+            
             RestClient client = new RestClient(iUrlWS);
             RestRequest request = new RestRequest("ws/total/desconto", Method.POST);
             request.AddParameter("token", iParamToken);
             request.AddParameter("status", Convert.ToInt16(chkDesconto.Checked));
-            request.AddParameter("ordemExibicao", 4);
-            string iFormasPagamento = "";
+            int iTotalOrSub = 4;
+            if (rbSub.Checked)
+            {
+                iTotalOrSub = 5;
+            }
+            request.AddParameter("ordemExibicao", iTotalOrSub);
+            string iFormasPagamento = "1";
             if (chkDinheiro.Checked)
             {
                 iFormasPagamento = "1";
@@ -94,7 +99,15 @@ namespace DexComanda.Operações
                 iFormasPagamento = "1,2";
             }
             request.AddParameter("formasPagamento", iFormasPagamento);
-            request.AddParameter("percentualDesconto",int.Parse(txtPercentualDesconto.Text));
+            if (txtPercentualDesconto.Text!="")
+            {
+                request.AddParameter("percentualDesconto", int.Parse(txtPercentualDesconto.Text));
+            }
+            else
+            {
+                request.AddParameter("percentualDesconto", 0);
+            }
+            
             RestResponse response = (RestResponse)client.Execute(request);
 
             ReturnPadrao lRetorno = new ReturnPadrao();
@@ -216,11 +229,15 @@ namespace DexComanda.Operações
                 request.AddParameter("idReferencia", ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
                 request.AddParameter("nome", ds.Tables["Produto"].Rows[i].Field<string>("NomeProduto"));
                 request.AddParameter("preco", prProduto);
-                //request.AddParameter("idReferenciaCategoria",10);
+              //  request.AddParameter("precoPromocao", 10);
                 request.AddParameter("idReferenciaCategoria", RetornaIDCategoria(ds.Tables["Produto"].Rows[i].Field<string>("GrupoProduto")));
                 request.AddParameter("descricao", ds.Tables["Produto"].Rows[i].Field<string>("DescricaoProduto"));
                 request.AddParameter("ativo", Convert.ToInt32(ds.Tables["Produto"].Rows[i].Field<Boolean>("OnlineSN")));
                 request.AddParameter("maxOptions", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
+             //   request.AddParameter("precoPromocao", ds.Tables["Produto"].Rows[i].Field<int>("PrecoDesconto"));
+             //   request.AddParameter("dataInicial", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
+             //   request.AddParameter("dataFinal", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
+
                 // request.AddParameter("imagem", "  ");
                 // request.AddParameter("lista", " "); 
                 prgBarProduto.Value = i + 1;

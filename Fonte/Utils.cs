@@ -71,6 +71,7 @@ namespace DexComanda
             else if (senha.Equals(""))
             {
                 MessageBox.Show("Informe sua senha.");
+              
             }
             else
             {

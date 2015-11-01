@@ -67,6 +67,10 @@ namespace DexComanda
                 }
                 if (lol.Contains("Sunday"))
                 {
+                    ChkSabado.Checked = true;
+                }
+                if (lol.Contains("Saturday"))
+                {
                     chkDomingo.Checked = true;
                 }
 
@@ -119,6 +123,10 @@ namespace DexComanda
                     if (lol.Contains("Friday"))
                     {
                         ChkSexta.Checked = true;
+                    }
+                    if (lol.Contains("Sunday"))
+                    {
+                        ChkSabado.Checked = true;
                     }
                     if (lol.Contains("Sunday"))
                     {
@@ -254,11 +262,11 @@ namespace DexComanda
             }
             if (ChkSabado.Checked)
             {
-                Marcados = Marcados + ";Saturday";
+                Marcados = Marcados + ";Sunday";
             }
             if (chkDomingo.Checked)
             {
-                Marcados = Marcados + ";Sunday";
+                Marcados = Marcados + ";Saturday";
             }
 
             return Marcados;

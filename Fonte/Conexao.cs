@@ -278,7 +278,7 @@ namespace DexComanda
             command.Parameters.AddWithValue("@Numero", iNumCaixa);
             command.Parameters.AddWithValue("@DataI", iDataI);
             command.Parameters.AddWithValue("@DataF", iDataF);
-
+            
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, table);

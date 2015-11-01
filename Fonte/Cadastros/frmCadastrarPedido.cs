@@ -1628,7 +1628,7 @@ namespace DexComanda
                 DiaDaPromocao = produto.Rows[0]["DiaSemana"].ToString();
                 // lol = DiaDaPromocao.Split(new char[] { ';' });
 
-                if (PromocaoDiasSemana && DiaDaSema.Equals(DiaDaPromocao))
+                if (PromocaoDiasSemana && DiaDaPromocao.IndexOf(DiaDaSema)>0)
                 {
                     valorProduto = decimal.Parse(produto.Rows[0]["PrecoDesconto"].ToString());
                     // valorSabor = decimal.Parse(sabor.Rows[0]["PrecoDesconto"].ToString());
@@ -3026,7 +3026,6 @@ namespace DexComanda
         {
             if (radioButton1.Checked)
             {
-
                 decimal lPreco = decimal.Parse(radioButton1.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
                 cbxProdutosGrid.Text = iNomeProd + " " + radioButton1.Text;
