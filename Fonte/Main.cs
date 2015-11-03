@@ -240,46 +240,34 @@ namespace DexComanda
                 {
                     string propriedade = cbxBuscarPor.SelectedItem.ToString();
                     string valor = txtBurcarValor.Text;
-
+                    DataSet dsResult;
                     if (!propriedade.Equals(""))
                     {
                         if (!valor.Equals(""))
                         {
-                            string query = null;
-                            DBExpertDataSet dbExpert = new DBExpertDataSet();
-                            DataSet result = con.SelectAll("Pessoa", "spObterPessoas");
-
-
-                            if (propriedade.Equals("Nome"))
+                            if (propriedade.Equals("Telefone"))
                             {
-                                query = "Nome LIKE '%" + valor + "%'";
+                                dsResult= con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", valor);
                             }
-                            else if (propriedade.Equals("Telefone"))
+                            else if (propriedade.Equals("Nome"))
                             {
-                                query = "Telefone ='" + valor + "'";
+                                dsResult = con.SelectPessoaPorNome(valor, Sessions.SqlPessoa,"Nome");
                             }
                             else
                             {
-                                query = "Endereco like '%" + valor + "%' or Bairro like '%" + valor +"%'";
+                                dsResult=  con.SelectPessoaPorNome(valor, Sessions.SqlPessoa, "Endereco");
                             }
-
-                            var dv = result.Tables[0].DefaultView;
-                            dv.RowFilter = query;
-
-                            var newDS = new DataSet("Pessoa");
-                            var newDT = dv.ToTable();
-
-                            newDS.Tables.Add(newDT);
-
+                            
                             this.clientesGridView.DataSource = null;
                             this.clientesGridView.AutoGenerateColumns = true;
-                            this.clientesGridView.DataSource = newDS;
+                            this.clientesGridView.DataSource = dsResult;
                             this.clientesGridView.DataMember = "Pessoa";
                         }
                         else
                         {
                             MessageBox.Show("Informe Nome ou Telefone.");
-                            Utils.PopularGrid("Pessoas", this.clientesGridView);
+                            Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
+                            // Utils.PopularGrid("Pessoas", this.clientesGridView);
 
 
                         }

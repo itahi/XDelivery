@@ -209,6 +209,7 @@
     <Compile Include="Models\HistoricoPessoa.cs" />
     <Compile Include="Models\Opcao.cs" />
     <Compile Include="Models\OpcaoItem.cs" />
+    <Compile Include="Models\Produto_Estoque.cs" />
     <Compile Include="Models\Produto_Opcao.cs" />
     <Compile Include="Models\RegiaoEntrega_Bairros.cs" />
     <Compile Include="Models\RemoveDezPorcento.cs" />

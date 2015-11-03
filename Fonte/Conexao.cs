@@ -498,17 +498,24 @@ namespace DexComanda
         }
         public DataSet SelectMontaGrid(string iTable, string iParametrosConsulta, Boolean iAtivos = true)
         {
-            string iSql, iSubSelect;
+            string iSql="", iSubSelect="subSelect";
 
             if (iParametrosConsulta != null)
             {
-                iSql = "select " + iParametrosConsulta + " from " + iTable;
+                iSql = "select "+ iParametrosConsulta + iSubSelect + " from " + iTable;
+               
                 if (iTable == "Pedido")
                 {
-                    iSql = iSql + " Pd where Finalizado = 0 and [status] ='Aberto' ORDER BY Pd.Codigo DESC";
+                    iSql = iSql.Replace(iSubSelect,"") + " Pd where Finalizado = 0 and [status] ='Aberto' ORDER BY Pd.Codigo DESC";
                 }
+                else 
                 if (iTable == "Produto")
                 {
+                    if (Sessions.returnEmpresa.CNPJ == "13004606798")
+                    {
+                        iSql = iSql.Replace(iSubSelect, ",(select Quantidade from Produto_Estoque E where E.CodProduto = Produto.Codigo and E.DataAtualizacao between '" +DateTime.Now.Date+ "' and '"+ DateTime.Now.Date.ToShortDateString()+ " 23:59:59') as QtdVendida");
+                    }
+
                     if (iAtivos)
                     {
                         iSql = iSql + " where AtivoSN=1 ";
@@ -518,6 +525,10 @@ namespace DexComanda
                         iSql = iSql + " where AtivoSN=0";
                     }
 
+                }
+                else
+                {
+                    iSql = iSql.Replace(iSubSelect, "");
                 }
 
             }
@@ -548,6 +559,16 @@ namespace DexComanda
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, "Produto_Opcao");
+            return ds;
+        }
+        public DataSet SelectPessoaPorNome(string iNome,string iSqlConsulta,string iParam)
+        {
+            iSqlConsulta = "select "+ iSqlConsulta + " from Pessoa  where " + iParam +" like '%"+iNome+"'";
+            command = new SqlCommand(iSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Pessoa");
             return ds;
         }
 

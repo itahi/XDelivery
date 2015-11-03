@@ -639,10 +639,12 @@ namespace DexComanda
                                 pedido.TotalPedido = pedido.TotalPedido + item.PrecoTotal;
                                 pedido.Codigo = codPedido;
                                 con.Insert("spAdicionarItemAoPedido", item);
+                                
                                 con.Update("spAlterarTotalPedido", pedido);
                                 items.Add(item);
                                 atualizarGrid(item);
                                 SemMeiaPizza();
+                                Utils.PopulaGrid_Novo("Pedido", parentWindow.pedidosGridView, Sessions.SqlPedido);
                             }
 
                         }
@@ -838,7 +840,7 @@ namespace DexComanda
 
 
                             MessageBox.Show("Pedido gerado com sucesso.");
-
+                            Utils.PopulaGrid_Novo("Produto", parentWindow.produtosGridView, Sessions.SqlProduto);
 
                             if (ContraMesas && cbxTipoPedido.Text != "1 - Mesa")
                             {

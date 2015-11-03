@@ -1064,7 +1064,7 @@ namespace DexComanda
             Conexao con = new Conexao();
             DataSet Dados = null;
             Dados = con.SelectMontaGrid(table, iParametrosConsulta, iAtivo);
-
+           
             gridView.DataSource = null;
             gridView.AutoGenerateColumns = true;
             gridView.DataSource = Dados;

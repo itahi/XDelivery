@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DexComanda.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,7 @@ namespace DexComanda.Operações
     public partial class frmLancaEstoque : Form
     {
         private Conexao con;
+        private int i = 0;
         public frmLancaEstoque()
         {
             con = new Conexao();
@@ -46,25 +48,58 @@ namespace DexComanda.Operações
              lTipoMovimento = "S";
 	        }
             DataTable dt = new DataTable();
+            
             try
-            {
-                for (int i = 0; i <gridMovimento.Rows.Count; i++)
-                {
-                    gridMovimento.Rows[i].Cells["CodProduto"].Value = cbxProdutosGrid.SelectedValue.ToString();
-                    gridMovimento.Rows[i].Cells["NomeProduto"].Value = cbxProdutosGrid.Text;
-                    gridMovimento.Rows[i].Cells["Quantidade"].Value = txtQuantidade.Text;
-                    gridMovimento.Rows[i].Cells["TipoMovimento"].Value = lTipoMovimento;
-                    i++;
-                }
+            { 
+       
+                gridMovimento.Rows.Add(cbxProdutosGrid.SelectedValue.ToString(), cbxProdutosGrid.Text, txtQuantidade.Text, lTipoMovimento);
                 
                
             }
-            catch (Exception)
+            catch (Exception erro)
             {
                 
                 throw;
             }
             
+
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            con = new Conexao();
+            try
+            {
+
+                for (int i = 0; i < gridMovimento.Rows.Count-1; i++)
+                {
+                    Produto_Estoque prodEs = new Produto_Estoque()
+                    {
+                        CodProduto = int.Parse(gridMovimento.Rows[i].Cells["CodProduto"].Value.ToString()),
+                        DataAtualizacao = DateTime.Now,
+                        //Quantidade = decimal .Parse(gridMovimento.Rows[i].Cells["Quantidade"])
+                    };
+                    if (gridMovimento.Rows[i].Cells["TipoMovimento"].Value.ToString() =="E")
+                    {
+                        prodEs.Quantidade = decimal.Parse(gridMovimento.Rows[i].Cells["Quantidade"].Value.ToString());
+                    }
+                    else
+                    {
+                        prodEs.Quantidade = -decimal.Parse(gridMovimento.Rows[i].Cells["Quantidade"].Value.ToString());
+                    }
+                    con.Insert("spAtualizaEstoque", prodEs);
+                }
+
+                MessageBox.Show("Movimento confirmado ");
+                gridMovimento.Rows.Clear();
+            }
+            catch (Exception erro)
+            {
+
+                throw;
+            }
+          
 
             
         }
