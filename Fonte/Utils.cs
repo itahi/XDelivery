@@ -236,7 +236,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    report.PrintToPrinter(0, false, 0, 0);
+                    report.PrintToPrinter(0, true, 0, 0);
                 }
             }
             catch (Exception erro)

@@ -563,7 +563,7 @@ namespace DexComanda
         }
         public DataSet SelectPessoaPorNome(string iNome,string iSqlConsulta,string iParam)
         {
-            iSqlConsulta = "select "+ iSqlConsulta + " from Pessoa  where " + iParam +" like '%"+iNome+"'";
+            iSqlConsulta = "select "+ iSqlConsulta + " from Pessoa  where " + iParam +" like '%"+iNome+"%'";
             command = new SqlCommand(iSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             adapter = new SqlDataAdapter(command);
