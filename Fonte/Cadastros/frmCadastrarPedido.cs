@@ -1177,6 +1177,7 @@ namespace DexComanda
                 if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa")
                 {
                     int iCodigo;
+                    string iRetorno;
                     if (con.getLastCodigo() != 0)
                     {
                         iCodigo = con.getLastCodigo();
@@ -1185,8 +1186,16 @@ namespace DexComanda
                     {
                         iCodigo = codPedido;
                     }
+                    if (Sessions.returnConfig.QtdCaracteresImp <= 30)
+                    {
+                        iRetorno = Utils.ImpressaoFechamentoNovo_20(iCodigo, ImprimeLPT, QtdViasBalcao);
+                    }
+                    else
+                    {
+                        iRetorno = Utils.ImpressaoFechamentoNovo(iCodigo, ImprimeLPT, QtdViasBalcao);
+                    }
 
-                    string iRetorno = Utils.ImpressaoFechamentoNovo(iCodigo, ImprimeLPT, QtdViasBalcao);
+                    
 
                     if (ImprimeLPT && iRetorno != "")
                     {

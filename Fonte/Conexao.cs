@@ -518,7 +518,7 @@ namespace DexComanda
 
                     if (iAtivos)
                     {
-                        iSql = iSql + " where AtivoSN=1 ";
+                        iSql = iSql.Replace(iSubSelect,"") + " where AtivoSN=1 ";
                     }
                     else
                     {
