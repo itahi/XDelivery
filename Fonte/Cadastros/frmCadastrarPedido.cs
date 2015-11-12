@@ -1,4 +1,5 @@
 ﻿
+using DexComanda.Cadastros;
 using DexComanda.Models;
 using DexComanda.Relatorios.Delivery;
 using System;
@@ -316,6 +317,7 @@ namespace DexComanda
 
         private void cbxProdutosGrid_SelectedIndexChanged(object sender, EventArgs e)
         {
+            LimpaTamanhosSabores();
             var produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxProdutosGrid.SelectedValue.ToString())).Tables["Produto"];
 
             MontaMenuOpcoes(int.Parse(this.cbxProdutosGrid.SelectedValue.ToString()));
@@ -1516,8 +1518,9 @@ namespace DexComanda
             prepareToPrint();
 
         }
-        private void cbxMeiaPizza_CheckedChanged(object sender, EventArgs e)
+        private void LimpaTamanhosSabores()
         {
+
             // Percorre o GroupBox dos tamanhos e e  desmarca todos pra obrigar o usuario marcar o tamanho depois de selecionar os tamanhos
             foreach (System.Windows.Forms.Control ctrControl in grpBoxTamanhos.Controls)
             {
@@ -1527,7 +1530,11 @@ namespace DexComanda
                     ((System.Windows.Forms.RadioButton)ctrControl).Checked = false;
                 }
             }
+        }
 
+        private void cbxMeiaPizza_CheckedChanged(object sender, EventArgs e)
+        {
+            LimpaTamanhosSabores();
 
             if (cbxMeiaPizza.Checked)
             {
@@ -1939,6 +1946,7 @@ namespace DexComanda
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.label9 = new System.Windows.Forms.Label();
             this.chkListAdicionais = new System.Windows.Forms.CheckedListBox();
+            this.btnMultiploPagamento = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -2116,7 +2124,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(749, 6);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -2262,6 +2270,7 @@ namespace DexComanda
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel2.Controls.Add(this.btnMultiploPagamento);
             this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.btnCalGarcon);
             this.panel2.Controls.Add(this.lblEntrega);
@@ -2275,7 +2284,7 @@ namespace DexComanda
             this.panel2.Controls.Add(this.btnGerarPedido);
             this.panel2.Location = new System.Drawing.Point(0, 440);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(754, 82);
+            this.panel2.Size = new System.Drawing.Size(754, 126);
             this.panel2.TabIndex = 42;
             // 
             // label10
@@ -2683,12 +2692,25 @@ namespace DexComanda
             this.chkListAdicionais.TabIndex = 0;
             this.chkListAdicionais.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkListAdicionais_ItemCheck);
             // 
+            // btnMultiploPagamento
+            // 
+            this.btnMultiploPagamento.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnMultiploPagamento.FlatAppearance.BorderSize = 5;
+            this.btnMultiploPagamento.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnMultiploPagamento.Location = new System.Drawing.Point(254, 84);
+            this.btnMultiploPagamento.Name = "btnMultiploPagamento";
+            this.btnMultiploPagamento.Size = new System.Drawing.Size(178, 38);
+            this.btnMultiploPagamento.TabIndex = 61;
+            this.btnMultiploPagamento.Text = "+ F. Pagamento [F10]";
+            this.btnMultiploPagamento.UseVisualStyleBackColor = true;
+            this.btnMultiploPagamento.Click += new System.EventHandler(this.MultiplaFormasPagamento);
+            // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1051, 522);
+            this.ClientSize = new System.Drawing.Size(1051, 568);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.cbxListaMesas);
@@ -2817,6 +2839,7 @@ namespace DexComanda
 
         private void cbxSabor_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            LimpaTamanhosSabores();
             ComparaValores();
             MontaMenuOpcoes(int.Parse(cbxSabor.SelectedValue.ToString()), int.Parse(cbxSabor.SelectedValue.ToString()));
         }
@@ -3134,6 +3157,16 @@ namespace DexComanda
                 txtPrecoUnitario.Text = Convert.ToString(iValor);
 
                 CalcularTotalItem();
+            }
+        }
+
+        private void MultiplaFormasPagamento(object sender, EventArgs e)
+        {
+            if (AtualizaTroco(false))
+            {
+                frmFinalizacaoPedido frm = new frmFinalizacaoPedido(decimal.Parse(lbTotal.Text.Replace("R$", "")));
+                frm.ShowDialog();
+                
             }
         }
 

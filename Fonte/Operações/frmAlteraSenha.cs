@@ -48,7 +48,11 @@ namespace DexComanda
 
                     con.Update("spAlterarSenha", user);
                     MessageBox.Show("Senha alterada");
-                    Utils.Restart();
+                    if (user.Codigo == Sessions.retunrUsuario.Codigo)
+                    {
+                        Utils.Restart();
+                    }
+                   
                 }
                 else
                 {

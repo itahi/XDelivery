@@ -148,6 +148,17 @@ namespace DexComanda
             adapter.Fill(ds, "Produto_Opcao");
             return ds;
         }
+        public DataSet SelectFormasPagamento()
+        {
+            string lSqlConsulta = " select Codigo,Descricao from FormaPagamento";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "FormaPagamento");
+            return ds;
+        }
         public DataSet SelectAdicionalLanche()
         {
             // string lSqlConsulta = " select * from Opcao  where Tipo='Texto Livre'  ";

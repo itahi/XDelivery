@@ -103,7 +103,10 @@ namespace DexComanda
 
                 int iNumeroCaixa = Sessions.returnUsuario.CaixaLogado;
                 iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now, iNumeroCaixa).Tables["Caixa"].Rows.Count;
-
+                if (Sessions.returnEmpresa.CNPJ == "22695578000142")
+                {
+                    return;
+                }
                 if (Utils.CaixaAberto(DateTime.Now, iNumeroCaixa))
                 {
                     aberturaCaixaToolStripMenuItem.Enabled = false;
@@ -132,6 +135,11 @@ namespace DexComanda
 
         private void MontaMenu() // Monta o menu de opções
         {
+            if (Sessions.returnEmpresa.CNPJ== "22695578000142")
+            {
+                aberturaCaixaToolStripMenuItem.Enabled = false;
+            }
+            
             // Menu Visivel
             //relatórioToolStripMenuItem.Enabled = Sessions.returnUsuario.AcessaRelatoriosSN;
             entregadorToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
