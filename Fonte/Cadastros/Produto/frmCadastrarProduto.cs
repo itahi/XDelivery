@@ -226,6 +226,7 @@ namespace DexComanda
                 ClearForm(this);
                // this_FormClosing();
                 MessageBox.Show("Produto cadastrado com sucesso.");
+                Utils.PopulaGrid_Novo("Produto", parentMain.produtosGridView, Sessions.SqlProduto);
                 Utils.ControlaEventos("Inserir", this.Name);
                 nomeProdutoTextBox.Text = "";
                 txtPrecoDesconto.Text = "";

@@ -35,8 +35,10 @@ namespace DexComanda
         private List<ItemPedido> items;
         private Pedido pedido;
         private string iTotalItem;
+        public int iCodPedido;
         private string iNomeProd;
         private Main parentWindow;
+        private frmCadastrarPedido parentWindowPedido;
         private int codigoItemParaAlterar;
         private int rowIndex;
         private Font printFont;
@@ -80,6 +82,19 @@ namespace DexComanda
         private decimal dcTaxaEntrega;
         private int gMaximoOpcaoProduto;
 
+        public frmCadastrarPedido()
+        {
+            try
+            {
+                InitializeComponent();
+                con = new Conexao();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         //private int HoraPedido = Sessions.returnPedido.RealizadoEm.Minute;
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, string iNumeMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara, string fPagamento, string TipoPedido, string MesaBalcao,
@@ -160,7 +175,7 @@ namespace DexComanda
             con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcoesProduto", iCodProduto);
         }
 
-        private void frmCadastrarPedido_Load(object sender, EventArgs e)
+        public void frmCadastrarPedido_Load(object sender, EventArgs e)
         {
 
             if (Sessions.returnUsuario != null)
@@ -641,7 +656,7 @@ namespace DexComanda
                                 pedido.TotalPedido = pedido.TotalPedido + item.PrecoTotal;
                                 pedido.Codigo = codPedido;
                                 con.Insert("spAdicionarItemAoPedido", item);
-                                
+
                                 con.Update("spAlterarTotalPedido", pedido);
                                 items.Add(item);
                                 atualizarGrid(item);
@@ -704,12 +719,12 @@ namespace DexComanda
             this.Close();
             //EXCLUIR ITEMS DO PEDIDO E DEPOIS REMOVER PEDIDO
         }
-        private void btnGerarPedido_Click(object sender, EventArgs e)
+        public void btnGerarPedido_Click(object sender, EventArgs e)
         {
-
+            int iRetur = 0;
             try
             {
-                if (cmbFPagamento.SelectedValue.ToString() == "")
+                if (cmbFPagamento.ValueMember == null)
                 {
                     MessageBox.Show("Formaga de Pagamento não selecionada", "[XSistemas] Aviso");
                     cmbFPagamento.Focus();
@@ -722,7 +737,7 @@ namespace DexComanda
                     //   Boolean ivalida = object.ReferenceEquals(e,System.Windows.Forms.KeyEventArgs.Equals(Keys.F5));
                     if (AtualizaTroco(false))
                     {
-                        DBExpertDataSet dbExpert = new DBExpertDataSet();
+                        // DBExpertDataSet dbExpert = new DBExpertDataSet();
                         int totalDeItems = this.gridViewItemsPedido.RowCount;
                         if (totalDeItems == 0)
                         {
@@ -839,9 +854,17 @@ namespace DexComanda
 
                                 Utils.AtualizaMesa(cbxListaMesas.Text, 2);
                             }
+                            iCodPedido = con.getLastCodigo();
 
-
+                            FinalizaPedido finaliza = new FinalizaPedido()
+                            {
+                                CodPedido = iCodPedido,
+                                CodPagamento = int.Parse(cmbFPagamento.SelectedValue.ToString()),
+                                ValorPagamento = pedido.TotalPedido
+                            };
+                            con.Insert("", finaliza);
                             MessageBox.Show("Pedido gerado com sucesso.");
+                           
                             Utils.PopulaGrid_Novo("Produto", parentWindow.produtosGridView, Sessions.SqlProduto);
 
                             if (ContraMesas && cbxTipoPedido.Text != "1 - Mesa")
@@ -1197,7 +1220,7 @@ namespace DexComanda
                         iRetorno = Utils.ImpressaoFechamentoNovo(iCodigo, ImprimeLPT, QtdViasBalcao);
                     }
 
-                    
+
 
                     if (ImprimeLPT && iRetorno != "")
                     {
@@ -1646,7 +1669,7 @@ namespace DexComanda
                 DiaDaPromocao = produto.Rows[0]["DiaSemana"].ToString();
                 // lol = DiaDaPromocao.Split(new char[] { ';' });
 
-                if (PromocaoDiasSemana && DiaDaPromocao.IndexOf(DiaDaSema)>0)
+                if (PromocaoDiasSemana && DiaDaPromocao.IndexOf(DiaDaSema) > 0)
                 {
                     valorProduto = decimal.Parse(produto.Rows[0]["PrecoDesconto"].ToString());
                     // valorSabor = decimal.Parse(sabor.Rows[0]["PrecoDesconto"].ToString());
@@ -1735,7 +1758,11 @@ namespace DexComanda
                     }
 
                     con.Update("spAlterarTrocoParaFormaPagamento", pedido);
-                    Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
+                    if (codPedido != 0)
+                    {
+                        Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
+                    }
+
                     //   MessageBox.Show("Troco e/ou Forma de pagamento atualizados");
                     Ok = true;
                 }
@@ -1912,6 +1939,7 @@ namespace DexComanda
             this.lblDescricaoDoItem = new System.Windows.Forms.Label();
             this.btnReimprimir = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnMultiploPagamento = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.btnCalGarcon = new System.Windows.Forms.Button();
             this.lblEntrega = new System.Windows.Forms.Label();
@@ -1946,7 +1974,6 @@ namespace DexComanda
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.label9 = new System.Windows.Forms.Label();
             this.chkListAdicionais = new System.Windows.Forms.CheckedListBox();
-            this.btnMultiploPagamento = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -2286,6 +2313,19 @@ namespace DexComanda
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(754, 126);
             this.panel2.TabIndex = 42;
+            // 
+            // btnMultiploPagamento
+            // 
+            this.btnMultiploPagamento.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnMultiploPagamento.FlatAppearance.BorderSize = 5;
+            this.btnMultiploPagamento.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnMultiploPagamento.Location = new System.Drawing.Point(275, 85);
+            this.btnMultiploPagamento.Name = "btnMultiploPagamento";
+            this.btnMultiploPagamento.Size = new System.Drawing.Size(178, 37);
+            this.btnMultiploPagamento.TabIndex = 61;
+            this.btnMultiploPagamento.Text = "+ F. Pagamento [F10]";
+            this.btnMultiploPagamento.UseVisualStyleBackColor = true;
+            this.btnMultiploPagamento.Click += new System.EventHandler(this.MultiplaFormasPagamento);
             // 
             // label10
             // 
@@ -2692,19 +2732,6 @@ namespace DexComanda
             this.chkListAdicionais.TabIndex = 0;
             this.chkListAdicionais.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkListAdicionais_ItemCheck);
             // 
-            // btnMultiploPagamento
-            // 
-            this.btnMultiploPagamento.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnMultiploPagamento.FlatAppearance.BorderSize = 5;
-            this.btnMultiploPagamento.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnMultiploPagamento.Location = new System.Drawing.Point(254, 84);
-            this.btnMultiploPagamento.Name = "btnMultiploPagamento";
-            this.btnMultiploPagamento.Size = new System.Drawing.Size(178, 38);
-            this.btnMultiploPagamento.TabIndex = 61;
-            this.btnMultiploPagamento.Text = "+ F. Pagamento [F10]";
-            this.btnMultiploPagamento.UseVisualStyleBackColor = true;
-            this.btnMultiploPagamento.Click += new System.EventHandler(this.MultiplaFormasPagamento);
-            // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2921,7 +2948,7 @@ namespace DexComanda
         private void cmbFPagamento_SelectionChangeCommitted(object sender, EventArgs e)
         {
             Decimal ValorProduto = 0.00M;
-           // DiaDaPromocao = produto.Rows[0]["DiaSemana"].ToString();
+            // DiaDaPromocao = produto.Rows[0]["DiaSemana"].ToString();
             ////   lol = DiaDaPromocao.Split(new char[] { ';' });
             //if (DiaDaPromocao.IndexOf(DiaDaSema) > 0)
             //if (PromocaoDiasSemana)
@@ -3162,12 +3189,10 @@ namespace DexComanda
 
         private void MultiplaFormasPagamento(object sender, EventArgs e)
         {
-            if (AtualizaTroco(false))
-            {
-                frmFinalizacaoPedido frm = new frmFinalizacaoPedido(decimal.Parse(lbTotal.Text.Replace("R$", "")));
-                frm.ShowDialog();
-                
-            }
+            Boolean iInsereAtualiza = this.btnGerarPedido.Text != "Alterar";
+            frmFinalizacaoPedido frm = new frmFinalizacaoPedido(decimal.Parse(lbTotal.Text.Replace("R$", "")), this, iInsereAtualiza,codPedido);
+            frm.ShowDialog();
+
         }
 
         private void cbxSabor_SelectedIndexChanged(object sender, EventArgs e)

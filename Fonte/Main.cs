@@ -103,7 +103,7 @@ namespace DexComanda
 
                 int iNumeroCaixa = Sessions.returnUsuario.CaixaLogado;
                 iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now, iNumeroCaixa).Tables["Caixa"].Rows.Count;
-                if (Sessions.returnEmpresa.CNPJ == "22695578000142")
+                if (Sessions.returnEmpresa.CNPJ == "22695578000142" || Sessions.returnEmpresa.CNPJ== "22678091000151")
                 {
                     return;
                 }
@@ -135,9 +135,10 @@ namespace DexComanda
 
         private void MontaMenu() // Monta o menu de opções
         {
-            if (Sessions.returnEmpresa.CNPJ== "22695578000142")
+            if (Sessions.returnEmpresa.CNPJ== "22695578000142" || Sessions.returnEmpresa.CNPJ == "22678091000151")
             {
                 aberturaCaixaToolStripMenuItem.Enabled = false;
+                controleDeEstoqueToolStripMenuItem.Enabled = false;
             }
             
             // Menu Visivel

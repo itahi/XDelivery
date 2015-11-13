@@ -315,7 +315,7 @@ namespace DexComanda
                                   "  ,RB.CEP ,RG.OnlineSN" +
                                   "   from RegiaoEntrega RG " +
                                    "  left join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo " +
-                                  "   WHERE RG.DataAlteracao > RG.DataSincronismo";
+                                  "   WHERE RG.DataAlteracao > RG.DataSincronismo or RG.DataSincronismo is null";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -533,7 +533,7 @@ namespace DexComanda
                     }
                     else
                     {
-                        iSql = iSql + " where AtivoSN=0";
+                        iSql = iSql.Replace(iSubSelect,"") + " where AtivoSN=0";
                     }
 
                 }

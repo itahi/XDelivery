@@ -30,9 +30,9 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.b = new System.Windows.Forms.Label();
+            this.lblTotalPedido = new System.Windows.Forms.Label();
             this.lblFalta = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnFinalizar = new System.Windows.Forms.Button();
             this.gridFormasPagamento = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.gridFormasPagamento)).BeginInit();
             this.SuspendLayout();
@@ -57,17 +57,17 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Falta R$:";
             // 
-            // b
+            // lblTotalPedido
             // 
-            this.b.AutoSize = true;
-            this.b.BackColor = System.Drawing.Color.Red;
-            this.b.Font = new System.Drawing.Font("Showcard Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.b.Location = new System.Drawing.Point(125, 278);
-            this.b.Name = "b";
-            this.b.Size = new System.Drawing.Size(52, 23);
-            this.b.TabIndex = 4;
-            this.b.Text = "0,00";
+            this.lblTotalPedido.AutoSize = true;
+            this.lblTotalPedido.BackColor = System.Drawing.Color.Red;
+            this.lblTotalPedido.Font = new System.Drawing.Font("Showcard Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalPedido.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblTotalPedido.Location = new System.Drawing.Point(125, 278);
+            this.lblTotalPedido.Name = "lblTotalPedido";
+            this.lblTotalPedido.Size = new System.Drawing.Size(52, 23);
+            this.lblTotalPedido.TabIndex = 4;
+            this.lblTotalPedido.Text = "0,00";
             // 
             // lblFalta
             // 
@@ -81,14 +81,15 @@
             this.lblFalta.TabIndex = 5;
             this.lblFalta.Text = "0,00";
             // 
-            // button1
+            // btnFinalizar
             // 
-            this.button1.Location = new System.Drawing.Point(255, 293);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(85, 37);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Finalizar [F12]";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnFinalizar.Location = new System.Drawing.Point(255, 293);
+            this.btnFinalizar.Name = "btnFinalizar";
+            this.btnFinalizar.Size = new System.Drawing.Size(85, 37);
+            this.btnFinalizar.TabIndex = 6;
+            this.btnFinalizar.Text = "Finalizar [F12]";
+            this.btnFinalizar.UseVisualStyleBackColor = true;
+            this.btnFinalizar.Click += new System.EventHandler(this.Finaliza);
             // 
             // gridFormasPagamento
             // 
@@ -111,9 +112,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(375, 339);
             this.Controls.Add(this.gridFormasPagamento);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnFinalizar);
             this.Controls.Add(this.lblFalta);
-            this.Controls.Add(this.b);
+            this.Controls.Add(this.lblTotalPedido);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -131,9 +132,9 @@
         #endregion
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label b;
+        private System.Windows.Forms.Label lblTotalPedido;
         private System.Windows.Forms.Label lblFalta;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnFinalizar;
         private System.Windows.Forms.DataGridView gridFormasPagamento;
     }
 }
