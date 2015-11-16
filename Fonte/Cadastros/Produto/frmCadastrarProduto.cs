@@ -142,6 +142,7 @@ namespace DexComanda
         private void frmCadastrarProduto_Load(object sender, EventArgs e)
         {
             con = new Conexao();
+            btnEditar.Enabled = codigoProdutoParaAlterar != 0;
             DiasSelecionados = new List<string>();
             tabPage2.IsAccessible = btnDoProduto.Text == "Alterar [F12]";
             //    List<Produtos_Adicionais> ProdAdicionais = new List<Produtos_Adicionais>();
@@ -189,6 +190,7 @@ namespace DexComanda
                 }
                 Produto produto = new Produto()
                 {
+                    Codigo = 0,
                     Nome = this.nomeProdutoTextBox.Text,
                     AtivoSN = this.chkAtivo.Checked,
                     Descricao = this.descricaoProdutoTextBox.Text,
@@ -226,6 +228,7 @@ namespace DexComanda
                 ClearForm(this);
                // this_FormClosing();
                 MessageBox.Show("Produto cadastrado com sucesso.");
+                SalvarAdicionais(con.getLastCodigo());
                 Utils.PopulaGrid_Novo("Produto", parentMain.produtosGridView, Sessions.SqlProduto);
                 Utils.ControlaEventos("Inserir", this.Name);
                 nomeProdutoTextBox.Text = "";
@@ -236,6 +239,24 @@ namespace DexComanda
             catch (Exception errro)
             {
                 MessageBox.Show("Registro não foi gravado " + errro.Message);
+            }
+        }
+        private void SalvarAdicionais(int iCodProduto)
+        {
+            if (AdicionaisGridView.Rows.Count>0)
+            {
+                for (int i = 0; i < AdicionaisGridView.Rows.Count; i++)
+                {
+                    Produto_Opcao prod = new Produto_Opcao()
+                    {
+                        CodProduto = iCodProduto,
+                        CodOpcao = int.Parse(AdicionaisGridView.Rows[i].Cells["CodOpcao"].Value.ToString()),
+                        Preco = decimal.Parse(AdicionaisGridView.Rows[i].Cells["Preco"].Value.ToString()),
+                        DataAlteracao = DateTime.Now
+                    };
+                    con.Insert("spAdicionarOpcaProduto", prod);
+                }
+                
             }
         }
         public string DiasSelecinado()
@@ -407,8 +428,7 @@ namespace DexComanda
 
         private void ListaOpcao(object sender, EventArgs e)
         {
-
-
+            
             this.cbxOpcao.DataSource = con.SelectAll("Opcao", "spObterOpcao").Tables["Opcao"];
             this.cbxOpcao.DisplayMember = "Nome";
             this.cbxOpcao.ValueMember = "Codigo";
@@ -416,26 +436,55 @@ namespace DexComanda
 
         private void AdicionarOpcao(object sender, EventArgs e)
         {
-            if (txtPrecoOpcao.Text.Trim() != "")
+            try
             {
-                Produto_Opcao prodOpcao = new Produto_Opcao()
+                int iCountLinhas = AdicionaisGridView.Rows.Count;
+                if (codigoProdutoParaAlterar != 0)
                 {
-                    CodProduto = codigoProdutoParaAlterar,
-                    CodOpcao = int.Parse(cbxOpcao.SelectedValue.ToString()),
-                    Preco = decimal.Parse(txtPrecoOpcao.Text),
-                    DataAlteracao = DateTime.Now
-                };
-                con.Insert("spAdicionarOpcaProduto", prodOpcao);
-               // con.AtualizaDataSincronismo("Produto", codigoProdutoParaAlterar, "DataAlteracao");
-                txtPrecoOpcao.Text = "";
-                cbxOpcao.Text = "";
-                ListaOpcaoProduto();
+                    if (txtPrecoOpcao.Text.Trim() != "")
+                    {
+                        Produto_Opcao prodOpcao = new Produto_Opcao()
+                        {
+                            CodProduto = codigoProdutoParaAlterar,
+                            CodOpcao = int.Parse(cbxOpcao.SelectedValue.ToString()),
+                            Preco = decimal.Parse(txtPrecoOpcao.Text),
+                            DataAlteracao = DateTime.Now
+                        };
+                        con.Insert("spAdicionarOpcaProduto", prodOpcao);
+                        // con.AtualizaDataSincronismo("Produto", codigoProdutoParaAlterar, "DataAlteracao");
+                        txtPrecoOpcao.Text = "";
+                        cbxOpcao.Text = "";
+                        ListaOpcaoProduto();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Campos obrigatórios não podem ser vazios");
+                        return;
+                    }
+                }
+                else
+                {
+                    if (AdicionaisGridView.DataSource!=null)
+                    {
+                        AdicionaisGridView.AutoGenerateColumns = false;
+                        AdicionaisGridView.DataSource = null;
+                        AdicionaisGridView.DataMember = null;
+                    }
+                    
+                    AdicionaisGridView.Rows.Add();
+                    AdicionaisGridView.Rows[iCountLinhas].Cells[0].Value = int.Parse(cbxOpcao.SelectedValue.ToString());
+                    AdicionaisGridView.Rows[iCountLinhas].Cells[1].Value = decimal.Parse(txtPrecoOpcao.Text);
+                    AdicionaisGridView.Rows[iCountLinhas].Cells[2].Value = cbxOpcao.Text.ToString();
+                    iCountLinhas = AdicionaisGridView.Rows.Count;
+                }
             }
-            else
+            catch (Exception erro)
             {
-                MessageBox.Show("Campos obrigatórios não podem ser vazios");
-                return;
+
+                throw;
             }
+           
+            
             
             
 
@@ -462,14 +511,12 @@ namespace DexComanda
 
         private void AdicionaisGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int total = this.AdicionaisGridView.SelectedRows.Count;
+          //  int total = this.AdicionaisGridView.SelectedRows.Count;
 
-            for (int i = 0; i < total; i++)
+            for (int i = 0; i < AdicionaisGridView.SelectedRows.Count; i++)
             {
-                if (this.AdicionaisGridView.Rows[i].Selected)
-                {
                     rowIndex = this.AdicionaisGridView.Rows[i].Index;
-                }
+               
             }
         }
 
@@ -548,20 +595,28 @@ namespace DexComanda
         {
             try
             {
+              
                 if (AdicionaisGridView.SelectedRows.Count > 0)
                 {
-
-                    Produto_Opcao prod = new Produto_Opcao()
+                    if (codigoProdutoParaAlterar!=0)
                     {
-                        CodProduto = codigoProdutoParaAlterar,
-                        CodOpcao = int.Parse(this.AdicionaisGridView.SelectedCells[0].Value.ToString())
+                        Produto_Opcao prod = new Produto_Opcao()
+                        {
+                            CodProduto = codigoProdutoParaAlterar,
+                            CodOpcao = int.Parse(this.AdicionaisGridView.SelectedCells[0].Value.ToString())
 
-                    };
-                    con.Delete("spExcluirOpcaoProduto", prod);
+                        };
+                        con.Delete("spExcluirOpcaoProduto", prod);
 
-                    Utils.ControlaEventos("Excluir", this.Name);
-                    MessageBox.Show("Item excluído com sucesso.");
-                    ListaOpcaoProduto();
+                        Utils.ControlaEventos("Excluir", this.Name);
+                        MessageBox.Show("Item excluído com sucesso.");
+                        ListaOpcaoProduto();
+                    }
+                    else
+                    {
+                        AdicionaisGridView.Rows.RemoveAt(AdicionaisGridView.CurrentRow.Index);
+                    }
+                   
 
                 }
                 else

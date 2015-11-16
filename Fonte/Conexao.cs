@@ -587,6 +587,7 @@ namespace DexComanda
         {
             SqlParameter codPedido = null;
             SqlParameter CodPessoa = null;
+            SqlParameter CodProduto = null;
          //   SqlParameter CodOpcao = null;
             Type ObjectType = obj.GetType();
             PropertyInfo[] properties = ObjectType.GetProperties();
@@ -600,8 +601,15 @@ namespace DexComanda
                 spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento" || spName == "spAdicionarOpcaProduto")
             {
 
+                if (spName == "spAdicionarProduto")
+                {
+                    CodProduto = new SqlParameter("@Codigo", SqlDbType.Int);
+                    CodProduto.Direction = ParameterDirection.Output;
+                    command.Parameters.Add(CodProduto);
+                }
                 foreach (PropertyInfo propriedade in properties)
                 {
+                  
                     if (!propriedade.Name.Equals("Codigo"))
                     {
                         if (!propriedade.Name.Equals("cod"))
@@ -767,6 +775,10 @@ namespace DexComanda
             else if (spName == "spAdicionarClienteDelivery")
             {
                 lastCodigo = int.Parse(CodPessoa.Value.ToString());
+            }
+            else if (spName == "spAdicionarProduto")
+            {
+                lastCodigo = int.Parse(CodProduto.Value.ToString());
             }
             //else if (spName == "spAdicionarOpcao")
             //{

@@ -75,5 +75,11 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button btnMultiploPagamento;
+        private System.Windows.Forms.RadioButton rb9;
+        private System.Windows.Forms.RadioButton rb8;
+        private System.Windows.Forms.RadioButton rb7;
+        private System.Windows.Forms.RadioButton rb12;
+        private System.Windows.Forms.RadioButton rb11;
+        private System.Windows.Forms.RadioButton rb10;
     }
 }
