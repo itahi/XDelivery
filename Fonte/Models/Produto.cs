@@ -18,6 +18,7 @@ namespace DexComanda.Models
         public bool AtivoSN { get; set; }
         public bool OnlineSN { get; set; }
         public DateTime DataAlteracao { get; set; }
-        public int MaximoAdicionais { get; set; } 
+        public int MaximoAdicionais { get; set; }
+        public string UrlImagem { get; set; }
     }
 }

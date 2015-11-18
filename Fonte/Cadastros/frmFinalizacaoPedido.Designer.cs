@@ -105,6 +105,10 @@
             this.gridFormasPagamento.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridFormasPagamento.Size = new System.Drawing.Size(372, 263);
             this.gridFormasPagamento.TabIndex = 7;
+            this.gridFormasPagamento.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridFormasPagamento_CellClick);
+            this.gridFormasPagamento.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridFormasPagamento_CellValueChanged);
+            this.gridFormasPagamento.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.Valida);
+            this.gridFormasPagamento.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridFormasPagamento_KeyDown);
             // 
             // frmFinalizacaoPedido
             // 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace DexComanda.Operações
         }
         private void GerarToken()
         {
-           
+
             iParamToken = Convert.ToString(DateTime.Now).Replace("/", "").Replace(":", "").Replace(" ", "").Substring(0, 11) + "Adminx";
             iParamToken = Utils.CriptografarArquivo(iParamToken.Trim());
             iParamToken = iParamToken.ToLower();
@@ -39,27 +40,17 @@ namespace DexComanda.Operações
 
             try
             {
-                    if (chkProdutos.Checked)
-                    {
-                        CadastraCategorias(ObterDados("Grupo"));
-                        CadastrarOpcao(ObterDados("Opcao"));
-                        CadastrarProduto(ObterDados("Produto"));
-                    }
-                    if (chkRegiaoEntrega.Checked)
-                    {
-                        CadastraRegioes(con.RetornaRegiao());
-                    }
-                double iPerceDesconto;
-                if (txtPercentualDesconto.Text!="")
+                if (chkProdutos.Checked)
                 {
-                    iPerceDesconto = double.Parse(txtPercentualDesconto.Text);
+                    CadastraCategorias(ObterDados("Grupo"));
+                    CadastrarOpcao(ObterDados("Opcao"));
+                    CadastrarProduto(ObterDados("Produto"));
                 }
-                else
+                if (chkRegiaoEntrega.Checked)
                 {
-                    iPerceDesconto = 0;
+                    CadastraRegioes(con.RetornaRegiao());
                 }
-                    CadastrarDesconto(iPerceDesconto);
-
+                
             }
             catch (Exception erro)
             {
@@ -71,18 +62,38 @@ namespace DexComanda.Operações
         {
             return con.SelectRegistroONline(iNomeTable);
         }
-
-        private void CadastrarDesconto(double iValorDescont=0)
+        private void CadastrarBanner(string iBanner)
         {
-            
+            RestClient client = new RestClient(iUrlWS);
+            RestRequest request = new RestRequest("ws/banner/promocao/set", Method.POST);
+            request.AddParameter("token", iParamToken);
+            request.AddFile("imagem", iBanner);
+            // request.AddFile("imagem", ConverterFotoEmByte(iBanner), "photo.jpg", "image/pjpeg");
+
+            RestResponse response = (RestResponse)client.Execute(request);
+
+            ReturnPadrao lRetorno = new ReturnPadrao();
+            lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+            //  lblReturn.Visible = lRetorno.status;
+            lbRetornoImage.Visible = true;
+            lbRetornoImage.Text = lRetorno.msg;
+
+        }
+        private void CadastrarDesconto(double iValorDescont = 0)
+        {
+
             RestClient client = new RestClient(iUrlWS);
             RestRequest request = new RestRequest("ws/total/desconto", Method.POST);
             request.AddParameter("token", iParamToken);
             request.AddParameter("status", Convert.ToInt16(chkDesconto.Checked));
-            int iTotalOrSub = 4;
+            int iTotalOrSub;
             if (rbSub.Checked)
             {
                 iTotalOrSub = 5;
+            }
+            else
+            {
+                iTotalOrSub = 4;
             }
             request.AddParameter("ordemExibicao", iTotalOrSub);
             string iFormasPagamento = "1";
@@ -99,7 +110,7 @@ namespace DexComanda.Operações
                 iFormasPagamento = "1,2";
             }
             request.AddParameter("formasPagamento", iFormasPagamento);
-            if (txtPercentualDesconto.Text!="")
+            if (txtPercentualDesconto.Text != "")
             {
                 request.AddParameter("percentualDesconto", int.Parse(txtPercentualDesconto.Text));
             }
@@ -107,7 +118,7 @@ namespace DexComanda.Operações
             {
                 request.AddParameter("percentualDesconto", 0);
             }
-            
+
             RestResponse response = (RestResponse)client.Execute(request);
 
             ReturnPadrao lRetorno = new ReturnPadrao();
@@ -130,7 +141,7 @@ namespace DexComanda.Operações
                 request.AddParameter("nome", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("NomeRegiao"));
                 request.AddParameter("valor", ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("TaxaServico"));
                 request.AddParameter("referencia_id", ds.Tables["RegiaoEntrega"].Rows[i].Field<int>("Codigo"));
-                request.AddParameter("ativo", Convert.ToInt16( ds.Tables["RegiaoEntrega"].Rows[i].Field<Boolean>("OnlineSN")));
+                request.AddParameter("ativo", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<Boolean>("OnlineSN")));
                 RestResponse response = (RestResponse)client.Execute(request);
                 prgBarRegiao.Value = i + 1;
 
@@ -138,7 +149,7 @@ namespace DexComanda.Operações
                 {
                     con.AtualizaDataSincronismo("RegiaoEntrega", ds.Tables[0].Rows[i].Field<int>("Codigo"));
                 }
-               
+
 
             }
         }
@@ -177,7 +188,7 @@ namespace DexComanda.Operações
                 {
                     con.AtualizaDataSincronismo("Opcao", ds.Tables["Opcao"].Rows[i].Field<int>("Codigo"));
                 }
-             
+
 
             }
         }
@@ -196,9 +207,9 @@ namespace DexComanda.Operações
             GerarToken();
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                string inome =  ds.Tables["Grupo"].Rows[i].Field<string>("NomeGrupo");
-                int iCod     =  ds.Tables["Grupo"].Rows[i].Field<int>("Codigo");
-                int AtivoSN  =  Convert.ToInt16(ds.Tables["Grupo"].Rows[i].Field<Boolean>("OnlineSN"));
+                string inome = ds.Tables["Grupo"].Rows[i].Field<string>("NomeGrupo");
+                int iCod = ds.Tables["Grupo"].Rows[i].Field<int>("Codigo");
+                int AtivoSN = Convert.ToInt16(ds.Tables["Grupo"].Rows[i].Field<Boolean>("OnlineSN"));
 
                 request.AddParameter("token", iParamToken);
                 request.AddParameter("nomeCategoria", inome);
@@ -211,8 +222,52 @@ namespace DexComanda.Operações
                 {
                     con.AtualizaDataSincronismo("Grupo", iCod);
                 }
-                
 
+
+            }
+        }
+        // Metodo para converter imagems embytes
+        public byte[] ConverterFotoEmByte(System.IO.Stream iArquivo)
+        {
+            long originalPosition = iArquivo.Position;
+            iArquivo.Position = 0;
+
+            try
+            {
+                byte[] readBuffer = new byte[4096];
+
+                int totalBytesRead = 0;
+                int bytesRead;
+
+                while ((bytesRead = iArquivo.Read(readBuffer, totalBytesRead, readBuffer.Length - totalBytesRead)) > 0)
+                {
+                    totalBytesRead += bytesRead;
+
+                    if (totalBytesRead == readBuffer.Length)
+                    {
+                        int nextByte = iArquivo.ReadByte();
+                        if (nextByte != -1)
+                        {
+                            byte[] temp = new byte[readBuffer.Length * 2];
+                            Buffer.BlockCopy(readBuffer, 0, temp, 0, readBuffer.Length);
+                            Buffer.SetByte(temp, totalBytesRead, (byte)nextByte);
+                            readBuffer = temp;
+                            totalBytesRead++;
+                        }
+                    }
+                }
+
+                byte[] buffer = readBuffer;
+                if (readBuffer.Length != totalBytesRead)
+                {
+                    buffer = new byte[totalBytesRead];
+                    Buffer.BlockCopy(readBuffer, 0, buffer, 0, totalBytesRead);
+                }
+                return buffer;
+            }
+            finally
+            {
+                iArquivo.Position = originalPosition;
             }
         }
         private void CadastrarProduto(DataSet ds)
@@ -225,18 +280,24 @@ namespace DexComanda.Operações
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
                 decimal prProduto = ds.Tables["Produto"].Rows[i].Field<decimal>("PrecoProduto");
+                string iCaminhoImagem = ds.Tables["Produto"].Rows[i].Field<string>("UrlImagem");
                 request.AddParameter("token", iParamToken);
                 request.AddParameter("idReferencia", ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
                 request.AddParameter("nome", ds.Tables["Produto"].Rows[i].Field<string>("NomeProduto"));
                 request.AddParameter("preco", prProduto);
-              //  request.AddParameter("precoPromocao", 10);
+                if (iCaminhoImagem !=null && iCaminhoImagem!="")
+                {
+                    request.AddFile("imagem", iCaminhoImagem);
+                }
+                
+                //  request.AddParameter("precoPromocao", 10);
                 request.AddParameter("idReferenciaCategoria", RetornaIDCategoria(ds.Tables["Produto"].Rows[i].Field<string>("GrupoProduto")));
                 request.AddParameter("descricao", ds.Tables["Produto"].Rows[i].Field<string>("DescricaoProduto"));
                 request.AddParameter("ativo", Convert.ToInt32(ds.Tables["Produto"].Rows[i].Field<Boolean>("OnlineSN")));
                 request.AddParameter("maxOptions", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
-             //   request.AddParameter("precoPromocao", ds.Tables["Produto"].Rows[i].Field<int>("PrecoDesconto"));
-             //   request.AddParameter("dataInicial", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
-             //   request.AddParameter("dataFinal", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
+                //   request.AddParameter("precoPromocao", ds.Tables["Produto"].Rows[i].Field<int>("PrecoDesconto"));
+                //   request.AddParameter("dataInicial", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
+                //   request.AddParameter("dataFinal", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
 
                 // request.AddParameter("imagem", "  ");
                 // request.AddParameter("lista", " "); 
@@ -249,11 +310,18 @@ namespace DexComanda.Operações
                     con.AtualizaDataSincronismo("Produto", ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
                     CadastrarOpcaoProduto(ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
                 }
-              
+
             }
 
         }
-
+        private System.IO.Stream RetornaArquivo(string iCaminho)
+        {
+            // convert string to stream
+            byte[] byteArray = Encoding.UTF8.GetBytes(iCaminho);
+            //byte[] byteArray = Encoding.ASCII.GetBytes(contents);
+            MemoryStream stream = new MemoryStream(byteArray);
+            return stream;
+        }
         private int RetornaIDCategoria(string iNomeCategoria)
         {
             int iIDReturn = 1;
@@ -269,7 +337,7 @@ namespace DexComanda.Operações
 
         private void CadastrarOpcaoProduto(int iCodProduto)
         {
-            
+
             try
             {
                 RestClient client = new RestClient(iUrlWS);
@@ -297,7 +365,7 @@ namespace DexComanda.Operações
                     {
                         con.AtualizaDataSincronismo("Produto_Opcao", iCodProd, iCodOpcao);
                     }
-                    
+
                 }
             }
             catch (Exception erro)
@@ -305,7 +373,7 @@ namespace DexComanda.Operações
 
                 MessageBox.Show("Erro ao cadastrar opção do Produto" + erro.Message);
             }
-            
+
 
         }
         private void CadastraFormaPagamento(DataSet ds)
@@ -327,13 +395,55 @@ namespace DexComanda.Operações
                 {
                     con.AtualizaDataSincronismo("FormaPagamento", iCod);
                 }
-              
+
             }
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void SelecionarImage(object sender, EventArgs e)
+        {
+            OpenFileDialog opn = new OpenFileDialog();
+            opn.Title = "Selecione a imagem pro site";
+            opn.CheckFileExists = true;
+            opn.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|" + "All files (*.*)|*.*";
+
+            if (opn.ShowDialog() == DialogResult.OK)
+            {
+                txtcaminhoImage.Text = opn.FileName.ToString();
+            }
+        }
+
+        private void txtcaminhoImage_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSincronizar_Click(object sender, EventArgs e)
+        {
+            Sincroniza(sender, e);
+        }
+
+        private void SincAdicionais(object sender, EventArgs e)
+        {
+            double iPerceDesconto;
+            if (txtPercentualDesconto.Text != "")
+            {
+                iPerceDesconto = double.Parse(txtPercentualDesconto.Text);
+            }
+            else
+            {
+                iPerceDesconto = 0;
+            }
+            CadastrarDesconto(iPerceDesconto);
+
+            if (txtcaminhoImage.Text.Trim() != "")
+            {
+                CadastrarBanner(txtcaminhoImage.Text);
+            }
         }
     }
 }

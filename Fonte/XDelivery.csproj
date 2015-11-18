@@ -548,6 +548,12 @@
     <Compile Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.Designer.cs">
       <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\frmReportFechamentoDia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\frmReportFechamentoDia.Designer.cs">
+      <DependentUpon>frmReportFechamentoDia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -690,6 +696,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.resx">
       <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmReportFechamentoDia.resx">
+      <DependentUpon>frmReportFechamentoDia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -915,6 +924,7 @@
     <None Include="Relatorios\dsRelatorio.xss">
       <DependentUpon>dsRelatorio.xsd</DependentUpon>
     </None>
+    <None Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.rdlc" />
     <None Include="Relatorios\Microsoft.QualityTools.Testing.Fakes.dl" />
     <None Include="Relatorios\Microsoft.ReportViewer.WinForms.dl" />
     <None Include="Service References\LOCASMS\ServiceSms.wsdl" />
@@ -1161,6 +1171,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\LOCASMS\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

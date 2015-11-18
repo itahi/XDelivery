@@ -640,7 +640,8 @@ namespace DexComanda
             try
             {
                 if (radioButton1.Visible && !radioButton1.Checked && !radioButton2.Checked && !radioButton3.Checked
-                    && !radioButton4.Checked && !radioButton5.Checked && !radioButton6.Checked)
+                    && !radioButton4.Checked && !radioButton5.Checked && !radioButton6.Checked && !rb7.Checked
+                     && !rb8.Checked && !rb9.Checked && !rb10.Checked && !rb11.Checked && !rb12.Checked)
                 {
                     MessageBox.Show("É obrigatório selecionar o tamanho ", "[xSistemas]", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
@@ -706,6 +707,8 @@ namespace DexComanda
                                 {
                                     item.CodProduto = int.Parse(this.txtCodProduto1.Text);
                                 }
+
+                                item.DataAtualizacao = DateTime.Now;
 
                                 pedido.TotalPedido = pedido.TotalPedido + item.PrecoTotal;
                                 pedido.Codigo = codPedido;
@@ -895,12 +898,10 @@ namespace DexComanda
                                     ImpressoSN = false,
                                     Item = items[i].Item
                                 };
+                                itemDoPedido.DataAtualizacao = DateTime.Now;
                                 con.Insert("spCriarPedido", itemDoPedido);
                                 Utils.ControlaEventos("Inserir", this.Name);
                             }
-
-
-
 
                             if (ContraMesas && cbxListaMesas.Visible && pedido.NumeroMesa != 0)
                             {
@@ -908,18 +909,10 @@ namespace DexComanda
 
                                 Utils.AtualizaMesa(cbxListaMesas.Text, 2);
                             }
+
                             iCodPedido = con.getLastCodigo();
-
-                            FinalizaPedido finaliza = new FinalizaPedido()
-                            {
-                                CodPedido = iCodPedido,
-                                CodPagamento = int.Parse(cmbFPagamento.SelectedValue.ToString()),
-                                ValorPagamento = pedido.TotalPedido
-                            };
-                            con.Insert("spAdicionarFinalizaPedido_Pedido", finaliza);
-
                             MessageBox.Show("Pedido gerado com sucesso.");
-                           
+
                             Utils.PopulaGrid_Novo("Produto", parentWindow.produtosGridView, Sessions.SqlProduto);
 
                             if (ContraMesas && cbxTipoPedido.Text != "1 - Mesa")
@@ -932,6 +925,20 @@ namespace DexComanda
                             }
                             // Fecha o Formulario 
                             this.Close();
+
+                            if (con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo",iCodPedido).Tables[0].Rows.Count>0)
+                            {
+                                return;
+                            }
+                            FinalizaPedido finaliza = new FinalizaPedido()
+                            {
+                                CodPedido = iCodPedido,
+                                CodPagamento = int.Parse(cmbFPagamento.SelectedValue.ToString()),
+                                ValorPagamento = pedido.TotalPedido
+                            };
+                            con.Insert("spAdicionarFinalizaPedido_Pedido", finaliza);
+
+                            
                         }
                     }
                 }
@@ -1106,7 +1113,7 @@ namespace DexComanda
 
                         };
 
-
+                        itemPedido.DataAtualizacao = DateTime.Now;
 
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value = itemPedido.NomeProduto;
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value = itemPedido.Quantidade;
@@ -2030,6 +2037,12 @@ namespace DexComanda
             this.lblNomeCliente = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.grpBoxTamanhos = new System.Windows.Forms.GroupBox();
+            this.rb12 = new System.Windows.Forms.RadioButton();
+            this.rb11 = new System.Windows.Forms.RadioButton();
+            this.rb10 = new System.Windows.Forms.RadioButton();
+            this.rb9 = new System.Windows.Forms.RadioButton();
+            this.rb8 = new System.Windows.Forms.RadioButton();
+            this.rb7 = new System.Windows.Forms.RadioButton();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
@@ -2038,12 +2051,6 @@ namespace DexComanda
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.label9 = new System.Windows.Forms.Label();
             this.chkListAdicionais = new System.Windows.Forms.CheckedListBox();
-            this.rb9 = new System.Windows.Forms.RadioButton();
-            this.rb8 = new System.Windows.Forms.RadioButton();
-            this.rb7 = new System.Windows.Forms.RadioButton();
-            this.rb10 = new System.Windows.Forms.RadioButton();
-            this.rb11 = new System.Windows.Forms.RadioButton();
-            this.rb12 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -2453,7 +2460,7 @@ namespace DexComanda
             this.lblTroco.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblTroco.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold);
             this.lblTroco.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.lblTroco.Location = new System.Drawing.Point(541, 8);
+            this.lblTroco.Location = new System.Drawing.Point(529, 8);
             this.lblTroco.Name = "lblTroco";
             this.lblTroco.Size = new System.Drawing.Size(71, 31);
             this.lblTroco.TabIndex = 56;
@@ -2464,7 +2471,7 @@ namespace DexComanda
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.label5.ForeColor = System.Drawing.Color.DarkSlateGray;
-            this.label5.Location = new System.Drawing.Point(481, 15);
+            this.label5.Location = new System.Drawing.Point(467, 15);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(59, 20);
             this.label5.TabIndex = 55;
@@ -2711,6 +2718,84 @@ namespace DexComanda
             this.grpBoxTamanhos.TabStop = false;
             this.grpBoxTamanhos.Text = "Tamanhos";
             // 
+            // rb12
+            // 
+            this.rb12.AutoSize = true;
+            this.rb12.Location = new System.Drawing.Point(235, 137);
+            this.rb12.Name = "rb12";
+            this.rb12.Size = new System.Drawing.Size(46, 17);
+            this.rb12.TabIndex = 83;
+            this.rb12.TabStop = true;
+            this.rb12.Text = "rb12";
+            this.rb12.UseVisualStyleBackColor = true;
+            this.rb12.Visible = false;
+            this.rb12.Click += new System.EventHandler(this.rb12_Click);
+            // 
+            // rb11
+            // 
+            this.rb11.AutoSize = true;
+            this.rb11.Location = new System.Drawing.Point(130, 140);
+            this.rb11.Name = "rb11";
+            this.rb11.Size = new System.Drawing.Size(46, 17);
+            this.rb11.TabIndex = 82;
+            this.rb11.TabStop = true;
+            this.rb11.Text = "rb11";
+            this.rb11.UseVisualStyleBackColor = true;
+            this.rb11.Visible = false;
+            this.rb11.Click += new System.EventHandler(this.rb11_Click);
+            // 
+            // rb10
+            // 
+            this.rb10.AutoSize = true;
+            this.rb10.Location = new System.Drawing.Point(6, 140);
+            this.rb10.Name = "rb10";
+            this.rb10.Size = new System.Drawing.Size(46, 17);
+            this.rb10.TabIndex = 81;
+            this.rb10.TabStop = true;
+            this.rb10.Text = "rb10";
+            this.rb10.UseVisualStyleBackColor = true;
+            this.rb10.Visible = false;
+            this.rb10.Click += new System.EventHandler(this.rb10_Click);
+            // 
+            // rb9
+            // 
+            this.rb9.AutoSize = true;
+            this.rb9.Location = new System.Drawing.Point(235, 102);
+            this.rb9.Name = "rb9";
+            this.rb9.Size = new System.Drawing.Size(40, 17);
+            this.rb9.TabIndex = 80;
+            this.rb9.TabStop = true;
+            this.rb9.Text = "rb6";
+            this.rb9.UseVisualStyleBackColor = true;
+            this.rb9.Visible = false;
+            this.rb9.Click += new System.EventHandler(this.rb9_Click);
+            // 
+            // rb8
+            // 
+            this.rb8.AutoSize = true;
+            this.rb8.Location = new System.Drawing.Point(235, 60);
+            this.rb8.Name = "rb8";
+            this.rb8.Size = new System.Drawing.Size(40, 17);
+            this.rb8.TabIndex = 79;
+            this.rb8.TabStop = true;
+            this.rb8.Text = "rb5";
+            this.rb8.UseVisualStyleBackColor = true;
+            this.rb8.Visible = false;
+            this.rb8.Click += new System.EventHandler(this.rb8_Click);
+            // 
+            // rb7
+            // 
+            this.rb7.AutoSize = true;
+            this.rb7.Location = new System.Drawing.Point(235, 19);
+            this.rb7.Name = "rb7";
+            this.rb7.Size = new System.Drawing.Size(40, 17);
+            this.rb7.TabIndex = 78;
+            this.rb7.TabStop = true;
+            this.rb7.Text = "rb7";
+            this.rb7.UseVisualStyleBackColor = true;
+            this.rb7.Visible = false;
+            this.rb7.Click += new System.EventHandler(this.rb7_Click);
+            // 
             // radioButton6
             // 
             this.radioButton6.AutoSize = true;
@@ -2807,84 +2892,6 @@ namespace DexComanda
             this.chkListAdicionais.Size = new System.Drawing.Size(362, 229);
             this.chkListAdicionais.TabIndex = 0;
             this.chkListAdicionais.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkListAdicionais_ItemCheck);
-            // 
-            // rb9
-            // 
-            this.rb9.AutoSize = true;
-            this.rb9.Location = new System.Drawing.Point(235, 102);
-            this.rb9.Name = "rb9";
-            this.rb9.Size = new System.Drawing.Size(40, 17);
-            this.rb9.TabIndex = 80;
-            this.rb9.TabStop = true;
-            this.rb9.Text = "rb6";
-            this.rb9.UseVisualStyleBackColor = true;
-            this.rb9.Visible = false;
-            this.rb9.Click += new System.EventHandler(this.rb9_Click);
-            // 
-            // rb8
-            // 
-            this.rb8.AutoSize = true;
-            this.rb8.Location = new System.Drawing.Point(235, 60);
-            this.rb8.Name = "rb8";
-            this.rb8.Size = new System.Drawing.Size(40, 17);
-            this.rb8.TabIndex = 79;
-            this.rb8.TabStop = true;
-            this.rb8.Text = "rb5";
-            this.rb8.UseVisualStyleBackColor = true;
-            this.rb8.Visible = false;
-            this.rb8.Click += new System.EventHandler(this.rb8_Click);
-            // 
-            // rb7
-            // 
-            this.rb7.AutoSize = true;
-            this.rb7.Location = new System.Drawing.Point(235, 19);
-            this.rb7.Name = "rb7";
-            this.rb7.Size = new System.Drawing.Size(40, 17);
-            this.rb7.TabIndex = 78;
-            this.rb7.TabStop = true;
-            this.rb7.Text = "rb7";
-            this.rb7.UseVisualStyleBackColor = true;
-            this.rb7.Visible = false;
-            this.rb7.Click += new System.EventHandler(this.rb7_Click);
-            // 
-            // rb10
-            // 
-            this.rb10.AutoSize = true;
-            this.rb10.Location = new System.Drawing.Point(6, 140);
-            this.rb10.Name = "rb10";
-            this.rb10.Size = new System.Drawing.Size(46, 17);
-            this.rb10.TabIndex = 81;
-            this.rb10.TabStop = true;
-            this.rb10.Text = "rb10";
-            this.rb10.UseVisualStyleBackColor = true;
-            this.rb10.Visible = false;
-            this.rb10.Click += new System.EventHandler(this.rb10_Click);
-            // 
-            // rb11
-            // 
-            this.rb11.AutoSize = true;
-            this.rb11.Location = new System.Drawing.Point(130, 140);
-            this.rb11.Name = "rb11";
-            this.rb11.Size = new System.Drawing.Size(46, 17);
-            this.rb11.TabIndex = 82;
-            this.rb11.TabStop = true;
-            this.rb11.Text = "rb11";
-            this.rb11.UseVisualStyleBackColor = true;
-            this.rb11.Visible = false;
-            this.rb11.Click += new System.EventHandler(this.rb11_Click);
-            // 
-            // rb12
-            // 
-            this.rb12.AutoSize = true;
-            this.rb12.Location = new System.Drawing.Point(235, 137);
-            this.rb12.Name = "rb12";
-            this.rb12.Size = new System.Drawing.Size(46, 17);
-            this.rb12.TabIndex = 83;
-            this.rb12.TabStop = true;
-            this.rb12.Text = "rb12";
-            this.rb12.UseVisualStyleBackColor = true;
-            this.rb12.Visible = false;
-            this.rb12.Click += new System.EventHandler(this.rb12_Click);
             // 
             // frmCadastrarPedido
             // 

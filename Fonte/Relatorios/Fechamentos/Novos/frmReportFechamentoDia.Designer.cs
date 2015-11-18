@@ -1,6 +1,6 @@
-﻿namespace DexComanda.Cadastros
+﻿namespace DexComanda.Relatorios.Fechamentos.Novos
 {
-    partial class frmCadProdutoAdicional
+    partial class frmReportFechamentoDia
     {
         /// <summary>
         /// Required designer variable.
@@ -30,13 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // frmCadProdutoAdicional
+            // frmReportFechamentoDia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(613, 374);
-            this.Name = "frmCadProdutoAdicional";
-            this.Text = "[XSistemas] Cadastro Opcionais";
+            this.ClientSize = new System.Drawing.Size(709, 261);
+            this.Name = "frmReportFechamentoDia";
+            this.Text = "frmReportFechamentoDia";
             this.ResumeLayout(false);
 
         }

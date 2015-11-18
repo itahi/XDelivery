@@ -34,7 +34,7 @@ namespace DexComanda
 
         }
         public frmCadastrarProduto(int CodProduto ,string iNomeProduto, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
-                                   decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais)
+                                   decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais,string iUrlImagem)
         {
             InitializeComponent();
             codigoProdutoParaAlterar = CodProduto;
@@ -82,7 +82,7 @@ namespace DexComanda
             chkAtivo.Checked = true;
             chkOnline.Checked = iVendaOnline;
             txtMaxAdicionais.Text = iMaximoAdicionais;
-    
+            txtcaminhoImage.Text = iUrlImagem; 
             this.btnDoProduto.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
             this.btnDoProduto.Text = "Alterar [F12]";
             this.btnDoProduto.Click -= AdicionarProduto;
@@ -200,6 +200,11 @@ namespace DexComanda
                     
                     DataAlteracao = DateTime.Now
                 };
+                produto.UrlImagem = "";
+                if (txtcaminhoImage.Text.Trim()!="")
+                {
+                    produto.UrlImagem = txtcaminhoImage.Text;
+                }
                 if (txtMaxAdicionais.Text.Trim()!="")
                 {
                     produto.MaximoAdicionais  = int.Parse(txtMaxAdicionais.Text);
@@ -314,6 +319,11 @@ namespace DexComanda
                     OnlineSN = chkOnline.Checked,
                     DataAlteracao = DateTime.Now
                 };
+                produto.UrlImagem = "";
+                if (txtcaminhoImage.Text.Trim() != "")
+                {
+                    produto.UrlImagem = txtcaminhoImage.Text;
+                }
                 if (txtMaxAdicionais.Text.Trim() != "")
                 {
                     produto.MaximoAdicionais = int.Parse(txtMaxAdicionais.Text);
@@ -643,6 +653,36 @@ namespace DexComanda
             this.cbxGrupoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupo").Tables["Grupo"];
             this.cbxGrupoProduto.DisplayMember = "NomeGrupo";
             this.cbxGrupoProduto.ValueMember = "Codigo";
+        }
+
+        private void SelecionarImagem(object sender, EventArgs e)
+        {
+            OpenFileDialog opn = new OpenFileDialog();
+            opn.Title = "Selecione a imagem pro site";
+            opn.CheckFileExists = true;
+            opn.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|" + "All files (*.*)|*.*";
+
+            if (opn.ShowDialog() == DialogResult.OK)
+            {
+                txtcaminhoImage.Text = opn.FileName.ToString();
+                
+                imgProduto.Load(txtcaminhoImage.Text);
+            }
+        }
+
+        private void txtcaminhoImage_TextChanged(object sender, EventArgs e)
+        {
+            if (txtcaminhoImage.Text!="")
+            {
+                imgProduto.Load(txtcaminhoImage.Text);
+            }
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            txtcaminhoImage.Text = "";
+            imgProduto.Dispose();
         }
     }
 }

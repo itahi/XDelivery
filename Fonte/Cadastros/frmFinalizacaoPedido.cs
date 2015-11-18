@@ -17,6 +17,7 @@ namespace DexComanda.Cadastros
         private Boolean bInserir;
         private frmCadastrarPedido iFrm;
         private int intCodPedido;
+        private decimal iTotalSomado = 0;
         public frmFinalizacaoPedido()
         {
             InitializeComponent();
@@ -59,7 +60,7 @@ namespace DexComanda.Cadastros
                     if (!gridFormasPagamento.Columns.Contains("Valor"))
                     {
                         gridFormasPagamento.Columns.Add("Valor", "Valor R$");
-                       // gridFormasPagamento.Columns["Valor"].V
+                       // gridFormasPagamento.Columns.
                             gridFormasPagamento.Refresh();
                     }
                     gridFormasPagamento.Refresh();
@@ -67,6 +68,7 @@ namespace DexComanda.Cadastros
                 }
 
             }
+
             catch (Exception erro)
             {
 
@@ -74,12 +76,21 @@ namespace DexComanda.Cadastros
             }
 
         }
+        void TeclaPressionada(object sender, KeyPressEventArgs e)
+
+        {
+
+            if (!char.IsNumber(e.KeyChar) && !char.IsPunctuation(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+
+                e.Handled = true;
+
+        }
 
         private void Finaliza(object sender, EventArgs e)
         {
             try
             {
-                decimal iTotalSomado = 0;
+               
                 for (int i = 0; i < gridFormasPagamento.Rows.Count; i++)
                 {
                     if (gridFormasPagamento.Rows[i].Cells["Valor"].Value != null)
@@ -91,6 +102,11 @@ namespace DexComanda.Cadastros
                 if (iTotalSomado < decimal.Parse(lblTotalPedido.Text))
                 {
                     MessageBox.Show("Valor devido é maior que o valor informado");
+                    return;
+                }
+                else if (iTotalSomado> decimal.Parse(lblTotalPedido.Text))
+                {
+                    MessageBox.Show("Os Valores somados são maiores que o valor do Pedido");
                     return;
                 }
                 else
@@ -139,6 +155,52 @@ namespace DexComanda.Cadastros
             }
            
 
+        }
+
+        private void Valida(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (e.Control is DataGridViewTextBoxEditingControl && gridFormasPagamento.Columns.Contains("Valor"))
+
+            {
+                for (int i = 0; i < gridFormasPagamento.Rows.Count; i++)
+                {
+                    if (gridFormasPagamento.Rows[i].Cells["Valor"].Value!=null)
+                    {
+                        e.Control.KeyPress += new KeyPressEventHandler(TeclaPressionada);
+                     //   CalculaRestante(decimal.Parse(gridFormasPagamento.Rows[i].Cells["Valor"].Value.ToString()));
+                    }
+                    
+                }
+               
+            }
+        }
+        void CalculaRestante(decimal iValorDigitado)
+        {
+            lblFalta.Text = Convert.ToString(decimal.Parse(lblTotalPedido.Text) - iValorDigitado);
+        }
+
+        private void gridFormasPagamento_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+        }
+
+        private void gridFormasPagamento_KeyDown(object sender, KeyEventArgs e)
+        {
+         
+        }
+
+        private void gridFormasPagamento_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            decimal iValue=0;
+            for (int i = 0; i < gridFormasPagamento.Rows.Count; i++)
+            {
+                if (gridFormasPagamento.Rows[i].Cells["Valor"].Value!=null)
+                {
+                    iValue = iValue + decimal.Parse(gridFormasPagamento.Rows[i].Cells["Valor"].Value.ToString());
+                    CalculaRestante(iValue);
+                }
+            }
+           
         }
     }
 }

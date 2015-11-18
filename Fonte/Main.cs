@@ -20,6 +20,7 @@ using System.IO;
 using DexComanda.Relatorios.Fechamentos;
 using Microsoft.VisualBasic;
 using DexComanda.Cadastros.Produto;
+using DexComanda.Relatorios.Fechamentos.Novos;
 //using DexComanda.Relatorios.Fechamentos;
 
 namespace DexComanda
@@ -518,7 +519,8 @@ namespace DexComanda
 
             frmCadastrarProduto frm = new frmCadastrarProduto(int.Parse(dRowProduto.ItemArray.GetValue(7).ToString()), dRowProduto.ItemArray.GetValue(0).ToString(), dRowProduto.ItemArray.GetValue(3).ToString(),
                                                               decimal.Parse(dRowProduto.ItemArray.GetValue(1).ToString()), dRowProduto.ItemArray.GetValue(2).ToString(),
-                                                              Convert.ToBoolean(dRowProduto.ItemArray.GetValue(6).ToString()), decimal.Parse(dRowProduto.ItemArray.GetValue(5).ToString()), dRowProduto.ItemArray.GetValue(4).ToString(), dRowProduto.ItemArray.GetValue(8).ToString());
+                                                              Convert.ToBoolean(dRowProduto.ItemArray.GetValue(6).ToString()), decimal.Parse(dRowProduto.ItemArray.GetValue(5).ToString()),
+                                                              dRowProduto.ItemArray.GetValue(4).ToString(), dRowProduto.ItemArray.GetValue(8).ToString(), dRowProduto.ItemArray.GetValue(9).ToString());
             frm.StartPosition = FormStartPosition.CenterParent;
             frm.ShowDialog();
             Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
@@ -1513,7 +1515,12 @@ namespace DexComanda
 
         private void geralToolStripMenuItem2_Click(object sender, EventArgs e)
         {
+            // Utils.ReportFechamento_Novo(DateTime.Now.AddDays(-2), DateTime.Now);
+            //RelFechamento_Novo rel = new RelFechamento_Novo();
 
+            //rel.SetParameterValue("DataInicio", DateTime.Now);
+            //rel.SetParameterValue("DataFim", DateTime.Now);
+            //rel.PrintToPrinter(0, true, 0, 0);
             frmReportPedidosPorPeriodo frm = new frmReportPedidosPorPeriodo();
             frm.ShowDialog();
         }

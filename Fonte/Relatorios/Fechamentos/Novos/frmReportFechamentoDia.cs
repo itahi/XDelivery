@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DexComanda.Cadastros
+namespace DexComanda.Relatorios.Fechamentos.Novos
 {
-    public partial class frmCadProdutoAdicional : Form
+    public partial class frmReportFechamentoDia : Form
     {
-        public frmCadProdutoAdicional()
+        public frmReportFechamentoDia()
         {
             InitializeComponent();
         }

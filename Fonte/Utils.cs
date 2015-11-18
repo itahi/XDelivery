@@ -35,6 +35,8 @@ using CrystalDecisions.CrystalReports.Engine;
 using System.Diagnostics;
 using System.Configuration;
 using DexComanda.Relatorios.Clientes;
+using DexComanda.Relatorios.Fechamentos.Novos;
+
 namespace DexComanda
 {
     public class Utils
@@ -422,6 +424,43 @@ namespace DexComanda
             }
             return iRetorno;
         }
+        //public static string ReportFechamento_Novo(DateTime iDataI,DateTime iDataFim)
+        //{
+        //    string iRetorno = ""; ;
+        //    RelFechamento_Novo report;
+        //    try
+        //    {
+        //        report = new RelFechamento_Novo();
+
+        //        crtableLogoninfos = new TableLogOnInfos();
+        //        crtableLogoninfo = new TableLogOnInfo();
+        //        crConnectionInfo = new ConnectionInfo();
+        //        Tables CrTables;
+
+        //        report.Load(Directory.GetCurrentDirectory() + @"\RelFechamento_Novo.rpt");
+        //        crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+        //        crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+        //        crConnectionInfo.UserID = "dex";
+        //        crConnectionInfo.Password = "1234";
+
+        //        CrTables = report.Database.Tables;
+        //        foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+        //        {
+        //            crtableLogoninfo = CrTable.LogOnInfo;
+        //            crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+        //            CrTable.ApplyLogOnInfo(crtableLogoninfo);
+        //        }
+        //        report.SetParameterValue("DataInicio", DateTime.Now);
+        //        report.SetParameterValue("DataFim", DateTime.Now);
+               
+        //    }
+        //    catch (Exception erro)
+        //    {
+
+        //        MessageBox.Show(erro.InnerException.Message);
+        //    }
+        //    return iRetorno;
+        //}
         public static string ImpressaoFechamentoNovo(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;

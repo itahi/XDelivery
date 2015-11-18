@@ -522,9 +522,9 @@ namespace DexComanda
                 else 
                 if (iTable == "Produto")
                 {
-                    if (Sessions.returnEmpresa.CNPJ == "13004606798")
+                    if (Sessions.returnEmpresa.CNPJ == "13004606798" || Sessions.returnEmpresa.CNPJ =="21207218000191")
                     {
-                        iSql = iSql.Replace(iSubSelect, ",(select Quantidade from Produto_Estoque E where E.CodProduto = Produto.Codigo and E.DataAtualizacao between '" +DateTime.Now.Date+ "' and '"+ DateTime.Now.Date.ToShortDateString()+ " 23:59:59') as QtdVendida");
+                        iSql = iSql.Replace(iSubSelect, ",(select top 1 Quantidade from Produto_Estoque E where E.CodProduto = Produto.Codigo and E.DataAtualizacao between '" +DateTime.Now.Date.ToShortDateString() +" 00:00:00" + "' and '"+ DateTime.Now.Date.ToShortDateString()+ " 23:59:59') as QtdVendida");
                     }
 
                     if (iAtivos)

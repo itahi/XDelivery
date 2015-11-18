@@ -16,5 +16,6 @@ namespace DexComanda.Models
         public decimal PrecoTotal { get; set; }
         public bool ImpressoSN { get; set; }
         public string Item { get; set; }
+        public DateTime DataAtualizacao { get; set; }
     }
 }
