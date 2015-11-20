@@ -148,6 +148,32 @@ namespace DexComanda
             adapter.Fill(ds, "Produto_Opcao");
             return ds;
         }
+        public DataSet RetornaDadosPessoa(string iNomeBairros, int iIDRegiao)
+        {
+            string lSqlConsulta = " select Codigo,Nome,Cidade,Bairro,Telefone,CodRegiao from Pessoa where teste ";
+            if (iNomeBairros!="")
+            {
+                lSqlConsulta = lSqlConsulta.Replace("teste"," bairro like '%"+ iNomeBairros + "%'");
+             //   command.Parameters.AddWithValue("@Bairro", iNomeBairros);
+            }
+           else if (iIDRegiao!=0)
+            {
+                lSqlConsulta = lSqlConsulta.Replace("teste", "CodRegiao="+iIDRegiao+"");
+              //  command.Parameters.AddWithValue("@CodRegiao", iIDRegiao);
+            }
+            else if(iNomeBairros!="" && iIDRegiao!=0)
+            {
+                lSqlConsulta = lSqlConsulta.Replace("teste", " bairro like '%@Bairro% and CodRegiao=@CodRegiao ");
+             //   lSqlConsulta = lSqlConsulta.Replace("teste", "CodRegiao=" + iIDRegiao + "");
+            }
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Pessoa");
+            return ds;
+        }
         public DataSet SelectFormasPagamento()
         {
             string lSqlConsulta = " select Codigo,Descricao from FormaPagamento";

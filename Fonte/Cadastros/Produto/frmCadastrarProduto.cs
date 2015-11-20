@@ -650,7 +650,7 @@ namespace DexComanda
 
         private void cbxGrupoProduto_Click(object sender, EventArgs e)
         {
-            this.cbxGrupoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupo").Tables["Grupo"];
+            this.cbxGrupoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupoAtivo").Tables["Grupo"];
             this.cbxGrupoProduto.DisplayMember = "NomeGrupo";
             this.cbxGrupoProduto.ValueMember = "Codigo";
         }

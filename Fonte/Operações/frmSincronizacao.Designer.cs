@@ -31,8 +31,20 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnSincronizar = new System.Windows.Forms.Button();
+            this.prgBarRegiao = new System.Windows.Forms.ProgressBar();
+            this.prgBarpagamento = new System.Windows.Forms.ProgressBar();
+            this.prgBarProduto = new System.Windows.Forms.ProgressBar();
+            this.chkRegiaoEntrega = new System.Windows.Forms.CheckBox();
+            this.chkFPagamento = new System.Windows.Forms.CheckBox();
+            this.chkProdutos = new System.Windows.Forms.CheckBox();
             this.lblSincronismo = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
+            this.lbRetornoImage = new System.Windows.Forms.Label();
+            this.btnImg = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtcaminhoImage = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rbTotal = new System.Windows.Forms.RadioButton();
             this.rbSub = new System.Windows.Forms.RadioButton();
@@ -41,18 +53,6 @@
             this.lblReturn = new System.Windows.Forms.Label();
             this.chkDesconto = new System.Windows.Forms.CheckBox();
             this.txtPercentualDesconto = new System.Windows.Forms.TextBox();
-            this.lbRetornoImage = new System.Windows.Forms.Label();
-            this.btnImg = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtcaminhoImage = new System.Windows.Forms.TextBox();
-            this.prgBarRegiao = new System.Windows.Forms.ProgressBar();
-            this.prgBarpagamento = new System.Windows.Forms.ProgressBar();
-            this.prgBarProduto = new System.Windows.Forms.ProgressBar();
-            this.chkRegiaoEntrega = new System.Windows.Forms.CheckBox();
-            this.chkFPagamento = new System.Windows.Forms.CheckBox();
-            this.chkProdutos = new System.Windows.Forms.CheckBox();
-            this.btnSincronizar = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -91,6 +91,78 @@
             this.tabPage1.Text = "Cadastros";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // btnSincronizar
+            // 
+            this.btnSincronizar.Location = new System.Drawing.Point(90, 194);
+            this.btnSincronizar.Name = "btnSincronizar";
+            this.btnSincronizar.Size = new System.Drawing.Size(75, 23);
+            this.btnSincronizar.TabIndex = 14;
+            this.btnSincronizar.Text = "Sincronizar";
+            this.btnSincronizar.UseVisualStyleBackColor = true;
+            this.btnSincronizar.Click += new System.EventHandler(this.btnSincronizar_Click);
+            // 
+            // prgBarRegiao
+            // 
+            this.prgBarRegiao.Location = new System.Drawing.Point(128, 51);
+            this.prgBarRegiao.Name = "prgBarRegiao";
+            this.prgBarRegiao.Size = new System.Drawing.Size(114, 18);
+            this.prgBarRegiao.TabIndex = 13;
+            // 
+            // prgBarpagamento
+            // 
+            this.prgBarpagamento.Location = new System.Drawing.Point(128, 29);
+            this.prgBarpagamento.Name = "prgBarpagamento";
+            this.prgBarpagamento.Size = new System.Drawing.Size(114, 16);
+            this.prgBarpagamento.TabIndex = 12;
+            // 
+            // prgBarProduto
+            // 
+            this.prgBarProduto.Location = new System.Drawing.Point(128, 7);
+            this.prgBarProduto.Name = "prgBarProduto";
+            this.prgBarProduto.Size = new System.Drawing.Size(114, 16);
+            this.prgBarProduto.TabIndex = 11;
+            // 
+            // chkRegiaoEntrega
+            // 
+            this.chkRegiaoEntrega.AutoSize = true;
+            this.chkRegiaoEntrega.Location = new System.Drawing.Point(5, 52);
+            this.chkRegiaoEntrega.Name = "chkRegiaoEntrega";
+            this.chkRegiaoEntrega.Size = new System.Drawing.Size(105, 17);
+            this.chkRegiaoEntrega.TabIndex = 10;
+            this.chkRegiaoEntrega.Text = "Regioes Entrega";
+            this.chkRegiaoEntrega.UseVisualStyleBackColor = true;
+            // 
+            // chkFPagamento
+            // 
+            this.chkFPagamento.AutoSize = true;
+            this.chkFPagamento.Enabled = false;
+            this.chkFPagamento.Location = new System.Drawing.Point(5, 29);
+            this.chkFPagamento.Name = "chkFPagamento";
+            this.chkFPagamento.Size = new System.Drawing.Size(117, 17);
+            this.chkFPagamento.TabIndex = 9;
+            this.chkFPagamento.Text = "Forma Pagamentos";
+            this.chkFPagamento.UseVisualStyleBackColor = true;
+            // 
+            // chkProdutos
+            // 
+            this.chkProdutos.AutoSize = true;
+            this.chkProdutos.Location = new System.Drawing.Point(6, 6);
+            this.chkProdutos.Name = "chkProdutos";
+            this.chkProdutos.Size = new System.Drawing.Size(68, 17);
+            this.chkProdutos.TabIndex = 8;
+            this.chkProdutos.Text = "Produtos";
+            this.chkProdutos.UseVisualStyleBackColor = true;
+            // 
+            // lblSincronismo
+            // 
+            this.lblSincronismo.AutoSize = true;
+            this.lblSincronismo.Location = new System.Drawing.Point(42, 288);
+            this.lblSincronismo.Name = "lblSincronismo";
+            this.lblSincronismo.Size = new System.Drawing.Size(23, 13);
+            this.lblSincronismo.TabIndex = 4;
+            this.lblSincronismo.Text = "labl";
+            this.lblSincronismo.Visible = false;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.button1);
@@ -107,15 +179,52 @@
             this.tabPage2.Text = "Adicionais";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // lblSincronismo
+            // button1
             // 
-            this.lblSincronismo.AutoSize = true;
-            this.lblSincronismo.Location = new System.Drawing.Point(42, 288);
-            this.lblSincronismo.Name = "lblSincronismo";
-            this.lblSincronismo.Size = new System.Drawing.Size(23, 13);
-            this.lblSincronismo.TabIndex = 4;
-            this.lblSincronismo.Text = "labl";
-            this.lblSincronismo.Visible = false;
+            this.button1.Location = new System.Drawing.Point(88, 194);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(90, 23);
+            this.button1.TabIndex = 23;
+            this.button1.Text = "Sinc. Adicionais";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.SincAdicionais);
+            // 
+            // lbRetornoImage
+            // 
+            this.lbRetornoImage.AutoSize = true;
+            this.lbRetornoImage.Location = new System.Drawing.Point(110, 173);
+            this.lbRetornoImage.Name = "lbRetornoImage";
+            this.lbRetornoImage.Size = new System.Drawing.Size(23, 13);
+            this.lbRetornoImage.TabIndex = 22;
+            this.lbRetornoImage.Text = "labl";
+            this.lbRetornoImage.Visible = false;
+            // 
+            // btnImg
+            // 
+            this.btnImg.Location = new System.Drawing.Point(11, 168);
+            this.btnImg.Name = "btnImg";
+            this.btnImg.Size = new System.Drawing.Size(75, 23);
+            this.btnImg.TabIndex = 19;
+            this.btnImg.Text = "Abrir";
+            this.btnImg.UseVisualStyleBackColor = true;
+            this.btnImg.Click += new System.EventHandler(this.SelecionarImage);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(11, 125);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(105, 13);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "Banner Promocional ";
+            this.label1.Visible = false;
+            // 
+            // txtcaminhoImage
+            // 
+            this.txtcaminhoImage.Location = new System.Drawing.Point(11, 143);
+            this.txtcaminhoImage.Name = "txtcaminhoImage";
+            this.txtcaminhoImage.Size = new System.Drawing.Size(248, 20);
+            this.txtcaminhoImage.TabIndex = 20;
             // 
             // groupBox2
             // 
@@ -203,114 +312,6 @@
             this.txtPercentualDesconto.Size = new System.Drawing.Size(45, 20);
             this.txtPercentualDesconto.TabIndex = 9;
             // 
-            // lbRetornoImage
-            // 
-            this.lbRetornoImage.AutoSize = true;
-            this.lbRetornoImage.Location = new System.Drawing.Point(110, 173);
-            this.lbRetornoImage.Name = "lbRetornoImage";
-            this.lbRetornoImage.Size = new System.Drawing.Size(23, 13);
-            this.lbRetornoImage.TabIndex = 22;
-            this.lbRetornoImage.Text = "labl";
-            this.lbRetornoImage.Visible = false;
-            // 
-            // btnImg
-            // 
-            this.btnImg.Location = new System.Drawing.Point(11, 168);
-            this.btnImg.Name = "btnImg";
-            this.btnImg.Size = new System.Drawing.Size(75, 23);
-            this.btnImg.TabIndex = 19;
-            this.btnImg.Text = "Abrir";
-            this.btnImg.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 125);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(105, 13);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "Banner Promocional ";
-            this.label1.Visible = false;
-            // 
-            // txtcaminhoImage
-            // 
-            this.txtcaminhoImage.Location = new System.Drawing.Point(11, 143);
-            this.txtcaminhoImage.Name = "txtcaminhoImage";
-            this.txtcaminhoImage.Size = new System.Drawing.Size(248, 20);
-            this.txtcaminhoImage.TabIndex = 20;
-            // 
-            // prgBarRegiao
-            // 
-            this.prgBarRegiao.Location = new System.Drawing.Point(128, 51);
-            this.prgBarRegiao.Name = "prgBarRegiao";
-            this.prgBarRegiao.Size = new System.Drawing.Size(114, 18);
-            this.prgBarRegiao.TabIndex = 13;
-            // 
-            // prgBarpagamento
-            // 
-            this.prgBarpagamento.Location = new System.Drawing.Point(128, 29);
-            this.prgBarpagamento.Name = "prgBarpagamento";
-            this.prgBarpagamento.Size = new System.Drawing.Size(114, 16);
-            this.prgBarpagamento.TabIndex = 12;
-            // 
-            // prgBarProduto
-            // 
-            this.prgBarProduto.Location = new System.Drawing.Point(128, 7);
-            this.prgBarProduto.Name = "prgBarProduto";
-            this.prgBarProduto.Size = new System.Drawing.Size(114, 16);
-            this.prgBarProduto.TabIndex = 11;
-            // 
-            // chkRegiaoEntrega
-            // 
-            this.chkRegiaoEntrega.AutoSize = true;
-            this.chkRegiaoEntrega.Location = new System.Drawing.Point(5, 52);
-            this.chkRegiaoEntrega.Name = "chkRegiaoEntrega";
-            this.chkRegiaoEntrega.Size = new System.Drawing.Size(105, 17);
-            this.chkRegiaoEntrega.TabIndex = 10;
-            this.chkRegiaoEntrega.Text = "Regioes Entrega";
-            this.chkRegiaoEntrega.UseVisualStyleBackColor = true;
-            // 
-            // chkFPagamento
-            // 
-            this.chkFPagamento.AutoSize = true;
-            this.chkFPagamento.Enabled = false;
-            this.chkFPagamento.Location = new System.Drawing.Point(5, 29);
-            this.chkFPagamento.Name = "chkFPagamento";
-            this.chkFPagamento.Size = new System.Drawing.Size(117, 17);
-            this.chkFPagamento.TabIndex = 9;
-            this.chkFPagamento.Text = "Forma Pagamentos";
-            this.chkFPagamento.UseVisualStyleBackColor = true;
-            // 
-            // chkProdutos
-            // 
-            this.chkProdutos.AutoSize = true;
-            this.chkProdutos.Location = new System.Drawing.Point(6, 6);
-            this.chkProdutos.Name = "chkProdutos";
-            this.chkProdutos.Size = new System.Drawing.Size(68, 17);
-            this.chkProdutos.TabIndex = 8;
-            this.chkProdutos.Text = "Produtos";
-            this.chkProdutos.UseVisualStyleBackColor = true;
-            // 
-            // btnSincronizar
-            // 
-            this.btnSincronizar.Location = new System.Drawing.Point(90, 194);
-            this.btnSincronizar.Name = "btnSincronizar";
-            this.btnSincronizar.Size = new System.Drawing.Size(75, 23);
-            this.btnSincronizar.TabIndex = 14;
-            this.btnSincronizar.Text = "Sincronizar";
-            this.btnSincronizar.UseVisualStyleBackColor = true;
-            this.btnSincronizar.Click += new System.EventHandler(this.btnSincronizar_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(88, 194);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(90, 23);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "Sinc. Adicionais";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.SincAdicionais);
-            // 
             // frmSincronizacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -319,6 +320,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "frmSincronizacao";
             this.Text = "[XSistemas] Sincronizacao";
+            this.Load += new System.EventHandler(this.frmSincronizacao_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

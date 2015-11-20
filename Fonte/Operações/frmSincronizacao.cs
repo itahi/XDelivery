@@ -430,6 +430,8 @@ namespace DexComanda.Operações
         private void SincAdicionais(object sender, EventArgs e)
         {
             double iPerceDesconto;
+            GerarToken();
+            iUrlWS = Sessions.returnEmpresa.UrlServidor;
             if (txtPercentualDesconto.Text != "")
             {
                 iPerceDesconto = double.Parse(txtPercentualDesconto.Text);
@@ -444,6 +446,11 @@ namespace DexComanda.Operações
             {
                 CadastrarBanner(txtcaminhoImage.Text);
             }
+        }
+
+        private void frmSincronizacao_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

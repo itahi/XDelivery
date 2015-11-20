@@ -150,6 +150,16 @@ namespace DexComanda
             }
             return CaixaAberto;
         }
+        public static Boolean MessageBoxQuestion(string iMessage)
+        {
+            Boolean iResposta = false;
+            DialogResult resultado = MessageBox.Show(iMessage, "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (resultado == DialogResult.Yes)
+            {
+                iResposta = true;
+            }
+            return iResposta;
+        }
         public static void ImprimirHistoricoCliente(int iCodPessoa, DateTime iDtInici, DateTime idtFim)
         {
             RelHistoricoCliente report;
@@ -238,13 +248,14 @@ namespace DexComanda
                 }
                 else
                 {
+                   
                     report.PrintToPrinter(0, true, 0, 0);
                 }
             }
             catch (Exception erro)
             {
 
-                MessageBox.Show(erro.InnerException.Message);
+                MessageBox.Show("Erro ná impressao :"+ erro.Message);
             }
             return iRetorno;  
         }

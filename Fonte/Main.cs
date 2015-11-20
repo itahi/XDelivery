@@ -21,6 +21,7 @@ using DexComanda.Relatorios.Fechamentos;
 using Microsoft.VisualBasic;
 using DexComanda.Cadastros.Produto;
 using DexComanda.Relatorios.Fechamentos.Novos;
+using DexComanda.Operações.Alteracoes;
 //using DexComanda.Relatorios.Fechamentos;
 
 namespace DexComanda
@@ -1581,8 +1582,7 @@ namespace DexComanda
 
         private void opçãoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmCadOpcao frm = new frmCadOpcao();
-            frm.ShowDialog();
+            
         }
 
         private void bairrosPorRegiãoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1609,7 +1609,23 @@ namespace DexComanda
             frm.ShowDialog();
         }
 
+        private void opçõesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadOpcao frm = new frmCadOpcao();
+            frm.ShowDialog();
+        }
 
+        private void produtosToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmAlteracaoProduto frm = new frmAlteracaoProduto();
+            frm.ShowDialog();
+        }
+
+        private void clientesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmAlteracaoCliente frm = new frmAlteracaoCliente();
+            frm.ShowDialog();
+        }
     }
 }
 

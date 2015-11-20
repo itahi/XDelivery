@@ -177,6 +177,12 @@
     <Compile Include="Cadastros\frmFinalizacaoPedido.Designer.cs">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cadastros\Produto\frmTipoOpcao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Produto\frmTipoOpcao.Designer.cs">
+      <DependentUpon>frmTipoOpcao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cadastros\RegiaoEntrega\frmBairrosRegiao.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -207,6 +213,8 @@
       <DependentUpon>DBExpert_TesteDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Integração\MP2032.cs" />
+    <Compile Include="Models\Alteracoes Multiplas\AlteracaoCliente.cs" />
+    <Compile Include="Models\Alteracoes Multiplas\MultiplaProduto.cs" />
     <Compile Include="Models\Caixa.cs" />
     <Compile Include="Models\CaixaCadastros.cs" />
     <Compile Include="Models\CaixaDiferenca.cs" />
@@ -221,6 +229,18 @@
     <Compile Include="Models\RegiaoEntrega_Bairros.cs" />
     <Compile Include="Models\RemoveDezPorcento.cs" />
     <Compile Include="Models\ReturnPadrao.cs" />
+    <Compile Include="Operações\Alteracoes\frmAlteracaoCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Alteracoes\frmAlteracaoCliente.Designer.cs">
+      <DependentUpon>frmAlteracaoCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operações\Alteracoes\frmAlteracaoProduto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Alteracoes\frmAlteracaoProduto.Designer.cs">
+      <DependentUpon>frmAlteracaoProduto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operações\Financeiro\frmAberturaCaixa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -628,6 +648,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Produto\frmCadOpcao.resx">
       <DependentUpon>frmCadOpcao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Alteracoes\frmAlteracaoCliente.resx">
+      <DependentUpon>frmAlteracaoCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Alteracoes\frmAlteracaoProduto.resx">
+      <DependentUpon>frmAlteracaoProduto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\Financeiro\frmAberturaCaixa.resx">
       <DependentUpon>frmAberturaCaixa.cs</DependentUpon>
@@ -1171,7 +1197,9 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\LOCASMS\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="bin\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
