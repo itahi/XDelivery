@@ -637,6 +637,9 @@
     <EmbeddedResource Include="Cadastros\frmFinalizacaoPedido.resx">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\Produto\frmTipoOpcao.resx">
+      <DependentUpon>frmTipoOpcao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\RegiaoEntrega\frmBairrosRegiao.resx">
       <DependentUpon>frmBairrosRegiao.cs</DependentUpon>
     </EmbeddedResource>

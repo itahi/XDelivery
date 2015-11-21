@@ -70,7 +70,6 @@
             this.produtosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.taxasDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.regiõesDeEntregaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.alterarSenhaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FinanceiroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lançamentoAvulsoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -204,6 +203,7 @@
             this.tipoOpçãoToolStripMenuItem.Name = "tipoOpçãoToolStripMenuItem";
             this.tipoOpçãoToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.tipoOpçãoToolStripMenuItem.Text = "Tipo Opção";
+            this.tipoOpçãoToolStripMenuItem.Click += new System.EventHandler(this.tipoOpçãoToolStripMenuItem_Click);
             // 
             // opçõesToolStripMenuItem
             // 
@@ -450,8 +450,7 @@
             this.alteraçõesMultiplasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.produtosToolStripMenuItem1,
             this.clientesToolStripMenuItem1,
-            this.taxasDeEntregaToolStripMenuItem,
-            this.regiõesDeEntregaToolStripMenuItem1});
+            this.taxasDeEntregaToolStripMenuItem});
             this.alteraçõesMultiplasToolStripMenuItem.Name = "alteraçõesMultiplasToolStripMenuItem";
             this.alteraçõesMultiplasToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.alteraçõesMultiplasToolStripMenuItem.Text = "Alterações Multiplas";
@@ -459,28 +458,22 @@
             // produtosToolStripMenuItem1
             // 
             this.produtosToolStripMenuItem1.Name = "produtosToolStripMenuItem1";
-            this.produtosToolStripMenuItem1.Size = new System.Drawing.Size(213, 26);
+            this.produtosToolStripMenuItem1.Size = new System.Drawing.Size(184, 26);
             this.produtosToolStripMenuItem1.Text = "Produtos";
             this.produtosToolStripMenuItem1.Click += new System.EventHandler(this.produtosToolStripMenuItem1_Click);
             // 
             // clientesToolStripMenuItem1
             // 
             this.clientesToolStripMenuItem1.Name = "clientesToolStripMenuItem1";
-            this.clientesToolStripMenuItem1.Size = new System.Drawing.Size(213, 26);
+            this.clientesToolStripMenuItem1.Size = new System.Drawing.Size(184, 26);
             this.clientesToolStripMenuItem1.Text = "Clientes";
             this.clientesToolStripMenuItem1.Click += new System.EventHandler(this.clientesToolStripMenuItem1_Click);
             // 
             // taxasDeEntregaToolStripMenuItem
             // 
             this.taxasDeEntregaToolStripMenuItem.Name = "taxasDeEntregaToolStripMenuItem";
-            this.taxasDeEntregaToolStripMenuItem.Size = new System.Drawing.Size(213, 26);
-            this.taxasDeEntregaToolStripMenuItem.Text = "Taxas De Entrega";
-            // 
-            // regiõesDeEntregaToolStripMenuItem1
-            // 
-            this.regiõesDeEntregaToolStripMenuItem1.Name = "regiõesDeEntregaToolStripMenuItem1";
-            this.regiõesDeEntregaToolStripMenuItem1.Size = new System.Drawing.Size(213, 26);
-            this.regiõesDeEntregaToolStripMenuItem1.Text = "Regiões de Entrega";
+            this.taxasDeEntregaToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.taxasDeEntregaToolStripMenuItem.Text = "Pedidos Online";
             // 
             // alterarSenhaToolStripMenuItem
             // 
@@ -1156,7 +1149,6 @@
         private System.Windows.Forms.ToolStripMenuItem produtosToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem taxasDeEntregaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem regiõesDeEntregaToolStripMenuItem1;
         private System.Windows.Forms.Timer AtualizaGrid;
         private System.Windows.Forms.ToolStripMenuItem alterarSenhaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem geralToolStripMenuItem2;

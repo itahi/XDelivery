@@ -1626,6 +1626,11 @@ namespace DexComanda
             frmAlteracaoCliente frm = new frmAlteracaoCliente();
             frm.ShowDialog();
         }
+
+        private void tipoOpçãoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

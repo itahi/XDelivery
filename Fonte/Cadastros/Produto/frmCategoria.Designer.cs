@@ -37,6 +37,7 @@
             this.chkImprimeCozinha = new System.Windows.Forms.CheckBox();
             this.chkOnline = new System.Windows.Forms.CheckBox();
             this.chkAtivo = new System.Windows.Forms.CheckBox();
+            this.cachedRelCreditoDebito1 = new DexComanda.Relatorios.Clientes.CachedRelCreditoDebito();
             ((System.ComponentModel.ISupportInitialize)(this.gruposGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -164,5 +165,6 @@
         private System.Windows.Forms.CheckBox chkImprimeCozinha;
         private System.Windows.Forms.CheckBox chkOnline;
         private System.Windows.Forms.CheckBox chkAtivo;
+        private Relatorios.Clientes.CachedRelCreditoDebito cachedRelCreditoDebito1;
     }
 }
