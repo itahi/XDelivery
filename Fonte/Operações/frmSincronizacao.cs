@@ -446,11 +446,33 @@ namespace DexComanda.Operações
             {
                 CadastrarBanner(txtcaminhoImage.Text);
             }
+            else if (chkRemover.Checked)
+            {
+                RemoverBanner();
+            }
         }
+        private void RemoverBanner()
+        {
+            RestClient client = new RestClient(iUrlWS);
+            RestRequest request = new RestRequest("ws/banner/promocao/delete", Method.POST);
+            request.AddParameter("token", iParamToken);
+       
+            RestResponse response = (RestResponse)client.Execute(request);
 
+            ReturnPadrao lRetorno = new ReturnPadrao();
+            lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+            //  lblReturn.Visible = lRetorno.status;
+            lbRetornoImage.Visible = true;
+            lbRetornoImage.Text = lRetorno.msg;
+        }
         private void frmSincronizacao_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void chkRemover_CheckedChanged(object sender, EventArgs e)
+        {
+            grpBanner.Enabled = !chkRemover.Checked;
         }
     }
 }

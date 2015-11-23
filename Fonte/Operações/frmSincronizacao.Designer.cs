@@ -41,10 +41,12 @@
             this.lblSincronismo = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
+            this.grpBanner = new System.Windows.Forms.GroupBox();
             this.lbRetornoImage = new System.Windows.Forms.Label();
             this.btnImg = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.txtcaminhoImage = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.chkRemover = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rbTotal = new System.Windows.Forms.RadioButton();
             this.rbSub = new System.Windows.Forms.RadioButton();
@@ -56,6 +58,7 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.grpBanner.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,10 +70,10 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Location = new System.Drawing.Point(5, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(278, 249);
+            this.tabControl1.Size = new System.Drawing.Size(278, 266);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage1
@@ -86,7 +89,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(270, 223);
+            this.tabPage1.Size = new System.Drawing.Size(270, 240);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Cadastros";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -166,65 +169,84 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.button1);
-            this.tabPage2.Controls.Add(this.lbRetornoImage);
-            this.tabPage2.Controls.Add(this.btnImg);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.txtcaminhoImage);
+            this.tabPage2.Controls.Add(this.grpBanner);
+            this.tabPage2.Controls.Add(this.chkRemover);
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(270, 223);
+            this.tabPage2.Size = new System.Drawing.Size(270, 240);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Adicionais";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(88, 194);
+            this.button1.Location = new System.Drawing.Point(84, 211);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(90, 23);
-            this.button1.TabIndex = 23;
+            this.button1.TabIndex = 33;
             this.button1.Text = "Sinc. Adicionais";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.SincAdicionais);
             // 
+            // grpBanner
+            // 
+            this.grpBanner.Controls.Add(this.lbRetornoImage);
+            this.grpBanner.Controls.Add(this.btnImg);
+            this.grpBanner.Controls.Add(this.txtcaminhoImage);
+            this.grpBanner.Controls.Add(this.label1);
+            this.grpBanner.Location = new System.Drawing.Point(6, 136);
+            this.grpBanner.Name = "grpBanner";
+            this.grpBanner.Size = new System.Drawing.Size(258, 71);
+            this.grpBanner.TabIndex = 24;
+            this.grpBanner.TabStop = false;
+            this.grpBanner.Text = "Banner Promocional ";
+            // 
             // lbRetornoImage
             // 
             this.lbRetornoImage.AutoSize = true;
-            this.lbRetornoImage.Location = new System.Drawing.Point(110, 173);
+            this.lbRetornoImage.Location = new System.Drawing.Point(6, 42);
             this.lbRetornoImage.Name = "lbRetornoImage";
             this.lbRetornoImage.Size = new System.Drawing.Size(23, 13);
-            this.lbRetornoImage.TabIndex = 22;
+            this.lbRetornoImage.TabIndex = 31;
             this.lbRetornoImage.Text = "labl";
             this.lbRetornoImage.Visible = false;
             // 
             // btnImg
             // 
-            this.btnImg.Location = new System.Drawing.Point(11, 168);
+            this.btnImg.Location = new System.Drawing.Point(213, 15);
             this.btnImg.Name = "btnImg";
-            this.btnImg.Size = new System.Drawing.Size(75, 23);
-            this.btnImg.TabIndex = 19;
+            this.btnImg.Size = new System.Drawing.Size(39, 23);
+            this.btnImg.TabIndex = 29;
             this.btnImg.Text = "Abrir";
             this.btnImg.UseVisualStyleBackColor = true;
-            this.btnImg.Click += new System.EventHandler(this.SelecionarImage);
+            // 
+            // txtcaminhoImage
+            // 
+            this.txtcaminhoImage.Location = new System.Drawing.Point(5, 17);
+            this.txtcaminhoImage.Name = "txtcaminhoImage";
+            this.txtcaminhoImage.Size = new System.Drawing.Size(202, 20);
+            this.txtcaminhoImage.TabIndex = 30;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 125);
+            this.label1.Location = new System.Drawing.Point(-24, 4);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(105, 13);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "Banner Promocional ";
-            this.label1.Visible = false;
+            this.label1.Size = new System.Drawing.Size(0, 13);
+            this.label1.TabIndex = 26;
             // 
-            // txtcaminhoImage
+            // chkRemover
             // 
-            this.txtcaminhoImage.Location = new System.Drawing.Point(11, 143);
-            this.txtcaminhoImage.Name = "txtcaminhoImage";
-            this.txtcaminhoImage.Size = new System.Drawing.Size(248, 20);
-            this.txtcaminhoImage.TabIndex = 20;
+            this.chkRemover.AutoSize = true;
+            this.chkRemover.Location = new System.Drawing.Point(154, 118);
+            this.chkRemover.Name = "chkRemover";
+            this.chkRemover.Size = new System.Drawing.Size(106, 17);
+            this.chkRemover.TabIndex = 17;
+            this.chkRemover.Text = "Remover Banner";
+            this.chkRemover.UseVisualStyleBackColor = true;
+            this.chkRemover.CheckedChanged += new System.EventHandler(this.chkRemover_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -316,7 +338,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 271);
+            this.ClientSize = new System.Drawing.Size(286, 268);
             this.Controls.Add(this.tabControl1);
             this.Name = "frmSincronizacao";
             this.Text = "[XSistemas] Sincronizacao";
@@ -326,6 +348,8 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.grpBanner.ResumeLayout(false);
+            this.grpBanner.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -345,11 +369,6 @@
         private System.Windows.Forms.CheckBox chkProdutos;
         private System.Windows.Forms.Label lblSincronismo;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label lbRetornoImage;
-        private System.Windows.Forms.Button btnImg;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtcaminhoImage;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RadioButton rbTotal;
         private System.Windows.Forms.RadioButton rbSub;
@@ -358,5 +377,12 @@
         private System.Windows.Forms.Label lblReturn;
         private System.Windows.Forms.CheckBox chkDesconto;
         private System.Windows.Forms.TextBox txtPercentualDesconto;
+        private System.Windows.Forms.GroupBox grpBanner;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox chkRemover;
+        private System.Windows.Forms.Label lbRetornoImage;
+        private System.Windows.Forms.Button btnImg;
+        private System.Windows.Forms.TextBox txtcaminhoImage;
+        private System.Windows.Forms.Button button1;
     }
 }
