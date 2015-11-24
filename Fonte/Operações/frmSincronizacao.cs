@@ -275,6 +275,7 @@ namespace DexComanda.Operações
             RestClient client = new RestClient(iUrlWS);
             RestRequest request = new RestRequest("ws/produto/set", Method.POST);
             MudaLabel("Produto");
+            decimal iPrecoProduto = 0;
             prgBarProduto.Value = 0;
             prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
@@ -284,13 +285,25 @@ namespace DexComanda.Operações
                 request.AddParameter("token", iParamToken);
                 request.AddParameter("idReferencia", ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
                 request.AddParameter("nome", ds.Tables["Produto"].Rows[i].Field<string>("NomeProduto"));
+
+                if (Sessions.returnEmpresa.CNPJ=="09395874000160")
+                {
+
+                    prProduto = prProduto + con.RetornaPrecoComEmbalagem(ds.Tables["Produto"].Rows[i].Field<string>("GrupoProduto"), ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
+
+                }
+                else
+                {
+                    prProduto = ds.Tables["Produto"].Rows[i].Field<decimal>("PrecoProduto");
+                }
+
                 request.AddParameter("preco", prProduto);
+
                 if (iCaminhoImagem !=null && iCaminhoImagem!="")
                 {
                     request.AddFile("imagem", iCaminhoImagem);
                 }
-                
-                //  request.AddParameter("precoPromocao", 10);
+               
                 request.AddParameter("idReferenciaCategoria", RetornaIDCategoria(ds.Tables["Produto"].Rows[i].Field<string>("GrupoProduto")));
                 request.AddParameter("descricao", ds.Tables["Produto"].Rows[i].Field<string>("DescricaoProduto"));
                 request.AddParameter("ativo", Convert.ToInt32(ds.Tables["Produto"].Rows[i].Field<Boolean>("OnlineSN")));
@@ -298,9 +311,7 @@ namespace DexComanda.Operações
                 //   request.AddParameter("precoPromocao", ds.Tables["Produto"].Rows[i].Field<int>("PrecoDesconto"));
                 //   request.AddParameter("dataInicial", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
                 //   request.AddParameter("dataFinal", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
-
-                // request.AddParameter("imagem", "  ");
-                // request.AddParameter("lista", " "); 
+                
                 prgBarProduto.Value = i + 1;
 
                 RestResponse response = (RestResponse)client.Execute(request);

@@ -90,7 +90,44 @@ namespace DexComanda
 
 
         }
+        public decimal RetornaPrecoComEmbalagem(string iGrupoProduto,int iCodProduto)
+        {
+            decimal iReturnPreco = 0;
+            //string lSqlConsulta = " select * from Produto where GrupoProduto=@GrupoProduto";
 
+            string Grupo1 = "ENTRADAS;Pratos Especiais; Sushis Especiais; Yakissoba" +
+                           "Hossomaki;Hosso Maki Hot;Uramaki;Futu Maki, Okonomis (Niguiri), Temaki, Sushi Jo, Sobremesa";
+            
+            //////////////////////////////////////
+            string Grupo2 ="Teppan Yaki";
+            int[] CodProdutos = new int[7];
+            CodProdutos[0] = 96;
+            CodProdutos[1] = 97;
+            CodProdutos[2] = 102;
+            CodProdutos[3] = 103;
+            CodProdutos[4] = 142;
+            CodProdutos[5] = 143;
+
+            if (Grupo1.Contains(iGrupoProduto))
+            {
+                iReturnPreco = 1.50M;
+            }
+            else if (Grupo2.Contains(iGrupoProduto)|| CodProdutos.Equals(iCodProduto))
+            {
+
+                iReturnPreco = 2.50M;
+            }
+
+            //command = new SqlCommand(lSqlConsulta, conn);
+            //command.CommandType = CommandType.Text;
+            //command.Parameters.AddWithValue("@GrupoProduto", iGrupoProduto);
+
+
+            //adapter = new SqlDataAdapter(command);
+            //ds = new DataSet();
+            //adapter.Fill(ds, "Produto");
+            return iReturnPreco;
+        }
         public void OpenConection(string servidor, string banco)
         {
             connectionString = @"Data Source=" + servidor + ";Initial Catalog=" + banco + "; User ID=dex; Password=1234; Trusted_Connection=False; ";
