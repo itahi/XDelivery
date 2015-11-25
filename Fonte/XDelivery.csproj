@@ -177,12 +177,6 @@
     <Compile Include="Cadastros\frmFinalizacaoPedido.Designer.cs">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cadastros\Produto\frmTipoOpcao.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Cadastros\Produto\frmTipoOpcao.Designer.cs">
-      <DependentUpon>frmTipoOpcao.cs</DependentUpon>
-    </Compile>
     <Compile Include="Cadastros\RegiaoEntrega\frmBairrosRegiao.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -568,11 +562,23 @@
     <Compile Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.Designer.cs">
       <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\frmReportEntregasMotoboy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\frmReportEntregasMotoboy.Designer.cs">
+      <DependentUpon>frmReportEntregasMotoboy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\frmReportFechamentoDia.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\frmReportFechamentoDia.Designer.cs">
       <DependentUpon>frmReportFechamentoDia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboy.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelEntregasMotoboy.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.cs">
       <AutoGen>True</AutoGen>
@@ -637,9 +643,6 @@
     <EmbeddedResource Include="Cadastros\frmFinalizacaoPedido.resx">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\Produto\frmTipoOpcao.resx">
-      <DependentUpon>frmTipoOpcao.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\RegiaoEntrega\frmBairrosRegiao.resx">
       <DependentUpon>frmBairrosRegiao.cs</DependentUpon>
     </EmbeddedResource>
@@ -651,9 +654,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Produto\frmCadOpcao.resx">
       <DependentUpon>frmCadOpcao.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Operações\Alteracoes\frmAlteracaoCliente.resx">
-      <DependentUpon>frmAlteracaoCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\Alteracoes\frmAlteracaoProduto.resx">
       <DependentUpon>frmAlteracaoProduto.cs</DependentUpon>
@@ -726,8 +726,15 @@
     <EmbeddedResource Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.resx">
       <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmReportEntregasMotoboy.resx">
+      <DependentUpon>frmReportEntregasMotoboy.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmReportFechamentoDia.resx">
       <DependentUpon>frmReportFechamentoDia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboy.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelEntregasMotoboy.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -953,7 +960,6 @@
     <None Include="Relatorios\dsRelatorio.xss">
       <DependentUpon>dsRelatorio.xsd</DependentUpon>
     </None>
-    <None Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.rdlc" />
     <None Include="Relatorios\Microsoft.QualityTools.Testing.Fakes.dl" />
     <None Include="Relatorios\Microsoft.ReportViewer.WinForms.dl" />
     <None Include="Service References\LOCASMS\ServiceSms.wsdl" />

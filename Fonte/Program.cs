@@ -263,6 +263,7 @@ namespace DexComanda
                                 }
                                 else
                                 {
+                                    Utils.IniciaSistema();
                                     MessageBox.Show("Licença Expirada, conecte-se a internet para uma renovação");
                                     frmLicencaOFFLINE frm = new frmLicencaOFFLINE();
                                     frm.ShowDialog();

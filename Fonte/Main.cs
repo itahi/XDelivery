@@ -1505,7 +1505,9 @@ namespace DexComanda
 
         private void entregasPorMotoboyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmReportEntregasPorMotoboy frm = new frmReportEntregasPorMotoboy();
+            frmReportEntregasMotoboy frm = new frmReportEntregasMotoboy();
+
+            //frmReportEntregasPorMotoboy frm = new frmReportEntregasPorMotoboy();
             frm.ShowDialog();
         }
 
@@ -1623,8 +1625,8 @@ namespace DexComanda
 
         private void clientesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            frmAlteracaoCliente frm = new frmAlteracaoCliente();
-            frm.ShowDialog();
+            //frmAlteracaoCliente frm = new frmAlteracaoCliente();
+            //frm.ShowDialog();
         }
 
         private void tipoOpçãoToolStripMenuItem_Click(object sender, EventArgs e)

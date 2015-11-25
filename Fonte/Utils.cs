@@ -160,6 +160,7 @@ namespace DexComanda
             }
             return iResposta;
         }
+     
         public static void ImprimirHistoricoCliente(int iCodPessoa, DateTime iDtInici, DateTime idtFim)
         {
             RelHistoricoCliente report;

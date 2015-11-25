@@ -31,14 +31,7 @@ namespace DexComanda.Operações.Alteracoes
         {
             if (txtBairro.Text!="" || cbxRegiao.SelectedValue.ToString()!="")
             {
-                int iIDRegiao = 0;
-                    if (chkPesquisaRegiao.Checked)
-                {
-                    iIDRegiao = int.Parse(cbxRegiao.SelectedValue.ToString());
-                }
-               
-                    
-                DataSet dspessoa = con.RetornaDadosPessoa(txtBairro.Text, iIDRegiao);
+                DataSet dspessoa = con.RetornaDadosPessoa(txtBairro.Text, int.Parse(cbxRegiao.SelectedValue.ToString()));
                 if (dspessoa.Tables[0].Rows.Count>0)
                 {
                     GridView.DataSource = null;
@@ -64,50 +57,34 @@ namespace DexComanda.Operações.Alteracoes
             }
         }
 
-        private void ExecutarAlteracoes(object sender, EventArgs e)
+        private void ExecutarAlteracoes(object sender, UICuesEventArgs e)
         {
-            if (Utils.MessageBoxQuestion("Confirma alteração de "+ GridView.Rows.Count.ToString() +" Clientes?"))
+            for (int i = 0; i < GridView.Rows.Count; i++)
             {
-                for (int i = 0; i < GridView.Rows.Count; i++)
+                AlteracaoCliente newCliente = new AlteracaoCliente();
+                if (txtBairro.Text!="")
                 {
-                    AlteracaoCliente newCliente = new AlteracaoCliente();
-                    if (txtNewBairro.Text != "")
-                    {
-                        newCliente.Bairro = txtNewBairro.Text;
-                    }
-                    else
-                    {
-                        newCliente.Bairro = GridView.Rows[i].Cells["Bairro"].Value.ToString();
-                    }
-                    if (cbxNewRegiao.SelectedValue.ToString() != "" && chkNovaRota.Checked)
-                    {
-                        newCliente.CodRegiao = int.Parse(cbxNewRegiao.SelectedValue.ToString());
-
-                    }
-                    else
-                    {
-                        newCliente.CodRegiao = int.Parse(GridView.Rows[i].Cells["CodRegiao"].Value.ToString());
-                    }
-                    newCliente.Cidade = GridView.Rows[i].Cells["Cidade"].Value.ToString();
-                    newCliente.Nome = GridView.Rows[i].Cells["Nome"].Value.ToString();
-                    newCliente.Telefone = GridView.Rows[i].Cells["Telefone"].Value.ToString();
-                    newCliente.Codigo = int.Parse(GridView.Rows[i].Cells["Codigo"].Value.ToString());
-
-                    con.Update("spAlterarMultiploPessoa", newCliente);
+                    newCliente.Bairro = txtBairro.Text;
                 }
+                else
+                {
+                    newCliente.Bairro = GridView.Rows[i].Cells["Bairro"].Value.ToString();
+                }
+                if (cbxNewRegiao.SelectedValue.ToString()!="")
+                {
+                    newCliente.CodRegiao = int.Parse(cbxNewRegiao.SelectedValue.ToString());
 
-                GridView.DataSource = null;
-                GridView.DataMember = null;
-                GridView.AutoGenerateColumns = false;
+                }
+                else
+                {
+                    newCliente.CodRegiao = int.Parse(GridView.Rows[i].Cells["CodRegiao"].Value.ToString());
+                }
+                newCliente.Cidade = GridView.Rows[i].Cells["Cidade"].Value.ToString();
+                newCliente.Codigo = int.Parse(GridView.Rows[i].Cells["Codigo"].Value.ToString());
+
+                con.Update("spAlterarMultiploPessoa", newCliente);
+
             }
-            
-        }
-
-        private void cbxNewRegiao_Click(object sender, EventArgs e)
-        {
-            this.cbxNewRegiao.DataSource = con.SelectAll("RegiaoEntrega", "spObterRegioes").Tables["RegiaoEntrega"];
-            this.cbxNewRegiao.DisplayMember = "NomeRegiao";
-            this.cbxNewRegiao.ValueMember = "Codigo";
         }
     }
 }

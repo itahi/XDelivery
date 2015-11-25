@@ -29,18 +29,15 @@
         private void InitializeComponent()
         {
             this.grpFiltros = new System.Windows.Forms.GroupBox();
-            this.chkPesquisaRegiao = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cbxRegiao = new System.Windows.Forms.ComboBox();
             this.btnFiltrar = new System.Windows.Forms.Button();
             this.txtBairro = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.grpAlteracoes = new System.Windows.Forms.GroupBox();
-            this.chkNovaRota = new System.Windows.Forms.CheckBox();
-            this.chkNovoBairro = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbxNewRegiao = new System.Windows.Forms.ComboBox();
-            this.txtNewBairro = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.GridView = new System.Windows.Forms.DataGridView();
@@ -56,7 +53,6 @@
             // 
             this.grpFiltros.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpFiltros.Controls.Add(this.chkPesquisaRegiao);
             this.grpFiltros.Controls.Add(this.label4);
             this.grpFiltros.Controls.Add(this.cbxRegiao);
             this.grpFiltros.Controls.Add(this.btnFiltrar);
@@ -68,16 +64,6 @@
             this.grpFiltros.TabIndex = 1;
             this.grpFiltros.TabStop = false;
             this.grpFiltros.Text = "Filtros";
-            // 
-            // chkPesquisaRegiao
-            // 
-            this.chkPesquisaRegiao.AutoSize = true;
-            this.chkPesquisaRegiao.Location = new System.Drawing.Point(276, 10);
-            this.chkPesquisaRegiao.Name = "chkPesquisaRegiao";
-            this.chkPesquisaRegiao.Size = new System.Drawing.Size(106, 17);
-            this.chkPesquisaRegiao.TabIndex = 29;
-            this.chkPesquisaRegiao.Text = "Pesquisa Região";
-            this.chkPesquisaRegiao.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
@@ -139,11 +125,9 @@
             // 
             this.grpAlteracoes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpAlteracoes.Controls.Add(this.chkNovaRota);
-            this.grpAlteracoes.Controls.Add(this.chkNovoBairro);
             this.grpAlteracoes.Controls.Add(this.label3);
             this.grpAlteracoes.Controls.Add(this.cbxNewRegiao);
-            this.grpAlteracoes.Controls.Add(this.txtNewBairro);
+            this.grpAlteracoes.Controls.Add(this.textBox2);
             this.grpAlteracoes.Controls.Add(this.label2);
             this.grpAlteracoes.Location = new System.Drawing.Point(12, 89);
             this.grpAlteracoes.Name = "grpAlteracoes";
@@ -151,26 +135,6 @@
             this.grpAlteracoes.TabIndex = 6;
             this.grpAlteracoes.TabStop = false;
             this.grpAlteracoes.Text = "Alterações";
-            // 
-            // chkNovaRota
-            // 
-            this.chkNovaRota.AutoSize = true;
-            this.chkNovaRota.Location = new System.Drawing.Point(226, 95);
-            this.chkNovaRota.Name = "chkNovaRota";
-            this.chkNovaRota.Size = new System.Drawing.Size(122, 17);
-            this.chkNovaRota.TabIndex = 29;
-            this.chkNovaRota.Text = "Confirma Nova Rota";
-            this.chkNovaRota.UseVisualStyleBackColor = true;
-            // 
-            // chkNovoBairro
-            // 
-            this.chkNovoBairro.AutoSize = true;
-            this.chkNovoBairro.Location = new System.Drawing.Point(226, 38);
-            this.chkNovoBairro.Name = "chkNovoBairro";
-            this.chkNovoBairro.Size = new System.Drawing.Size(126, 17);
-            this.chkNovoBairro.TabIndex = 28;
-            this.chkNovoBairro.Text = "Confirma Novo Bairro";
-            this.chkNovoBairro.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
@@ -191,14 +155,13 @@
             this.cbxNewRegiao.Name = "cbxNewRegiao";
             this.cbxNewRegiao.Size = new System.Drawing.Size(202, 26);
             this.cbxNewRegiao.TabIndex = 26;
-            this.cbxNewRegiao.Click += new System.EventHandler(this.cbxNewRegiao_Click);
             // 
-            // txtNewBairro
+            // textBox2
             // 
-            this.txtNewBairro.Location = new System.Drawing.Point(9, 36);
-            this.txtNewBairro.Name = "txtNewBairro";
-            this.txtNewBairro.Size = new System.Drawing.Size(202, 20);
-            this.txtNewBairro.TabIndex = 4;
+            this.textBox2.Location = new System.Drawing.Point(9, 36);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(202, 20);
+            this.textBox2.TabIndex = 4;
             // 
             // label2
             // 
@@ -248,7 +211,6 @@
             this.btnExecutar.TabIndex = 8;
             this.btnExecutar.Text = "Executar";
             this.btnExecutar.UseVisualStyleBackColor = true;
-            this.btnExecutar.Click += new System.EventHandler(this.ExecutarAlteracoes);
             this.btnExecutar.ChangeUICues += new System.Windows.Forms.UICuesEventHandler(this.ExecutarAlteracoes);
             // 
             // btnCancelar
@@ -292,6 +254,7 @@
         private System.Windows.Forms.TextBox txtBairro;
         private System.Windows.Forms.Button btnFiltrar;
         private System.Windows.Forms.GroupBox grpAlteracoes;
+        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbxRegiao;
@@ -301,9 +264,5 @@
         private System.Windows.Forms.DataGridView GridView;
         private System.Windows.Forms.Button btnExecutar;
         private System.Windows.Forms.Button btnCancelar;
-        private System.Windows.Forms.CheckBox chkPesquisaRegiao;
-        private System.Windows.Forms.CheckBox chkNovaRota;
-        private System.Windows.Forms.CheckBox chkNovoBairro;
-        public System.Windows.Forms.TextBox txtNewBairro;
     }
 }
