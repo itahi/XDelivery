@@ -420,7 +420,7 @@ namespace DexComanda
 
                 throw;
             }
-            
+
 
             //  ComparaValores();
         }
@@ -613,7 +613,7 @@ namespace DexComanda
 
                 MessageBox.Show("Erro na montagem de opções " + erro.Message);
             }
-           
+
 
             //if (cbxSabor.SelectedIndex>0)
             //{
@@ -926,7 +926,7 @@ namespace DexComanda
                             // Fecha o Formulario 
                             this.Close();
 
-                            if (con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo",iCodPedido).Tables[0].Rows.Count>0)
+                            if (con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).Tables[0].Rows.Count > 0)
                             {
                                 return;
                             }
@@ -938,7 +938,7 @@ namespace DexComanda
                             };
                             con.Insert("spAdicionarFinalizaPedido_Pedido", finaliza);
 
-                            
+
                         }
                     }
                 }
@@ -1141,7 +1141,7 @@ namespace DexComanda
                             CodPagamento = int.Parse(cmbFPagamento.SelectedValue.ToString()),
                             ValorPagamento = pedido.TotalPedido
                         };
-                        
+
                         con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
 
                         con.Update("spAlterarItemPedido", itemPedido);
@@ -2228,7 +2228,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(749, 6);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -3110,80 +3110,88 @@ namespace DexComanda
         {
             Decimal ValorProduto = 0.00M;
             // DiaDaPromocao = produto.Rows[0]["DiaSemana"].ToString();
-            ////   lol = DiaDaPromocao.Split(new char[] { ';' });
-            //if (DiaDaPromocao.IndexOf(DiaDaSema) > 0)
-            //if (PromocaoDiasSemana)
-            //{
-            //    DataRow rows;
-            //    DataSet DsFP;
-            //    int CodFP = int.Parse(cmbFPagamento.SelectedValue.ToString());
-            //    DsFP = new DataSet();
-            //    DsFP = con.SelectRegistroPorCodigo("FormaPagamento", "spObterFPPorCodigo", CodFP);
-            //    rows = DsFP.Tables[0].Rows[0];
-            //    FPPermiteDesconto = Convert.ToBoolean(rows.ItemArray.GetValue(2).ToString());
+            //   lol = DiaDaPromocao.Split(new char[] { ';' });
+            //  if (DiaDaPromocao.IndexOf(DiaDaSema) > 0)
+            if (PromocaoDiasSemana)
+            {
+                DataRow rows;
+                DataSet DsFP;
+                int CodFP = int.Parse(cmbFPagamento.SelectedValue.ToString());
+                DsFP = new DataSet();
+                DsFP = con.SelectRegistroPorCodigo("FormaPagamento", "spObterFPPorCodigo", CodFP);
+                rows = DsFP.Tables[0].Rows[0];
+                FPPermiteDesconto = Convert.ToBoolean(rows.ItemArray.GetValue(2).ToString());
 
-            //    DataSet dsProduto;
-            //    DataRow RowsProduto;
+                DataSet dsProduto;
+                DataRow RowsProduto;
 
-            //    Decimal TotalAtualizado = 0;
-            //    int iCodProduto = 0;
+                Decimal TotalAtualizado = 0;
+                int iCodProduto = 0;
 
-            //    if (!FPPermiteDesconto)
-            //    {
+                if (!FPPermiteDesconto)
+                {
 
-            //        for (int i = 0; i < gridViewItemsPedido.Rows.Count; i++)
-            //        {
-            //            iCodProduto = int.Parse(gridViewItemsPedido.Rows[i].Cells[0].Value.ToString());
-            //            dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", iCodProduto, true);
-            //            RowsProduto = dsProduto.Tables[0].Rows[0];
-            //            ValorProduto = decimal.Parse(RowsProduto.ItemArray.GetValue(1).ToString());
+                    for (int i = 0; i < gridViewItemsPedido.Rows.Count; i++)
+                    {
+                        iCodProduto = int.Parse(gridViewItemsPedido.Rows[i].Cells[0].Value.ToString());
+                        dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", iCodProduto, true);
+                        RowsProduto = dsProduto.Tables[0].Rows[0];
+                        if (RowsProduto.ItemArray.GetValue(4).ToString().IndexOf(DiaDaSema) > 0 && FPPermiteDesconto)
+                        {
+                            ValorProduto = decimal.Parse(RowsProduto.ItemArray.GetValue(5).ToString());
+                        }
+                        else
+                        {
+                            ValorProduto = decimal.Parse(RowsProduto.ItemArray.GetValue(1).ToString());
+                        }
 
-            //            gridViewItemsPedido.Rows[i].Cells[3].Value = ValorProduto;
-            //            gridViewItemsPedido.Rows[i].Cells[4].Value = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[2].Value.ToString()) * ValorProduto;
-            //            decimal TotalLinha = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[4].Value.ToString());
 
-            //            TotalAtualizado += TotalLinha;
+                        gridViewItemsPedido.Rows[i].Cells[3].Value = ValorProduto;
+                        gridViewItemsPedido.Rows[i].Cells[4].Value = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[2].Value.ToString()) * ValorProduto;
+                        decimal TotalLinha = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[4].Value.ToString());
 
-            //        }
+                        TotalAtualizado += TotalLinha;
 
-            //    }
-            //    else 
-            //    {
-            //        for (int intFor = 0; intFor < gridViewItemsPedido.Rows.Count; intFor++)
-            //        {
-            //            iCodProduto = int.Parse(gridViewItemsPedido.Rows[intFor].Cells[0].Value.ToString());
-            //            dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", iCodProduto, true);
+                    }
 
-            //            RowsProduto = dsProduto.Tables[0].Rows[0];
+                }
+                else
+                {
+                    for (int intFor = 0; intFor < gridViewItemsPedido.Rows.Count; intFor++)
+                    {
+                        iCodProduto = int.Parse(gridViewItemsPedido.Rows[intFor].Cells[0].Value.ToString());
+                        dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", iCodProduto, true);
 
-            //            if (RowsProduto.ItemArray.GetValue(4).ToString().IndexOf(DiaDaSema) > 0)
-            //            {
-            //                if (RowsProduto.ItemArray.GetValue(5).ToString() != "0,00")
-            //                {
-            //                    ValorProduto = decimal.Parse(RowsProduto.ItemArray.GetValue(5).ToString());
-            //                }
-            //                else
-            //                {
-            //                    ValorProduto = decimal.Parse(RowsProduto.ItemArray.GetValue(1).ToString());
-            //                }
+                        RowsProduto = dsProduto.Tables[0].Rows[0];
 
-            //            }
-            //            else
-            //            {
+                        if (RowsProduto.ItemArray.GetValue(4).ToString().IndexOf(DiaDaSema) > 0)
+                        {
+                            if (RowsProduto.ItemArray.GetValue(5).ToString() != "0,00")
+                            {
+                                ValorProduto = decimal.Parse(RowsProduto.ItemArray.GetValue(5).ToString());
+                            }
+                            else
+                            {
+                                ValorProduto = decimal.Parse(RowsProduto.ItemArray.GetValue(1).ToString());
+                            }
 
-            //                ValorProduto = decimal.Parse(RowsProduto.ItemArray.GetValue(1).ToString());
-            //            }
-            //            gridViewItemsPedido.Rows[intFor].Cells[3].Value = ValorProduto;
-            //            gridViewItemsPedido.Rows[intFor].Cells[4].Value = decimal.Parse(gridViewItemsPedido.Rows[intFor].Cells[2].Value.ToString()) * ValorProduto;
-            //            decimal TotalLinha = decimal.Parse(gridViewItemsPedido.Rows[intFor].Cells[4].Value.ToString());
-            //            TotalAtualizado += TotalLinha;
+                        }
+                        else
+                        {
 
-            //        }
+                            ValorProduto = decimal.Parse(RowsProduto.ItemArray.GetValue(1).ToString());
+                        }
+                        gridViewItemsPedido.Rows[intFor].Cells[3].Value = ValorProduto;
+                        gridViewItemsPedido.Rows[intFor].Cells[4].Value = decimal.Parse(gridViewItemsPedido.Rows[intFor].Cells[2].Value.ToString()) * ValorProduto;
+                        decimal TotalLinha = decimal.Parse(gridViewItemsPedido.Rows[intFor].Cells[4].Value.ToString());
+                        TotalAtualizado += TotalLinha;
 
-            //    }
+                    }
 
-            //    lbTotal.Text = "R$ " + Convert.ToString(TotalAtualizado + Convert.ToDecimal(lblEntrega.Text));
-            //}
+                }
+
+                lbTotal.Text = "R$ " + Convert.ToString(TotalAtualizado + Convert.ToDecimal(lblEntrega.Text));
+            }
 
         }
 
@@ -3351,7 +3359,7 @@ namespace DexComanda
         private void MultiplaFormasPagamento(object sender, EventArgs e)
         {
             Boolean iInsereAtualiza = this.btnGerarPedido.Text != "Alterar";
-            frmFinalizacaoPedido frm = new frmFinalizacaoPedido(decimal.Parse(lbTotal.Text.Replace("R$", "")), this, iInsereAtualiza,codPedido);
+            frmFinalizacaoPedido frm = new frmFinalizacaoPedido(decimal.Parse(lbTotal.Text.Replace("R$", "")), this, iInsereAtualiza, codPedido);
             frm.ShowDialog();
 
         }

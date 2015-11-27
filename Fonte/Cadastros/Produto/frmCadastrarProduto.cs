@@ -34,7 +34,7 @@ namespace DexComanda
 
         }
         public frmCadastrarProduto(int CodProduto ,string iNomeProduto, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
-                                   decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais,string iUrlImagem)
+                                   decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais,string iUrlImagem,DateTime idtInicioPromo, DateTime idtFimPromo)
         {
             InitializeComponent();
             codigoProdutoParaAlterar = CodProduto;
@@ -82,7 +82,9 @@ namespace DexComanda
             chkAtivo.Checked = true;
             chkOnline.Checked = iVendaOnline;
             txtMaxAdicionais.Text = iMaximoAdicionais;
-            txtcaminhoImage.Text = iUrlImagem; 
+            txtcaminhoImage.Text = iUrlImagem;
+            dtInicio.Value = idtInicioPromo;
+            dtFim.Value = idtFimPromo;
             this.btnDoProduto.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
             this.btnDoProduto.Text = "Alterar [F12]";
             this.btnDoProduto.Click -= AdicionarProduto;
@@ -142,6 +144,7 @@ namespace DexComanda
         private void frmCadastrarProduto_Load(object sender, EventArgs e)
         {
             con = new Conexao();
+            
             btnEditar.Enabled = codigoProdutoParaAlterar != 0;
             DiasSelecionados = new List<string>();
             tabPage2.IsAccessible = btnDoProduto.Text == "Alterar [F12]";
@@ -197,8 +200,9 @@ namespace DexComanda
                     Preco = Convert.ToDecimal(this.precoProdutoTextBox.Text.Replace(".", ",")),
                     GrupoProduto = this.cbxGrupoProduto.Text,
                     OnlineSN = chkOnline.Checked,
-                    
-                    DataAlteracao = DateTime.Now
+                    DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
+                    DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
+                DataAlteracao = DateTime.Now
                 };
                 produto.UrlImagem = "";
                 if (txtcaminhoImage.Text.Trim()!="")
@@ -261,7 +265,10 @@ namespace DexComanda
                     };
                     con.Insert("spAdicionarOpcaProduto", prod);
                 }
-                
+
+                AdicionaisGridView.DataSource = null;
+                AdicionaisGridView.DataMember = null;
+                AdicionaisGridView.AutoGenerateColumns = false;
             }
         }
         public string DiasSelecinado()
@@ -317,7 +324,9 @@ namespace DexComanda
                     GrupoProduto = cbxGrupoProduto.Text,
                     AtivoSN = chkAtivo.Checked,
                     OnlineSN = chkOnline.Checked,
-                    DataAlteracao = DateTime.Now
+                    DataAlteracao = DateTime.Now,
+                    DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
+                    DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                 };
                 produto.UrlImagem = "";
                 if (txtcaminhoImage.Text.Trim() != "")
@@ -603,43 +612,6 @@ namespace DexComanda
         }
         private void DeletarRegistro(object sender, EventArgs e)
         {
-            try
-            {
-              
-                if (AdicionaisGridView.SelectedRows.Count > 0)
-                {
-                    if (codigoProdutoParaAlterar!=0)
-                    {
-                        Produto_Opcao prod = new Produto_Opcao()
-                        {
-                            CodProduto = codigoProdutoParaAlterar,
-                            CodOpcao = int.Parse(this.AdicionaisGridView.SelectedCells[0].Value.ToString())
-
-                        };
-                        con.Delete("spExcluirOpcaoProduto", prod);
-
-                        Utils.ControlaEventos("Excluir", this.Name);
-                        MessageBox.Show("Item excluído com sucesso.");
-                        ListaOpcaoProduto();
-                    }
-                    else
-                    {
-                        AdicionaisGridView.Rows.RemoveAt(AdicionaisGridView.CurrentRow.Index);
-                    }
-                   
-
-                }
-                else
-                {
-                    MessageBox.Show("Selecione o registro para excluir");
-                }
-            }
-            catch (Exception erro)
-            {
-
-                MessageBox.Show(erro.Message);
-            }
-
 
         }
 
@@ -683,6 +655,16 @@ namespace DexComanda
         {
             txtcaminhoImage.Text = "";
             imgProduto.Dispose();
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSair_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

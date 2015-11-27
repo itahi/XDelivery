@@ -35,6 +35,7 @@
             System.Windows.Forms.Label nomeProdutoLabel;
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label label5;
+            System.Windows.Forms.Label label6;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarProduto));
             this.dBExpertDataSet = new DexComanda.DBExpertDataSet();
             this.produtoBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -43,6 +44,7 @@
             this.btnSair = new System.Windows.Forms.Button();
             this.btnDoProduto = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnImg = new System.Windows.Forms.Button();
             this.txtcaminhoImage = new System.Windows.Forms.TextBox();
             this.imgProduto = new System.Windows.Forms.PictureBox();
@@ -64,6 +66,8 @@
             this.chkOnline = new System.Windows.Forms.CheckBox();
             this.chkAtivo = new System.Windows.Forms.CheckBox();
             this.grpDesconto = new System.Windows.Forms.GroupBox();
+            this.dtFim = new System.Windows.Forms.DateTimePicker();
+            this.dtInicio = new System.Windows.Forms.DateTimePicker();
             this.chkDomingo = new System.Windows.Forms.CheckBox();
             this.txtPrecoDesconto = new System.Windows.Forms.TextBox();
             this.ChkSexta = new System.Windows.Forms.CheckBox();
@@ -74,13 +78,13 @@
             this.chkSegunda = new System.Windows.Forms.CheckBox();
             this.cbxGrupoProduto = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.button1 = new System.Windows.Forms.Button();
             grupoProdutoLabel = new System.Windows.Forms.Label();
             precoProdutoLabel = new System.Windows.Forms.Label();
             descricaoProdutoLabel = new System.Windows.Forms.Label();
             nomeProdutoLabel = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
+            label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -147,6 +151,15 @@
             label5.TabIndex = 37;
             label5.Text = "Max. Adicionais";
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(6, 76);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(97, 13);
+            label6.TabIndex = 32;
+            label6.Text = "Validade Desconto";
+            // 
             // dBExpertDataSet
             // 
             this.dBExpertDataSet.DataSetName = "DBExpertDataSet";
@@ -180,6 +193,7 @@
             this.btnSair.TabIndex = 35;
             this.btnSair.Text = "Sair [ESC]";
             this.btnSair.UseVisualStyleBackColor = true;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click_1);
             // 
             // btnDoProduto
             // 
@@ -204,6 +218,16 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Imagem";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(489, 13);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(47, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Limpar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnImg
             // 
@@ -436,6 +460,9 @@
             // 
             // grpDesconto
             // 
+            this.grpDesconto.Controls.Add(label6);
+            this.grpDesconto.Controls.Add(this.dtFim);
+            this.grpDesconto.Controls.Add(this.dtInicio);
             this.grpDesconto.Controls.Add(this.chkDomingo);
             this.grpDesconto.Controls.Add(label1);
             this.grpDesconto.Controls.Add(this.txtPrecoDesconto);
@@ -445,12 +472,29 @@
             this.grpDesconto.Controls.Add(this.ChkQuarta);
             this.grpDesconto.Controls.Add(this.chkTerca);
             this.grpDesconto.Controls.Add(this.chkSegunda);
-            this.grpDesconto.Location = new System.Drawing.Point(303, 57);
+            this.grpDesconto.Location = new System.Drawing.Point(298, 57);
             this.grpDesconto.Name = "grpDesconto";
-            this.grpDesconto.Size = new System.Drawing.Size(232, 79);
+            this.grpDesconto.Size = new System.Drawing.Size(232, 123);
             this.grpDesconto.TabIndex = 32;
             this.grpDesconto.TabStop = false;
             this.grpDesconto.Text = "Dias Desconto";
+            // 
+            // dtFim
+            // 
+            this.dtFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtFim.Location = new System.Drawing.Point(119, 97);
+            this.dtFim.Name = "dtFim";
+            this.dtFim.Size = new System.Drawing.Size(81, 20);
+            this.dtFim.TabIndex = 27;
+            // 
+            // dtInicio
+            // 
+            this.dtInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtInicio.Location = new System.Drawing.Point(23, 97);
+            this.dtInicio.Name = "dtInicio";
+            this.dtInicio.Size = new System.Drawing.Size(81, 20);
+            this.dtInicio.TabIndex = 26;
+            this.dtInicio.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // chkDomingo
             // 
@@ -555,16 +599,6 @@
             this.tabControl1.TabIndex = 0;
             this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(489, 13);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(47, 23);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "Limpar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // frmCadastrarProduto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -640,5 +674,7 @@
         private System.Windows.Forms.Button btnImg;
         private System.Windows.Forms.TextBox txtcaminhoImage;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DateTimePicker dtInicio;
+        private System.Windows.Forms.DateTimePicker dtFim;
     }
 }

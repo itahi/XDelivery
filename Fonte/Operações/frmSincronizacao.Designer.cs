@@ -31,6 +31,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.prgBarPrevisao = new System.Windows.Forms.ProgressBar();
+            this.chkPrevisao = new System.Windows.Forms.CheckBox();
             this.btnSincronizar = new System.Windows.Forms.Button();
             this.prgBarRegiao = new System.Windows.Forms.ProgressBar();
             this.prgBarpagamento = new System.Windows.Forms.ProgressBar();
@@ -78,6 +80,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.prgBarPrevisao);
+            this.tabPage1.Controls.Add(this.chkPrevisao);
             this.tabPage1.Controls.Add(this.btnSincronizar);
             this.tabPage1.Controls.Add(this.prgBarRegiao);
             this.tabPage1.Controls.Add(this.prgBarpagamento);
@@ -93,6 +97,23 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Cadastros";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // prgBarPrevisao
+            // 
+            this.prgBarPrevisao.Location = new System.Drawing.Point(128, 78);
+            this.prgBarPrevisao.Name = "prgBarPrevisao";
+            this.prgBarPrevisao.Size = new System.Drawing.Size(114, 18);
+            this.prgBarPrevisao.TabIndex = 16;
+            // 
+            // chkPrevisao
+            // 
+            this.chkPrevisao.AutoSize = true;
+            this.chkPrevisao.Location = new System.Drawing.Point(5, 79);
+            this.chkPrevisao.Name = "chkPrevisao";
+            this.chkPrevisao.Size = new System.Drawing.Size(88, 17);
+            this.chkPrevisao.TabIndex = 15;
+            this.chkPrevisao.Text = "Prev Entrega";
+            this.chkPrevisao.UseVisualStyleBackColor = true;
             // 
             // btnSincronizar
             // 
@@ -177,7 +198,7 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(270, 240);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Adicionais";
+            this.tabPage2.Text = "Descontos - Promo";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // button1
@@ -221,6 +242,7 @@
             this.btnImg.TabIndex = 29;
             this.btnImg.Text = "Abrir";
             this.btnImg.UseVisualStyleBackColor = true;
+            this.btnImg.Click += new System.EventHandler(this.SelecionarImage);
             // 
             // txtcaminhoImage
             // 
@@ -384,5 +406,7 @@
         private System.Windows.Forms.Button btnImg;
         private System.Windows.Forms.TextBox txtcaminhoImage;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ProgressBar prgBarPrevisao;
+        private System.Windows.Forms.CheckBox chkPrevisao;
     }
 }

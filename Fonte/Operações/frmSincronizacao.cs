@@ -19,6 +19,7 @@ namespace DexComanda.Operações
         private string iParamToken;
         private List<Grupo> listGrupos;
         private string iUrlWS;
+        private string strPrevisaoEntrega="0";
         private Conexao con;
         public frmSincronizacao()
         {
@@ -50,12 +51,38 @@ namespace DexComanda.Operações
                 {
                     CadastraRegioes(con.RetornaRegiao());
                 }
+                if (!chkPrevisao.Checked)
+                {
+                    if (Utils.MessageBoxQuestion("Deseja desativar a previsão de entrega exibida no site/app?"))
+                    {
+                        CadastraPrevisao();
+                    }
+                }
+               
                 
             }
             catch (Exception erro)
             {
 
                 MessageBox.Show("Erro ao sincronizar " + erro.Message);
+            }
+        }
+        private void CadastraPrevisao()
+        {
+          
+            RestClient client = new RestClient(iUrlWS);
+            RestRequest request = new RestRequest("ws/previsao/entrega/set", Method.POST);
+            request.AddParameter("token", iParamToken);
+            request.AddParameter("tempo", strPrevisaoEntrega);
+            request.AddParameter("status", Convert.ToInt32(chkPrevisao.Checked));
+           
+            RestResponse response = (RestResponse)client.Execute(request);
+
+            ReturnPadrao lRetorno = new ReturnPadrao();
+            lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+            if (lRetorno.status==true)
+            {
+                prgBarPrevisao.Value = 100;
             }
         }
         private DataSet ObterDados(string iNomeTable)
@@ -288,9 +315,7 @@ namespace DexComanda.Operações
 
                 if (Sessions.returnEmpresa.CNPJ=="09395874000160")
                 {
-
                     prProduto = prProduto + con.RetornaPrecoComEmbalagem(ds.Tables["Produto"].Rows[i].Field<string>("GrupoProduto"), ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
-
                 }
                 else
                 {
@@ -298,7 +323,12 @@ namespace DexComanda.Operações
                 }
 
                 request.AddParameter("preco", prProduto);
-
+                if (Sessions.returnConfig.DescontoDiaSemana)
+                {
+                    request.AddParameter("precoPromocao", ds.Tables["Produto"].Rows[i].Field<decimal>("PrecoDesconto"));
+                    request.AddParameter("dataInicial", ds.Tables["Produto"].Rows[i].Field<DateTime>("DataInicioPromocao"));
+                    request.AddParameter("dataFinal", ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFimPromocao"));
+                }
                 if (iCaminhoImagem !=null && iCaminhoImagem!="")
                 {
                     request.AddFile("imagem", iCaminhoImagem);
@@ -308,9 +338,6 @@ namespace DexComanda.Operações
                 request.AddParameter("descricao", ds.Tables["Produto"].Rows[i].Field<string>("DescricaoProduto"));
                 request.AddParameter("ativo", Convert.ToInt32(ds.Tables["Produto"].Rows[i].Field<Boolean>("OnlineSN")));
                 request.AddParameter("maxOptions", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
-                //   request.AddParameter("precoPromocao", ds.Tables["Produto"].Rows[i].Field<int>("PrecoDesconto"));
-                //   request.AddParameter("dataInicial", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
-                //   request.AddParameter("dataFinal", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
                 
                 prgBarProduto.Value = i + 1;
 
@@ -321,7 +348,7 @@ namespace DexComanda.Operações
                     con.AtualizaDataSincronismo("Produto", ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
                     CadastrarOpcaoProduto(ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
                 }
-
+                iCaminhoImagem = "";
             }
 
         }
@@ -478,7 +505,12 @@ namespace DexComanda.Operações
         }
         private void frmSincronizacao_Load(object sender, EventArgs e)
         {
-
+            if (Sessions.returnConfig.PrevisaoEntrega != null)
+            {
+                strPrevisaoEntrega = Sessions.returnConfig.PrevisaoEntrega;
+            }
+           
+            chkPrevisao.Text = chkPrevisao.Text + strPrevisaoEntrega + " min.";
         }
 
         private void chkRemover_CheckedChanged(object sender, EventArgs e)

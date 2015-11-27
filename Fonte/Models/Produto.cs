@@ -20,5 +20,7 @@ namespace DexComanda.Models
         public DateTime DataAlteracao { get; set; }
         public int MaximoAdicionais { get; set; }
         public string UrlImagem { get; set; }
+        public DateTime DataInicioPromocao { get; set; }
+        public DateTime DataFimPromocao { get; set; }
     }
 }
