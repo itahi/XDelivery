@@ -81,5 +81,6 @@
         private System.Windows.Forms.RadioButton rb12;
         private System.Windows.Forms.RadioButton rb11;
         private System.Windows.Forms.RadioButton rb10;
+        private System.Windows.Forms.Button btnAtlCadastro;
     }
 }

@@ -597,22 +597,43 @@ namespace DexComanda
             {
                 ContextMenu m = new ContextMenu();
                 MenuItem Excluir = new MenuItem(" 0 - Excluir Opcao ");
-              //  MenuItem Excluir2 = new MenuItem("  ");
                 Excluir.Click += DeletarRegistro;
                 m.MenuItems.Add(Excluir);
-             ///   m.MenuItems.Add(Excluir2);
-
                 int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
                 m.Show(dgv, new Point(e.X, e.Y));
+
+                ListaOpcaoProduto();
 
             }
 
 
 
         }
-        private void DeletarRegistro(object sender, EventArgs e)
+        private void ExcluirOpcaoProduto(int iCodProduto , int iCodOpcao)
         {
 
+        }
+        private void DeletarRegistro(object sender, EventArgs e)
+        {
+            if (codigoProdutoParaAlterar!=0)
+            {
+               int intCodOpcao = int.Parse(AdicionaisGridView.Rows[rowIndex].Cells["CodOpcao"].Value.ToString());
+                con.Delete("Produto_Opcao", "spExcluirOpcaoProduto", codigoProdutoParaAlterar, intCodOpcao);
+            
+            }
+            else
+            {
+                if (AdicionaisGridView.SelectedRows.Count > 0)
+                {
+                    AdicionaisGridView.Rows.RemoveAt(AdicionaisGridView.CurrentRow.Index);
+                }
+
+                else
+                {
+                    MessageBox.Show("Selecione o registro para excluir");
+                }
+            }
+            ListaOpcaoProduto();
         }
 
         private void tabControl1_Click(object sender, EventArgs e)

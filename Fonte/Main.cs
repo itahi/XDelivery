@@ -1631,7 +1631,8 @@ namespace DexComanda
 
         private void tipoOpçãoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmTipoOpcao frm = new frmTipoOpcao();
+            frm.ShowDialog();
         }
     }
 }

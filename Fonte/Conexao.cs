@@ -90,6 +90,7 @@ namespace DexComanda
 
 
         }
+        
         public decimal RetornaPrecoComEmbalagem(string iGrupoProduto, int iCodProduto)
         {
             decimal iReturnPreco = 0;
@@ -225,7 +226,18 @@ namespace DexComanda
         adapter.Fill(ds, "Produto_Opcao");
         return ds;
     }
-    public DataSet RetornaDadosPessoa(string iNomeBairros, int iIDRegiao)
+
+        public DataSet RetornaTipoOpcao()
+        {
+            string lSqlConsulta = " select * from Produto_OpcaoTipo ";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto_OpcaoTipo");
+            return ds;
+        }
+        public DataSet RetornaDadosPessoa(string iNomeBairros, int iIDRegiao)
     {
         string lSqlConsulta = " select Codigo,Nome,Cidade,Bairro,Telefone,CodRegiao from Pessoa where teste ";
         if (iNomeBairros != "")
@@ -565,7 +577,19 @@ namespace DexComanda
 
         return ds;
     }
-    public DataSet DeleteBairroRegiao(string itable, string ispName, int iCodRegiao, string iCEP)
+        public DataSet Delete(string table, string spName, int CodProduto,int CodOpcao)
+        {
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@CodProduto", CodProduto);
+            command.Parameters.AddWithValue("@CodOpcao", CodOpcao);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+        public DataSet DeleteBairroRegiao(string itable, string ispName, int iCodRegiao, string iCEP)
     {
         command = new SqlCommand(ispName, conn);
         command.CommandType = CommandType.StoredProcedure;
@@ -632,13 +656,13 @@ namespace DexComanda
 
                 if (iAtivos)
                 {
-                    iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=1 ";
+                    iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=1";
                 }
                 else
                 {
                     iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=0";
                 }
-
+                
             }
             else
             {
@@ -701,7 +725,7 @@ namespace DexComanda
         if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" || spName == "spAdicionarCaixa" || spName == "spAdicionaHistorico" ||
             spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
             spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" ||
-            spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento" || spName == "spAdicionarOpcaProduto")
+            spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento" || spName == "spAdicionarOpcaProduto"|| spName == "spAdicionarProduto_OpcaoTipo")
         {
 
             if (spName == "spAdicionarProduto")

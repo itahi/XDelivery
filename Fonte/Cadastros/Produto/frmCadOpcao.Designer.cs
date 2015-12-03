@@ -53,7 +53,7 @@
             this.OpcaoGridView.Name = "OpcaoGridView";
             this.OpcaoGridView.ReadOnly = true;
             this.OpcaoGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.OpcaoGridView.Size = new System.Drawing.Size(270, 223);
+            this.OpcaoGridView.Size = new System.Drawing.Size(288, 223);
             this.OpcaoGridView.TabIndex = 2;
             this.OpcaoGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OpcaoGridView_CellClick);
             this.OpcaoGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OpcaoGridView_MouseClick);
@@ -86,7 +86,7 @@
             this.txtNome.Location = new System.Drawing.Point(4, 23);
             this.txtNome.MaxLength = 15;
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(266, 26);
+            this.txtNome.Size = new System.Drawing.Size(284, 26);
             this.txtNome.TabIndex = 12;
             // 
             // btnAdicionar
@@ -126,7 +126,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(277, 364);
+            this.ClientSize = new System.Drawing.Size(295, 364);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cbxTipo);
             this.Controls.Add(this.label1);

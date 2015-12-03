@@ -201,7 +201,7 @@ namespace DexComanda
             }
             
         }
-        public static string ImpressaoEntreganova(int iCodPedido,decimal iValorPago, Boolean iExport = false, int iNumCopias = 0)
+        public static string ImpressaoEntreganova(int iCodPedido,decimal iValorPago,string iPrevisaoEntrega ,Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
            
@@ -230,7 +230,7 @@ namespace DexComanda
 
                 report.SetParameterValue("@Codigo", iCodPedido);
                 report.SetParameterValue("ValorPago", iValorPago);
-            
+                report.SetParameterValue("PrevEntrega", iPrevisaoEntrega);
                 if (iExport)
                 {
                     CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
