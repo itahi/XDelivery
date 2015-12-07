@@ -392,6 +392,12 @@
       <DependentUpon>RelBalcao.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Delivery\RelDelivery_Matricial.cs">
+      <DependentUpon>RelDelivery_Matricial.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Relatorios\Delivery\RelDelivery_20.cs">
       <DependentUpon>RelDelivery_20.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -581,22 +587,40 @@
     <Compile Include="Relatorios\Fechamentos\Novos\frmReportFechamentoDia.Designer.cs">
       <DependentUpon>frmReportFechamentoDia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\frmReportFechamentoResumido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\frmReportFechamentoResumido.Designer.cs">
+      <DependentUpon>frmReportFechamentoResumido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\frmReportItensVendidos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\frmReportItensVendidos.Designer.cs">
+      <DependentUpon>frmReportItensVendidos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboy.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelEntregasMotoboy.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\RelFechamentoResumido.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelFechamentoResumido.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\RelItemsVendidosPeriodo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelItemsVendidosPeriodo.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelEntregasPorMotoboy.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Relatorios\Fechamentos\RelItemsVendidos.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RelItemsVendidos.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\frmReportProdutos.cs">
@@ -713,6 +737,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelBalcao.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelDelivery_Matricial.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDelivery_Matricial.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelDelivery_20.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDelivery_20.cs</LastGenOutput>
@@ -742,16 +770,29 @@
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmReportFechamentoDia.resx">
       <DependentUpon>frmReportFechamentoDia.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmReportFechamentoResumido.resx">
+      <DependentUpon>frmReportFechamentoResumido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmReportItensVendidos.resx">
+      <DependentUpon>frmReportItensVendidos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboy.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelEntregasMotoboy.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelFechamentoResumido.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelFechamentoResumido.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelItemsVendidosPeriodo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelItemsVendidosPeriodo.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelEntregasPorMotoboy.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\RelFechamentoDetalhado.rdlc" />
-    <EmbeddedResource Include="Relatorios\Fechamentos\RelItemsVendidos.rdlc" />
     <EmbeddedResource Include="Cadastros\frmCadastrarEntregador.resx">
       <DependentUpon>frmCadastrarEntregador.cs</DependentUpon>
     </EmbeddedResource>
@@ -808,10 +849,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\frmReportPessoas.resx">
       <DependentUpon>frmReportPessoas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Fechamentos\RelItemsVendidos.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelItemsVendidos.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\frmReportProdutos.resx">
       <DependentUpon>frmReportProdutos.cs</DependentUpon>

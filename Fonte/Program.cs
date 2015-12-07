@@ -249,6 +249,10 @@ namespace DexComanda
                                     {
                                         Utils.IniciaSistema();
                                     }
+                                    else if (empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "10512501000100")
+                                    {
+                                        Utils.IniciaSistema();
+                                    }
                                     else
                                     {
                                         MessageBox.Show("Voce precisa se conectar a Internet para obter uma nova Licença", "Aviso Importante");
@@ -263,7 +267,7 @@ namespace DexComanda
                                 }
                                 else
                                 {
-                                    Utils.IniciaSistema();
+                                   // Utils.IniciaSistema();
                                     MessageBox.Show("Licença Expirada, conecte-se a internet para uma renovação");
                                     frmLicencaOFFLINE frm = new frmLicencaOFFLINE();
                                     frm.ShowDialog();

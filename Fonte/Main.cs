@@ -172,16 +172,13 @@ namespace DexComanda
             DvPedido = DsPedido.Tables[0].Rows[0];
 
             decimal TaxaServico = Utils.RetornaTaxaPorCliente(int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), con);
-
-            //frmCadastrarPedido(Boolean iPedidoRepetio, string iNumeMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo, 
-            //DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara,
-            //string fPagamento, string TipoPedido, string MesaBalcao, Main parent)
+            
             string strTrocoPara = DvPedido.ItemArray.GetValue(4).ToString();
             string strTotalPedido = DvPedido.ItemArray.GetValue(3).ToString();
             string strDescPedido = DvPedido.ItemArray.GetValue(14).ToString();
             string strTroco = "0,00";
             decimal MargemGarcon = decimal.Parse(DvPedido.ItemArray.GetValue(16).ToString());
-            if (strTrocoPara != "0.00")
+            if (strTrocoPara!="0,00")
             {
                 strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
             }
@@ -1152,7 +1149,8 @@ namespace DexComanda
 
         private void maisVendidosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmReportVendasPorProduto frm = new frmReportVendasPorProduto();
+            //frmReportVendasPorProduto frm = new frmReportVendasPorProduto();
+            frmReportItensVendidos frm = new frmReportItensVendidos();
             frm.ShowDialog();
             // frm.Dispose();
         }
@@ -1182,6 +1180,41 @@ namespace DexComanda
             if (e.KeyCode == Keys.F12)
             {
                 BuscarCliente(txbTelefoneCliente.Text);
+            }
+            if (e.KeyCode == Keys.F11)
+            {
+                ImpressaRapida();
+            }
+        }
+        private void ImpressaRapida()
+        {
+            int iCodPedido = int.Parse(pedidosGridView.Rows[0].Cells["Codigo"].Value.ToString());
+            DataSet DsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido);
+            DataRow DvPedido = DsPedido.Tables[0].Rows[0];
+
+            string iTipo        = DvPedido.ItemArray.GetValue(8).ToString();
+            decimal iTrocoPara   = decimal.Parse(DvPedido.ItemArray.GetValue(4).ToString());
+            decimal iTotalPedido = decimal.Parse(DvPedido.ItemArray.GetValue(3).ToString());
+            decimal iValue=0;
+            if (iTrocoPara>0)
+            {
+                iValue = iTrocoPara - iTotalPedido; 
+            }
+            
+            DateTime iDataPedido = Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString());
+            if (iTipo== "1 - Mesa")
+            {
+
+                Utils.ImpressaoFechamentoNovo(iCodPedido);
+            }
+            else if (iTipo== "0 - Entrega")
+            {
+                Utils.ImpressaoEntreganova(iCodPedido, iValue, iDataPedido.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString());
+            }
+            else if (iTipo== "2 - Balcao")
+            {
+
+                Utils.ImpressaoBalcao(iCodPedido);
             }
         }
 
@@ -1425,7 +1458,7 @@ namespace DexComanda
                 /* Code here */
                 if (pedidosGridView.SelectedCells.Count > 0 && e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
-                    codigo = int.Parse(pedidosGridView.SelectedCells[0].Value.ToString());
+                    codigo = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString()); //SelectedRows[pedidosGridView.CurrentRow.Index].Cells["Codigo"].Value.ToString());
                     CarregaPedido(codigo);
 
                 }
@@ -1633,6 +1666,12 @@ namespace DexComanda
         {
             frmTipoOpcao frm = new frmTipoOpcao();
             frm.ShowDialog();
+        }
+
+        private void resumidoFormaDePagamentoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReportFechamentoResumido frm = new frmReportFechamentoResumido();
+                frm.ShowDialog();
         }
     }
 }

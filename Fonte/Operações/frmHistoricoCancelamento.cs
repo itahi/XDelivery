@@ -39,5 +39,17 @@ namespace DexComanda.Operações
                 this.Close();
             }
         }
+
+        private void frmHistoricoCancelamento_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12)
+            {
+                Salvar(sender, e); 
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+        }
     }
 }

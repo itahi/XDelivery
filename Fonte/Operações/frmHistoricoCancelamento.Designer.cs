@@ -97,12 +97,14 @@
             this.Controls.Add(this.cbxMotivo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmHistoricoCancelamento";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = " [XSistemas] Histórico de Cancelamento";
             this.Load += new System.EventHandler(this.frmHistoricoCancelamento_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmHistoricoCancelamento_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

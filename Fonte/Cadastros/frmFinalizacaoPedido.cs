@@ -14,6 +14,7 @@ namespace DexComanda.Cadastros
     public partial class frmFinalizacaoPedido : Form
     {
         private Conexao con;
+        public bool bMultiPlasFP = false;
         private Boolean bInserir;
         private frmCadastrarPedido iFrm;
         private int intCodPedido;
@@ -113,6 +114,7 @@ namespace DexComanda.Cadastros
                 {
                     if (bInserir)
                     {
+                        Utils.bMult = true;
                         iFrm.btnGerarPedido_Click(sender, e);
                     }
                     
@@ -201,6 +203,18 @@ namespace DexComanda.Cadastros
                 }
             }
            
+        }
+
+        private void frmFinalizacaoPedido_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12)
+            {
+                Finaliza(sender, e);
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
         }
     }
 }

@@ -123,6 +123,7 @@
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.lblCaixa = new System.Windows.Forms.Label();
+            this.resumidoFormaDePagamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -318,7 +319,8 @@
             // 
             this.porPessoaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.geralToolStripMenuItem2,
-            this.entregasPorMotoboyToolStripMenuItem});
+            this.entregasPorMotoboyToolStripMenuItem,
+            this.resumidoFormaDePagamentoToolStripMenuItem});
             this.porPessoaToolStripMenuItem.Name = "porPessoaToolStripMenuItem";
             this.porPessoaToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.porPessoaToolStripMenuItem.Text = "Vendas";
@@ -327,14 +329,14 @@
             // geralToolStripMenuItem2
             // 
             this.geralToolStripMenuItem2.Name = "geralToolStripMenuItem2";
-            this.geralToolStripMenuItem2.Size = new System.Drawing.Size(235, 26);
+            this.geralToolStripMenuItem2.Size = new System.Drawing.Size(312, 26);
             this.geralToolStripMenuItem2.Text = "Geral";
             this.geralToolStripMenuItem2.Click += new System.EventHandler(this.geralToolStripMenuItem2_Click);
             // 
             // entregasPorMotoboyToolStripMenuItem
             // 
             this.entregasPorMotoboyToolStripMenuItem.Name = "entregasPorMotoboyToolStripMenuItem";
-            this.entregasPorMotoboyToolStripMenuItem.Size = new System.Drawing.Size(235, 26);
+            this.entregasPorMotoboyToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
             this.entregasPorMotoboyToolStripMenuItem.Text = "Entregas por Motoboy";
             this.entregasPorMotoboyToolStripMenuItem.Click += new System.EventHandler(this.entregasPorMotoboyToolStripMenuItem_Click);
             // 
@@ -1032,6 +1034,13 @@
             this.lblCaixa.TabIndex = 8;
             this.lblCaixa.Text = "Caixa Fechado";
             // 
+            // resumidoFormaDePagamentoToolStripMenuItem
+            // 
+            this.resumidoFormaDePagamentoToolStripMenuItem.Name = "resumidoFormaDePagamentoToolStripMenuItem";
+            this.resumidoFormaDePagamentoToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
+            this.resumidoFormaDePagamentoToolStripMenuItem.Text = "Resumido (Forma de Pagamento)";
+            this.resumidoFormaDePagamentoToolStripMenuItem.Click += new System.EventHandler(this.resumidoFormaDePagamentoToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1172,5 +1181,6 @@
         private System.Windows.Forms.ToolStripMenuItem consultaMovimentoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tipoOpçãoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem opçõesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resumidoFormaDePagamentoToolStripMenuItem;
     }
 }

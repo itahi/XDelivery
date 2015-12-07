@@ -13,28 +13,26 @@ using System.Windows.Forms;
 
 namespace DexComanda.Relatorios.Fechamentos.Novos
 {
-    public partial class frmReportEntregasMotoboy : Form
+    public partial class frmReportFechamentoResumido : Form
     {
-        public frmReportEntregasMotoboy()
+        public frmReportFechamentoResumido()
         {
-            //dtInicio.Value = DateTime.Now.AddDays(-1);
-            //dtFim.Value = DateTime.Now;
             InitializeComponent();
         }
 
-        private void GerarReport(object sender, EventArgs e)
+        private void btnFiltro_Click(object sender, EventArgs e)
         {
-            RelEntregasMotoboy report;
+            RelFechamentoResumido report;
             try
             {
-                report = new RelEntregasMotoboy();
+                report = new RelFechamentoResumido();
 
                 TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
                 TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
                 ConnectionInfo crConnectionInfo = new ConnectionInfo();
                 Tables CrTables;
 
-                report.Load(Directory.GetCurrentDirectory() + @"\RelEntregasMotoboy.rpt");
+                report.Load(Directory.GetCurrentDirectory() + @"\RelFechamentoResumido.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
                 crConnectionInfo.UserID = "dex";
@@ -47,19 +45,20 @@ namespace DexComanda.Relatorios.Fechamentos.Novos
                     crtableLogoninfo.ConnectionInfo = crConnectionInfo;
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
+                var dtInicio = Convert.ToDateTime(dtinicio.Value.ToShortDateString() + " 00:00:00");
+                var datFim = Convert.ToDateTime(dtFim.Value.ToShortDateString() + " 23:59:59");
 
-                report.SetParameterValue("@DataInicio", "01/01/2014");
-                report.SetParameterValue("@DataFim", "31/12/2015");
-                //report.SetParameterValue("@DataInicio", dtInicio.Value.ToShortDateString());
-                //report.SetParameterValue("@DataFim", dtFim.Value.ToShortDateString());
+                report.SetParameterValue("@DataInicio", dtInicio);
+                report.SetParameterValue("@DataFim", datFim);
                 crystalReportViewer1.ReportSource = report;
                 crystalReportViewer1.Refresh();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                MessageBox.Show(ex.Message + "\n" + ex.InnerException.ToString());
+                throw;
             }
         }
     }
-}
+    }
+

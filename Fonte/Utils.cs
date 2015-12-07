@@ -62,6 +62,7 @@ namespace DexComanda
         private static TableLogOnInfo crtableLogoninfo;
         private static ConnectionInfo crConnectionInfo;
         private static Tables CrTables;
+        public static Boolean bMult;
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
         public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1)
         {
@@ -259,6 +260,65 @@ namespace DexComanda
                 MessageBox.Show("Erro ná impressao :"+ erro.Message);
             }
             return iRetorno;  
+        }
+        public static string ImpressaoEntreganova_Matricial(int iCodPedido, decimal iValorPago, string iPrevisaoEntrega, Boolean iExport = false, int iNumCopias = 0)
+        {
+            string iRetorno = ""; ;
+
+            RelDelivery_Matricial report;
+            try
+            {
+                report = new RelDelivery_Matricial();
+                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery_Matricial.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "dex";
+                crConnectionInfo.Password = "1234";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+
+                report.SetParameterValue("@Codigo", iCodPedido);
+                report.SetParameterValue("ValorPago", iValorPago);
+                report.SetParameterValue("PrevEntrega", iPrevisaoEntrega);
+                if (iExport)
+                {
+                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
+                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
+
+                    report.ExportOptions.ExportDestinationType =
+                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+                    report.ExportOptions.ExportFormatType =
+                    CrystalDecisions.Shared.ExportFormatType.Text;
+
+                    report.ExportOptions.DestinationOptions = reportExport;
+                    report.Export();
+                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
+                }
+                else
+                {
+
+                    report.PrintToPrinter(0, true, 0, 0);
+                }
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show("Erro ná impressao :" + erro.Message);
+            }
+            return iRetorno;
         }
         public static string ImpressaoEntreganova_20(int iCodPedido,decimal iValorPago, Boolean iExport = false, int iNumCopias = 0)
         {

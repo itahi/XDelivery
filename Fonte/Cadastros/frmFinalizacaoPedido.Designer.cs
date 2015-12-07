@@ -122,11 +122,13 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmFinalizacaoPedido";
             this.Text = "[xSistemas] Finalizacao do Pedido";
             this.Load += new System.EventHandler(this.frmFinalizacaoPedido_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmFinalizacaoPedido_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.gridFormasPagamento)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

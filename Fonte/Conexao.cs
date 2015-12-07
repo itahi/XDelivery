@@ -90,7 +90,7 @@ namespace DexComanda
 
 
         }
-        
+
         public decimal RetornaPrecoComEmbalagem(string iGrupoProduto, int iCodProduto)
         {
             decimal iReturnPreco = 0;
@@ -197,35 +197,35 @@ namespace DexComanda
             Insert("spAdicionarOpcaProduto", prod);
 
         }
-    
-
-    public DataSet SelectAll(string table, string spName)
-    {
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-        return ds;
-    }
-    public DataSet RetornaOpcoesProduto(int iDProduto)
-    {
-        string lSqlConsulta = " select Op.Nome,Op.Tipo,Prod.Preco, " +
-                              " isnull((select MaximoAdicionais from Produto P where P.Codigo = Prod.CodProduto),0) as MaximoAdicionais" +
-                              "  from  Produto_Opcao Prod " +
-                              "  join Opcao Op  on Op.Codigo = Prod.CodOpcao  " +
-                              "  where Prod.CodProduto=@CodProduto " +
-                              "  order by Nome";
-        command = new SqlCommand(lSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-        command.Parameters.AddWithValue("@CodProduto", iDProduto);
 
 
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, "Produto_Opcao");
-        return ds;
-    }
+        public DataSet SelectAll(string table, string spName)
+        {
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+            return ds;
+        }
+        public DataSet RetornaOpcoesProduto(int iDProduto)
+        {
+            string lSqlConsulta = " select Op.Nome,Op.Tipo,Prod.Preco, " +
+                                  " isnull((select MaximoAdicionais from Produto P where P.Codigo = Prod.CodProduto),0) as MaximoAdicionais" +
+                                  "  from  Produto_Opcao Prod " +
+                                  "  join Opcao Op  on Op.Codigo = Prod.CodOpcao  " +
+                                  "  where Prod.CodProduto=@CodProduto " +
+                                  "  order by Nome";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@CodProduto", iDProduto);
+
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto_Opcao");
+            return ds;
+        }
 
         public DataSet RetornaTipoOpcao()
         {
@@ -238,346 +238,346 @@ namespace DexComanda
             return ds;
         }
         public DataSet RetornaDadosPessoa(string iNomeBairros, int iIDRegiao)
-    {
-        string lSqlConsulta = " select Codigo,Nome,Cidade,Bairro,Telefone,CodRegiao from Pessoa where teste ";
-        if (iNomeBairros != "")
         {
-            lSqlConsulta = lSqlConsulta.Replace("teste", " bairro like '%" + iNomeBairros + "%'");
-            //   command.Parameters.AddWithValue("@Bairro", iNomeBairros);
-        }
-        else if (iIDRegiao != 0)
-        {
-            lSqlConsulta = lSqlConsulta.Replace("teste", "CodRegiao=" + iIDRegiao + "");
-            //  command.Parameters.AddWithValue("@CodRegiao", iIDRegiao);
-        }
-        else if (iNomeBairros != "" && iIDRegiao != 0)
-        {
-            lSqlConsulta = lSqlConsulta.Replace("teste", " bairro like '%@Bairro% and CodRegiao=@CodRegiao ");
-            //   lSqlConsulta = lSqlConsulta.Replace("teste", "CodRegiao=" + iIDRegiao + "");
-        }
-        command = new SqlCommand(lSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, "Pessoa");
-        return ds;
-    }
-    public DataSet SelectFormasPagamento()
-    {
-        string lSqlConsulta = " select Codigo,Descricao from FormaPagamento";
-        command = new SqlCommand(lSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, "FormaPagamento");
-        return ds;
-    }
-    public DataSet SelectAdicionalLanche()
-    {
-        // string lSqlConsulta = " select * from Opcao  where Tipo='Texto Livre'  ";
-        //   "  where Tipo = 'Texto livre'";
-        string lSqlConsulta = "select  p.CodOpcao,P.Preco from Produto_Opcao P " +
-                              "  left join Opcao O on O.Codigo = P.CodOpcao " +
-                              "  where O.Tipo = 'Multipla Selecao' ";
-        command = new SqlCommand(lSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, "Produto_Opcao");
-        return ds;
-    }
-    public DataSet SelectLanches()
-    {
-        string lSqlConsulta = "select * from Produto where GrupoProduto='LANCHES' AND CODIGO >1 ";
-        command = new SqlCommand(lSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, "Produto");
-        return ds;
-    }
-
-
-    public DataSet RetornaListaPessoasSMS(DateTime iData1, DateTime iData2, Boolean iAniversariante, Boolean iSemPedido, Boolean iTodos)
-    {
-        string lSqlConsulta = "";
-
-        command = new SqlCommand();
-
-        try
-        {
-            if (iSemPedido)
+            string lSqlConsulta = " select Codigo,Nome,Cidade,Bairro,Telefone,CodRegiao from Pessoa where teste ";
+            if (iNomeBairros != "")
             {
-                lSqlConsulta = "select Telefone,Nome from Pessoa P" +
-                              "  where  " +
-                              "  P.Codigo not in ( Select Codigo from Pedido where RealizadoEm between @Data1 and @Data2 )" +
-                              "  and " +
-                              "  (SUBSTRING(Telefone,0,2) = 9 " +
-                              "  or SUBSTRING(Telefone,0,2) =8)";
-
-
-                command.Parameters.AddWithValue("@Data1", iData1);
-                command.Parameters.AddWithValue("@Data2", iData2);
+                lSqlConsulta = lSqlConsulta.Replace("teste", " bairro like '%" + iNomeBairros + "%'");
+                //   command.Parameters.AddWithValue("@Bairro", iNomeBairros);
             }
-            else if (iAniversariante)
+            else if (iIDRegiao != 0)
             {
-                lSqlConsulta = "select Telefone,Nome from Pessoa P " +
-                              "  where  " +
-                              "  Cast(DataNascimento as date) between @Data1 and @Data2 " +
-                              "  and " +
-                              "  (SUBSTRING(Telefone,0,2) = 9 " +
-                              "  or SUBSTRING(Telefone,0,2) =8 )";
-
-                command.Parameters.AddWithValue("@Data1", iData1);
-                command.Parameters.AddWithValue("@Data2", iData2);
+                lSqlConsulta = lSqlConsulta.Replace("teste", "CodRegiao=" + iIDRegiao + "");
+                //  command.Parameters.AddWithValue("@CodRegiao", iIDRegiao);
             }
-            else if (iTodos)
+            else if (iNomeBairros != "" && iIDRegiao != 0)
             {
-                lSqlConsulta = "select top 2000 Telefone,Nome from Pessoa P" +
-                               " where  " +
-                               " (SUBSTRING(Telefone,0,2) = 9 " +
-                               " or SUBSTRING(Telefone,0,2) =8  " +
-                               " and DATALENGTH(Telefone) >=8)   and Codigo >26349";
+                lSqlConsulta = lSqlConsulta.Replace("teste", " bairro like '%@Bairro% and CodRegiao=@CodRegiao ");
+                //   lSqlConsulta = lSqlConsulta.Replace("teste", "CodRegiao=" + iIDRegiao + "");
             }
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Pessoa");
+            return ds;
         }
-        catch (Exception erro)
+        public DataSet SelectFormasPagamento()
+        {
+            string lSqlConsulta = " select Codigo,Descricao from FormaPagamento";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "FormaPagamento");
+            return ds;
+        }
+        public DataSet SelectAdicionalLanche()
+        {
+            // string lSqlConsulta = " select * from Opcao  where Tipo='Texto Livre'  ";
+            //   "  where Tipo = 'Texto livre'";
+            string lSqlConsulta = "select  p.CodOpcao,P.Preco from Produto_Opcao P " +
+                                  "  left join Opcao O on O.Codigo = P.CodOpcao " +
+                                  "  where O.Tipo = 'Multipla Selecao' ";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto_Opcao");
+            return ds;
+        }
+        public DataSet SelectLanches()
+        {
+            string lSqlConsulta = "select * from Produto where GrupoProduto='LANCHES' AND CODIGO >1 ";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto");
+            return ds;
+        }
+
+
+        public DataSet RetornaListaPessoasSMS(DateTime iData1, DateTime iData2, Boolean iAniversariante, Boolean iSemPedido, Boolean iTodos)
+        {
+            string lSqlConsulta = "";
+
+            command = new SqlCommand();
+
+            try
+            {
+                if (iSemPedido)
+                {
+                    lSqlConsulta = "select Telefone,Nome from Pessoa P" +
+                                  "  where  " +
+                                  "  P.Codigo not in ( Select Codigo from Pedido where RealizadoEm between @Data1 and @Data2 )" +
+                                  "  and " +
+                                  "  (SUBSTRING(Telefone,0,2) = 9 " +
+                                  "  or SUBSTRING(Telefone,0,2) =8)";
+
+
+                    command.Parameters.AddWithValue("@Data1", iData1);
+                    command.Parameters.AddWithValue("@Data2", iData2);
+                }
+                else if (iAniversariante)
+                {
+                    lSqlConsulta = "select Telefone,Nome from Pessoa P " +
+                                  "  where  " +
+                                  "  Cast(DataNascimento as date) between @Data1 and @Data2 " +
+                                  "  and " +
+                                  "  (SUBSTRING(Telefone,0,2) = 9 " +
+                                  "  or SUBSTRING(Telefone,0,2) =8 )";
+
+                    command.Parameters.AddWithValue("@Data1", iData1);
+                    command.Parameters.AddWithValue("@Data2", iData2);
+                }
+                else if (iTodos)
+                {
+                    lSqlConsulta = "select top 2000 Telefone,Nome from Pessoa P" +
+                                   " where  " +
+                                   " (SUBSTRING(Telefone,0,2) = 9 " +
+                                   " or SUBSTRING(Telefone,0,2) =8  " +
+                                   " and DATALENGTH(Telefone) >=8)   and Codigo >26349";
+                }
+            }
+            catch (Exception erro)
+            {
+
+                throw;
+            }
+
+            command.CommandText = lSqlConsulta;
+            command.Connection = conn;
+            command.CommandType = CommandType.Text;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Pessoa");
+            return ds;
+        }
+
+        public DataSet SelectRegistroPorCodigoPeriodo(string table, string spName, string iCodPessoa, DateTime iDataI, DateTime iDataF)
+        {
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            if (spName == "spTotaisCaixa")
+            {
+                command.Parameters.AddWithValue("@Numero", iCodPessoa);
+                command.Parameters.AddWithValue("@Data", iDataI);
+            }
+            else
+            {
+                command.Parameters.AddWithValue("@CodPessoa", iCodPessoa);
+                command.Parameters.AddWithValue("@DataInicio", iDataI);
+                command.Parameters.AddWithValue("@DataFim", iDataF);
+            }
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+            return ds;
+        }
+        public DataSet SelectCaixaFechamento(string iDataI, string iDataF, string iNumCaixa, string table = "CaixaMovimento")
+        {
+            string lSqlConsulta = " select " +
+                                 " case Tipo " +
+                                 " when 'E' then 'Entradas'" +
+                                 " when 'S' then 'Saidas'" +
+                                 " end" +
+                                 " as 'Tipo Movimento', " +
+                                //" Cx.CodCaixa," +
+                                " Fp.Descricao ," +
+                                " sum(cx.Valor) as 'Total Somado'" +
+                                " from CaixaMovimento CX" +
+                                " left join FormaPagamento FP on FP.Codigo = Cx.CodFormaPagamento" +
+                                " where " +
+                                " CX.CodCaixa = @Numero AND" +
+                                "  CX.Data BETWEEN @DataI  AND @DataF " +
+                                " group by CodCaixa,Fp.Descricao,Tipo";
+
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@Numero", iNumCaixa);
+            command.Parameters.AddWithValue("@DataI", iDataI);
+            command.Parameters.AddWithValue("@DataF", iDataF);
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+            return ds;
+        }
+        public DataSet SelectRegistroONline(string iNomeTable)
+        {
+            string lSqlConsulta = " select * from " + iNomeTable + " where DataAlteracao>DataSincronismo or DataSincronismo is null";
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, iNomeTable);
+            return ds;
+
+        }
+
+        public DataSet RetornaRegiao()
+        {
+            string lSqlConsulta = " select RG.Codigo, RG.NomeRegiao,RG.TaxaServico" +
+                                  "  ,RB.CEP ,RG.OnlineSN" +
+                                  "   from RegiaoEntrega RG " +
+                                   "  left join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo " +
+                                  "   WHERE RG.DataAlteracao > RG.DataSincronismo or RG.DataSincronismo is null";
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "RegiaoEntrega");
+            return ds;
+
+        }
+        public DataSet RetornaCEPporBairro(string iNomeBairro, Boolean iCidadePadrao)
+        {
+            string lSqlConsulta = "select cep,bairro cep from base_cep where cep=" + iNomeBairro;
+            if (iCidadePadrao)
+            {
+                lSqlConsulta = lSqlConsulta + " and cidade='" + Sessions.returnEmpresa.Cidade + "'";
+            }
+
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "base_cep");
+            return ds;
+
+        }
+
+        //public DataSet SelectObterOpcaoProduto()
+        //{
+        //    string lSqlConsulta = "";
+
+        //    command = new SqlCommand(lSqlConsulta, conn);
+        //    command.CommandType = CommandType.Text;
+
+        //    adapter = new SqlDataAdapter(command);
+        //    ds = new DataSet();
+        //    adapter.Fill(ds, "Produto_Opcao");
+        //    return ds;
+
+        //}
+
+
+        public void AtualizaDataSincronismo(string iNomeTable, int iCodigo, string iDataAtualizar = "DataSincronismo")
         {
 
-            throw;
+            string lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where Codigo=" + iCodigo;// and AtivoSN=1";
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.ExecuteNonQuery();
+
         }
-
-        command.CommandText = lSqlConsulta;
-        command.Connection = conn;
-        command.CommandType = CommandType.Text;
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, "Pessoa");
-        return ds;
-    }
-
-    public DataSet SelectRegistroPorCodigoPeriodo(string table, string spName, string iCodPessoa, DateTime iDataI, DateTime iDataF)
-    {
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        if (spName == "spTotaisCaixa")
+        public void AtualizaDataSincronismo(string iNomeTable, int iCodProduto, int iCodOpcao, string iDataAtualizar = "DataSincronismo")
         {
-            command.Parameters.AddWithValue("@Numero", iCodPessoa);
-            command.Parameters.AddWithValue("@Data", iDataI);
+            string lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where CodProduto=" + iCodProduto + " and CodOpcao=" + iCodOpcao;// and AtivoSN=1";
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.ExecuteNonQuery();
+
         }
-        else
+        public DataSet SelectEntregaPorBoy(string iDataI, string iDataF, int CodMotoboy, string table = "Entregador")
         {
-            command.Parameters.AddWithValue("@CodPessoa", iCodPessoa);
-            command.Parameters.AddWithValue("@DataInicio", iDataI);
-            command.Parameters.AddWithValue("@DataFim", iDataF);
+            string lSqlConsulta = "  select  " +
+                                    " count(P.CodMotoboy) as QuantidadeEntregas," +
+                                    " cast(P.RealizadoEm as date) as RealizadoEm," +
+                                    " (select Codigo from Entregador E where P.CodMotoboy = E.Codigo) as CodMotoboy, " +
+                                    " (select Nome from Entregador E where P.CodMotoboy = E.Codigo) as Nome," +
+                                    " (select NomeRegiao from RegiaoEntrega R where R.Codigo = Pes.CodRegiao) as Regiao" +
+                                    " from " +
+                                    " Pedido P " +
+                                    " left join Pessoa Pes on Pes.Codigo = P.CodPessoa " +
+                                    " where P.Finalizado =1  " +
+                                    " and  P.RealizadoEm between'" + iDataI.ToString() + "' and '" + iDataF.ToString() + "'";
+            if (CodMotoboy != 0)
+            {
+                lSqlConsulta = lSqlConsulta + " and P.CodMotoboy=" + CodMotoboy;
+            }
+            lSqlConsulta = lSqlConsulta + "group by P.CodMotoboy,cast(P.RealizadoEm as date)";
+
+
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+            return ds;
         }
-
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-        return ds;
-    }
-    public DataSet SelectCaixaFechamento(string iDataI, string iDataF, string iNumCaixa, string table = "CaixaMovimento")
-    {
-        string lSqlConsulta = " select " +
-                             " case Tipo " +
-                             " when 'E' then 'Entradas'" +
-                             " when 'S' then 'Saidas'" +
-                             " end" +
-                             " as 'Tipo Movimento', " +
-                            //" Cx.CodCaixa," +
-                            " Fp.Descricao ," +
-                            " sum(cx.Valor) as 'Total Somado'" +
-                            " from CaixaMovimento CX" +
-                            " left join FormaPagamento FP on FP.Codigo = Cx.CodFormaPagamento" +
-                            " where " +
-                            " CX.CodCaixa = @Numero AND" +
-                            "  CX.Data BETWEEN @DataI  AND @DataF " +
-                            " group by CodCaixa,Fp.Descricao,Tipo";
-
-
-        command = new SqlCommand(lSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-        command.Parameters.AddWithValue("@Numero", iNumCaixa);
-        command.Parameters.AddWithValue("@DataI", iDataI);
-        command.Parameters.AddWithValue("@DataF", iDataF);
-
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-        return ds;
-    }
-    public DataSet SelectRegistroONline(string iNomeTable)
-    {
-        string lSqlConsulta = " select * from " + iNomeTable + " where DataAlteracao>DataSincronismo or DataSincronismo is null";
-
-        command = new SqlCommand(lSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, iNomeTable);
-        return ds;
-
-    }
-
-    public DataSet RetornaRegiao()
-    {
-        string lSqlConsulta = " select RG.Codigo, RG.NomeRegiao,RG.TaxaServico" +
-                              "  ,RB.CEP ,RG.OnlineSN" +
-                              "   from RegiaoEntrega RG " +
-                               "  left join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo " +
-                              "   WHERE RG.DataAlteracao > RG.DataSincronismo or RG.DataSincronismo is null";
-
-        command = new SqlCommand(lSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, "RegiaoEntrega");
-        return ds;
-
-    }
-    public DataSet RetornaCEPporBairro(string iNomeBairro, Boolean iCidadePadrao)
-    {
-        string lSqlConsulta = "select cep,bairro cep from base_cep where cep=" + iNomeBairro;
-        if (iCidadePadrao)
+        public DataSet SelectCaixaMovimetoFiltro(string iDataI, string iDataF, string iTipo, string iCdFormaPagt, string table = "CaixaMovimento", string iNumCaixa = "1")
         {
-            lSqlConsulta = lSqlConsulta + " and cidade='" + Sessions.returnEmpresa.Cidade + "'";
+            string lSqlConsulta = " select " +
+                                    " CX.Numero as 'Numero Caixa'," +
+                                    " CXM.DATA, " +
+                                    " CXM.Historico, " +
+                                    " CXM.NumeroDocumento, " +
+                                    " FP.Descricao AS 'FORMA PAGAMENTO'," +
+                                    " CXM.Valor, " +
+                                    " case  CXM.Tipo" +
+                                    " when 'E' THEN 'Entrada'" +
+                                    " when 'S' then 'Saida' " +
+                                    " end  " +
+                                    " as  " +
+                                    " 'Tipo Movimento' " +
+                                    " from CaixaMovimento  CXM " +
+                                    " LEFT JOIN FormaPagamento FP ON FP.Codigo = CXM.CodFormaPagamento " +
+                                    " LEFT JOIN Caixa          CX ON CX.Codigo = CXM.CodCaixa " +
+                                " where " +
+                                "  CXM.Data BETWEEN  '" + iDataI.ToString() + "' AND '" + iDataF.ToString() + "'";
+
+            if (iNumCaixa != "")
+            {
+                lSqlConsulta = lSqlConsulta + " and CXM.CodCaixa  = '" + iNumCaixa + "'";
+            }
+            if (iCdFormaPagt != "")
+            {
+                lSqlConsulta = lSqlConsulta + " and  CXM.CodFormaPagamento = '" + iCdFormaPagt + " '";
+            }
+            if (iTipo != "ES")
+            {
+                lSqlConsulta = lSqlConsulta + " and  CXM.Tipo ='" + iTipo + "'";
+            }
+
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+            return ds;
         }
-
-
-        command = new SqlCommand(lSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, "base_cep");
-        return ds;
-
-    }
-
-    //public DataSet SelectObterOpcaoProduto()
-    //{
-    //    string lSqlConsulta = "";
-
-    //    command = new SqlCommand(lSqlConsulta, conn);
-    //    command.CommandType = CommandType.Text;
-
-    //    adapter = new SqlDataAdapter(command);
-    //    ds = new DataSet();
-    //    adapter.Fill(ds, "Produto_Opcao");
-    //    return ds;
-
-    //}
-
-
-    public void AtualizaDataSincronismo(string iNomeTable, int iCodigo, string iDataAtualizar = "DataSincronismo")
-    {
-
-        string lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where Codigo=" + iCodigo;// and AtivoSN=1";
-
-        command = new SqlCommand(lSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-        command.ExecuteNonQuery();
-
-    }
-    public void AtualizaDataSincronismo(string iNomeTable, int iCodProduto, int iCodOpcao, string iDataAtualizar = "DataSincronismo")
-    {
-        string lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where CodProduto=" + iCodProduto + " and CodOpcao=" + iCodOpcao;// and AtivoSN=1";
-
-        command = new SqlCommand(lSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-        command.ExecuteNonQuery();
-
-    }
-    public DataSet SelectEntregaPorBoy(string iDataI, string iDataF, int CodMotoboy, string table = "Entregador")
-    {
-        string lSqlConsulta = "  select  " +
-                                " count(P.CodMotoboy) as QuantidadeEntregas," +
-                                " cast(P.RealizadoEm as date) as RealizadoEm," +
-                                " (select Codigo from Entregador E where P.CodMotoboy = E.Codigo) as CodMotoboy, " +
-                                " (select Nome from Entregador E where P.CodMotoboy = E.Codigo) as Nome," +
-                                " (select NomeRegiao from RegiaoEntrega R where R.Codigo = Pes.CodRegiao) as Regiao" +
-                                " from " +
-                                " Pedido P " +
-                                " left join Pessoa Pes on Pes.Codigo = P.CodPessoa " +
-                                " where P.Finalizado =1  " +
-                                " and  P.RealizadoEm between'" + iDataI.ToString() + "' and '" + iDataF.ToString() + "'";
-        if (CodMotoboy != 0)
+        public DataSet DeleteAll(string table, string spName, int CodigoDeletar)
         {
-            lSqlConsulta = lSqlConsulta + " and P.CodMotoboy=" + CodMotoboy;
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Codigo", CodigoDeletar);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
         }
-        lSqlConsulta = lSqlConsulta + "group by P.CodMotoboy,cast(P.RealizadoEm as date)";
-
-
-
-        command = new SqlCommand(lSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-        return ds;
-    }
-    public DataSet SelectCaixaMovimetoFiltro(string iDataI, string iDataF, string iTipo, string iCdFormaPagt, string table = "CaixaMovimento", string iNumCaixa = "1")
-    {
-        string lSqlConsulta = " select " +
-                                " CX.Numero as 'Numero Caixa'," +
-                                " CXM.DATA, " +
-                                " CXM.Historico, " +
-                                " CXM.NumeroDocumento, " +
-                                " FP.Descricao AS 'FORMA PAGAMENTO'," +
-                                " CXM.Valor, " +
-                                " case  CXM.Tipo" +
-                                " when 'E' THEN 'Entrada'" +
-                                " when 'S' then 'Saida' " +
-                                " end  " +
-                                " as  " +
-                                " 'Tipo Movimento' " +
-                                " from CaixaMovimento  CXM " +
-                                " LEFT JOIN FormaPagamento FP ON FP.Codigo = CXM.CodFormaPagamento " +
-                                " LEFT JOIN Caixa          CX ON CX.Codigo = CXM.CodCaixa " +
-                            " where " +
-                            "  CXM.Data BETWEEN  '" + iDataI.ToString() + "' AND '" + iDataF.ToString() + "'";
-
-        if (iNumCaixa != "")
-        {
-            lSqlConsulta = lSqlConsulta + " and CXM.CodCaixa  = '" + iNumCaixa + "'";
-        }
-        if (iCdFormaPagt != "")
-        {
-            lSqlConsulta = lSqlConsulta + " and  CXM.CodFormaPagamento = '" + iCdFormaPagt + " '";
-        }
-        if (iTipo != "ES")
-        {
-            lSqlConsulta = lSqlConsulta + " and  CXM.Tipo ='" + iTipo + "'";
-        }
-
-
-        command = new SqlCommand(lSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-        return ds;
-    }
-    public DataSet DeleteAll(string table, string spName, int CodigoDeletar)
-    {
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@Codigo", CodigoDeletar);
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-        public DataSet Delete(string table, string spName, int CodProduto,int CodOpcao)
+        public DataSet Delete(string table, string spName, int CodProduto, int CodOpcao)
         {
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
@@ -590,156 +590,199 @@ namespace DexComanda
             return ds;
         }
         public DataSet DeleteBairroRegiao(string itable, string ispName, int iCodRegiao, string iCEP)
-    {
-        command = new SqlCommand(ispName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@CodRegiao", iCodRegiao);
-        command.Parameters.AddWithValue("@CEP", iCEP);
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, itable);
-
-        return ds;
-    }
-    public DataSet LimpaTabela(string table, string spName)
-    {
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-    public DataSet SelectObterUltimoPedido(int iCodCliente)
-    {
-        command = new SqlCommand("sbObterUltimoPedido", conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@CodPessoa", iCodCliente);
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, "Pedido");
-
-        return ds;
-
-    }
-
-    public DataSet SelectPuro(string iTable)
-    {
-        string iSql = "select * from " + iTable;
-        command = new SqlCommand(iSql, conn);
-        command.CommandType = CommandType.Text;
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, iTable);
-        return ds;
-    }
-    public DataSet SelectMontaGrid(string iTable, string iParametrosConsulta, Boolean iAtivos = true)
-    {
-        string iSql = "", iSubSelect = "subSelect";
-
-        if (iParametrosConsulta != null)
         {
-            iSql = "select " + iParametrosConsulta + iSubSelect + " from " + iTable;
+            command = new SqlCommand(ispName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@CodRegiao", iCodRegiao);
+            command.Parameters.AddWithValue("@CEP", iCEP);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, itable);
 
-            if (iTable == "Pedido")
+            return ds;
+        }
+        public DataSet LimpaTabela(string table, string spName)
+        {
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+        public DataSet SelectObterUltimoPedido(int iCodCliente)
+        {
+            command = new SqlCommand("sbObterUltimoPedido", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@CodPessoa", iCodCliente);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Pedido");
+
+            return ds;
+
+        }
+
+        public DataSet SelectPuro(string iTable)
+        {
+            string iSql = "select * from " + iTable;
+            command = new SqlCommand(iSql, conn);
+            command.CommandType = CommandType.Text;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, iTable);
+            return ds;
+        }
+        public DataSet SelectMontaGrid(string iTable, string iParametrosConsulta, Boolean iAtivos = true)
+        {
+            string iSql = "", iSubSelect = "subSelect";
+
+            if (iParametrosConsulta != null)
             {
-                iSql = iSql.Replace(iSubSelect, "") + " Pd where Finalizado = 0 and [status] ='Aberto' ORDER BY Pd.Codigo DESC";
-            }
-            else
-            if (iTable == "Produto")
-            {
-                if (Sessions.returnEmpresa.CNPJ == "13004606798" || Sessions.returnEmpresa.CNPJ == "21207218000191")
+                iSql = "select " + iParametrosConsulta + iSubSelect + " from " + iTable;
+
+                if (iTable == "Pedido")
                 {
-                    iSql = iSql.Replace(iSubSelect, ",(select top 1 Quantidade from Produto_Estoque E where E.CodProduto = Produto.Codigo and E.DataAtualizacao between '" + DateTime.Now.Date.ToShortDateString() + " 00:00:00" + "' and '" + DateTime.Now.Date.ToShortDateString() + " 23:59:59') as QtdVendida");
+                    iSql = iSql.Replace(iSubSelect, "") + " Pd where Finalizado = 0 and [status] ='Aberto' ORDER BY Pd.Codigo DESC";
                 }
-
-                if (iAtivos)
+                else
+                if (iTable == "Produto")
                 {
-                    iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=1";
+                    if (Sessions.returnEmpresa.CNPJ == "13004606798" || Sessions.returnEmpresa.CNPJ == "21207218000191")
+                    {
+                        iSql = iSql.Replace(iSubSelect, ",(select top 1 Quantidade from Produto_Estoque E where E.CodProduto = Produto.Codigo and E.DataAtualizacao between '" + DateTime.Now.Date.ToShortDateString() + " 00:00:00" + "' and '" + DateTime.Now.Date.ToShortDateString() + " 23:59:59') as QtdVendida");
+                    }
+
+                    if (iAtivos)
+                    {
+                        iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=1";
+                    }
+                    else
+                    {
+                        iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=0";
+                    }
+
                 }
                 else
                 {
-                    iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=0";
+                    iSql = iSql.Replace(iSubSelect, "");
                 }
-                
+
             }
             else
             {
-                iSql = iSql.Replace(iSubSelect, "");
+                iSql = "select * from " + iTable;
             }
 
+
+            command = new SqlCommand(iSql, conn);
+            command.CommandType = CommandType.Text;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, iTable);
+            return ds;
         }
-        else
+        public DataSet SelectOpcaoProduto(string iCodProduto)
         {
-            iSql = "select * from " + iTable;
+            string iSql = " select PO.CODOPCAO, PO.Preco,OP.Nome  " +
+                          "  from Produto_Opcao PO " +
+                          " left join Opcao OP on OP.Codigo = PO.CodOpcao " +
+                          " where " +
+                          " PO.CodProduto = @CodProduto";
+
+            command = new SqlCommand(iSql, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@CodProduto", iCodProduto);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto_Opcao");
+            return ds;
+        }
+        public DataSet SelectPessoaPorNome(string iNome, string iSqlConsulta, string iParam)
+        {
+            iSqlConsulta = "select " + iSqlConsulta + " from Pessoa  where " + iParam + " like '%" + iNome + "%'";
+            command = new SqlCommand(iSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Pessoa");
+            return ds;
         }
 
-
-        command = new SqlCommand(iSql, conn);
-        command.CommandType = CommandType.Text;
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, iTable);
-        return ds;
-    }
-    public DataSet SelectOpcaoProduto(string iCodProduto)
-    {
-        string iSql = " select PO.CODOPCAO, PO.Preco,OP.Nome  " +
-                      "  from Produto_Opcao PO " +
-                      " left join Opcao OP on OP.Codigo = PO.CodOpcao " +
-                      " where " +
-                      " PO.CodProduto = @CodProduto";
-
-        command = new SqlCommand(iSql, conn);
-        command.CommandType = CommandType.Text;
-        command.Parameters.AddWithValue("@CodProduto", iCodProduto);
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, "Produto_Opcao");
-        return ds;
-    }
-    public DataSet SelectPessoaPorNome(string iNome, string iSqlConsulta, string iParam)
-    {
-        iSqlConsulta = "select " + iSqlConsulta + " from Pessoa  where " + iParam + " like '%" + iNome + "%'";
-        command = new SqlCommand(iSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-        adapter = new SqlDataAdapter(command);
-        ds = new DataSet();
-        adapter.Fill(ds, "Pessoa");
-        return ds;
-    }
-
-    public void Insert(string spName, Object obj)
-    {
-        SqlParameter codPedido = null;
-        SqlParameter CodPessoa = null;
-        SqlParameter CodProduto = null;
-        //   SqlParameter CodOpcao = null;
-        Type ObjectType = obj.GetType();
-        PropertyInfo[] properties = ObjectType.GetProperties();
-
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-
-        if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" || spName == "spAdicionarCaixa" || spName == "spAdicionaHistorico" ||
-            spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
-            spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" ||
-            spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento" || spName == "spAdicionarOpcaProduto"|| spName == "spAdicionarProduto_OpcaoTipo")
+        public void Insert(string spName, Object obj)
         {
+            SqlParameter codPedido = null;
+            SqlParameter CodPessoa = null;
+            SqlParameter CodProduto = null;
+            //   SqlParameter CodOpcao = null;
+            Type ObjectType = obj.GetType();
+            PropertyInfo[] properties = ObjectType.GetProperties();
 
-            if (spName == "spAdicionarProduto")
-            {
-                CodProduto = new SqlParameter("@Codigo", SqlDbType.Int);
-                CodProduto.Direction = ParameterDirection.Output;
-                command.Parameters.Add(CodProduto);
-            }
-            foreach (PropertyInfo propriedade in properties)
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+
+            if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" || spName == "spAdicionarCaixa" || spName == "spAdicionaHistorico" ||
+                spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
+                spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" ||
+                spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento" || spName == "spAdicionarOpcaProduto" || spName == "spAdicionarProduto_OpcaoTipo")
             {
 
-                if (!propriedade.Name.Equals("Codigo"))
+                if (spName == "spAdicionarProduto")
                 {
-                    if (!propriedade.Name.Equals("cod"))
+                    CodProduto = new SqlParameter("@Codigo", SqlDbType.Int);
+                    CodProduto.Direction = ParameterDirection.Output;
+                    command.Parameters.Add(CodProduto);
+                }
+                foreach (PropertyInfo propriedade in properties)
+                {
+
+                    if (!propriedade.Name.Equals("Codigo"))
+                    {
+                        if (!propriedade.Name.Equals("cod"))
+                        {
+                            Console.WriteLine(propriedade.Name);
+                            command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                        }
+                    }
+                }
+
+            }
+            else if (spName == "spAdicionarGrupo")
+            {
+                foreach (PropertyInfo propriedade in properties)
+                {
+                    if (!propriedade.Name.Equals("DataSincronismo") && !propriedade.Name.Equals("Codigo"))
+                    {
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
+                }
+            }
+            else if (spName == "spAdicionaBairrosRegiao")
+            {
+                foreach (PropertyInfo propriedade in properties)
+                {
+                    if (!propriedade.Name.Equals("DataSincronismo"))
+                    {
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
+                }
+            }
+            else if (spName == "spAdicionarOpcao")
+            {
+                foreach (PropertyInfo propriedade in properties)
+                {
+                    if (!propriedade.Name.Equals("DataSincronismo") && !propriedade.Name.Equals("Codigo"))
+                    {
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
+                }
+            }
+            else if (spName == "spAdicionarUsuario")
+            {
+                foreach (PropertyInfo propriedade in properties)
+                {
+                    if (!propriedade.Name.Equals("CaixaLogado") && !propriedade.Name.Equals("Codigo"))
                     {
                         Console.WriteLine(propriedade.Name);
                         command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
@@ -747,770 +790,743 @@ namespace DexComanda
                 }
             }
 
-        }
-        else if (spName == "spAdicionarGrupo")
-        {
-            foreach (PropertyInfo propriedade in properties)
+            else if (spName == "spAbrirCaixa")
             {
-                if (!propriedade.Name.Equals("DataSincronismo") && !propriedade.Name.Equals("Codigo"))
+                foreach (PropertyInfo propriedade in properties)
                 {
-                    command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    if (!propriedade.Name.Equals("Codigo") && !propriedade.Name.Equals("ValorFechamento"))
+                    {
+                        Console.WriteLine(propriedade.Name);
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
                 }
+
             }
-        }
-        else if (spName == "spAdicionaBairrosRegiao")
-        {
-            foreach (PropertyInfo propriedade in properties)
+
+            else if (spName == "spAdicionarPedido")
             {
-                if (!propriedade.Name.Equals("DataSincronismo"))
+                codPedido = new SqlParameter("@Codigo", SqlDbType.Int);
+                codPedido.Direction = ParameterDirection.Output;
+                command.Parameters.Add(codPedido);
+
+                foreach (PropertyInfo propriedade in properties)
                 {
-                    command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    if (!propriedade.Name.Equals("Codigo"))
+                    {
+                        Console.WriteLine(propriedade.Name);
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
                 }
-            }
-        }
-        else if (spName == "spAdicionarOpcao")
-        {
-            foreach (PropertyInfo propriedade in properties)
-            {
-                if (!propriedade.Name.Equals("DataSincronismo") && !propriedade.Name.Equals("Codigo"))
-                {
-                    command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
-                }
-            }
-        }
-        else if (spName == "spAdicionarUsuario")
-        {
-            foreach (PropertyInfo propriedade in properties)
-            {
-                if (!propriedade.Name.Equals("CaixaLogado") && !propriedade.Name.Equals("Codigo"))
-                {
-                    Console.WriteLine(propriedade.Name);
-                    command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
-                }
-            }
-        }
-
-        else if (spName == "spAbrirCaixa")
-        {
-            foreach (PropertyInfo propriedade in properties)
-            {
-                if (!propriedade.Name.Equals("Codigo") && !propriedade.Name.Equals("ValorFechamento"))
-                {
-                    Console.WriteLine(propriedade.Name);
-                    command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
-                }
-            }
-
-        }
-
-        else if (spName == "spAdicionarPedido")
-        {
-            codPedido = new SqlParameter("@Codigo", SqlDbType.Int);
-            codPedido.Direction = ParameterDirection.Output;
-            command.Parameters.Add(codPedido);
-
-            foreach (PropertyInfo propriedade in properties)
-            {
-                if (!propriedade.Name.Equals("Codigo"))
-                {
-                    Console.WriteLine(propriedade.Name);
-                    command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
-                }
-            }
-
-        }
-        //else if (spName == "spAdicionarOpcao")
-        //{
-        //    CodOpcao = new SqlParameter("@Codigo", SqlDbType.Int);
-        //    CodOpcao.Direction = ParameterDirection.Output;
-        //    command.Parameters.Add(CodOpcao);
-
-        //    foreach (PropertyInfo propriedade in properties)
-        //    {
-        //        if (!propriedade.Name.Equals("Codigo") && !propriedade.Name.Equals("DataSincronismo"))
-        //        {
-        //            Console.WriteLine(propriedade.Name);
-        //            command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
-        //        }
-        //    }
-
-        //}
-        else if (spName == "spCriarPedido" || spName == "spAdicionaHistoricoCancelamento")
-        {
-
-            //  Console.WriteLine("spCriarPedido");
-
-            foreach (PropertyInfo propriedade in properties)
-            {
-                if (!propriedade.Name.Equals("Codigo"))
-                {
-
-                    Console.WriteLine(propriedade.Name);
-                    command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
-                }
-            }
-
-        }
-        else if (spName == "spAlteraFidelidade" || spName == "spZerarFidelidade")
-        {
-
-            Console.WriteLine("spAlteraFidelidade");
-
-            foreach (PropertyInfo propriedade in properties)
-            {
-
-                Console.WriteLine(propriedade.Name);
-                command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
 
             }
-
-        }
-        else if (spName == "spAdicionarClienteDelivery")
-        {
-
-            CodPessoa = new SqlParameter("@Codigo", SqlDbType.Int);
-            CodPessoa.Direction = ParameterDirection.Output;
-            command.Parameters.Add(CodPessoa);
-            foreach (PropertyInfo propriedade in properties)
-            {
-                if (!propriedade.Name.Equals("Codigo"))
-                {
-                    Console.WriteLine(propriedade.Name);
-                    command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
-                }
-            }
-
-        }
-        else
-        {
-            foreach (PropertyInfo propriedade in properties)
-            {
-                if (!propriedade.Name.Equals("Codigo"))
-                {
-                    Console.WriteLine(propriedade.Name);
-                    command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
-                }
-            }
-        }
-
-        int n = command.ExecuteNonQuery();
-
-        if (n > 0 && spName == "spAdicionarPedido")
-        {
-            lastCodigo = int.Parse(codPedido.Value.ToString());
-        }
-        else if (spName == "spAdicionarClienteDelivery")
-        {
-            lastCodigo = int.Parse(CodPessoa.Value.ToString());
-        }
-        else if (spName == "spAdicionarProduto")
-        {
-            lastCodigo = int.Parse(CodProduto.Value.ToString());
-        }
-        //else if (spName == "spAdicionarOpcao")
-        //{
-        //    lastCodigo = int.Parse(CodOpcao.Value.ToString());
-        //}
-
-    }
-
-    public int getLastCodigo()
-    {
-        return lastCodigo;
-    }
-
-    public void Update(string spName, Object obj)
-    {
-
-        Type ObjectType = obj.GetType();
-        PropertyInfo[] properties = ObjectType.GetProperties();
-
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        //int pIndex = 0;
-        foreach (PropertyInfo p in properties)
-        {
-
-            if (spName == "spAlterarTotalPedido")
-            {
-                if (p.Name.Equals("Codigo") || p.Name.Equals("TotalPedido") || p.Name.Equals("Tipo") || p.Name.Equals("NumeroMesa"))
-                {
-                    command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
-                }
-            }
-            //else if (spName=="spAlterarOpcaoProduto")
+            //else if (spName == "spAdicionarOpcao")
             //{
-            //    if (!p.Name.Equals("DataSincronismo") ||!p.Name.Equals("Codigo"))
+            //    CodOpcao = new SqlParameter("@Codigo", SqlDbType.Int);
+            //    CodOpcao.Direction = ParameterDirection.Output;
+            //    command.Parameters.Add(CodOpcao);
+
+            //    foreach (PropertyInfo propriedade in properties)
             //    {
-            //        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+            //        if (!propriedade.Name.Equals("Codigo") && !propriedade.Name.Equals("DataSincronismo"))
+            //        {
+            //            Console.WriteLine(propriedade.Name);
+            //            command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+            //        }
             //    }
+
             //}
-            else if (spName == "spAlteraOpcao")
+            else if (spName == "spCriarPedido" || spName == "spAdicionaHistoricoCancelamento")
             {
-                if (!p.Name.Equals("DataSincronismo"))
+
+                //  Console.WriteLine("spCriarPedido");
+
+                foreach (PropertyInfo propriedade in properties)
                 {
-                    command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
-                }
-            }
-            else if (spName == "spAlterarTrocoParaFormaPagamento")
-            {
-                if (p.Name.Equals("Codigo") || p.Name.Equals("TrocoPara") || p.Name.Equals("FormaPagamento"))
-                {
-                    command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
-                }
-            }
-            else if (spName == "spAlterarItemPedido" || spName == "spAlteraStatusMesa" || spName == "spFecharCaixa")
-            {
-                if (!p.Name.Equals("Codigo") && !p.Name.Equals("ValorAbertura"))
-                {
-                    command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    if (!propriedade.Name.Equals("Codigo"))
+                    {
+
+                        Console.WriteLine(propriedade.Name);
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
                 }
 
             }
-            else if (spName == "spAlterarUsuario")
+            else if (spName == "spAlteraFidelidade" || spName == "spZerarFidelidade")
             {
 
-                if (!p.Name.Equals("CaixaLogado"))
-                {
-                    command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
-                }
-            }
-            else if (spName == "spAdicionarItemAoPedido")
-            {
+                Console.WriteLine("spAlteraFidelidade");
 
-                if (!p.Name.Equals("Codigo"))
+                foreach (PropertyInfo propriedade in properties)
                 {
-                    command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+
+                    Console.WriteLine(propriedade.Name);
+                    command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+
                 }
 
             }
-            else if (spName == "spAlterarEmpresa")
+            else if (spName == "spAdicionarClienteDelivery")
             {
 
-                if (!p.Name.Equals("Codigo"))
+                CodPessoa = new SqlParameter("@Codigo", SqlDbType.Int);
+                CodPessoa.Direction = ParameterDirection.Output;
+                command.Parameters.Add(CodPessoa);
+                foreach (PropertyInfo propriedade in properties)
                 {
-                    command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    if (!propriedade.Name.Equals("Codigo"))
+                    {
+                        Console.WriteLine(propriedade.Name);
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
                 }
 
-            }
-            else if (spName == "spAlterarBairrosRegiao")
-            {
-                if (!p.Name.Equals("DataSincronismo"))
-                {
-                    command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
-                }
             }
             else
             {
-                command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                foreach (PropertyInfo propriedade in properties)
+                {
+                    if (!propriedade.Name.Equals("Codigo"))
+                    {
+                        Console.WriteLine(propriedade.Name);
+                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                    }
+                }
             }
+
+            int n = command.ExecuteNonQuery();
+
+            if (n > 0 && spName == "spAdicionarPedido")
+            {
+                lastCodigo = int.Parse(codPedido.Value.ToString());
+            }
+            else if (spName == "spAdicionarClienteDelivery")
+            {
+                lastCodigo = int.Parse(CodPessoa.Value.ToString());
+            }
+            else if (spName == "spAdicionarProduto")
+            {
+                lastCodigo = int.Parse(CodProduto.Value.ToString());
+            }
+            //else if (spName == "spAdicionarOpcao")
+            //{
+            //    lastCodigo = int.Parse(CodOpcao.Value.ToString());
+            //}
+
         }
-        int n = command.ExecuteNonQuery();
-    }
 
-    public void Delete(string spName, Object obj)
-    {
+        public int getLastCodigo()
+        {
+            return lastCodigo;
+        }
 
-        Type ObjectType = obj.GetType();
-        PropertyInfo[] properties = ObjectType.GetProperties();
-
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        //int pIndex = 0;
-        foreach (PropertyInfo p in properties)
+        public void Update(string spName, Object obj)
         {
 
-            if (spName == "spExcluirItemPedido")
+            Type ObjectType = obj.GetType();
+            PropertyInfo[] properties = ObjectType.GetProperties();
+
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            //int pIndex = 0;
+            foreach (PropertyInfo p in properties)
             {
-                if (p.Name.Equals("CodProduto") || p.Name.Equals("CodPedido"))
+
+                if (spName == "spAlterarTotalPedido")
                 {
+                    if (p.Name.Equals("Codigo") || p.Name.Equals("TotalPedido") || p.Name.Equals("Tipo") || p.Name.Equals("NumeroMesa"))
+                    {
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
+                }
+                //else if (spName=="spAlterarOpcaoProduto")
+                //{
+                //    if (!p.Name.Equals("DataSincronismo") ||!p.Name.Equals("Codigo"))
+                //    {
+                //        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                //    }
+                //}
+                else if (spName == "spAlteraOpcao")
+                {
+                    if (!p.Name.Equals("DataSincronismo"))
+                    {
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
+                }
+                else if (spName == "spAlterarTrocoParaFormaPagamento")
+                {
+                    if (p.Name.Equals("Codigo") || p.Name.Equals("TrocoPara") || p.Name.Equals("FormaPagamento"))
+                    {
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
+                }
+                else if (spName == "spAlterarItemPedido" || spName == "spAlteraStatusMesa" || spName == "spFecharCaixa")
+                {
+                    if (!p.Name.Equals("Codigo") && !p.Name.Equals("ValorAbertura"))
+                    {
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
+
+                }
+                else if (spName == "spAlterarUsuario")
+                {
+
+                    if (!p.Name.Equals("CaixaLogado"))
+                    {
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
+                }
+                else if (spName == "spAdicionarItemAoPedido")
+                {
+
                     if (!p.Name.Equals("Codigo"))
+                    {
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
+
+                }
+                else if (spName == "spAlterarEmpresa")
+                {
+
+                    if (!p.Name.Equals("Codigo"))
+                    {
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
+
+                }
+                else if (spName == "spAlterarBairrosRegiao")
+                {
+                    if (!p.Name.Equals("DataSincronismo"))
+                    {
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                }
+            }
+            int n = command.ExecuteNonQuery();
+        }
+
+        public void Delete(string spName, Object obj)
+        {
+
+            Type ObjectType = obj.GetType();
+            PropertyInfo[] properties = ObjectType.GetProperties();
+
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            //int pIndex = 0;
+            foreach (PropertyInfo p in properties)
+            {
+
+                if (spName == "spExcluirItemPedido")
+                {
+                    if (p.Name.Equals("CodProduto") || p.Name.Equals("CodPedido"))
+                    {
+                        if (!p.Name.Equals("Codigo"))
+                        {
+                            command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                        }
+                    }
+                }
+
+                else if (spName == "spExcluirOpcaoProduto")
+                {
+                    if (p.Name.Equals("CodProduto") || p.Name.Equals("CodOpcao"))
                     {
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
                 }
             }
+            int n = command.ExecuteNonQuery();
+        }
 
-            else if (spName == "spExcluirOpcaoProduto")
+        public DataSet SelectPessoaPorTelefone(string table, string spName, string telefone)
+        {
+
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Telefone", telefone);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+        public DataSet SelectRegistroPorData(string itable, string ispName, DateTime iDataRegistro)
+        {
+            command = new SqlCommand(ispName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Data", iDataRegistro);
+
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, itable);
+
+            return ds;
+        }
+        public DataSet SelectRegistroPorDataCodigo(string itable, string ispName, DateTime iDataRegistro, int iNumero)
+        {
+            command = new SqlCommand(ispName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Data", iDataRegistro);
+            command.Parameters.AddWithValue("@Numero", iNumero);
+
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, itable);
+
+            return ds;
+        }
+        public DataSet SelectObterPedidosPorData(string itable, string ispName, DateTime iDataInicio, DateTime iDataFim)
+        {
+            command = new SqlCommand(ispName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@DataInicio", iDataInicio);
+            command.Parameters.AddWithValue("@DataFim", iDataFim);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, itable);
+
+            return ds;
+        }
+        public DataSet SelectObterItemsVendidos(string itable, string ispName, DateTime iDataInicio, DateTime iDataFim)
+        {
+            command = new SqlCommand("select * from " + ispName, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@DataInicio", iDataInicio);
+            command.Parameters.AddWithValue("@DataFim", iDataFim);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, itable);
+
+            return ds;
+        }
+        public DataSet SelectView(string iNomeView, string iTable)
+        {
+            command = new SqlCommand("select * from " + iNomeView, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, iTable);
+
+            return ds;
+        }
+
+        public DataSet SelectObterPedidosPorCliente(string table, string spName, int CodPessoa)
+        {
+
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@CodPessoa", CodPessoa);
+            //   command.Parameters.AddWithValue("@DataInicio", DataInicio);
+            //  command.Parameters.AddWithValue("@DataFim", DataFim);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+        public DataSet SelectObterAniversariantes(string table, string spName, DateTime DataInicial, DateTime DataFinal)
+        {
+
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@DataInicial", DataInicial);
+            command.Parameters.AddWithValue("@DataFinal", DataFinal);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+        public DataSet SelectObterClientesSemPedido(string table, string spName, DateTime DataInicial, DateTime DataFinal)
+        {
+
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@DataInicial", DataInicial);
+            command.Parameters.AddWithValue("@DataFinal", DataFinal);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+        public DataSet SelectPessoaPorCodigo(string table, string spName, int codigo)
+        {
+
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Codigo", codigo);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+
+        public DataSet SelectProdutoCompleto(string table, string spName, int codigo)
+        {
+
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            if (spName.Equals("spObterProdutoCompleto") || spName.Equals("spObterProdutoPorCodigo"))
             {
-                if (p.Name.Equals("CodProduto") || p.Name.Equals("CodOpcao"))
-                {
-                    command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
-                }
+                command.Parameters.AddWithValue("@Codigo", codigo);
+                command.Parameters.AddWithValue("@AtivoSN", true);
             }
-        }
-        int n = command.ExecuteNonQuery();
-    }
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-    public DataSet SelectPessoaPorTelefone(string table, string spName, string telefone)
-    {
+            ds = new DataSet();
+            adapter.Fill(ds, table);
 
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@Telefone", telefone);
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-    public DataSet SelectRegistroPorData(string itable, string ispName, DateTime iDataRegistro)
-    {
-        command = new SqlCommand(ispName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@Data", iDataRegistro);
-
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, itable);
-
-        return ds;
-    }
-    public DataSet SelectRegistroPorDataCodigo(string itable, string ispName, DateTime iDataRegistro, int iNumero)
-    {
-        command = new SqlCommand(ispName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@Data", iDataRegistro);
-        command.Parameters.AddWithValue("@Numero", iNumero);
-
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, itable);
-
-        return ds;
-    }
-    public DataSet SelectObterPedidosPorData(string itable, string ispName, DateTime iDataInicio, DateTime iDataFim)
-    {
-        command = new SqlCommand(ispName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@DataInicio", iDataInicio);
-        command.Parameters.AddWithValue("@DataFim", iDataFim);
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, itable);
-
-        return ds;
-    }
-    public DataSet SelectObterItemsVendidos(string itable, string ispName, DateTime iDataInicio, DateTime iDataFim)
-    {
-        command = new SqlCommand("select * from " + ispName, conn);
-        command.CommandType = CommandType.Text;
-        command.Parameters.AddWithValue("@DataInicio", iDataInicio);
-        command.Parameters.AddWithValue("@DataFim", iDataFim);
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, itable);
-
-        return ds;
-    }
-    public DataSet SelectView(string iNomeView, string iTable)
-    {
-        command = new SqlCommand("select * from " + iNomeView, conn);
-        command.CommandType = CommandType.Text;
-
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, iTable);
-
-        return ds;
-    }
-
-    public DataSet SelectObterPedidosPorCliente(string table, string spName, int CodPessoa)
-    {
-
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@CodPessoa", CodPessoa);
-        //   command.Parameters.AddWithValue("@DataInicio", DataInicio);
-        //  command.Parameters.AddWithValue("@DataFim", DataFim);
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-    public DataSet SelectObterAniversariantes(string table, string spName, DateTime DataInicial, DateTime DataFinal)
-    {
-
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@DataInicial", DataInicial);
-        command.Parameters.AddWithValue("@DataFinal", DataFinal);
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-    public DataSet SelectObterClientesSemPedido(string table, string spName, DateTime DataInicial, DateTime DataFinal)
-    {
-
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@DataInicial", DataInicial);
-        command.Parameters.AddWithValue("@DataFinal", DataFinal);
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-    public DataSet SelectPessoaPorCodigo(string table, string spName, int codigo)
-    {
-
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@Codigo", codigo);
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-
-    public DataSet SelectProdutoCompleto(string table, string spName, int codigo)
-    {
-
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        if (spName.Equals("spObterProdutoCompleto") || spName.Equals("spObterProdutoPorCodigo"))
-        {
-            command.Parameters.AddWithValue("@Codigo", codigo);
-            command.Parameters.AddWithValue("@AtivoSN", true);
-        }
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-
-
-    public DataSet SelectRegistroPorNome(string @iParametro, string table, string spName, string grupoProduto)
-    {
-
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue(@iParametro, grupoProduto);
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-
-    public DataSet SelectObterRegistroPorString(string iNome, string itable)
-    {
-        string iSqlConsulta = "select * from " + itable + " where ";
-
-        command = new SqlCommand(iSqlConsulta, conn);
-        command.CommandType = CommandType.Text;
-        command.Parameters.AddWithValue("@Nome", iNome);
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, itable);
-
-        return ds;
-    }
-    public DataSet SelectObterFormaPagamentoPorNOme(string iNomeFP, string itable)
-    {
-        string iSqlConsulta = "spObterFPNOme";
-
-        command = new SqlCommand(iSqlConsulta, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@Nome", iNomeFP);
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, itable);
-
-        return ds;
-    }
-    public DataSet InsertCep(string table, string spName, CepUtil cep)
-    {
-
-        Type ObjectType = cep.GetType();
-        PropertyInfo[] properties = ObjectType.GetProperties();
-
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        //int pIndex = 0;
-        foreach (PropertyInfo p in properties)
-        {
-            command.Parameters.AddWithValue("@" + p.Name, p.GetValue(cep));
-        }
-        int n = command.ExecuteNonQuery();
-        if (n > 0)
-        {
-            MessageBox.Show("Cep Cadastrado");
-        }
-        else
-        {
-            MessageBox.Show("Erro ao Cadastrar , preencha todos campos");
-        }
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-
-    public DataSet SelectEnderecoPorCep(string table, string spName, int cep)
-    {
-
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@Cep", cep);
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-
-    public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo)
-    {
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        if (spName == "spObterCodigoMesa")
-        {
-            command.Parameters.AddWithValue("@NumeroMesa", codigo);
-        }
-        else if (spName == "spObterHistoricoPorPessoa")
-        {
-            command.Parameters.AddWithValue("@CodPessoa", codigo);
-        }
-        else
-        {
-            command.Parameters.AddWithValue("@Codigo", codigo);
-
+            return ds;
         }
 
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-        ds = new DataSet();
-        adapter.Fill(ds, table);
+        public DataSet SelectRegistroPorNome(string @iParametro, string table, string spName, string grupoProduto)
+        {
 
-        return ds;
-    }
-    public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo, Boolean AtivoSN)
-    {
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        if (spName == "spObterCodigoMesa")
-        {
-            command.Parameters.AddWithValue("@NumeroMesa", codigo);
-        }
-        else if (spName == "spObterHistoricoPorPessoa")
-        {
-            command.Parameters.AddWithValue("@CodPessoa", codigo);
-        }
-        else
-        {
-            command.Parameters.AddWithValue("@Codigo", codigo);
-            command.Parameters.AddWithValue("@AtivoSN", AtivoSN);
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue(@iParametro, grupoProduto);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
         }
 
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-    public DataSet SelectItemsPedido(string table, string spName)
-    {
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-
-    public DataSet SinalizarPedidoConcluido(string table, string spName, int codigo)
-    {
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@Codigo", codigo);
-        //   command.Parameters.AddWithValue("@status", "Fechado");
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-
-    public DataSet SelectItemsExtrasPorPedido(string table, string spName, int codigo)
-    {
-        command = new SqlCommand(spName, conn);
-        command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@CodPedido", codigo);
-        adapter = new SqlDataAdapter(command);
-        adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-        ds = new DataSet();
-        adapter.Fill(ds, table);
-
-        return ds;
-    }
-    public DataSet Liberacao(string iNomeEmpresa, string CNPJ, string iNomePC, string iMAC)
-    {
-        int Tabela;
-        Boolean AtivoSn = false;
-        DataRow Colunas;
-        try
+        public DataSet SelectObterRegistroPorString(string iNome, string itable)
         {
-            MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
-            // MysqlCommand.CommandTimeout = CmysqlTimeOut;
-            MysqlConnection.Open();
-            if (MysqlConnection.State == ConnectionState.Open)
+            string iSqlConsulta = "select * from " + itable + " where ";
+
+            command = new SqlCommand(iSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@Nome", iNome);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, itable);
+
+            return ds;
+        }
+        public DataSet SelectObterFormaPagamentoPorNOme(string iNomeFP, string itable)
+        {
+            string iSqlConsulta = "spObterFPNOme";
+
+            command = new SqlCommand(iSqlConsulta, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Nome", iNomeFP);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, itable);
+
+            return ds;
+        }
+        public DataSet InsertCep(string table, string spName, CepUtil cep)
+        {
+
+            Type ObjectType = cep.GetType();
+            PropertyInfo[] properties = ObjectType.GetProperties();
+
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            //int pIndex = 0;
+            foreach (PropertyInfo p in properties)
             {
+                command.Parameters.AddWithValue("@" + p.Name, p.GetValue(cep));
+            }
+            int n = command.ExecuteNonQuery();
+            if (n > 0)
+            {
+                MessageBox.Show("Cep Cadastrado");
+            }
+            else
+            {
+                MessageBox.Show("Erro ao Cadastrar , preencha todos campos");
+            }
+            ds = new DataSet();
+            adapter.Fill(ds, table);
 
-                MysqlCommand = new MySqlCommand("select cnpj,AtivoSN,NomePC,MACPC from Licenca where cnpj='" + CNPJ + "' and NomePC='" + iNomePC + "' and MACPC='" + iMAC + "'", MysqlConnection);
+            return ds;
+        }
 
-                MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
-                MysqlDataAdapter.Fill(ds, "Licenca");
-                if (ds.Tables["Licenca"].Rows.Count > 0)
+        public DataSet SelectEnderecoPorCep(string table, string spName, int cep)
+        {
+
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Cep", cep);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+        public DataSet ValidaMultiplasFormasPagamento(int iCodPedido)
+        {
+            string lSqlConsulta = " select * from Pedido_Finalizacao PF"+
+                                  "  join Pedido P on P.Codigo = PF.CodPedido"+
+                                  " where"+
+                                  " CodPedido = @Codigo and Codigo = @Codigo ";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@Codigo", iCodPedido);
+          
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Pedido_Finalizacao");
+            return ds;
+        }
+
+        public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo)
+        {
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            if (spName == "spObterCodigoMesa")
+            {
+                command.Parameters.AddWithValue("@NumeroMesa", codigo);
+            }
+            else if (spName == "spObterHistoricoPorPessoa")
+            {
+                command.Parameters.AddWithValue("@CodPessoa", codigo);
+            }
+            else
+            {
+                command.Parameters.AddWithValue("@Codigo", codigo);
+
+            }
+
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+        public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo, Boolean AtivoSN)
+        {
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            if (spName == "spObterCodigoMesa")
+            {
+                command.Parameters.AddWithValue("@NumeroMesa", codigo);
+            }
+            else if (spName == "spObterHistoricoPorPessoa")
+            {
+                command.Parameters.AddWithValue("@CodPessoa", codigo);
+            }
+            else
+            {
+                command.Parameters.AddWithValue("@Codigo", codigo);
+                command.Parameters.AddWithValue("@AtivoSN", AtivoSN);
+            }
+
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+        public DataSet SelectItemsPedido(string table, string spName)
+        {
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+
+        public DataSet SinalizarPedidoConcluido(string table, string spName, int codigo)
+        {
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Codigo", codigo);
+            //   command.Parameters.AddWithValue("@status", "Fechado");
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+
+        public DataSet SelectItemsExtrasPorPedido(string table, string spName, int codigo)
+        {
+            command = new SqlCommand(spName, conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@CodPedido", codigo);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, table);
+
+            return ds;
+        }
+        public DataSet Liberacao(string iNomeEmpresa, string CNPJ, string iNomePC, string iMAC)
+        {
+            int Tabela;
+            Boolean AtivoSn = false;
+            DataRow Colunas;
+            try
+            {
+                MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
+                // MysqlCommand.CommandTimeout = CmysqlTimeOut;
+                MysqlConnection.Open();
+                if (MysqlConnection.State == ConnectionState.Open)
                 {
-                    Colunas = ds.Tables["Licenca"].Rows[0];
 
-                    if (Colunas.ItemArray.GetValue(1).ToString() == "1")
+                    MysqlCommand = new MySqlCommand("select cnpj,AtivoSN,NomePC,MACPC from Licenca where cnpj='" + CNPJ + "' and NomePC='" + iNomePC + "' and MACPC='" + iMAC + "'", MysqlConnection);
+
+                    MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
+                    MysqlDataAdapter.Fill(ds, "Licenca");
+                    if (ds.Tables["Licenca"].Rows.Count > 0)
                     {
-                        AtivoSn = true;
+                        Colunas = ds.Tables["Licenca"].Rows[0];
 
-                        if (!AtivoSn)
+                        if (Colunas.ItemArray.GetValue(1).ToString() == "1")
+                        {
+                            AtivoSn = true;
+
+                            if (!AtivoSn)
+                            {
+                                ds = null;
+                            }
+                        }
+                        else
                         {
                             ds = null;
                         }
+
                     }
                     else
                     {
                         ds = null;
+                        Utils.ExcluiRegistro();
                     }
 
+
+
+                    MysqlCommand.ExecuteNonQuery();
                 }
                 else
                 {
-                    ds = null;
-                    Utils.ExcluiRegistro();
+                    MessageBox.Show("Sem conexão com o servidor central para validação da Licença , tente novamente  reiniciando o sistema", "[xSistemas] Erro ");
                 }
 
-
-
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Erro na validação da licença" + e.Message);
+                int intAbriu5Vezes = Utils.ContaRegistro(iNomeEmpresa + CNPJ);
+                if (intAbriu5Vezes >= 5)
+                {
+                    MessageBox.Show(" Não foi possivel validar seu acesso o sistema  será encerrado!");
+                    Utils.Kill();
+                }
+            }
+            return ds;
+        }
+        public void InserirLicencaTemporaria(string CNPJ, bool AtivoSN, string NomeEmpresa, DateTime dataLiberacao, DateTime DataExpiracao)
+        {
+            try
+            {
+                MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
+                // MysqlCommand.CommandTimeout = CmysqlTimeOut;
+                MysqlConnection.Open();
+                MysqlCommand = new MySqlCommand("insert into Licenca(CNPJ,AtivoSN,Nome,DataLiberacao,DataExpiracao) values " + CNPJ + ", " + AtivoSN + " ," + NomeEmpresa + ", " + dataLiberacao + " ," + DataExpiracao, MysqlConnection);
+                MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
+                MysqlDataAdapter.Fill(ds, "Licenca");
                 MysqlCommand.ExecuteNonQuery();
             }
-            else
+            catch (Exception e)
             {
-                MessageBox.Show("Sem conexão com o servidor central para validação da Licença , tente novamente  reiniciando o sistema", "[xSistemas] Erro ");
-            }
 
-        }
-        catch (Exception e)
-        {
-            MessageBox.Show("Erro na validação da licença" + e.Message);
-            int intAbriu5Vezes = Utils.ContaRegistro(iNomeEmpresa + CNPJ);
-            if (intAbriu5Vezes >= 5)
-            {
-                MessageBox.Show(" Não foi possivel validar seu acesso o sistema  será encerrado!");
-                Utils.Kill();
+                MessageBox.Show("Não foi possivel criar uma licença de testes" +
+                    e.Message);
             }
         }
-        return ds;
+
+        //Método da API
+        [DllImport("wininet.dll")]
+        private extern static Boolean InternetGetConnectedState(out int Description, int ReservedValue);
+
+        // Um método que verifica se esta conectado
+        public Boolean IsConnected()
+        {
+            try
+            {
+                int Description;
+
+                return InternetGetConnectedState(out Description, 0);
+                //using (var client = new WebClient())
+                //using (var stream = client.OpenRead("http://www.google.com"))
+                //{
+                //    return true;
+                //}
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        //public DataSet SelecionaItensAtualizados(string iSpnome ,DateTime iDataAtualizacao, string iTabela)
+        //{
+        //    //command = new SqlCommand(iSpnome, conn);
+        //    //command.CommandType = CommandType.StoredProcedure;
+        //    //command.Parameters.AddWithValue("@Codigo", CodigoDeletar);
+        //    //adapter = new SqlDataAdapter(command);
+        //    //ds = new DataSet();
+        //    //adapter.Fill(ds, iTabela);
+
+
+        //    return ds;
+        //}
+
+
     }
-    public void InserirLicencaTemporaria(string CNPJ, bool AtivoSN, string NomeEmpresa, DateTime dataLiberacao, DateTime DataExpiracao)
-    {
-        try
-        {
-            MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
-            // MysqlCommand.CommandTimeout = CmysqlTimeOut;
-            MysqlConnection.Open();
-            MysqlCommand = new MySqlCommand("insert into Licenca(CNPJ,AtivoSN,Nome,DataLiberacao,DataExpiracao) values " + CNPJ + ", " + AtivoSN + " ," + NomeEmpresa + ", " + dataLiberacao + " ," + DataExpiracao, MysqlConnection);
-            MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
-            MysqlDataAdapter.Fill(ds, "Licenca");
-            MysqlCommand.ExecuteNonQuery();
-        }
-        catch (Exception e)
-        {
-
-            MessageBox.Show("Não foi possivel criar uma licença de testes" +
-                e.Message);
-        }
-    }
-
-    //Método da API
-    [DllImport("wininet.dll")]
-    private extern static Boolean InternetGetConnectedState(out int Description, int ReservedValue);
-
-    // Um método que verifica se esta conectado
-    public Boolean IsConnected()
-    {
-        try
-        {
-            int Description;
-
-            return InternetGetConnectedState(out Description, 0);
-            //using (var client = new WebClient())
-            //using (var stream = client.OpenRead("http://www.google.com"))
-            //{
-            //    return true;
-            //}
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-
-    //public DataSet SelecionaItensAtualizados(string iSpnome ,DateTime iDataAtualizacao, string iTabela)
-    //{
-    //    //command = new SqlCommand(iSpnome, conn);
-    //    //command.CommandType = CommandType.StoredProcedure;
-    //    //command.Parameters.AddWithValue("@Codigo", CodigoDeletar);
-    //    //adapter = new SqlDataAdapter(command);
-    //    //ds = new DataSet();
-    //    //adapter.Fill(ds, iTabela);
-
-
-    //    return ds;
-    //}
-
-
-}
 }

@@ -66,7 +66,7 @@
             this.groupBox1.Cursor = System.Windows.Forms.Cursors.Default;
             this.groupBox1.Location = new System.Drawing.Point(7, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(821, 57);
+            this.groupBox1.Size = new System.Drawing.Size(809, 57);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
@@ -82,7 +82,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(124, 26);
+            this.label1.Location = new System.Drawing.Point(112, 26);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(32, 13);
             this.label1.TabIndex = 17;
@@ -91,7 +91,7 @@
             // txtdtFim
             // 
             this.txtdtFim.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.txtdtFim.Location = new System.Drawing.Point(176, 23);
+            this.txtdtFim.Location = new System.Drawing.Point(150, 20);
             this.txtdtFim.Name = "txtdtFim";
             this.txtdtFim.Size = new System.Drawing.Size(91, 20);
             this.txtdtFim.TabIndex = 16;
@@ -99,7 +99,7 @@
             // 
             // btnConsultar
             // 
-            this.btnConsultar.Location = new System.Drawing.Point(286, 23);
+            this.btnConsultar.Location = new System.Drawing.Point(247, 16);
             this.btnConsultar.Name = "btnConsultar";
             this.btnConsultar.Size = new System.Drawing.Size(75, 23);
             this.btnConsultar.TabIndex = 14;
