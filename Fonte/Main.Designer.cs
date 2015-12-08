@@ -53,6 +53,7 @@
             this.porPessoaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.entregasPorMotoboyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resumidoFormaDePagamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maisVendidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,7 +124,7 @@
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.lblCaixa = new System.Windows.Forms.Label();
-            this.resumidoFormaDePagamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ticketMédioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -320,7 +321,8 @@
             this.porPessoaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.geralToolStripMenuItem2,
             this.entregasPorMotoboyToolStripMenuItem,
-            this.resumidoFormaDePagamentoToolStripMenuItem});
+            this.resumidoFormaDePagamentoToolStripMenuItem,
+            this.ticketMédioToolStripMenuItem});
             this.porPessoaToolStripMenuItem.Name = "porPessoaToolStripMenuItem";
             this.porPessoaToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.porPessoaToolStripMenuItem.Text = "Vendas";
@@ -339,6 +341,13 @@
             this.entregasPorMotoboyToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
             this.entregasPorMotoboyToolStripMenuItem.Text = "Entregas por Motoboy";
             this.entregasPorMotoboyToolStripMenuItem.Click += new System.EventHandler(this.entregasPorMotoboyToolStripMenuItem_Click);
+            // 
+            // resumidoFormaDePagamentoToolStripMenuItem
+            // 
+            this.resumidoFormaDePagamentoToolStripMenuItem.Name = "resumidoFormaDePagamentoToolStripMenuItem";
+            this.resumidoFormaDePagamentoToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
+            this.resumidoFormaDePagamentoToolStripMenuItem.Text = "Resumido (Forma de Pagamento)";
+            this.resumidoFormaDePagamentoToolStripMenuItem.Click += new System.EventHandler(this.resumidoFormaDePagamentoToolStripMenuItem_Click);
             // 
             // diárioToolStripMenuItem
             // 
@@ -1034,12 +1043,12 @@
             this.lblCaixa.TabIndex = 8;
             this.lblCaixa.Text = "Caixa Fechado";
             // 
-            // resumidoFormaDePagamentoToolStripMenuItem
+            // ticketMédioToolStripMenuItem
             // 
-            this.resumidoFormaDePagamentoToolStripMenuItem.Name = "resumidoFormaDePagamentoToolStripMenuItem";
-            this.resumidoFormaDePagamentoToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
-            this.resumidoFormaDePagamentoToolStripMenuItem.Text = "Resumido (Forma de Pagamento)";
-            this.resumidoFormaDePagamentoToolStripMenuItem.Click += new System.EventHandler(this.resumidoFormaDePagamentoToolStripMenuItem_Click);
+            this.ticketMédioToolStripMenuItem.Name = "ticketMédioToolStripMenuItem";
+            this.ticketMédioToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
+            this.ticketMédioToolStripMenuItem.Text = "Ticket Médio";
+            this.ticketMédioToolStripMenuItem.Click += new System.EventHandler(this.ticketMédioToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -1182,5 +1191,6 @@
         private System.Windows.Forms.ToolStripMenuItem tipoOpçãoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem opçõesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resumidoFormaDePagamentoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ticketMédioToolStripMenuItem;
     }
 }

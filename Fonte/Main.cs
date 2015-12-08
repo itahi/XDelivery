@@ -22,6 +22,7 @@ using Microsoft.VisualBasic;
 using DexComanda.Cadastros.Produto;
 using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Operações.Alteracoes;
+using DexComanda.Relatorios.Gerenciais;
 //using DexComanda.Relatorios.Fechamentos;
 
 namespace DexComanda
@@ -1276,18 +1277,23 @@ namespace DexComanda
             DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpresso", iCodPedido);
             if (itemsPedido.Tables[0].Rows.Count > 0)
             {
-               
                 items = new List<ItemPedido>();
                 ItemPedido itemPedido = new ItemPedido();
-                string lRetorno = Utils.ImpressaMesaNova(iCodPedido, ImprimeLPT, 0);
+                string lRetorno="";
                 for (int i = 0; i < itemsPedido.Tables[0].Rows.Count; i++)
                 {
-                    AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
-                    Atualiza.CodPedido = iCodPedido;
-                    Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("CodProduto");
-                    Atualiza.ImpressoSN = true;
-                    con.Update("spInformaItemImpresso", Atualiza);
-                   
+                    if (!itemsPedido.Tables["ItemsPedido"].Rows[i].Field<bool>("ImpressoSN"))
+                    {
+                        string strNomeImpressora = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<string>("NomeImpressora");
+                        lRetorno = Utils.ImpressaMesaNova(iCodPedido, ImprimeLPT, 0, strNomeImpressora);
+                        AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
+                        Atualiza.CodPedido = iCodPedido;
+                        Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("CodProduto");
+                        Atualiza.ImpressoSN = true;
+                        con.Update("spInformaItemImpresso", Atualiza);
+                    }
+                    
+                    
                 }
 
 
@@ -1672,6 +1678,12 @@ namespace DexComanda
         {
             frmReportFechamentoResumido frm = new frmReportFechamentoResumido();
                 frm.ShowDialog();
+        }
+
+        private void ticketMédioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReportTickeMedio frm = new frmReportTickeMedio();
+            frm.ShowDialog();
         }
     }
 }

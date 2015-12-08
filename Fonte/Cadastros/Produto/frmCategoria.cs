@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,15 @@ namespace DexComanda
                     OnlineSN =chkOnline.Checked,
                     DataAlteracao = DateTime.Now
                 };
+                if (chkImprimeCozinha.Checked)
+                {
+                    grupo.NomeImpressora = cbxNomeImpressora.Text;
+                }
+                else
+                {
+                    grupo.NomeImpressora = "";
+                }
+
                 if (txbNomeGrupo.Text !="")
                 {
                     con.Insert("spAdicionarGrupo", grupo);
@@ -111,6 +121,15 @@ namespace DexComanda
                 DataAlteracao = DateTime.Now
 
             };
+            if (chkImprimeCozinha.Checked)
+            {
+                grupo.NomeImpressora = cbxNomeImpressora.Text;
+            }
+            else
+            {
+                grupo.NomeImpressora = "";
+            }
+
             if (txbNomeGrupo.Text !="")
             {
                 con.Update("spAlterarGrupo", grupo);
@@ -218,7 +237,19 @@ namespace DexComanda
             }
         }
 
+        private void btnLista_Click(object sender, EventArgs e)
+        {
+            foreach (string impressora in PrinterSettings.InstalledPrinters)
+            {
+                cbxNomeImpressora.Items.Add(impressora);
+            }
+        }
 
+        private void chkImprimeCozinha_CheckedChanged(object sender, EventArgs e)
+        {
+            cbxNomeImpressora.Enabled = chkImprimeCozinha.Checked;
+            btnLista.Enabled = chkImprimeCozinha.Checked;
+        }
     }
 }
 

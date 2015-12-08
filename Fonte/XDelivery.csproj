@@ -655,6 +655,24 @@
       <DependentUpon>RelDelivery.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Gerenciais\Cristal\RelEvolucaoVendas.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelEvolucaoVendas.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\Cristal\RelTickeMedio.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelTickeMedio.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\frmReportTickeMedio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\frmReportTickeMedio.Designer.cs">
+      <DependentUpon>frmReportTickeMedio.cs</DependentUpon>
+    </Compile>
     <Compile Include="Service References\LOCASMS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -872,6 +890,17 @@
     <EmbeddedResource Include="Relatorios\Delivery\RelDelivery.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDelivery.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelEvolucaoVendas.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelEvolucaoVendas.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelTickeMedio.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelTickeMedio.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\frmReportTickeMedio.resx">
+      <DependentUpon>frmReportTickeMedio.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="DBExpertDataSet.xsc">

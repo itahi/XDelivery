@@ -386,7 +386,7 @@ namespace DexComanda
             try
             {
                 report = new RelDelivey_Cozinha();
-                
+                report.PrintOptions.PrinterName = "MP-4200 TH";
                 crtableLogoninfos = new TableLogOnInfos();
                 crtableLogoninfo = new TableLogOnInfo();
                 crConnectionInfo = new ConnectionInfo();
@@ -424,6 +424,7 @@ namespace DexComanda
                 }
                 else
                 {
+                    
                     report.PrintToPrinter(iNumCopias, false, 0, 0);
                 }
             }
@@ -440,7 +441,7 @@ namespace DexComanda
         /// <param name="iCodPedido">Inteiro Código do Pedido a ser impresso</param>
         ///  <param name="iExport">Boolean Código do Pedido a ser impresso</param>
         /// <returns>String do Pedido para impressoras Matriciais quando iExpport for True.</returns>
-        public static string ImpressaMesaNova(int iCodPedido,Boolean iExport = false, int iNumCopias = 0)
+        public static string ImpressaMesaNova(int iCodPedido,Boolean iExport = false, int iNumCopias = 0,string iNomeImpressora="")
         {
             string iRetorno = ""; ;
             RelComandaMesa report;
@@ -451,8 +452,19 @@ namespace DexComanda
                 crtableLogoninfos = new TableLogOnInfos();
                 crtableLogoninfo = new TableLogOnInfo();
                 crConnectionInfo = new ConnectionInfo();
-                Tables CrTables;
 
+                System.Drawing.Printing.PrinterSettings printersettings = new System.Drawing.Printing.PrinterSettings();
+
+                printersettings.PrinterName = iNomeImpressora;
+
+                printersettings.Copies = 1;
+
+                printersettings.Collate = false;
+                //Workaround with PrintOutputController
+                ///  CrystalDecisions.ReportAppServer.Controllers.PrintOutputControl
+                Tables CrTables;
+                
+                
                 report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
@@ -486,7 +498,8 @@ namespace DexComanda
                 }
                 else
                 {
-                    report.PrintToPrinter(0, false, 0, 0);
+                    report.PrintToPrinter(printersettings, new System.Drawing.Printing.PageSettings(), false);
+
                 }
             }
             catch (Exception erro)
