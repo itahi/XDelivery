@@ -454,14 +454,9 @@ namespace DexComanda
                 crConnectionInfo = new ConnectionInfo();
 
                 System.Drawing.Printing.PrinterSettings printersettings = new System.Drawing.Printing.PrinterSettings();
-
                 printersettings.PrinterName = iNomeImpressora;
-
                 printersettings.Copies = 1;
-
                 printersettings.Collate = false;
-                //Workaround with PrintOutputController
-                ///  CrystalDecisions.ReportAppServer.Controllers.PrintOutputControl
                 Tables CrTables;
                 
                 
@@ -498,7 +493,15 @@ namespace DexComanda
                 }
                 else
                 {
-                    report.PrintToPrinter(printersettings, new System.Drawing.Printing.PageSettings(), false);
+                    if (iNomeImpressora!="")
+                    {
+                        report.PrintToPrinter(printersettings, new System.Drawing.Printing.PageSettings(), false);
+                    }
+                    else
+                    {
+                        report.PrintToPrinter(iNumCopias, false, 0, iNumCopias);
+                    }
+                    
 
                 }
             }

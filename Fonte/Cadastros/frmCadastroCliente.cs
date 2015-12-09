@@ -184,7 +184,6 @@ namespace DexComanda
                 }
                 else
                 {
-
                     int cep = int.Parse(this.txtCEP.Text);
                     endereco = con.SelectEnderecoPorCep("base_cep", "spObterEnderecoPorCep", cep);
 
@@ -195,8 +194,7 @@ namespace DexComanda
 
                         this.txtEndereco.Text = dRow.ItemArray.GetValue(0).ToString();
                         this.txtBairro.Text = dRow.ItemArray.GetValue(1).ToString();
-                        //  this.txtCidade.Text = CidadePadrao;//dRow.ItemArray.GetValue(2).ToString();
-                        //this.txtEstado.Text = EstadoPadrao;//dRow.ItemArray.GetValue(3).ToString();
+                        PreencheRegiao();
                         this.txtNumero.Focus();
                     }
                     else
@@ -209,6 +207,16 @@ namespace DexComanda
                 }
             }
 
+        }
+        private void PreencheRegiao()
+        {
+           DataSet ds = con.RetornarTaxaPorBairro(txtBairro.Text);
+            if (ds.Tables[0].Rows.Count>0)
+            {
+                cbxRegiao.SelectedValue = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("Codigo"));
+                cbxRegiao.Text        = ds.Tables[0].Rows[0].Field<string>("NomeRegiao");
+                txtTaxaEntrega.Text   = Convert.ToString(ds.Tables[0].Rows[0].Field<decimal>("TaxaServico"));
+            }
         }
 
         private void AdicionarCliente(object sender, EventArgs e)

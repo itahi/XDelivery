@@ -90,7 +90,23 @@ namespace DexComanda
 
 
         }
+        public DataSet RetornarTaxaPorBairro(string iNOmeBairro)
+        {
+            string lSqlConsulta = " select R.Codigo , " +
+                                  " R.TaxaServico , " +
+                                  " R.NomeRegiao " +
+                                  " from RegiaoEntrega R " +
+                                  " left join RegiaoEntrega_Bairros RG on RG.CodRegiao = R.Codigo " +
+                                  "  where RG.Nome like '%"+ iNOmeBairro +"%'";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+        //    command.Parameters.AddWithValue("@NomeBairro", iNOmeBairro);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "RegiaoEntrega");
+            return ds;
 
+        }
         public decimal RetornaPrecoComEmbalagem(string iGrupoProduto, int iCodProduto)
         {
             decimal iReturnPreco = 0;
