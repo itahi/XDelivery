@@ -54,6 +54,7 @@
             this.geralToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.entregasPorMotoboyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resumidoFormaDePagamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ticketMédioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maisVendidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -124,7 +125,8 @@
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.lblCaixa = new System.Windows.Forms.Label();
-            this.ticketMédioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chkGerenciaImpressao = new System.Windows.Forms.CheckBox();
+            this.vendidosNoPeriodoAgrupadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -349,12 +351,20 @@
             this.resumidoFormaDePagamentoToolStripMenuItem.Text = "Resumido (Forma de Pagamento)";
             this.resumidoFormaDePagamentoToolStripMenuItem.Click += new System.EventHandler(this.resumidoFormaDePagamentoToolStripMenuItem_Click);
             // 
+            // ticketMédioToolStripMenuItem
+            // 
+            this.ticketMédioToolStripMenuItem.Name = "ticketMédioToolStripMenuItem";
+            this.ticketMédioToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
+            this.ticketMédioToolStripMenuItem.Text = "Ticket Médio";
+            this.ticketMédioToolStripMenuItem.Click += new System.EventHandler(this.ticketMédioToolStripMenuItem_Click);
+            // 
             // diárioToolStripMenuItem
             // 
             this.diárioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.geralToolStripMenuItem,
             this.maisVendidosToolStripMenuItem,
-            this.promoçõesToolStripMenuItem});
+            this.promoçõesToolStripMenuItem,
+            this.vendidosNoPeriodoAgrupadoToolStripMenuItem});
             this.diárioToolStripMenuItem.Name = "diárioToolStripMenuItem";
             this.diárioToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.diárioToolStripMenuItem.Text = "Produto";
@@ -362,21 +372,21 @@
             // geralToolStripMenuItem
             // 
             this.geralToolStripMenuItem.Name = "geralToolStripMenuItem";
-            this.geralToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
+            this.geralToolStripMenuItem.Size = new System.Drawing.Size(298, 26);
             this.geralToolStripMenuItem.Text = "Geral";
             this.geralToolStripMenuItem.Click += new System.EventHandler(this.ReportProdutos);
             // 
             // maisVendidosToolStripMenuItem
             // 
             this.maisVendidosToolStripMenuItem.Name = "maisVendidosToolStripMenuItem";
-            this.maisVendidosToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
-            this.maisVendidosToolStripMenuItem.Text = "Vendidos no Periodo";
+            this.maisVendidosToolStripMenuItem.Size = new System.Drawing.Size(298, 26);
+            this.maisVendidosToolStripMenuItem.Text = "Vendidos no Periodo Detalhado";
             this.maisVendidosToolStripMenuItem.Click += new System.EventHandler(this.maisVendidosToolStripMenuItem_Click);
             // 
             // promoçõesToolStripMenuItem
             // 
             this.promoçõesToolStripMenuItem.Name = "promoçõesToolStripMenuItem";
-            this.promoçõesToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
+            this.promoçõesToolStripMenuItem.Size = new System.Drawing.Size(298, 26);
             this.promoçõesToolStripMenuItem.Text = "Promoções";
             this.promoçõesToolStripMenuItem.Visible = false;
             // 
@@ -1043,12 +1053,23 @@
             this.lblCaixa.TabIndex = 8;
             this.lblCaixa.Text = "Caixa Fechado";
             // 
-            // ticketMédioToolStripMenuItem
+            // chkGerenciaImpressao
             // 
-            this.ticketMédioToolStripMenuItem.Name = "ticketMédioToolStripMenuItem";
-            this.ticketMédioToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
-            this.ticketMédioToolStripMenuItem.Text = "Ticket Médio";
-            this.ticketMédioToolStripMenuItem.Click += new System.EventHandler(this.ticketMédioToolStripMenuItem_Click);
+            this.chkGerenciaImpressao.AutoSize = true;
+            this.chkGerenciaImpressao.ForeColor = System.Drawing.Color.Black;
+            this.chkGerenciaImpressao.Location = new System.Drawing.Point(170, 643);
+            this.chkGerenciaImpressao.Name = "chkGerenciaImpressao";
+            this.chkGerenciaImpressao.Size = new System.Drawing.Size(120, 17);
+            this.chkGerenciaImpressao.TabIndex = 9;
+            this.chkGerenciaImpressao.Text = "Gerencia Impressão";
+            this.chkGerenciaImpressao.UseVisualStyleBackColor = true;
+            // 
+            // vendidosNoPeriodoAgrupadoToolStripMenuItem
+            // 
+            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Name = "vendidosNoPeriodoAgrupadoToolStripMenuItem";
+            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Size = new System.Drawing.Size(298, 26);
+            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Text = "Vendidos no Periodo Agrupado";
+            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Click += new System.EventHandler(this.vendidosNoPeriodoAgrupadoToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -1057,6 +1078,7 @@
             this.BackColor = System.Drawing.Color.Cornsilk;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(992, 663);
+            this.Controls.Add(this.chkGerenciaImpressao);
             this.Controls.Add(this.lblCaixa);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.dashboardV01);
@@ -1192,5 +1214,7 @@
         private System.Windows.Forms.ToolStripMenuItem opçõesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resumidoFormaDePagamentoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ticketMédioToolStripMenuItem;
+        private System.Windows.Forms.CheckBox chkGerenciaImpressao;
+        private System.Windows.Forms.ToolStripMenuItem vendidosNoPeriodoAgrupadoToolStripMenuItem;
     }
 }

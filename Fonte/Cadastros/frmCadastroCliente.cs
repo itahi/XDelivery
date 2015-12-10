@@ -178,9 +178,10 @@ namespace DexComanda
             if (txtCEP.Text.Length == 8)
             {
                 ObterCidadePadrao();
-                if (this.txtCEP.Text.Equals(""))
+                if (this.txtCEP.Text.Equals("") && e.KeyCode == Keys.Enter)
                 {
                     MessageBox.Show("Informe o Cep.");
+                    return;
                 }
                 else
                 {

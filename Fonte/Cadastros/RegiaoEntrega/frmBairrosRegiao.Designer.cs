@@ -91,10 +91,13 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.RegioesGridView);
             this.groupBox2.Location = new System.Drawing.Point(1, 162);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(255, 174);
+            this.groupBox2.Size = new System.Drawing.Size(291, 198);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Bairros";
@@ -112,7 +115,7 @@
             this.RegioesGridView.Name = "RegioesGridView";
             this.RegioesGridView.ReadOnly = true;
             this.RegioesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.RegioesGridView.Size = new System.Drawing.Size(249, 155);
+            this.RegioesGridView.Size = new System.Drawing.Size(285, 179);
             this.RegioesGridView.TabIndex = 3;
             this.RegioesGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RegioesGridView_CellClick);
             this.RegioesGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxiliar);
@@ -154,7 +157,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(263, 339);
+            this.ClientSize = new System.Drawing.Size(299, 363);
             this.Controls.Add(this.txtBairro);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnAdicionar);

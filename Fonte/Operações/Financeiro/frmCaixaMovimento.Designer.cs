@@ -45,15 +45,17 @@
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
             this.panel1 = new System.Windows.Forms.Panel();
             this.MovimentosGridView = new System.Windows.Forms.DataGridView();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lblSaidas = new System.Windows.Forms.Label();
-            this.lblLiquido = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
             this.lblEntradas = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblLiquido = new System.Windows.Forms.Label();
+            this.lblSaidas = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MovimentosGridView)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -206,10 +208,13 @@
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.MovimentosGridView);
             this.panel1.Location = new System.Drawing.Point(0, 93);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(690, 319);
+            this.panel1.Size = new System.Drawing.Size(691, 315);
             this.panel1.TabIndex = 1;
             // 
             // MovimentosGridView
@@ -224,78 +229,94 @@
             this.MovimentosGridView.Name = "MovimentosGridView";
             this.MovimentosGridView.ReadOnly = true;
             this.MovimentosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.MovimentosGridView.Size = new System.Drawing.Size(690, 319);
+            this.MovimentosGridView.Size = new System.Drawing.Size(691, 315);
             this.MovimentosGridView.TabIndex = 8;
             // 
-            // label3
+            // panel2
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(190, 421);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(78, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Total Saidas $:";
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.lblEntradas);
+            this.panel2.Controls.Add(this.label8);
+            this.panel2.Controls.Add(this.lblLiquido);
+            this.panel2.Controls.Add(this.lblSaidas);
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Location = new System.Drawing.Point(25, 415);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(633, 25);
+            this.panel2.TabIndex = 8;
             // 
-            // lblSaidas
+            // label4
             // 
-            this.lblSaidas.AutoSize = true;
-            this.lblSaidas.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblSaidas.Location = new System.Drawing.Point(274, 421);
-            this.lblSaidas.Name = "lblSaidas";
-            this.lblSaidas.Size = new System.Drawing.Size(28, 13);
-            this.lblSaidas.TabIndex = 3;
-            this.lblSaidas.Text = "0,00";
-            // 
-            // lblLiquido
-            // 
-            this.lblLiquido.AutoSize = true;
-            this.lblLiquido.ForeColor = System.Drawing.Color.Red;
-            this.lblLiquido.Location = new System.Drawing.Point(459, 421);
-            this.lblLiquido.Name = "lblLiquido";
-            this.lblLiquido.Size = new System.Drawing.Size(28, 13);
-            this.lblLiquido.TabIndex = 4;
-            this.lblLiquido.Text = "0,00";
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(432, 3);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Liquido R$:";
             // 
             // lblEntradas
             // 
+            this.lblEntradas.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblEntradas.AutoSize = true;
             this.lblEntradas.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblEntradas.Location = new System.Drawing.Point(108, 421);
+            this.lblEntradas.Location = new System.Drawing.Point(160, 3);
             this.lblEntradas.Name = "lblEntradas";
             this.lblEntradas.Size = new System.Drawing.Size(28, 13);
-            this.lblEntradas.TabIndex = 6;
+            this.lblEntradas.TabIndex = 12;
             this.lblEntradas.Text = "0,00";
             this.lblEntradas.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label8
             // 
+            this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 421);
+            this.label8.Location = new System.Drawing.Point(56, 3);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(88, 13);
-            this.label8.TabIndex = 5;
+            this.label8.TabIndex = 11;
             this.label8.Text = "Total Entradas $:";
             // 
-            // label4
+            // lblLiquido
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(375, 421);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Liquido R$:";
+            this.lblLiquido.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblLiquido.AutoSize = true;
+            this.lblLiquido.ForeColor = System.Drawing.Color.Red;
+            this.lblLiquido.Location = new System.Drawing.Point(509, 3);
+            this.lblLiquido.Name = "lblLiquido";
+            this.lblLiquido.Size = new System.Drawing.Size(28, 13);
+            this.lblLiquido.TabIndex = 10;
+            this.lblLiquido.Text = "0,00";
+            // 
+            // lblSaidas
+            // 
+            this.lblSaidas.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblSaidas.AutoSize = true;
+            this.lblSaidas.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lblSaidas.Location = new System.Drawing.Point(324, 3);
+            this.lblSaidas.Name = "lblSaidas";
+            this.lblSaidas.Size = new System.Drawing.Size(28, 13);
+            this.lblSaidas.TabIndex = 9;
+            this.lblSaidas.Text = "0,00";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(223, 3);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(78, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Total Saidas $:";
             // 
             // frmCaixaMovimento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(693, 457);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.lblEntradas);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.lblLiquido);
-            this.Controls.Add(this.lblSaidas);
-            this.Controls.Add(this.label3);
+            this.ClientSize = new System.Drawing.Size(700, 451);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -308,8 +329,9 @@
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.MovimentosGridView)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -327,16 +349,16 @@
         private System.Windows.Forms.Button btnFiltrar;
         private System.Windows.Forms.Panel panel1;
         public System.Windows.Forms.DataGridView MovimentosGridView;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label lblLiquido;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbxNumCaixa;
-        private System.Windows.Forms.Label lblEntradas;
-        private System.Windows.Forms.Label label8;
-        protected System.Windows.Forms.Label lblSaidas;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cbxFPagamento;
-
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblEntradas;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblLiquido;
+        protected System.Windows.Forms.Label lblSaidas;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -34,6 +34,7 @@
             this.lblFalta = new System.Windows.Forms.Label();
             this.btnFinalizar = new System.Windows.Forms.Button();
             this.gridFormasPagamento = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gridFormasPagamento)).BeginInit();
             this.SuspendLayout();
             // 
@@ -99,22 +100,34 @@
             this.gridFormasPagamento.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridFormasPagamento.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.gridFormasPagamento.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridFormasPagamento.Location = new System.Drawing.Point(1, 12);
+            this.gridFormasPagamento.Location = new System.Drawing.Point(1, 32);
             this.gridFormasPagamento.MultiSelect = false;
             this.gridFormasPagamento.Name = "gridFormasPagamento";
             this.gridFormasPagamento.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridFormasPagamento.Size = new System.Drawing.Size(372, 263);
+            this.gridFormasPagamento.Size = new System.Drawing.Size(372, 243);
             this.gridFormasPagamento.TabIndex = 7;
             this.gridFormasPagamento.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridFormasPagamento_CellClick);
             this.gridFormasPagamento.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridFormasPagamento_CellValueChanged);
             this.gridFormasPagamento.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.Valida);
             this.gridFormasPagamento.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridFormasPagamento_KeyDown);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Poor Richard", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(5, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(358, 19);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "( * ) Preenche o valor restante na linha selecionada";
+            this.label2.Visible = false;
+            // 
             // frmFinalizacaoPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(375, 339);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.gridFormasPagamento);
             this.Controls.Add(this.btnFinalizar);
             this.Controls.Add(this.lblFalta);
@@ -142,5 +155,6 @@
         private System.Windows.Forms.Label lblFalta;
         private System.Windows.Forms.Button btnFinalizar;
         private System.Windows.Forms.DataGridView gridFormasPagamento;
+        private System.Windows.Forms.Label label2;
     }
 }

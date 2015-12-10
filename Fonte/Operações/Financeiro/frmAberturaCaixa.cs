@@ -72,7 +72,8 @@ namespace DexComanda.Operações.Financeiro
                     // Lança movimento no Caixa de abertura
                     con.Insert("spAbrirCaixa", caixa);
                     con.Insert("spInserirMovimentoCaixa", cxMovi);
-                   
+
+                    con.LimpaTabela("Produto_Estoque", "spLimparEstoque");
                     MessageBox.Show("Caixa aberto", "[xSistemas] Aviso");
 
                   

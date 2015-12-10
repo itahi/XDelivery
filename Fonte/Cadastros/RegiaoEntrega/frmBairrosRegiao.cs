@@ -31,6 +31,11 @@ namespace DexComanda.Cadastros
             this.cbxRegiao.DataSource = con.SelectAll("RegiaoEntrega", "spObterRegioes").Tables["RegiaoEntrega"];
             this.cbxRegiao.DisplayMember = "NomeRegiao";
             this.cbxRegiao.ValueMember = "Codigo";
+            if (cbxRegiao.SelectedValue.ToString()!="")
+            {
+                ListaBairrosPorRegiao(int.Parse(cbxRegiao.SelectedValue.ToString()));
+            }
+            
 
         }
 
@@ -89,7 +94,7 @@ namespace DexComanda.Cadastros
 
         private void txtCEP_KeyDown(object sender, KeyEventArgs e)
         {
-            if (txtCEP.Text.Length == 8)
+            if (txtCEP.Text.Length == 8 && e.KeyCode == Keys.Enter)
             {
                 DataSet dsCEp = con.RetornaCEPporBairro(txtCEP.Text, false);
                 if (dsCEp.Tables[0].Rows.Count > 0)

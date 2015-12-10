@@ -70,11 +70,12 @@ namespace DexComanda
             if (nomeUsuario.Equals(""))
             {
                 MessageBox.Show("Informe seu usuário.");
+                Logado = false;
             }
             else if (senha.Equals(""))
             {
                 MessageBox.Show("Informe sua senha.");
-              
+                Logado = false;
             }
             else
             {

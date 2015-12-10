@@ -58,6 +58,10 @@ namespace DexComanda.Operações
                         CadastraPrevisao();
                     }
                 }
+                else
+                {
+                    CadastraPrevisao();
+                }
                
                 
             }

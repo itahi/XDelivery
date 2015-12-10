@@ -98,7 +98,8 @@ namespace DexComanda
         // private string Mo
         private void Main_Load(object sender, EventArgs e)
         {
-
+            chkGerenciaImpressao.Checked = Utils.RetornaNomePc() == Sessions.returnEmpresa.Servidor;
+            
 
             if (Sessions.returnUsuario != null)
             {
@@ -1150,7 +1151,7 @@ namespace DexComanda
 
         private void maisVendidosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //frmReportVendasPorProduto frm = new frmReportVendasPorProduto();
+           
             frmReportItensVendidos frm = new frmReportItensVendidos();
             frm.ShowDialog();
             // frm.Dispose();
@@ -1375,7 +1376,7 @@ namespace DexComanda
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
                     
                 }
-                if (Sessions.returnConfig.ImpViaCozinha)
+                if (Sessions.returnConfig.ImpViaCozinha && chkGerenciaImpressao.Checked)
                 {
 
                     for (int i = 0; i < pedidosGridView.Rows.Count; i++)
@@ -1664,8 +1665,8 @@ namespace DexComanda
 
         private void clientesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            //frmAlteracaoCliente frm = new frmAlteracaoCliente();
-            //frm.ShowDialog();
+            frmAlteracaoCliente frm = new frmAlteracaoCliente();
+            frm.ShowDialog();
         }
 
         private void tipoOpçãoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1683,6 +1684,12 @@ namespace DexComanda
         private void ticketMédioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmReportTickeMedio frm = new frmReportTickeMedio();
+            frm.ShowDialog();
+        }
+
+        private void vendidosNoPeriodoAgrupadoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReportVendasPorProduto frm = new frmReportVendasPorProduto();
             frm.ShowDialog();
         }
     }

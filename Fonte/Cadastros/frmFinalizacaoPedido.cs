@@ -215,6 +215,10 @@ namespace DexComanda.Cadastros
             {
                 this.Close();
             }
+            //if (e.KeyCode == Keys.Multiply)
+            //{
+            //    gridFormasPagamento.SelectedRows[gridFormasPagamento.CurrentRow.Index].Cells["Valor"].Value = lblFalta.Text;
+            //}
         }
     }
 }

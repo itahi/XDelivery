@@ -241,7 +241,7 @@ namespace DexComanda
                             {
 
                                 MessageBox.Show("Não foi encontrado uma conexão com a internet ", "Dex Aviso - Atenção");
-                                Utils.IniciaSistema();
+                              //  Utils.IniciaSistema();
                                 if (Utils.LeArquivoRegistro())
                                 {
                                     int intAbriu5Vezes = Utils.ContaRegistro(empresas.Nome + empresas.CNPJ);

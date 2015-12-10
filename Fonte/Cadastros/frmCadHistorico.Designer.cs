@@ -90,10 +90,12 @@
             // 
             this.MotivosGridView.AllowUserToAddRows = false;
             this.MotivosGridView.AllowUserToDeleteRows = false;
+            this.MotivosGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.MotivosGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.MotivosGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.MotivosGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MotivosGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MotivosGridView.Location = new System.Drawing.Point(0, 0);
             this.MotivosGridView.MultiSelect = false;
             this.MotivosGridView.Name = "MotivosGridView";
@@ -117,7 +119,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 343);
+            this.ClientSize = new System.Drawing.Size(287, 353);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
