@@ -29,7 +29,7 @@ namespace DexComanda
 
         private void Main_Load(object sender, EventArgs e)
         {
-
+            pnlImpressora.Enabled = chkImprimeCozinha.Checked;
         }
 
         private void AdicionarGrupo(object sender, EventArgs e)
@@ -78,6 +78,7 @@ namespace DexComanda
             codigo = int.Parse(this.gruposGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
             this.txbNomeGrupo.Text = this.gruposGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
             chkImprimeCozinha.Checked =Convert.ToBoolean( this.gruposGridView.SelectedRows[rowIndex].Cells[2].Value.ToString());
+            cbxNomeImpressora.Text = this.gruposGridView.SelectedRows[rowIndex].Cells["NomeImpressora"].Value.ToString();
             chkOnline.Checked = Convert.ToBoolean(this.gruposGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
             chkAtivo.Checked = Convert.ToBoolean(this.gruposGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
 
@@ -247,8 +248,13 @@ namespace DexComanda
 
         private void chkImprimeCozinha_CheckedChanged(object sender, EventArgs e)
         {
-            cbxNomeImpressora.Enabled = chkImprimeCozinha.Checked;
-            btnLista.Enabled = chkImprimeCozinha.Checked;
+            //  cbxNomeImpressora.Enabled = chkImprimeCozinha.Checked;
+            //btnLista.Enabled = chkImprimeCozinha.Checked;
+        }
+
+        private void chkImprimeCozinha_CheckedChanged_1(object sender, EventArgs e)
+        {
+            pnlImpressora.Enabled = chkImprimeCozinha.Checked;
         }
     }
 }

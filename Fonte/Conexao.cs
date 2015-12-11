@@ -701,7 +701,7 @@ namespace DexComanda
         }
         public DataSet SelectOpcaoProduto(string iCodProduto)
         {
-            string iSql = " select PO.CODOPCAO, PO.Preco,OP.Nome  " +
+            string iSql = " select PO.CODOPCAO, PO.Preco,OP.Nome,OP.Tipo  " +
                           "  from Produto_Opcao PO " +
                           " left join Opcao OP on OP.Codigo = PO.CodOpcao " +
                           " where " +

@@ -15,6 +15,7 @@ namespace DexComanda.Cadastros.Produto
     {
         private Conexao con;
         private int rowIndex;
+        private int intCodopcaTipo;
         public frmTipoOpcao()
         {
             con = new Conexao();
@@ -113,7 +114,7 @@ namespace DexComanda.Cadastros.Produto
         {
             try
             {
-                int intCodopcaTipo = int.Parse(TipoOpcaoGrid.SelectedRows[rowIndex].Cells[0].Value.ToString());
+                intCodopcaTipo = int.Parse(TipoOpcaoGrid.SelectedRows[rowIndex].Cells[0].Value.ToString());
                 DataSet ds = con.SelectRegistroPorCodigo("Produto_OpcaoTipo", "spObterProduto_OpcaoTipoPorCodigo", intCodopcaTipo);
                 if (ds.Tables["Produto_OpcaoTipo"].Rows.Count > 0)
                 {
@@ -128,6 +129,14 @@ namespace DexComanda.Cadastros.Produto
                     }
                
                 }
+
+                this.btnAdicionar.Text = "Salvar [F12]";
+                this.btnAdicionar.Click += new System.EventHandler(this.SalvarRegistro);
+                this.btnAdicionar.Click -= new System.EventHandler(this.btnAdicionar_Click);
+
+                this.btnEditar.Text = "Cancelar [ESC]";
+                this.btnEditar.Click += new System.EventHandler(this.Cancelar);
+                this.btnEditar.Click -= new System.EventHandler(this.btnEditar_Click);
             }
             catch (Exception erro)
             {
@@ -135,6 +144,75 @@ namespace DexComanda.Cadastros.Produto
                 throw;
             }
            
+
+
+        }
+        private void Cancelar(object sender, EventArgs e)
+        {
+
+            Button iButton = (Button)sender;
+
+            if (iButton.Name == "btnEditarGrupo")
+            {
+                Utils.LimpaForm(this);
+            }
+            this.btnAdicionar.Text = "Adicionar";
+            this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
+            this.btnAdicionar.Click -= new System.EventHandler(this.SalvarRegistro);
+
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+        }
+        private void SalvarRegistro(object sender, EventArgs e)
+        {
+            if (!rbMultipla.Checked && !rbTexto.Checked && !rbUnica.Checked)
+            {
+                MessageBox.Show("Marque uma opção para continuar");
+                grpMaxMin.Focus();
+                return;
+            }
+            ProdutoOpcao_Tipo prodOp = new ProdutoOpcao_Tipo()
+            {
+                Codigo = intCodopcaTipo,
+                Nome = txtNome.Text.Trim(),
+                Tipo = RetornaOpcao(),
+                MaximoOpcionais = 0,
+                MinimoOpcionais = 0,
+                OrdenExibicao = int.Parse(cbxOrdem.Text),
+                DataAlteracao = DateTime.Now,
+            };
+            if (grpTipo.Enabled && rbMultipla.Checked)
+            {
+                if (txtMax.Text == "" && txtMinimo.Text == "")
+                {
+                    MessageBox.Show("Campos obrigatórios não preenchidos");
+                    txtMax.Focus();
+                    return;
+                }
+                else
+                {
+                    prodOp.MaximoOpcionais = int.Parse(txtMax.Text);
+                    prodOp.MinimoOpcionais = int.Parse(txtMinimo.Text);
+                }
+
+            }
+            con.Update("spAlterarProduto_OpcaoTipo", prodOp);
+            
+
+                Utils.ControlaEventos("Alterar", this.Name);
+                this.btnAdicionar.Text = "Adicionar [F12]";
+                this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
+                this.btnAdicionar.Click -= new System.EventHandler(this.SalvarRegistro);
+
+                this.btnEditar.Text = "Editar [F11]";
+                this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+             //   this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+            Utils.LimpaForm(this);
+            ListaTipoOpcao();
+
+
+
         }
         private void MarcaRadio(int iTipo)
         {

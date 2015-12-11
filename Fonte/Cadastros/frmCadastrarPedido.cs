@@ -1175,6 +1175,12 @@ namespace DexComanda
         {
             if (gridViewItemsPedido.SelectedRows.Count > 0)
             {
+                string iNomeProduto = gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
+                if (!Utils.MessageBoxQuestion("Deseja excluir o item "+ iNomeProduto
+                    + " Do Pedido?"))
+                {
+                    return;
+                }
                 rowIndex = this.gridViewItemsPedido.CurrentRow.Index;
 
                 var itemPedido = new ItemPedido()
@@ -1380,15 +1386,15 @@ namespace DexComanda
 
                         string iRetorno = Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
                         //ImpressaoCozinha();
-                        if (ImprimeLPT && iRetorno != "")
-                        {
+                        //if (ImprimeLPT && iRetorno != "")
+                        //{
 
-                            //StreamReader tempDex = new StreamReader(iRetorno);
-                            //string sLine = "";
-                            //sLine = tempDex.ReadToEnd();
-                            //Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
+                        //    //StreamReader tempDex = new StreamReader(iRetorno);
+                        //    //string sLine = "";
+                        //    //sLine = tempDex.ReadToEnd();
+                        //    //Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
 
-                        }
+                        //}
                         //else
                         //{
                         //    pd.PrintPage += new PrintPageEventHandler(this.imprimirViaCozinha);
@@ -2256,7 +2262,7 @@ namespace DexComanda
             this.lbTotal.Cursor = System.Windows.Forms.Cursors.Default;
             this.lbTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold);
             this.lbTotal.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.lbTotal.Location = new System.Drawing.Point(331, 8);
+            this.lbTotal.Location = new System.Drawing.Point(322, 8);
             this.lbTotal.Name = "lbTotal";
             this.lbTotal.Size = new System.Drawing.Size(71, 31);
             this.lbTotal.TabIndex = 11;
@@ -2450,7 +2456,7 @@ namespace DexComanda
             this.lblEntrega.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold);
             this.lblEntrega.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.lblEntrega.Location = new System.Drawing.Point(146, 8);
+            this.lblEntrega.Location = new System.Drawing.Point(137, 8);
             this.lblEntrega.Name = "lblEntrega";
             this.lblEntrega.Size = new System.Drawing.Size(71, 31);
             this.lblEntrega.TabIndex = 58;
@@ -2473,7 +2479,7 @@ namespace DexComanda
             this.lblTroco.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblTroco.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold);
             this.lblTroco.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.lblTroco.Location = new System.Drawing.Point(529, 8);
+            this.lblTroco.Location = new System.Drawing.Point(519, 8);
             this.lblTroco.Name = "lblTroco";
             this.lblTroco.Size = new System.Drawing.Size(71, 31);
             this.lblTroco.TabIndex = 56;

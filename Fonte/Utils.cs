@@ -63,6 +63,7 @@ namespace DexComanda
         private static ConnectionInfo crConnectionInfo;
         private static Tables CrTables;
         public static Boolean bMult;
+        private static string strProxImpressora = "";
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
         public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1)
         {
@@ -442,7 +443,7 @@ namespace DexComanda
         /// <param name="iCodPedido">Inteiro Código do Pedido a ser impresso</param>
         ///  <param name="iExport">Boolean Código do Pedido a ser impresso</param>
         /// <returns>String do Pedido para impressoras Matriciais quando iExpport for True.</returns>
-        public static string ImpressaMesaNova(int iCodPedido,Boolean iExport = false, int iNumCopias = 0,string iNomeImpressora="")
+        public static string ImpressaMesaNova(int iCodPedido,Boolean iExport = false, int iNumCopias = 0,string iNomeImpressora="",Boolean iImprimirAgora=false)
         {
             string iRetorno = ""; ;
             RelComandaMesa report;
@@ -494,14 +495,27 @@ namespace DexComanda
                 }
                 else
                 {
-                    if (iNomeImpressora!="")
-                    {
-                        report.PrintToPrinter(printersettings, new System.Drawing.Printing.PageSettings(), false);
-                    }
-                    else
-                    {
-                        report.PrintToPrinter(iNumCopias, false, 0, iNumCopias);
-                    }
+                    //if (iImprimirAgora)
+                    //{
+                        if (iNomeImpressora != "")
+                        {
+                        if (iNomeImpressora==strProxImpressora || strProxImpressora=="")
+                        {
+                            report.PrintToPrinter(printersettings, new System.Drawing.Printing.PageSettings(), false);
+                        }
+                        else
+                        {
+                            strProxImpressora = iNomeImpressora;
+                        }
+                    
+                            
+                        }
+                        else
+                        {
+                            report.PrintToPrinter(iNumCopias, false, 0, iNumCopias);
+                        }
+                    //}
+                   
                     
 
                 }

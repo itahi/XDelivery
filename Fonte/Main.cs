@@ -54,6 +54,7 @@ namespace DexComanda
         private int PedidosContados;
         private DataSet ListaPedidos;
         private int iCaixaAberto;
+        private PrintDocument pd;
         // Permissões de Usuarios
         //private bool UserAdmin = Sessions.returnUsuario.AdministradorSN;
         //private bool UserCancelaPedido = Sessions.returnUsuario.CancelaPedidosSN;
@@ -180,7 +181,7 @@ namespace DexComanda
             string strDescPedido = DvPedido.ItemArray.GetValue(14).ToString();
             string strTroco = "0,00";
             decimal MargemGarcon = decimal.Parse(DvPedido.ItemArray.GetValue(16).ToString());
-            if (strTrocoPara!="0,00")
+            if (strTrocoPara!="0,00" && strTrocoPara!="0")
             {
                 strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
             }
@@ -1271,7 +1272,19 @@ namespace DexComanda
             frmAdicionarMesa frm = new frmAdicionarMesa();
             frm.ShowDialog();
         }
+        //private void ImpressaCozinha(ItemPedido item, string iNomeImpressora)
+        ////{
+        ////    pd.PrintPage += new PrintPageEventHandler(this.imprimirGarcon);
+        ////    pd.PrinterSettings.PrinterName = 
+        ////    pd.PrintPage -= new PrintPageEventHandler(this.imprimirGarcon);
+        //}
+        private void imprimirGarcon(object sender, PrintPageEventArgs ev)
+        {
+            printFont = new Font("Arial", 12);
+            ev.Graphics.DrawString(line, printFont, Brushes.Black,0,0);
+            ev.HasMorePages = false;
 
+        }
         private void ImpressaoAutomatica(int iCodPedido, string iNumMesa)
         {
 
@@ -1281,17 +1294,23 @@ namespace DexComanda
                 items = new List<ItemPedido>();
                 ItemPedido itemPedido = new ItemPedido();
                 string lRetorno="";
+                Boolean imprimirAgora = false;
+                string strNomeImpressora,strImpressoraAnterior = "";
                 for (int i = 0; i < itemsPedido.Tables[0].Rows.Count; i++)
                 {
                     if (!itemsPedido.Tables["ItemsPedido"].Rows[i].Field<bool>("ImpressoSN"))
                     {
-                        string strNomeImpressora = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<string>("NomeImpressora");
-                        lRetorno = Utils.ImpressaMesaNova(iCodPedido, ImprimeLPT, 0, strNomeImpressora);
+                        strNomeImpressora = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<string>("NomeImpressora");
+                        imprimirAgora = false;
+                        lRetorno = Utils.ImpressaMesaNova(iCodPedido, ImprimeLPT, 0, strNomeImpressora, imprimirAgora);
+                        
+                       
                         AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
                         Atualiza.CodPedido = iCodPedido;
                         Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("CodProduto");
                         Atualiza.ImpressoSN = true;
                         con.Update("spInformaItemImpresso", Atualiza);
+                        imprimirAgora = true;
                     }
                     
                     
