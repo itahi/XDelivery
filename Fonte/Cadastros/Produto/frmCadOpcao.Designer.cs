@@ -111,6 +111,7 @@
             this.cbxTipo.Name = "cbxTipo";
             this.cbxTipo.Size = new System.Drawing.Size(186, 21);
             this.cbxTipo.TabIndex = 17;
+            this.cbxTipo.DropDown += new System.EventHandler(this.cbxTipo_DropDown);
             // 
             // label2
             // 

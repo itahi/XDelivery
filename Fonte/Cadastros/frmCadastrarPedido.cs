@@ -77,7 +77,7 @@ namespace DexComanda
         private decimal DMargemGarco = 0.00M;
         private string lnome;
         private string lNomeOpcao;
-        private string lTipo;
+        private int lTipo;
         private decimal lPreco;
         private decimal dcTaxaEntrega;
         private int gMaximoOpcaoProduto;
@@ -497,18 +497,14 @@ namespace DexComanda
                 DataRow dRowOpcoes;
                 DataRow dRoOpcoes2;
                 DataSet dsOpcoes2 = con.RetornaOpcoesProduto(iCodProduto2);
-
-                //  Utils.LimpaForm(grpBoxTamanhos);
                 EscondeTamanhos();
                 chkListAdicionais.Items.Clear();
                 if (dsOpcoes.Tables[0].Rows.Count > 0)
                 {
-
                     for (int i = 0; i < dsOpcoes.Tables[0].Rows.Count; i++)
                     {
-                        if (iCodProduto2 != 0 && lTipo.Equals("Selecao unica"))
+                        if (iCodProduto2 != 0 && lTipo==1)
                         {
-
                             lPreco = RetornaMaiorValor(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco"), dsOpcoes2.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco"));
                         }
                         else
@@ -517,10 +513,10 @@ namespace DexComanda
                         }
                         gMaximoOpcaoProduto = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<int>("MaximoAdicionais");
                         lnome = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();//.Substring(1, 10);
-                        lTipo = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo");
+                        lTipo = int.Parse(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo"));
                         // lPreco = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
 
-                        if (lTipo.Equals("Selecao unica"))
+                        if (lTipo ==1)
                         {
                             lNomeOpcao = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();
                             if (!radioButton1.Visible)
@@ -600,7 +596,7 @@ namespace DexComanda
                             }
 
                         }
-                        if (lTipo.Equals("Multipla Selecao"))
+                        if (lTipo ==2)
                         {
                             chkListAdicionais.Items.Add(lnome + "(+" + lPreco + ")", false);
                         }
@@ -1176,7 +1172,7 @@ namespace DexComanda
             if (gridViewItemsPedido.SelectedRows.Count > 0)
             {
                 string iNomeProduto = gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
-                if (!Utils.MessageBoxQuestion("Deseja excluir o item "+ iNomeProduto
+                if (!Utils.MessageBoxQuestion("Deseja excluir o item " + iNomeProduto
                     + " Do Pedido?"))
                 {
                     return;
@@ -2247,7 +2243,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(749, 6);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -3390,8 +3386,8 @@ namespace DexComanda
             {
                 MessageBox.Show(" Troco é menor que total do Pedido");
             }
-            
-            
+
+
 
         }
 
@@ -3480,26 +3476,26 @@ namespace DexComanda
             decimal TotalPedido = ValorTotal;
             //if (Utils.SoDecimais(e.KeyValue.GetTypeCode(KeyPressEventArgs))
             //{
-                if (decimal.Parse(txtDesconto.Text) < TotalPedido)
+            if (decimal.Parse(txtDesconto.Text) < TotalPedido)
+            {
+                if ((txtDesconto.Text != ""))
                 {
-                    if ((txtDesconto.Text != "") )
-                    {
-                        TotalPedido = TotalPedido + decimal.Parse(lblEntrega.Text);
-                        TotalPedido = TotalPedido - decimal.Parse(txtDesconto.Text);
-                        txtDesconto.Text = string.Format("{0:#,##0.00}", decimal.Parse(txtDesconto.Text));
-                        lbTotal.Text = "R$" + TotalPedido.ToString();
-                        AtualizaTroco();
-                        AtualizaTotalPedido();
-                    }
-
-
-
+                    TotalPedido = TotalPedido + decimal.Parse(lblEntrega.Text);
+                    TotalPedido = TotalPedido - decimal.Parse(txtDesconto.Text);
+                    txtDesconto.Text = string.Format("{0:#,##0.00}", decimal.Parse(txtDesconto.Text));
+                    lbTotal.Text = "R$" + TotalPedido.ToString();
+                    AtualizaTroco();
+                    AtualizaTotalPedido();
                 }
-                else
-                {
-                    MessageBox.Show("Desconto não pode ser maior que o total do pedido", "Aviso");
-                    return;
-                }
+
+
+
+            }
+            else
+            {
+                MessageBox.Show("Desconto não pode ser maior que o total do pedido", "Aviso");
+                return;
+            }
 
             //}
         }

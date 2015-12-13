@@ -618,22 +618,15 @@ namespace DexComanda
             if (codigoProdutoParaAlterar!=0)
             {
                int intCodOpcao = int.Parse(AdicionaisGridView.Rows[rowIndex].Cells["CodOpcao"].Value.ToString());
-                con.Delete("Produto_Opcao", "spExcluirOpcaoProduto", codigoProdutoParaAlterar, intCodOpcao);
-            
+               con.Delete("Produto_Opcao", "spExcluirOpcaoProduto", codigoProdutoParaAlterar, intCodOpcao);
+                ListaOpcaoProduto();
             }
             else
             {
-                if (AdicionaisGridView.SelectedRows.Count > 0)
-                {
-                    AdicionaisGridView.Rows.RemoveAt(AdicionaisGridView.CurrentRow.Index);
-                }
-
-                else
-                {
-                    MessageBox.Show("Selecione o registro para excluir");
-                }
+                AdicionaisGridView.Rows.RemoveAt(AdicionaisGridView.SelectedRows[AdicionaisGridView.CurrentRow.Index].Index);
+              
             }
-            ListaOpcaoProduto();
+            
         }
 
         private void tabControl1_Click(object sender, EventArgs e)
@@ -660,6 +653,7 @@ namespace DexComanda
                 txtcaminhoImage.Text = opn.FileName.ToString();
                 
                 imgProduto.Load(txtcaminhoImage.Text);
+                con.AtualizaDataSincronismo("Produto", codigoProdutoParaAlterar, "DataFoto");
             }
         }
 
@@ -676,6 +670,7 @@ namespace DexComanda
         {
             txtcaminhoImage.Text = "";
             imgProduto.Dispose();
+            con.AtualizaDataSincronismo("Produto", codigoProdutoParaAlterar, "DataFoto");
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)

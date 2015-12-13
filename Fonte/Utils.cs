@@ -139,7 +139,22 @@ namespace DexComanda
             }
             return Logado;
         }
-       
+        public static void MontaCombox(ComboBox icbxName, string idisplayName,
+            string iValueMember ,string iTable,string iSP,int iCod=-1)
+        {
+
+            if (iCod==-1)
+            {
+                icbxName.DataSource = conexao.SelectAll(iTable, iSP).Tables[iTable];
+            }
+            else
+            {
+                icbxName.DataSource = conexao.SelectRegistroPorCodigo(iTable, iSP, iCod).Tables[iTable];
+            }
+            
+            icbxName.DisplayMember = idisplayName;
+            icbxName.ValueMember = iValueMember;
+        }
        
         public static bool VerificaCaixaAbertoDiaAnterior()
         {

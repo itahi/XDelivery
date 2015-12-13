@@ -226,12 +226,15 @@ namespace DexComanda
         }
         public DataSet RetornaOpcoesProduto(int iDProduto)
         {
-            string lSqlConsulta = " select Op.Nome,Op.Tipo,Prod.Preco, " +
-                                  " isnull((select MaximoAdicionais from Produto P where P.Codigo = Prod.CodProduto),0) as MaximoAdicionais" +
-                                  "  from  Produto_Opcao Prod " +
-                                  "  join Opcao Op  on Op.Codigo = Prod.CodOpcao  " +
-                                  "  where Prod.CodProduto=@CodProduto " +
-                                  "  order by Nome";
+            string lSqlConsulta = " select Op.Nome, "+
+                                  " PoT.Tipo," +
+                                  " Prod.Preco," +
+                                  " PoT.MaximoOpcionais as MaximoAdicionais" +
+                                  " from Produto_Opcao Prod" +
+                                  " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
+                                  " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
+                                  "  where Prod.CodProduto = @CodProduto" +
+                                  " order by Nome";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@CodProduto", iDProduto);
@@ -426,6 +429,7 @@ namespace DexComanda
             adapter.Fill(ds, table);
             return ds;
         }
+      
         public DataSet SelectRegistroONline(string iNomeTable)
         {
             string lSqlConsulta = " select * from " + iNomeTable + " where DataAlteracao>DataSincronismo or DataSincronismo is null";

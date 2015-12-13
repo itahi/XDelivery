@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -34,11 +35,10 @@ namespace DexComanda.Operações
             iParamToken = Utils.CriptografarArquivo(iParamToken.Trim());
             iParamToken = iParamToken.ToLower();
         }
-        private void Sincroniza(object sender, EventArgs e)
+        private void Sincroniza()
         {
             iUrlWS = Sessions.returnEmpresa.UrlServidor;
             GerarToken();
-
             try
             {
                 if (chkProdutos.Checked)
@@ -93,6 +93,32 @@ namespace DexComanda.Operações
         {
             return con.SelectRegistroONline(iNomeTable);
         }
+
+        private void CadastrarTipoOpcao(DataSet ds)
+        {
+            RestClient client = new RestClient(iUrlWS);
+            RestRequest request = new RestRequest("ws/regiaoEntrega/set", Method.POST);
+
+            prgBarRegiao.Maximum = ds.Tables[0].Rows.Count;
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                request.AddParameter("token", iParamToken);
+                request.AddParameter("nome", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<string>("nome"));
+                request.AddParameter("tipo", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("tipo"));
+                request.AddParameter("referencia_id", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("Codigo"));
+                request.AddParameter("ordemExibicao", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<string>("OrdemExibicao"));
+                request.AddParameter("minimoselecao",ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<string>("MinimoOpcionais"));
+                request.AddParameter("maximoselecao", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<string>("MaximoOpcionais"));
+                RestResponse response = (RestResponse)client.Execute(request);
+                prgBarRegiao.Value = i + 1;
+
+                if (response.Content.ToString() == "true")
+                {
+                    con.AtualizaDataSincronismo("Produto_OpcaoTipo", ds.Tables[0].Rows[i].Field<int>("Codigo"));
+                }
+            }
+        }
+
         private void CadastrarBanner(string iBanner)
         {
             RestClient client = new RestClient(iUrlWS);
@@ -312,6 +338,8 @@ namespace DexComanda.Operações
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
                 decimal prProduto = ds.Tables["Produto"].Rows[i].Field<decimal>("PrecoProduto");
+                DateTime dtFoto = ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFoto");
+                DateTime dtSinc = ds.Tables["Produto"].Rows[i].Field<DateTime>("DataSincronismo");
                 string iCaminhoImagem = ds.Tables["Produto"].Rows[i].Field<string>("UrlImagem");
                 request.AddParameter("token", iParamToken);
                 request.AddParameter("idReferencia", ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
@@ -327,13 +355,14 @@ namespace DexComanda.Operações
                 }
 
                 request.AddParameter("preco", prProduto);
-                if (Sessions.returnConfig.DescontoDiaSemana)
+                decimal prPromocao = ds.Tables["Produto"].Rows[i].Field<decimal>("PrecoDesconto");
+                if (Sessions.returnConfig.DescontoDiaSemana&& prPromocao>0)
                 {
-                    request.AddParameter("precoPromocao", ds.Tables["Produto"].Rows[i].Field<decimal>("PrecoDesconto"));
+                    request.AddParameter("precoPromocao", prPromocao);
                     request.AddParameter("dataInicial", ds.Tables["Produto"].Rows[i].Field<DateTime>("DataInicioPromocao"));
                     request.AddParameter("dataFinal", ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFimPromocao"));
                 }
-                if (iCaminhoImagem !=null && iCaminhoImagem!="")
+                if (iCaminhoImagem !=null && iCaminhoImagem!="" && dtFoto>dtSinc )
                 {
                     request.AddFile("imagem", iCaminhoImagem);
                 }
@@ -466,9 +495,31 @@ namespace DexComanda.Operações
 
         private void btnSincronizar_Click(object sender, EventArgs e)
         {
-            Sincroniza(sender, e);
-        }
+            Sincroniza();
+            //Thread NovaTread;
+            //try
+            //{
 
+            //    NovaTread = new Thread(new ThreadStart(Sincroniza));
+            //    NovaTread.Start();
+            //    while (!NovaTread.IsAlive)
+            //    {
+            //        Thread.Sleep(1);
+            //        NovaTread.Abort();
+            //        NovaTread.Join();
+            //    }
+            //}
+            //finally
+            //{
+            //    //
+            //}
+            
+            
+        }
+        private void SincronizacaoEmTread()
+        {
+           // Sincroniza(sender, e);
+        }
         private void SincAdicionais(object sender, EventArgs e)
         {
             double iPerceDesconto;

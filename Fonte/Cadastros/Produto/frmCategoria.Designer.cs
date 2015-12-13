@@ -36,7 +36,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.chkOnline = new System.Windows.Forms.CheckBox();
             this.chkAtivo = new System.Windows.Forms.CheckBox();
-            this.cachedRelCreditoDebito1 = new DexComanda.Relatorios.Clientes.CachedRelCreditoDebito();
             this.pnlImpressora = new System.Windows.Forms.Panel();
             this.btnLista = new System.Windows.Forms.Button();
             this.cbxNomeImpressora = new System.Windows.Forms.ComboBox();
@@ -200,7 +199,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chkOnline;
         private System.Windows.Forms.CheckBox chkAtivo;
-        private Relatorios.Clientes.CachedRelCreditoDebito cachedRelCreditoDebito1;
         private System.Windows.Forms.Panel pnlImpressora;
         private System.Windows.Forms.Button btnLista;
         private System.Windows.Forms.ComboBox cbxNomeImpressora;

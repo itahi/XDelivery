@@ -32,7 +32,7 @@ namespace DexComanda.Cadastros.Produto
                     {
                         DataAlteracao = DateTime.Now,
                         Nome = txtNome.Text,
-                        Tipo = cbxTipo.Text,
+                        Tipo = cbxTipo.SelectedValue.ToString(),
                         OnlineSN = true
 
                     };
@@ -60,6 +60,8 @@ namespace DexComanda.Cadastros.Produto
 
         private void frmCadOpcao_Load(object sender, EventArgs e)
         {
+           Utils.MontaCombox(cbxTipo, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
+
             ListaOpcao();
         }
         private void DeletaRegistro(object sender, EventArgs e)
@@ -92,19 +94,33 @@ namespace DexComanda.Cadastros.Produto
 
         }
 
+        private void RetonaTipo(int iTipo)
+        {
+            //con.SelectRegistroPorCodigo("Produto_OpcaoTipo", "", iTipo);
+            Utils.MontaCombox(cbxTipo, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterProduto_OpcaoTipoPorCodigo", iTipo);
+        }
+
         private void EditarOpcao(object sender, EventArgs e)
         {
-            codigoAlterarDeletar = int.Parse(this.OpcaoGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-            this.cbxTipo.Text = this.OpcaoGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
-            txtNome.Text =OpcaoGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
-          
-            this.btnAdicionar.Text = "Salvar [F12]";
-            this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
-            this.btnAdicionar.Click -= new System.EventHandler(this.CadastraOpcao);
+            try
+            {
+                codigoAlterarDeletar = int.Parse(this.OpcaoGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
+                RetonaTipo(int.Parse(OpcaoGridView.SelectedRows[rowIndex].Cells[1].Value.ToString()));
+                txtNome.Text = OpcaoGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
 
-            this.btnEditar.Text = "Cancelar [ESC]";
-            this.btnEditar.Click += new System.EventHandler(this.Cancelar);
-            this.btnEditar.Click -= new System.EventHandler(this.EditarOpcao);
+                this.btnAdicionar.Text = "Salvar [F12]";
+                this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
+                this.btnAdicionar.Click -= new System.EventHandler(this.CadastraOpcao);
+
+                this.btnEditar.Text = "Cancelar [ESC]";
+                this.btnEditar.Click += new System.EventHandler(this.Cancelar);
+                this.btnEditar.Click -= new System.EventHandler(this.EditarOpcao);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+           
         }
         private void Cancelar(object sender, EventArgs e)
         {
@@ -129,7 +145,7 @@ namespace DexComanda.Cadastros.Produto
                 {
                     Codigo = codigoAlterarDeletar,
                     Nome = txtNome.Text,
-                    Tipo = cbxTipo.Text,
+                    Tipo = cbxTipo.SelectedValue.ToString(),
                     DataAlteracao= DateTime.Now
                 };
                 con.Update("spAlteraOpcao", opcao);
@@ -180,6 +196,11 @@ namespace DexComanda.Cadastros.Produto
                 m.Show(dgv, new Point(e.X, e.Y));
 
             }
+        }
+
+        private void cbxTipo_DropDown(object sender, EventArgs e)
+        {
+            Utils.MontaCombox(cbxTipo, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
         }
     }
 }
