@@ -268,13 +268,13 @@ namespace DexComanda
                 else
                 {
                    
-                    report.PrintToPrinter(0, true, 0, 0);
+                    report.PrintToPrinter(iNumCopias, true, 0, 0);
                 }
             }
             catch (Exception erro)
             {
 
-                MessageBox.Show("Erro ná impressao :"+ erro.Message);
+                MessageBox.Show("Erro na impressao :"+ erro.Message);
             }
             return iRetorno;  
         }
@@ -403,7 +403,7 @@ namespace DexComanda
             try
             {
                 report = new RelDelivey_Cozinha();
-                report.PrintOptions.PrinterName = "MP-4200 TH";
+              //  report.PrintOptions.PrinterName = "MP-4200 TH";
                 crtableLogoninfos = new TableLogOnInfos();
                 crtableLogoninfo = new TableLogOnInfo();
                 crConnectionInfo = new ConnectionInfo();

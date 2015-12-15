@@ -57,6 +57,7 @@
             this.lblReturn = new System.Windows.Forms.Label();
             this.chkDesconto = new System.Windows.Forms.CheckBox();
             this.txtPercentualDesconto = new System.Windows.Forms.TextBox();
+            this.lblSinc = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -80,6 +81,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.lblSinc);
             this.tabPage1.Controls.Add(this.prgBarPrevisao);
             this.tabPage1.Controls.Add(this.chkPrevisao);
             this.tabPage1.Controls.Add(this.btnSincronizar);
@@ -117,7 +119,7 @@
             // 
             // btnSincronizar
             // 
-            this.btnSincronizar.Location = new System.Drawing.Point(90, 194);
+            this.btnSincronizar.Location = new System.Drawing.Point(89, 184);
             this.btnSincronizar.Name = "btnSincronizar";
             this.btnSincronizar.Size = new System.Drawing.Size(75, 23);
             this.btnSincronizar.TabIndex = 14;
@@ -356,6 +358,16 @@
             this.txtPercentualDesconto.Size = new System.Drawing.Size(45, 20);
             this.txtPercentualDesconto.TabIndex = 9;
             // 
+            // lblSinc
+            // 
+            this.lblSinc.AutoSize = true;
+            this.lblSinc.Location = new System.Drawing.Point(23, 164);
+            this.lblSinc.Name = "lblSinc";
+            this.lblSinc.Size = new System.Drawing.Size(74, 13);
+            this.lblSinc.TabIndex = 17;
+            this.lblSinc.Text = "Sincronizando";
+            this.lblSinc.Visible = false;
+            // 
             // frmSincronizacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -408,5 +420,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ProgressBar prgBarPrevisao;
         private System.Windows.Forms.CheckBox chkPrevisao;
+        private System.Windows.Forms.Label lblSinc;
     }
 }

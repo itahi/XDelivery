@@ -447,9 +447,9 @@ namespace DexComanda
         public DataSet RetornaRegiao()
         {
             string lSqlConsulta = " select RG.Codigo, RG.NomeRegiao,RG.TaxaServico" +
-                                  "  ,RB.CEP ,RG.OnlineSN" +
+                                  "  ,RB.CEP ,Isnull(RB.OnlineSN,0) as OnlineSN" +
                                   "   from RegiaoEntrega RG " +
-                                   "  left join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo " +
+                                   "  join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo " +
                                   "   WHERE RG.DataAlteracao > RG.DataSincronismo or RG.DataSincronismo is null";
 
             command = new SqlCommand(lSqlConsulta, conn);
@@ -944,7 +944,6 @@ namespace DexComanda
 
             Type ObjectType = obj.GetType();
             PropertyInfo[] properties = ObjectType.GetProperties();
-
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
             //int pIndex = 0;
@@ -1143,6 +1142,19 @@ namespace DexComanda
 
             ds = new DataSet();
             adapter.Fill(ds, iTable);
+
+            return ds;
+        }
+        public DataSet SelectCEPRegiao(string iBairro)
+        {
+            command = new SqlCommand("select * from  RegiaoEntrega_Bairros where AtivoSN=1 and  NOME='"+ iBairro +"'", conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, "RegiaoEntrega_Bairros");
 
             return ds;
         }

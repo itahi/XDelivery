@@ -3100,27 +3100,27 @@ namespace DexComanda
             decimal TotalPedido = ValorTotal;
             if (Utils.SoDecimais(e))
             {
-                if (decimal.Parse(txtDesconto.Text) < TotalPedido)
+                if ((txtDesconto.Text != "") && (e.KeyChar == Convert.ToChar(Keys.Enter)))
                 {
-                    if ((txtDesconto.Text != "") && (e.KeyChar == Convert.ToChar(Keys.Enter)))
+                    if (decimal.Parse(txtDesconto.Text) < TotalPedido)
                     {
+
                         TotalPedido = TotalPedido + decimal.Parse(lblEntrega.Text);
                         TotalPedido = TotalPedido - decimal.Parse(txtDesconto.Text);
                         txtDesconto.Text = string.Format("{0:#,##0.00}", decimal.Parse(txtDesconto.Text));
                         lbTotal.Text = "R$" + TotalPedido.ToString();
                         AtualizaTroco();
                         AtualizaTotalPedido();
+
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Desconto não pode ser maior que o total do pedido", "Aviso");
+                        return;
                     }
 
-
-
                 }
-                else
-                {
-                    MessageBox.Show("Desconto não pode ser maior que o total do pedido", "Aviso");
-                    return;
-                }
-
             }
         }
 
@@ -3473,29 +3473,29 @@ namespace DexComanda
 
         private void txtDesconto_KeyUp(object sender, KeyEventArgs e)
         {
-            decimal TotalPedido = ValorTotal;
-            //if (Utils.SoDecimais(e.KeyValue.GetTypeCode(KeyPressEventArgs))
+            //decimal TotalPedido = ValorTotal;
+            ////if (Utils.SoDecimais(e.KeyValue.GetTypeCode(KeyPressEventArgs))
+            ////{
+            //if (decimal.Parse(txtDesconto.Text) < TotalPedido)
             //{
-            if (decimal.Parse(txtDesconto.Text) < TotalPedido)
-            {
-                if ((txtDesconto.Text != ""))
-                {
-                    TotalPedido = TotalPedido + decimal.Parse(lblEntrega.Text);
-                    TotalPedido = TotalPedido - decimal.Parse(txtDesconto.Text);
-                    txtDesconto.Text = string.Format("{0:#,##0.00}", decimal.Parse(txtDesconto.Text));
-                    lbTotal.Text = "R$" + TotalPedido.ToString();
-                    AtualizaTroco();
-                    AtualizaTotalPedido();
-                }
+            //    if ((txtDesconto.Text != ""))
+            //    {
+            //        TotalPedido = TotalPedido + decimal.Parse(lblEntrega.Text);
+            //        TotalPedido = TotalPedido - decimal.Parse(txtDesconto.Text);
+            //        txtDesconto.Text = string.Format("{0:#,##0.00}", decimal.Parse(txtDesconto.Text));
+            //        lbTotal.Text = "R$" + TotalPedido.ToString();
+            //        AtualizaTroco();
+            //        AtualizaTotalPedido();
+            //    }
 
 
 
-            }
-            else
-            {
-                MessageBox.Show("Desconto não pode ser maior que o total do pedido", "Aviso");
-                return;
-            }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Desconto não pode ser maior que o total do pedido", "Aviso");
+            //    return;
+            //}
 
             //}
         }

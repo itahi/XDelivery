@@ -48,12 +48,16 @@ namespace DexComanda.Relatorios.Fechamentos.Novos
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
 
-                report.SetParameterValue("@DataInicio", "01/01/2014");
-                report.SetParameterValue("@DataFim", "31/12/2015");
-                //report.SetParameterValue("@DataInicio", dtInicio.Value.ToShortDateString());
-                //report.SetParameterValue("@DataFim", dtFim.Value.ToShortDateString());
+
+                report.SetParameterValue("@DataInicio", dtInicio.Value.ToShortDateString() + " 00:00:00");
+                report.SetParameterValue("@DataFim", dtFim.Value.ToShortDateString() + " 23:59:59");
+                if (report.Rows.Count == 0)
+                {
+                    MessageBox.Show("Não há resultados com o filtro selecionado");
+                    return;
+                }
                 crystalReportViewer1.ReportSource = report;
-                crystalReportViewer1.Refresh();
+               crystalReportViewer1.Refresh();
             }
             catch (Exception ex)
             {

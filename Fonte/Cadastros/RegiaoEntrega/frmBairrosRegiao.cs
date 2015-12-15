@@ -38,19 +38,7 @@ namespace DexComanda.Cadastros
             
 
         }
-
-        private void txtBairro_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
-
-        private void cbxBairro_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
-
-
-
+        
         private void Adicionar(object sender, EventArgs e)
         {
             if (cbxRegiao.SelectedIndex != -1 && txtCEP.Text != "")
@@ -62,9 +50,12 @@ namespace DexComanda.Cadastros
                         CodRegiao = int.Parse(cbxRegiao.SelectedValue.ToString()),
                         CEP = txtCEP.Text,
                         Nome = txtBairro.Text,
-                        DataCadastro = DateTime.Now
+                        DataCadastro = DateTime.Now,
+                        AtivoSN = chkAtivo.Checked,
+                        OnlineSN = chkOnlineSN.Checked
                     };
                     con.Insert("spAdicionaBairrosRegiao", reg);
+                    con.AtualizaDataSincronismo("RegiaoEntrega", reg.CodRegiao, "DataAlteracao");
                     Utils.ControlaEventos("Inserir", this.Name);
                   ///  Utils.LimpaForm(this);
                     ListaBairrosPorRegiao(int.Parse(cbxRegiao.SelectedValue.ToString()));
@@ -121,7 +112,8 @@ namespace DexComanda.Cadastros
                 cbxRegiao.SelectedText = dRow.ItemArray.GetValue(2).ToString();
                 txtBairro.Text = RegioesGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
                 txtCEP.Text = RegioesGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
-                
+                chkAtivo.Checked = Convert.ToBoolean(RegioesGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
+                chkOnlineSN.Checked = Convert.ToBoolean(RegioesGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
                 this.btnAdicionar.Text = "Salvar";
                 this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
                 this.btnAdicionar.Click -= new System.EventHandler(this.Adicionar);
@@ -148,16 +140,27 @@ namespace DexComanda.Cadastros
 
         private void Salvar(object sender, EventArgs e)
         {
+            string iCodSelecionado = cbxRegiao.SelectedValue.ToString();
             try
             {
+              
                 RegiaoEntrega_Bairros reg = new RegiaoEntrega_Bairros()
                 {
                     CEP = txtCEP.Text,
                     CodRegiao = int.Parse(cbxRegiao.SelectedValue.ToString()),
                     DataCadastro = DateTime.Now,
-                    Nome = cbxRegiao.Text
+                    Nome = txtBairro.Text,
+                    AtivoSN = chkAtivo.Checked,
+                    OnlineSN = chkOnlineSN.Checked
                 };
+                if (con.SelectCEPRegiao(txtBairro.Text).Tables[0].Rows.Count > 0 && iCodSelecionado != reg.CodRegiao.ToString())
+                {
+                    MessageBox.Show("Esse cep já está vinculado a outra região");
+                    return;
+                }
+
                 con.Update("spAlterarBairrosRegiao", reg);
+                con.AtualizaDataSincronismo("RegiaoEntrega", reg.CodRegiao, "DataAlteracao");
                 Utils.ControlaEventos("Alterar", this.Name);
                 ListaRegiao();
             }
@@ -237,8 +240,8 @@ namespace DexComanda.Cadastros
                 string Cep = RegioesGridView.SelectedCells[2].Value.ToString();
                 con.DeleteBairroRegiao("RegiaoEntrega_Bairros", "spExcluirBairroRegiao", CoRegiao, Cep);
                 Utils.ControlaEventos("Excluir", this.Name);
+                con.AtualizaDataSincronismo("RegiaoEntrega", CoRegiao, "DataAlteracao");
                 MessageBox.Show("Item excluído com sucesso.");
-                // ListaRegiao();
                 ListaBairrosPorRegiao(CoRegiao);
             }
             else

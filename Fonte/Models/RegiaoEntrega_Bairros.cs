@@ -13,6 +13,8 @@ namespace DexComanda.Models
         public string CEP { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime DataSincronismo { get; set; }
+        public Boolean AtivoSN { get; set; }
+        public Boolean OnlineSN { get; set; }
 
     }
 }

@@ -39,6 +39,8 @@
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnAdicionar = new System.Windows.Forms.Button();
             this.txtBairro = new System.Windows.Forms.TextBox();
+            this.chkAtivo = new System.Windows.Forms.CheckBox();
+            this.chkOnlineSN = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RegioesGridView)).BeginInit();
             this.SuspendLayout();
@@ -129,8 +131,8 @@
             this.btnEditar.Size = new System.Drawing.Size(74, 24);
             this.btnEditar.TabIndex = 32;
             this.btnEditar.Text = "Editar";
+            this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnEditar.UseVisualStyleBackColor = true;
-            this.btnEditar.Visible = false;
             this.btnEditar.Click += new System.EventHandler(this.Editar);
             // 
             // btnAdicionar
@@ -153,11 +155,33 @@
             this.txtBairro.Size = new System.Drawing.Size(177, 20);
             this.txtBairro.TabIndex = 35;
             // 
+            // chkAtivo
+            // 
+            this.chkAtivo.AutoSize = true;
+            this.chkAtivo.Location = new System.Drawing.Point(90, 52);
+            this.chkAtivo.Name = "chkAtivo";
+            this.chkAtivo.Size = new System.Drawing.Size(71, 17);
+            this.chkAtivo.TabIndex = 36;
+            this.chkAtivo.Text = "AtivoSN?";
+            this.chkAtivo.UseVisualStyleBackColor = true;
+            // 
+            // chkOnlineSN
+            // 
+            this.chkOnlineSN.AutoSize = true;
+            this.chkOnlineSN.Location = new System.Drawing.Point(90, 75);
+            this.chkOnlineSN.Name = "chkOnlineSN";
+            this.chkOnlineSN.Size = new System.Drawing.Size(77, 17);
+            this.chkOnlineSN.TabIndex = 37;
+            this.chkOnlineSN.Text = "OnlineSN?";
+            this.chkOnlineSN.UseVisualStyleBackColor = true;
+            // 
             // frmBairrosRegiao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(299, 363);
+            this.Controls.Add(this.chkOnlineSN);
+            this.Controls.Add(this.chkAtivo);
             this.Controls.Add(this.txtBairro);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnAdicionar);
@@ -189,5 +213,7 @@
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnAdicionar;
         private System.Windows.Forms.TextBox txtBairro;
+        private System.Windows.Forms.CheckBox chkAtivo;
+        private System.Windows.Forms.CheckBox chkOnlineSN;
     }
 }

@@ -50,6 +50,11 @@ namespace DexComanda.Relatorios.Fechamentos.Novos
 
                 report.SetParameterValue("@DataInicio", dtInicio);
                 report.SetParameterValue("@DataFim", datFim);
+                if (report.Rows.Count==0)
+                {
+                    MessageBox.Show("Não há resultados com o filtro selecionado");
+                    return;
+                }
                 crystalReportViewer1.ReportSource = report;
                 crystalReportViewer1.Refresh();
             }
