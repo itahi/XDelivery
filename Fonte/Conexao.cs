@@ -229,7 +229,7 @@ namespace DexComanda
             string lSqlConsulta = " select Op.Nome, "+
                                   " PoT.Tipo," +
                                   " Prod.Preco," +
-                                  " PoT.MaximoOpcionais as MaximoAdicionais" +
+                                  " (select MaximoAdicionais from Produto P where P.Codigo=Prod.CodProduto  ) MaximoAdicionais" +
                                   " from Produto_Opcao Prod" +
                                   " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
                                   " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
@@ -705,9 +705,10 @@ namespace DexComanda
         }
         public DataSet SelectOpcaoProduto(string iCodProduto)
         {
-            string iSql = " select PO.CODOPCAO, PO.Preco,OP.Nome,OP.Tipo  " +
+            string iSql = " select PO.CODOPCAO, PO.Preco,OP.Nome,PRO.Tipo  " +
                           "  from Produto_Opcao PO " +
                           " left join Opcao OP on OP.Codigo = PO.CodOpcao " +
+                          "join Produto_OpcaoTipo PRO on PRO.Codigo = Op.Tipo"+
                           " where " +
                           " PO.CodProduto = @CodProduto";
 

@@ -893,7 +893,7 @@ namespace DexComanda
                     int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
                     dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
 
-                    if (Sessions.returnConfig.ControlaEntregador && iCodMesa == 0)
+                    if (Sessions.returnConfig.ControlaEntregador && iCodMesa != 0)
                     {
                         InformaMotoboyPedido(codigo);
                     }
@@ -914,7 +914,7 @@ namespace DexComanda
 
                     // Atualiza Ticket Fidelidade
                     AtualizarFidelidade(intCodPessoa);
-
+                     
                     // Enfim finaliza o Pedido
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 

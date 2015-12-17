@@ -562,7 +562,8 @@ namespace DexComanda
                 CodOpcao = codigoOpcao,
                 CodProduto = codigoProdutoParaAlterar,
                 DataAlteracao = DateTime.Now,
-                Preco = decimal.Parse(txtPrecoOpcao.Text)
+                Preco = decimal.Parse(txtPrecoOpcao.Text),
+                PrecoProcomocao = 0,
             };
             if (txtPrecoOpcao.Text != "")
             {

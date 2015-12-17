@@ -11,6 +11,7 @@ namespace DexComanda.Models
         public int CodProduto { get; set; }
         public int CodOpcao { get; set; }
         public decimal Preco { get; set; }
+        public decimal PrecoProcomocao { get; set; }
         public DateTime DataAlteracao { get; set; }
 
     }

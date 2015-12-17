@@ -60,7 +60,7 @@ namespace DexComanda
             catch (Exception erro)
             {
 
-                throw;
+                MessageBox.Show(erro.Message);
             }
 
 

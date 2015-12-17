@@ -246,7 +246,6 @@ namespace DexComanda.Operações
                         con.AtualizaDataSincronismo("Opcao", ds.Tables["Opcao"].Rows[i].Field<int>("Codigo"));
                     }
 
-
                 }
             }
             catch (Exception erro)
@@ -290,50 +289,7 @@ namespace DexComanda.Operações
 
             }
         }
-        // Metodo para converter imagems embytes
-        public byte[] ConverterFotoEmByte(System.IO.Stream iArquivo)
-        {
-            long originalPosition = iArquivo.Position;
-            iArquivo.Position = 0;
-
-            try
-            {
-                byte[] readBuffer = new byte[4096];
-
-                int totalBytesRead = 0;
-                int bytesRead;
-
-                while ((bytesRead = iArquivo.Read(readBuffer, totalBytesRead, readBuffer.Length - totalBytesRead)) > 0)
-                {
-                    totalBytesRead += bytesRead;
-
-                    if (totalBytesRead == readBuffer.Length)
-                    {
-                        int nextByte = iArquivo.ReadByte();
-                        if (nextByte != -1)
-                        {
-                            byte[] temp = new byte[readBuffer.Length * 2];
-                            Buffer.BlockCopy(readBuffer, 0, temp, 0, readBuffer.Length);
-                            Buffer.SetByte(temp, totalBytesRead, (byte)nextByte);
-                            readBuffer = temp;
-                            totalBytesRead++;
-                        }
-                    }
-                }
-
-                byte[] buffer = readBuffer;
-                if (readBuffer.Length != totalBytesRead)
-                {
-                    buffer = new byte[totalBytesRead];
-                    Buffer.BlockCopy(readBuffer, 0, buffer, 0, totalBytesRead);
-                }
-                return buffer;
-            }
-            finally
-            {
-                iArquivo.Position = originalPosition;
-            }
-        }
+      
         private void CadastrarProduto(DataSet ds)
         {
             try
@@ -441,8 +397,17 @@ namespace DexComanda.Operações
 
                     for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
+                        decimal iprice = 0;
                         iCodOpcao = ds.Tables["Produto_Opcao"].Rows[i].Field<int>("CodOpcao");
-                        decimal iprice = ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
+                        if (Sessions.returnConfig.DescontoDiaSemana && ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProcomocao") >0)
+                        {
+                            iprice = ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProcomocao");
+                        }
+                        else
+                        {
+                            iprice = ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
+                        }
+                         
                         request.AddParameter("opcao[" + iCodOpcao + "]", iprice);
                     }
 
