@@ -28,13 +28,13 @@ namespace DexComanda
         {
             InitializeComponent();
             this.parentMain = parent;
-          //  parentMain = new Main();
+            //  parentMain = new Main();
             DiasSelecionados = new List<string>();
             grpDesconto.Visible = DescontoPordia;
 
         }
-        public frmCadastrarProduto(int CodProduto ,string iNomeProduto, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
-                                   decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais,string iUrlImagem,DateTime idtInicioPromo, DateTime idtFimPromo)
+        public frmCadastrarProduto(int CodProduto, string iNomeProduto, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
+                                   decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo, DateTime idtFimPromo)
         {
             InitializeComponent();
             codigoProdutoParaAlterar = CodProduto;
@@ -144,7 +144,7 @@ namespace DexComanda
         private void frmCadastrarProduto_Load(object sender, EventArgs e)
         {
             con = new Conexao();
-            
+
             btnEditar.Enabled = codigoProdutoParaAlterar != 0;
             DiasSelecionados = new List<string>();
             tabPage2.IsAccessible = btnDoProduto.Text == "Alterar [F12]";
@@ -202,21 +202,21 @@ namespace DexComanda
                     OnlineSN = chkOnline.Checked,
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
-                DataAlteracao = DateTime.Now
+                    DataAlteracao = DateTime.Now
                 };
                 produto.UrlImagem = "";
-                if (txtcaminhoImage.Text.Trim()!="")
+                if (txtcaminhoImage.Text.Trim() != "")
                 {
                     produto.UrlImagem = txtcaminhoImage.Text;
                 }
-                if (txtMaxAdicionais.Text.Trim()!="")
+                if (txtMaxAdicionais.Text.Trim() != "")
                 {
-                    produto.MaximoAdicionais  = int.Parse(txtMaxAdicionais.Text);
+                    produto.MaximoAdicionais = int.Parse(txtMaxAdicionais.Text);
                 }
                 else
-	            {
+                {
                     produto.MaximoAdicionais = 0;
-	            }
+                }
                 if (DescontoPordia)
                 {
                     produto.DiaSemana = DiasSelecinado();
@@ -235,7 +235,7 @@ namespace DexComanda
                     con.Insert("spAdicionarProduto", produto);
                 }
                 ClearForm(this);
-               // this_FormClosing();
+                // this_FormClosing();
                 MessageBox.Show("Produto cadastrado com sucesso.");
                 SalvarAdicionais(con.getLastCodigo());
                 Utils.PopulaGrid_Novo("Produto", parentMain.produtosGridView, Sessions.SqlProduto);
@@ -252,7 +252,7 @@ namespace DexComanda
         }
         private void SalvarAdicionais(int iCodProduto)
         {
-            if (AdicionaisGridView.Rows.Count>0)
+            if (AdicionaisGridView.Rows.Count > 0)
             {
                 for (int i = 0; i < AdicionaisGridView.Rows.Count; i++)
                 {
@@ -348,7 +348,7 @@ namespace DexComanda
                     {
                         produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text.Replace(".", ","));
                     }
-                   
+
                     con.Update("spAlterarProduto", produto);
                 }
                 else
@@ -362,7 +362,7 @@ namespace DexComanda
                 this.btnDoProduto.Text = "Cadastrar [F12]";
                 this.btnDoProduto.Click -= AlterarProduto;
                 this.btnDoProduto.Click += AdicionarProduto;
-                 
+
                 Utils.ControlaEventos("Alterar", this.Name);
                 MessageBox.Show("Produto alterado com sucesso.");
                 this.Close();
@@ -447,7 +447,7 @@ namespace DexComanda
 
         private void ListaOpcao(object sender, EventArgs e)
         {
-            
+
             this.cbxOpcao.DataSource = con.SelectAll("Opcao", "spObterOpcao").Tables["Opcao"];
             this.cbxOpcao.DisplayMember = "Nome";
             this.cbxOpcao.ValueMember = "Codigo";
@@ -483,13 +483,13 @@ namespace DexComanda
                 }
                 else
                 {
-                    if (AdicionaisGridView.DataSource!=null)
+                    if (AdicionaisGridView.DataSource != null)
                     {
                         AdicionaisGridView.AutoGenerateColumns = false;
                         AdicionaisGridView.DataSource = null;
                         AdicionaisGridView.DataMember = null;
                     }
-                    
+
                     AdicionaisGridView.Rows.Add();
                     AdicionaisGridView.Rows[iCountLinhas].Cells[0].Value = int.Parse(cbxOpcao.SelectedValue.ToString());
                     AdicionaisGridView.Rows[iCountLinhas].Cells[1].Value = decimal.Parse(txtPrecoOpcao.Text);
@@ -502,17 +502,16 @@ namespace DexComanda
 
                 throw;
             }
-           
-            
-            
-            
+
+
+
+
 
 
         }
 
         private void ListaOpcaoProduto()
         {
-
             AdicionaisGridView.DataSource = con.SelectOpcaoProduto(Convert.ToString(codigoProdutoParaAlterar));
             AdicionaisGridView.AutoGenerateColumns = true;
             AdicionaisGridView.DataMember = "Produto_Opcao";
@@ -530,13 +529,17 @@ namespace DexComanda
 
         private void AdicionaisGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-          //  int total = this.AdicionaisGridView.SelectedRows.Count;
-
-            for (int i = 0; i < AdicionaisGridView.SelectedRows.Count; i++)
+            try
             {
-                    rowIndex = this.AdicionaisGridView.Rows[i].Index;
-               
+                rowIndex = this.AdicionaisGridView.Rows[e.RowIndex].Index;
             }
+            catch (Exception erro)
+            {
+
+                throw;
+            }
+
+
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -610,24 +613,33 @@ namespace DexComanda
 
 
         }
-        private void ExcluirOpcaoProduto(int iCodProduto , int iCodOpcao)
+        private void ExcluirOpcaoProduto(int iCodProduto, int iCodOpcao)
         {
 
         }
         private void DeletarRegistro(object sender, EventArgs e)
         {
-            if (codigoProdutoParaAlterar!=0)
+            try
             {
-               int intCodOpcao = int.Parse(AdicionaisGridView.Rows[rowIndex].Cells["CodOpcao"].Value.ToString());
-               con.Delete("Produto_Opcao", "spExcluirOpcaoProduto", codigoProdutoParaAlterar, intCodOpcao);
-                ListaOpcaoProduto();
+                if (codigoProdutoParaAlterar != 0)
+                {
+                    int intCodOpcao = Convert.ToInt16(AdicionaisGridView.Rows[rowIndex].Cells["CodOpcao"].Value);
+                    con.Delete("Produto_Opcao", "spExcluirOpcaoProduto", codigoProdutoParaAlterar, intCodOpcao);
+                    ListaOpcaoProduto();
+                }
+                else
+                {
+                    AdicionaisGridView.Rows.RemoveAt(rowIndex);
+
+                }
             }
-            else
+            catch (Exception ERRO)
             {
-                AdicionaisGridView.Rows.RemoveAt(AdicionaisGridView.SelectedRows[AdicionaisGridView.CurrentRow.Index].Index);
-              
+
+                throw;
             }
-            
+
+
         }
 
         private void tabControl1_Click(object sender, EventArgs e)
@@ -652,7 +664,7 @@ namespace DexComanda
             if (opn.ShowDialog() == DialogResult.OK)
             {
                 txtcaminhoImage.Text = opn.FileName.ToString();
-                
+
                 imgProduto.Load(txtcaminhoImage.Text);
                 con.AtualizaDataSincronismo("Produto", codigoProdutoParaAlterar, "DataFoto");
             }
@@ -660,11 +672,11 @@ namespace DexComanda
 
         private void txtcaminhoImage_TextChanged(object sender, EventArgs e)
         {
-            if (txtcaminhoImage.Text!="")
+            if (txtcaminhoImage.Text != "")
             {
                 imgProduto.Load(txtcaminhoImage.Text);
             }
-            
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -674,14 +686,22 @@ namespace DexComanda
             con.AtualizaDataSincronismo("Produto", codigoProdutoParaAlterar, "DataFoto");
         }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnSair_Click_1(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void AdicionaisGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                rowIndex = this.AdicionaisGridView.Rows[e.RowIndex].Index;
+            }
+            catch (Exception erro)
+            {
+
+                throw;
+            }
         }
     }
 }

@@ -779,9 +779,16 @@ namespace DexComanda
                 if (Sessions.returnUsuario != null)
                 {
                     dsCaixa = conexao.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", iDataRegistro, iNumero);
-                    dRow = dsCaixa.Tables[0].Rows[0];
-                    iRetorno = dRow.ItemArray.GetValue(7).ToString() == Convert.ToString(false);
-
+                    if (dsCaixa.Tables[0].Rows.Count>0)
+                    {
+                        dRow = dsCaixa.Tables[0].Rows[0];
+                        iRetorno = dRow.ItemArray.GetValue(7).ToString() == Convert.ToString(false);
+                    }
+                    else
+                    {
+                        MessageBox.Show("O Caixa não esta aberto, sistema funcionará somente no modo consulta");
+                    }
+                    
                 }
                 else
                 {

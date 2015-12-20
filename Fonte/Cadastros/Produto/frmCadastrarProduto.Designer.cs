@@ -373,6 +373,7 @@
             this.AdicionaisGridView.Size = new System.Drawing.Size(536, 178);
             this.AdicionaisGridView.TabIndex = 2;
             this.AdicionaisGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AdicionaisGridView_CellClick);
+            this.AdicionaisGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AdicionaisGridView_CellContentClick);
             this.AdicionaisGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AdicionaisGridView_MouseClick);
             this.AdicionaisGridView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EditarLinha);
             // 
@@ -494,7 +495,6 @@
             this.dtInicio.Name = "dtInicio";
             this.dtInicio.Size = new System.Drawing.Size(81, 20);
             this.dtInicio.TabIndex = 26;
-            this.dtInicio.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // chkDomingo
             // 

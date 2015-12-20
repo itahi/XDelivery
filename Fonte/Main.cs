@@ -892,8 +892,8 @@ namespace DexComanda
                     iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(9).ToString());
                     int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
                     dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
-
-                    if (Sessions.returnConfig.ControlaEntregador && iCodMesa != 0)
+                    string iTipo = dRowPedido.ItemArray.GetValue(18).ToString();
+                    if (Sessions.returnConfig.ControlaEntregador && iTipo=="0 - Entrega")
                     {
                         InformaMotoboyPedido(codigo);
                     }
@@ -1167,9 +1167,9 @@ namespace DexComanda
 
         private void exportarDadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmExportacao frm = new frmExportacao();
-            frm.ShowDialog();
-            frm.Dispose();
+            //frmExportacao frm = new frmExportacao();
+            //frm.ShowDialog();
+            //frm.Dispose();
         }
 
         private void contatoAtivaçãoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1195,11 +1195,11 @@ namespace DexComanda
             DataSet DsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido);
             DataRow DvPedido = DsPedido.Tables[0].Rows[0];
 
-            string iTipo        = DvPedido.ItemArray.GetValue(8).ToString();
+            string  iTipo        = DvPedido.ItemArray.GetValue(8).ToString();
             decimal iTrocoPara   = decimal.Parse(DvPedido.ItemArray.GetValue(4).ToString());
             decimal iTotalPedido = decimal.Parse(DvPedido.ItemArray.GetValue(3).ToString());
             decimal iValue=0;
-            if (iTrocoPara>0)
+            if (iTrocoPara!=0.00M && iTrocoPara!=0)
             {
                 iValue = iTrocoPara - iTotalPedido; 
             }

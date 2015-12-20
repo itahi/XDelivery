@@ -319,12 +319,6 @@
     <Compile Include="Operações\frmExibeCancelamentos.Designer.cs">
       <DependentUpon>frmExibeCancelamentos.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operações\frmExportacao.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Operações\frmExportacao.Designer.cs">
-      <DependentUpon>frmExportacao.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operações\frmHistoricoCancelamento.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -843,9 +837,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmConfigurarImpressao.resx">
       <DependentUpon>frmConfigurarImpressao.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Operações\frmExportacao.resx">
-      <DependentUpon>frmExportacao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmLicencaOFFLINE.resx">
       <DependentUpon>frmLicencaOFFLINE.cs</DependentUpon>

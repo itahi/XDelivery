@@ -42,50 +42,56 @@ namespace DexComanda.Operações.Financeiro
 
         private void Salvar(object sender, EventArgs e)
         {
-            if (Utils.EfetuarLogin(cbxFuncionario.Text, txtSenha.Text, false))
+            try
             {
-                Caixa caixa = new Caixa()
+                if (Utils.EfetuarLogin(cbxFuncionario.Text, txtSenha.Text, false))
                 {
-                    Data = dtAbertura.Value,
-                    Estado = false /*Caixa Aber*/,
-                    Historico = "Abertura Inicial",
-                    ValorAbertura = decimal.Parse(txtValor.Text),
-                    Numero = cbxCaixas.Text
-
-                };
-                if (cbxFuncionario.Text != "")
-                {
-                    caixa.CodUsuario = Sessions.retunrUsuario.Codigo;
-
-                    CaixaMovimento cxMovi = new CaixaMovimento()
+                    Caixa caixa = new Caixa()
                     {
-                        CodCaixa = int.Parse(caixa.Numero),
-                        CodFormaPagamento = 1,
-                        Data = caixa.Data,
-                        Historico = "Lançamento abertura",
-                        NumeroDocumento = caixa.Numero,
-                        Tipo = 'E',
-                        Valor = caixa.ValorAbertura,
-                        CodUser = caixa.CodUsuario
+                        Data = dtAbertura.Value,
+                        Estado = false /*Caixa Aber*/,
+                        Historico = "Abertura Inicial",
+                        ValorAbertura = decimal.Parse(txtValor.Text),
+                        Numero = cbxCaixas.Text
+
                     };
+                    if (cbxFuncionario.Text != "")
+                    {
+                        caixa.CodUsuario = Sessions.retunrUsuario.Codigo;
 
-                    // Lança movimento no Caixa de abertura
-                    con.Insert("spAbrirCaixa", caixa);
-                    con.Insert("spInserirMovimentoCaixa", cxMovi);
+                        CaixaMovimento cxMovi = new CaixaMovimento()
+                        {
+                            CodCaixa = int.Parse(caixa.Numero),
+                            CodFormaPagamento = 1,
+                            Data = caixa.Data,
+                            Historico = "Lançamento abertura",
+                            NumeroDocumento = caixa.Numero,
+                            Tipo = 'E',
+                            Valor = caixa.ValorAbertura,
+                            CodUser = caixa.CodUsuario
+                        };
 
-                    con.LimpaTabela("Produto_Estoque", "spLimparEstoque");
-                    MessageBox.Show("Caixa aberto", "[xSistemas] Aviso");
+                        // Lança movimento no Caixa de abertura
+                        con.Insert("spAbrirCaixa", caixa);
+                        con.Insert("spInserirMovimentoCaixa", cxMovi);
 
-                  
-                    Utils.Restart();
-
+                        con.LimpaTabela("Produto_Estoque", "spLimparEstoque");
+                        MessageBox.Show("Caixa aberto", "[xSistemas] Aviso");
+                        
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Usuario não selecionado", "[xSistemas] Aviso");
+                    }
 
                 }
-                else
-                {
-                    MessageBox.Show("Usuario não selecionado", "[xSistemas] Aviso");
-                }
+            }
+            catch (Exception erro)
+            {
 
+
+                MessageBox.Show(erro.Message);
             }
 
         }

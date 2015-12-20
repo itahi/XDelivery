@@ -54,10 +54,13 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.gridMovimento);
             this.groupBox1.Location = new System.Drawing.Point(5, 100);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(462, 267);
+            this.groupBox1.Size = new System.Drawing.Size(465, 287);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Lista Produtos";
@@ -75,7 +78,7 @@
             this.gridMovimento.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridMovimento.Location = new System.Drawing.Point(3, 16);
             this.gridMovimento.Name = "gridMovimento";
-            this.gridMovimento.Size = new System.Drawing.Size(456, 248);
+            this.gridMovimento.Size = new System.Drawing.Size(459, 268);
             this.gridMovimento.TabIndex = 0;
             // 
             // CodProduto
@@ -211,9 +214,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(95, 373);
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.button1.Location = new System.Drawing.Point(84, 387);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(117, 32);
+            this.button1.Size = new System.Drawing.Size(142, 38);
             this.button1.TabIndex = 52;
             this.button1.Text = "Confirma Movimento";
             this.button1.UseVisualStyleBackColor = true;
@@ -221,18 +225,18 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(250, 373);
+            this.button2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.button2.Location = new System.Drawing.Point(239, 387);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(117, 32);
+            this.button2.Size = new System.Drawing.Size(142, 38);
             this.button2.TabIndex = 53;
             this.button2.Text = "Cancela Movimento";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // frmLancaEstoque
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(478, 422);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(482, 435);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);

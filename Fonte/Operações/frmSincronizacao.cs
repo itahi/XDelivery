@@ -321,7 +321,7 @@ namespace DexComanda.Operações
 
                     request.AddParameter("preco", prProduto);
                     decimal prPromocao = ds.Tables["Produto"].Rows[i].Field<decimal>("PrecoDesconto");
-                    if (Sessions.returnConfig.DescontoDiaSemana && prPromocao > 0)
+                    if (ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFimPromocao")> DateTime.Now && prPromocao > 0)
                     {
                         request.AddParameter("precoPromocao", prPromocao);
                         request.AddParameter("dataInicial", ds.Tables["Produto"].Rows[i].Field<DateTime>("DataInicioPromocao"));
