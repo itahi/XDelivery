@@ -503,7 +503,7 @@ namespace DexComanda
                 {
                     for (int i = 0; i < dsOpcoes.Tables[0].Rows.Count; i++)
                     {
-                        if (iCodProduto2 != 0 && lTipo==1)
+                        if (iCodProduto2 != 0 && lTipo == 1)
                         {
                             lPreco = RetornaMaiorValor(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco"), dsOpcoes2.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco"));
                         }
@@ -516,7 +516,7 @@ namespace DexComanda
                         lTipo = int.Parse(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo"));
                         // lPreco = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
 
-                        if (lTipo ==1)
+                        if (lTipo == 1)
                         {
                             lNomeOpcao = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();
                             if (!radioButton1.Visible)
@@ -596,7 +596,7 @@ namespace DexComanda
                             }
 
                         }
-                        if (lTipo ==2)
+                        if (lTipo == 2)
                         {
                             chkListAdicionais.Items.Add(lnome + "(+" + lPreco + ")", false);
                         }
@@ -696,7 +696,7 @@ namespace DexComanda
                                     Item = txtItemDescricao.Text
                                 };
 
-                                if (Sessions.returnConfig.ProdutoPorCodigo == false)
+                                if (!Sessions.returnConfig.ProdutoPorCodigo)
                                 {
                                     item.CodProduto = int.Parse(this.cbxProdutosGrid.SelectedValue.ToString());
                                 }
@@ -725,13 +725,20 @@ namespace DexComanda
                             item = new ItemPedido()
                             {
                                 CodPedido = 0,
-                                CodProduto = int.Parse(this.cbxProdutosGrid.SelectedValue.ToString()),
                                 NomeProduto = itemNome,
                                 Quantidade = int.Parse(this.txtQuantidade.Text),
                                 PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$ ", "")),
                                 PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", "")),
                                 Item = txtItemDescricao.Text
                             };
+                            if (!Sessions.returnConfig.ProdutoPorCodigo)
+                            {
+                                item.CodProduto = int.Parse(this.cbxProdutosGrid.SelectedValue.ToString());
+                            }
+                            else
+                            {
+                                item.CodProduto = int.Parse(this.txtCodProduto1.Text);
+                            }
 
                             items.Add(item);
 
@@ -1888,7 +1895,6 @@ namespace DexComanda
                 if (txtCodProduto1.Text != "")
                 {
                     var produto = con.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
-
 
                     if (produto.Rows.Count > 0)
                     {

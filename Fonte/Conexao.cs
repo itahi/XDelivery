@@ -449,8 +449,9 @@ namespace DexComanda
             string lSqlConsulta = " select RG.Codigo, RG.NomeRegiao,RG.TaxaServico" +
                                   "  ,RB.CEP ,Isnull(RB.OnlineSN,0) as OnlineSN" +
                                   "   from RegiaoEntrega RG " +
-                                   "  join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo " +
-                                  "   WHERE RG.DataAlteracao > RG.DataSincronismo or RG.DataSincronismo is null";
+                                  "  join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo and RB.OnlineSN=1 " +
+                                  "  WHERE (RG.DataAlteracao > RG.DataSincronismo or RG.DataSincronismo is null ) " +
+                                  " and RG.ONLINESN=1 " ;
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
