@@ -23,6 +23,7 @@ using DexComanda.Cadastros.Produto;
 using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Operações.Alteracoes;
 using DexComanda.Relatorios.Gerenciais;
+using DexComanda.Operações.Pedido;
 //using DexComanda.Relatorios.Fechamentos;
 
 namespace DexComanda
@@ -1709,6 +1710,18 @@ namespace DexComanda
         private void vendidosNoPeriodoAgrupadoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmReportVendasPorProduto frm = new frmReportVendasPorProduto();
+            frm.ShowDialog();
+        }
+
+        private void alteracaoStatusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAlterarStatusPedido frm = new frmAlterarStatusPedido();
+            frm.ShowDialog();
+        }
+
+        private void cadastroStatusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadastrarStatus frm = new frmCadastrarStatus();
             frm.ShowDialog();
         }
     }

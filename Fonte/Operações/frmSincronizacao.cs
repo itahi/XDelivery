@@ -235,7 +235,7 @@ namespace DexComanda.Operações
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     request.AddParameter("token", iParamToken);
-                    request.AddParameter("tipo", ds.Tables["Opcao"].Rows[i].Field<string>("Tipo"));
+                    request.AddParameter("tipo", ds.Tables["Opcao"].Rows[i].Field<int>("Tipo"));
                     request.AddParameter("nome", ds.Tables["Opcao"].Rows[i].Field<string>("Nome"));
                     request.AddParameter("referenciaId", ds.Tables["Opcao"].Rows[i].Field<int>("Codigo"));
                     RestResponse response = (RestResponse)client.Execute(request);
@@ -392,6 +392,7 @@ namespace DexComanda.Operações
                 {
                     int iCodProd = ds.Tables["Produto_Opcao"].Rows[0].Field<int>("CodProduto");
                     string[] opcao = new string[ds.Tables[0].Rows.Count];
+                    DateTime dtFimPromo = ds.Tables["Produto_Opcao"].Rows[0].Field<DateTime>("DataFimPromocao");
                     request.AddParameter("token", iParamToken);
                     request.AddParameter("referenciaId", iCodProd);
 
@@ -399,7 +400,7 @@ namespace DexComanda.Operações
                     {
                         decimal iprice = 0;
                         iCodOpcao = ds.Tables["Produto_Opcao"].Rows[i].Field<int>("CodOpcao");
-                        if (Sessions.returnConfig.DescontoDiaSemana && ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProcomocao") >0)
+                        if (dtFimPromo<=DateTime.Now && ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProcomocao") >0)
                         {
                             iprice = ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProcomocao");
                         }

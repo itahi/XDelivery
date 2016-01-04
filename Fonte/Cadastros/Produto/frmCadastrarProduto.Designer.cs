@@ -221,9 +221,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(489, 13);
+            this.button1.Location = new System.Drawing.Point(487, 13);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(47, 23);
+            this.button1.Size = new System.Drawing.Size(49, 23);
             this.button1.TabIndex = 15;
             this.button1.Text = "Limpar";
             this.button1.UseVisualStyleBackColor = true;
@@ -231,11 +231,11 @@
             // 
             // btnImg
             // 
-            this.btnImg.Location = new System.Drawing.Point(441, 13);
+            this.btnImg.Location = new System.Drawing.Point(429, 13);
             this.btnImg.Name = "btnImg";
-            this.btnImg.Size = new System.Drawing.Size(47, 23);
+            this.btnImg.Size = new System.Drawing.Size(55, 23);
             this.btnImg.TabIndex = 13;
-            this.btnImg.Text = "Abrir";
+            this.btnImg.Text = "Buscar";
             this.btnImg.UseVisualStyleBackColor = true;
             this.btnImg.Click += new System.EventHandler(this.SelecionarImagem);
             // 
@@ -243,7 +243,7 @@
             // 
             this.txtcaminhoImage.Location = new System.Drawing.Point(8, 16);
             this.txtcaminhoImage.Name = "txtcaminhoImage";
-            this.txtcaminhoImage.Size = new System.Drawing.Size(427, 20);
+            this.txtcaminhoImage.Size = new System.Drawing.Size(419, 20);
             this.txtcaminhoImage.TabIndex = 14;
             this.txtcaminhoImage.TextChanged += new System.EventHandler(this.txtcaminhoImage_TextChanged);
             // 
@@ -272,7 +272,7 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(542, 274);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Adicionais";
+            this.tabPage2.Text = "Adicionais/Opcionais";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 

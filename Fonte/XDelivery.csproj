@@ -224,6 +224,8 @@
     <Compile Include="Models\HistoricoPessoa.cs" />
     <Compile Include="Models\Opcao.cs" />
     <Compile Include="Models\OpcaoItem.cs" />
+    <Compile Include="Models\Operacoes\PedidoStatus.cs" />
+    <Compile Include="Models\PedidoStatusMovimento.cs" />
     <Compile Include="Models\ProdutoOpcao_Tipo.cs" />
     <Compile Include="Models\Produto_Estoque.cs" />
     <Compile Include="Models\Produto_Opcao.cs" />
@@ -368,6 +370,18 @@
       <DependentUpon>frmSincronizacao.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\Funções\RotinasGlobal.cs" />
+    <Compile Include="Operações\Pedido\frmAlterarStatusPedido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Pedido\frmAlterarStatusPedido.Designer.cs">
+      <DependentUpon>frmAlterarStatusPedido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operações\Pedido\frmCadastrarStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Pedido\frmCadastrarStatus.Designer.cs">
+      <DependentUpon>frmCadastrarStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\Clientes\RelCreditoDebito.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -736,6 +750,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmSincronizacao.resx">
       <DependentUpon>frmSincronizacao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Pedido\frmAlterarStatusPedido.resx">
+      <DependentUpon>frmAlterarStatusPedido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Pedido\frmCadastrarStatus.resx">
+      <DependentUpon>frmCadastrarStatus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\RelCreditoDebito.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

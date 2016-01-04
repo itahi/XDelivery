@@ -76,7 +76,9 @@ namespace DexComanda.Operações.Financeiro
                 if (!FechamentosGrid.Columns.Contains("ValorInformado"))
                 {
                     FechamentosGrid.Columns.Add("ValorInformado", "ValorInformado");
+                    
                     FechamentosGrid.Refresh();
+
                 }
 
                 con.Close();

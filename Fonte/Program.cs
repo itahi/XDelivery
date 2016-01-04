@@ -241,7 +241,7 @@ namespace DexComanda
                             {
 
                                 MessageBox.Show("Não foi encontrado uma conexão com a internet ", "Dex Aviso - Atenção");
-                              //  Utils.IniciaSistema();
+                               // Utils.IniciaSistema();
                                 if (Utils.LeArquivoRegistro())
                                 {
                                     int intAbriu5Vezes = Utils.ContaRegistro(empresas.Nome + empresas.CNPJ);
@@ -261,7 +261,7 @@ namespace DexComanda
 
                                 }
                                 // CNPJ OSVALDO
-                                else if (empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "10512501000100")
+                                else if (empresas.Servidor== "DESKTOP-5K2U4E8" || empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "10512501000100")
                                 {
                                     Utils.IniciaSistema();
                                 }

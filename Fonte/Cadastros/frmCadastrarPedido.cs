@@ -212,10 +212,11 @@ namespace DexComanda
                 cbxTipoProduto.Visible = true;
                 lblGrupo.Text = "Grupo";
                 txtCodProduto1.Visible = false;
+                this.cbxTipoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupoAtivo").Tables["Grupo"];
+                this.cbxTipoProduto.DisplayMember = "NomeGrupo";
+                this.cbxTipoProduto.ValueMember = "Codigo";
             }
-            this.cbxTipoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupoAtivo").Tables["Grupo"];
-            this.cbxTipoProduto.DisplayMember = "NomeGrupo";
-            this.cbxTipoProduto.ValueMember = "Codigo";
+           
 
             this.cmbFPagamento.DataSource = con.SelectAll("FormaPagamento", "spObterFormaPagamento").Tables["FormaPagamento"];
             this.cmbFPagamento.DisplayMember = "Descricao";
@@ -814,6 +815,7 @@ namespace DexComanda
                                 RealizadoEm = DateTime.Now,
                                 Status = "Aberto",
                                 PedidoOrigem = "Balcao",
+                                CodigoPedidoWS =0
 
                             };
                             if (txtTrocoPara.Text != "")
@@ -915,6 +917,7 @@ namespace DexComanda
                             }
 
                             iCodPedido = con.getLastCodigo();
+                            con.AlteraStatusPedido(iCodPedido, Sessions.retunrUsuario.Codigo, 1);
                             MessageBox.Show("Pedido gerado com sucesso.");
 
                             Utils.PopulaGrid_Novo("Produto", parentWindow.produtosGridView, Sessions.SqlProduto);

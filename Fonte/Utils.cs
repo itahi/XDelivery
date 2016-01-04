@@ -948,11 +948,11 @@ namespace DexComanda
                     //Unselect all RadioButtons
                     ((System.Windows.Forms.RadioButton)ctrControl).Checked = false;
                 }
-                if (ctrControl.Controls.Count > 0)
-                {
-                    //Call itself to get all other controls in other containers 
-                    //ClearForm(ctrControl);
-                }
+                //if (ctrControl.Controls.Count > 0)
+                //{
+                //    //Call itself to get all other controls in other containers 
+                //    //ClearForm(ctrControl);
+                //}
             }
         }
 
@@ -1800,20 +1800,29 @@ namespace DexComanda
         }
         public static void SalvarConfiguracao(string iChave, string iValue)
         {
-            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            try
+            {
+                System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-               // Add an Application Setting.
-            config.AppSettings.Settings.Remove(iChave);
-            config.AppSettings.Settings.Add(iChave, iValue);
-           
-            // Save the configuration file.
-            //config.Save(ConfigurationSaveMode.Full);
-            string meuProcesso = Process.GetCurrentProcess().ProcessName;
-            config.Save(ConfigurationSaveMode.Full);
-           
-            // Force a reload of a changed section.
-        //    ConfigurationManager.RefreshSection("appSettings");
+                // Add an Application Setting.
+                config.AppSettings.Settings.Remove(iChave);
+                config.AppSettings.Settings.Add(iChave, iValue);
 
+                // Save the configuration file.
+                //config.Save(ConfigurationSaveMode.Full);
+                string meuProcesso = Process.GetCurrentProcess().ProcessName;
+                config.Save(ConfigurationSaveMode.Full);
+
+                // Force a reload of a changed section.
+                //    ConfigurationManager.RefreshSection("appSettings");
+
+            }
+            catch (Exception erro)
+            {
+
+                throw;
+            }
+            
 
 
         }

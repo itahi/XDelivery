@@ -47,14 +47,22 @@ namespace DexComanda
         {
             try
             {
-                string Itext = ConfigurationManager.AppSettings["ConfigSMS"];
-
-                string[] words = Itext.Split(',');
-                for (int i = 0; i < words.Length - 1; i++)
+                if (ConfigurationManager.AppSettings.Keys.Count ==4)
                 {
-                    pLogin = words[0];
-                    pSenha = words[1];
+                    string Itext = ConfigurationManager.AppSettings["ConfigSMS"];
+
+                    string[] words = Itext.Split(',');
+                    for (int i = 0; i < words.Length - 1; i++)
+                    {
+                        pLogin = words[0];
+                        pSenha = words[1];
+                    }
                 }
+                else
+                {
+                    MessageBox.Show("Arquivo de configuração para envio de SMS não está na pasta , favor ir até Configurações > Promoção preencher os campos e salvar");
+                }
+                
 
             }
             catch (Exception erro)
@@ -63,9 +71,7 @@ namespace DexComanda
                 MessageBox.Show(erro.Message);
             }
 
-
-
-            // MultipleSending Cliente = new MultipleSending("xsistemas", "XJzaDYXQ");
+            // Caracters restantes no texto
             lblRestante.Text = Convert.ToString(150 - NomeEmpresa.ToString().Length);
 
         }
@@ -118,6 +124,10 @@ namespace DexComanda
                 Utils.EnviaSMS_LOCASMS(dsLista, txtMensagem.Text, "Teste", pLogin, pSenha);
                 lbl.Text = Convert.ToString(TotalSelecionado);
                 this.Cursor = Cursors.Default;
+            }
+            else
+            {
+                MessageBox.Show("Seu filtro não retornou nenhum dado");
             }
         }
 

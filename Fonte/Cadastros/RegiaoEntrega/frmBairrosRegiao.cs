@@ -64,10 +64,13 @@ namespace DexComanda.Cadastros
                 }
                 catch (Exception erro)
                 {
-
                     if (erro.Message.Contains("Violação da restrição UNIQUE KEY"))
                     {
                         MessageBox.Show("Esse cep já está vinculado a outra região", "[xSistemas]");
+                    }
+                    else
+                    {
+                        MessageBox.Show(erro.Message);
                     }
                 }
 

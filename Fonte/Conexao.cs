@@ -13,6 +13,7 @@ using MySql.Data.MySqlClient;
 using System.Runtime.InteropServices;
 using System.Management;
 using System.Net;
+using XIntegrador.Classe.Local;
 
 namespace DexComanda
 {
@@ -90,6 +91,27 @@ namespace DexComanda
 
 
         }
+        public DataSet RetornaPedidosOnline(Boolean iOnlineSN, DateTime iDataInicio, DateTime iDataFim)
+        {
+            string iSqlConsulta = " select P.CodPessoa, P.Codigo , Pe.Nome , P.TotalPedido, P.RealizadoEm," +
+                                 " P.CodigoPedidoWS from Pedido P " +
+                                 " join Pessoa Pe on Pe.Codigo = P.CodPessoa " +
+                                 " where RealizadoEm between @dataInicio and @dataFim ";
+            if (iOnlineSN)
+            {
+                iSqlConsulta = iSqlConsulta + " and CodigoPedidoWS is not null ";
+            }
+
+            command = new SqlCommand(iSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@dataInicio", iDataInicio);
+            command.Parameters.AddWithValue("@dataFim", iDataFim);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Pedido");
+            return ds;
+
+        }
         public DataSet RetornarTaxaPorBairro(string iNOmeBairro)
         {
             string lSqlConsulta = " select R.Codigo , " +
@@ -105,6 +127,18 @@ namespace DexComanda
             ds = new DataSet();
             adapter.Fill(ds, "RegiaoEntrega");
             return ds;
+
+        }
+        public void AlteraStatusPedido(int iCodPedido, int iCodUser, int iCodStatus)
+        {
+            PedidoStatusMovimento ped = new PedidoStatusMovimento()
+            {
+                CodPedido = iCodPedido,
+                CodStatus = iCodStatus,
+                CodUsuario = iCodUser,
+                DataAlteracao = DateTime.Now
+            };
+            Insert("spAdicionarPedidoStatusMovimento", ped);
 
         }
         public decimal RetornaPrecoComEmbalagem(string iGrupoProduto, int iCodProduto)

@@ -59,6 +59,7 @@
             this.geralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maisVendidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.promoçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vendidosNoPeriodoAgrupadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mensalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.envioDeSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +84,9 @@
             this.controleDeEstoqueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lançarMovimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaMovimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pedidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cadastroStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alteracaoStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoAtivaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dBExpertDataSet = new DexComanda.DBExpertDataSet();
@@ -126,7 +130,6 @@
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.lblCaixa = new System.Windows.Forms.Label();
             this.chkGerenciaImpressao = new System.Windows.Forms.CheckBox();
-            this.vendidosNoPeriodoAgrupadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -390,6 +393,13 @@
             this.promoçõesToolStripMenuItem.Text = "Promoções";
             this.promoçõesToolStripMenuItem.Visible = false;
             // 
+            // vendidosNoPeriodoAgrupadoToolStripMenuItem
+            // 
+            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Name = "vendidosNoPeriodoAgrupadoToolStripMenuItem";
+            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Size = new System.Drawing.Size(298, 26);
+            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Text = "Vendidos no Periodo Agrupado";
+            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Click += new System.EventHandler(this.vendidosNoPeriodoAgrupadoToolStripMenuItem_Click);
+            // 
             // mensalToolStripMenuItem
             // 
             this.mensalToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -461,7 +471,8 @@
             this.FinanceiroToolStripMenuItem,
             this.aberturaCaixaToolStripMenuItem,
             this.sincronizaçãoToolStripMenuItem,
-            this.controleDeEstoqueToolStripMenuItem});
+            this.controleDeEstoqueToolStripMenuItem,
+            this.pedidoToolStripMenuItem});
             this.operaçõesToolStripMenuItem.Name = "operaçõesToolStripMenuItem";
             this.operaçõesToolStripMenuItem.Size = new System.Drawing.Size(96, 25);
             this.operaçõesToolStripMenuItem.Text = "Operações";
@@ -578,6 +589,30 @@
             this.consultaMovimentoToolStripMenuItem.Name = "consultaMovimentoToolStripMenuItem";
             this.consultaMovimentoToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
             this.consultaMovimentoToolStripMenuItem.Text = "Consultar Movimento";
+            // 
+            // pedidoToolStripMenuItem
+            // 
+            this.pedidoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cadastroStatusToolStripMenuItem,
+            this.alteracaoStatusToolStripMenuItem});
+            this.pedidoToolStripMenuItem.Enabled = false;
+            this.pedidoToolStripMenuItem.Name = "pedidoToolStripMenuItem";
+            this.pedidoToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.pedidoToolStripMenuItem.Text = "Pedido";
+            // 
+            // cadastroStatusToolStripMenuItem
+            // 
+            this.cadastroStatusToolStripMenuItem.Name = "cadastroStatusToolStripMenuItem";
+            this.cadastroStatusToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
+            this.cadastroStatusToolStripMenuItem.Text = "Cadastro Status";
+            this.cadastroStatusToolStripMenuItem.Click += new System.EventHandler(this.cadastroStatusToolStripMenuItem_Click);
+            // 
+            // alteracaoStatusToolStripMenuItem
+            // 
+            this.alteracaoStatusToolStripMenuItem.Name = "alteracaoStatusToolStripMenuItem";
+            this.alteracaoStatusToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
+            this.alteracaoStatusToolStripMenuItem.Text = "Alteracao Status";
+            this.alteracaoStatusToolStripMenuItem.Click += new System.EventHandler(this.alteracaoStatusToolStripMenuItem_Click);
             // 
             // contatoToolStripMenuItem
             // 
@@ -1064,13 +1099,6 @@
             this.chkGerenciaImpressao.Text = "Gerencia Impressão";
             this.chkGerenciaImpressao.UseVisualStyleBackColor = true;
             // 
-            // vendidosNoPeriodoAgrupadoToolStripMenuItem
-            // 
-            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Name = "vendidosNoPeriodoAgrupadoToolStripMenuItem";
-            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Size = new System.Drawing.Size(298, 26);
-            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Text = "Vendidos no Periodo Agrupado";
-            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Click += new System.EventHandler(this.vendidosNoPeriodoAgrupadoToolStripMenuItem_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1216,5 +1244,8 @@
         private System.Windows.Forms.ToolStripMenuItem ticketMédioToolStripMenuItem;
         private System.Windows.Forms.CheckBox chkGerenciaImpressao;
         private System.Windows.Forms.ToolStripMenuItem vendidosNoPeriodoAgrupadoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pedidoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cadastroStatusToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem alteracaoStatusToolStripMenuItem;
     }
 }

@@ -529,15 +529,15 @@ namespace DexComanda
 
         private void AdicionaisGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            try
-            {
-                rowIndex = this.AdicionaisGridView.Rows[e.RowIndex].Index;
-            }
-            catch (Exception erro)
-            {
-
-                throw;
-            }
+            //    try
+            //    {
+            //        rowIndex = e.RowIndex;
+            //        //  rowIndex = this.AdicionaisGridView.SelectedRows[e.RowIndex].Index;
+            //    }
+            //    catch (Exception erro)
+            //    {
+            //        MessageBox.Show("Não foi possivel selecionar a linha "+ erro.Message);
+            //    }
 
 
         }
@@ -630,13 +630,12 @@ namespace DexComanda
                 else
                 {
                     AdicionaisGridView.Rows.RemoveAt(rowIndex);
-
+                    
                 }
             }
             catch (Exception ERRO)
             {
-
-                throw;
+                MessageBox.Show("Não foi possivel excluir a linha " + ERRO.Message);
             }
 
 
@@ -695,12 +694,11 @@ namespace DexComanda
         {
             try
             {
-                rowIndex = this.AdicionaisGridView.Rows[e.RowIndex].Index;
+                rowIndex = e.RowIndex;
             }
             catch (Exception erro)
             {
-
-                throw;
+                MessageBox.Show("Não foi possivel selecionar a linha " + erro.Message);
             }
         }
     }
