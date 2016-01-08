@@ -830,7 +830,10 @@
             this.PedidosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.PedidosGridView.Size = new System.Drawing.Size(568, 106);
             this.PedidosGridView.TabIndex = 4;
+            this.PedidosGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MenuAuxiliar);
+            this.PedidosGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PedidosGridView_CellContentClick);
             this.PedidosGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.MostraItems);
+            this.PedidosGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AuxiliarMenu);
             // 
             // label11
             // 

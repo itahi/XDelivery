@@ -56,6 +56,7 @@ namespace DexComanda
                     {
                         pLogin = words[0];
                         pSenha = words[1];
+                        return;
                     }
                 }
                 else

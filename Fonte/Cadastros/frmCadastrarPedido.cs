@@ -609,7 +609,7 @@ namespace DexComanda
             catch (Exception erro)
             {
 
-                MessageBox.Show("Erro na montagem de opções " + erro.Message);
+                MessageBox.Show("Erro na montagem de opções " + erro.Message + erro.InnerException);
             }
 
 

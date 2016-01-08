@@ -1096,9 +1096,9 @@ namespace DexComanda
 
             return RetornoServ = retorno[0].ToString();
         }
-        public static int EnviaSMS_LOCASMS(DataSet ds, string iMessagem,string iNomeCampanha,string iUser,string iSenha)
+        public static string EnviaSMS_LOCASMS(DataSet ds, string iMessagem,string iNomeCampanha,string iUser,string iSenha)
         {
-          
+            string strRetorno = "";
             DialogResult resultado = MessageBox.Show("O Sistema enviará SMS para " + ds.Tables[0].Rows.Count + " Clientes , deseja continuar?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (resultado == DialogResult.Yes)
@@ -1111,8 +1111,6 @@ namespace DexComanda
                     string iNumero = dRow.ItemArray.GetValue(0).ToString();
                     NomeCliente = dRow.ItemArray.GetValue(1).ToString();
 
-                    //if (EHCelular(iNumero))
-                    //{
                         if (iNumero.Length == 8)
                         {
                             Telefone[i] = "279" + iNumero;
@@ -1122,26 +1120,24 @@ namespace DexComanda
                             Telefone[i] = "27" + iNumero;
                         }
 
-                    //}
-
                 }
 
                 Integração.EnviaSMS_LOCASMS EnviarSMS = new EnviaSMS_LOCASMS();
                 
-                string strRetorno, strQuantidadeEnvio,iText;
-
+                string strQuantidadeEnvio,iText;
+                
                  iText= EnviarSMS.EnviaSMSLista(Telefone, iUser, iSenha, iMessagem, iNomeCampanha);
 
                  string[] IRetorno = iText.Split(',');
                 
                 for (int i = 0; i < IRetorno.Length; i++)
                 {
-                    strRetorno = IRetorno[0].ToString();
+                    strRetorno = IRetorno[i].ToString();
                 }
               //  MessageBox.Show("Resultado"IRetorno[0].ToStr);
             }
 
-            return TotalSelecionado;
+            return strRetorno;
         }
         
         public static bool EHCelular(string iNumero)

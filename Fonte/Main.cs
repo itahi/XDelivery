@@ -893,7 +893,7 @@ namespace DexComanda
                     iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(9).ToString());
                     int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
                     dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
-                    string iTipo = dRowPedido.ItemArray.GetValue(18).ToString();
+                    string iTipo = dRowPedido.ItemArray.GetValue(8).ToString();
                     if (Sessions.returnConfig.ControlaEntregador && iTipo=="0 - Entrega")
                     {
                         InformaMotoboyPedido(codigo);
@@ -918,8 +918,6 @@ namespace DexComanda
                      
                     // Enfim finaliza o Pedido
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
-
-
 
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
 
@@ -1470,32 +1468,7 @@ namespace DexComanda
 
         private void EditarPedido(object sender, DataGridViewCellMouseEventArgs e)
         {
-            try
-            {
-                int codigo = 0;
-                int codigoPessoa = 0;
-                decimal tPara = 0.00M;
-                decimal TotalPedido = 0.00M;
-                decimal TaxaEntrega = 0.00M;
-                string TrocoTotal = "0.00";
-                string fPagamento = null;
-                string MesaBalcao, tipoPedido, NumMesa, PedidoOrigem = "";
-                DateTime DataPedido;
 
-                /* Code here */
-                if (pedidosGridView.SelectedCells.Count > 0 && e.Button == System.Windows.Forms.MouseButtons.Left)
-                {
-                    codigo = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString()); //SelectedRows[pedidosGridView.CurrentRow.Index].Cells["Codigo"].Value.ToString());
-                    CarregaPedido(codigo);
-
-                }
-
-            }
-            catch (Exception es)
-            {
-
-                MessageBox.Show(es.Message);
-            }
         }
 
         private void MenuAuxiliarPedidos(object sender, MouseEventArgs e)

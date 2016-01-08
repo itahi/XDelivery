@@ -10,7 +10,7 @@ namespace DexComanda.Integração
    public class EnviaSMS_LOCASMS
     {
 
-       public string EnviaSMSLista(Array iNumeros, string iUser, string iSennha, string iMensagem , string iNomeCampanha)
+        public string EnviaSMSLista(Array iNumeros, string iUser, string iSennha, string iMensagem, string iNomeCampanha)
        {
            Array[] IRetorno = new Array[2];
            try
@@ -31,6 +31,7 @@ namespace DexComanda.Integração
                // Montando os Parametros
                LOCASMS.rSMS Parametros = new LOCASMS.rSMS();
                Parametros.Destinations = Destinatarios.ToArray();
+              //  Parametros.JobDateTime = iDataEnvio; 
 
                // Determinando o Nome da CAmpanha
                Parametros.Subject = iNomeCampanha;

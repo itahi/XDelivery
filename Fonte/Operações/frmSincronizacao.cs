@@ -43,9 +43,13 @@ namespace DexComanda.Operações
             {
                 if (chkProdutos.Checked)
                 {
+                    // Sincronizar Grupos
                     CadastraCategorias(ObterDados("Grupo"));
+                    // Sincronizar Tipo Opcao
                     CadastrarTipoOpcao(ObterDados("Produto_OpcaoTipo"));
+                    // Sincronizar Opcao
                     CadastrarOpcao(ObterDados("Opcao"));
+                    // Sincronizar Produtos
                     CadastrarProduto(ObterDados("Produto"));
                 }
                 if (chkRegiaoEntrega.Checked)

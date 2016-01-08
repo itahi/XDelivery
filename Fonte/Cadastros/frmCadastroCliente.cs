@@ -26,7 +26,7 @@ namespace DexComanda
         private string EstadoPadrao;
         private DataRow RowsClientes;
         private int mCodRegiao;
-
+        private int rowIndex;
 
         public frmCadastroCliente(Main parent)
         {
@@ -843,6 +843,64 @@ namespace DexComanda
                 MessageBox.Show(erro.InnerException.Message);
             }
 
+        }
+
+        private void MenuAuxiliar(object sender, DataGridViewCellEventArgs e)
+        {
+           
+        }
+
+        private void AuxiliarMenu(object sender, MouseEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu m = new ContextMenu();
+                MenuItem ReeimpressaoPedido = new MenuItem(" 0 - Reeimprimir Pedido");
+
+                ReeimpressaoPedido.Click += ReeimpressaoPedidoGrid;
+                m.MenuItems.Add(ReeimpressaoPedido);
+                int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
+                m.Show(dgv, new Point(e.X, e.Y));
+
+            }
+        }
+
+        private void ReeimpressaoPedidoGrid(object sender, EventArgs e)
+        {
+            int codPedido = int.Parse(this.PedidosGridView.CurrentRow.Cells[0].Value.ToString());
+            DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoFinalizadoPorCodigo", codPedido);
+
+            if (dsPedido.Tables[0].Rows.Count>0)
+            {
+                DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
+                DateTime dtPedido = Convert.ToDateTime(dRowPedido.ItemArray.GetValue(7).ToString());
+                string dblPRevisao = dtPedido.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString();
+
+                string iTipo = dRowPedido.ItemArray.GetValue(8).ToString();
+                decimal iTrocoPara = decimal.Parse(dRowPedido.ItemArray.GetValue(4).ToString());
+                decimal iTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
+                decimal iValue = 0;
+                if (iTrocoPara != 0.00M && iTrocoPara != 0)
+                {
+                    iValue = iTrocoPara - iTotalPedido;
+                }
+
+                Utils.ImpressaoEntreganova(codPedido, iValue, dtPedido.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString());
+            }
+            
+        }
+
+        private void PedidosGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                rowIndex = e.RowIndex;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Não foi possivel selecionar a linha " + erro.Message);
+            }
         }
     }
 

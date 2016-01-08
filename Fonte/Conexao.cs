@@ -263,12 +263,13 @@ namespace DexComanda
             string lSqlConsulta = " select Op.Nome, "+
                                   " PoT.Tipo," +
                                   " Prod.Preco," +
-                                  " (select MaximoAdicionais from Produto P where P.Codigo=Prod.CodProduto  ) MaximoAdicionais" +
+                                  " ISNULL((select MaximoAdicionais from Produto P where P.Codigo=Prod.CodProduto  ),0) as MaximoAdicionais,"+
+                                  " PoT.Nome as NomeTipo " +
                                   " from Produto_Opcao Prod" +
                                   " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
                                   " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
                                   "  where Prod.CodProduto = @CodProduto" +
-                                  " order by Nome";
+                                  " order by PoT.Nome";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@CodProduto", iDProduto);
@@ -279,6 +280,7 @@ namespace DexComanda
             adapter.Fill(ds, "Produto_Opcao");
             return ds;
         }
+      
 
         public DataSet RetornaTipoOpcao()
         {
