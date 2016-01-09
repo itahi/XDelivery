@@ -1,1 +1,0 @@
-Data Source=DESKTOP-5K2U4E8;Initial Catalog=BurBurger; User ID=dex; Password=1234; Trusted_Connection=False; 

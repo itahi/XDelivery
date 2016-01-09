@@ -73,7 +73,7 @@
             this.btnEditar.Location = new System.Drawing.Point(140, 98);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(130, 35);
-            this.btnEditar.TabIndex = 14;
+            this.btnEditar.TabIndex = 2;
             this.btnEditar.Text = "Editar [F11]";
             this.btnEditar.UseVisualStyleBackColor = true;
             this.btnEditar.Click += new System.EventHandler(this.EditarOpcao);
@@ -87,14 +87,14 @@
             this.txtNome.MaxLength = 15;
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(284, 26);
-            this.txtNome.TabIndex = 12;
+            this.txtNome.TabIndex = 0;
             // 
             // btnAdicionar
             // 
             this.btnAdicionar.Location = new System.Drawing.Point(4, 98);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(114, 35);
-            this.btnAdicionar.TabIndex = 13;
+            this.btnAdicionar.TabIndex = 1;
             this.btnAdicionar.Text = "Adicionar [F12]";
             this.btnAdicionar.UseVisualStyleBackColor = true;
             this.btnAdicionar.Click += new System.EventHandler(this.CadastraOpcao);
@@ -135,6 +135,7 @@
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.btnAdicionar);
             this.Controls.Add(this.OpcaoGridView);
+            this.KeyPreview = true;
             this.Name = "frmCadOpcao";
             this.Text = "[xSistemas] Cadastro Opções";
             this.Load += new System.EventHandler(this.frmCadOpcao_Load);

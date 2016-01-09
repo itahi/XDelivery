@@ -151,11 +151,7 @@ namespace DexComanda
             //    List<Produtos_Adicionais> ProdAdicionais = new List<Produtos_Adicionais>();
             grpDesconto.Visible = DescontoPordia;
             List<Grupo> grupos = new List<Grupo>();
-
-            //this.cbxGrupoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupo").Tables["Grupo"];
-            //this.cbxGrupoProduto.DisplayMember = "NomeGrupo";
-            //this.cbxGrupoProduto.ValueMember = "Codigo";
-
+            
             if (produto != null)
             {
                 if (Sessions.retunrUsuario != null)
@@ -512,9 +508,13 @@ namespace DexComanda
 
         private void ListaOpcaoProduto()
         {
-            AdicionaisGridView.DataSource = con.SelectOpcaoProduto(Convert.ToString(codigoProdutoParaAlterar));
-            AdicionaisGridView.AutoGenerateColumns = true;
-            AdicionaisGridView.DataMember = "Produto_Opcao";
+            if (codigoProdutoParaAlterar!=0)
+            {
+                AdicionaisGridView.DataSource = con.SelectOpcaoProduto(Convert.ToString(codigoProdutoParaAlterar));
+                AdicionaisGridView.AutoGenerateColumns = true;
+                AdicionaisGridView.DataMember = "Produto_Opcao";
+
+            }
         }
 
         private void tabPage2_Click(object sender, EventArgs e)
