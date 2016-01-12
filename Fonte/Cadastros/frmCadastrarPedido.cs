@@ -1343,8 +1343,8 @@ namespace DexComanda
                     int iCodigo;
                     string iRetorno;
                     string dblPRevisao = DataPed.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString();
-                    for (int i = 0; i < QtViasEntrega; i++)
-                    {
+                    //for (int i = 0; i < QtViasEntrega; i++)
+                    //{
                         if (con.getLastCodigo() != 0)
                         {
                             iCodigo = con.getLastCodigo();
@@ -1373,7 +1373,7 @@ namespace DexComanda
                             //Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
                         }
 
-                    }
+                  //  }
 
                 }
                 if (ImprimeViaCozinha && cbxTipoPedido.Text == "0 - Entrega" && Sessions.returnEmpresa.Nome != "BURIS BURGUER")

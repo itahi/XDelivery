@@ -307,8 +307,21 @@ namespace DexComanda.Operações
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     decimal prProduto = ds.Tables["Produto"].Rows[i].Field<decimal>("PrecoProduto");
-                    DateTime dtFoto = ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFoto");
-                    DateTime dtSinc = ds.Tables["Produto"].Rows[i].Field<DateTime>("DataSincronismo");
+                    DateTime dtSinc = DateTime.Now.AddYears(1);
+                    DateTime dtFoto = DateTime.Now.AddYears(1);
+                    ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFoto");
+
+                    if (ds.Tables["Produto"].Rows[i].Field<DateTime>("DataSincronismo")!=null)
+                    {
+                       dtSinc = ds.Tables["Produto"].Rows[i].Field<DateTime>("DataSincronismo");
+                    }
+                    if (ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFoto") != null)
+                    {
+                        dtFoto = ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFoto");
+                    }
+                    
+                    
+                        
                     string iCaminhoImagem = ds.Tables["Produto"].Rows[i].Field<string>("UrlImagem");
                     request.AddParameter("token", iParamToken);
                     request.AddParameter("idReferencia", ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
@@ -404,7 +417,7 @@ namespace DexComanda.Operações
                     {
                         decimal iprice = 0;
                         iCodOpcao = ds.Tables["Produto_Opcao"].Rows[i].Field<int>("CodOpcao");
-                        if (dtFimPromo<=DateTime.Now && ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProcomocao") >0)
+                        if (dtFimPromo>=Convert.ToDateTime(DateTime.Now.ToShortDateString()) && ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProcomocao") >0)
                         {
                             iprice = ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProcomocao");
                         }

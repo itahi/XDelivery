@@ -195,12 +195,17 @@ namespace DexComanda
                                         // Inicia Sistema
 
                                         // Verifica se Abriu o Sistema 5 dias sem internet e limpa dando mais 5 dias  
-                                        int intAbriu5Vezes = Utils.ContaRegistro(empresas.Nome + empresas.CNPJ);
-                                        if (intAbriu5Vezes >= 5)
+                                        int intAbriu15Vezes = Utils.ContaRegistro(empresas.Nome + empresas.CNPJ);
+                                        if (intAbriu15Vezes >= 15)
                                         {
                                             con.LimpaTabela("XSistemas", "spCalculaSistema");
+                                            return;
                                         }
-                                        Utils.IniciaSistema();
+                                        else
+                                        {
+                                            Utils.IniciaSistema();
+                                        }
+                                        
 
                                     }
                                     else
@@ -244,12 +249,12 @@ namespace DexComanda
                                // Utils.IniciaSistema();
                                 if (Utils.LeArquivoRegistro())
                                 {
-                                    int intAbriu5Vezes = Utils.ContaRegistro(empresas.Nome + empresas.CNPJ);
-                                    if (intAbriu5Vezes < 5)
+                                    int intAbriu15Vezes = Utils.ContaRegistro(empresas.Nome + empresas.CNPJ);
+                                    if (intAbriu15Vezes < 15)
                                     {
                                         Utils.IniciaSistema();
                                     }
-                                    else if (empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "10512501000100")
+                                    else if (empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" )
                                     {
                                         Utils.IniciaSistema();
                                     }

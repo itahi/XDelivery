@@ -479,6 +479,7 @@ namespace DexComanda
                 }
                 else
                 {
+                    
                     if (AdicionaisGridView.DataSource != null)
                     {
                         AdicionaisGridView.AutoGenerateColumns = false;
@@ -513,8 +514,15 @@ namespace DexComanda
                 AdicionaisGridView.DataSource = con.SelectOpcaoProduto(Convert.ToString(codigoProdutoParaAlterar));
                 AdicionaisGridView.AutoGenerateColumns = true;
                 AdicionaisGridView.DataMember = "Produto_Opcao";
-
             }
+            else if (!AdicionaisGridView.Columns.Contains("CodOpcao"))
+            {
+                AdicionaisGridView.Columns.Add("CodOpcao", "CodOpcao");
+                AdicionaisGridView.Columns.Add("Preco", "Preco");
+                AdicionaisGridView.Columns.Add("Nome", "Nome");
+                AdicionaisGridView.Columns.Add("Tipo", "Tipo");
+            }
+           
         }
 
         private void tabPage2_Click(object sender, EventArgs e)
@@ -643,7 +651,7 @@ namespace DexComanda
 
         private void tabControl1_Click(object sender, EventArgs e)
         {
-            ListaOpcaoProduto();
+            //ListaOpcaoProduto();
         }
 
         private void cbxGrupoProduto_Click(object sender, EventArgs e)
@@ -700,6 +708,11 @@ namespace DexComanda
             {
                 MessageBox.Show("Não foi possivel selecionar a linha " + erro.Message);
             }
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListaOpcaoProduto();
         }
     }
 }

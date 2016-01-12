@@ -303,7 +303,7 @@ namespace DexComanda
             // Utils.RetornoTxt();//cbxCozinha.Text= cbxMesas.Text= cbxEntregas.Text = ListaImpressoras();
             if (Sessions.returnConfig != null)
             {
-                grpFidelidade.Visible = chkFidelidade.Checked;
+                grpFidelidade.Enabled = chkFidelidade.Checked;
                 chkViaCozinha.Checked = Sessions.returnConfig.ImpViaCozinha;
                 chkDataNAscimento.Checked = Sessions.returnConfig.UsaDataNascimento;
                 chkLoginSenha.Checked = Sessions.returnConfig.UsaLoginSenha;
