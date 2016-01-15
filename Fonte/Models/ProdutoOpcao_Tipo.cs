@@ -15,8 +15,10 @@ namespace DexComanda.Models
         public int MinimoOpcionais { get; set; }
         public int OrdenExibicao { get; set; }
         public DateTime DataAlteracao { get; set; }
-      //  public DateTime DataSincronismo { get; set; }
-       // public int OrdenExibicao { get; set; }
+        public Boolean AtivoSN { get; set; }
+        public Boolean OnlineSN { get; set; }
+        //  public DateTime DataSincronismo { get; set; }
+        // public int OrdenExibicao { get; set; }
 
     }
 }

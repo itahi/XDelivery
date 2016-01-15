@@ -44,6 +44,8 @@
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnAdicionar = new System.Windows.Forms.Button();
             this.cbxOrdem = new System.Windows.Forms.ComboBox();
+            this.chkOnlineSN = new System.Windows.Forms.CheckBox();
+            this.chkAtivoSN = new System.Windows.Forms.CheckBox();
             this.grpTipo.SuspendLayout();
             this.grpMaxMin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TipoOpcaoGrid)).BeginInit();
@@ -61,9 +63,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(9, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 13);
+            this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Nome Opção";
+            this.label1.Text = "Nome Tipo";
             // 
             // grpTipo
             // 
@@ -189,7 +191,7 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(149, 141);
+            this.btnEditar.Location = new System.Drawing.Point(149, 143);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(130, 35);
             this.btnEditar.TabIndex = 16;
@@ -225,11 +227,37 @@
             this.cbxOrdem.Size = new System.Drawing.Size(42, 26);
             this.cbxOrdem.TabIndex = 63;
             // 
+            // chkOnlineSN
+            // 
+            this.chkOnlineSN.AutoSize = true;
+            this.chkOnlineSN.Checked = true;
+            this.chkOnlineSN.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkOnlineSN.Location = new System.Drawing.Point(140, 22);
+            this.chkOnlineSN.Name = "chkOnlineSN";
+            this.chkOnlineSN.Size = new System.Drawing.Size(71, 17);
+            this.chkOnlineSN.TabIndex = 64;
+            this.chkOnlineSN.Text = "OnlineSN";
+            this.chkOnlineSN.UseVisualStyleBackColor = true;
+            // 
+            // chkAtivoSN
+            // 
+            this.chkAtivoSN.AutoSize = true;
+            this.chkAtivoSN.Checked = true;
+            this.chkAtivoSN.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkAtivoSN.Location = new System.Drawing.Point(69, 21);
+            this.chkAtivoSN.Name = "chkAtivoSN";
+            this.chkAtivoSN.Size = new System.Drawing.Size(65, 17);
+            this.chkAtivoSN.TabIndex = 65;
+            this.chkAtivoSN.Text = "AtivoSN";
+            this.chkAtivoSN.UseVisualStyleBackColor = true;
+            // 
             // frmTipoOpcao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(412, 355);
+            this.Controls.Add(this.chkAtivoSN);
+            this.Controls.Add(this.chkOnlineSN);
             this.Controls.Add(this.cbxOrdem);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnAdicionar);
@@ -272,5 +300,7 @@
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnAdicionar;
         private System.Windows.Forms.ComboBox cbxOrdem;
+        private System.Windows.Forms.CheckBox chkOnlineSN;
+        private System.Windows.Forms.CheckBox chkAtivoSN;
     }
 }

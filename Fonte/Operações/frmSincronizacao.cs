@@ -344,7 +344,7 @@ namespace DexComanda.Operações
                         request.AddParameter("dataInicial", ds.Tables["Produto"].Rows[i].Field<DateTime>("DataInicioPromocao"));
                         request.AddParameter("dataFinal", ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFimPromocao"));
                     }
-                    if (iCaminhoImagem != null && iCaminhoImagem != "" && dtFoto > dtSinc)
+                    if (File.Exists(iCaminhoImagem) && dtFoto > dtSinc)
                     {
                         request.AddFile("imagem", iCaminhoImagem);
                     }

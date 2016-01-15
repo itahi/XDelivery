@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -672,16 +673,24 @@ namespace DexComanda
             {
                 txtcaminhoImage.Text = opn.FileName.ToString();
 
-                imgProduto.Load(txtcaminhoImage.Text);
+                if (File.Exists(txtcaminhoImage.Text))
+                {
+                    imgProduto.Load(txtcaminhoImage.Text);
+                }
+               
                 con.AtualizaDataSincronismo("Produto", codigoProdutoParaAlterar, "DataFoto");
             }
         }
 
         private void txtcaminhoImage_TextChanged(object sender, EventArgs e)
         {
-            if (txtcaminhoImage.Text != "")
+            if (File.Exists(txtcaminhoImage.Text))
             {
                 imgProduto.Load(txtcaminhoImage.Text);
+            }
+            else
+            {
+                MessageBox.Show("Arquivo de imagem não existe no caminho " + txtcaminhoImage.Text + " informado, favor verificar");
             }
 
         }

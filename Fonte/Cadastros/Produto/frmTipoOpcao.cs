@@ -82,6 +82,8 @@ namespace DexComanda.Cadastros.Produto
                         MaximoOpcionais = 0,
                         MinimoOpcionais = 0,
                         OrdenExibicao = int.Parse(cbxOrdem.Text),
+                        OnlineSN = chkOnlineSN.Checked,
+                        AtivoSN = chkAtivoSN.Checked,
                         DataAlteracao = DateTime.Now,
                     };
                     if (grpTipo.Enabled && rbMultipla.Checked)
@@ -120,7 +122,10 @@ namespace DexComanda.Cadastros.Produto
                 {
                     txtNome.Text = ds.Tables[0].Rows[0].Field<string>("Nome");
                     cbxOrdem.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("OrdenExibicao"));
+                    chkAtivoSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("AtivoSN");
+                    chkOnlineSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("OnlineSN");
                     int iTipo = int.Parse(ds.Tables[0].Rows[0].Field<string>("Tipo"));
+
                     MarcaRadio(iTipo);
                     if (grpMaxMin.Visible)
                     {
@@ -179,6 +184,8 @@ namespace DexComanda.Cadastros.Produto
                 Tipo = RetornaOpcao(),
                 MaximoOpcionais = 0,
                 MinimoOpcionais = 0,
+                OnlineSN = chkOnlineSN.Checked,
+                AtivoSN = chkAtivoSN.Checked,
                 OrdenExibicao = int.Parse(cbxOrdem.Text),
                 DataAlteracao = DateTime.Now,
             };

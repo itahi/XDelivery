@@ -107,15 +107,18 @@
             // 
             this.usuariosGridView.AllowUserToAddRows = false;
             this.usuariosGridView.AllowUserToDeleteRows = false;
+            this.usuariosGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.usuariosGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.usuariosGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.usuariosGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.usuariosGridView.Location = new System.Drawing.Point(5, 151);
+            this.usuariosGridView.Location = new System.Drawing.Point(5, 142);
             this.usuariosGridView.MultiSelect = false;
             this.usuariosGridView.Name = "usuariosGridView";
             this.usuariosGridView.ReadOnly = true;
             this.usuariosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.usuariosGridView.Size = new System.Drawing.Size(398, 124);
+            this.usuariosGridView.Size = new System.Drawing.Size(399, 154);
             this.usuariosGridView.TabIndex = 7;
             // 
             // chkCancelaPedidos
@@ -210,7 +213,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(415, 282);
+            this.ClientSize = new System.Drawing.Size(416, 303);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.chkFechaPedido);
             this.Controls.Add(this.chkAdministrador);

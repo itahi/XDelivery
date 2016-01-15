@@ -33,7 +33,8 @@ namespace DexComanda.Cadastros.Produto
                         DataAlteracao = DateTime.Now,
                         Nome = txtNome.Text,
                         Tipo = cbxTipo.SelectedValue.ToString(),
-                        OnlineSN = true
+                        OnlineSN = chkOnlineSN.Checked,
+                        AtivoSN = chkAtivoSN.Checked
 
                     };
                     con.Insert("spAdicionarOpcao", opcao);
@@ -96,7 +97,6 @@ namespace DexComanda.Cadastros.Produto
 
         private void RetonaTipo(int iTipo)
         {
-            //con.SelectRegistroPorCodigo("Produto_OpcaoTipo", "", iTipo);
             Utils.MontaCombox(cbxTipo, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterProduto_OpcaoTipoPorCodigo", iTipo);
         }
 
@@ -107,7 +107,8 @@ namespace DexComanda.Cadastros.Produto
                 codigoAlterarDeletar = int.Parse(this.OpcaoGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
                 RetonaTipo(int.Parse(OpcaoGridView.SelectedRows[rowIndex].Cells[1].Value.ToString()));
                 txtNome.Text = OpcaoGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
-
+                chkAtivoSN.Checked = Convert.ToBoolean(OpcaoGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
+                chkOnlineSN.Checked = Convert.ToBoolean(OpcaoGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
                 this.btnAdicionar.Text = "Salvar [F12]";
                 this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
                 this.btnAdicionar.Click -= new System.EventHandler(this.CadastraOpcao);
@@ -146,7 +147,9 @@ namespace DexComanda.Cadastros.Produto
                     Codigo = codigoAlterarDeletar,
                     Nome = txtNome.Text,
                     Tipo = cbxTipo.SelectedValue.ToString(),
-                    DataAlteracao= DateTime.Now
+                    DataAlteracao= DateTime.Now,
+                    OnlineSN = chkOnlineSN.Checked,
+                    AtivoSN = chkAtivoSN.Checked
                 };
                 con.Update("spAlteraOpcao", opcao);
                 Utils.LimpaForm(this);
@@ -159,7 +162,7 @@ namespace DexComanda.Cadastros.Produto
                 this.btnEditar.Click += new System.EventHandler(this.EditarOpcao);
                 this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
               
-                ListaOpcao();
+               // ListaOpcao();
 
             }
             catch (Exception erro)

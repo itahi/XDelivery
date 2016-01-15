@@ -14,6 +14,7 @@ namespace DexComanda.Models
        public DateTime DataAlteracao { get; set; }
        public DateTime DataSincronismo { get; set; }
        public Boolean OnlineSN { get; set; }
+       public Boolean AtivoSN { get; set; }
 
     }
 }
