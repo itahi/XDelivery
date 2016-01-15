@@ -203,7 +203,6 @@
             this.opçãoToolStripMenuItem.Name = "opçãoToolStripMenuItem";
             this.opçãoToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
             this.opçãoToolStripMenuItem.Text = "Opção";
-            this.opçãoToolStripMenuItem.Click += new System.EventHandler(this.opçãoToolStripMenuItem_Click);
             // 
             // tipoOpçãoToolStripMenuItem
             // 
@@ -524,7 +523,6 @@
             this.FinanceiroToolStripMenuItem.Name = "FinanceiroToolStripMenuItem";
             this.FinanceiroToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.FinanceiroToolStripMenuItem.Text = "Financeiro";
-            this.FinanceiroToolStripMenuItem.Click += new System.EventHandler(this.caixaToolStripMenuItem_Click);
             // 
             // lançamentoAvulsoToolStripMenuItem
             // 
@@ -857,7 +855,6 @@
             this.txtEndereco.Name = "txtEndereco";
             this.txtEndereco.Size = new System.Drawing.Size(468, 29);
             this.txtEndereco.TabIndex = 24;
-            this.txtEndereco.TextChanged += new System.EventHandler(this.txtEndereco_TextChanged);
             // 
             // label5
             // 

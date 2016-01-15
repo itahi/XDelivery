@@ -24,6 +24,9 @@ using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Operações.Alteracoes;
 using DexComanda.Relatorios.Gerenciais;
 using DexComanda.Operações.Pedido;
+using RestSharp;
+using Newtonsoft.Json;
+using DexComanda.Models.WS;
 //using DexComanda.Relatorios.Fechamentos;
 
 namespace DexComanda
@@ -37,7 +40,10 @@ namespace DexComanda
         private Font printFont;
         private List<ItemPedido> items;
         private int rowIndex;
+        private string cUrlWs = "";
+        private string iParamToken;
         private List<Produto> Produtos;
+        private int CodPedidoWS=0;
         private Main parentWindow;
         private Main parentMain;
         private bool DescontoDia = Sessions.returnConfig.DescontoDiaSemana;
@@ -80,6 +86,21 @@ namespace DexComanda
             this.parentMain = parent;
 
         }
+        private void GerarToken()
+        {
+            try
+            {
+                cUrlWs = Sessions.returnEmpresa.UrlServidor;
+                iParamToken = Convert.ToString(DateTime.Now).Replace("/", "").Replace(":", "").Replace(" ", "").Substring(0, 11) + "Adminx";
+                iParamToken = Utils.CriptografarArquivo(iParamToken.Trim(),false);
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show("Geração do Token de validação " + e.Message);
+            }
+
+        }
         private void gruposToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -97,11 +118,15 @@ namespace DexComanda
                 }
             }
         }
+
         // private string Mo
         private void Main_Load(object sender, EventArgs e)
         {
             chkGerenciaImpressao.Checked = Utils.RetornaNomePc() == Sessions.returnEmpresa.Servidor;
-            
+            if (Sessions.returnEmpresa.UrlServidor!="")
+            {
+
+            }
 
             if (Sessions.returnUsuario != null)
             {
@@ -874,6 +899,53 @@ namespace DexComanda
                 con.Update("spInsereBoyPedido", MotoBoy);
             }
         }
+        private void PedidoNaCozinha(object sender, EventArgs e)
+        {
+            try
+            {
+                AlteraStatusPedido(CodPedidoWS, 3);
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show("Não foi possivel alterar o status do Pedido " + erro.Message);
+            }
+
+        }
+        private void PedidoNaEntrega(object sender, EventArgs e)
+        {
+            try
+            {
+                AlteraStatusPedido(CodPedidoWS, 4);
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show("Não foi possivel alterar o status do Pedido " + erro.Message);
+            }
+
+        }
+        private void AlteraStatusPedido(int iCodPedidows, int iStatus)
+        {
+            GerarToken();
+            RestClient client = new RestClient(cUrlWs);
+            RestRequest request = new RestRequest("ws/pedidos/status", Method.POST);
+            request.AddParameter("idPedido", iCodPedidows);
+            request.AddParameter("idStatus", iStatus);
+            request.AddParameter("token", iParamToken);
+            RestResponse response = (RestResponse)client.Execute(request);
+
+            if (response.Content.Contains("true"))
+            {
+                MessageBox.Show("Alteração realizada com sucesso");
+            }
+            else
+            {
+                MessageBox.Show("Alteração não pode ser realizada, favor tentar novamente mais tarde");
+            }
+           
+
+        }
         private void FinalizaCancelaPEdidos(object sender, EventArgs e)
         {
             try
@@ -1502,12 +1574,34 @@ namespace DexComanda
             if (e.Button == MouseButtons.Right)
             {
                 ContextMenu m = new ContextMenu();
+                ContextMenu subMenu = new ContextMenu();
                 MenuItem CancPedido = new MenuItem(" 0 - Cancelar Pedidos");
-                //    MenuItem EnviaTab = new MenuItem(" 1 - Enviar Garçon");
                 MenuItem FinalizarPed = new MenuItem(" 1 - Finalizar Este Pedido?");
                 MenuItem FinalizaSelecionados = new MenuItem(" 2 - Finalizar Todos Selecionado?");
                 MenuItem ImprimeConferenciaMesa = new MenuItem(" Imprimir Conferencia desta Mesa");
+                MenuItem PedidoONline =new MenuItem(" X - Pedido Online");
+                PedidoONline.Enabled = false;
+                int codPedido = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+                
+                // Verifica se o Pedido veio da Web e Habilita o subMenu
+                DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoOnline", codPedido);
+                if (dsPedido.Tables[0].Rows.Count>0)
+                {
+                    CodPedidoWS = dsPedido.Tables[0].Rows[0].Field<int>("CodigoPedidoWS");                    GerarToken();
+                    PedidoONline.Enabled = true;
+                    PedidoONline = new MenuItem(" 0 - Status Pedido Online");
+                    MenuItem StatusNaCozinha = new MenuItem(" 0 - Pedido na Cozinha");
+                    MenuItem StatusNaEntrega = new MenuItem(" 1 - Saiu pra entrega");
+                    MenuItem StatusCancelado = new MenuItem(" 2 - Cancelado");
 
+                    PedidoONline.MenuItems.Add(StatusNaCozinha);
+                    PedidoONline.MenuItems.Add(StatusNaEntrega);
+                    PedidoONline.MenuItems.Add(StatusCancelado);
+                    StatusCancelado.Enabled = false;
+                    StatusNaCozinha.Click += PedidoNaCozinha;
+                    StatusNaEntrega.Click += PedidoNaEntrega;
+                }
+                
                 CancPedido.Click += CancelarPedidos;
                 FinalizarPed.Click += FinalizaCancelaPEdidos;
                 FinalizaSelecionados.Click += FinalizaTodos;
@@ -1521,15 +1615,11 @@ namespace DexComanda
                 m.MenuItems.Add(CancPedido);
                 m.MenuItems.Add(FinalizarPed);
                 m.MenuItems.Add(FinalizaSelecionados);
+                m.MenuItems.Add(PedidoONline);
                 int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
                 m.Show(dgv, new Point(e.X, e.Y));
 
             }
-        }
-
-        private void alteraSenhaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void alterarSenhaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1569,11 +1659,6 @@ namespace DexComanda
             frm.ShowDialog();
         }
 
-        private void txtEndereco_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void geralToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             // Utils.ReportFechamento_Novo(DateTime.Now.AddDays(-2), DateTime.Now);
@@ -1592,11 +1677,7 @@ namespace DexComanda
             frm.ShowDialog();
         }
 
-        private void caixaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
+    
         private void aberturaCaixaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAberturaCaixa frm = new frmAberturaCaixa();
@@ -1640,11 +1721,7 @@ namespace DexComanda
             frm.ShowDialog();
         }
 
-        private void opçãoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
+    
         private void bairrosPorRegiãoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmBairrosRegiao frm = new frmBairrosRegiao();

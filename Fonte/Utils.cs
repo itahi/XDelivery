@@ -1204,7 +1204,7 @@ namespace DexComanda
 
             return strBuilder.ToString().ToUpper();
         }
-        public static string CriptografarArquivo(string iArquivo)
+        public static string CriptografarArquivo(string iArquivo,Boolean iUUPER=true)
         {
             MD5 md5Hasher = MD5.Create();
             byte[] valorCriptografado = md5Hasher.ComputeHash(Encoding.Default.GetBytes(iArquivo));
@@ -1214,8 +1214,15 @@ namespace DexComanda
             {
                 strBuilder.Append(valorCriptografado[i].ToString("x2"));
             }
-
-            return strBuilder.ToString().ToUpper();
+            if (iUUPER)
+            {
+                return strBuilder.ToString().ToUpper();
+            }
+            else
+            {
+                return strBuilder.ToString();
+            }
+            
         }
         public static string CriptoGrafarOnExecute(string iNomeMaquina, string iCNPJ)
         {

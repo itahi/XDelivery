@@ -232,6 +232,7 @@
     <Compile Include="Models\RegiaoEntrega_Bairros.cs" />
     <Compile Include="Models\RemoveDezPorcento.cs" />
     <Compile Include="Models\ReturnPadrao.cs" />
+    <Compile Include="Models\WS\RetornoWS.cs" />
     <Compile Include="Operações\Alteracoes\frmAlteracaoCliente.cs">
       <SubType>Form</SubType>
     </Compile>
