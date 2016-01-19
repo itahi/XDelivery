@@ -123,10 +123,6 @@ namespace DexComanda
         private void Main_Load(object sender, EventArgs e)
         {
             chkGerenciaImpressao.Checked = Utils.RetornaNomePc() == Sessions.returnEmpresa.Servidor;
-            if (Sessions.returnEmpresa.UrlServidor!="")
-            {
-
-            }
 
             if (Sessions.returnUsuario != null)
             {
@@ -1025,10 +1021,13 @@ namespace DexComanda
             // Retornando o IDFpagamento
             try
             {
+                int iIFormaPagamento = 1;
                 DataSet dsPedido = con.SelectObterFormaPagamentoPorNOme(iFPagamento, "FormaPagamento");
-                DataRow dRow = dsPedido.Tables[0].Rows[0];
-                int iIFormaPagamento = int.Parse(dRow.ItemArray.GetValue(0).ToString());
-
+                if (dsPedido.Tables[0].Rows.Count>0)
+                {
+                    DataRow dRow = dsPedido.Tables[0].Rows[0];
+                    iIFormaPagamento = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+                }
                 CaixaMovimento caixa = new CaixaMovimento()
                 {
                     CodCaixa = Sessions.retunrUsuario.CaixaLogado,
@@ -1042,6 +1041,7 @@ namespace DexComanda
 
                 };
                 con.Insert("spInserirMovimentoCaixa", caixa);
+
             }
             catch (Exception erro)
             {

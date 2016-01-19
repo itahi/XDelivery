@@ -1251,21 +1251,25 @@ namespace DexComanda
             Conexao con = new Conexao();
 
             DataSet dsFormaPagamento = con.SelectObterFormaPagamentoPorNOme(iFormaPagamento, "FormaPagamento");
-            DataRow dRowFpagamento = dsFormaPagamento.Tables[0].Rows[0];
-
-            if (Convert.ToBoolean(dRowFpagamento.ItemArray.GetValue(3).ToString()) == true)
+            if (dsFormaPagamento.Tables[0].Rows.Count>0)
             {
-                HistoricoPessoa hist = new Models.HistoricoPessoa()
+                DataRow dRowFpagamento = dsFormaPagamento.Tables[0].Rows[0];
+
+                if (Convert.ToBoolean(dRowFpagamento.ItemArray.GetValue(3).ToString()) == true)
                 {
-                    CodPessoa = iCodPessoa,
-                    CodUsuario = iCodUsuario,
-                    Data = iData,
-                    Historico = iHistorico,
-                    Tipo = iTipo,
-                    Valor =iValor
-                };
-                con.Insert("spAdicionaHistorico", hist);
+                    HistoricoPessoa hist = new Models.HistoricoPessoa()
+                    {
+                        CodPessoa = iCodPessoa,
+                        CodUsuario = iCodUsuario,
+                        Data = iData,
+                        Historico = iHistorico,
+                        Tipo = iTipo,
+                        Valor = iValor
+                    };
+                    con.Insert("spAdicionaHistorico", hist);
+                }
             }
+           
         }
 
         public static DataSet PopularGrid(string table, DataGridView gridView, string iParametrosConsulta)
