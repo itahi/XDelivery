@@ -51,7 +51,7 @@ namespace DexComanda
         // Rotina para efetuar Backup Automátizado do Banco de dados ao Encerrar o Programa
         public void BackupBanco(string iNomeServidor, string iNomeBanco, string iLocalBackup)
         {
-            string BackupFileName = iNomeBanco + DateTime.Now.ToShortDateString().Replace("/", "") + ".bkp";
+            string BackupFileName = iNomeBanco + DateTime.Now.ToShortDateString().Replace("/", "") + ".bak";
             string SqlComBackup = @"BACKUP DATABASE " + iNomeBanco + " TO DISK = N'" + iLocalBackup + @"\" + BackupFileName + @"'";
             SqlConnection SqlConec = null;
             SqlCommand cmdBkUp = null;
@@ -468,7 +468,7 @@ namespace DexComanda
       
         public DataSet SelectRegistroONline(string iNomeTable)
         {
-            string lSqlConsulta = " select * from " + iNomeTable + " where DataAlteracao>DataSincronismo or DataSincronismo is null and OnlineSN=1 and AtivoSN=1";
+            string lSqlConsulta = " select * from " + iNomeTable + " where DataAlteracao>DataSincronismo or DataSincronismo is null and (OnlineSN=1 and AtivoSN=1)";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;

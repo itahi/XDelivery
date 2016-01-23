@@ -269,9 +269,9 @@ namespace DexComanda
                     if (PromocaoDiasSemana)
                     {
                         var produto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", itemPedido.CodProduto, true).Tables["Produto"];
-                        if (produto != null)
+                        DiaDaPromocao = produto.Rows[0]["DiaSemana"].ToString();
+                        if (produto != null && DiaDaPromocao.IndexOf(DiaDaSema) > 0)
                         {
-                            DiaDaPromocao = produto.Rows[0]["DiaSemana"].ToString();
                             if (con.RetornaOpcoesProduto(itemPedido.CodProduto).Tables[0].Rows.Count == 0)
                             {
                                 if (DiaDaPromocao.IndexOf(DiaDaSema) > 0)

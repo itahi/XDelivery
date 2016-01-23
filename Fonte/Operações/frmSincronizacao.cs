@@ -67,8 +67,7 @@ namespace DexComanda.Operações
                 {
                     CadastraPrevisao();
                 }
-               
-                
+
             }
             catch (Exception erro)
             {
@@ -101,38 +100,40 @@ namespace DexComanda.Operações
 
         private void CadastrarTipoOpcao(DataSet ds)
         {
-            RestClient client = new RestClient(iUrlWS);
-            RestRequest request = new RestRequest("ws/opcao/tipo/set", Method.POST);
-            int iMaxOpcionais = 0; int iMinumum = 0;
-            MudaLabel("Tipo de Opção");
-            // prgBarRegiao.Maximum = ds.Tables[0].Rows.Count;
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-                if (ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("MinimoOpcionais")!=null)
+                RestClient client = new RestClient(iUrlWS);
+                RestRequest request = new RestRequest("ws/opcao/tipo/set", Method.POST);
+                int iMaxOpcionais = 0; int iMinumum = 0;
+                MudaLabel("Tipo de Opção");
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     iMaxOpcionais = ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("MinimoOpcionais");
-                }
-                if (ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("MaximoOpcionais")!=null)
-                {
                     iMinumum = ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("MaximoOpcionais");
-                }
-            // iMaxOpcionais = ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<string>("MinimoOpcionais")!=null;
-                request.AddParameter("token", iParamToken);
-                request.AddParameter("nome", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<string>("nome"));
-                request.AddParameter("tipo", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<string>("tipo"));
-                request.AddParameter("referenciaId", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("Codigo"));
-                request.AddParameter("ordenExibicao", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("OrdenExibicao"));
-                request.AddParameter("minimoSelecao", iMaxOpcionais);
-                request.AddParameter("maximoSelecao", iMinumum);
-                RestResponse response = (RestResponse)client.Execute(request);
-              
-                ReturnPadrao lRetorno = new ReturnPadrao();
-                lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
-                if (lRetorno.status == true)
-                {
-                    con.AtualizaDataSincronismo("Produto_OpcaoTipo", ds.Tables[0].Rows[i].Field<int>("Codigo"));
+                    request.AddParameter("token", iParamToken);
+                    request.AddParameter("nome", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<string>("nome"));
+                    request.AddParameter("tipo", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<string>("tipo"));
+                    request.AddParameter("referenciaId", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("Codigo"));
+                    request.AddParameter("ordenExibicao", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("OrdenExibicao"));
+                    request.AddParameter("minimoSelecao", iMaxOpcionais);
+                    request.AddParameter("maximoSelecao", iMinumum);
+                    RestResponse response = (RestResponse)client.Execute(request);
+
+                    ReturnPadrao lRetorno = new ReturnPadrao();
+                    lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+                    if (lRetorno.status == true)
+                    {
+                        con.AtualizaDataSincronismo("Produto_OpcaoTipo", ds.Tables[0].Rows[i].Field<int>("Codigo"));
+                    }
                 }
             }
+            catch (Exception er)
+            {
+
+                MessageBox.Show("Erro ao cadastrarar Produto_OpcaoTipo " + er.Message + er.InnerException);
+            }
+           
         }
 
         private void CadastrarBanner(string iBanner)
@@ -162,11 +163,11 @@ namespace DexComanda.Operações
             int iTotalOrSub;
             if (rbSub.Checked)
             {
-                iTotalOrSub = 5;
+                iTotalOrSub = 2;
             }
             else
             {
-                iTotalOrSub = 4;
+                iTotalOrSub = 1;
             }
             request.AddParameter("ordemExibicao", iTotalOrSub);
             string iFormasPagamento = "1";
@@ -235,7 +236,6 @@ namespace DexComanda.Operações
                 prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
                 MudaLabel("Opções");
-                // CadastrarOpcaoProduto(ds.Tables["Opcao"].Rows[i].Field<int>("Codigo"));
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     request.AddParameter("token", iParamToken);
@@ -252,12 +252,12 @@ namespace DexComanda.Operações
 
                 }
             }
-            catch (Exception erro)
+            catch (Exception er)
             {
 
-                MessageBox.Show(this.Name + erro.Message);
+                MessageBox.Show("Erro ao cadastrar Opcao" + er.Message + er.InnerException);
             }
-            
+
         }
         private void MudaLabel(string iNomeTabela)
         {
@@ -266,32 +266,42 @@ namespace DexComanda.Operações
         }
         private void CadastraCategorias(DataSet ds)
         {
-            RestClient client = new RestClient(iUrlWS);
-            RestRequest request = new RestRequest("ws/categorias/set", Method.POST);
-            prgBarProduto.Value = 0;
-            prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
-            MudaLabel("Grupo");
-            GerarToken();
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-                string inome = ds.Tables["Grupo"].Rows[i].Field<string>("NomeGrupo");
-                int iCod = ds.Tables["Grupo"].Rows[i].Field<int>("Codigo");
-                int AtivoSN = Convert.ToInt16(ds.Tables["Grupo"].Rows[i].Field<Boolean>("OnlineSN"));
-
-                request.AddParameter("token", iParamToken);
-                request.AddParameter("nomeCategoria", inome);
-                request.AddParameter("ativo", AtivoSN);
-                request.AddParameter("idReferencia", iCod);
-                RestResponse response = (RestResponse)client.Execute(request);
-                prgBarProduto.Value = i + 1;
-
-                if (response.Content.ToString() == "true")
+                RestClient client = new RestClient(iUrlWS);
+                RestRequest request = new RestRequest("ws/categorias/set", Method.POST);
+                prgBarProduto.Value = 0;
+                prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
+                MudaLabel("Grupo");
+                GerarToken();
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    con.AtualizaDataSincronismo("Grupo", iCod);
+                    string inome = ds.Tables["Grupo"].Rows[i].Field<string>("NomeGrupo");
+                    int iCod = ds.Tables["Grupo"].Rows[i].Field<int>("Codigo");
+                    int AtivoSN = Convert.ToInt16(ds.Tables["Grupo"].Rows[i].Field<Boolean>("OnlineSN"));
+
+                    request.AddParameter("token", iParamToken);
+                    request.AddParameter("nomeCategoria", inome);
+                    request.AddParameter("ativo", AtivoSN);
+                    request.AddParameter("idReferencia", iCod);
+                    RestResponse response = (RestResponse)client.Execute(request);
+                    prgBarProduto.Value = i + 1;
+
+                    if (response.Content.ToString() == "true")
+                    {
+                        con.AtualizaDataSincronismo("Grupo", iCod);
+                    }
+
+
                 }
 
-
             }
+            catch (Exception er)
+            {
+
+                MessageBox.Show("Erro ao cadastrarar Grupo" + er.Message + er.InnerException);
+            }
+            
         }
       
         private void CadastrarProduto(DataSet ds)
@@ -366,12 +376,12 @@ namespace DexComanda.Operações
                     iCaminhoImagem = "";
                 }
             }
-            catch (Exception erro)
+            catch (Exception er)
             {
 
-                MessageBox.Show(this.Name + erro.Message);
+                MessageBox.Show("Erro ao cadastrarar Produto" + er.Message + er.InnerException);
             }
-            
+
 
         }
         private System.IO.Stream RetornaArquivo(string iCaminho)
@@ -468,12 +478,7 @@ namespace DexComanda.Operações
 
             }
         }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void SelecionarImage(object sender, EventArgs e)
         {
             OpenFileDialog opn = new OpenFileDialog();

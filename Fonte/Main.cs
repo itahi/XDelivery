@@ -843,6 +843,12 @@ namespace DexComanda
                             DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
                             DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
 
+                            CodPedidoWS = VerificaPedidoOnline(codigo);
+                            if (CodPedidoWS > 0)
+                            {
+                                AlteraStatusPedido(CodPedidoWS, 5);
+                               // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
+                            }
                             int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
                             dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
                             
@@ -942,6 +948,17 @@ namespace DexComanda
            
 
         }
+        private int VerificaPedidoOnline(int CodPedido)
+        {
+            int iCodWs = 0;
+            DataSet dPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoOnline", CodPedido);
+            if (dPedido.Tables[0].Rows.Count > 0)
+            {
+                iCodWs = dPedido.Tables[0].Rows[0].Field<int>("CodigoPedidoWS"); 
+              
+            }
+            return iCodWs;
+        }
         private void FinalizaCancelaPEdidos(object sender, EventArgs e)
         {
             try
@@ -950,13 +967,19 @@ namespace DexComanda
                 int codigo, iCodMesa;
                 decimal dblTotalPedido;
                 string NumeroMesa;
-                // this.pedidosGridView.SelectedCells[2].Value = true;
 
                 if (MessageBox.Show("Deseja ** FINALIZAR ** este pedido?", "Cuidado !!!", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
                     DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
                     DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
+
+                    CodPedidoWS = VerificaPedidoOnline(codigo);
+                    if (CodPedidoWS>0)
+                    {
+                        AlteraStatusPedido(CodPedidoWS, 5);
+                        MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
+                    }
 
                     iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(9).ToString());
                     int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
@@ -1581,26 +1604,29 @@ namespace DexComanda
                 MenuItem ImprimeConferenciaMesa = new MenuItem(" Imprimir Conferencia desta Mesa");
                 MenuItem PedidoONline =new MenuItem(" X - Pedido Online");
                 PedidoONline.Enabled = false;
-                int codPedido = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
-                
-                // Verifica se o Pedido veio da Web e Habilita o subMenu
-                DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoOnline", codPedido);
-                if (dsPedido.Tables[0].Rows.Count>0)
+                if (pedidosGridView.Rows.Count>0)
                 {
-                    CodPedidoWS = dsPedido.Tables[0].Rows[0].Field<int>("CodigoPedidoWS");                    GerarToken();
-                    PedidoONline.Enabled = true;
-                    PedidoONline = new MenuItem(" 0 - Status Pedido Online");
-                    MenuItem StatusNaCozinha = new MenuItem(" 0 - Pedido na Cozinha");
-                    MenuItem StatusNaEntrega = new MenuItem(" 1 - Saiu pra entrega");
-                    MenuItem StatusCancelado = new MenuItem(" 2 - Cancelado");
+                    int codPedido = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+                    // Verifica se o Pedido veio da Web e Habilita o subMenu
+                    DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoOnline", codPedido);
+                    if (dsPedido.Tables[0].Rows.Count > 0)
+                    {
+                        CodPedidoWS = dsPedido.Tables[0].Rows[0].Field<int>("CodigoPedidoWS"); GerarToken();
+                        PedidoONline.Enabled = true;
+                        PedidoONline = new MenuItem(" 0 - Status Pedido Online");
+                        MenuItem StatusNaCozinha = new MenuItem(" 0 - Pedido na Cozinha");
+                        MenuItem StatusNaEntrega = new MenuItem(" 1 - Saiu pra entrega");
+                        MenuItem StatusCancelado = new MenuItem(" 2 - Cancelado");
 
-                    PedidoONline.MenuItems.Add(StatusNaCozinha);
-                    PedidoONline.MenuItems.Add(StatusNaEntrega);
-                    PedidoONline.MenuItems.Add(StatusCancelado);
-                    StatusCancelado.Enabled = false;
-                    StatusNaCozinha.Click += PedidoNaCozinha;
-                    StatusNaEntrega.Click += PedidoNaEntrega;
+                        PedidoONline.MenuItems.Add(StatusNaCozinha);
+                        PedidoONline.MenuItems.Add(StatusNaEntrega);
+                        PedidoONline.MenuItems.Add(StatusCancelado);
+                        StatusCancelado.Enabled = false;
+                        StatusNaCozinha.Click += PedidoNaCozinha;
+                        StatusNaEntrega.Click += PedidoNaEntrega;
+                    }
                 }
+                
                 
                 CancPedido.Click += CancelarPedidos;
                 FinalizarPed.Click += FinalizaCancelaPEdidos;

@@ -372,7 +372,13 @@ namespace DexComanda
 
         private void Cancelar(object sender, EventArgs e)
         {
-            ClearForm(this);
+            this.btnAdicionarOpcao.Text = "Salvar [F12]";
+            this.btnAdicionarOpcao.Click += new System.EventHandler(this.AdicionarOpcao);
+            this.btnAdicionarOpcao.Click -= new System.EventHandler(this.SalvarRegistro);
+
+            this.btnEditar.Text = "Cancelar";
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
         }
 
         private static void ClearForm(System.Windows.Forms.Control parent)
@@ -538,34 +544,43 @@ namespace DexComanda
 
         private void AdicionaisGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //    try
-            //    {
-            //        rowIndex = e.RowIndex;
-            //        //  rowIndex = this.AdicionaisGridView.SelectedRows[e.RowIndex].Index;
-            //    }
-            //    catch (Exception erro)
-            //    {
-            //        MessageBox.Show("Não foi possivel selecionar a linha "+ erro.Message);
-            //    }
+            try
+            {
+                rowIndex = e.RowIndex;
+                //  rowIndex = this.AdicionaisGridView.SelectedRows[e.RowIndex].Index;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Não foi possivel selecionar a linha " + erro.Message);
+            }
 
 
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
+            try
+            {
+                codigoOpcao = int.Parse(this.AdicionaisGridView.Rows[rowIndex].Cells[0].Value.ToString());
+                txtPrecoOpcao.Text = AdicionaisGridView.Rows[rowIndex].Cells[1].Value.ToString();
+                this.cbxOpcao.SelectedText = this.AdicionaisGridView.Rows[rowIndex].Cells[2].Value.ToString();
 
-            codigoOpcao = int.Parse(this.AdicionaisGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-            txtPrecoOpcao.Text = AdicionaisGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
-            this.cbxOpcao.SelectedText = this.AdicionaisGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
 
+                this.btnAdicionarOpcao.Text = "Salvar";
+                this.btnAdicionarOpcao.Click += new System.EventHandler(this.SalvarRegistro);
+                this.btnAdicionarOpcao.Click -= new System.EventHandler(this.AdicionarOpcao);
 
-            this.btnAdicionarOpcao.Text = "Salvar";
-            this.btnAdicionarOpcao.Click += new System.EventHandler(this.SalvarRegistro);
-            this.btnAdicionarOpcao.Click -= new System.EventHandler(this.AdicionarOpcao);
+                this.btnEditar.Text = "Cancelar";
+                this.btnEditar.Click += new System.EventHandler(this.Cancelar);
+                this.btnEditar.Click -= new System.EventHandler(this.btnEditar_Click);
+                
+            }
+            catch (Exception erro)
+            {
 
-            this.btnEditar.Text = "Cancelar";
-            this.btnEditar.Click += new System.EventHandler(this.Cancelar);
-            this.btnEditar.Click -= new System.EventHandler(this.SalvarRegistro);
+                MessageBox.Show(erro.Message);
+            }
+            
         }
         private void SalvarRegistro(object sender, EventArgs e)
         {
@@ -589,7 +604,7 @@ namespace DexComanda
                 this.btnAdicionarOpcao.Click -= new System.EventHandler(this.SalvarRegistro);
 
                 this.btnEditar.Text = "Editar";
-                this.btnEditar.Click += new System.EventHandler(this.SalvarRegistro);
+                this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
                 this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
 
                 Utils.LimpaForm(this);
