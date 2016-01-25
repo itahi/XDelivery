@@ -14,5 +14,6 @@ namespace DexComanda.Models
         public Boolean GeraFinanceiro { get; set; }
         public Boolean OnlineSN { get; set; }
         public DateTime DataAlteracao { get; set; }
+        public string CaminhoImagem { get; set; }
     }
 }

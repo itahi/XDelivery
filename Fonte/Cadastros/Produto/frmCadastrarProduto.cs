@@ -738,5 +738,11 @@ namespace DexComanda
         {
             ListaOpcaoProduto();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            frmAdicionarGrupo frm = new frmAdicionarGrupo();
+            frm.Show();
+        }
     }
 }

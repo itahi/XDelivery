@@ -59,6 +59,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.AdicionaisGridView = new System.Windows.Forms.DataGridView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
             this.txtMaxAdicionais = new System.Windows.Forms.TextBox();
             this.nomeProdutoTextBox = new System.Windows.Forms.TextBox();
             this.descricaoProdutoTextBox = new System.Windows.Forms.TextBox();
@@ -136,7 +137,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(152, 15);
+            label1.Location = new System.Drawing.Point(152, 16);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(74, 13);
             label1.TabIndex = 24;
@@ -187,7 +188,7 @@
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(400, 307);
+            this.btnSair.Location = new System.Drawing.Point(400, 302);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(150, 43);
             this.btnSair.TabIndex = 35;
@@ -197,7 +198,7 @@
             // 
             // btnDoProduto
             // 
-            this.btnDoProduto.Location = new System.Drawing.Point(224, 307);
+            this.btnDoProduto.Location = new System.Drawing.Point(224, 302);
             this.btnDoProduto.Name = "btnDoProduto";
             this.btnDoProduto.Size = new System.Drawing.Size(150, 43);
             this.btnDoProduto.TabIndex = 34;
@@ -214,14 +215,14 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(542, 274);
+            this.tabPage3.Size = new System.Drawing.Size(603, 274);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Imagem";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(487, 13);
+            this.button1.Location = new System.Drawing.Point(548, 13);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(49, 23);
             this.button1.TabIndex = 15;
@@ -231,7 +232,7 @@
             // 
             // btnImg
             // 
-            this.btnImg.Location = new System.Drawing.Point(429, 13);
+            this.btnImg.Location = new System.Drawing.Point(487, 14);
             this.btnImg.Name = "btnImg";
             this.btnImg.Size = new System.Drawing.Size(55, 23);
             this.btnImg.TabIndex = 13;
@@ -243,7 +244,7 @@
             // 
             this.txtcaminhoImage.Location = new System.Drawing.Point(8, 16);
             this.txtcaminhoImage.Name = "txtcaminhoImage";
-            this.txtcaminhoImage.Size = new System.Drawing.Size(419, 20);
+            this.txtcaminhoImage.Size = new System.Drawing.Size(473, 20);
             this.txtcaminhoImage.TabIndex = 14;
             this.txtcaminhoImage.TextChanged += new System.EventHandler(this.txtcaminhoImage_TextChanged);
             // 
@@ -252,7 +253,7 @@
             this.imgProduto.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.imgProduto.Location = new System.Drawing.Point(8, 42);
             this.imgProduto.Name = "imgProduto";
-            this.imgProduto.Size = new System.Drawing.Size(528, 226);
+            this.imgProduto.Size = new System.Drawing.Size(589, 226);
             this.imgProduto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.imgProduto.TabIndex = 0;
             this.imgProduto.TabStop = false;
@@ -270,7 +271,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(542, 274);
+            this.tabPage2.Size = new System.Drawing.Size(603, 274);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Adicionais/Opcionais";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -379,6 +380,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button2);
             this.tabPage1.Controls.Add(label5);
             this.tabPage1.Controls.Add(this.txtMaxAdicionais);
             this.tabPage1.Controls.Add(this.nomeProdutoTextBox);
@@ -395,10 +397,20 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(542, 274);
+            this.tabPage1.Size = new System.Drawing.Size(603, 274);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Produto";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(237, 141);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 26);
+            this.button2.TabIndex = 38;
+            this.button2.Text = "Novo Grupo";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // txtMaxAdicionais
             // 
@@ -415,7 +427,7 @@
             this.nomeProdutoTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nomeProdutoTextBox.Location = new System.Drawing.Point(11, 25);
             this.nomeProdutoTextBox.Name = "nomeProdutoTextBox";
-            this.nomeProdutoTextBox.Size = new System.Drawing.Size(524, 26);
+            this.nomeProdutoTextBox.Size = new System.Drawing.Size(575, 26);
             this.nomeProdutoTextBox.TabIndex = 23;
             // 
             // descricaoProdutoTextBox
@@ -425,7 +437,7 @@
             this.descricaoProdutoTextBox.Location = new System.Drawing.Point(6, 186);
             this.descricaoProdutoTextBox.Multiline = true;
             this.descricaoProdutoTextBox.Name = "descricaoProdutoTextBox";
-            this.descricaoProdutoTextBox.Size = new System.Drawing.Size(524, 82);
+            this.descricaoProdutoTextBox.Size = new System.Drawing.Size(577, 82);
             this.descricaoProdutoTextBox.TabIndex = 27;
             // 
             // precoProdutoTextBox
@@ -473,7 +485,7 @@
             this.grpDesconto.Controls.Add(this.ChkQuarta);
             this.grpDesconto.Controls.Add(this.chkTerca);
             this.grpDesconto.Controls.Add(this.chkSegunda);
-            this.grpDesconto.Location = new System.Drawing.Point(298, 57);
+            this.grpDesconto.Location = new System.Drawing.Point(354, 60);
             this.grpDesconto.Name = "grpDesconto";
             this.grpDesconto.Size = new System.Drawing.Size(232, 123);
             this.grpDesconto.TabIndex = 32;
@@ -583,7 +595,7 @@
             this.cbxGrupoProduto.FormattingEnabled = true;
             this.cbxGrupoProduto.Location = new System.Drawing.Point(8, 141);
             this.cbxGrupoProduto.Name = "cbxGrupoProduto";
-            this.cbxGrupoProduto.Size = new System.Drawing.Size(280, 26);
+            this.cbxGrupoProduto.Size = new System.Drawing.Size(223, 26);
             this.cbxGrupoProduto.TabIndex = 24;
             this.cbxGrupoProduto.Click += new System.EventHandler(this.cbxGrupoProduto_Click);
             // 
@@ -595,7 +607,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 1);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(550, 300);
+            this.tabControl1.Size = new System.Drawing.Size(611, 300);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
@@ -604,7 +616,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(552, 349);
+            this.ClientSize = new System.Drawing.Size(623, 349);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnDoProduto);
             this.Controls.Add(this.tabControl1);
@@ -677,5 +689,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DateTimePicker dtInicio;
         private System.Windows.Forms.DateTimePicker dtFim;
+        private System.Windows.Forms.Button button2;
     }
 }

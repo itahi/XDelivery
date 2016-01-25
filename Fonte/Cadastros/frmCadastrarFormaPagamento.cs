@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,14 +35,15 @@ namespace DexComanda
                 Descricao = this.txtNomeFP.Text.ToString(),
                 DescontoSN = chkDesconto2.Checked,
                 GeraFinanceiro = chkFinanceiro.Checked,
-                OnlineSN  = chkOnline.Checked,
-                DataAlteracao =DateTime.Now
+                OnlineSN = chkOnline.Checked,
+                DataAlteracao = DateTime.Now,
+                CaminhoImagem = txtcaminhoImage.Text
             };
 
             if (txtNomeFP.Text != "")
             {
                 con.Insert("spAdicionarFormaPagamento", fp);
-                Utils.ControlaEventos("Inserir",this.Name);
+                Utils.ControlaEventos("Inserir", this.Name);
                 Utils.LimpaForm(this);
                 Utils.PopularGrid_SP("FormaPagamento", FPGridView, "spObterFormaPagamento");
             }
@@ -49,19 +51,20 @@ namespace DexComanda
             {
                 MessageBox.Show("Preencha o nome para Continuar", "DexAviso");
             }
-            
+
         }
 
         //Só habilita a edicao trocando os nomes os metodos dos botoes
         private void Editar(object sender, EventArgs e)
         {
-            if (FPGridView.SelectedRows.Count >0)
+            if (FPGridView.SelectedRows.Count > 0)
             {
                 codigo = int.Parse(this.FPGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
                 this.txtNomeFP.Text = this.FPGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
                 chkDesconto2.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[2].Value.ToString());
                 chkFinanceiro.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
-                chkOnline.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[4].Value.ToString()); 
+                chkOnline.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
+                txtcaminhoImage.Text = FPGridView.SelectedRows[rowIndex].Cells[5].Value.ToString();
 
                 this.btnAdicionar.Text = "Salvar";
                 this.btnAdicionar.Click += new System.EventHandler(this.SalvarFP);
@@ -69,13 +72,13 @@ namespace DexComanda
 
                 this.btnEditarFP.Text = "Cancelar";
                 this.btnEditarFP.Click += new System.EventHandler(this.Cancelar);
-                this.btnEditarFP.Click -= new System.EventHandler(this.Editar); 
+                this.btnEditarFP.Click -= new System.EventHandler(this.Editar);
             }
             else
             {
                 MessageBox.Show("Selecione um registro para editar", "Dex Aviso");
             }
-            
+
         }
 
         private void Cancelar(object sender, EventArgs e)
@@ -102,12 +105,13 @@ namespace DexComanda
         {
             DexComanda.Models.FormasPagamento fp = new DexComanda.Models.FormasPagamento()
             {
-                Codigo      = codigo,
-                Descricao   = this.txtNomeFP.Text.ToString(),
-                DescontoSN  = chkDesconto2.Checked ,
+                Codigo = codigo,
+                Descricao = this.txtNomeFP.Text.ToString(),
+                DescontoSN = chkDesconto2.Checked,
                 GeraFinanceiro = chkFinanceiro.Checked,
                 OnlineSN = chkOnline.Checked,
-                DataAlteracao = DateTime.Now
+                DataAlteracao = DateTime.Now,
+                CaminhoImagem = txtcaminhoImage.Text
             };
 
             con.Update("spAlterarFormaPagamento", fp);
@@ -144,7 +148,7 @@ namespace DexComanda
             {
                 Adicionar(sender, e);
             }
-           
+
         }
 
         private void DeletarRegistro(object sender, EventArgs e)
@@ -153,7 +157,7 @@ namespace DexComanda
             {
                 int CodRegistro = int.Parse(this.FPGridView.SelectedCells[0].Value.ToString());
                 con.DeleteAll("FormaPagamento", "spExcluirFormaPagamento", CodRegistro);
-                Utils.ControlaEventos("Excluir",this.Name);
+                Utils.ControlaEventos("Excluir", this.Name);
                 MessageBox.Show("Item excluído com sucesso.");
                 Utils.PopularGrid_SP("FormaPagamento", FPGridView, "spObterFormaPagamento");
 
@@ -165,7 +169,7 @@ namespace DexComanda
 
         }
 
-    
+
         private void Excluir(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -187,6 +191,54 @@ namespace DexComanda
         {
 
         }
-            
+
+        private void SelecionarImagem(object sender, EventArgs e)
+        {
+            OpenFileDialog opn = new OpenFileDialog();
+            opn.Title = "Selecione a imagem da bandeira para exibir no site";
+            opn.CheckFileExists = true;
+            opn.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|"; //+ "All files (*.*)|*.*";
+
+            if (opn.ShowDialog() == DialogResult.OK)
+            {
+                txtcaminhoImage.Text = opn.FileName.ToString();
+
+                if (File.Exists(txtcaminhoImage.Text))
+                {
+                    img.Load(txtcaminhoImage.Text);
+                }
+
+                con.AtualizaDataSincronismo("FormaPagamento", codigo, "DataFoto");
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            txtcaminhoImage.Text = "";
+            img.Dispose();
+            con.AtualizaDataSincronismo("Produto", codigo, "DataFoto");
+        }
+
+        private void btnAdicionar_Click(object sender, EventArgs e)
+        {
+            Adicionar(sender, e);
+        }
+
+        private void btnEditarFP_Click(object sender, EventArgs e)
+        {
+            Editar(sender, e);
+        }
+
+        private void txtcaminhoImage_TextChanged(object sender, EventArgs e)
+        {
+            if (File.Exists(txtcaminhoImage.Text))
+            {
+                img.Load(txtcaminhoImage.Text);
+            }
+            else
+            {
+                MessageBox.Show("Arquivo de imagem não existe no caminho " + txtcaminhoImage.Text + " informado, favor verificar");
+            }
+        }
     }
 }

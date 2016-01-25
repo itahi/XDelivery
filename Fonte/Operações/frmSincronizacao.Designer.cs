@@ -31,6 +31,10 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lblMinimo = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtVlrMinimo = new System.Windows.Forms.TextBox();
+            this.lblSinc = new System.Windows.Forms.Label();
             this.prgBarPrevisao = new System.Windows.Forms.ProgressBar();
             this.chkPrevisao = new System.Windows.Forms.CheckBox();
             this.btnSincronizar = new System.Windows.Forms.Button();
@@ -57,7 +61,6 @@
             this.lblReturn = new System.Windows.Forms.Label();
             this.chkDesconto = new System.Windows.Forms.CheckBox();
             this.txtPercentualDesconto = new System.Windows.Forms.TextBox();
-            this.lblSinc = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -81,6 +84,9 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.lblMinimo);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.txtVlrMinimo);
             this.tabPage1.Controls.Add(this.lblSinc);
             this.tabPage1.Controls.Add(this.prgBarPrevisao);
             this.tabPage1.Controls.Add(this.chkPrevisao);
@@ -99,6 +105,46 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Cadastros";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // lblMinimo
+            // 
+            this.lblMinimo.AutoSize = true;
+            this.lblMinimo.Location = new System.Drawing.Point(90, 130);
+            this.lblMinimo.Name = "lblMinimo";
+            this.lblMinimo.Size = new System.Drawing.Size(74, 13);
+            this.lblMinimo.TabIndex = 20;
+            this.lblMinimo.Text = "Sincronizando";
+            this.lblMinimo.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(2, 111);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(93, 13);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "Pedido Minimo R$";
+            this.label2.Visible = false;
+            // 
+            // txtVlrMinimo
+            // 
+            this.txtVlrMinimo.Location = new System.Drawing.Point(5, 127);
+            this.txtVlrMinimo.Name = "txtVlrMinimo";
+            this.txtVlrMinimo.Size = new System.Drawing.Size(75, 20);
+            this.txtVlrMinimo.TabIndex = 18;
+            this.txtVlrMinimo.Text = "0";
+            this.txtVlrMinimo.Visible = false;
+            this.txtVlrMinimo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtVlrMinimo_KeyPress);
+            // 
+            // lblSinc
+            // 
+            this.lblSinc.AutoSize = true;
+            this.lblSinc.Location = new System.Drawing.Point(23, 164);
+            this.lblSinc.Name = "lblSinc";
+            this.lblSinc.Size = new System.Drawing.Size(74, 13);
+            this.lblSinc.TabIndex = 17;
+            this.lblSinc.Text = "Sincronizando";
+            this.lblSinc.Visible = false;
             // 
             // prgBarPrevisao
             // 
@@ -161,7 +207,6 @@
             // chkFPagamento
             // 
             this.chkFPagamento.AutoSize = true;
-            this.chkFPagamento.Enabled = false;
             this.chkFPagamento.Location = new System.Drawing.Point(5, 29);
             this.chkFPagamento.Name = "chkFPagamento";
             this.chkFPagamento.Size = new System.Drawing.Size(117, 17);
@@ -358,16 +403,6 @@
             this.txtPercentualDesconto.Size = new System.Drawing.Size(45, 20);
             this.txtPercentualDesconto.TabIndex = 9;
             // 
-            // lblSinc
-            // 
-            this.lblSinc.AutoSize = true;
-            this.lblSinc.Location = new System.Drawing.Point(23, 164);
-            this.lblSinc.Name = "lblSinc";
-            this.lblSinc.Size = new System.Drawing.Size(74, 13);
-            this.lblSinc.TabIndex = 17;
-            this.lblSinc.Text = "Sincronizando";
-            this.lblSinc.Visible = false;
-            // 
             // frmSincronizacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -421,5 +456,8 @@
         private System.Windows.Forms.ProgressBar prgBarPrevisao;
         private System.Windows.Forms.CheckBox chkPrevisao;
         private System.Windows.Forms.Label lblSinc;
+        private System.Windows.Forms.Label lblMinimo;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtVlrMinimo;
     }
 }

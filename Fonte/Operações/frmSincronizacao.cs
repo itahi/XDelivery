@@ -41,6 +41,12 @@ namespace DexComanda.Operações
             GerarToken();
             try
             {
+                CadastraPrevisao();
+                if (chkFPagamento.Checked)
+                {
+                    // Envia as formas de pagamento ao site , enviando a imagem da bandeira 
+                    CadastraFormaPagamento(ObterDados("FormaPagamento"));
+                }
                 if (chkProdutos.Checked)
                 {
                     // Sincronizar Grupos
@@ -74,6 +80,21 @@ namespace DexComanda.Operações
 
                 MessageBox.Show("Erro ao sincronizar " + erro.Message);
             }
+        }
+        private void CadastraPedidoMinimo()
+        {
+
+            RestClient client = new RestClient(iUrlWS);
+            RestRequest request = new RestRequest("ws/pedido/minimo", Method.POST);
+            request.AddParameter("token", iParamToken);
+            request.AddParameter("valor", txtVlrMinimo.Text);
+            MudaLabel("Pedido Mínimo");
+            RestResponse response = (RestResponse)client.Execute(request);
+
+            ReturnPadrao lRetorno = new ReturnPadrao();
+            lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+            lblMinimo.Visible = true;
+            lblMinimo.Text = lRetorno.msg;
         }
         private void CadastraPrevisao()
         {
@@ -459,24 +480,23 @@ namespace DexComanda.Operações
         private void CadastraFormaPagamento(DataSet ds)
         {
             RestClient client = new RestClient(iUrlWS);
-            RestRequest request = new RestRequest("ws/formapagamento/set", Method.POST);
+            RestRequest request = new RestRequest("ws/loja/cartoes", Method.POST);
 
             prgBarpagamento.Maximum = ds.Tables[0].Rows.Count;
+            request.AddParameter("token", iParamToken);
+            int iCod=0;
+            
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                string inome = ds.Tables["FormaPagamento"].Rows[i].Field<string>("Nome");
-                int iCod = ds.Tables["FormaPagamento"].Rows[i].Field<int>("Codigo");
-                request.AddParameter("token", iParamToken);
-                request.AddParameter("nomeformapagamento", inome);
-                request.AddParameter("idReferencia", iCod);
-                RestResponse response = (RestResponse)client.Execute(request);
-                prgBarpagamento.Value = i + 1;
-                if (response.Content.ToString() == "true")
-                {
-                    con.AtualizaDataSincronismo("FormaPagamento", iCod);
-                }
-
+                iCod = ds.Tables["FormaPagamento"].Rows[i].Field<int>("Codigo");
+                request.AddFile("cartao[" + i + "]", ds.Tables["FormaPagamento"].Rows[i].Field<string>("CaminhoImagem").ToLower(),"imagem/png");
+                prgBarpagamento.Value = prgBarpagamento.Value + 1;
+                con.AtualizaDataSincronismo("FormaPagamento", iCod);
             }
+            RestResponse response = (RestResponse)client.Execute(request);
+            ReturnPadrao lReturn = new ReturnPadrao();
+            lReturn = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+            
         }
         
         private void SelecionarImage(object sender, EventArgs e)
@@ -492,11 +512,7 @@ namespace DexComanda.Operações
             }
         }
 
-        private void txtcaminhoImage_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
+    
         private void btnSincronizar_Click(object sender, EventArgs e)
         {
             Sincroniza();
@@ -575,6 +591,11 @@ namespace DexComanda.Operações
         private void chkRemover_CheckedChanged(object sender, EventArgs e)
         {
             grpBanner.Enabled = !chkRemover.Checked;
+        }
+
+        private void txtVlrMinimo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
         }
     }
 }

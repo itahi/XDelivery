@@ -847,7 +847,7 @@ namespace DexComanda
 
         private void MenuAuxiliar(object sender, DataGridViewCellEventArgs e)
         {
-           
+        
         }
 
         private void AuxiliarMenu(object sender, MouseEventArgs e)
