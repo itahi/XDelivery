@@ -1,9 +1,11 @@
 ﻿using DexComanda.Models;
+using DexComanda.Models.WS;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -20,8 +22,9 @@ namespace DexComanda.Operações
         private string iParamToken;
         private List<Grupo> listGrupos;
         private string iUrlWS;
-        private string strPrevisaoEntrega="0";
+        private string strPrevisaoEntrega = "0";
         private Conexao con;
+        private List<DadosApp> newDados;
         public frmSincronizacao()
         {
             InitializeComponent();
@@ -41,7 +44,7 @@ namespace DexComanda.Operações
             GerarToken();
             try
             {
-                CadastraPrevisao();
+                //CadastraPrevisao();
                 if (chkFPagamento.Checked)
                 {
                     // Envia as formas de pagamento ao site , enviando a imagem da bandeira 
@@ -73,12 +76,50 @@ namespace DexComanda.Operações
                 {
                     CadastraPrevisao();
                 }
+                if (chkMobile.Checked)
+                {
+                    CadastraLinkApp();
+                }
 
             }
             catch (Exception erro)
             {
 
                 MessageBox.Show("Erro ao sincronizar " + erro.Message);
+            }
+        }
+        private void CadastraLinkApp()
+        {
+            try
+
+            {
+                newDados = new List<DadosApp>();
+                newDados= JsonConvert.DeserializeObject<List<DadosApp>>(Sessions.returnConfig.DadosApp);
+                RestClient client = new RestClient(iUrlWS);
+                RestResponse response= new RestResponse();
+                RestRequest request = new RestRequest("ws/loja/baixarrApp", Method.POST);
+
+                foreach (DadosApp item in newDados)
+                {
+                    request.AddParameter("token", iParamToken);
+                    request.AddParameter("plataforma", item.plataforma);
+                    request.AddParameter("urlBaixarApp",item.url);
+                    MudaLabel("Link APP");
+                    response = (RestResponse)client.Execute(request);
+                    ReturnPadrao lRetorno = new ReturnPadrao();
+                    lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+                }
+                   
+                
+                
+                
+
+            }
+
+            catch (Exception er)
+            {
+
+                MessageBox.Show("Erro ao cadastrar Link App " + er.Message + er.InnerException);
             }
         }
         private void CadastraPedidoMinimo()
@@ -98,7 +139,7 @@ namespace DexComanda.Operações
         }
         private void CadastraPrevisao()
         {
-          
+
             RestClient client = new RestClient(iUrlWS);
             RestRequest request = new RestRequest("ws/previsao/entrega/set", Method.POST);
             request.AddParameter("token", iParamToken);
@@ -109,14 +150,22 @@ namespace DexComanda.Operações
 
             ReturnPadrao lRetorno = new ReturnPadrao();
             lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
-            if (lRetorno.status==true)
+            if (lRetorno.status == true)
             {
                 prgBarPrevisao.Value = 100;
             }
         }
         private DataSet ObterDados(string iNomeTable)
         {
-            return con.SelectRegistroONline(iNomeTable);
+            if (iNomeTable!="FormaPagamento")
+            {
+                return con.SelectRegistroONline(iNomeTable);
+            }
+            else
+            {
+                return con.SelectRegistroONlineSemData(iNomeTable);
+            }
+            
         }
 
         private void CadastrarTipoOpcao(DataSet ds)
@@ -154,7 +203,7 @@ namespace DexComanda.Operações
 
                 MessageBox.Show("Erro ao cadastrarar Produto_OpcaoTipo " + er.Message + er.InnerException);
             }
-           
+
         }
 
         private void CadastrarBanner(string iBanner)
@@ -322,9 +371,9 @@ namespace DexComanda.Operações
 
                 MessageBox.Show("Erro ao cadastrarar Grupo" + er.Message + er.InnerException);
             }
-            
+
         }
-      
+
         private void CadastrarProduto(DataSet ds)
         {
             try
@@ -342,17 +391,17 @@ namespace DexComanda.Operações
                     DateTime dtFoto = DateTime.Now.AddYears(1);
                     ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFoto");
 
-                    if (ds.Tables["Produto"].Rows[i].Field<DateTime>("DataSincronismo")!=null)
+                    if (ds.Tables["Produto"].Rows[i].Field<DateTime>("DataSincronismo") != null)
                     {
-                       dtSinc = ds.Tables["Produto"].Rows[i].Field<DateTime>("DataSincronismo");
+                        dtSinc = ds.Tables["Produto"].Rows[i].Field<DateTime>("DataSincronismo");
                     }
                     if (ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFoto") != null)
                     {
                         dtFoto = ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFoto");
                     }
-                    
-                    
-                        
+
+
+
                     string iCaminhoImagem = ds.Tables["Produto"].Rows[i].Field<string>("UrlImagem");
                     request.AddParameter("token", iParamToken);
                     request.AddParameter("idReferencia", ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
@@ -369,7 +418,7 @@ namespace DexComanda.Operações
 
                     request.AddParameter("preco", prProduto);
                     decimal prPromocao = ds.Tables["Produto"].Rows[i].Field<decimal>("PrecoDesconto");
-                    if (ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFimPromocao")> DateTime.Now && prPromocao > 0)
+                    if (ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFimPromocao") > DateTime.Now && prPromocao > 0)
                     {
                         request.AddParameter("precoPromocao", prPromocao);
                         request.AddParameter("dataInicial", ds.Tables["Produto"].Rows[i].Field<DateTime>("DataInicioPromocao"));
@@ -448,7 +497,7 @@ namespace DexComanda.Operações
                     {
                         decimal iprice = 0;
                         iCodOpcao = ds.Tables["Produto_Opcao"].Rows[i].Field<int>("CodOpcao");
-                        if (dtFimPromo>=Convert.ToDateTime(DateTime.Now.ToShortDateString()) && ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProcomocao") >0)
+                        if (dtFimPromo >= Convert.ToDateTime(DateTime.Now.ToShortDateString()) && ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProcomocao") > 0)
                         {
                             iprice = ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProcomocao");
                         }
@@ -456,7 +505,7 @@ namespace DexComanda.Operações
                         {
                             iprice = ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
                         }
-                         
+
                         request.AddParameter("opcao[" + iCodOpcao + "]", iprice);
                     }
 
@@ -484,21 +533,25 @@ namespace DexComanda.Operações
 
             prgBarpagamento.Maximum = ds.Tables[0].Rows.Count;
             request.AddParameter("token", iParamToken);
-            int iCod=0;
-            
+            int iCod = 0;
+
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                iCod = ds.Tables["FormaPagamento"].Rows[i].Field<int>("Codigo");
-                request.AddFile("cartao[" + i + "]", ds.Tables["FormaPagamento"].Rows[i].Field<string>("CaminhoImagem").ToLower(),"imagem/png");
+                if (File.Exists(ds.Tables["FormaPagamento"].Rows[i].Field<string>("CaminhoImagem")))
+                {
+                    iCod = ds.Tables["FormaPagamento"].Rows[i].Field<int>("Codigo");
+                    request.AddFile("cartao[" + i + "]", ds.Tables["FormaPagamento"].Rows[i].Field<string>("CaminhoImagem"), "imagem/png");
+                    
+                }
                 prgBarpagamento.Value = prgBarpagamento.Value + 1;
                 con.AtualizaDataSincronismo("FormaPagamento", iCod);
             }
             RestResponse response = (RestResponse)client.Execute(request);
             ReturnPadrao lReturn = new ReturnPadrao();
             lReturn = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
-            
+
         }
-        
+
         private void SelecionarImage(object sender, EventArgs e)
         {
             OpenFileDialog opn = new OpenFileDialog();
@@ -512,7 +565,7 @@ namespace DexComanda.Operações
             }
         }
 
-    
+
         private void btnSincronizar_Click(object sender, EventArgs e)
         {
             Sincroniza();
@@ -533,12 +586,12 @@ namespace DexComanda.Operações
             //{
             //    //
             //}
-            
-            
+
+
         }
         private void SincronizacaoEmTread()
         {
-           // Sincroniza(sender, e);
+            // Sincroniza(sender, e);
         }
         private void SincAdicionais(object sender, EventArgs e)
         {
@@ -569,7 +622,7 @@ namespace DexComanda.Operações
             RestClient client = new RestClient(iUrlWS);
             RestRequest request = new RestRequest("ws/banner/promocao/delete", Method.POST);
             request.AddParameter("token", iParamToken);
-       
+
             RestResponse response = (RestResponse)client.Execute(request);
 
             ReturnPadrao lRetorno = new ReturnPadrao();
@@ -584,8 +637,8 @@ namespace DexComanda.Operações
             {
                 strPrevisaoEntrega = Sessions.returnConfig.PrevisaoEntrega;
             }
-           
-            chkPrevisao.Text = chkPrevisao.Text +" "+strPrevisaoEntrega + "min.";
+
+            chkPrevisao.Text = chkPrevisao.Text + " " + strPrevisaoEntrega + "min.";
         }
 
         private void chkRemover_CheckedChanged(object sender, EventArgs e)

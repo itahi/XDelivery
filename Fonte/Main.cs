@@ -1512,7 +1512,6 @@ namespace DexComanda
 
                 MessageBox.Show("Erro ao atualizar pedidos" + erro.Message);
             }
-            //DataSet Dados, PedidosAberto;
 
         }
         private string QuebrarString(string texto)
@@ -1824,6 +1823,12 @@ namespace DexComanda
         {
             frmCadastrarStatus frm = new frmCadastrarStatus();
             frm.ShowDialog();
+        }
+
+        private void linkAppMobileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAplicativoMobile frm = new frmAplicativoMobile();
+            frm.Show();
         }
     }
 }

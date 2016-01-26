@@ -116,6 +116,7 @@
             this.label23 = new System.Windows.Forms.Label();
             this.txtNumeroPedidos = new System.Windows.Forms.TextBox();
             this.grpSms = new System.Windows.Forms.GroupBox();
+            this.btnSalvarSMS = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtSenha = new System.Windows.Forms.TextBox();
@@ -177,7 +178,15 @@
             this.btnSalvar = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnSalvarSMS = new System.Windows.Forms.Button();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.txtLink2 = new System.Windows.Forms.TextBox();
+            this.cbxPlataforma2 = new System.Windows.Forms.ComboBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.txtLink1 = new System.Windows.Forms.TextBox();
+            this.cbxPlataforma1 = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -200,6 +209,7 @@
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -209,6 +219,7 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tbExibicao);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Location = new System.Drawing.Point(8, 9);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -1071,6 +1082,18 @@
             this.grpSms.TabStop = false;
             this.grpSms.Text = "Dados Envio Sms";
             // 
+            // btnSalvarSMS
+            // 
+            this.btnSalvarSMS.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvarSMS.Image")));
+            this.btnSalvarSMS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSalvarSMS.Location = new System.Drawing.Point(98, 71);
+            this.btnSalvarSMS.Name = "btnSalvarSMS";
+            this.btnSalvarSMS.Size = new System.Drawing.Size(75, 23);
+            this.btnSalvarSMS.TabIndex = 24;
+            this.btnSalvarSMS.Text = "Salvar";
+            this.btnSalvarSMS.UseVisualStyleBackColor = true;
+            this.btnSalvarSMS.Click += new System.EventHandler(this.btnSalvarSMS_Click);
+            // 
             // label21
             // 
             this.label21.AutoSize = true;
@@ -1713,17 +1736,101 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // btnSalvarSMS
+            // tabPage5
             // 
-            this.btnSalvarSMS.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvarSMS.Image")));
-            this.btnSalvarSMS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalvarSMS.Location = new System.Drawing.Point(98, 71);
-            this.btnSalvarSMS.Name = "btnSalvarSMS";
-            this.btnSalvarSMS.Size = new System.Drawing.Size(75, 23);
-            this.btnSalvarSMS.TabIndex = 24;
-            this.btnSalvarSMS.Text = "Salvar";
-            this.btnSalvarSMS.UseVisualStyleBackColor = true;
-            this.btnSalvarSMS.Click += new System.EventHandler(this.btnSalvarSMS_Click);
+            this.tabPage5.Controls.Add(this.label31);
+            this.tabPage5.Controls.Add(this.label32);
+            this.tabPage5.Controls.Add(this.txtLink2);
+            this.tabPage5.Controls.Add(this.cbxPlataforma2);
+            this.tabPage5.Controls.Add(this.label33);
+            this.tabPage5.Controls.Add(this.label34);
+            this.tabPage5.Controls.Add(this.txtLink1);
+            this.tabPage5.Controls.Add(this.cbxPlataforma1);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(652, 391);
+            this.tabPage5.TabIndex = 5;
+            this.tabPage5.Text = "Dados App";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Enabled = false;
+            this.label31.Location = new System.Drawing.Point(7, 142);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(65, 13);
+            this.label31.TabIndex = 17;
+            this.label31.Text = "Link da Loja";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Enabled = false;
+            this.label32.Location = new System.Drawing.Point(7, 94);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(57, 13);
+            this.label32.TabIndex = 16;
+            this.label32.Text = "Plataforma";
+            // 
+            // txtLink2
+            // 
+            this.txtLink2.Enabled = false;
+            this.txtLink2.Location = new System.Drawing.Point(5, 160);
+            this.txtLink2.Name = "txtLink2";
+            this.txtLink2.Size = new System.Drawing.Size(347, 20);
+            this.txtLink2.TabIndex = 15;
+            // 
+            // cbxPlataforma2
+            // 
+            this.cbxPlataforma2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxPlataforma2.Enabled = false;
+            this.cbxPlataforma2.FormattingEnabled = true;
+            this.cbxPlataforma2.Items.AddRange(new object[] {
+            "android",
+            "ios"});
+            this.cbxPlataforma2.Location = new System.Drawing.Point(5, 116);
+            this.cbxPlataforma2.Name = "cbxPlataforma2";
+            this.cbxPlataforma2.Size = new System.Drawing.Size(121, 21);
+            this.cbxPlataforma2.TabIndex = 14;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(6, 51);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(65, 13);
+            this.label33.TabIndex = 13;
+            this.label33.Text = "Link da Loja";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(6, 3);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(57, 13);
+            this.label34.TabIndex = 12;
+            this.label34.Text = "Plataforma";
+            // 
+            // txtLink1
+            // 
+            this.txtLink1.Location = new System.Drawing.Point(4, 69);
+            this.txtLink1.Name = "txtLink1";
+            this.txtLink1.Size = new System.Drawing.Size(347, 20);
+            this.txtLink1.TabIndex = 10;
+            // 
+            // cbxPlataforma1
+            // 
+            this.cbxPlataforma1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxPlataforma1.FormattingEnabled = true;
+            this.cbxPlataforma1.Items.AddRange(new object[] {
+            "android",
+            "ios"});
+            this.cbxPlataforma1.Location = new System.Drawing.Point(4, 25);
+            this.cbxPlataforma1.Name = "cbxPlataforma1";
+            this.cbxPlataforma1.Size = new System.Drawing.Size(121, 21);
+            this.cbxPlataforma1.TabIndex = 9;
             // 
             // frmConfiguracoes
             // 
@@ -1779,6 +1886,8 @@
             this.groupBox6.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1934,6 +2043,14 @@
         private System.Windows.Forms.CheckBox chkTelefone;
         private System.Windows.Forms.CheckBox chkCep;
         private System.Windows.Forms.Button btnSalvarSMS;
-
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.TextBox txtLink2;
+        private System.Windows.Forms.ComboBox cbxPlataforma2;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.TextBox txtLink1;
+        private System.Windows.Forms.ComboBox cbxPlataforma1;
     }
 }

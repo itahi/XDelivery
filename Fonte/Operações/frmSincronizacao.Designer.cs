@@ -61,6 +61,8 @@
             this.lblReturn = new System.Windows.Forms.Label();
             this.chkDesconto = new System.Windows.Forms.CheckBox();
             this.txtPercentualDesconto = new System.Windows.Forms.TextBox();
+            this.prgBarMobile = new System.Windows.Forms.ProgressBar();
+            this.chkMobile = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -84,6 +86,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.prgBarMobile);
+            this.tabPage1.Controls.Add(this.chkMobile);
             this.tabPage1.Controls.Add(this.lblMinimo);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.txtVlrMinimo);
@@ -109,7 +113,7 @@
             // lblMinimo
             // 
             this.lblMinimo.AutoSize = true;
-            this.lblMinimo.Location = new System.Drawing.Point(90, 130);
+            this.lblMinimo.Location = new System.Drawing.Point(93, 159);
             this.lblMinimo.Name = "lblMinimo";
             this.lblMinimo.Size = new System.Drawing.Size(74, 13);
             this.lblMinimo.TabIndex = 20;
@@ -119,7 +123,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(2, 111);
+            this.label2.Location = new System.Drawing.Point(5, 140);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(93, 13);
             this.label2.TabIndex = 19;
@@ -128,7 +132,7 @@
             // 
             // txtVlrMinimo
             // 
-            this.txtVlrMinimo.Location = new System.Drawing.Point(5, 127);
+            this.txtVlrMinimo.Location = new System.Drawing.Point(8, 156);
             this.txtVlrMinimo.Name = "txtVlrMinimo";
             this.txtVlrMinimo.Size = new System.Drawing.Size(75, 20);
             this.txtVlrMinimo.TabIndex = 18;
@@ -139,7 +143,7 @@
             // lblSinc
             // 
             this.lblSinc.AutoSize = true;
-            this.lblSinc.Location = new System.Drawing.Point(23, 164);
+            this.lblSinc.Location = new System.Drawing.Point(23, 179);
             this.lblSinc.Name = "lblSinc";
             this.lblSinc.Size = new System.Drawing.Size(74, 13);
             this.lblSinc.TabIndex = 17;
@@ -165,7 +169,7 @@
             // 
             // btnSincronizar
             // 
-            this.btnSincronizar.Location = new System.Drawing.Point(89, 184);
+            this.btnSincronizar.Location = new System.Drawing.Point(89, 198);
             this.btnSincronizar.Name = "btnSincronizar";
             this.btnSincronizar.Size = new System.Drawing.Size(75, 23);
             this.btnSincronizar.TabIndex = 14;
@@ -403,6 +407,23 @@
             this.txtPercentualDesconto.Size = new System.Drawing.Size(45, 20);
             this.txtPercentualDesconto.TabIndex = 9;
             // 
+            // prgBarMobile
+            // 
+            this.prgBarMobile.Location = new System.Drawing.Point(128, 104);
+            this.prgBarMobile.Name = "prgBarMobile";
+            this.prgBarMobile.Size = new System.Drawing.Size(114, 18);
+            this.prgBarMobile.TabIndex = 22;
+            // 
+            // chkMobile
+            // 
+            this.chkMobile.AutoSize = true;
+            this.chkMobile.Location = new System.Drawing.Point(5, 105);
+            this.chkMobile.Name = "chkMobile";
+            this.chkMobile.Size = new System.Drawing.Size(81, 17);
+            this.chkMobile.TabIndex = 21;
+            this.chkMobile.Text = "APP Mobile";
+            this.chkMobile.UseVisualStyleBackColor = true;
+            // 
             // frmSincronizacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -459,5 +480,7 @@
         private System.Windows.Forms.Label lblMinimo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtVlrMinimo;
+        private System.Windows.Forms.ProgressBar prgBarMobile;
+        private System.Windows.Forms.CheckBox chkMobile;
     }
 }

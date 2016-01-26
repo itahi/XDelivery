@@ -216,7 +216,7 @@ namespace DexComanda
                 this.cbxTipoProduto.DisplayMember = "NomeGrupo";
                 this.cbxTipoProduto.ValueMember = "Codigo";
             }
-           
+
 
             this.cmbFPagamento.DataSource = con.SelectAll("FormaPagamento", "spObterFormaPagamento").Tables["FormaPagamento"];
             this.cmbFPagamento.DisplayMember = "Descricao";
@@ -815,7 +815,7 @@ namespace DexComanda
                                 RealizadoEm = DateTime.Now,
                                 Status = "Aberto",
                                 PedidoOrigem = "Balcao",
-                                CodigoPedidoWS =0
+                                CodigoPedidoWS = 0
 
                             };
                             if (txtTrocoPara.Text != "")
@@ -1345,69 +1345,52 @@ namespace DexComanda
                     string dblPRevisao = DataPed.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString();
                     //for (int i = 0; i < QtViasEntrega; i++)
                     //{
-                        if (con.getLastCodigo() != 0)
-                        {
-                            iCodigo = con.getLastCodigo();
-                        }
-                        else
-                        {
-                            iCodigo = codPedido;
-                        }
+                    if (con.getLastCodigo() != 0)
+                    {
+                        iCodigo = con.getLastCodigo();
+                    }
+                    else
+                    {
+                        iCodigo = codPedido;
+                    }
 
-                        if (Sessions.returnConfig.QtdCaracteresImp <= 30)
-                        {
+                    if (Sessions.returnConfig.QtdCaracteresImp <= 30)
+                    {
 
-                            iRetorno = Utils.ImpressaoEntreganova_20(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), ImprimeLPT, QtViasEntrega);
-                        }
-                        else if (Sessions.returnConfig.QtdCaracteresImp >= 40)
-                        {
-                            iRetorno = Utils.ImpressaoEntreganova(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), dblPRevisao, ImprimeLPT, QtViasEntrega);
-                        }
-                        if (ImprimeLPT)
-                        {
-                            //MessageBox.Show("Chegou arui");
-                            Utils.ImpressaoEntreganova_Matricial(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), dblPRevisao);
-                            //StreamReader tempDex = new StreamReader(iRetorno);
-                            //string sLine = "";
-                            //sLine = tempDex.ReadToEnd();
-                            //Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
-                        }
+                        iRetorno = Utils.ImpressaoEntreganova_20(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), ImprimeLPT, QtViasEntrega);
+                    }
+                    else if (Sessions.returnConfig.QtdCaracteresImp >= 40)
+                    {
+                        iRetorno = Utils.ImpressaoEntreganova(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), dblPRevisao, ImprimeLPT, QtViasEntrega);
+                    }
+                    if (ImprimeLPT)
+                    {
+                        //MessageBox.Show("Chegou arui");
+                        Utils.ImpressaoEntreganova_Matricial(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), dblPRevisao);
+                        //StreamReader tempDex = new StreamReader(iRetorno);
+                        //string sLine = "";
+                        //sLine = tempDex.ReadToEnd();
+                        //Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
+                    }
 
-                  //  }
+                    //  }
 
                 }
-                if (ImprimeViaCozinha && cbxTipoPedido.Text == "0 - Entrega" && Sessions.returnEmpresa.Nome != "BURIS BURGUER")
+                if (ImprimeViaCozinha && cbxTipoPedido.Text.Contains("0 - Entrega"))
                 {
                     int iCodigo;
-                    for (int i = 0; i < QtdViasCozinha; i++)
+                    if (con.getLastCodigo() != 0)
                     {
-                        if (con.getLastCodigo() != 0)
-                        {
-                            iCodigo = con.getLastCodigo();
-                        }
-                        else
-                        {
-                            iCodigo = codPedido;
-                        }
-
-                        string iRetorno = Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
-                        //ImpressaoCozinha();
-                        //if (ImprimeLPT && iRetorno != "")
-                        //{
-
-                        //    //StreamReader tempDex = new StreamReader(iRetorno);
-                        //    //string sLine = "";
-                        //    //sLine = tempDex.ReadToEnd();
-                        //    //Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
-
-                        //}
-                        //else
-                        //{
-                        //    pd.PrintPage += new PrintPageEventHandler(this.imprimirViaCozinha);
-                        //    pd.Print();
-                        //    pd.PrintPage -= new PrintPageEventHandler(this.imprimirViaCozinha);
-                        //}
+                        iCodigo = con.getLastCodigo();
                     }
+                    else
+                    {
+                        iCodigo = codPedido;
+                    }
+
+                    string iRetorno = Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
+
+
 
                 }
             }

@@ -12,16 +12,19 @@ using System.Drawing.Printing;
 using System.IO.Ports;
 using DexComanda.Integração;
 using System.Configuration;
+using Newtonsoft.Json;
+using DexComanda.Models.WS;
+
 namespace DexComanda
 {
     public partial class frmConfiguracoes : Form
     {
-       private Configuracao config;
-       private Utils util;
-       private Conexao con;
-       private int iNumModelo = 7;
-       private string Porta = "";
-       public string nomeImpressora;
+        private Configuracao config;
+        private Utils util;
+        private Conexao con;
+        private int iNumModelo = 7;
+        private string Porta = "";
+        public string nomeImpressora;
         public frmConfiguracoes()
         {
             con = new Conexao();
@@ -37,7 +40,7 @@ namespace DexComanda
 
             Conexao con = new Conexao();
             con.OpenConection(servidor, banco);
-            
+
         }
 
         private void label11_Click(object sender, EventArgs e)
@@ -65,104 +68,104 @@ namespace DexComanda
                 Servidor = txtServidor.Text,
                 Banco = txtBanco.Text,
                 DataInicio = DateTime.Now,
-                VersaoBanco= "1",
+                VersaoBanco = "1",
                 CaminhoBackup = txtCaminhoBkp.Text,
                 UrlServidor = txtURL.Text
-                
+
             };
             // Grava as configurações
-                config.ImpViaCozinha = chkViaCozinha.Checked;
-                config.UsaLoginSenha = chkLoginSenha.Checked ;
-                config.UsaDataNascimento = chkDataNAscimento.Checked ;
-                config.ControlaEntregador = chkEntregadores.Checked;
-                config.ProdutoPorCodigo = chkProdutoCodigo.Checked;
-                config.Usa2Telefones = chk2Telefones.Checked;
-                config.UsaControleMesa = chkControlaMesas.Checked;
-                config.ImprimeViaEntrega = chkImprimeViaEntrega.Checked;
-                config.DescontoDiaSemana = chkDescontoDiasemana.Checked;
-                config.ControlaFidelidade = chkFidelidade.Checked;
-                config.EnviaSMS = chkEnviaSms.Checked;
-                config.RegistraCancelamentos = chkRegCancelamentos.Checked;
-               
-                
-                 config.RepeteUltimoPedido = chkUltPedido.Checked;
-                if (chkEnviaSms.Checked)
-                {
-                    Utils.CriaArquivoTxt("ConfigSMS",txtLogin.Text+"-"+txtSenha.Text);
-                }
-                if (chkFidelidade.Checked)
-                {
-                   
-                    config.PedidosParaFidelidade = int.Parse(txtNumeroPedidos.Text);
-                }
-                else
-                {
-                    config.PedidosParaFidelidade = 0;
-                }
-                
-                config.PrevisaoEntregaSN = chkPrevisao.Checked;
-                if (chkPrevisao.Checked)
-                {
-                    config.PrevisaoEntrega = txtPrevisao.Text;
-                }
-                else
-                {
-                    config.PrevisaoEntrega = "0";
-                }
-                if (txtTamanhoFont.Text!="")
-                {
-                    config.TamanhoFont = txtTamanhoFont.Text; 
-                }
-                else
-                {
-                    config.TamanhoFont = "8"; // Font Defaul
-                }
-                config.ImpLPT = chkImpLPT.Checked;
-                if (chkImpLPT.Checked && txtPortaLPT.Text!="")
-                {
-                    config.PortaLPT = txtPortaLPT.Text;
-                }
-                else
-                {
-                    config.PortaLPT = "0";
-                }
-                //config.ImpressoraEntrega = cbxEntregas.Text;
-                //config.ImpressoraCozinha = cbxCozinha.Text;
-                //config.ImpressoraCopaBalcao = cbxMesas.Text;
-            
-            if (txtCaracterImpressora.Text !="")
+            config.ImpViaCozinha = chkViaCozinha.Checked;
+            config.UsaLoginSenha = chkLoginSenha.Checked;
+            config.UsaDataNascimento = chkDataNAscimento.Checked;
+            config.ControlaEntregador = chkEntregadores.Checked;
+            config.ProdutoPorCodigo = chkProdutoCodigo.Checked;
+            config.Usa2Telefones = chk2Telefones.Checked;
+            config.UsaControleMesa = chkControlaMesas.Checked;
+            config.ImprimeViaEntrega = chkImprimeViaEntrega.Checked;
+            config.DescontoDiaSemana = chkDescontoDiasemana.Checked;
+            config.ControlaFidelidade = chkFidelidade.Checked;
+            config.EnviaSMS = chkEnviaSms.Checked;
+            config.RegistraCancelamentos = chkRegCancelamentos.Checked;
+            config.DadosApp = GravaJson(cbxPlataforma1.Text, txtLink2.Text);// + cbxPlataforma2.Text + txtLink2.Text);
+
+            config.RepeteUltimoPedido = chkUltPedido.Checked;
+            if (chkEnviaSms.Checked)
+            {
+                Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
+            }
+            if (chkFidelidade.Checked)
+            {
+
+                config.PedidosParaFidelidade = int.Parse(txtNumeroPedidos.Text);
+            }
+            else
+            {
+                config.PedidosParaFidelidade = 0;
+            }
+
+            config.PrevisaoEntregaSN = chkPrevisao.Checked;
+            if (chkPrevisao.Checked)
+            {
+                config.PrevisaoEntrega = txtPrevisao.Text;
+            }
+            else
+            {
+                config.PrevisaoEntrega = "0";
+            }
+            if (txtTamanhoFont.Text != "")
+            {
+                config.TamanhoFont = txtTamanhoFont.Text;
+            }
+            else
+            {
+                config.TamanhoFont = "8"; // Font Defaul
+            }
+            config.ImpLPT = chkImpLPT.Checked;
+            if (chkImpLPT.Checked && txtPortaLPT.Text != "")
+            {
+                config.PortaLPT = txtPortaLPT.Text;
+            }
+            else
+            {
+                config.PortaLPT = "0";
+            }
+            //config.ImpressoraEntrega = cbxEntregas.Text;
+            //config.ImpressoraCozinha = cbxCozinha.Text;
+            //config.ImpressoraCopaBalcao = cbxMesas.Text;
+
+            if (txtCaracterImpressora.Text != "")
             {
                 config.QtdCaracteresImp = int.Parse(txtCaracterImpressora.Text.ToString());
             }
-            
-            if (chkLoginSenha.Checked && txtUsuarioPadrao.Text.Trim()!="" && txtSenhaPadrao.Text.Trim()!="")
+
+            if (chkLoginSenha.Checked && txtUsuarioPadrao.Text.Trim() != "" && txtSenhaPadrao.Text.Trim() != "")
             {
                 string _senha = Utils.EncryptMd5(this.txtUsuarioPadrao.Text.ToString(), this.txtSenhaPadrao.Text.ToString());
                 Usuario usuario = new Usuario()
                 {
                     Nome = this.txtUsuarioPadrao.Text.ToString(),
                     Senha = _senha,
-                    FinalizaPedidoSN=true,
-                    AdministradorSN=true
+                    FinalizaPedidoSN = true,
+                    AdministradorSN = true
                 };
-                con.Insert("spAdicionarUsuario", usuario);  
+                con.Insert("spAdicionarUsuario", usuario);
             }
-            
+
 
             this.btnSalvar.Click -= AlterarConfig;
             this.btnSalvar.Click += SalvaConfig;
-            if (empresa.Nome != "" && empresa.Contato != "" && empresa.Telefone != "" && txtViasBalcao.Text != "" && txtViasCozinha.Text != "" && txtViasEntrega.Text != "" && txtCaminhoBkp.Text!="")
+            if (empresa.Nome != "" && empresa.Contato != "" && empresa.Telefone != "" && txtViasBalcao.Text != "" && txtViasCozinha.Text != "" && txtViasEntrega.Text != "" && txtCaminhoBkp.Text != "")
             {
-                
-                    config.ViasEntrega = txtViasEntrega.Text;
-                    config.ViasBalcao = txtViasBalcao.Text;
-                    config.ViasCozinha = txtViasCozinha.Text;
 
-                    con.Insert("spAdicionarEmpresa", empresa);
-                   // MessageBox.Show("Empresa Adicionada com sucesso");
-                    con.Insert("spAdicionarConfiguracao", config);
-                    MessageBox.Show("Configuração adicionada com sucesso.");
-                    Utils.Restart();
+                config.ViasEntrega = txtViasEntrega.Text;
+                config.ViasBalcao = txtViasBalcao.Text;
+                config.ViasCozinha = txtViasCozinha.Text;
+
+                con.Insert("spAdicionarEmpresa", empresa);
+                // MessageBox.Show("Empresa Adicionada com sucesso");
+                con.Insert("spAdicionarConfiguracao", config);
+                MessageBox.Show("Configuração adicionada com sucesso.");
+                Utils.Restart();
 
             }
             else
@@ -192,76 +195,76 @@ namespace DexComanda
                 DataInicio = DateTime.Now,
                 VersaoBanco = "0",
                 CaminhoBackup = txtCaminhoBkp.Text,
-                UrlServidor =txtURL.Text
+                UrlServidor = txtURL.Text
             };
 
             config.cod = Sessions.returnConfig.cod;
-           config.ImpViaCozinha = chkViaCozinha.Checked;
-           config.UsaLoginSenha = chkLoginSenha.Checked;
-           config.UsaDataNascimento = chkDataNAscimento.Checked ;
-           config.ControlaEntregador = chkEntregadores.Checked;
-           config.ProdutoPorCodigo = chkProdutoCodigo.Checked;
-           config.Usa2Telefones = chk2Telefones.Checked;
-           config.UsaControleMesa = chkControlaMesas.Checked;
-           config.ImprimeViaEntrega = chkImprimeViaEntrega.Checked;
-           config.ControlaFidelidade = chkFidelidade.Checked;
-           config.DescontoDiaSemana = chkDescontoDiasemana.Checked;
-           config.PedidosParaFidelidade = int.Parse(txtNumeroPedidos.Text);
-           config.QtdCaracteresImp = int.Parse(txtCaracterImpressora.Text.ToString());
-           config.PrevisaoEntregaSN = chkPrevisao.Checked;
-           config.PrevisaoEntrega = txtPrevisao.Text;
-           config.CobraTaxaGarcon = chk10Garcon.Checked;
-           config.EnviaSMS = chkEnviaSms.Checked;
-           config.ViasEntrega = txtViasEntrega.Text;
-           config.TamanhoFont = txtTamanhoFont.Text;
-           config.ViasBalcao = txtViasBalcao.Text;
-           config.ViasCozinha = txtViasCozinha.Text;
-           config.ImpLPT = chkImpLPT.Checked;
-           config.RepeteUltimoPedido = chkUltPedido.Checked;
-           config.RegistraCancelamentos = chkRegCancelamentos.Checked;
+            config.ImpViaCozinha = chkViaCozinha.Checked;
+            config.UsaLoginSenha = chkLoginSenha.Checked;
+            config.UsaDataNascimento = chkDataNAscimento.Checked;
+            config.ControlaEntregador = chkEntregadores.Checked;
+            config.ProdutoPorCodigo = chkProdutoCodigo.Checked;
+            config.Usa2Telefones = chk2Telefones.Checked;
+            config.UsaControleMesa = chkControlaMesas.Checked;
+            config.ImprimeViaEntrega = chkImprimeViaEntrega.Checked;
+            config.ControlaFidelidade = chkFidelidade.Checked;
+            config.DescontoDiaSemana = chkDescontoDiasemana.Checked;
+            config.PedidosParaFidelidade = int.Parse(txtNumeroPedidos.Text);
+            config.QtdCaracteresImp = int.Parse(txtCaracterImpressora.Text.ToString());
+            config.PrevisaoEntregaSN = chkPrevisao.Checked;
+            config.PrevisaoEntrega = txtPrevisao.Text;
+            config.CobraTaxaGarcon = chk10Garcon.Checked;
+            config.EnviaSMS = chkEnviaSms.Checked;
+            config.ViasEntrega = txtViasEntrega.Text;
+            config.TamanhoFont = txtTamanhoFont.Text;
+            config.ViasBalcao = txtViasBalcao.Text;
+            config.ViasCozinha = txtViasCozinha.Text;
+            config.ImpLPT = chkImpLPT.Checked;
+            config.RepeteUltimoPedido = chkUltPedido.Checked;
+            config.RegistraCancelamentos = chkRegCancelamentos.Checked;
+            config.DadosApp = GravaJson(cbxPlataforma1.Text, txtLink1.Text);//+ cbxPlataforma2.Text +txtLink2.Text);
+            if (chkEnviaSms.Checked)
+            {
+                Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
+            }
 
-           if (chkEnviaSms.Checked)
-           {
-               Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
-           }
 
+            if (chkImpLPT.Checked && txtPortaLPT.Text != "")
+            {
+                config.PortaLPT = txtPortaLPT.Text;
+            }
+            else
+            {
+                config.PortaLPT = "0";
+            }
 
-           if (chkImpLPT.Checked && txtPortaLPT.Text != "")
-           {
-               config.PortaLPT = txtPortaLPT.Text;
-           }
-           else
-           {
-               config.PortaLPT = "0";
-           }
+            if (chkLoginSenha.Checked && txtUsuarioPadrao.Text.Trim() != "" && txtSenhaPadrao.Text.Trim() != "")
+            {
+                string _senha = Utils.EncryptMd5(this.txtUsuarioPadrao.Text.ToString(), this.txtSenhaPadrao.Text.ToString());
+                UsuarioDefault usuario = new UsuarioDefault()
+                {
+                    Nome = this.txtUsuarioPadrao.Text.ToString(),
+                    senha = _senha,
+                    AdministradorSN = true
+                };
+                con.Insert("spAdicionarUsuarioDefault", usuario);
+            }
 
-           if (chkLoginSenha.Checked && txtUsuarioPadrao.Text.Trim() != "" && txtSenhaPadrao.Text.Trim() != "")
-           {
-               string _senha = Utils.EncryptMd5(this.txtUsuarioPadrao.Text.ToString(), this.txtSenhaPadrao.Text.ToString());
-               UsuarioDefault usuario = new UsuarioDefault()
-               {
-                   Nome = this.txtUsuarioPadrao.Text.ToString(),
-                   senha = _senha,
-                   AdministradorSN=true
-               };
-               con.Insert("spAdicionarUsuarioDefault", usuario);
-           }
+            if (empresa.Nome != "" && empresa.Contato != "" && empresa.Telefone != "" && txtCaminhoBkp.Text != "")
+            {
+                this.btnSalvar.Click -= AlterarConfig;
+                this.btnSalvar.Click += SalvaConfig;
+                con.Update("spAlterarConfiguracao", config);
+                MessageBox.Show("Configuração alterada com sucesso.");
 
-           if (empresa.Nome != "" && empresa.Contato != "" && empresa.Telefone != ""&& txtCaminhoBkp.Text!="")
-           {
-               this.btnSalvar.Click -= AlterarConfig;
-               this.btnSalvar.Click += SalvaConfig;
-               con.Update("spAlterarConfiguracao", config);
-               MessageBox.Show("Configuração alterada com sucesso.");
-               
-               con.Update("spAlterarEmpresa", empresa);
-               MessageBox.Show("Empresa alterada com sucesso");
-               Utils.Restart();
-           }
-           else
-           {
-               MessageBox.Show("Campos Obrigatórios não preenchidos");
-           }
+                con.Update("spAlterarEmpresa", empresa);
+                MessageBox.Show("Empresa alterada com sucesso");
+                Utils.Restart();
+            }
+            else
+            {
+                MessageBox.Show("Campos Obrigatórios não preenchidos");
+            }
         }
         public string ListaImpressoras()
         {
@@ -271,6 +274,15 @@ namespace DexComanda
 
             return nomeImpressora;
         }
+        private string GravaJson(string iPlataforma , string iUrl)
+        {
+            DadosApp dadosApp = new DadosApp();
+            dadosApp.plataforma = iPlataforma;
+            dadosApp.url = iUrl;
+            return '['+JsonConvert.SerializeObject(dadosApp, Formatting.None)+']';
+
+        }
+       
         private void LoadImpressoras()
         {
             // LOAD do Formulário para configuração de portas e Modelos de impressoras
@@ -299,7 +311,7 @@ namespace DexComanda
         private void frmConfiguracoes_Load(object sender, EventArgs e)
         {
             LoadImpressoras();
-            
+
             // Utils.RetornoTxt();//cbxCozinha.Text= cbxMesas.Text= cbxEntregas.Text = ListaImpressoras();
             if (Sessions.returnConfig != null)
             {
@@ -328,14 +340,14 @@ namespace DexComanda
                 txtViasBalcao.Text = Sessions.returnConfig.ViasBalcao;
                 chkUltPedido.Checked = Sessions.returnConfig.RepeteUltimoPedido;
                 chkRegCancelamentos.Checked = Sessions.returnConfig.RegistraCancelamentos;
-                
+
                 this.btnSalvar.Text = "Alterar";
                 this.btnSalvar.Click -= SalvaConfig;
                 this.btnSalvar.Click += AlterarConfig;
             }
-           //  Exibir DataLiberação Sistema
+            //  Exibir DataLiberação Sistema
             var servidorLocal = con.SelectAll("Empresa", "spObterEmpresa");
-            if (servidorLocal!=null)
+            if (servidorLocal != null)
             {
                 DataRow Linha = servidorLocal.Tables["Empresa"].Rows[0];
                 txtNomeEmpresa.Text = Linha.ItemArray.GetValue(1).ToString();
@@ -368,10 +380,10 @@ namespace DexComanda
                     txtLicenca.Text = txtCNPJ.Text + Utils.EnderecoMAC();
                     lblDataExpiracao.Text = DateTime.Now.AddMonths(1).ToString();
                 }
-                
+
             }
-            
-                
+
+
 
         }
 
@@ -389,14 +401,14 @@ namespace DexComanda
 
         private void ConsultarCEP(object sender, KeyEventArgs e)
         {
-           
+
         }
 
         private void BuscarCep(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (txtCEP.Text.Length ==8)
+                if (txtCEP.Text.Length == 8)
                 {
                     DataSet endereco = con.SelectEnderecoPorCep("base_cep", "spObterEnderecoPorCep", int.Parse(txtCEP.Text));
 
@@ -420,7 +432,7 @@ namespace DexComanda
                     MessageBox.Show("CEP menor que 8 caracteres , favor verificar");
                     txtCEP.Focus();
                 }
-                
+
             }
         }
 
@@ -436,7 +448,7 @@ namespace DexComanda
 
         private void chkDescontoDiasemana_CheckedChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void ControlaPrevisao(object sender, EventArgs e)
@@ -445,7 +457,7 @@ namespace DexComanda
             if (chkPrevisao.Checked)
             {
                 lbltempo.Focus();
-            } 
+            }
         }
 
         private void ImpressoaMatricial(object sender, EventArgs e)
@@ -455,29 +467,7 @@ namespace DexComanda
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (txtPortaLPT.Text != "")
-            {
-                SerialPort porta = new SerialPort(txtPortaLPT.Text);
-                porta.Open();
-                try
-                {
 
-                }
-                catch (Exception)
-                {
-                    
-                    throw;
-                }
-                if (porta.IsOpen)
-                {
-                    MessageBox.Show("Comunicação Realizada com sucesso");
-                }
-                else
-                {
-                 
-                }
-
-            }
         }
 
         private void txtNumero_KeyPress(object sender, KeyPressEventArgs e)
@@ -560,7 +550,7 @@ namespace DexComanda
                 iNumModelo = 7;
             }
 
-          
+
         }
 
         private void cbPorta_SelectedIndexChanged(object sender, EventArgs e)
@@ -568,22 +558,22 @@ namespace DexComanda
 
             txtIpImpressora.Visible = cbPorta.SelectedItem.ToString() == "ETHERNET";
             txtIpImpressora.Focus();
-        
+
         }
 
-       
+
         private void button1_Click_1(object sender, EventArgs e)
         {
-            
+
             //MP2032.ConfiguraModeloImpressora(iNumModelo);
             if (txtIpImpressora.Visible)
-	        {
-		     Porta = txtIpImpressora.Text;
-	        }
+            {
+                Porta = txtIpImpressora.Text;
+            }
             else
-	        {
+            {
                 Porta = cbPorta.SelectedItem.ToString();
-	        }
+            }
 
             if (MP2032.IniciaPorta(Porta) <= 0)
             {
@@ -592,9 +582,9 @@ namespace DexComanda
             }
             else
             {
-                string iArquivo = Utils.CriaArquivoTxt("ConfigImpressao", Convert.ToString(iNumModelo)+";"+ Porta);
+                string iArquivo = Utils.CriaArquivoTxt("ConfigImpressao", Convert.ToString(iNumModelo) + ";" + Porta);
             }
-            
+
         }
 
         private void chkViaCozinha_CheckedChanged(object sender, EventArgs e)
@@ -617,7 +607,7 @@ namespace DexComanda
         private void SalvarConfigProduto(object sender, EventArgs e)
         {
             string strConfiProduto = "Codigo";
-          
+
             if (chkNomeProd.Checked)
             {
                 strConfiProduto = strConfiProduto + ",NomeProduto";
@@ -644,7 +634,7 @@ namespace DexComanda
             }
             if (chkDtAlteracao.Checked)
             {
-             strConfiProduto = strConfiProduto + ",DataAlteracao";   
+                strConfiProduto = strConfiProduto + ",DataAlteracao";
             }
             if (chkDtSincronismo.Checked)
             {
@@ -652,7 +642,7 @@ namespace DexComanda
             }
 
             Utils.SalvarConfiguracao("GridProduto", strConfiProduto);
-           
+
         }
 
         private void SalvarConfigPedido(object sender, EventArgs e)
@@ -660,7 +650,7 @@ namespace DexComanda
             string strConfigPedido = "Codigo,";
             if (chkNomeCliente.Checked)
             {
-                strConfigPedido = strConfigPedido + "(select Nome from Pessoa P where P.Codigo = Pd.CodPessoa) as 'Nome Cliente'"; 
+                strConfigPedido = strConfigPedido + "(select Nome from Pessoa P where P.Codigo = Pd.CodPessoa) as 'Nome Cliente'";
             }
             if (chkFinalizado.Checked)
             {
@@ -670,7 +660,7 @@ namespace DexComanda
             {
                 strConfigPedido = strConfigPedido + ",TotalPedido";
             }
-          
+
             if (chkTrocoPara.Checked)
             {
                 strConfigPedido = strConfigPedido + ",TrocoPara";
@@ -679,7 +669,7 @@ namespace DexComanda
             {
                 strConfigPedido = strConfigPedido + ",FormaPagamento";
             }
-           
+
             if (chkDataPedido.Checked)
             {
                 strConfigPedido = strConfigPedido + ",RealizadoEM";
@@ -766,9 +756,9 @@ namespace DexComanda
             MessageBox.Show("Senha gravada", "[xSistemas]");
         }
 
-        
 
-        
+
+
 
     }
 }

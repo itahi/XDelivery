@@ -188,7 +188,7 @@
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(400, 302);
+            this.btnSair.Location = new System.Drawing.Point(433, 302);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(150, 43);
             this.btnSair.TabIndex = 35;
@@ -198,7 +198,7 @@
             // 
             // btnDoProduto
             // 
-            this.btnDoProduto.Location = new System.Drawing.Point(224, 302);
+            this.btnDoProduto.Location = new System.Drawing.Point(273, 302);
             this.btnDoProduto.Name = "btnDoProduto";
             this.btnDoProduto.Size = new System.Drawing.Size(150, 43);
             this.btnDoProduto.TabIndex = 34;
@@ -281,7 +281,7 @@
             // 
             this.btnEditar.Image = ((System.Drawing.Image)(resources.GetObject("btnEditar.Image")));
             this.btnEditar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEditar.Location = new System.Drawing.Point(411, 19);
+            this.btnEditar.Location = new System.Drawing.Point(516, 19);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(63, 26);
             this.btnEditar.TabIndex = 30;
@@ -294,7 +294,7 @@
             // 
             this.btnAdicionarOpcao.Image = ((System.Drawing.Image)(resources.GetObject("btnAdicionarOpcao.Image")));
             this.btnAdicionarOpcao.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAdicionarOpcao.Location = new System.Drawing.Point(330, 19);
+            this.btnAdicionarOpcao.Location = new System.Drawing.Point(425, 19);
             this.btnAdicionarOpcao.Name = "btnAdicionarOpcao";
             this.btnAdicionarOpcao.Size = new System.Drawing.Size(75, 26);
             this.btnAdicionarOpcao.TabIndex = 29;
@@ -306,7 +306,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(215, 3);
+            this.label4.Location = new System.Drawing.Point(324, 3);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(35, 13);
             this.label4.TabIndex = 28;
@@ -316,7 +316,7 @@
             // 
             this.txtPrecoOpcao.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
             this.txtPrecoOpcao.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecoOpcao.Location = new System.Drawing.Point(218, 19);
+            this.txtPrecoOpcao.Location = new System.Drawing.Point(327, 19);
             this.txtPrecoOpcao.Name = "txtPrecoOpcao";
             this.txtPrecoOpcao.Size = new System.Drawing.Size(92, 26);
             this.txtPrecoOpcao.TabIndex = 27;
@@ -327,7 +327,7 @@
             this.cbxOpcao.FormattingEnabled = true;
             this.cbxOpcao.Location = new System.Drawing.Point(11, 24);
             this.cbxOpcao.Name = "cbxOpcao";
-            this.cbxOpcao.Size = new System.Drawing.Size(191, 21);
+            this.cbxOpcao.Size = new System.Drawing.Size(280, 21);
             this.cbxOpcao.TabIndex = 6;
             this.cbxOpcao.Click += new System.EventHandler(this.ListaOpcao);
             // 
@@ -354,7 +354,7 @@
             this.panel1.Controls.Add(this.AdicionaisGridView);
             this.panel1.Location = new System.Drawing.Point(3, 66);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(536, 178);
+            this.panel1.Size = new System.Drawing.Size(576, 178);
             this.panel1.TabIndex = 0;
             // 
             // AdicionaisGridView
@@ -371,7 +371,7 @@
             this.AdicionaisGridView.Name = "AdicionaisGridView";
             this.AdicionaisGridView.ReadOnly = true;
             this.AdicionaisGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.AdicionaisGridView.Size = new System.Drawing.Size(536, 178);
+            this.AdicionaisGridView.Size = new System.Drawing.Size(576, 178);
             this.AdicionaisGridView.TabIndex = 2;
             this.AdicionaisGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AdicionaisGridView_CellClick);
             this.AdicionaisGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AdicionaisGridView_CellContentClick);

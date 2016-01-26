@@ -34,7 +34,7 @@ namespace DexComanda.Models
         public string ViasBalcao { get; set; }
         public bool RepeteUltimoPedido { get; set; }
         public bool RegistraCancelamentos { get; set; }
-        //public string ImpressoraEntrega { get; set; }
+        public string DadosApp { get; set; }
         //public string ImpressoraCopaBalcao { get; set; }
     }
 }

@@ -118,14 +118,14 @@ namespace DexComanda
             Utils.ControlaEventos("Alterar", this.Name);
 
             this.btnAdicionar.Text = "Adicionar";
-            this.btnAdicionar.Click += new System.EventHandler(this.Adicionar);
-            this.btnAdicionar.Click -= new System.EventHandler(this.SalvarFP);
+            this.btnAdicionar.Click += new System.EventHandler(this.SalvarFP);
+            this.btnAdicionar.Click -= new System.EventHandler(this.Adicionar);
 
             this.btnEditarFP.Text = "Editar";
             this.btnEditarFP.Click += new System.EventHandler(this.Editar);
             this.btnEditarFP.Click -= new System.EventHandler(this.Cancelar);
 
-            this.txtNomeFP.Text = "";
+           // Utils.LimpaForm(this);
             Utils.PopularGrid_SP("FormaPagamento", FPGridView, "spObterFormaPagamento");
         }
 
@@ -197,8 +197,7 @@ namespace DexComanda
             OpenFileDialog opn = new OpenFileDialog();
             opn.Title = "Selecione a imagem da bandeira para exibir no site";
             opn.CheckFileExists = true;
-            opn.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|"; //+ "All files (*.*)|*.*";
-
+            opn.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|" + "All files (*.*)|*.*";
             if (opn.ShowDialog() == DialogResult.OK)
             {
                 txtcaminhoImage.Text = opn.FileName.ToString();
