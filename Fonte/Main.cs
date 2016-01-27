@@ -195,8 +195,13 @@ namespace DexComanda
             DataRow DvPedido;
             DsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido);
             DvPedido = DsPedido.Tables[0].Rows[0];
-
-            decimal TaxaServico = Utils.RetornaTaxaPorCliente(int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), con);
+            string iTipo= DvPedido.ItemArray.GetValue(8).ToString();
+            decimal TaxaServico = 0;
+            if (iTipo=="0 - Entrega")
+            {
+                 TaxaServico = Utils.RetornaTaxaPorCliente(int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), con);
+            }
+            
             
             string strTrocoPara = DvPedido.ItemArray.GetValue(4).ToString();
             string strTotalPedido = DvPedido.ItemArray.GetValue(3).ToString();
@@ -1395,7 +1400,7 @@ namespace DexComanda
                     if (!itemsPedido.Tables["ItemsPedido"].Rows[i].Field<bool>("ImpressoSN"))
                     {
                         strNomeImpressora = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<string>("NomeImpressora");
-                        imprimirAgora = false;
+                       // imprimirAgora = false;
                         lRetorno = Utils.ImpressaMesaNova(iCodPedido, ImprimeLPT, 0, strNomeImpressora, imprimirAgora);
                         
                        
@@ -1404,7 +1409,7 @@ namespace DexComanda
                         Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("CodProduto");
                         Atualiza.ImpressoSN = true;
                         con.Update("spInformaItemImpresso", Atualiza);
-                        imprimirAgora = true;
+                       // imprimirAgora = true;
                     }
                     
                     
@@ -1489,7 +1494,7 @@ namespace DexComanda
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
                     
                 }
-                if (Sessions.returnConfig.ImpViaCozinha && chkGerenciaImpressao.Checked)
+                if (chkGerenciaImpressao.Checked)
                 {
 
                     for (int i = 0; i < pedidosGridView.Rows.Count; i++)
@@ -1827,8 +1832,8 @@ namespace DexComanda
 
         private void linkAppMobileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAplicativoMobile frm = new frmAplicativoMobile();
-            frm.Show();
+            //frmAplicativoMobile frm = new frmAplicativoMobile();
+            //frm.Show();
         }
     }
 }

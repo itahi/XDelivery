@@ -267,8 +267,12 @@ namespace DexComanda
                 }
                 else
                 {
+                    for (int i = 0; i < iNumCopias; i++)
+                    {
+                        report.PrintToPrinter(1, false, 0, 0);
+                    }
                    
-                    report.PrintToPrinter(iNumCopias, true, 0, 0);
+                   
                 }
             }
             catch (Exception erro)
@@ -322,12 +326,15 @@ namespace DexComanda
 
                     report.ExportOptions.DestinationOptions = reportExport;
                     report.Export();
-                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
+                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery_Matricial.txt";
                 }
                 else
                 {
-
-                    report.PrintToPrinter(0, true, 0, 0);
+                    for (int i = 0; i < iNumCopias; i++)
+                    {
+                        report.PrintToPrinter(0, true, 0, 0);
+                    }
+                   
                 }
             }
             catch (Exception erro)
@@ -385,7 +392,11 @@ namespace DexComanda
                 }
                 else
                 {
-                    report.PrintToPrinter(0, false, 0, 0);
+                    for (int i = 0; i < iNumCopias; i++)
+                    {
+                        report.PrintToPrinter(0, false, 0, 0);
+                    }
+                    
                 }
             }
             catch (Exception erro)
@@ -441,8 +452,11 @@ namespace DexComanda
                 }
                 else
                 {
+                    for (int i = 0; i < iNumCopias; i++)
+                    {
+                        report.PrintToPrinter(1, false, 0, 0);
+                    }
                     
-                    report.PrintToPrinter(iNumCopias, false, 0, 0);
                 }
             }
             catch (Exception erro)
@@ -470,9 +484,10 @@ namespace DexComanda
                 crtableLogoninfo = new TableLogOnInfo();
                 crConnectionInfo = new ConnectionInfo();
 
+                
                 System.Drawing.Printing.PrinterSettings printersettings = new System.Drawing.Printing.PrinterSettings();
                 printersettings.PrinterName = iNomeImpressora;
-                printersettings.Copies = 1;
+                printersettings.Copies = 1;//int.Parse(iNumCopias);
                 printersettings.Collate = false;
                 Tables CrTables;
                 
@@ -514,20 +529,17 @@ namespace DexComanda
                     //{
                         if (iNomeImpressora != "")
                         {
-                        if (iNomeImpressora==strProxImpressora || strProxImpressora=="")
-                        {
+                        
                             report.PrintToPrinter(printersettings, new System.Drawing.Printing.PageSettings(), false);
-                        }
-                        else
-                        {
-                            strProxImpressora = iNomeImpressora;
-                        }
-                    
                             
                         }
                         else
                         {
-                            report.PrintToPrinter(iNumCopias, false, 0, iNumCopias);
+                        for (int i = 0; i < iNumCopias; i++)
+                        {
+                            report.PrintToPrinter(1, false, 0, 0);
+                        }
+                           
                         }
                     //}
                    
@@ -624,7 +636,7 @@ namespace DexComanda
                 }
                 else
                 {
-                  
+                 
                     report.PrintToPrinter(0, true, 0, 0);
                 }
             }

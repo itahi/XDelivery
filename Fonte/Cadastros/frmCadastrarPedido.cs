@@ -1030,7 +1030,7 @@ namespace DexComanda
                 }
 
                 codigoItemParaAlterar = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
-
+                txtCodProduto1.Text = codItem.ToString();
                 this.txtQuantidade.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
                 this.txtPrecoUnitario.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value.ToString();
                 this.txtPrecoTotal.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value.ToString();
