@@ -94,25 +94,25 @@ namespace DexComanda.Operações
 
             {
                 newDados = new List<DadosApp>();
-                newDados= JsonConvert.DeserializeObject<List<DadosApp>>(Sessions.returnConfig.DadosApp);
+                newDados = JsonConvert.DeserializeObject<List<DadosApp>>(Sessions.returnConfig.DadosApp);
                 RestClient client = new RestClient(iUrlWS);
-                RestResponse response= new RestResponse();
+                RestResponse response = new RestResponse();
                 RestRequest request = new RestRequest("ws/loja/baixarrApp", Method.POST);
 
                 foreach (DadosApp item in newDados)
                 {
                     request.AddParameter("token", iParamToken);
                     request.AddParameter("plataforma", item.plataforma);
-                    request.AddParameter("urlBaixarApp",item.url);
+                    request.AddParameter("urlBaixarApp", item.url);
                     MudaLabel("Link APP");
                     response = (RestResponse)client.Execute(request);
                     ReturnPadrao lRetorno = new ReturnPadrao();
                     lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
                 }
-                   
-                
-                
-                
+
+
+
+
 
             }
 
@@ -157,7 +157,7 @@ namespace DexComanda.Operações
         }
         private DataSet ObterDados(string iNomeTable)
         {
-            if (iNomeTable!="FormaPagamento")
+            if (iNomeTable != "FormaPagamento")
             {
                 return con.SelectRegistroONline(iNomeTable);
             }
@@ -165,7 +165,7 @@ namespace DexComanda.Operações
             {
                 return con.SelectRegistroONlineSemData(iNomeTable);
             }
-            
+
         }
 
         private void CadastrarTipoOpcao(DataSet ds)
@@ -176,16 +176,18 @@ namespace DexComanda.Operações
                 RestRequest request = new RestRequest("ws/opcao/tipo/set", Method.POST);
                 int iMaxOpcionais = 0; int iMinumum = 0;
                 MudaLabel("Tipo de Opção");
-
+                DataRow dRow;
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    iMaxOpcionais = ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("MinimoOpcionais");
-                    iMinumum = ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("MaximoOpcionais");
+                    dRow = ds.Tables[0].Rows[i];
+
+                    iMaxOpcionais = int.Parse(dRow.ItemArray.GetValue(3).ToString());
+                    iMinumum = int.Parse(dRow.ItemArray.GetValue(4).ToString());
                     request.AddParameter("token", iParamToken);
-                    request.AddParameter("nome", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<string>("nome"));
-                    request.AddParameter("tipo", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<string>("tipo"));
-                    request.AddParameter("referenciaId", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("Codigo"));
-                    request.AddParameter("ordenExibicao", ds.Tables["Produto_OpcaoTipo"].Rows[i].Field<int>("OrdenExibicao"));
+                    request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
+                    request.AddParameter("tipo", dRow.ItemArray.GetValue(2).ToString());
+                    request.AddParameter("referenciaId", dRow.ItemArray.GetValue(0).ToString());
+                    request.AddParameter("ordenExibicao", dRow.ItemArray.GetValue(5).ToString());
                     request.AddParameter("minimoSelecao", iMaxOpcionais);
                     request.AddParameter("maximoSelecao", iMinumum);
                     RestResponse response = (RestResponse)client.Execute(request);
@@ -194,7 +196,7 @@ namespace DexComanda.Operações
                     lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
                     if (lRetorno.status == true)
                     {
-                        con.AtualizaDataSincronismo("Produto_OpcaoTipo", ds.Tables[0].Rows[i].Field<int>("Codigo"));
+                        con.AtualizaDataSincronismo("Produto_OpcaoTipo", int.Parse(dRow.ItemArray.GetValue(0).ToString()));
                     }
                 }
             }
@@ -305,19 +307,21 @@ namespace DexComanda.Operações
                 RestRequest request = new RestRequest("ws/opcoes/set", Method.POST);
                 prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
+                DataRow dRow;
                 MudaLabel("Opções");
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
+                    dRow = ds.Tables[0].Rows[0];
                     request.AddParameter("token", iParamToken);
-                    request.AddParameter("tipo", ds.Tables["Opcao"].Rows[i].Field<int>("Tipo"));
-                    request.AddParameter("nome", ds.Tables["Opcao"].Rows[i].Field<string>("Nome"));
-                    request.AddParameter("referenciaId", ds.Tables["Opcao"].Rows[i].Field<int>("Codigo"));
+                    request.AddParameter("tipo", dRow.ItemArray.GetValue(2).ToString());
+                    request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
+                    request.AddParameter("referenciaId", dRow.ItemArray.GetValue(0).ToString());
                     RestResponse response = (RestResponse)client.Execute(request);
                     prgBarProduto.Value = i + 1;
 
                     if (response.Content.ToString() == "true")
                     {
-                        con.AtualizaDataSincronismo("Opcao", ds.Tables["Opcao"].Rows[i].Field<int>("Codigo"));
+                        con.AtualizaDataSincronismo("Opcao", int.Parse(dRow.ItemArray.GetValue(0).ToString()));
                     }
 
                 }
@@ -331,6 +335,7 @@ namespace DexComanda.Operações
         }
         private void MudaLabel(string iNomeTabela)
         {
+            Application.DoEvents();
             lblSinc.Visible = true;
             lblSinc.Text = "Sincronizando " + iNomeTabela;
         }
@@ -342,13 +347,19 @@ namespace DexComanda.Operações
                 RestRequest request = new RestRequest("ws/categorias/set", Method.POST);
                 prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
+                DataRow dRow;
                 MudaLabel("Grupo");
                 GerarToken();
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    string inome = ds.Tables["Grupo"].Rows[i].Field<string>("NomeGrupo");
-                    int iCod = ds.Tables["Grupo"].Rows[i].Field<int>("Codigo");
-                    int AtivoSN = Convert.ToInt16(ds.Tables["Grupo"].Rows[i].Field<Boolean>("OnlineSN"));
+                    dRow = ds.Tables[0].Rows[i];
+                    string inome = dRow.ItemArray.GetValue(1).ToString();
+                    int iCod = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+                    int AtivoSN = 0;
+                    if (Convert.ToBoolean(dRow.ItemArray.GetValue(6).ToString()) == true)
+                    {
+                        AtivoSN = 1;
+                    }
 
                     request.AddParameter("token", iParamToken);
                     request.AddParameter("nomeCategoria", inome);
@@ -361,7 +372,7 @@ namespace DexComanda.Operações
                     {
                         con.AtualizaDataSincronismo("Grupo", iCod);
                     }
-
+                    prgBarProduto.Value = i + 1;
 
                 }
 
@@ -383,56 +394,63 @@ namespace DexComanda.Operações
                 MudaLabel("Produto");
                 decimal iPrecoProduto = 0;
                 prgBarProduto.Value = 0;
+                DataRow dRow;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    decimal prProduto = ds.Tables["Produto"].Rows[i].Field<decimal>("PrecoProduto");
+                    dRow = ds.Tables[0].Rows[i];
+                    decimal prProduto = decimal.Parse(dRow.ItemArray.GetValue(3).ToString());
                     DateTime dtSinc = DateTime.Now.AddYears(1);
                     DateTime dtFoto = DateTime.Now.AddYears(1);
-                    ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFoto");
 
-                    if (ds.Tables["Produto"].Rows[i].Field<DateTime>("DataSincronismo") != null)
+
+                    if (dRow.ItemArray.GetValue(10).ToString() != "")
                     {
-                        dtSinc = ds.Tables["Produto"].Rows[i].Field<DateTime>("DataSincronismo");
+                        dtSinc = Convert.ToDateTime(dRow.ItemArray.GetValue(10).ToString());
                     }
-                    if (ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFoto") != null)
+                    if (dRow.ItemArray.GetValue(15).ToString() != "")
                     {
-                        dtFoto = ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFoto");
+                        dtFoto = Convert.ToDateTime(dRow.ItemArray.GetValue(15).ToString());
                     }
 
 
 
-                    string iCaminhoImagem = ds.Tables["Produto"].Rows[i].Field<string>("UrlImagem");
+                    string iCaminhoImagem = dRow.ItemArray.GetValue(12).ToString();
                     request.AddParameter("token", iParamToken);
-                    request.AddParameter("idReferencia", ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
-                    request.AddParameter("nome", ds.Tables["Produto"].Rows[i].Field<string>("NomeProduto"));
+                    request.AddParameter("idReferencia", dRow.ItemArray.GetValue(0).ToString());
+                    request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
 
                     if (Sessions.returnEmpresa.CNPJ == "09395874000160")
                     {
-                        prProduto = prProduto + con.RetornaPrecoComEmbalagem(ds.Tables["Produto"].Rows[i].Field<string>("GrupoProduto"), ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
+                        prProduto = prProduto + con.RetornaPrecoComEmbalagem(dRow.ItemArray.GetValue(4).ToString(), int.Parse(dRow.ItemArray.GetValue(0).ToString()));
                     }
                     else
                     {
-                        prProduto = ds.Tables["Produto"].Rows[i].Field<decimal>("PrecoProduto");
+                        prProduto = decimal.Parse(dRow.ItemArray.GetValue(3).ToString());
                     }
 
                     request.AddParameter("preco", prProduto);
-                    decimal prPromocao = ds.Tables["Produto"].Rows[i].Field<decimal>("PrecoDesconto");
-                    if (ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFimPromocao") > DateTime.Now && prPromocao > 0)
+                    decimal prPromocao = decimal.Parse(dRow.ItemArray.GetValue(5).ToString());
+                    if (Convert.ToDateTime(dRow.ItemArray.GetValue(14).ToString()) > DateTime.Now && prPromocao > 0)
                     {
                         request.AddParameter("precoPromocao", prPromocao);
-                        request.AddParameter("dataInicial", ds.Tables["Produto"].Rows[i].Field<DateTime>("DataInicioPromocao"));
-                        request.AddParameter("dataFinal", ds.Tables["Produto"].Rows[i].Field<DateTime>("DataFimPromocao"));
+                        request.AddParameter("dataInicial", dRow.ItemArray.GetValue(13).ToString());
+                        request.AddParameter("dataFinal", dRow.ItemArray.GetValue(14).ToString());
                     }
                     if (File.Exists(iCaminhoImagem) && dtFoto > dtSinc)
                     {
                         request.AddFile("imagem", iCaminhoImagem);
                     }
 
-                    request.AddParameter("idReferenciaCategoria", RetornaIDCategoria(ds.Tables["Produto"].Rows[i].Field<string>("GrupoProduto")));
-                    request.AddParameter("descricao", ds.Tables["Produto"].Rows[i].Field<string>("DescricaoProduto"));
-                    request.AddParameter("ativo", Convert.ToInt32(ds.Tables["Produto"].Rows[i].Field<Boolean>("OnlineSN")));
-                    request.AddParameter("maxOptions", ds.Tables["Produto"].Rows[i].Field<int>("MaximoAdicionais"));
+                    request.AddParameter("idReferenciaCategoria", RetornaIDCategoria(dRow.ItemArray.GetValue(4).ToString()));
+                    request.AddParameter("descricao", dRow.ItemArray.GetValue(2).ToString());
+                    int bAtivoSn = 0;
+                    if (Convert.ToBoolean(dRow.ItemArray.GetValue(8).ToString()) == true)
+                    {
+                        bAtivoSn = 1;
+                    }
+                    request.AddParameter("ativo", bAtivoSn);
+                    request.AddParameter("maxOptions", dRow.ItemArray.GetValue(11).ToString());
 
                     prgBarProduto.Value = i + 1;
 
@@ -440,8 +458,8 @@ namespace DexComanda.Operações
 
                     if (response.Content.ToString() == "true")
                     {
-                        con.AtualizaDataSincronismo("Produto", ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
-                        CadastrarOpcaoProduto(ds.Tables["Produto"].Rows[i].Field<int>("Codigo"));
+                        con.AtualizaDataSincronismo("Produto", int.Parse(dRow.ItemArray.GetValue(0).ToString()));
+                        CadastrarOpcaoProduto(int.Parse(dRow.ItemArray.GetValue(0).ToString()));
                     }
                     iCaminhoImagem = "";
                 }
@@ -485,25 +503,28 @@ namespace DexComanda.Operações
                 DataSet ds = con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcaoProdutoCodigo", iCodProduto);
                 int iCodOpcao = 0;
                 MudaLabel("Opcoes/Adicionais");
+                DataRow dRow;
                 if (ds.Tables[0].Rows.Count > 0)
                 {
+                    
                     int iCodProd = ds.Tables["Produto_Opcao"].Rows[0].Field<int>("CodProduto");
                     string[] opcao = new string[ds.Tables[0].Rows.Count];
-                    DateTime dtFimPromo = ds.Tables["Produto_Opcao"].Rows[0].Field<DateTime>("DataFimPromocao");
                     request.AddParameter("token", iParamToken);
                     request.AddParameter("referenciaId", iCodProd);
 
                     for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
+                        dRow = ds.Tables[0].Rows[i];
+                        DateTime dtFimPromo = Convert.ToDateTime(dRow.ItemArray.GetValue(7).ToString());
                         decimal iprice = 0;
-                        iCodOpcao = ds.Tables["Produto_Opcao"].Rows[i].Field<int>("CodOpcao");
-                        if (dtFimPromo >= Convert.ToDateTime(DateTime.Now.ToShortDateString()) && ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProcomocao") > 0)
+                        iCodOpcao = int.Parse(dRow.ItemArray.GetValue(1).ToString());
+                        if (dtFimPromo >= Convert.ToDateTime(DateTime.Now.ToShortDateString()) && decimal.Parse(dRow.ItemArray.GetValue(6).ToString()) > 0)
                         {
-                            iprice = ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProcomocao");
+                            iprice = decimal.Parse(dRow.ItemArray.GetValue(6).ToString());
                         }
                         else
                         {
-                            iprice = ds.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
+                            iprice = decimal.Parse(dRow.ItemArray.GetValue(2).ToString());
                         }
 
                         request.AddParameter("opcao[" + iCodOpcao + "]", iprice);
@@ -534,14 +555,15 @@ namespace DexComanda.Operações
             prgBarpagamento.Maximum = ds.Tables[0].Rows.Count;
             request.AddParameter("token", iParamToken);
             int iCod = 0;
-
+            DataRow dRow;
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                if (File.Exists(ds.Tables["FormaPagamento"].Rows[i].Field<string>("CaminhoImagem")))
+                dRow = ds.Tables[0].Rows[i];
+                if (File.Exists(dRow.ItemArray.GetValue(7).ToString()))
                 {
-                    iCod = ds.Tables["FormaPagamento"].Rows[i].Field<int>("Codigo");
-                    request.AddFile("cartao[" + i + "]", ds.Tables["FormaPagamento"].Rows[i].Field<string>("CaminhoImagem"), "imagem/png");
-                    
+                    iCod = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+                    request.AddFile("cartao[" + i + "]", dRow.ItemArray.GetValue(7).ToString(), "imagem/png");
+
                 }
                 prgBarpagamento.Value = prgBarpagamento.Value + 1;
                 con.AtualizaDataSincronismo("FormaPagamento", iCod);
