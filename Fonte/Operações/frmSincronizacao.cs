@@ -188,8 +188,8 @@ namespace DexComanda.Operações
                     request.AddParameter("tipo", dRow.ItemArray.GetValue(2).ToString());
                     request.AddParameter("referenciaId", dRow.ItemArray.GetValue(0).ToString());
                     request.AddParameter("ordenExibicao", dRow.ItemArray.GetValue(5).ToString());
-                    request.AddParameter("minimoSelecao", iMaxOpcionais);
-                    request.AddParameter("maximoSelecao", iMinumum);
+                    request.AddParameter("minimoSelecao", iMinumum);
+                    request.AddParameter("maximoSelecao", iMaxOpcionais);
                     RestResponse response = (RestResponse)client.Execute(request);
 
                     ReturnPadrao lRetorno = new ReturnPadrao();
@@ -311,7 +311,7 @@ namespace DexComanda.Operações
                 MudaLabel("Opções");
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    dRow = ds.Tables[0].Rows[0];
+                    dRow = ds.Tables[0].Rows[i];
                     request.AddParameter("token", iParamToken);
                     request.AddParameter("tipo", dRow.ItemArray.GetValue(2).ToString());
                     request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());

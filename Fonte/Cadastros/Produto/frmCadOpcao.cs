@@ -104,11 +104,11 @@ namespace DexComanda.Cadastros.Produto
         {
             try
             {
-                codigoAlterarDeletar = int.Parse(this.OpcaoGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-                RetonaTipo(int.Parse(OpcaoGridView.SelectedRows[rowIndex].Cells[1].Value.ToString()));
-                txtNome.Text = OpcaoGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
-                chkAtivoSN.Checked = Convert.ToBoolean(OpcaoGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
-                chkOnlineSN.Checked = Convert.ToBoolean(OpcaoGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
+                codigoAlterarDeletar = int.Parse(this.OpcaoGridView.Rows[rowIndex].Cells[0].Value.ToString());
+                RetonaTipo(int.Parse(OpcaoGridView.Rows[rowIndex].Cells[1].Value.ToString()));
+                txtNome.Text = OpcaoGridView.Rows[rowIndex].Cells[2].Value.ToString();
+                chkAtivoSN.Checked = Convert.ToBoolean(OpcaoGridView.Rows[rowIndex].Cells[3].Value.ToString());
+                chkOnlineSN.Checked = Convert.ToBoolean(OpcaoGridView.Rows[rowIndex].Cells[4].Value.ToString());
                 this.btnAdicionar.Text = "Salvar [F12]";
                 this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
                 this.btnAdicionar.Click -= new System.EventHandler(this.CadastraOpcao);
@@ -162,7 +162,7 @@ namespace DexComanda.Cadastros.Produto
                 this.btnEditar.Click += new System.EventHandler(this.EditarOpcao);
                 this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
               
-               // ListaOpcao();
+                ListaOpcao();
 
             }
             catch (Exception erro)
@@ -174,14 +174,14 @@ namespace DexComanda.Cadastros.Produto
 
         private void OpcaoGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int total = this.OpcaoGridView.SelectedRows.Count;
-
-            for (int i = 0; i < total; i++)
+            try
             {
-                if (this.OpcaoGridView.Rows[i].Selected)
-                {
-                    rowIndex = this.OpcaoGridView.Rows[i].Index;
-                }
+                rowIndex = e.RowIndex;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 

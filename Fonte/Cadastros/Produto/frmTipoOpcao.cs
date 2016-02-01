@@ -67,7 +67,7 @@ namespace DexComanda.Cadastros.Produto
         {
             try
             {
-                if (!rbMultipla.Checked && !rbTexto.Checked && !rbUnica.Checked)
+                if (!rbMultipla.Checked && !rbTexto.Checked && !rbUnica.Checked && cbxOrdem.SelectedIndex<0)
                 {
                     MessageBox.Show("Marque uma opção para continuar");
                     grpMaxMin.Focus();
@@ -103,7 +103,7 @@ namespace DexComanda.Cadastros.Produto
                     }
                     con.Insert("spAdicionarProduto_OpcaoTipo", prodOp);
                     ListaTipoOpcao();
-                }
+                    Utils.LimpaForm(this);                }
             }
             catch (Exception erro)
             {

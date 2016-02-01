@@ -936,7 +936,7 @@ namespace DexComanda
                 if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.TextBox)))
                 {
                     //Check to see if it's a textbox 
-                    ((System.Windows.Forms.TextBox)ctrControl).Text = string.Empty;
+                    ((System.Windows.Forms.TextBox)ctrControl).Text = "";
                     //If it is then set the text to String.Empty (empty textbox) 
                 }
                 else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RichTextBox)))
@@ -960,11 +960,11 @@ namespace DexComanda
                     //Unselect all RadioButtons
                     ((System.Windows.Forms.RadioButton)ctrControl).Checked = false;
                 }
-                //if (ctrControl.Controls.Count > 0)
-                //{
-                //    //Call itself to get all other controls in other containers 
-                //    //ClearForm(ctrControl);
-                //}
+                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.PictureBox)))
+                {
+                    ((System.Windows.Forms.PictureBox)ctrControl).Image = null;
+                    // (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))(
+                }
             }
         }
 

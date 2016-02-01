@@ -1400,8 +1400,8 @@ namespace DexComanda
                     if (!itemsPedido.Tables["ItemsPedido"].Rows[i].Field<bool>("ImpressoSN"))
                     {
                         strNomeImpressora = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<string>("NomeImpressora");
-                       // imprimirAgora = false;
-                        lRetorno = Utils.ImpressaMesaNova(iCodPedido, ImprimeLPT, 0, strNomeImpressora, imprimirAgora);
+                        imprimirAgora = false;
+                        lRetorno = Utils.ImpressaMesaNova(iCodPedido, ImprimeLPT, int.Parse(Sessions.returnConfig.ViasCozinha), strNomeImpressora, imprimirAgora);
                         
                        
                         AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();

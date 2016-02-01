@@ -27,60 +27,6 @@ namespace DexComanda
             Utils.PopularGrid_SP("FormaPagamento", FPGridView, "spObterFormaPagamento");
         }
 
-        private void Adicionar(object sender, EventArgs e)
-        {
-            DexComanda.Models.FormasPagamento fp = new DexComanda.Models.FormasPagamento()
-            {
-                Codigo = codigo,
-                Descricao = this.txtNomeFP.Text.ToString(),
-                DescontoSN = chkDesconto2.Checked,
-                GeraFinanceiro = chkFinanceiro.Checked,
-                OnlineSN = chkOnline.Checked,
-                DataAlteracao = DateTime.Now,
-                CaminhoImagem = txtcaminhoImage.Text
-            };
-
-            if (txtNomeFP.Text != "")
-            {
-                con.Insert("spAdicionarFormaPagamento", fp);
-                Utils.ControlaEventos("Inserir", this.Name);
-                Utils.LimpaForm(this);
-                Utils.PopularGrid_SP("FormaPagamento", FPGridView, "spObterFormaPagamento");
-            }
-            else
-            {
-                MessageBox.Show("Preencha o nome para Continuar", "DexAviso");
-            }
-
-        }
-
-        //Só habilita a edicao trocando os nomes os metodos dos botoes
-        private void Editar(object sender, EventArgs e)
-        {
-            if (FPGridView.SelectedRows.Count > 0)
-            {
-                codigo = int.Parse(this.FPGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-                this.txtNomeFP.Text = this.FPGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
-                chkDesconto2.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[2].Value.ToString());
-                chkFinanceiro.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
-                chkOnline.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
-                txtcaminhoImage.Text = FPGridView.SelectedRows[rowIndex].Cells[5].Value.ToString();
-
-                this.btnAdicionar.Text = "Salvar";
-                this.btnAdicionar.Click += new System.EventHandler(this.SalvarFP);
-                this.btnAdicionar.Click -= new System.EventHandler(this.Adicionar);
-
-                this.btnEditarFP.Text = "Cancelar";
-                this.btnEditarFP.Click += new System.EventHandler(this.Cancelar);
-                this.btnEditarFP.Click -= new System.EventHandler(this.Editar);
-            }
-            else
-            {
-                MessageBox.Show("Selecione um registro para editar", "Dex Aviso");
-            }
-
-        }
-
         private void Cancelar(object sender, EventArgs e)
         {
 
@@ -91,11 +37,11 @@ namespace DexComanda
                 this.txtNomeFP.Text = "";
             }
             this.btnAdicionar.Text = "Adicionar";
-            this.btnAdicionar.Click += new System.EventHandler(this.Adicionar);
+            this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
             this.btnAdicionar.Click -= new System.EventHandler(this.SalvarFP);
             codigo = 0;
             this.btnEditarFP.Text = "Editar";
-            this.btnEditarFP.Click += new System.EventHandler(this.Editar);
+            this.btnEditarFP.Click += new System.EventHandler(this.btnEditarFP_Click);
             this.btnEditarFP.Click -= new System.EventHandler(this.Cancelar);
         }
 
@@ -116,37 +62,40 @@ namespace DexComanda
 
             con.Update("spAlterarFormaPagamento", fp);
             Utils.ControlaEventos("Alterar", this.Name);
+            Utils.LimpaForm(this);
+            this.btnAdicionar.Text = "Adicionar [F12]";
 
-            this.btnAdicionar.Text = "Adicionar";
-            this.btnAdicionar.Click += new System.EventHandler(this.SalvarFP);
-            this.btnAdicionar.Click -= new System.EventHandler(this.Adicionar);
+            this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
+            this.btnAdicionar.Click -= new System.EventHandler(this.SalvarFP);
 
-            this.btnEditarFP.Text = "Editar";
-            this.btnEditarFP.Click += new System.EventHandler(this.Editar);
+            this.btnEditarFP.Text = "Editar [F11]";
+            this.btnEditarFP.Click += new System.EventHandler(this.btnEditarFP_Click);
             this.btnEditarFP.Click -= new System.EventHandler(this.Cancelar);
-
-           // Utils.LimpaForm(this);
+            
+            
             Utils.PopularGrid_SP("FormaPagamento", FPGridView, "spObterFormaPagamento");
         }
 
         private void formaPgtGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int total = this.FPGridView.SelectedRows.Count;
-
-            for (int i = 0; i < total; i++)
+            try
             {
-                if (this.FPGridView.Rows[i].Selected)
-                {
-                    rowIndex = this.FPGridView.Rows[i].Index;
-                }
+                rowIndex = e.RowIndex;
             }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Não foi possivel obter o código da linha " + erro.Message);
+            }
+            
+                   
+            
         }
 
         private void frmCadastrarFormaPagamento_KeyDown(object sender, KeyEventArgs e)
         {
             if ((e.KeyCode == Keys.F12) && (btnAdicionar.Text == "Adicionar [F12]"))
             {
-                Adicionar(sender, e);
+                btnEditarFP_Click(sender, e);
             }
 
         }
@@ -220,12 +169,56 @@ namespace DexComanda
 
         private void btnAdicionar_Click(object sender, EventArgs e)
         {
-            Adicionar(sender, e);
+            DexComanda.Models.FormasPagamento fp = new DexComanda.Models.FormasPagamento()
+            {
+                Codigo = codigo,
+                Descricao = this.txtNomeFP.Text.ToString(),
+                DescontoSN = chkDesconto2.Checked,
+                GeraFinanceiro = chkFinanceiro.Checked,
+                OnlineSN = chkOnline.Checked,
+                DataAlteracao = DateTime.Now,
+                CaminhoImagem = txtcaminhoImage.Text
+            };
+
+            if (txtNomeFP.Text != "")
+            {
+                con.Insert("spAdicionarFormaPagamento", fp);
+                Utils.ControlaEventos("Inserir", this.Name);
+                Utils.LimpaForm(this);
+                Utils.PopularGrid_SP("FormaPagamento", FPGridView, "spObterFormaPagamento");
+            }
+            else
+            {
+                MessageBox.Show("Preencha o nome para Continuar", "DexAviso");
+            }
+            //Adicionar(sender, e);
         }
 
         private void btnEditarFP_Click(object sender, EventArgs e)
         {
-            Editar(sender, e);
+            if (FPGridView.SelectedRows.Count > 0)
+            {
+                codigo = int.Parse(this.FPGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
+                this.txtNomeFP.Text = this.FPGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
+                chkDesconto2.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[2].Value.ToString());
+                chkFinanceiro.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
+                chkOnline.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
+                txtcaminhoImage.Text = FPGridView.SelectedRows[rowIndex].Cells[5].Value.ToString();
+
+                this.btnAdicionar.Text = "Salvar";
+                this.btnAdicionar.Click += new System.EventHandler(this.SalvarFP);
+                this.btnAdicionar.Click -= new System.EventHandler(this.btnAdicionar_Click);
+
+                this.btnEditarFP.Text = "Cancelar";
+                this.btnEditarFP.Click += new System.EventHandler(this.Cancelar);
+                this.btnEditarFP.Click -= new System.EventHandler(this.btnEditarFP_Click);
+            }
+            else
+            {
+                MessageBox.Show("Selecione um registro para editar", "Dex Aviso");
+            }
+
+            //Editar(sender, e);
         }
 
         private void txtcaminhoImage_TextChanged(object sender, EventArgs e)
