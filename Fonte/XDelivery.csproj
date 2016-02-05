@@ -221,6 +221,7 @@
     <Compile Include="Integração\MP2032.cs" />
     <Compile Include="Models\Alteracoes Multiplas\AlteracaoCliente.cs" />
     <Compile Include="Models\Alteracoes Multiplas\MultiplaProduto.cs" />
+    <Compile Include="Models\AtualizaEstoque.cs" />
     <Compile Include="Models\Caixa.cs" />
     <Compile Include="Models\CaixaCadastros.cs" />
     <Compile Include="Models\CaixaDiferenca.cs" />

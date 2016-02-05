@@ -36,6 +36,7 @@ using System.Diagnostics;
 using System.Configuration;
 using DexComanda.Relatorios.Clientes;
 using DexComanda.Relatorios.Fechamentos.Novos;
+using DexComanda.Operações.Financeiro;
 
 namespace DexComanda
 {
@@ -140,10 +141,10 @@ namespace DexComanda
             return Logado;
         }
         public static void MontaCombox(ComboBox icbxName, string idisplayName,
-            string iValueMember ,string iTable,string iSP,int iCod=-1)
+            string iValueMember, string iTable, string iSP, int iCod = -1)
         {
 
-            if (iCod==-1)
+            if (iCod == -1)
             {
                 icbxName.DataSource = conexao.SelectAll(iTable, iSP).Tables[iTable];
             }
@@ -151,11 +152,11 @@ namespace DexComanda
             {
                 icbxName.DataSource = conexao.SelectRegistroPorCodigo(iTable, iSP, iCod).Tables[iTable];
             }
-            
+
             icbxName.DisplayMember = idisplayName;
             icbxName.ValueMember = iValueMember;
         }
-       
+
         public static bool VerificaCaixaAbertoDiaAnterior()
         {
             Boolean CaixaAberto = false;
@@ -178,7 +179,7 @@ namespace DexComanda
             }
             return iResposta;
         }
-     
+
         public static void ImprimirHistoricoCliente(int iCodPessoa, DateTime iDtInici, DateTime idtFim)
         {
             RelHistoricoCliente report;
@@ -217,12 +218,12 @@ namespace DexComanda
 
                 MessageBox.Show(erro.Message);
             }
-            
+
         }
-        public static string ImpressaoEntreganova(int iCodPedido,decimal iValorPago,string iPrevisaoEntrega ,Boolean iExport = false, int iNumCopias = 0)
+        public static string ImpressaoEntreganova(int iCodPedido, decimal iValorPago, string iPrevisaoEntrega, Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
-           
+
             RelDelivery report;
             try
             {
@@ -253,13 +254,13 @@ namespace DexComanda
                 {
                     CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
                     new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                    reportExport.DiskFileName = Directory.GetCurrentDirectory()+@"\RelDelivery.txt";
+                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
 
                     report.ExportOptions.ExportDestinationType =
-	                CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
 
                     report.ExportOptions.ExportFormatType =
-	                CrystalDecisions.Shared.ExportFormatType.Text;
+                    CrystalDecisions.Shared.ExportFormatType.Text;
 
                     report.ExportOptions.DestinationOptions = reportExport;
                     report.Export();
@@ -271,16 +272,16 @@ namespace DexComanda
                     {
                         report.PrintToPrinter(1, false, 0, 0);
                     }
-                   
-                   
+
+
                 }
             }
             catch (Exception erro)
             {
 
-                MessageBox.Show("Erro na impressao :"+ erro.Message);
+                MessageBox.Show("Erro na impressao :" + erro.Message);
             }
-            return iRetorno;  
+            return iRetorno;
         }
         public static string ImpressaoEntreganova_Matricial(int iCodPedido, decimal iValorPago, string iPrevisaoEntrega, Boolean iExport = false, int iNumCopias = 0)
         {
@@ -334,7 +335,7 @@ namespace DexComanda
                     {
                         report.PrintToPrinter(0, true, 0, 0);
                     }
-                   
+
                 }
             }
             catch (Exception erro)
@@ -344,7 +345,7 @@ namespace DexComanda
             }
             return iRetorno;
         }
-        public static string ImpressaoEntreganova_20(int iCodPedido,decimal iValorPago, Boolean iExport = false, int iNumCopias = 0)
+        public static string ImpressaoEntreganova_20(int iCodPedido, decimal iValorPago, Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
 
@@ -396,7 +397,7 @@ namespace DexComanda
                     {
                         report.PrintToPrinter(0, false, 0, 0);
                     }
-                    
+
                 }
             }
             catch (Exception erro)
@@ -406,15 +407,15 @@ namespace DexComanda
             }
             return iRetorno;
         }
-        public static string ImpressaoCozihanova(int iCodPedido, Boolean iExport = false,int iNumCopias=0)
+        public static string ImpressaoCozihanova(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
-           
+
             RelDelivey_Cozinha report;
             try
             {
                 report = new RelDelivey_Cozinha();
-              //  report.PrintOptions.PrinterName = "MP-4200 TH";
+                //  report.PrintOptions.PrinterName = "MP-4200 TH";
                 crtableLogoninfos = new TableLogOnInfos();
                 crtableLogoninfo = new TableLogOnInfo();
                 crConnectionInfo = new ConnectionInfo();
@@ -456,7 +457,7 @@ namespace DexComanda
                     {
                         report.PrintToPrinter(1, false, 0, 0);
                     }
-                    
+
                 }
             }
             catch (Exception erro)
@@ -472,7 +473,7 @@ namespace DexComanda
         /// <param name="iCodPedido">Inteiro Código do Pedido a ser impresso</param>
         ///  <param name="iExport">Boolean Código do Pedido a ser impresso</param>
         /// <returns>String do Pedido para impressoras Matriciais quando iExpport for True.</returns>
-        public static string ImpressaMesaNova(int iCodPedido,Boolean iExport = false, int iNumCopias = 0,string iNomeImpressora="",Boolean iImprimirAgora=false)
+        public static string ImpressaMesaNova(int iCodPedido, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
         {
             string iRetorno = ""; ;
             RelComandaMesa report;
@@ -484,14 +485,14 @@ namespace DexComanda
                 crtableLogoninfo = new TableLogOnInfo();
                 crConnectionInfo = new ConnectionInfo();
 
-                
+
                 System.Drawing.Printing.PrinterSettings printersettings = new System.Drawing.Printing.PrinterSettings();
                 printersettings.PrinterName = iNomeImpressora;
                 printersettings.Copies = 1;//int.Parse(iNumCopias);
                 printersettings.Collate = false;
                 Tables CrTables;
-                
-                
+
+
                 report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
@@ -506,7 +507,7 @@ namespace DexComanda
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
                 report.SetParameterValue("@Codigo", iCodPedido);
-              
+
                 if (iExport)
                 {
                     CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
@@ -525,27 +526,14 @@ namespace DexComanda
                 }
                 else
                 {
-                    //if (iImprimirAgora)
-                    //{
-                        if (iNomeImpressora != "")
-                        {
-                        
-                            report.PrintToPrinter(printersettings, new System.Drawing.Printing.PageSettings(), false);
-                            
-                        }
-                        else
-                        {
-                        for (int i = 0; i < iNumCopias; i++)
-                        {
-                            report.PrintToPrinter(1, false, 0, 0);
-                        }
-                           
-                        }
-                    //}
-                   
-                    
+
+                    for (int i = 0; i < iNumCopias; i++)
+                    {
+                        report.PrintToPrinter(1, false, 0, 0);
+                    }
 
                 }
+
             }
             catch (Exception erro)
             {
@@ -582,7 +570,7 @@ namespace DexComanda
         //        }
         //        report.SetParameterValue("DataInicio", DateTime.Now);
         //        report.SetParameterValue("DataFim", DateTime.Now);
-               
+
         //    }
         //    catch (Exception erro)
         //    {
@@ -636,7 +624,7 @@ namespace DexComanda
                 }
                 else
                 {
-                 
+
                     report.PrintToPrinter(0, true, 0, 0);
                 }
             }
@@ -775,9 +763,24 @@ namespace DexComanda
 
         public static void IniciaSistema()
         {
+            //if (CaixaAberto(DateTime.Now,1))
+            //{
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Splashcreen());
+            //}
+            //else
+            //{
+            //    if (MessageBoxQuestion("Caixa não está aberto, deseja abrir agora?"))
+            //    {
+            //        frmLogin frmL = new frmLogin();
+            //        frmL.ShowDialog();
+            //        frmAberturaCaixa frm = new frmAberturaCaixa();
+            //        frm.ShowDialog();
+            //    }
+
+            //}
+
         }
 
         public static bool CaixaAberto(DateTime iDataRegistro, int iNumero)
@@ -788,24 +791,24 @@ namespace DexComanda
             conexao = new Conexao();
             try
             {
-                if (Sessions.returnUsuario != null)
+                //if (Sessions.returnUsuario != null)
+                //{
+                dsCaixa = conexao.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", iDataRegistro, iNumero);
+                if (dsCaixa.Tables[0].Rows.Count > 0)
                 {
-                    dsCaixa = conexao.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", iDataRegistro, iNumero);
-                    if (dsCaixa.Tables[0].Rows.Count>0)
-                    {
-                        dRow = dsCaixa.Tables[0].Rows[0];
-                        iRetorno = dRow.ItemArray.GetValue(7).ToString() == Convert.ToString(false);
-                    }
-                    else
-                    {
-                        MessageBox.Show("O Caixa não esta aberto, sistema funcionará somente no modo consulta");
-                    }
-                    
+                    dRow = dsCaixa.Tables[0].Rows[0];
+                    iRetorno = dRow.ItemArray.GetValue(7).ToString() == Convert.ToString(false);
                 }
                 else
                 {
-                    iRetorno = true;
+                    MessageBox.Show("O Caixa não esta aberto, sistema funcionará somente no modo consulta");
                 }
+
+                //}
+                //else
+                //{
+                //    iRetorno = true;
+                //}
             }
             catch (Exception erro)
             {
@@ -1108,7 +1111,7 @@ namespace DexComanda
 
             return RetornoServ = retorno[0].ToString();
         }
-        public static string EnviaSMS_LOCASMS(DataSet ds, string iMessagem,string iNomeCampanha,string iUser,string iSenha)
+        public static string EnviaSMS_LOCASMS(DataSet ds, string iMessagem, string iNomeCampanha, string iUser, string iSenha)
         {
             string strRetorno = "";
             DialogResult resultado = MessageBox.Show("O Sistema enviará SMS para " + ds.Tables[0].Rows.Count + " Clientes , deseja continuar?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -1123,35 +1126,35 @@ namespace DexComanda
                     string iNumero = dRow.ItemArray.GetValue(0).ToString();
                     NomeCliente = dRow.ItemArray.GetValue(1).ToString();
 
-                        if (iNumero.Length == 8)
-                        {
-                            Telefone[i] = "279" + iNumero;
-                        }
-                        else
-                        {
-                            Telefone[i] = "27" + iNumero;
-                        }
+                    if (iNumero.Length == 8)
+                    {
+                        Telefone[i] = "279" + iNumero;
+                    }
+                    else
+                    {
+                        Telefone[i] = "27" + iNumero;
+                    }
 
                 }
 
                 Integração.EnviaSMS_LOCASMS EnviarSMS = new EnviaSMS_LOCASMS();
-                
-                string strQuantidadeEnvio,iText;
-                
-                 iText= EnviarSMS.EnviaSMSLista(Telefone, iUser, iSenha, iMessagem, iNomeCampanha);
 
-                 string[] IRetorno = iText.Split(',');
-                
+                string strQuantidadeEnvio, iText;
+
+                iText = EnviarSMS.EnviaSMSLista(Telefone, iUser, iSenha, iMessagem, iNomeCampanha);
+
+                string[] IRetorno = iText.Split(',');
+
                 for (int i = 0; i < IRetorno.Length; i++)
                 {
                     strRetorno = IRetorno[i].ToString();
                 }
-              //  MessageBox.Show("Resultado"IRetorno[0].ToStr);
+                //  MessageBox.Show("Resultado"IRetorno[0].ToStr);
             }
 
             return strRetorno;
         }
-        
+
         public static bool EHCelular(string iNumero)
         {
             bool IRETORNO = false;
@@ -1216,7 +1219,7 @@ namespace DexComanda
 
             return strBuilder.ToString().ToUpper();
         }
-        public static string CriptografarArquivo(string iArquivo,Boolean iUUPER=true)
+        public static string CriptografarArquivo(string iArquivo, Boolean iUUPER = true)
         {
             MD5 md5Hasher = MD5.Create();
             byte[] valorCriptografado = md5Hasher.ComputeHash(Encoding.Default.GetBytes(iArquivo));
@@ -1234,7 +1237,7 @@ namespace DexComanda
             {
                 return strBuilder.ToString();
             }
-            
+
         }
         public static string CriptoGrafarOnExecute(string iNomeMaquina, string iCNPJ)
         {
@@ -1258,12 +1261,12 @@ namespace DexComanda
             //Kill();
             Application.Restart();
         }
-        public static void GeraHistorico(DateTime iData, int iCodPessoa, decimal iValor, int iCodUsuario, string iHistorico, char iTipo,string iFormaPagamento)
+        public static void GeraHistorico(DateTime iData, int iCodPessoa, decimal iValor, int iCodUsuario, string iHistorico, char iTipo, string iFormaPagamento)
         {
             Conexao con = new Conexao();
 
             DataSet dsFormaPagamento = con.SelectObterFormaPagamentoPorNOme(iFormaPagamento, "FormaPagamento");
-            if (dsFormaPagamento.Tables[0].Rows.Count>0)
+            if (dsFormaPagamento.Tables[0].Rows.Count > 0)
             {
                 DataRow dRowFpagamento = dsFormaPagamento.Tables[0].Rows[0];
 
@@ -1281,7 +1284,7 @@ namespace DexComanda
                     con.Insert("spAdicionaHistorico", hist);
                 }
             }
-           
+
         }
 
         public static DataSet PopularGrid(string table, DataGridView gridView, string iParametrosConsulta)
@@ -1303,7 +1306,7 @@ namespace DexComanda
             Conexao con = new Conexao();
             DataSet Dados = null;
             Dados = con.SelectMontaGrid(table, iParametrosConsulta, iAtivo);
-           
+
             gridView.DataSource = null;
             gridView.AutoGenerateColumns = true;
             gridView.DataSource = Dados;
@@ -1313,7 +1316,7 @@ namespace DexComanda
             return Dados;
         }
 
-        public static DataSet PopularGrid_SP(string table, DataGridView gridView, string spName, int CodRegistro = -1 )
+        public static DataSet PopularGrid_SP(string table, DataGridView gridView, string spName, int CodRegistro = -1)
         {
             Conexao con = new Conexao();
             DataSet Dados = null;
@@ -1321,7 +1324,7 @@ namespace DexComanda
             {
                 Dados = con.SelectAll(table, spName);
             }
-          
+
             else
             {
                 Dados = con.SelectRegistroPorCodigo(table, spName, CodRegistro);
@@ -1647,7 +1650,7 @@ namespace DexComanda
             {
                 iNomePC = iNomePC.Replace("Data Source=", "");
                 //Process[] remoteByName = Process.GetProcessesByName("MySQL", "NomeMaquina");
-               // MSSQLSERVER
+                // MSSQLSERVER
                 //// 2. Using an IP address to specify the machineName parameter.
                 //Process[] ipByName = Process.GetProcessesByName("notepad", "192.168.xx.x");
                 ServiceController MeuServico = new ServiceController("MSSQLSERVER", iNomePC);
@@ -1841,7 +1844,7 @@ namespace DexComanda
 
                 throw;
             }
-            
+
 
 
         }

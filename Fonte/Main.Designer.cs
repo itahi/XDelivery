@@ -715,7 +715,8 @@
             // 
             this.pedidosGridView.AllowUserToAddRows = false;
             this.pedidosGridView.AllowUserToDeleteRows = false;
-            this.pedidosGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.pedidosGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pedidosGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.pedidosGridView.BackgroundColor = System.Drawing.Color.White;
@@ -928,7 +929,8 @@
             // 
             this.produtosGridView.AllowUserToAddRows = false;
             this.produtosGridView.AllowUserToDeleteRows = false;
-            this.produtosGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.produtosGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.produtosGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.produtosGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;

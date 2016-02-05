@@ -107,24 +107,40 @@ namespace DexComanda.Cadastros
 
         private void Editar(object sender, EventArgs e)
         {
-            if (RegioesGridView.SelectedRows.Count > 0)
+            try
             {
-                DataSet dsRegiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", int.Parse(this.RegioesGridView.SelectedRows[rowIndex].Cells[0].Value.ToString()));
-                DataRow dRow = dsRegiao.Tables[0].Rows[0];
-                cbxRegiao.SelectedValue = int.Parse(dRow.ItemArray.GetValue(0).ToString());
-                cbxRegiao.SelectedText = dRow.ItemArray.GetValue(2).ToString();
-                txtBairro.Text = RegioesGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
-                txtCEP.Text = RegioesGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
-                chkAtivo.Checked = Convert.ToBoolean(RegioesGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
-                chkOnlineSN.Checked = Convert.ToBoolean(RegioesGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
-                this.btnAdicionar.Text = "Salvar";
-                this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
-                this.btnAdicionar.Click -= new System.EventHandler(this.Adicionar);
+                if (RegioesGridView.SelectedRows.Count > 0)
+                {
+                    DataSet dsRegiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", int.Parse(this.RegioesGridView.SelectedRows[rowIndex].Cells[0].Value.ToString()));
+                    if (dsRegiao.Tables[0].Rows.Count > 0)
+                    {
+                        txtCEP.Enabled = false;
+                        txtBairro.Enabled = false;
+ 
+                        DataRow dRow = dsRegiao.Tables[0].Rows[0];
+                        cbxRegiao.SelectedValue = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+                        cbxRegiao.SelectedText = dRow.ItemArray.GetValue(2).ToString();
+                        txtBairro.Text = RegioesGridView.Rows[rowIndex].Cells[1].Value.ToString();
+                        txtCEP.Text = RegioesGridView.Rows[rowIndex].Cells[2].Value.ToString();
+                        chkAtivo.Checked = Convert.ToBoolean(RegioesGridView.Rows[rowIndex].Cells[3].Value.ToString());
+                        chkOnlineSN.Checked = Convert.ToBoolean(RegioesGridView.Rows[rowIndex].Cells[4].Value.ToString());
+                        this.btnAdicionar.Text = "Salvar";
+                        this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
+                        this.btnAdicionar.Click -= new System.EventHandler(this.Adicionar);
 
-                this.btnEditar.Text = "Cancelar";
-                this.btnEditar.Click += new System.EventHandler(this.Cancelar);
-                this.btnEditar.Click -= new System.EventHandler(this.Editar);
+                        this.btnEditar.Text = "Cancelar";
+                        this.btnEditar.Click += new System.EventHandler(this.Cancelar);
+                        this.btnEditar.Click -= new System.EventHandler(this.Editar);
+                    }
+
+                }
             }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message);
+            }
+           
         }
         private void Cancelar(object sender, EventArgs e)
         {
@@ -165,6 +181,8 @@ namespace DexComanda.Cadastros
                 con.Update("spAlterarBairrosRegiao", reg);
                 con.AtualizaDataSincronismo("RegiaoEntrega", reg.CodRegiao, "DataAlteracao");
                 Utils.ControlaEventos("Alterar", this.Name);
+                txtCEP.Enabled = true;
+                txtBairro.Enabled = true;
                 ListaRegiao();
             }
             catch (Exception erro)
@@ -180,15 +198,17 @@ namespace DexComanda.Cadastros
 
         private void RegioesGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int total = this.RegioesGridView.SelectedRows.Count;
-
-            for (int i = 0; i < total; i++)
+            try
             {
-                if (this.RegioesGridView.Rows[i].Selected)
-                {
-                    rowIndex = this.RegioesGridView.Rows[i].Index;
-                }
+                rowIndex = e.RowIndex;
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+                    
+           
         }
 
         private void ListaBairrosPorRegiao(int iCodRegiao)

@@ -77,7 +77,7 @@ namespace DexComanda.Operações.Financeiro
 
                         con.LimpaTabela("Produto_Estoque", "spLimparEstoque");
                         MessageBox.Show("Caixa aberto", "[xSistemas] Aviso");
-                        
+                        Utils.Restart();
                         this.Close();
                     }
                     else

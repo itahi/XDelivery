@@ -38,6 +38,8 @@
             this.txtRegiao = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.RegioesGridView = new System.Windows.Forms.DataGridView();
+            this.chkAtivo = new System.Windows.Forms.CheckBox();
+            this.chkOnline = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RegioesGridView)).BeginInit();
@@ -45,6 +47,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkOnline);
+            this.groupBox1.Controls.Add(this.chkAtivo);
             this.groupBox1.Controls.Add(this.btnEditar);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txtEntrega);
@@ -53,7 +57,7 @@
             this.groupBox1.Controls.Add(this.txtRegiao);
             this.groupBox1.Location = new System.Drawing.Point(1, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(286, 147);
+            this.groupBox1.Size = new System.Drawing.Size(309, 147);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cadastro ";
@@ -141,6 +145,26 @@
             this.RegioesGridView.TabIndex = 3;
             this.RegioesGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RegioesGridView_CellClick);
             // 
+            // chkAtivo
+            // 
+            this.chkAtivo.AutoSize = true;
+            this.chkAtivo.Location = new System.Drawing.Point(204, 33);
+            this.chkAtivo.Name = "chkAtivo";
+            this.chkAtivo.Size = new System.Drawing.Size(71, 17);
+            this.chkAtivo.TabIndex = 7;
+            this.chkAtivo.Text = "AtivoSN?";
+            this.chkAtivo.UseVisualStyleBackColor = true;
+            // 
+            // chkOnline
+            // 
+            this.chkOnline.AutoSize = true;
+            this.chkOnline.Location = new System.Drawing.Point(204, 71);
+            this.chkOnline.Name = "chkOnline";
+            this.chkOnline.Size = new System.Drawing.Size(77, 17);
+            this.chkOnline.TabIndex = 8;
+            this.chkOnline.Text = "OnlineSN?";
+            this.chkOnline.UseVisualStyleBackColor = true;
+            // 
             // frmCadastroRegioes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,5 +198,7 @@
         private System.Windows.Forms.TextBox txtRegiao;
         private System.Windows.Forms.DataGridView RegioesGridView;
         private System.Windows.Forms.Button btnEditar;
+        private System.Windows.Forms.CheckBox chkOnline;
+        private System.Windows.Forms.CheckBox chkAtivo;
     }
 }

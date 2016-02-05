@@ -1299,18 +1299,11 @@ namespace DexComanda
                     {
                         iRetorno = Utils.ImpressaoFechamentoNovo_20(iCodigo, ImprimeLPT, QtdViasBalcao);
                     }
-                    else
+                    else if (Sessions.returnConfig.QtdCaracteresImp>= 30)
                     {
                         iRetorno = Utils.ImpressaoFechamentoNovo(iCodigo, ImprimeLPT, QtdViasBalcao);
                     }
-
-                    if (ImprimeLPT && iRetorno != "")
-                    {
-                        StreamReader tempDex = new StreamReader(iRetorno);
-                        string sLine = "";
-                        sLine = tempDex.ReadToEnd();
-                        Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
-                    }
+                 
 
                 }
                 // Impressão de Venda Balcão
@@ -1343,8 +1336,7 @@ namespace DexComanda
                     int iCodigo;
                     string iRetorno;
                     string dblPRevisao = DataPed.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString();
-                    //for (int i = 0; i < QtViasEntrega; i++)
-                    //{
+                  
                     if (con.getLastCodigo() != 0)
                     {
                         iCodigo = con.getLastCodigo();
@@ -1359,18 +1351,13 @@ namespace DexComanda
 
                         iRetorno = Utils.ImpressaoEntreganova_20(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), ImprimeLPT, QtViasEntrega);
                     }
-                    else if (Sessions.returnConfig.QtdCaracteresImp >= 40)
+                    else if (Sessions.returnConfig.QtdCaracteresImp >= 40 && !ImprimeLPT)
                     {
                         iRetorno = Utils.ImpressaoEntreganova(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), dblPRevisao, ImprimeLPT, QtViasEntrega);
                     }
-                    if (ImprimeLPT)
+                    else if (ImprimeLPT)
                     {
-                        //MessageBox.Show("Chegou arui");
                         Utils.ImpressaoEntreganova_Matricial(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), dblPRevisao);
-                        //StreamReader tempDex = new StreamReader(iRetorno);
-                        //string sLine = "";
-                        //sLine = tempDex.ReadToEnd();
-                        //Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
                     }
 
                     //  }

@@ -14,5 +14,6 @@ namespace DexComanda.Models
         public decimal TaxaServico { get; set; }
         public DateTime DataAlteracao { get; set; }
         public Boolean OnlineSN { get; set; }
+        public Boolean AtivoSN { get; set; }
     }
 }

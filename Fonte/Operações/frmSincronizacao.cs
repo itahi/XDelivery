@@ -431,12 +431,16 @@ namespace DexComanda.Operações
 
                     request.AddParameter("preco", prProduto);
                     decimal prPromocao = decimal.Parse(dRow.ItemArray.GetValue(5).ToString());
-                    if (Convert.ToDateTime(dRow.ItemArray.GetValue(14).ToString()) > DateTime.Now && prPromocao > 0)
+                    if (dRow.ItemArray.GetValue(14).ToString()!="")
                     {
-                        request.AddParameter("precoPromocao", prPromocao);
-                        request.AddParameter("dataInicial", dRow.ItemArray.GetValue(13).ToString());
-                        request.AddParameter("dataFinal", dRow.ItemArray.GetValue(14).ToString());
+                        if (Convert.ToDateTime(dRow.ItemArray.GetValue(14).ToString()) > DateTime.Now && prPromocao > 0)
+                        {
+                            request.AddParameter("precoPromocao", prPromocao);
+                            request.AddParameter("dataInicial", dRow.ItemArray.GetValue(13).ToString());
+                            request.AddParameter("dataFinal", dRow.ItemArray.GetValue(14).ToString());
+                        }
                     }
+                   
                     if (File.Exists(iCaminhoImagem) && dtFoto > dtSinc)
                     {
                         request.AddFile("imagem", iCaminhoImagem);

@@ -26,7 +26,7 @@ namespace DexComanda
 
         private void Acao(object sender, EventArgs e)
         {
-            
+
         }
         private void ListaRegioes()
         {
@@ -39,27 +39,30 @@ namespace DexComanda
 
         private void ConsultarCEP(object sender, KeyEventArgs e)
         {
-           
+
         }
 
         private void RegioesGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int total = this.RegioesGridView.SelectedRows.Count;
-
-            for (int i = 0; i < total; i++)
+            try
             {
-                if (this.RegioesGridView.Rows[i].Selected)
-                {
-                    rowIndex = this.RegioesGridView.Rows[i].Index;
-                }
+                rowIndex = e.RowIndex;
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            
+
         }
 
         private void Editar(object sender, EventArgs e)
         {
-            codigo = int.Parse(this.RegioesGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-            txtEntrega.Text = (this.RegioesGridView.SelectedRows[rowIndex].Cells[1].Value.ToString());
-            txtRegiao.Text = (this.RegioesGridView.SelectedRows[rowIndex].Cells[2].Value.ToString());
+            codigo = int.Parse(this.RegioesGridView.Rows[rowIndex].Cells["Codigo"].Value.ToString());
+            txtEntrega.Text = (this.RegioesGridView.Rows[rowIndex].Cells["TaxaServico"].Value.ToString());
+            txtRegiao.Text = (this.RegioesGridView.Rows[rowIndex].Cells["NomeRegiao"].Value.ToString());
 
             this.btnSalvar.Text = "Salvar [F12]";
             this.btnSalvar.Click += new System.EventHandler(this.SalvarRegiao);
@@ -109,8 +112,8 @@ namespace DexComanda
 
                 MessageBox.Show(erro.InnerException.Message);
             }
-            
-           
+
+
         }
         private void Cancelar(object sender, EventArgs e)
         {
@@ -141,20 +144,21 @@ namespace DexComanda
             {
                 if (txtRegiao.Text.Trim() != "" || txtEntrega.Text.Trim() != "")
                 {
-                RegioesEntrega regioes = new RegioesEntrega()
-                {
-                    NomeRegiao = txtRegiao.Text,
-                    TaxaServico = Convert.ToDecimal(this.txtEntrega.Text.Replace(".", ",")),
-                    DataAlteracao = DateTime.Now,
-                    OnlineSN = true
-                };
-                
+                    RegioesEntrega regioes = new RegioesEntrega()
+                    {
+                        NomeRegiao = txtRegiao.Text,
+                        TaxaServico = Convert.ToDecimal(this.txtEntrega.Text.Replace(".", ",")),
+                        DataAlteracao = DateTime.Now,
+                        OnlineSN = chkOnline.Checked,
+
+                    };
+
                     con.Insert("spAdicionaRegiao", regioes);
                     Utils.ControlaEventos("Inserir", this.Name);
                     Utils.LimpaForm(this);
                     txtRegiao.Focus();
                     ListaRegioes();
-                  }
+                }
                 else
                 {
                     MessageBox.Show("Preencha corretamento os campos para continuar", "Dex Aviso");
@@ -173,7 +177,7 @@ namespace DexComanda
             {
                 AdicionarRegiao(sender, e);
             }
-            else if (e.KeyCode == Keys.F12 && btnSalvar.Text =="Salvar [F12]")
+            else if (e.KeyCode == Keys.F12 && btnSalvar.Text == "Salvar [F12]")
             {
                 SalvarRegiao(sender, e);
             }

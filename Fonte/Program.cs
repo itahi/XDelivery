@@ -61,8 +61,13 @@ namespace DexComanda
                     Conexao.connectionString = sLine;
                     string[] words = sLine.Split(';');
                     string[] iText = words[0].Split('\'');
+
                     //Verifica se o Serviço do SQLSERVER está Ativo para inicia-lo
-                    Utils.ServicoSQLATIVO(iText[0]);
+                    if (Utils.RetornaNomePc() == iText[0])
+                    {
+                        Utils.ServicoSQLATIVO(iText[0]);
+                    }
+                    
 
                     con = new Conexao();
 
@@ -194,7 +199,7 @@ namespace DexComanda
                                         Utils.GravaRegistro(Utils.RetornaNomePc() + empresas.CNPJ + empresas.Cidade + empresas.Nome);
                                         // Inicia Sistema
 
-                                        // Verifica se Abriu o Sistema 5 dias sem internet e limpa dando mais 5 dias  
+                                        // Verifica se Abriu o Sistema 15 dias sem internet e limpa dando mais 5 dias  
                                         int intAbriu15Vezes = Utils.ContaRegistro(empresas.Nome + empresas.CNPJ);
                                         if (intAbriu15Vezes >= 15)
                                         {
@@ -266,7 +271,7 @@ namespace DexComanda
 
                                 }
                                 // CNPJ OSVALDO
-                                else if (empresas.Servidor== "DESKTOP-5K2U4E8" || empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "10512501000100")
+                                else if (empresas.Servidor=="DESKTOP-TGEH425"|| empresas.Servidor== "DESKTOP-5K2U4E8" || empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "10512501000100")
                                 {
                                     Utils.IniciaSistema();
                                 }
