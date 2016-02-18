@@ -130,9 +130,10 @@ namespace DexComanda
 
                 int iNumeroCaixa = Sessions.returnUsuario.CaixaLogado;
                 iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now, iNumeroCaixa).Tables["Caixa"].Rows.Count;
-                if (Sessions.returnEmpresa.CNPJ == "22695578000142" || Sessions.returnEmpresa.CNPJ == "22678091000151")
+                if (Sessions.returnEmpresa.CNPJ == "22695578000142" || Sessions.returnEmpresa.CNPJ == "22678091000151" || Sessions.returnEmpresa.CNPJ == "18907495000100")
                 {
-                    return;
+                    MessageBox.Show("Sua licença permite o uso apenas do módulo de vendas Online");
+                    // return;
                 }
                 if (Utils.CaixaAberto(DateTime.Now, iNumeroCaixa))
                 {
@@ -671,7 +672,7 @@ namespace DexComanda
             string strServidor = Sessions.returnEmpresa.Servidor;
             string strBanco = Sessions.returnEmpresa.Banco;
             string strCaminhoBkp = Sessions.returnEmpresa.CaminhoBackup;
-            //  VerificaRegistroASincronizar();
+            VerificaRegistroASincronizar();
             con.BackupBanco(strServidor, strBanco, strCaminhoBkp);
 
             this.Dispose();
@@ -767,10 +768,10 @@ namespace DexComanda
                         dtPedido = dsPedido.Tables[0].Rows[0].Field<DateTime>("RealizadoEm");
                         DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
 
-                        if (Sessions.returnEmpresa.CNPJ== "13004606798")
+                        if (Sessions.returnEmpresa.CNPJ == "13004606798")
                         {
                             DataSet dsItensPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsPedido", Codigo);
-                            
+
                             for (int i = 0; i < dsItensPedido.Tables[0].Rows.Count; i++)
                             {
                                 DataRow dRow = dsItensPedido.Tables[0].Rows[i];
@@ -784,6 +785,19 @@ namespace DexComanda
                                 con.Update("spAtualizaEstoque", atl);
                             }
                         }
+
+                        CodPedidoWS = VerificaPedidoOnline(Codigo);
+
+                        if (CodPedidoWS > 0)
+                        {
+                            if (Utils.MessageBoxQuestion("Este é um pedido gerado/recebido na plataforma Online , tem certeza que deseja cancela-lo?"))
+                            {
+                                AlteraStatusPedido(CodPedidoWS, 6);
+                                // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
+                            }
+                        }
+
+
                         cancelPedid.Codigo = Codigo;
                         cancelPedid.RealizadoEm = DateTime.Now;
 
@@ -818,7 +832,7 @@ namespace DexComanda
 
                             finally
                             {
-                                dsPedido.Dispose();
+                               // dsPedido.Dispose();
 
                             }
 
@@ -828,7 +842,8 @@ namespace DexComanda
                         con.Update("spCancelarPedido", cancelPedid);
                         Utils.ControlaEventos("CancPedido", this.Name);
                         MessageBox.Show("Pedido Cancelado com sucesso.");
-                        Utils.PopulaGrid_Novo("Produto", parentWindow.produtosGridView, Sessions.SqlProduto);
+                     
+                     //   Utils.PopulaGrid_Novo("Produto", parentWindow.produtosGridView, Sessions.SqlProduto);
                         Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
                     }
                 }
@@ -854,7 +869,6 @@ namespace DexComanda
 
                 if (MessageBox.Show("Deseja ** FINALIZAR ** Todos Pedidos Selecionado?", "Cuidado !!!", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-
 
                     for (int i = 0; i < pedidosGridView.Rows.Count; i++)
                     {
@@ -1331,7 +1345,7 @@ namespace DexComanda
             }
             else if (iTipo == "0 - Entrega")
             {
-                Utils.ImpressaoEntreganova(iCodPedido, iValue, iDataPedido.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString(),false,1);
+                Utils.ImpressaoEntreganova(iCodPedido, iValue, iDataPedido.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString(), false, 1);
             }
             else if (iTipo == "2 - Balcao")
             {
@@ -1634,7 +1648,7 @@ namespace DexComanda
                         PedidoONline.MenuItems.Add(StatusNaCozinha);
                         PedidoONline.MenuItems.Add(StatusNaEntrega);
                         PedidoONline.MenuItems.Add(StatusCancelado);
-                        StatusCancelado.Enabled = false;
+                        StatusCancelado.Enabled = Sessions.returnUsuario.CancelaPedidosSN;
                         StatusNaCozinha.Click += PedidoNaCozinha;
                         StatusNaEntrega.Click += PedidoNaEntrega;
                     }
@@ -1843,6 +1857,18 @@ namespace DexComanda
         {
             //frmAplicativoMobile frm = new frmAplicativoMobile();
             //frm.Show();
+        }
+
+        private void statusPedidoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadastroStatus frm = new frmCadastroStatus();
+            frm.ShowDialog();
+        }
+
+        private void opçãoToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmAlterarOpcao frm = new frmAlterarOpcao();
+            frm.Show();
         }
     }
 }

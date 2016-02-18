@@ -220,6 +220,7 @@
     </Compile>
     <Compile Include="Integração\MP2032.cs" />
     <Compile Include="Models\Alteracoes Multiplas\AlteracaoCliente.cs" />
+    <Compile Include="Models\Alteracoes Multiplas\AlteracaoMultiplaOpcao.cs" />
     <Compile Include="Models\Alteracoes Multiplas\MultiplaProduto.cs" />
     <Compile Include="Models\AtualizaEstoque.cs" />
     <Compile Include="Models\Caixa.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Models\Opcao.cs" />
     <Compile Include="Models\OpcaoItem.cs" />
     <Compile Include="Models\Operacoes\PedidoStatus.cs" />
+    <Compile Include="Models\PedidoStatus.cs" />
     <Compile Include="Models\PedidoStatusMovimento.cs" />
     <Compile Include="Models\ProdutoOpcao_Tipo.cs" />
     <Compile Include="Models\Produto_Estoque.cs" />
@@ -252,6 +254,12 @@
     </Compile>
     <Compile Include="Operações\Alteracoes\frmAlteracaoProduto.Designer.cs">
       <DependentUpon>frmAlteracaoProduto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operações\Alteracoes\frmAlterarOpcao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Alteracoes\frmAlterarOpcao.Designer.cs">
+      <DependentUpon>frmAlterarOpcao.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\Financeiro\frmAberturaCaixa.cs">
       <SubType>Form</SubType>
@@ -729,6 +737,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\Alteracoes\frmAlteracaoProduto.resx">
       <DependentUpon>frmAlteracaoProduto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Alteracoes\frmAlterarOpcao.resx">
+      <DependentUpon>frmAlterarOpcao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\Financeiro\frmAberturaCaixa.resx">
       <DependentUpon>frmAberturaCaixa.cs</DependentUpon>

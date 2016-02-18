@@ -63,6 +63,7 @@ namespace DexComanda
             codigo = int.Parse(this.RegioesGridView.Rows[rowIndex].Cells["Codigo"].Value.ToString());
             txtEntrega.Text = (this.RegioesGridView.Rows[rowIndex].Cells["TaxaServico"].Value.ToString());
             txtRegiao.Text = (this.RegioesGridView.Rows[rowIndex].Cells["NomeRegiao"].Value.ToString());
+            txtTaxaGratis.Text = RegioesGridView.Rows[rowIndex].Cells["valorMinimoFreteGratis"].Value.ToString();
 
             this.btnSalvar.Text = "Salvar [F12]";
             this.btnSalvar.Click += new System.EventHandler(this.SalvarRegiao);
@@ -85,8 +86,9 @@ namespace DexComanda
                         NomeRegiao = txtRegiao.Text,
                         TaxaServico = Convert.ToDecimal(this.txtEntrega.Text.Replace(".", ",")),
                         DataAlteracao = DateTime.Now,
-                        OnlineSN = true
-
+                        OnlineSN = chkOnline.Checked,
+                        AtivoSN = chkAtivo.Checked
+                        
                     };
 
                     con.Update("spAlteraRegiao", regioes);
@@ -150,6 +152,7 @@ namespace DexComanda
                         TaxaServico = Convert.ToDecimal(this.txtEntrega.Text.Replace(".", ",")),
                         DataAlteracao = DateTime.Now,
                         OnlineSN = chkOnline.Checked,
+                        valorMinimoFreteGratis = double.Parse(txtTaxaGratis.Text)
 
                     };
 

@@ -143,18 +143,26 @@ namespace DexComanda
         public static void MontaCombox(ComboBox icbxName, string idisplayName,
             string iValueMember, string iTable, string iSP, int iCod = -1)
         {
-
-            if (iCod == -1)
+            try
             {
-                icbxName.DataSource = conexao.SelectAll(iTable, iSP).Tables[iTable];
-            }
-            else
-            {
-                icbxName.DataSource = conexao.SelectRegistroPorCodigo(iTable, iSP, iCod).Tables[iTable];
-            }
+                if (iCod == -1)
+                {
+                    icbxName.DataSource = conexao.SelectAll(iTable, iSP).Tables[iTable];
+                }
+                else
+                {
+                    icbxName.DataSource = conexao.SelectRegistroPorCodigo(iTable, iSP, iCod).Tables[iTable];
+                }
 
-            icbxName.DisplayMember = idisplayName;
-            icbxName.ValueMember = iValueMember;
+                icbxName.DisplayMember = idisplayName;
+                icbxName.ValueMember = iValueMember;
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message);
+            }
+            
         }
 
         public static bool VerificaCaixaAbertoDiaAnterior()
@@ -1707,7 +1715,7 @@ namespace DexComanda
                 MysqlConnection.Open();
                 if (MysqlConnection.State == ConnectionState.Open)
                 {
-
+                   // MessageBox.Show("Abriu Conexão");
                     MysqlCommand = new MySqlCommand("insert into  Licenca (CNPJ,DataLiberacao,DataExpiracao,AtivoSn,Nome,Telefone,Email,NomePC,MACPC) values " +
                                                     "('" + iCnpj + "','" + iDataLiberacao + "','" + iDataExpiracao + "'," + iAtivo + ",'" + iNome + "','" +
                                                     iTelefone + "','" + iEmail + "','" + NomePC + "','" + MacPc + "')", MysqlConnection);

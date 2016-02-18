@@ -30,16 +30,18 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroRegioes));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkOnline = new System.Windows.Forms.CheckBox();
+            this.chkAtivo = new System.Windows.Forms.CheckBox();
             this.btnEditar = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtEntrega = new System.Windows.Forms.TextBox();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtRegiao = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.RegioesGridView = new System.Windows.Forms.DataGridView();
-            this.chkAtivo = new System.Windows.Forms.CheckBox();
-            this.chkOnline = new System.Windows.Forms.CheckBox();
+            this.txtEntrega = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtTaxaGratis = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RegioesGridView)).BeginInit();
@@ -47,6 +49,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.txtTaxaGratis);
             this.groupBox1.Controls.Add(this.chkOnline);
             this.groupBox1.Controls.Add(this.chkAtivo);
             this.groupBox1.Controls.Add(this.btnEditar);
@@ -57,42 +64,46 @@
             this.groupBox1.Controls.Add(this.txtRegiao);
             this.groupBox1.Location = new System.Drawing.Point(1, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(309, 147);
+            this.groupBox1.Size = new System.Drawing.Size(373, 147);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cadastro ";
             // 
+            // chkOnline
+            // 
+            this.chkOnline.AutoSize = true;
+            this.chkOnline.Location = new System.Drawing.Point(281, 32);
+            this.chkOnline.Name = "chkOnline";
+            this.chkOnline.Size = new System.Drawing.Size(77, 17);
+            this.chkOnline.TabIndex = 8;
+            this.chkOnline.Text = "OnlineSN?";
+            this.chkOnline.UseVisualStyleBackColor = true;
+            // 
+            // chkAtivo
+            // 
+            this.chkAtivo.AutoSize = true;
+            this.chkAtivo.Location = new System.Drawing.Point(204, 33);
+            this.chkAtivo.Name = "chkAtivo";
+            this.chkAtivo.Size = new System.Drawing.Size(71, 17);
+            this.chkAtivo.TabIndex = 7;
+            this.chkAtivo.Text = "AtivoSN?";
+            this.chkAtivo.UseVisualStyleBackColor = true;
+            // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(124, 104);
+            this.btnEditar.Location = new System.Drawing.Point(204, 104);
             this.btnEditar.Name = "btnEditar";
-            this.btnEditar.Size = new System.Drawing.Size(86, 37);
+            this.btnEditar.Size = new System.Drawing.Size(154, 37);
             this.btnEditar.TabIndex = 4;
             this.btnEditar.Text = "Editar [F11]";
             this.btnEditar.UseVisualStyleBackColor = true;
             this.btnEditar.Click += new System.EventHandler(this.Editar);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 55);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Taxa Entrega";
-            // 
-            // txtEntrega
-            // 
-            this.txtEntrega.Location = new System.Drawing.Point(11, 71);
-            this.txtEntrega.Name = "txtEntrega";
-            this.txtEntrega.Size = new System.Drawing.Size(93, 20);
-            this.txtEntrega.TabIndex = 1;
-            // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(14, 104);
+            this.btnSalvar.Location = new System.Drawing.Point(11, 104);
             this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(86, 37);
+            this.btnSalvar.Size = new System.Drawing.Size(161, 37);
             this.btnSalvar.TabIndex = 3;
             this.btnSalvar.Text = "Adicionar [F12]";
             this.btnSalvar.UseVisualStyleBackColor = true;
@@ -109,7 +120,7 @@
             // 
             // txtRegiao
             // 
-            this.txtRegiao.Location = new System.Drawing.Point(11, 32);
+            this.txtRegiao.Location = new System.Drawing.Point(11, 33);
             this.txtRegiao.Name = "txtRegiao";
             this.txtRegiao.Size = new System.Drawing.Size(164, 20);
             this.txtRegiao.TabIndex = 0;
@@ -123,7 +134,7 @@
             this.groupBox2.Controls.Add(this.RegioesGridView);
             this.groupBox2.Location = new System.Drawing.Point(1, 155);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(312, 177);
+            this.groupBox2.Size = new System.Drawing.Size(378, 192);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Lista de Regiões";
@@ -141,35 +152,47 @@
             this.RegioesGridView.Name = "RegioesGridView";
             this.RegioesGridView.ReadOnly = true;
             this.RegioesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.RegioesGridView.Size = new System.Drawing.Size(306, 158);
+            this.RegioesGridView.Size = new System.Drawing.Size(372, 173);
             this.RegioesGridView.TabIndex = 3;
             this.RegioesGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RegioesGridView_CellClick);
             // 
-            // chkAtivo
+            // txtEntrega
             // 
-            this.chkAtivo.AutoSize = true;
-            this.chkAtivo.Location = new System.Drawing.Point(204, 33);
-            this.chkAtivo.Name = "chkAtivo";
-            this.chkAtivo.Size = new System.Drawing.Size(71, 17);
-            this.chkAtivo.TabIndex = 7;
-            this.chkAtivo.Text = "AtivoSN?";
-            this.chkAtivo.UseVisualStyleBackColor = true;
+            this.txtEntrega.Location = new System.Drawing.Point(11, 71);
+            this.txtEntrega.Name = "txtEntrega";
+            this.txtEntrega.Size = new System.Drawing.Size(93, 20);
+            this.txtEntrega.TabIndex = 1;
             // 
-            // chkOnline
+            // label3
             // 
-            this.chkOnline.AutoSize = true;
-            this.chkOnline.Location = new System.Drawing.Point(204, 71);
-            this.chkOnline.Name = "chkOnline";
-            this.chkOnline.Size = new System.Drawing.Size(77, 17);
-            this.chkOnline.TabIndex = 8;
-            this.chkOnline.Text = "OnlineSN?";
-            this.chkOnline.UseVisualStyleBackColor = true;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(11, 55);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Taxa Entrega";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(151, 74);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(108, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Tx. Grátis Pedidos >=";
+            // 
+            // txtTaxaGratis
+            // 
+            this.txtTaxaGratis.Location = new System.Drawing.Point(265, 71);
+            this.txtTaxaGratis.Name = "txtTaxaGratis";
+            this.txtTaxaGratis.Size = new System.Drawing.Size(93, 20);
+            this.txtTaxaGratis.TabIndex = 9;
             // 
             // frmCadastroRegioes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(320, 346);
+            this.ClientSize = new System.Drawing.Size(386, 361);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -191,8 +214,6 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtEntrega;
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtRegiao;
@@ -200,5 +221,9 @@
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.CheckBox chkOnline;
         private System.Windows.Forms.CheckBox chkAtivo;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtTaxaGratis;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtEntrega;
     }
 }

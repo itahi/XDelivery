@@ -2222,7 +2222,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(749, 6);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -2689,7 +2689,7 @@ namespace DexComanda
             this.panel5.Controls.Add(this.chkListAdicionais);
             this.panel5.Location = new System.Drawing.Point(671, 89);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(368, 431);
+            this.panel5.Size = new System.Drawing.Size(368, 467);
             this.panel5.TabIndex = 64;
             // 
             // grpBoxTamanhos
@@ -2708,7 +2708,7 @@ namespace DexComanda
             this.grpBoxTamanhos.Controls.Add(this.radioButton1);
             this.grpBoxTamanhos.Location = new System.Drawing.Point(6, 3);
             this.grpBoxTamanhos.Name = "grpBoxTamanhos";
-            this.grpBoxTamanhos.Size = new System.Drawing.Size(359, 177);
+            this.grpBoxTamanhos.Size = new System.Drawing.Size(350, 177);
             this.grpBoxTamanhos.TabIndex = 34;
             this.grpBoxTamanhos.TabStop = false;
             this.grpBoxTamanhos.Text = "Tamanhos";
@@ -2880,11 +2880,14 @@ namespace DexComanda
             // 
             // chkListAdicionais
             // 
+            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.chkListAdicionais.CheckOnClick = true;
             this.chkListAdicionais.FormattingEnabled = true;
             this.chkListAdicionais.Location = new System.Drawing.Point(3, 199);
             this.chkListAdicionais.Name = "chkListAdicionais";
-            this.chkListAdicionais.Size = new System.Drawing.Size(362, 229);
+            this.chkListAdicionais.Size = new System.Drawing.Size(353, 259);
             this.chkListAdicionais.TabIndex = 0;
             this.chkListAdicionais.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkListAdicionais_ItemCheck);
             // 

@@ -251,11 +251,20 @@ namespace DexComanda
 
         public DataSet SelectAll(string table, string spName)
         {
-            command = new SqlCommand(spName, conn);
-            command.CommandType = CommandType.StoredProcedure;
-            adapter = new SqlDataAdapter(command);
-            ds = new DataSet();
-            adapter.Fill(ds, table);
+            try
+            {
+                command = new SqlCommand(spName, conn);
+                command.CommandType = CommandType.StoredProcedure;
+                adapter = new SqlDataAdapter(command);
+                ds = new DataSet();
+                adapter.Fill(ds, table);
+            }
+            catch (Exception erro)
+            {
+
+                throw;
+            }
+           
             return ds;
         }
         public DataSet RetornaOpcoesProduto(int iDProduto)
@@ -280,7 +289,29 @@ namespace DexComanda
             adapter.Fill(ds, "Produto_Opcao");
             return ds;
         }
-      
+        public DataSet RetornaOpcoes(int iIDOpcao)
+        {
+            string lSqlConsulta = " select "+
+                                  " (select NomeProduto from  Produto where Produto.Codigo=Prod.CodProduto) as 'Nome do Produto'," +
+                                  " Op.Codigo as 'CodOpcao', " +
+                                  " Op.Nome as 'Nome Opcao', " +
+                                  " Prod.Preco "+
+                                  " from Produto_Opcao Prod" +
+                                  " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
+                                  " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
+                                  "  where Prod.CodOpcao = @CodOpcao" +
+                                  " order by PoT.Nome";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@CodOpcao", iIDOpcao);
+
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto_Opcao");
+            return ds;
+        }
+
 
         public DataSet RetornaTipoOpcao()
         {
@@ -706,51 +737,61 @@ namespace DexComanda
         }
         public DataSet SelectMontaGrid(string iTable, string iParametrosConsulta, Boolean iAtivos = true)
         {
-            string iSql = "", iSubSelect = "subSelect";
 
-            if (iParametrosConsulta != null)
+            try
             {
-                iSql = "select " + iParametrosConsulta + iSubSelect + " from " + iTable;
+                string iSql = "", iSubSelect = "subSelect";
 
-                if (iTable == "Pedido")
+                if (iParametrosConsulta != null)
                 {
-                    iSql = iSql.Replace(iSubSelect, "") + " Pd where Finalizado = 0 and [status] ='Aberto' ORDER BY Pd.Codigo DESC";
-                }
-                else
-                if (iTable == "Produto")
-                {
-                    if (Sessions.returnEmpresa.CNPJ == "13004606798" || Sessions.returnEmpresa.CNPJ == "21207218000191")
+                    iSql = "select " + iParametrosConsulta + iSubSelect + " from " + iTable;
+
+                    if (iTable == "Pedido")
                     {
-                        iSql = iSql.Replace(iSubSelect, ",(select top 1 Quantidade from Produto_Estoque E where E.CodProduto = Produto.Codigo and E.DataAtualizacao between '" + DateTime.Now.Date.ToShortDateString() + " 00:00:00" + "' and '" + DateTime.Now.Date.ToShortDateString() + " 23:59:59') as QtdVendida");
+                        iSql = iSql.Replace(iSubSelect, "") + " Pd where Finalizado = 0 and [status] ='Aberto' ORDER BY Pd.Codigo DESC";
                     }
-
-                    if (iAtivos)
+                    else
+                    if (iTable == "Produto")
                     {
-                        iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=1";
+                        if (Sessions.returnEmpresa.CNPJ == "13004606798" || Sessions.returnEmpresa.CNPJ == "21207218000191")
+                        {
+                            iSql = iSql.Replace(iSubSelect, ",(select top 1 Quantidade from Produto_Estoque E where E.CodProduto = Produto.Codigo and E.DataAtualizacao between '" + DateTime.Now.Date.ToShortDateString() + " 00:00:00" + "' and '" + DateTime.Now.Date.ToShortDateString() + " 23:59:59') as QtdVendida");
+                        }
+
+                        if (iAtivos)
+                        {
+                            iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=1";
+                        }
+                        else
+                        {
+                            iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=0";
+                        }
+
                     }
                     else
                     {
-                        iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=0";
+                        iSql = iSql.Replace(iSubSelect, "");
                     }
 
                 }
                 else
                 {
-                    iSql = iSql.Replace(iSubSelect, "");
+                    iSql = "select * from " + iTable;
                 }
 
+
+                command = new SqlCommand(iSql, conn);
+                command.CommandType = CommandType.Text;
+                adapter = new SqlDataAdapter(command);
+                ds = new DataSet();
+                adapter.Fill(ds, iTable);
             }
-            else
+            catch (Exception erro)
             {
-                iSql = "select * from " + iTable;
+
+                MessageBox.Show("Não foi possivel montar a grid " + erro.Message);
             }
-
-
-            command = new SqlCommand(iSql, conn);
-            command.CommandType = CommandType.Text;
-            adapter = new SqlDataAdapter(command);
-            ds = new DataSet();
-            adapter.Fill(ds, iTable);
+            
             return ds;
         }
         public DataSet SelectOpcaoProduto(string iCodProduto)
@@ -795,7 +836,7 @@ namespace DexComanda
 
             if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" || spName == "spAdicionarCaixa" || spName == "spAdicionaHistorico" ||
                 spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
-                spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" ||
+                spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" || spName== "spAdicionarPedidoStatus"||
                 spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento" || spName == "spAdicionarOpcaProduto" || spName == "spAdicionarProduto_OpcaoTipo")
             {
 

@@ -81,6 +81,8 @@ namespace DexComanda.Operações
                     CadastraLinkApp();
                 }
 
+                CadastraPedidoMinimo();
+
             }
             catch (Exception erro)
             {

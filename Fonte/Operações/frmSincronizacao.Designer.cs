@@ -31,6 +31,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.prgBarMobile = new System.Windows.Forms.ProgressBar();
+            this.chkMobile = new System.Windows.Forms.CheckBox();
             this.lblMinimo = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtVlrMinimo = new System.Windows.Forms.TextBox();
@@ -61,8 +63,6 @@
             this.lblReturn = new System.Windows.Forms.Label();
             this.chkDesconto = new System.Windows.Forms.CheckBox();
             this.txtPercentualDesconto = new System.Windows.Forms.TextBox();
-            this.prgBarMobile = new System.Windows.Forms.ProgressBar();
-            this.chkMobile = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -110,6 +110,23 @@
             this.tabPage1.Text = "Cadastros";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // prgBarMobile
+            // 
+            this.prgBarMobile.Location = new System.Drawing.Point(128, 104);
+            this.prgBarMobile.Name = "prgBarMobile";
+            this.prgBarMobile.Size = new System.Drawing.Size(114, 18);
+            this.prgBarMobile.TabIndex = 22;
+            // 
+            // chkMobile
+            // 
+            this.chkMobile.AutoSize = true;
+            this.chkMobile.Location = new System.Drawing.Point(5, 105);
+            this.chkMobile.Name = "chkMobile";
+            this.chkMobile.Size = new System.Drawing.Size(81, 17);
+            this.chkMobile.TabIndex = 21;
+            this.chkMobile.Text = "APP Mobile";
+            this.chkMobile.UseVisualStyleBackColor = true;
+            // 
             // lblMinimo
             // 
             this.lblMinimo.AutoSize = true;
@@ -118,7 +135,6 @@
             this.lblMinimo.Size = new System.Drawing.Size(74, 13);
             this.lblMinimo.TabIndex = 20;
             this.lblMinimo.Text = "Sincronizando";
-            this.lblMinimo.Visible = false;
             // 
             // label2
             // 
@@ -128,7 +144,6 @@
             this.label2.Size = new System.Drawing.Size(93, 13);
             this.label2.TabIndex = 19;
             this.label2.Text = "Pedido Minimo R$";
-            this.label2.Visible = false;
             // 
             // txtVlrMinimo
             // 
@@ -137,7 +152,6 @@
             this.txtVlrMinimo.Size = new System.Drawing.Size(75, 20);
             this.txtVlrMinimo.TabIndex = 18;
             this.txtVlrMinimo.Text = "0";
-            this.txtVlrMinimo.Visible = false;
             this.txtVlrMinimo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtVlrMinimo_KeyPress);
             // 
             // lblSinc
@@ -406,23 +420,6 @@
             this.txtPercentualDesconto.Name = "txtPercentualDesconto";
             this.txtPercentualDesconto.Size = new System.Drawing.Size(45, 20);
             this.txtPercentualDesconto.TabIndex = 9;
-            // 
-            // prgBarMobile
-            // 
-            this.prgBarMobile.Location = new System.Drawing.Point(128, 104);
-            this.prgBarMobile.Name = "prgBarMobile";
-            this.prgBarMobile.Size = new System.Drawing.Size(114, 18);
-            this.prgBarMobile.TabIndex = 22;
-            // 
-            // chkMobile
-            // 
-            this.chkMobile.AutoSize = true;
-            this.chkMobile.Location = new System.Drawing.Point(5, 105);
-            this.chkMobile.Name = "chkMobile";
-            this.chkMobile.Size = new System.Drawing.Size(81, 17);
-            this.chkMobile.TabIndex = 21;
-            this.chkMobile.Text = "APP Mobile";
-            this.chkMobile.UseVisualStyleBackColor = true;
             // 
             // frmSincronizacao
             // 
