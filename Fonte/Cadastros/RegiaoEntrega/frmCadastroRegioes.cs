@@ -63,6 +63,8 @@ namespace DexComanda
             codigo = int.Parse(this.RegioesGridView.Rows[rowIndex].Cells["Codigo"].Value.ToString());
             txtEntrega.Text = (this.RegioesGridView.Rows[rowIndex].Cells["TaxaServico"].Value.ToString());
             txtRegiao.Text = (this.RegioesGridView.Rows[rowIndex].Cells["NomeRegiao"].Value.ToString());
+            chkAtivo.Checked =Convert.ToBoolean(RegioesGridView.Rows[rowIndex].Cells["AtivoSN"].Value.ToString());
+            chkOnline.Checked = Convert.ToBoolean(RegioesGridView.Rows[rowIndex].Cells["OnlineSN"].Value.ToString());
             txtTaxaGratis.Text = RegioesGridView.Rows[rowIndex].Cells["valorMinimoFreteGratis"].Value.ToString();
 
             this.btnSalvar.Text = "Salvar [F12]";
@@ -78,6 +80,7 @@ namespace DexComanda
         {
             try
             {
+                double valorFrete = 0;
                 if (txtRegiao.Text.Trim() != "" || txtEntrega.Text.Trim() != "")
                 {
                     RegioesEntrega regioes = new RegioesEntrega()
@@ -90,6 +93,11 @@ namespace DexComanda
                         AtivoSN = chkAtivo.Checked
                         
                     };
+                    if (txtTaxaGratis.Text != "")
+                    {
+                        valorFrete = double.Parse(txtTaxaGratis.Text);
+                    }
+                    regioes.valorMinimoFreteGratis = valorFrete;
 
                     con.Update("spAlteraRegiao", regioes);
                     Utils.ControlaEventos("Altera", this.Name);
@@ -144,6 +152,7 @@ namespace DexComanda
         {
             try
             {
+                double valorFrete = 0;
                 if (txtRegiao.Text.Trim() != "" || txtEntrega.Text.Trim() != "")
                 {
                     RegioesEntrega regioes = new RegioesEntrega()
@@ -152,9 +161,15 @@ namespace DexComanda
                         TaxaServico = Convert.ToDecimal(this.txtEntrega.Text.Replace(".", ",")),
                         DataAlteracao = DateTime.Now,
                         OnlineSN = chkOnline.Checked,
-                        valorMinimoFreteGratis = double.Parse(txtTaxaGratis.Text)
+                        AtivoSN = chkAtivo.Checked,
+                      //  valorMinimoFreteGratis = valorFrete
 
                     };
+                    if (txtTaxaGratis.Text!="")
+                    {
+                        valorFrete = double.Parse(txtTaxaGratis.Text);
+                    }
+                    regioes.valorMinimoFreteGratis = valorFrete;
 
                     con.Insert("spAdicionaRegiao", regioes);
                     Utils.ControlaEventos("Inserir", this.Name);

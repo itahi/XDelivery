@@ -160,7 +160,7 @@ namespace DexComanda
             catch (Exception erro)
             {
 
-                MessageBox.Show(erro.Message);
+                MessageBox.Show("Erro ao listar itens do "+icbxName + erro.Message);
             }
             
         }
@@ -809,7 +809,12 @@ namespace DexComanda
                 }
                 else
                 {
-                    MessageBox.Show("O Caixa não esta aberto, sistema funcionará somente no modo consulta");
+                    if (MessageBoxQuestion("O Caixa não esta aberto sistema funcionará somente no modo consulta, deseja abrir agora?"))
+                    {
+                        frmAberturaCaixa frm = new frmAberturaCaixa();
+                        frm.ShowDialog();
+                    }
+                   // MessageBox.Show("O Caixa não esta aberto, sistema funcionará somente no modo consulta");
                 }
 
                 //}

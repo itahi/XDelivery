@@ -1,6 +1,7 @@
 ﻿
 using DexComanda.Cadastros;
 using DexComanda.Models;
+using DexComanda.Models.Operacoes;
 using DexComanda.Relatorios.Delivery;
 using System;
 using System.Collections.Generic;
@@ -3014,8 +3015,22 @@ namespace DexComanda
             else
             {
                 this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + dcTaxaEntrega);
+                lblEntrega.Text = "R$ " + dcTaxaEntrega;
             }
 
+            AlteraTotalPedido();
+        }
+
+        private void AlteraTotalPedido()
+        {
+            NovoTotalPedido pedi = new NovoTotalPedido()
+            {
+                Codigo = codPedido,
+                NumeroMesa = cbxListaMesas.Text,
+                TotalPedido = double.Parse(lbTotal.Text.Replace("R$", "")),
+                Tipo = cbxTipoPedido.Text
+            };
+            con.Update("spAlterarTotalPedido", pedi);
         }
 
         private void cbxTrocoParaOK_CheckedChanged(object sender, EventArgs e)

@@ -46,16 +46,17 @@ namespace DexComanda
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            
+
             if (cbxCaixas.Text != "")
             {
-                int iNumeroCaixa = int.Parse(cbxCaixas.Text );
+                int iNumeroCaixa = int.Parse(cbxCaixas.Text);
                 if (Utils.EfetuarLogin(this.txtUsuario.Text.ToString(), this.txtSenha.Text.ToString(), true, iNumeroCaixa))
                 {
-                    
+
                     Main frmPrincipal = new Main();
                     this.Hide();
                     frmPrincipal.ShowDialog();
+
                 }
             }
             else
@@ -97,7 +98,7 @@ namespace DexComanda
 
         private void txtSenha_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (txtSenha.Text!="" && e.KeyChar == Convert.ToChar(Keys.Enter) )
+            if (txtSenha.Text != "" && e.KeyChar == Convert.ToChar(Keys.Enter))
             {
                 btnSalvar_Click(sender, e);
             }

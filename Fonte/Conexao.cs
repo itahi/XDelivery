@@ -112,6 +112,18 @@ namespace DexComanda
             return ds;
 
         }
+        public int RetornaIDCategoria(string iNomeCategoria)
+        {
+            int iIDReturn = 1;
+            DataSet dsGrupo = SelectRegistroPorNome("@Nome", "Grupo", "spObterGrupoPorNome", iNomeCategoria);
+            if (dsGrupo.Tables[0].Rows.Count > 0)
+            {
+                DataRow dRowProduto = dsGrupo.Tables[0].Rows[0];
+                iIDReturn = int.Parse(dRowProduto.ItemArray.GetValue(0).ToString());
+            }
+
+            return iIDReturn;
+        }
         public DataSet RetornarTaxaPorBairro(string iNOmeBairro)
         {
             string lSqlConsulta = " select R.Codigo , " +
@@ -249,12 +261,21 @@ namespace DexComanda
         }
 
 
-        public DataSet SelectAll(string table, string spName)
+        public DataSet SelectAll(string table, string spName="",string iSqlSelect="")
         {
             try
             {
                 command = new SqlCommand(spName, conn);
-                command.CommandType = CommandType.StoredProcedure;
+                if (iSqlSelect!="")
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = iSqlSelect;
+                }
+                else
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                }
+                
                 adapter = new SqlDataAdapter(command);
                 ds = new DataSet();
                 adapter.Fill(ds, table);
@@ -527,7 +548,8 @@ namespace DexComanda
         public DataSet RetornaRegiao()
         {
             string lSqlConsulta = " select RG.Codigo, RG.NomeRegiao,RG.TaxaServico" +
-                                  "  ,RB.CEP ,Isnull(RB.OnlineSN,0) as OnlineSN" +
+                                  "  ,RB.CEP ,Isnull(RB.OnlineSN,0) as OnlineSN , "+
+                                  "  Isnull(RG.valorMinimoFreteGratis,0) as valorMinimoFreteGratis" +
                                   "   from RegiaoEntrega RG " +
                                   "  join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo and RB.OnlineSN=1 " +
                                   "  WHERE (RG.DataAlteracao > RG.DataSincronismo or RG.DataSincronismo is null ) " +

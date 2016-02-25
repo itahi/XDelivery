@@ -19,7 +19,7 @@ namespace DexComanda
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            if(pbCarrega.Value < 100)
+            if (pbCarrega.Value < 100)
             {
                 pbCarrega.Value = pbCarrega.Value + 5;
             }
@@ -29,16 +29,9 @@ namespace DexComanda
                 this.Visible = false;
                 if (Sessions.returnConfig != null)
                 {
-                    if (Sessions.returnConfig.UsaLoginSenha)
-                    {
-                        frmLogin frmLogin = new frmLogin();
-                        frmLogin.ShowDialog();
-                    }
-                    else
-                    {
-                        Main principal = new Main();
-                        principal.ShowDialog();
-                    }
+                    frmLogin frmLogin = new frmLogin();
+                    frmLogin.ShowDialog();
+
                 }
                 else
                 {

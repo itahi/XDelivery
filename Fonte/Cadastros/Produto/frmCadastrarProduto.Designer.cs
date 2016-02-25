@@ -79,6 +79,7 @@
             this.chkSegunda = new System.Windows.Forms.CheckBox();
             this.cbxGrupoProduto = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.button3 = new System.Windows.Forms.Button();
             grupoProdutoLabel = new System.Windows.Forms.Label();
             precoProdutoLabel = new System.Windows.Forms.Label();
             descricaoProdutoLabel = new System.Windows.Forms.Label();
@@ -188,7 +189,7 @@
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(433, 302);
+            this.btnSair.Location = new System.Drawing.Point(457, 302);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(150, 43);
             this.btnSair.TabIndex = 35;
@@ -198,7 +199,7 @@
             // 
             // btnDoProduto
             // 
-            this.btnDoProduto.Location = new System.Drawing.Point(273, 302);
+            this.btnDoProduto.Location = new System.Drawing.Point(292, 303);
             this.btnDoProduto.Name = "btnDoProduto";
             this.btnDoProduto.Size = new System.Drawing.Size(150, 43);
             this.btnDoProduto.TabIndex = 34;
@@ -612,11 +613,22 @@
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(4, 319);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 26);
+            this.button3.TabIndex = 39;
+            this.button3.Text = "Botão mestre";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // frmCadastrarProduto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 349);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnDoProduto);
             this.Controls.Add(this.tabControl1);
@@ -690,5 +702,6 @@
         private System.Windows.Forms.DateTimePicker dtInicio;
         private System.Windows.Forms.DateTimePicker dtFim;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }

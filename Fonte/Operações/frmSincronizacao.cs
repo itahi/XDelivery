@@ -290,6 +290,11 @@ namespace DexComanda.Operações
                 request.AddParameter("valor", ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("TaxaServico"));
                 request.AddParameter("referencia_id", ds.Tables["RegiaoEntrega"].Rows[i].Field<int>("Codigo"));
                 request.AddParameter("ativo", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<Boolean>("OnlineSN")));
+                if (ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("valorMinimoFreteGratis")>0)
+                {
+                    request.AddParameter("valorMinimoFreteGratis", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("valorMinimoFreteGratis")));
+                }
+               
                 RestResponse response = (RestResponse)client.Execute(request);
                 prgBarRegiao.Value = i + 1;
 
@@ -400,6 +405,7 @@ namespace DexComanda.Operações
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
+                    GerarToken();
                     dRow = ds.Tables[0].Rows[i];
                     decimal prProduto = decimal.Parse(dRow.ItemArray.GetValue(3).ToString());
                     DateTime dtSinc = DateTime.Now.AddYears(1);
@@ -414,7 +420,6 @@ namespace DexComanda.Operações
                     {
                         dtFoto = Convert.ToDateTime(dRow.ItemArray.GetValue(15).ToString());
                     }
-
 
 
                     string iCaminhoImagem = dRow.ItemArray.GetValue(12).ToString();
@@ -447,8 +452,8 @@ namespace DexComanda.Operações
                     {
                         request.AddFile("imagem", iCaminhoImagem);
                     }
-
-                    request.AddParameter("idReferenciaCategoria", RetornaIDCategoria(dRow.ItemArray.GetValue(4).ToString()));
+                    request.AddParameter("idReferenciaCategoria", dRow.ItemArray.GetValue(16).ToString());
+                    // request.AddParameter("idReferenciaCategoria", RetornaIDCategoria(dRow.ItemArray.GetValue(4).ToString()));
                     request.AddParameter("descricao", dRow.ItemArray.GetValue(2).ToString());
                     int bAtivoSn = 0;
                     if (Convert.ToBoolean(dRow.ItemArray.GetValue(8).ToString()) == true)

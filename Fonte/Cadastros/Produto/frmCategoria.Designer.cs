@@ -59,7 +59,7 @@
             this.gruposGridView.Name = "gruposGridView";
             this.gruposGridView.ReadOnly = true;
             this.gruposGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gruposGridView.Size = new System.Drawing.Size(300, 196);
+            this.gruposGridView.Size = new System.Drawing.Size(301, 235);
             this.gruposGridView.TabIndex = 1;
             this.gruposGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gruposGridView_CellClick);
             this.gruposGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gruposGridView_MouseClick_1);
@@ -68,7 +68,7 @@
             // 
             this.btnAdicionarGrupo.Location = new System.Drawing.Point(4, 144);
             this.btnAdicionarGrupo.Name = "btnAdicionarGrupo";
-            this.btnAdicionarGrupo.Size = new System.Drawing.Size(114, 35);
+            this.btnAdicionarGrupo.Size = new System.Drawing.Size(115, 35);
             this.btnAdicionarGrupo.TabIndex = 2;
             this.btnAdicionarGrupo.Text = "Adicionar [F12]";
             this.btnAdicionarGrupo.UseVisualStyleBackColor = true;
@@ -76,10 +76,12 @@
             // 
             // txbNomeGrupo
             // 
+            this.txbNomeGrupo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txbNomeGrupo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txbNomeGrupo.Location = new System.Drawing.Point(4, 112);
             this.txbNomeGrupo.Name = "txbNomeGrupo";
-            this.txbNomeGrupo.Size = new System.Drawing.Size(300, 26);
+            this.txbNomeGrupo.Size = new System.Drawing.Size(299, 26);
             this.txbNomeGrupo.TabIndex = 1;
             this.txbNomeGrupo.TextChanged += new System.EventHandler(this.txbNomeGrupo_TextChanged);
             // 
@@ -87,7 +89,7 @@
             // 
             this.btnEditarGrupo.Location = new System.Drawing.Point(174, 144);
             this.btnEditarGrupo.Name = "btnEditarGrupo";
-            this.btnEditarGrupo.Size = new System.Drawing.Size(130, 35);
+            this.btnEditarGrupo.Size = new System.Drawing.Size(131, 35);
             this.btnEditarGrupo.TabIndex = 3;
             this.btnEditarGrupo.Text = "Editar [F11]";
             this.btnEditarGrupo.UseVisualStyleBackColor = true;
@@ -125,28 +127,33 @@
             // 
             // pnlImpressora
             // 
+            this.pnlImpressora.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlImpressora.Controls.Add(this.btnLista);
             this.pnlImpressora.Controls.Add(this.cbxNomeImpressora);
             this.pnlImpressora.Location = new System.Drawing.Point(9, 36);
             this.pnlImpressora.Name = "pnlImpressora";
-            this.pnlImpressora.Size = new System.Drawing.Size(295, 48);
+            this.pnlImpressora.Size = new System.Drawing.Size(293, 48);
             this.pnlImpressora.TabIndex = 15;
             // 
             // btnLista
             // 
-            this.btnLista.Location = new System.Drawing.Point(201, 11);
+            this.btnLista.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLista.Location = new System.Drawing.Point(200, 13);
             this.btnLista.Name = "btnLista";
-            this.btnLista.Size = new System.Drawing.Size(75, 23);
+            this.btnLista.Size = new System.Drawing.Size(78, 23);
             this.btnLista.TabIndex = 17;
             this.btnLista.Text = "Lista Impre.";
             this.btnLista.UseVisualStyleBackColor = true;
             // 
             // cbxNomeImpressora
             // 
+            this.cbxNomeImpressora.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxNomeImpressora.FormattingEnabled = true;
             this.cbxNomeImpressora.Location = new System.Drawing.Point(3, 13);
             this.cbxNomeImpressora.Name = "cbxNomeImpressora";
-            this.cbxNomeImpressora.Size = new System.Drawing.Size(192, 21);
+            this.cbxNomeImpressora.Size = new System.Drawing.Size(191, 21);
             this.cbxNomeImpressora.TabIndex = 16;
             // 
             // chkImprimeCozinha
@@ -164,7 +171,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(313, 396);
+            this.ClientSize = new System.Drawing.Size(314, 435);
             this.Controls.Add(this.pnlImpressora);
             this.Controls.Add(this.chkAtivo);
             this.Controls.Add(this.chkImprimeCozinha);
@@ -177,7 +184,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MaximizeBox = false;
             this.Name = "frmAdicionarGrupo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[XDelivery] Cadastro Grupos ";

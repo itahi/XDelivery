@@ -198,7 +198,7 @@ namespace DexComanda
             DvPedido = DsPedido.Tables[0].Rows[0];
             string iTipo = DvPedido.ItemArray.GetValue(8).ToString();
             decimal TaxaServico = 0;
-            if (iTipo == "0 - Entrega")
+            if (iTipo == "0 - Entrega"||iTipo=="Entrega")
             {
                 TaxaServico = Utils.RetornaTaxaPorCliente(int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), con);
             }
@@ -546,7 +546,7 @@ namespace DexComanda
 
             DataRow dRowProduto = dsProduto.Tables["Produto"].Rows[0];
 
-            frmCadastrarProduto frm = new frmCadastrarProduto(int.Parse(dRowProduto.ItemArray.GetValue(7).ToString()), dRowProduto.ItemArray.GetValue(0).ToString(), dRowProduto.ItemArray.GetValue(3).ToString(),
+            frmCadastrarProduto frm = new frmCadastrarProduto(int.Parse(dRowProduto.ItemArray.GetValue(7).ToString()), dRowProduto.ItemArray.GetValue(0).ToString(), dRowProduto.ItemArray.GetValue(12).ToString(),dRowProduto.ItemArray.GetValue(3).ToString(),
                                                               decimal.Parse(dRowProduto.ItemArray.GetValue(1).ToString()), dRowProduto.ItemArray.GetValue(2).ToString(),
                                                               Convert.ToBoolean(dRowProduto.ItemArray.GetValue(6).ToString()), decimal.Parse(dRowProduto.ItemArray.GetValue(5).ToString()),
                                                               dRowProduto.ItemArray.GetValue(4).ToString(), dRowProduto.ItemArray.GetValue(8).ToString(), dRowProduto.ItemArray.GetValue(9).ToString(), Convert.ToDateTime(dRowProduto.ItemArray.GetValue(10).ToString()), Convert.ToDateTime(dRowProduto.ItemArray.GetValue(11).ToString()));
@@ -561,38 +561,6 @@ namespace DexComanda
             try
             {
                 CarregaProduto(int.Parse(produtosGridView.SelectedCells[0].Value.ToString()));
-                //if (produtosGridView.SelectedCells.Count > 0)
-                //{
-                //    var produto = new Produto()
-                //    {
-                //        Codigo = int.Parse(produtosGridView.SelectedCells[0].Value.ToString()),
-                //        Nome = (produtosGridView.SelectedCells[1].Value.ToString()),
-                //        Descricao = (produtosGridView.SelectedCells[2].Value.ToString()),
-                //        Preco = decimal.Parse(produtosGridView.SelectedCells[3].Value.ToString()),
-                //        GrupoProduto = (produtosGridView.SelectedCells[4].Value.ToString()),
-
-                //    };
-                //    if (DescontoDia)
-                //    {
-                //        produto.AtivoSN = Convert.ToBoolean(produtosGridView.SelectedCells[7].Value.ToString());
-                //        if (produto.PrecoDesconto.ToString() != "" || produto.PrecoDesconto != null)
-                //        {
-                //            produto.PrecoDesconto = decimal.Parse(produtosGridView.SelectedCells[5].Value.ToString());
-                //        }
-                //        if (produto.DiaSemana != "" || produto.DiaSemana != null)
-                //        {
-                //            produto.DiaSemana = (produtosGridView.SelectedCells[6].Value.ToString());
-                //        }
-                //    }
-                //    else
-                //    {
-                //        produto.AtivoSN = Convert.ToBoolean(produtosGridView.SelectedCells[5].Value.ToString());
-                //    }
-
-                //    frmCadastrarProduto frm = new frmCadastrarProduto(produto, this);
-                //    frm.StartPosition = FormStartPosition.CenterParent;
-                //    frm.Show();
-                //}
             }
             catch (Exception erro)
             {
@@ -682,23 +650,26 @@ namespace DexComanda
 
         private void VerificaRegistroASincronizar()
         {
-            DataSet dsProduto = con.SelectRegistroONline("Produto");
-            DataSet dsOpcao = con.SelectRegistroONline("Opcao");
-            DataSet dsProdutOpcao = con.SelectRegistroONline("Produto_Opcao");
-            DataSet dsFormaPagamento = con.SelectRegistroONline("FormaPagamento");
-            DataSet dsGrupo = con.SelectRegistroONline("Grupo");
-            //  DataSet dsRegiaoEntrega = con.SelectRegistroONline("RegiaoEntrega");
-
-
-            if (dsProduto.Tables[0].Rows.Count > 0 || dsOpcao.Tables[0].Rows.Count > 0 || dsProdutOpcao.Tables[0].Rows.Count > 0 || dsFormaPagamento.Tables[0].Rows.Count > 0 || dsGrupo.Tables[0].Rows.Count > 0)
+            if (Sessions.returnEmpresa.UrlServidor!="")
             {
-                DialogResult resposta = MessageBox.Show("Há registros que precisam ser sincronizados com o servidor , deseja fazer isso agora?", "[xSistemas]", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (resposta == DialogResult.Yes)
+                DataSet dsProduto = con.SelectRegistroONline("Produto");
+                DataSet dsOpcao = con.SelectRegistroONline("Opcao");
+                DataSet dsProdutOpcao = con.SelectRegistroONline("Produto_Opcao");
+              //  DataSet dsFormaPagamento = con.SelectRegistroONline("FormaPagamento");
+                DataSet dsGrupo = con.SelectRegistroONline("Grupo");
+                
+                if (dsProduto.Tables[0].Rows.Count > 0 || dsOpcao.Tables[0].Rows.Count > 0 || dsProdutOpcao.Tables[0].Rows.Count > 0 || /*dsFormaPagamento.Tables[0].Rows.Count > 0 ||*/ dsGrupo.Tables[0].Rows.Count > 0)
                 {
-                    frmSincronizacao frm = new frmSincronizacao();
-                    frm.ShowDialog();
+                    DialogResult resposta = MessageBox.Show("Há registros que precisam ser sincronizados com o servidor , deseja fazer isso agora?", "[xSistemas]", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (resposta == DialogResult.Yes)
+                    {
+                        frmSincronizacao frm = new frmSincronizacao();
+                        frm.ShowDialog();
+                    }
                 }
+
             }
+            
 
         }
 

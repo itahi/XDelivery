@@ -105,10 +105,14 @@ namespace DexComanda.Cadastros.Produto
             try
             {
                 codigoAlterarDeletar = int.Parse(this.OpcaoGridView.Rows[rowIndex].Cells[0].Value.ToString());
-                RetonaTipo(int.Parse(OpcaoGridView.Rows[rowIndex].Cells[1].Value.ToString()));
-                txtNome.Text = OpcaoGridView.Rows[rowIndex].Cells[2].Value.ToString();
-                chkAtivoSN.Checked = Convert.ToBoolean(OpcaoGridView.Rows[rowIndex].Cells[3].Value.ToString());
-                chkOnlineSN.Checked = Convert.ToBoolean(OpcaoGridView.Rows[rowIndex].Cells[4].Value.ToString());
+
+                DataSet ds = con.SelectRegistroPorCodigo("Opcao", "spObterOpcaoPorCodigo", codigoAlterarDeletar);
+
+                RetonaTipo(ds.Tables[0].Rows[0].Field<int>("Tipo"));
+                txtNome.Text = ds.Tables[0].Rows[0].Field<string>("Nome");
+                chkAtivoSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("AtivoSN");
+                chkOnlineSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("OnlineSN");
+
                 this.btnAdicionar.Text = "Salvar [F12]";
                 this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
                 this.btnAdicionar.Click -= new System.EventHandler(this.CadastraOpcao);

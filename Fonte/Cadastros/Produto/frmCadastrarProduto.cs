@@ -1,4 +1,5 @@
 ﻿using DexComanda.Models;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,7 @@ namespace DexComanda
         private Main parentMain;
         private int rowIndex;
         int codigoOpcao;
+        private string intCodGrupo;
         private Produto produto;
         private int codigoProdutoParaAlterar;
         private bool DescontoPordia = Sessions.returnConfig.DescontoDiaSemana;
@@ -34,16 +36,16 @@ namespace DexComanda
             grpDesconto.Visible = DescontoPordia;
 
         }
-        public frmCadastrarProduto(int CodProduto, string iNomeProduto, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
+        public frmCadastrarProduto(int CodProduto, string iNomeProduto, string iCodGrupo, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
                                    decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo, DateTime idtFimPromo)
         {
-            InitializeComponent();
-            codigoProdutoParaAlterar = CodProduto;
-            if (iDiasPromocao != "")
+            try
             {
+                InitializeComponent();
+                codigoProdutoParaAlterar = CodProduto;
                 grpDesconto.Visible = DescontoPordia;
                 txtPrecoDesconto.Text = iPrecoPromocao.ToString();
-
+                intCodGrupo = iCodGrupo;
                 string[] lol = iDiasPromocao.Split(new char[] { ';' });
 
                 if (lol.Contains("Monday"))
@@ -75,21 +77,29 @@ namespace DexComanda
                     chkDomingo.Checked = true;
                 }
 
+
+                nomeProdutoTextBox.Text = iNomeProduto;
+                precoProdutoTextBox.Text = iPreco.ToString();
+                cbxGrupoProduto.Text = iGrupo;
+                cbxGrupoProduto.ValueMember = iCodGrupo;
+                descricaoProdutoTextBox.Text = iDescricao;
+                chkAtivo.Checked = true;
+                chkOnline.Checked = iVendaOnline;
+                txtMaxAdicionais.Text = iMaximoAdicionais;
+                txtcaminhoImage.Text = iUrlImagem;
+                dtInicio.Value = idtInicioPromo;
+                dtFim.Value = idtFimPromo;
+                this.btnDoProduto.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
+                this.btnDoProduto.Text = "Alterar [F12]";
+                this.btnDoProduto.Click -= AdicionarProduto;
+                this.btnDoProduto.Click += AlterarProduto;
             }
-            nomeProdutoTextBox.Text = iNomeProduto;
-            precoProdutoTextBox.Text = iPreco.ToString();
-            cbxGrupoProduto.Text = iGrupo;
-            descricaoProdutoTextBox.Text = iDescricao;
-            chkAtivo.Checked = true;
-            chkOnline.Checked = iVendaOnline;
-            txtMaxAdicionais.Text = iMaximoAdicionais;
-            txtcaminhoImage.Text = iUrlImagem;
-            dtInicio.Value = idtInicioPromo;
-            dtFim.Value = idtFimPromo;
-            this.btnDoProduto.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
-            this.btnDoProduto.Text = "Alterar [F12]";
-            this.btnDoProduto.Click -= AdicionarProduto;
-            this.btnDoProduto.Click += AlterarProduto;
+            catch (Exception erro)
+            {
+
+                throw;
+            }
+
         }
 
         public frmCadastrarProduto(Produto prod, Main parent)
@@ -152,7 +162,7 @@ namespace DexComanda
             //    List<Produtos_Adicionais> ProdAdicionais = new List<Produtos_Adicionais>();
             grpDesconto.Visible = DescontoPordia;
             List<Grupo> grupos = new List<Grupo>();
-            
+
             if (produto != null)
             {
                 if (Sessions.retunrUsuario != null)
@@ -170,6 +180,7 @@ namespace DexComanda
 
                 codigoProdutoParaAlterar = produto.Codigo;
                 this.nomeProdutoTextBox.Text = produto.Nome;
+                cbxGrupoProduto.ValueMember = produto.CodGrupo.ToString();
                 this.cbxGrupoProduto.Text = produto.GrupoProduto;
                 this.precoProdutoTextBox.Text = produto.Preco.ToString();
                 this.descricaoProdutoTextBox.Text = produto.Descricao.ToString();
@@ -196,6 +207,7 @@ namespace DexComanda
                     Descricao = this.descricaoProdutoTextBox.Text,
                     Preco = Convert.ToDecimal(this.precoProdutoTextBox.Text.Replace(".", ",")),
                     GrupoProduto = this.cbxGrupoProduto.Text,
+                    CodGrupo = int.Parse(cbxGrupoProduto.SelectedValue.ToString()),
                     OnlineSN = chkOnline.Checked,
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
@@ -318,6 +330,7 @@ namespace DexComanda
                     Nome = nomeProdutoTextBox.Text,
                     Descricao = descricaoProdutoTextBox.Text,
                     Preco = Convert.ToDecimal(this.precoProdutoTextBox.Text.Replace(".", ",")),
+
                     GrupoProduto = cbxGrupoProduto.Text,
                     AtivoSN = chkAtivo.Checked,
                     OnlineSN = chkOnline.Checked,
@@ -325,6 +338,15 @@ namespace DexComanda
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                 };
+                if (cbxGrupoProduto.SelectedValue != null)
+                {
+                    produto.CodGrupo = int.Parse(cbxGrupoProduto.SelectedValue.ToString());
+                }
+                else
+                {
+                    produto.CodGrupo = int.Parse(intCodGrupo);
+                }
+
                 produto.UrlImagem = "";
                 if (txtcaminhoImage.Text.Trim() != "")
                 {
@@ -338,24 +360,18 @@ namespace DexComanda
                 {
                     produto.MaximoAdicionais = 0;
                 }
-                if (DescontoPordia)
-                {
-                    produto.DiaSemana = DiasSelecinado();
-                    if (txtPrecoDesconto.Text != "")
-                    {
-                        produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text.Replace(".", ","));
-                    }
 
-                    con.Update("spAlterarProduto", produto);
+                produto.DiaSemana = DiasSelecinado();
+                if (txtPrecoDesconto.Text != "")
+                {
+                    produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text.Replace(".", ","));
                 }
                 else
                 {
-                    produto.DiaSemana = "";
-                    produto.PrecoDesconto = decimal.Parse("0");
-
-                    con.Update("spAlterarProduto", produto);
+                    produto.PrecoDesconto = 0;
                 }
 
+                con.Update("spAlterarProduto", produto);
                 this.btnDoProduto.Text = "Cadastrar [F12]";
                 this.btnDoProduto.Click -= AlterarProduto;
                 this.btnDoProduto.Click += AdicionarProduto;
@@ -460,6 +476,16 @@ namespace DexComanda
         {
             try
             {
+                for (int i = 0; i < AdicionaisGridView.Rows.Count; i++)
+                {
+                    if (cbxOpcao.SelectedValue.ToString() == AdicionaisGridView.Rows[i].Cells["CodOpcao"].Value.ToString())
+                    {
+                        if (!Utils.MessageBoxQuestion("Essa opção já esta vinculada a esse produto , deseja adicionar novamente?"))
+                        {
+                            return;
+                        }
+                    }
+                }
                 int iCountLinhas = AdicionaisGridView.Rows.Count;
                 if (codigoProdutoParaAlterar != 0)
                 {
@@ -486,7 +512,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    
+
                     if (AdicionaisGridView.DataSource != null)
                     {
                         AdicionaisGridView.AutoGenerateColumns = false;
@@ -504,19 +530,15 @@ namespace DexComanda
             catch (Exception erro)
             {
 
-                throw;
+                MessageBox.Show("Erro ao adicionar linha " + erro.Message);
             }
-
-
-
-
 
 
         }
 
         private void ListaOpcaoProduto()
         {
-            if (codigoProdutoParaAlterar!=0)
+            if (codigoProdutoParaAlterar != 0)
             {
                 AdicionaisGridView.DataSource = con.SelectOpcaoProduto(Convert.ToString(codigoProdutoParaAlterar));
                 AdicionaisGridView.AutoGenerateColumns = true;
@@ -529,7 +551,7 @@ namespace DexComanda
                 AdicionaisGridView.Columns.Add("Nome", "Nome");
                 AdicionaisGridView.Columns.Add("Tipo", "Tipo");
             }
-           
+
         }
 
         private void tabPage2_Click(object sender, EventArgs e)
@@ -573,14 +595,14 @@ namespace DexComanda
                 this.btnEditar.Text = "Cancelar";
                 this.btnEditar.Click += new System.EventHandler(this.Cancelar);
                 this.btnEditar.Click -= new System.EventHandler(this.btnEditar_Click);
-                
+
             }
             catch (Exception erro)
             {
 
                 MessageBox.Show(erro.Message);
             }
-            
+
         }
         private void SalvarRegistro(object sender, EventArgs e)
         {
@@ -654,7 +676,7 @@ namespace DexComanda
                 else
                 {
                     AdicionaisGridView.Rows.RemoveAt(rowIndex);
-                    
+
                 }
             }
             catch (Exception ERRO)
@@ -672,9 +694,10 @@ namespace DexComanda
 
         private void cbxGrupoProduto_Click(object sender, EventArgs e)
         {
-            this.cbxGrupoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupoAtivo").Tables["Grupo"];
-            this.cbxGrupoProduto.DisplayMember = "NomeGrupo";
-            this.cbxGrupoProduto.ValueMember = "Codigo";
+            Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
+            //this.cbxGrupoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupoAtivo").Tables["Grupo"];
+            //this.cbxGrupoProduto.DisplayMember = "NomeGrupo";
+            //this.cbxGrupoProduto.ValueMember = "Codigo";
         }
 
         private void SelecionarImagem(object sender, EventArgs e)
@@ -692,7 +715,7 @@ namespace DexComanda
                 {
                     imgProduto.Load(txtcaminhoImage.Text);
                 }
-               
+
                 con.AtualizaDataSincronismo("Produto", codigoProdutoParaAlterar, "DataFoto");
             }
         }
@@ -743,6 +766,39 @@ namespace DexComanda
         {
             frmAdicionarGrupo frm = new frmAdicionarGrupo();
             frm.Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string strValor = Interaction.InputBox("Informe a senha mestre", "[xSistemas]", "", 100, 200);
+            if (strValor == "xAdminx77")
+            {
+                DataSet dsProduto = con.SelectAll("Produto", "", "select * from Produto");
+                for (int i = 0; i < dsProduto.Tables[0].Rows.Count; i++)
+                {
+                    Produto prod = new Produto()
+                    {
+                        Codigo = dsProduto.Tables[0].Rows[i].Field<int>("Codigo"),
+                        AtivoSN = dsProduto.Tables[0].Rows[i].Field<Boolean>("AtivoSN"),
+                        CodGrupo = con.RetornaIDCategoria(dsProduto.Tables[0].Rows[i].Field<string>("GrupoProduto")),
+                        DataAlteracao = DateTime.Now,
+                        DataFimPromocao = dsProduto.Tables[0].Rows[i].Field<DateTime>("DataFimPromocao"),
+                        DataInicioPromocao = dsProduto.Tables[0].Rows[i].Field<DateTime>("DataInicioPromocao"),
+                        Descricao = dsProduto.Tables[0].Rows[i].Field<string>("DescricaoProduto"),
+                        DiaSemana = dsProduto.Tables[0].Rows[i].Field<string>("DiaSemana"),
+                        GrupoProduto = dsProduto.Tables[0].Rows[i].Field<string>("GrupoProduto"),
+                        MaximoAdicionais = dsProduto.Tables[0].Rows[i].Field<int>("MaximoAdicionais"),
+                        Nome = dsProduto.Tables[0].Rows[i].Field<string>("NomeProduto"),
+                        OnlineSN = dsProduto.Tables[0].Rows[i].Field<Boolean>("OnlineSN"),
+                        Preco = dsProduto.Tables[0].Rows[i].Field<decimal>("PrecoProduto"),
+                        PrecoDesconto = dsProduto.Tables[0].Rows[i].Field<decimal>("PrecoDesconto"),
+                        UrlImagem = dsProduto.Tables[0].Rows[i].Field<string>("UrlImagem"),
+                    };
+
+
+                    con.Update("spAlterarProduto", prod);
+                }
+            }
         }
     }
 }

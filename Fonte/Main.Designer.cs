@@ -72,6 +72,7 @@
             this.operaçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alteraçõesMultiplasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.produtosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.opçãoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.taxasDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alterarSenhaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -131,7 +132,7 @@
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.lblCaixa = new System.Windows.Forms.Label();
             this.chkGerenciaImpressao = new System.Windows.Forms.CheckBox();
-            this.opçãoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.identificadorChamadasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
@@ -445,7 +446,8 @@
             this.configuraçãoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sistemaToolStripMenuItem,
             this.impressãoToolStripMenuItem,
-            this.renovarAtivarSistemaToolStripMenuItem});
+            this.renovarAtivarSistemaToolStripMenuItem,
+            this.identificadorChamadasToolStripMenuItem});
             this.configuraçãoToolStripMenuItem.Name = "configuraçãoToolStripMenuItem";
             this.configuraçãoToolStripMenuItem.Size = new System.Drawing.Size(115, 25);
             this.configuraçãoToolStripMenuItem.Text = "Configuração";
@@ -504,6 +506,13 @@
             this.produtosToolStripMenuItem1.Size = new System.Drawing.Size(184, 26);
             this.produtosToolStripMenuItem1.Text = "Produtos";
             this.produtosToolStripMenuItem1.Click += new System.EventHandler(this.produtosToolStripMenuItem1_Click);
+            // 
+            // opçãoToolStripMenuItem1
+            // 
+            this.opçãoToolStripMenuItem1.Name = "opçãoToolStripMenuItem1";
+            this.opçãoToolStripMenuItem1.Size = new System.Drawing.Size(125, 26);
+            this.opçãoToolStripMenuItem1.Text = "Opção";
+            this.opçãoToolStripMenuItem1.Click += new System.EventHandler(this.opçãoToolStripMenuItem1_Click);
             // 
             // clientesToolStripMenuItem1
             // 
@@ -1110,12 +1119,11 @@
             this.chkGerenciaImpressao.Text = "Gerencia Impressão";
             this.chkGerenciaImpressao.UseVisualStyleBackColor = true;
             // 
-            // opçãoToolStripMenuItem1
+            // identificadorChamadasToolStripMenuItem
             // 
-            this.opçãoToolStripMenuItem1.Name = "opçãoToolStripMenuItem1";
-            this.opçãoToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
-            this.opçãoToolStripMenuItem1.Text = "Opção";
-            this.opçãoToolStripMenuItem1.Click += new System.EventHandler(this.opçãoToolStripMenuItem1_Click);
+            this.identificadorChamadasToolStripMenuItem.Name = "identificadorChamadasToolStripMenuItem";
+            this.identificadorChamadasToolStripMenuItem.Size = new System.Drawing.Size(244, 26);
+            this.identificadorChamadasToolStripMenuItem.Text = "Identificador Chamadas";
             // 
             // Main
             // 
@@ -1267,5 +1275,6 @@
         private System.Windows.Forms.ToolStripMenuItem alteracaoStatusToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem statusPedidoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem opçãoToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem identificadorChamadasToolStripMenuItem;
     }
 }

@@ -30,18 +30,18 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroRegioes));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtTaxaGratis = new System.Windows.Forms.TextBox();
             this.chkOnline = new System.Windows.Forms.CheckBox();
             this.chkAtivo = new System.Windows.Forms.CheckBox();
             this.btnEditar = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtEntrega = new System.Windows.Forms.TextBox();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtRegiao = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.RegioesGridView = new System.Windows.Forms.DataGridView();
-            this.txtEntrega = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtTaxaGratis = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RegioesGridView)).BeginInit();
@@ -68,6 +68,22 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cadastro ";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(182, 55);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(135, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Valor Minino Entrega Grátis";
+            // 
+            // txtTaxaGratis
+            // 
+            this.txtTaxaGratis.Location = new System.Drawing.Point(185, 71);
+            this.txtTaxaGratis.Name = "txtTaxaGratis";
+            this.txtTaxaGratis.Size = new System.Drawing.Size(93, 20);
+            this.txtTaxaGratis.TabIndex = 9;
             // 
             // chkOnline
             // 
@@ -98,6 +114,22 @@
             this.btnEditar.Text = "Editar [F11]";
             this.btnEditar.UseVisualStyleBackColor = true;
             this.btnEditar.Click += new System.EventHandler(this.Editar);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(11, 55);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Taxa Entrega";
+            // 
+            // txtEntrega
+            // 
+            this.txtEntrega.Location = new System.Drawing.Point(11, 71);
+            this.txtEntrega.Name = "txtEntrega";
+            this.txtEntrega.Size = new System.Drawing.Size(93, 20);
+            this.txtEntrega.TabIndex = 1;
             // 
             // btnSalvar
             // 
@@ -155,38 +187,6 @@
             this.RegioesGridView.Size = new System.Drawing.Size(372, 173);
             this.RegioesGridView.TabIndex = 3;
             this.RegioesGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RegioesGridView_CellClick);
-            // 
-            // txtEntrega
-            // 
-            this.txtEntrega.Location = new System.Drawing.Point(11, 71);
-            this.txtEntrega.Name = "txtEntrega";
-            this.txtEntrega.Size = new System.Drawing.Size(93, 20);
-            this.txtEntrega.TabIndex = 1;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 55);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Taxa Entrega";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(151, 74);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(108, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Tx. Grátis Pedidos >=";
-            // 
-            // txtTaxaGratis
-            // 
-            this.txtTaxaGratis.Location = new System.Drawing.Point(265, 71);
-            this.txtTaxaGratis.Name = "txtTaxaGratis";
-            this.txtTaxaGratis.Size = new System.Drawing.Size(93, 20);
-            this.txtTaxaGratis.TabIndex = 9;
             // 
             // frmCadastroRegioes
             // 
