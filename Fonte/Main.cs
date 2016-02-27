@@ -176,7 +176,7 @@ namespace DexComanda
             alterarSenhaToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
             usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
             entregasPorMotoboyToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
-            entregadorToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
+           // entregadorToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
 
             if (Sessions.returnUsuario != null)
             {
@@ -186,7 +186,7 @@ namespace DexComanda
                 configuraçãoToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
                 usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
                 operaçõesToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
-                FinanceiroToolStripMenuItem.Enabled = iCaixaAberto > 0;
+                lançamentoAvulsoToolStripMenuItem.Enabled = iCaixaAberto > 0;
             }
 
         }

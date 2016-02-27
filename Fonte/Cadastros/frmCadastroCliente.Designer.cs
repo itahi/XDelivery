@@ -100,6 +100,7 @@
             this.btnConsultar = new System.Windows.Forms.Button();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
+            this.label25 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tbPrincipal.SuspendLayout();
             this.tbCreditoDebito.SuspendLayout();
@@ -476,6 +477,7 @@
             // 
             // tbCreditoDebito
             // 
+            this.tbCreditoDebito.Controls.Add(this.label25);
             this.tbCreditoDebito.Controls.Add(this.btnImprimir);
             this.tbCreditoDebito.Controls.Add(this.dataFim);
             this.tbCreditoDebito.Controls.Add(this.dataInicio);
@@ -509,7 +511,7 @@
             // dataFim
             // 
             this.dataFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dataFim.Location = new System.Drawing.Point(105, 375);
+            this.dataFim.Location = new System.Drawing.Point(107, 385);
             this.dataFim.Name = "dataFim";
             this.dataFim.Size = new System.Drawing.Size(80, 20);
             this.dataFim.TabIndex = 10;
@@ -517,7 +519,7 @@
             // dataInicio
             // 
             this.dataInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dataInicio.Location = new System.Drawing.Point(6, 375);
+            this.dataInicio.Location = new System.Drawing.Point(3, 385);
             this.dataInicio.Name = "dataInicio";
             this.dataInicio.Size = new System.Drawing.Size(80, 20);
             this.dataInicio.TabIndex = 9;
@@ -540,7 +542,7 @@
             this.lblTotal.AutoSize = true;
             this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotal.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblTotal.Location = new System.Drawing.Point(504, 392);
+            this.lblTotal.Location = new System.Drawing.Point(519, 383);
             this.lblTotal.Name = "lblTotal";
             this.lblTotal.Size = new System.Drawing.Size(49, 24);
             this.lblTotal.TabIndex = 3;
@@ -550,7 +552,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(447, 392);
+            this.label24.Location = new System.Drawing.Point(408, 383);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(93, 24);
             this.label24.TabIndex = 2;
@@ -870,6 +872,15 @@
             this.dtInicio.Size = new System.Drawing.Size(82, 20);
             this.dtInicio.TabIndex = 0;
             // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(57, 365);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(80, 13);
+            this.label25.TabIndex = 12;
+            this.label25.Text = "Periodo Filtrado";
+            // 
             // frmCadastroCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -975,6 +986,6 @@
         private System.Windows.Forms.DateTimePicker dataFim;
         private System.Windows.Forms.DateTimePicker dataInicio;
         private System.Windows.Forms.Button btnImprimir;
-
+        private System.Windows.Forms.Label label25;
     }
 }

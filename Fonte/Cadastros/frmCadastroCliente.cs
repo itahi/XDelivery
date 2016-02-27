@@ -756,6 +756,14 @@ namespace DexComanda
 
         private void LancarHistorico(object sender, EventArgs e)
         {
+            if (dtLancamento.Value< Convert.ToDateTime(DateTime.Now.ToShortDateString()))
+            {
+                if (!Utils.MessageBoxQuestion("Data do lançamento é menor que data atual, tem certeza que deseja continuar?"))
+                {
+                    return;
+                }
+                
+            }
             if (txtValor.Text.Trim()=="" || txtHistorico.Text.Trim()=="")
             {
                 MessageBox.Show("Campos obrigatórios não podem ser vazios");
@@ -782,6 +790,7 @@ namespace DexComanda
                 histPessoa.Tipo = 'D';
             }
             con.Insert("spAdicionaHistorico", histPessoa);
+            Utils.PopularGrid_SP("HistoricoPessoa", HistoricoGridView, "spObterHistoricoPorPessoa", histPessoa.CodPessoa);
             // Utils.PopularGrid("HistoricoPessoa", HistoricoGridView, "spObterHistoricoPorPessoa", histPessoa.CodPessoa);
             CalculaValores();
         }
@@ -793,11 +802,11 @@ namespace DexComanda
             {
                 if (HistoricoGridView.Rows[i].Cells["Tipo"].Value.ToString() == "D")
                 {
-                    dblTotalDebito = dblTotalDebito + double.Parse(HistoricoGridView.Rows[i].Cells["Debito"].Value.ToString());
+                    dblTotalDebito = dblTotalDebito + double.Parse(HistoricoGridView.Rows[i].Cells["Valor"].Value.ToString());
                 }
                 else
                 {
-                    dblTotalCredito = dblTotalCredito + double.Parse(HistoricoGridView.Rows[i].Cells["Credito"].Value.ToString());
+                    dblTotalCredito = dblTotalCredito + double.Parse(HistoricoGridView.Rows[i].Cells["Valor"].Value.ToString());
                 }
             }
             lblTotal.Text = Convert.ToString(dblTotalCredito - dblTotalDebito);
@@ -806,7 +815,7 @@ namespace DexComanda
 
         private void btnCons_Click(object sender, EventArgs e)
         {
-            DataSet dsPedidos = con.SelectRegistroPorCodigoPeriodo("HistoricoPessoa", "spObterHistoricoPorPessoa", Convert.ToString(codigoClienteParaAlterar), dataInicio.Value, dataFim.Value);
+            DataSet dsPedidos = con.SelectRegistroPorCodigoPeriodo("HistoricoPessoa", "spObterHistoricoPorPessoaPorData", Convert.ToString(codigoClienteParaAlterar), dataInicio.Value, dataFim.Value);
             if (dsPedidos.Tables[0].Rows.Count > 0)
             {
                 HistoricoGridView.DataSource = null;
