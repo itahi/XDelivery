@@ -306,7 +306,7 @@ namespace DexComanda
                 {
                     lbTotal.Text = Convert.ToString(decimal.Parse(lbTotal.Text.Replace("R$", "")) + DMargemGarco);
                 }
-                AtualizaClienteTela();
+                AtualizaClienteTela(this);
             }
             else
             {
@@ -326,11 +326,11 @@ namespace DexComanda
                     Telefone2 = dRow["Telefone2"].ToString()
                 };
 
-                AtualizaClienteTela();
+                AtualizaClienteTela(this);
             }
             this.gridViewItemsPedido.CurrentCell = null;
         }
-        private void AtualizaClienteTela()
+        public void AtualizaClienteTela(frmCadastrarPedido frm)
         {
             DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
 
@@ -2929,9 +2929,11 @@ namespace DexComanda
             this.Name = "frmCadastrarPedido";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[XDelivery ] Cadastrar Pedido";
+           
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCadastrarPedido_FormClosed);
             this.Load += new System.EventHandler(this.frmCadastrarPedido_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastrarPedido_KeyDown);
+   
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -3462,10 +3464,9 @@ namespace DexComanda
                                                               dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                               , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
                                                               , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString());
-
-            AtualizaClienteTela();
+            //GetFocus(e);
         }
-
+       
         private void txtDesconto_KeyUp(object sender, KeyEventArgs e)
         {
             //decimal TotalPedido = ValorTotal;
@@ -3494,6 +3495,8 @@ namespace DexComanda
 
             //}
         }
+
+        
 
         private void cbxSabor_SelectedIndexChanged(object sender, EventArgs e)
         {

@@ -40,6 +40,7 @@ namespace DexComanda
         private void ConsultarCliente(object sender, EventArgs e)
         {
             BuscarCliente(txbTelefoneCliente.Text);
+            
         }
         private void ExecutaRepeticaoPedido(int iCodPessoa)
         {
@@ -169,7 +170,7 @@ namespace DexComanda
                 {
                     MessageBox.Show("Caixa precisa estar aberto", "[XSistemas] Aviso");
                 }
-
+                LimpaCampos();
             }
 
             catch (Exception errobusca)
@@ -183,9 +184,16 @@ namespace DexComanda
         {
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
 
-
             int iNumeroCaixa = Sessions.returnUsuario.CaixaLogado;
             iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now, iNumeroCaixa).Tables["Caixa"].Rows.Count;
+            if (Utils.CaixaAberto(DateTime.Now, iNumeroCaixa))
+            {
+                aberturaCaixaToolStripMenuItem.Enabled = false;
+                lblCaixa.Text = "Caixa Aberto";
+                lblCaixa.ForeColor = Color.Green;
+            }
+
+
             this.txbTelefoneCliente.Focus();
 
             Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
@@ -1133,7 +1141,11 @@ namespace DexComanda
         {
             if (e.KeyCode == Keys.F12 || e.KeyCode == Keys.Enter)
             {
-                BuscarCliente(txbTelefoneCliente.Text);
+                if (txbTelefoneCliente.Focused)
+                {
+                    BuscarCliente(txbTelefoneCliente.Text);
+                }
+                
             }
             if (e.KeyCode == Keys.F11)
             {
@@ -1362,6 +1374,17 @@ namespace DexComanda
         {
             frmSincronizacao frm = new frmSincronizacao();
             frm.ShowDialog();
+        }
+
+        private void contatoAtivaçãoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmContato frm = new frmContato();
+            frm.ShowDialog();
+        }
+        
+        private void txbTelefoneCliente_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoPermiteNumeros(e);
         }
     }
 }

@@ -402,6 +402,7 @@ namespace DexComanda
                 con.Update("spAlterarPessoa", pessoa);
                 Utils.ControlaEventos("Altera", this.Name);
                 MessageBox.Show("Cliente alterado com sucesso.");
+               
                 this.Close();
             }
             catch (Exception ex)

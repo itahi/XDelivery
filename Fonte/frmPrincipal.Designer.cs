@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.cadastrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.produtosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,6 +126,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnConsultarTelefone = new System.Windows.Forms.Button();
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
+            this.lblCaixa = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -493,7 +496,7 @@
             // opçãoToolStripMenuItem1
             // 
             this.opçãoToolStripMenuItem1.Name = "opçãoToolStripMenuItem1";
-            this.opçãoToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
+            this.opçãoToolStripMenuItem1.Size = new System.Drawing.Size(125, 26);
             this.opçãoToolStripMenuItem1.Text = "Opção";
             this.opçãoToolStripMenuItem1.Click += new System.EventHandler(this.opçãoToolStripMenuItem1_Click);
             // 
@@ -625,6 +628,7 @@
             this.contatoAtivaçãoToolStripMenuItem.Name = "contatoAtivaçãoToolStripMenuItem";
             this.contatoAtivaçãoToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
             this.contatoAtivaçãoToolStripMenuItem.Text = "Contato / Ativação";
+            this.contatoAtivaçãoToolStripMenuItem.Click += new System.EventHandler(this.contatoAtivaçãoToolStripMenuItem_Click);
             // 
             // pnlPrincipal
             // 
@@ -692,9 +696,9 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(155, 12);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(56, 16);
+            this.label3.Size = new System.Drawing.Size(123, 16);
             this.label3.TabIndex = 24;
-            this.label3.Text = "Cliente";
+            this.label3.Text = "Nome do Cliente";
             // 
             // cbxFiltroTipo
             // 
@@ -763,6 +767,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlBuscaProduto.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlBuscaProduto.Controls.Add(this.label11);
             this.pnlBuscaProduto.Controls.Add(this.chkProdutosInativos);
             this.pnlBuscaProduto.Controls.Add(this.txtNomeProd);
             this.pnlBuscaProduto.Controls.Add(this.cbxGrupoProduto);
@@ -799,6 +804,7 @@
             // 
             // cbxGrupoProduto
             // 
+            this.cbxGrupoProduto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxGrupoProduto.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F);
             this.cbxGrupoProduto.FormattingEnabled = true;
             this.cbxGrupoProduto.Items.AddRange(new object[] {
@@ -809,7 +815,6 @@
             this.cbxGrupoProduto.Name = "cbxGrupoProduto";
             this.cbxGrupoProduto.Size = new System.Drawing.Size(220, 30);
             this.cbxGrupoProduto.TabIndex = 9;
-            this.cbxGrupoProduto.Text = "Nome";
             this.cbxGrupoProduto.SelectedIndexChanged += new System.EventHandler(this.FiltraGrupo);
             // 
             // label1
@@ -884,6 +889,7 @@
             // cbxBuscarPor
             // 
             this.cbxBuscarPor.AccessibleName = "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\";
+            this.cbxBuscarPor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxBuscarPor.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F);
             this.cbxBuscarPor.FormattingEnabled = true;
             this.cbxBuscarPor.Items.AddRange(new object[] {
@@ -894,7 +900,6 @@
             this.cbxBuscarPor.Name = "cbxBuscarPor";
             this.cbxBuscarPor.Size = new System.Drawing.Size(108, 30);
             this.cbxBuscarPor.TabIndex = 19;
-            this.cbxBuscarPor.Text = "Nome";
             // 
             // clientesGridView
             // 
@@ -1089,18 +1094,45 @@
             this.txbTelefoneCliente.Name = "txbTelefoneCliente";
             this.txbTelefoneCliente.Size = new System.Drawing.Size(292, 29);
             this.txbTelefoneCliente.TabIndex = 19;
+            this.txbTelefoneCliente.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbTelefoneCliente_KeyPress);
+            // 
+            // lblCaixa
+            // 
+            this.lblCaixa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCaixa.AutoSize = true;
+            this.lblCaixa.BackColor = System.Drawing.Color.Black;
+            this.lblCaixa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCaixa.ForeColor = System.Drawing.Color.White;
+            this.lblCaixa.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblCaixa.Location = new System.Drawing.Point(913, 6);
+            this.lblCaixa.Name = "lblCaixa";
+            this.lblCaixa.Size = new System.Drawing.Size(128, 20);
+            this.lblCaixa.TabIndex = 9;
+            this.lblCaixa.Text = "Caixa Fechado";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(247, 13);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(129, 16);
+            this.label11.TabIndex = 25;
+            this.label11.Text = "Nome do Produto";
             // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1044, 510);
+            this.Controls.Add(this.lblCaixa);
             this.Controls.Add(this.pnlPrincipal);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "frmPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmPrincipal";
+            this.Text = "[xDelivery] Controle e gestão  - www.xsistemas.com.br";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPrincipal_FormClosed);
             this.Load += new System.EventHandler(this.frmPrincipal_Load);
@@ -1227,5 +1259,7 @@
         private System.Windows.Forms.TextBox txtNomeProd;
         private System.Windows.Forms.CheckBox chkProdutosInativos;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblCaixa;
+        private System.Windows.Forms.Label label11;
     }
 }

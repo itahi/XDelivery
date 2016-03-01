@@ -161,7 +161,7 @@ namespace DexComanda
         }
 
 
-        private void MontaMenu() // Monta o menu de opções
+        private void MontaMenu() 
         {
             if (Sessions.returnEmpresa.CNPJ == "22695578000142" || Sessions.returnEmpresa.CNPJ == "22678091000151")
             {
@@ -241,8 +241,6 @@ namespace DexComanda
                 gridView.DataMember = table;
             }
 
-
-            //txbTelefoneCliente.Text = Convert.ToString(0); 
             con.Close();
         }
 
@@ -266,10 +264,6 @@ namespace DexComanda
 
         public void ConsultarCliente(object sender, EventArgs e)
         {
-            frmPrincipal frm = new frmPrincipal();
-            frm.ShowDialog();
-            // Integração.EnviaSMS_LOCASMS Enviar = new Integração.EnviaSMS_LOCASMS();
-            // Enviar.EnviaSMSLista(clientesGridView, "27981667827", "549636", "MEnsage");
             BuscarCliente(txbTelefoneCliente.Text);
         }
 

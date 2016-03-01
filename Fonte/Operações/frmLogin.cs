@@ -52,9 +52,12 @@ namespace DexComanda
                 int iNumeroCaixa = int.Parse(cbxCaixas.Text);
                 if (Utils.EfetuarLogin(this.txtUsuario.Text.ToString(), this.txtSenha.Text.ToString(), true, iNumeroCaixa))
                 {
-                    frmPrincipal frmPrincipal = new frmPrincipal();
-                    this.Hide();
-                    frmPrincipal.ShowDialog();
+                    if (Utils.CaixaAberto(DateTime.Now,iNumeroCaixa))
+                    {
+                        frmPrincipal frmPrincipal = new frmPrincipal();
+                        this.Hide();
+                        frmPrincipal.ShowDialog();
+                    }
 
                 }
             }
