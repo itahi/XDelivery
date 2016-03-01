@@ -238,6 +238,7 @@
     <Compile Include="Models\HistoricoPessoa.cs" />
     <Compile Include="Models\Opcao.cs" />
     <Compile Include="Models\OpcaoItem.cs" />
+    <Compile Include="Models\OpcaoPedido.cs" />
     <Compile Include="Models\Operacoes\PedidoStatus.cs" />
     <Compile Include="Models\Operacoes\NovoTotalPedido.cs" />
     <Compile Include="Models\PedidoStatus.cs" />

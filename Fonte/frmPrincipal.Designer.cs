@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.cadastrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -128,6 +129,13 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
+            this.chkGerenciaImpressao = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblValor = new System.Windows.Forms.Label();
+            this.lblQtd = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -139,6 +147,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.clientesGridView)).BeginInit();
             this.pnlRetornaCliente.SuspendLayout();
             this.pnlDigitaTelefone.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -633,6 +642,8 @@
             // pnlPrincipal
             // 
             this.pnlPrincipal.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.pnlPrincipal.Controls.Add(this.panel1);
+            this.pnlPrincipal.Controls.Add(this.chkGerenciaImpressao);
             this.pnlPrincipal.Controls.Add(this.statusStrip1);
             this.pnlPrincipal.Controls.Add(this.pnlPedido);
             this.pnlPrincipal.Controls.Add(this.pnlBuscaProduto);
@@ -694,7 +705,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(155, 12);
+            this.label3.Location = new System.Drawing.Point(155, 6);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(123, 16);
             this.label3.TabIndex = 24;
@@ -759,6 +770,7 @@
             this.pedidosGridView.TabIndex = 8;
             this.pedidosGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MarcarPedidos);
             this.pedidosGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.EditarPedido);
+            this.pedidosGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.pedidosGridView_CellValueChanged);
             this.pedidosGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxiliarPedido);
             // 
             // pnlBuscaProduto
@@ -882,7 +894,7 @@
             this.txtBurcarValor.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
             this.txtBurcarValor.Location = new System.Drawing.Point(227, 6);
             this.txtBurcarValor.Name = "txtBurcarValor";
-            this.txtBurcarValor.Size = new System.Drawing.Size(280, 29);
+            this.txtBurcarValor.Size = new System.Drawing.Size(276, 29);
             this.txtBurcarValor.TabIndex = 20;
             this.txtBurcarValor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BuscarCliente);
             // 
@@ -1114,11 +1126,80 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(247, 13);
+            this.label11.Location = new System.Drawing.Point(242, 6);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(129, 16);
             this.label11.TabIndex = 25;
             this.label11.Text = "Nome do Produto";
+            // 
+            // AtualizaGrid
+            // 
+            this.AtualizaGrid.Enabled = true;
+            this.AtualizaGrid.Interval = 10000;
+            this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
+            // 
+            // chkGerenciaImpressao
+            // 
+            this.chkGerenciaImpressao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkGerenciaImpressao.AutoSize = true;
+            this.chkGerenciaImpressao.ForeColor = System.Drawing.Color.Black;
+            this.chkGerenciaImpressao.Location = new System.Drawing.Point(165, 458);
+            this.chkGerenciaImpressao.Name = "chkGerenciaImpressao";
+            this.chkGerenciaImpressao.Size = new System.Drawing.Size(120, 17);
+            this.chkGerenciaImpressao.TabIndex = 20;
+            this.chkGerenciaImpressao.Text = "Gerencia Impressão";
+            this.chkGerenciaImpressao.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.lblValor);
+            this.panel1.Controls.Add(this.lblQtd);
+            this.panel1.Controls.Add(this.label12);
+            this.panel1.Controls.Add(this.label13);
+            this.panel1.Location = new System.Drawing.Point(537, 455);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(499, 23);
+            this.panel1.TabIndex = 26;
+            // 
+            // lblValor
+            // 
+            this.lblValor.AutoSize = true;
+            this.lblValor.Location = new System.Drawing.Point(420, 2);
+            this.lblValor.Name = "lblValor";
+            this.lblValor.Size = new System.Drawing.Size(13, 13);
+            this.lblValor.TabIndex = 12;
+            this.lblValor.Text = "0";
+            this.lblValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblQtd
+            // 
+            this.lblQtd.AutoSize = true;
+            this.lblQtd.Location = new System.Drawing.Point(61, 3);
+            this.lblQtd.Name = "lblQtd";
+            this.lblQtd.Size = new System.Drawing.Size(13, 13);
+            this.lblQtd.TabIndex = 2;
+            this.lblQtd.Text = "0";
+            this.lblQtd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(363, 2);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(51, 13);
+            this.label12.TabIndex = 1;
+            this.label12.Text = "Total R$:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(7, 2);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(48, 13);
+            this.label13.TabIndex = 0;
+            this.label13.Text = "Pedidos:";
             // 
             // frmPrincipal
             // 
@@ -1155,6 +1236,8 @@
             this.pnlRetornaCliente.ResumeLayout(false);
             this.pnlDigitaTelefone.ResumeLayout(false);
             this.pnlDigitaTelefone.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1261,5 +1344,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblCaixa;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Timer AtualizaGrid;
+        private System.Windows.Forms.CheckBox chkGerenciaImpressao;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblValor;
+        private System.Windows.Forms.Label lblQtd;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
     }
 }

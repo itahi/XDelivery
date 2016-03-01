@@ -1,5 +1,6 @@
 ﻿using DexComanda.Cadastros;
 using DexComanda.Cadastros.Produto;
+using DexComanda.Integração;
 using DexComanda.Models;
 using DexComanda.Operações;
 using DexComanda.Operações.Alteracoes;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +26,7 @@ namespace DexComanda
     {
         private Conexao con;
         private int rowIndex;
+        private List<ItemPedido> items;
         private int CodPedidoWS = 0;
         private Boolean RepeteUltimoPedido = Sessions.returnConfig.RepeteUltimoPedido;
         private int iCaixaAberto;
@@ -40,7 +43,7 @@ namespace DexComanda
         private void ConsultarCliente(object sender, EventArgs e)
         {
             BuscarCliente(txbTelefoneCliente.Text);
-            
+
         }
         private void ExecutaRepeticaoPedido(int iCodPessoa)
         {
@@ -55,8 +58,7 @@ namespace DexComanda
 
             if (QuantidadePedidos > 0)
             {
-                DialogResult resultado = MessageBox.Show("Deseja Repetir o Ultimo Pedido ?", "Dex Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if (resultado == DialogResult.Yes)
+                if (Utils.MessageBoxQuestion("Deseja Repetir o Ultimo Pedido ?"))
                 {
                     Utils.RepetirUltimoPedido(iCodPessoa);
                 }
@@ -79,7 +81,8 @@ namespace DexComanda
                                                                     "0.00", "", "", "");
             CadPedido.ShowDialog();
             Utils.LimpaForm(this);
-            //Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
+            Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
+            TotalizaPedidos();
         }
 
         private void AbreTelaPedido(string iTelefone)
@@ -183,7 +186,7 @@ namespace DexComanda
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
-
+            
             int iNumeroCaixa = Sessions.returnUsuario.CaixaLogado;
             iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now, iNumeroCaixa).Tables["Caixa"].Rows.Count;
             if (Utils.CaixaAberto(DateTime.Now, iNumeroCaixa))
@@ -200,6 +203,7 @@ namespace DexComanda
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
             Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
             MontaMenu();
+            TotalizaPedidos();
 
         }
         private void MontaMenu() // Monta o menu de opções
@@ -370,6 +374,8 @@ namespace DexComanda
                 this.pedidosGridView.AutoGenerateColumns = true;
                 this.pedidosGridView.DataSource = ds;
                 this.pedidosGridView.DataMember = "Pedido";
+                TotalizaPedidos();
+                
 
             }
             catch (Exception ex)
@@ -378,7 +384,16 @@ namespace DexComanda
                 MessageBox.Show("Erro ao buscar clientes" + ex.Message);
             }
         }
-
+        private void TotalizaPedidos ()
+        {
+            double dblTotalPedidos = 0;
+            for (int i = 0; i < pedidosGridView.Rows.Count; i++)
+            {
+                dblTotalPedidos = dblTotalPedidos +double.Parse( pedidosGridView.Rows[i].Cells["TotalPedido"].Value.ToString());
+            }
+            lblValor.Text = dblTotalPedidos.ToString();
+            lblQtd.Text = pedidosGridView.Rows.Count.ToString();
+        }
         private void BuscaPedidoCliente(object sender, KeyEventArgs e)
         {
             try
@@ -494,29 +509,23 @@ namespace DexComanda
                 MenuItem FinalizarPed = new MenuItem(" 1 - Finalizar Este Pedido?");
                 MenuItem FinalizaSelecionados = new MenuItem(" 2 - Finalizar Todos Selecionado?");
                 MenuItem ImprimeConferenciaMesa = new MenuItem(" Imprimir Conferencia desta Mesa");
-                MenuItem PedidoONline = new MenuItem(" X - Pedido Online");
-                PedidoONline.Enabled = false;
+                MenuItem PedidoONline = new MenuItem(" X - Status Pedido");
+                PedidoONline.Enabled = true;
                 if (pedidosGridView.Rows.Count > 0)
                 {
-                    int codPedido = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
-                    // Verifica se o Pedido veio da Web e Habilita o subMenu
-                    DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoOnline", codPedido);
-                    if (dsPedido.Tables[0].Rows.Count > 0)
-                    {
-                        CodPedidoWS = dsPedido.Tables[0].Rows[0].Field<int>("CodigoPedidoWS"); GerarToken();
-                        PedidoONline.Enabled = true;
-                        PedidoONline = new MenuItem(" 0 - Status Pedido Online");
-                        MenuItem StatusNaCozinha = new MenuItem(" 0 - Pedido na Cozinha");
-                        MenuItem StatusNaEntrega = new MenuItem(" 1 - Saiu pra entrega");
-                        MenuItem StatusCancelado = new MenuItem(" 2 - Cancelado");
+                    PedidoONline.Enabled = true;
+                    PedidoONline = new MenuItem(" X - Status Pedido");
+                    MenuItem StatusNaCozinha = new MenuItem(" 0 - Pedido na Cozinha");
+                    MenuItem StatusNaEntrega = new MenuItem(" 1 - Saiu pra entrega");
+                    MenuItem StatusCancelado = new MenuItem(" 2 - Cancelado");
 
-                        PedidoONline.MenuItems.Add(StatusNaCozinha);
-                        PedidoONline.MenuItems.Add(StatusNaEntrega);
-                        PedidoONline.MenuItems.Add(StatusCancelado);
-                        StatusCancelado.Enabled = Sessions.returnUsuario.CancelaPedidosSN;
-                        StatusNaCozinha.Click += PedidoNaCozinha;
-                        StatusNaEntrega.Click += PedidoNaEntrega;
-                    }
+                    PedidoONline.MenuItems.Add(StatusNaCozinha);
+                    PedidoONline.MenuItems.Add(StatusNaEntrega);
+                    PedidoONline.MenuItems.Add(StatusCancelado);
+                    StatusCancelado.Enabled = Sessions.returnUsuario.CancelaPedidosSN;
+                    StatusNaCozinha.Click += PedidoNaCozinha;
+                    StatusNaEntrega.Click += PedidoNaEntrega;
+
                 }
 
 
@@ -870,7 +879,14 @@ namespace DexComanda
         {
             try
             {
-                AlteraStatusPedido(CodPedidoWS, 3);
+                int intCodPedido = int.Parse(pedidosGridView.SelectedRows[rowIndex].Cells["Codigo"].Value.ToString());
+                if (VerificaPedidoOnline(intCodPedido) > 0)
+                {
+                    AlteraStatusPedido(CodPedidoWS, 3);
+                }
+
+                con.AlteraStatusPedido(intCodPedido, Sessions.retunrUsuario.Codigo, 2);
+
             }
             catch (Exception erro)
             {
@@ -883,7 +899,13 @@ namespace DexComanda
         {
             try
             {
-                AlteraStatusPedido(CodPedidoWS, 4);
+                int intCodPedido = int.Parse(pedidosGridView.SelectedRows[rowIndex].Cells["Codigo"].Value.ToString());
+
+                if (VerificaPedidoOnline(intCodPedido) > 0)
+                {
+                    AlteraStatusPedido(CodPedidoWS, 4);
+                }
+                con.AlteraStatusPedido(intCodPedido, Sessions.retunrUsuario.Codigo, 3);
             }
             catch (Exception erro)
             {
@@ -1145,7 +1167,7 @@ namespace DexComanda
                 {
                     BuscarCliente(txbTelefoneCliente.Text);
                 }
-                
+
             }
             if (e.KeyCode == Keys.F11)
             {
@@ -1381,10 +1403,144 @@ namespace DexComanda
             frmContato frm = new frmContato();
             frm.ShowDialog();
         }
-        
+
         private void txbTelefoneCliente_KeyPress(object sender, KeyPressEventArgs e)
         {
             Utils.SoPermiteNumeros(e);
+        }
+        private void ImpressaoAutomatica(int iCodPedido, string iNumMesa)
+        {
+
+            DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpresso", iCodPedido);
+            if (itemsPedido.Tables[0].Rows.Count > 0)
+            {
+                items = new List<ItemPedido>();
+                ItemPedido itemPedido = new ItemPedido();
+                string lRetorno = "";
+                Boolean imprimirAgora = false;
+                //string strNomeImpressora,strImpressoraAnterior = "";
+                lRetorno = Utils.ImpressaMesaNova(iCodPedido, false, int.Parse(Sessions.returnConfig.ViasCozinha), "", imprimirAgora);
+                for (int i = 0; i < itemsPedido.Tables[0].Rows.Count; i++)
+                {
+                    AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
+                    Atualiza.CodPedido = iCodPedido;
+                    Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("CodProduto");
+                    Atualiza.ImpressoSN = true;
+                    con.Update("spInformaItemImpresso", Atualiza);
+
+                }
+                //if (ImprimeLPT && lRetorno != "")
+                //{
+                //    StreamReader tempDex = new StreamReader(lRetorno);
+                //    line = tempDex.ReadToEnd();
+
+                //    string RetornoTxt = Directory.GetCurrentDirectory() + @"\" + "ConfigImpressao" + ".txt";
+                //    if (System.IO.File.Exists(RetornoTxt))
+                //    {
+                //        tempDex = new StreamReader(RetornoTxt);
+                //        // line = tempDex.ReadLine();
+                //        RetornoTxt = tempDex.ReadLine();
+
+                //        if (RetornoTxt != "")
+                //        {
+                //            string iPortaUSB = "", iModelo = "";
+                //            string[] words = RetornoTxt.Split(';');
+
+                //            for (int i = 0; i < words.Length; i++)
+                //            {
+                //                iModelo = words[0];
+                //                iPortaUSB = words[1];
+                //            }
+                //            int iRetorno;
+                //            MP2032 bema = new MP2032();
+                //            try
+                //            {
+                //                iRetorno = MP2032.ConfiguraModeloImpressora(int.Parse(iModelo));
+                //                iRetorno = MP2032.IniciaPorta(iPortaUSB);
+                //                if (iRetorno == 1)
+                //                {
+                //                    MP2032.FormataTX(line, 2, 0, 0, 1, 0);
+                //                    iRetorno = MP2032.BematechTX(line + "\r\n\r\n");
+                //                    MP2032.AcionaGuilhotina(1);
+                //                }
+                //                else
+                //                {
+                //                    MessageBox.Show("Erro de  conexão impressora" + iModelo + " Porta" + iPortaUSB);
+                //                }
+                //            }
+                //            catch (Exception erro)
+                //            {
+
+                //                MessageBox.Show(erro.Message);
+                //            }
+
+
+
+                //        }
+                //    }
+                //    //    }
+
+
+                //}
+
+            }
+        }
+        private void MudarCorLinha(int iCodPedido, DataGridView grdPedido)
+        {
+            DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spStatusPedido", iCodPedido);
+            int status = dsPedido.Tables[0].Rows[0].Field<int>("CodStatus");
+            switch (status)
+            {
+                case 1:
+                    grdPedido.Rows[0].DefaultCellStyle.BackColor = Color.Red;
+                    break;
+
+                case 2:
+                    grdPedido.Rows[0].DefaultCellStyle.BackColor = Color.Green;
+                    break;
+                case 3:
+                    grdPedido.Rows[0].DefaultCellStyle.BackColor = Color.Blue;
+                    break;
+            }
+        }
+        private void AtualizaGrid_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                DataSet dsPedidosAbertos = con.SelectAll("Pedido", "spObterPedido");
+                int iPedidosAberto = dsPedidosAbertos.Tables["Pedido"].Rows.Count;
+
+                if (iPedidosAberto != pedidosGridView.Rows.Count && cbxFiltroTipo.Text == "")
+                {
+
+                    Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
+
+                }
+
+               // double dblTotalPedidos = 0;
+                for (int i = 0; i < pedidosGridView.Rows.Count; i++)
+                {
+                  
+                   // MudarCorLinha(int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString()), pedidosGridView);
+                    DataRow dRowPedido = dsPedidosAbertos.Tables[0].Rows[i];
+                    Boolean iMesa = dRowPedido.ItemArray.GetValue(5).ToString() != "0";
+                    if (iMesa && chkGerenciaImpressao.Checked)
+                    {
+                        ImpressaoAutomatica(int.Parse(dRowPedido.ItemArray.GetValue(1).ToString()), dRowPedido.ItemArray.GetValue(5).ToString());
+                    }
+                }
+                
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show("Erro ao atualizar pedidos" + erro.Message);
+            }
+        }
+
+        private void pedidosGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            TotalizaPedidos();
         }
     }
 }

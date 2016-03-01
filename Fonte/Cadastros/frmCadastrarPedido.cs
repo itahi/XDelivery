@@ -228,9 +228,9 @@ namespace DexComanda
                 if (!PedidoRepetio)
                 {
                     this.label3.Text = "Alterar Pedido ( N:" + codPedido + ")";
-                    this.btnGerarPedido.Text = "Alterar";
+                    this.btnGerarPedido.Text = "Atualizar Pedido";
                     this.btnGerarPedido.Click -= btnGerarPedido_Click;
-                    this.btnGerarPedido.Click += AlterarItemPedido;
+                    this.btnGerarPedido.Click +=btnAtualizar_Click;
                     this.btnReimprimir.Visible = true;
                 }
 
@@ -721,7 +721,7 @@ namespace DexComanda
                                 items.Add(item);
                                 atualizarGrid(item);
                                 SemMeiaPizza();
-                                Utils.PopulaGrid_Novo("Pedido", parentWindow.pedidosGridView, Sessions.SqlPedido);
+                               // Utils.PopulaGrid_Novo("Pedido", parentWindow.pedidosGridView, Sessions.SqlPedido);
                             }
 
                         }
@@ -912,6 +912,7 @@ namespace DexComanda
                                 itemDoPedido.DataAtualizacao = DateTime.Now;
                                 con.Insert("spCriarPedido", itemDoPedido);
                                 Utils.ControlaEventos("Inserir", this.Name);
+                                
                             }
 
                             if (ContraMesas && cbxListaMesas.Visible && pedido.NumeroMesa != 0)
@@ -997,7 +998,7 @@ namespace DexComanda
             }
 
             con.Update("spAlterarTotalPedido", pedido);
-            Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
+           // Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
         }
         private void gridViewItemsPedido_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -1040,8 +1041,130 @@ namespace DexComanda
                 this.txtPrecoUnitario.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value.ToString();
                 this.txtPrecoTotal.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value.ToString();
                 this.txtItemDescricao.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value.ToString();
+                //   btnAdicionarItemNoPedido.
 
+                this.btnAdicionarItemNoPedido.Text = "Alterar Item";
+                this.btnAdicionarItemNoPedido.Click += new System.EventHandler(this.AlterarItem);
+                this.btnAdicionarItemNoPedido.Click -= new System.EventHandler(this.btnAdicionarItemNoPedido_Click);
+                
+            }
+        }
+        private void AlterarItem(object sender, EventArgs e)
+        {
+            ValorTotal = 0;
+            ValorTroco = 0;
+            if (radioButton1.Visible && !radioButton1.Checked && !radioButton2.Checked && !radioButton3.Checked
+                     && !radioButton4.Checked && !radioButton5.Checked && !radioButton6.Checked)
+            {
+                MessageBox.Show("É obrigatório selecionar o tamanho ", "[xSistemas]", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
+            if (!this.txtQuantidade.Text.Equals("")
+                    && !this.txtPrecoUnitario.Text.Equals("") && !this.txtPrecoTotal.Text.Equals(""))
+            {
+                foreach (ItemPedido item in items)
+                {
+                    if (item.CodProduto == codigoItemParaAlterar)
+                    {
+                        item.PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", ""));
+                        item.Item = this.txtItemDescricao.Text.ToString();
+                    }
+                }
+
+                foreach (ItemPedido item in items)
+                {
+                    ValorTotal = ValorTotal + item.PrecoTotal;
+                    if (txtTrocoPara.Text.ToString() != "")
+                    {
+                        ValorTroco = decimal.Parse(txtTrocoPara.Text.Replace("R$ ", "")) - ValorTotal;
+                    }
+                    else
+                    {
+                        ValorTroco = 0.00M;
+                    }
+
+                }
+
+                // Valida Se esta adicionando Meia Pizza
+                MeiaPizza();
+
+                if (!itemNome.Equals("") && !this.txtQuantidade.Text.Equals("")
+                    && !this.txtPrecoUnitario.Text.Equals("") && !this.txtPrecoTotal.Text.Equals(""))
+                {
+                    int totalDeItems = this.gridViewItemsPedido.RowCount;
+                    if (totalDeItems == 0)
+                    {
+                        MessageBox.Show("O Pedido deve contem no mínimo um item.");
+                        return;
+                    }
+                    else
+                    {
+                        var itemPedido = new ItemPedido()
+                        {
+                            CodProduto = codigoItemParaAlterar,
+                            CodPedido = codPedido,
+                            NomeProduto = itemNome,
+                            Quantidade = int.Parse(this.txtQuantidade.Text),
+                            PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$ ", "")),
+                            PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", "")),
+                            Item = this.txtItemDescricao.Text.ToString()
+
+                        };
+
+                        itemPedido.DataAtualizacao = DateTime.Now;
+
+                        this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value = itemPedido.NomeProduto;
+                        this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value = itemPedido.Quantidade;
+                        this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value = "R$ " + itemPedido.PrecoUnitario.ToString();
+                        this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value = "R$ " + itemPedido.PrecoTotal.ToString();
+                        this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value = itemPedido.Item.ToString();
+
+                        var ValorPedidoTotal = ValorTotal + decimal.Parse(lblEntrega.Text);
+
+                        if (DMargemGarco != 0.00M)
+                        {
+                            decimal TotalMesaGeral = DMargemGarco + ValorPedidoTotal;
+                            this.lbTotal.Text = "R$ " + TotalMesaGeral.ToString();
+                        }
+                        else
+                        {
+                            this.lbTotal.Text = "R$ " + ValorPedidoTotal;
+                        }
+
+                        this.lblTroco.Text = "R$ " + TrocoPagar;
+                        AtualizaTotalPedido();
+                        FinalizaPedido finaliza = new FinalizaPedido()
+                        {
+                            CodPedido = iCodPedido,
+                            CodPagamento = int.Parse(cmbFPagamento.SelectedValue.ToString()),
+                            ValorPagamento = pedido.TotalPedido
+                        };
+
+                        con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
+
+                        con.Update("spAlterarItemPedido", itemPedido);
+
+                        Utils.ControlaEventos("Alterar", this.Name);
+
+                        this.cbxProdutosGrid.Text = "";
+                        this.txtPrecoUnitario.Text = "";
+                        this.txtQuantidade.Text = "";
+                        this.txtPrecoTotal.Text = "";
+                        this.txtItemDescricao.Text = "";
+
+                        if (ContraMesas && cbxListaMesas.Visible)
+                        {
+                            int CodigoMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
+                            Utils.AtualizaMesa(cbxListaMesas.Text, 2);
+                        }
+
+                        MessageBox.Show("Item alterado com sucesso.", "[xSistemas]");
+                        this.btnAdicionarItemNoPedido.Text = "Adicionar";
+                        this.btnAdicionarItemNoPedido.Click += new System.EventHandler(this.btnAdicionarItemNoPedido_Click);
+                        this.btnAdicionarItemNoPedido.Click -= new System.EventHandler(this.AlterarItem);
+                    }
+                }
             }
         }
         private void gridViewItemsPedido_MouseClick(object sender, MouseEventArgs e)
@@ -1231,7 +1354,6 @@ namespace DexComanda
                 }
                 con.Delete("spExcluirItemPedido", itemPedido);
                 con.Update("spAlterarTotalPedido", pedido);
-                Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
                 Utils.ControlaEventos("Excluir", this.Name);
                 MessageBox.Show("Item excluído com sucesso.", "DexPedido");
             }
@@ -1251,8 +1373,7 @@ namespace DexComanda
             {
                 ValorTotal += item.PrecoTotal;
             }
-            //}
-
+         
 
             DataTable dt = new DataTable();
             dt.Columns.Add(new DataColumn("Codigo", typeof(string)));
