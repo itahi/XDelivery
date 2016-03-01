@@ -65,6 +65,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tbCreditoDebito = new System.Windows.Forms.TabPage();
+            this.label25 = new System.Windows.Forms.Label();
             this.btnImprimir = new System.Windows.Forms.Button();
             this.dataFim = new System.Windows.Forms.DateTimePicker();
             this.dataInicio = new System.Windows.Forms.DateTimePicker();
@@ -100,7 +101,6 @@
             this.btnConsultar = new System.Windows.Forms.Button();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
-            this.label25 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tbPrincipal.SuspendLayout();
             this.tbCreditoDebito.SuspendLayout();
@@ -494,6 +494,15 @@
             this.tbCreditoDebito.Text = "Crédito/Débito";
             this.tbCreditoDebito.UseVisualStyleBackColor = true;
             // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(57, 365);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(80, 13);
+            this.label25.TabIndex = 12;
+            this.label25.Text = "Periodo Filtrado";
+            // 
             // btnImprimir
             // 
             this.btnImprimir.Enabled = false;
@@ -645,6 +654,7 @@
             this.txtValor.Name = "txtValor";
             this.txtValor.Size = new System.Drawing.Size(107, 20);
             this.txtValor.TabIndex = 4;
+            this.txtValor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtValor_KeyPress);
             // 
             // label18
             // 
@@ -871,15 +881,6 @@
             this.dtInicio.Name = "dtInicio";
             this.dtInicio.Size = new System.Drawing.Size(82, 20);
             this.dtInicio.TabIndex = 0;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(57, 365);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(80, 13);
-            this.label25.TabIndex = 12;
-            this.label25.Text = "Periodo Filtrado";
             // 
             // frmCadastroCliente
             // 

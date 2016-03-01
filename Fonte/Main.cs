@@ -266,6 +266,8 @@ namespace DexComanda
 
         public void ConsultarCliente(object sender, EventArgs e)
         {
+            frmPrincipal frm = new frmPrincipal();
+            frm.ShowDialog();
             // Integração.EnviaSMS_LOCASMS Enviar = new Integração.EnviaSMS_LOCASMS();
             // Enviar.EnviaSMSLista(clientesGridView, "27981667827", "549636", "MEnsage");
             BuscarCliente(txbTelefoneCliente.Text);
@@ -1840,6 +1842,11 @@ namespace DexComanda
         {
             frmAlterarOpcao frm = new frmAlterarOpcao();
             frm.Show();
+        }
+
+        private void promoçõesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

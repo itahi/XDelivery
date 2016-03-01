@@ -218,6 +218,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBExpert_TesteDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="frmPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPrincipal.Designer.cs">
+      <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Integração\MP2032.cs" />
     <Compile Include="Models\Alteracoes Multiplas\AlteracaoCliente.cs" />
     <Compile Include="Models\Alteracoes Multiplas\AlteracaoMultiplaOpcao.cs" />
@@ -735,6 +741,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Produto\frmCadOpcao.resx">
       <DependentUpon>frmCadOpcao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPrincipal.resx">
+      <DependentUpon>frmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\Alteracoes\frmAlteracaoProduto.resx">
       <DependentUpon>frmAlteracaoProduto.cs</DependentUpon>

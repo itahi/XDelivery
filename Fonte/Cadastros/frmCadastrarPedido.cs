@@ -99,7 +99,7 @@ namespace DexComanda
         //private int HoraPedido = Sessions.returnPedido.RealizadoEm.Minute;
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, string iNumeMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara, string fPagamento, string TipoPedido, string MesaBalcao,
-            Main parent, decimal iTotalPedido, decimal MargeGarcon = 0.00M)
+            Main parent=null, decimal iTotalPedido=0, decimal MargeGarcon = 0.00M)
         {
             try
             {
@@ -306,8 +306,7 @@ namespace DexComanda
                 {
                     lbTotal.Text = Convert.ToString(decimal.Parse(lbTotal.Text.Replace("R$", "")) + DMargemGarco);
                 }
-                lblNomeCliente.Text = pCliente.Nome + "-" + pCliente.Telefone;
-                lblEndereco.Text = pCliente.Endereco + "," + pCliente.Numero + "-" + pCliente.Bairro + " " + pCliente.Cidade;
+                AtualizaClienteTela();
             }
             else
             {
@@ -327,12 +326,17 @@ namespace DexComanda
                     Telefone2 = dRow["Telefone2"].ToString()
                 };
 
-                lblNomeCliente.Text = pCliente.Nome + "-" + pCliente.Telefone;
-                lblEndereco.Text = pCliente.Endereco + "," + pCliente.Numero + "-" + pCliente.Bairro + " " + pCliente.Cidade;
+                AtualizaClienteTela();
             }
             this.gridViewItemsPedido.CurrentCell = null;
         }
+        private void AtualizaClienteTela()
+        {
+            DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
 
+            lblNomeCliente.Text = dsPessoa.Tables[0].Rows[0].Field<string>("Nome") + " - " + dsPessoa.Tables[0].Rows[0].Field<string>("Telefone");
+            lblEndereco.Text = dsPessoa.Tables[0].Rows[0].Field<string>("Endereco") + "," + dsPessoa.Tables[0].Rows[0].Field<string>("Numero") + "-" + dsPessoa.Tables[0].Rows[0].Field<string>("Bairro") + " " + dsPessoa.Tables[0].Rows[0].Field<string>("Cidade");
+        }
         private void cbxProdutosGrid_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -921,7 +925,7 @@ namespace DexComanda
                             con.AlteraStatusPedido(iCodPedido, Sessions.retunrUsuario.Codigo, 1);
                             MessageBox.Show("Pedido gerado com sucesso.");
 
-                            Utils.PopulaGrid_Novo("Produto", parentWindow.produtosGridView, Sessions.SqlProduto);
+//                            Utils.PopulaGrid_Novo("Produto", parentWindow.produtosGridView, Sessions.SqlProduto);
 
                             if (ContraMesas && cbxTipoPedido.Text != "1 - Mesa")
                             {
@@ -1812,12 +1816,6 @@ namespace DexComanda
                     }
 
                     con.Update("spAlterarTrocoParaFormaPagamento", pedido);
-                    if (codPedido != 0)
-                    {
-                        Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
-                    }
-
-                    //   MessageBox.Show("Troco e/ou Forma de pagamento atualizados");
                     Ok = true;
                 }
             }
@@ -1853,8 +1851,8 @@ namespace DexComanda
 
         private void frmCadastrarPedido_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Utils.PopulaGrid_Novo("Pedido", parentWindow.pedidosGridView, Sessions.SqlPedido);
-            this.Dispose();
+            //Utils.PopulaGrid_Novo("Pedido", parentWindow.pedidosGridView, Sessions.SqlPedido);
+            //this.Dispose();
         }
 
         private void cmbFPagamento_SelectedIndexChanged(object sender, EventArgs e)
@@ -3465,7 +3463,7 @@ namespace DexComanda
                                                               , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
                                                               , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString());
 
-
+            AtualizaClienteTela();
         }
 
         private void txtDesconto_KeyUp(object sender, KeyEventArgs e)

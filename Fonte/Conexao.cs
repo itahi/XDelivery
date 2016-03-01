@@ -757,7 +757,7 @@ namespace DexComanda
             adapter.Fill(ds, iTable);
             return ds;
         }
-        public DataSet SelectMontaGrid(string iTable, string iParametrosConsulta, Boolean iAtivos = true)
+        public DataSet SelectMontaGrid(string iTable, string iParametrosConsulta, Boolean iAtivos = true,string iFiltrosAdicionais="")
         {
 
             try
@@ -770,7 +770,8 @@ namespace DexComanda
 
                     if (iTable == "Pedido")
                     {
-                        iSql = iSql.Replace(iSubSelect, "") + " Pd where Finalizado = 0 and [status] ='Aberto' ORDER BY Pd.Codigo DESC";
+                        iSql = iSql + " Pd join Pessoa P on P.Codigo=Pd.CodPessoa";
+                        iSql = iSql.Replace(iSubSelect, "") + " where Finalizado = 0 and [status] ='Aberto'"+ iFiltrosAdicionais+" ORDER BY Pd.Codigo DESC";
                     }
                     else
                     if (iTable == "Produto")
@@ -782,11 +783,11 @@ namespace DexComanda
 
                         if (iAtivos)
                         {
-                            iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=1";
+                            iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=1" + iFiltrosAdicionais;
                         }
                         else
                         {
-                            iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=0";
+                            iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=0"+ iFiltrosAdicionais;
                         }
 
                     }

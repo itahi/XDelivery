@@ -37,6 +37,7 @@ using System.Configuration;
 using DexComanda.Relatorios.Clientes;
 using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Operações.Financeiro;
+using DexComanda.Operações;
 
 namespace DexComanda
 {
@@ -139,6 +140,20 @@ namespace DexComanda
 
             }
             return Logado;
+        }
+       
+        public static void HistoricoCancelamentos(int iCodPessoa)
+        {
+            int intQuantidadeCancelamento = conexao.SelectRegistroPorCodigo("HistoricoCancelamentos", "spObterCancelamentoPorPessoa", iCodPessoa).Tables[0].Rows.Count;
+            if (intQuantidadeCancelamento > 0)
+            {
+                
+                if (MessageBoxQuestion("Cliente possui " + intQuantidadeCancelamento + "  Cancelamento(s) Deseja visualizar ?"))
+                {
+                    frmExibeCancelamentos frm = new frmExibeCancelamentos(iCodPessoa);
+                    frm.ShowDialog();
+                }
+            }
         }
         public static void MontaCombox(ComboBox icbxName, string idisplayName,
             string iValueMember, string iTable, string iSP, int iCod = -1)
@@ -771,23 +786,10 @@ namespace DexComanda
 
         public static void IniciaSistema()
         {
-            //if (CaixaAberto(DateTime.Now,1))
-            //{
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Splashcreen());
-            //}
-            //else
-            //{
-            //    if (MessageBoxQuestion("Caixa não está aberto, deseja abrir agora?"))
-            //    {
-            //        frmLogin frmL = new frmLogin();
-            //        frmL.ShowDialog();
-            //        frmAberturaCaixa frm = new frmAberturaCaixa();
-            //        frm.ShowDialog();
-            //    }
-
-            //}
+       
 
         }
 
@@ -841,7 +843,7 @@ namespace DexComanda
 
             return iRetorno;
         }
-        public static void RepetirUltimoPedido(int iCodCliente, Main iMain)
+        public static void RepetirUltimoPedido(int iCodCliente, Main iMain=null)
         {
             DataSet ds;
             int CodPessoa, CodPedido;
@@ -1314,11 +1316,11 @@ namespace DexComanda
 
             return Dados;
         }
-        public static DataSet PopulaGrid_Novo(string table, DataGridView gridView, string iParametrosConsulta, bool iAtivo = true)
+        public static DataSet PopulaGrid_Novo(string table, DataGridView gridView, string iParametrosConsulta, bool iAtivo = true,string iFiltrosAd="")
         {
             Conexao con = new Conexao();
             DataSet Dados = null;
-            Dados = con.SelectMontaGrid(table, iParametrosConsulta, iAtivo);
+            Dados = con.SelectMontaGrid(table, iParametrosConsulta, iAtivo,iFiltrosAd);
 
             gridView.DataSource = null;
             gridView.AutoGenerateColumns = true;

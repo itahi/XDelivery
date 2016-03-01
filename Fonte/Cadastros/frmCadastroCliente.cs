@@ -28,7 +28,7 @@ namespace DexComanda
         private int mCodRegiao;
         private int rowIndex;
 
-        public frmCadastroCliente(Main parent)
+        public frmCadastroCliente(Main parent=null)
         {
             InitializeComponent();
             this.parentMain = parent;
@@ -778,7 +778,7 @@ namespace DexComanda
                 CodUsuario = Sessions.retunrUsuario.Codigo,
                 Data = dtLancamento.Value,
                 Historico = txtHistorico.Text,
-                Valor = decimal.Parse(txtValor.Text.Replace(",", "."))
+                Valor = decimal.Parse(txtValor.Text)
 
             };
             if (rbCredito.Checked)
@@ -910,6 +910,11 @@ namespace DexComanda
             {
                 MessageBox.Show("Não foi possivel selecionar a linha " + erro.Message);
             }
+        }
+
+        private void txtValor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
         }
     }
 
