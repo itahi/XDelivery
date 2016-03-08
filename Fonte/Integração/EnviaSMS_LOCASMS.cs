@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace DexComanda.Integração
    public class EnviaSMS_LOCASMS
     {
 
-        public string EnviaSMSLista(Array iNumeros, string iUser, string iSennha, string iMensagem, string iNomeCampanha)
+        public string EnviaSMSLista(Array iNumero, string iUser, string iSennha, string iMensagem, string iNomeCampanha)
        {
            Array[] IRetorno = new Array[2];
            try
@@ -19,17 +20,45 @@ namespace DexComanda.Integração
                // Lista de Destinatários
                List<LOCASMS.Destination> Destinatarios = new List<LOCASMS.Destination>();
 
-               // Carregando os Destinatarios do List View
-               foreach (String numeroDestinatario in iNumeros)
-               {
-                   if (numeroDestinatario!=null)
-                   {
-                       Destinatarios.Add(new LOCASMS.Destination() { Number = numeroDestinatario }); 
-                   }
-                   
-               }
-               // Montando os Parametros
-               LOCASMS.rSMS Parametros = new LOCASMS.rSMS();
+                foreach (String numeroDestinatario in iNumero)
+                {
+                    
+                        Destinatarios.Add(new LOCASMS.Destination() { Number = numeroDestinatario });
+                        // 
+                    
+
+                }
+                // Carregando os Destinatarios do List View
+
+                //LOCASMS.Destination dest = new LOCASMS.Destination();
+
+                //    string iNumero = dataSet.Tables[0].Rows[i].Field<string>("Telefone");
+
+                //    if (iNumero.Length==8)
+                //    {
+                //        iNumero = "279" + iNumero;
+                //    }
+                //    else
+                //    {
+                //        iNumero = "27" + iNumero;
+                //    }
+                //    dest.Number = iNumero;
+                //    dest.Name = dataSet.Tables[0].Rows[i].Field<string>("Nome");
+                //     Destinatarios.Add(new LOCASMS.Destination { dest });
+                //   Destinatarios.Add(Destinatarios { Name = dataSet.Tables[0].Rows[i].Field<string>("Nome") });
+
+                //foreach (String numeroDestinatario in ds)
+                //{
+                //    if (numeroDestinatario!=null)
+                //    {
+                //        Destinatarios.Add(new LOCASMS.Destination() { Number = numeroDestinatario });
+                //       // 
+                //     }
+
+                //}
+
+                // Montando os Parametros
+                LOCASMS.rSMS Parametros = new LOCASMS.rSMS();
                Parametros.Destinations = Destinatarios.ToArray();
               //  Parametros.JobDateTime = iDataEnvio; 
 

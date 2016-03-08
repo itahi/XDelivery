@@ -271,7 +271,7 @@ namespace DexComanda
 
                                 }
                                 // CNPJ OSVALDO
-                                else if (empresas.Servidor=="DESKTOP-TGEH425"|| empresas.Servidor== "DESKTOP-5K2U4E8" || empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "10512501000100")
+                                else if (empresas.Servidor=="DESKTOP-TGEH425"|| empresas.Servidor== "DESKTOP-5K2U4E8" || empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "10512501000100" ||empresas.Servidor== "MARK-PC")
                                 {
                                     Utils.IniciaSistema();
                                 }

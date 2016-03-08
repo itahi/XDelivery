@@ -444,11 +444,11 @@ namespace DexComanda
                 }
                 else if (iTodos)
                 {
-                    lSqlConsulta = "select top 2000 Telefone,Nome from Pessoa P" +
+                    lSqlConsulta = "select Telefone,Nome from Pessoa P" +
                                    " where  " +
-                                   " (SUBSTRING(Telefone,0,2) = 9 " +
-                                   " or SUBSTRING(Telefone,0,2) =8  " +
-                                   " and DATALENGTH(Telefone) >=8)   and Codigo >26349";
+                                   " (SUBSTRING(Telefone,0,2) ='9' " +
+                                   " or SUBSTRING(Telefone,0,2) ='8'  " +
+                                   " and DATALENGTH(Telefone) >=8) ";
                 }
             }
             catch (Exception erro)

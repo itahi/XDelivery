@@ -647,7 +647,7 @@ namespace DexComanda
 
         private void SalvarConfigPedido(object sender, EventArgs e)
         {
-            string strConfigPedido = "Codigo,";
+            string strConfigPedido = "Pd.Codigo,";
             if (chkNomeCliente.Checked)
             {
                 strConfigPedido = strConfigPedido + "(select Nome from Pessoa P where P.Codigo = Pd.CodPessoa) as 'Nome Cliente'";
@@ -676,7 +676,7 @@ namespace DexComanda
             }
             if (chkTipo.Checked)
             {
-                strConfigPedido = strConfigPedido + ",Tipo";
+                strConfigPedido = strConfigPedido + ",Pd.Tipo";
             }
             if (chkNumeroMesa.Checked)
             {

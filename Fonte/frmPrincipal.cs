@@ -189,7 +189,7 @@ namespace DexComanda
             
             int iNumeroCaixa = Sessions.returnUsuario.CaixaLogado;
             iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now, iNumeroCaixa).Tables["Caixa"].Rows.Count;
-            if (Utils.CaixaAberto(DateTime.Now, iNumeroCaixa))
+            if (iCaixaAberto>0)
             {
                 aberturaCaixaToolStripMenuItem.Enabled = false;
                 lblCaixa.Text = "Caixa Aberto";
@@ -389,7 +389,11 @@ namespace DexComanda
             double dblTotalPedidos = 0;
             for (int i = 0; i < pedidosGridView.Rows.Count; i++)
             {
-                dblTotalPedidos = dblTotalPedidos +double.Parse( pedidosGridView.Rows[i].Cells["TotalPedido"].Value.ToString());
+                if (pedidosGridView.Columns.Contains("TotalPedido"))
+                {
+                    dblTotalPedidos = dblTotalPedidos + double.Parse(pedidosGridView.Rows[i].Cells["TotalPedido"].Value.ToString());
+                }
+                
             }
             lblValor.Text = dblTotalPedidos.ToString();
             lblQtd.Text = pedidosGridView.Rows.Count.ToString();
@@ -489,6 +493,7 @@ namespace DexComanda
                     CarregaPedido(codigo);
 
                 }
+                Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido); 
 
             }
             catch (Exception es)
@@ -592,10 +597,10 @@ namespace DexComanda
                             // Grava Movimento De Caixa
                             GravaMOvimentoCaixa(strFormaPagamento, dblTotalPedido, codigo);
 
-                            iCodMesa = dRowPedido.ItemArray.GetValue(9).ToString();
-                            if (ControlaMesas && iCodMesa != "0")
+                            NumeroMesa = dRowPedido.ItemArray.GetValue(9).ToString();
+                            if (ControlaMesas && NumeroMesa != "0")
                             {
-                                Utils.AtualizaMesa(iCodMesa, 1);
+                                Utils.AtualizaMesa(NumeroMesa, 1);
                             }
                             con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 
@@ -637,7 +642,7 @@ namespace DexComanda
                         MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
                     }
 
-                    iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(9).ToString());
+                    NumeroMesa = dRowPedido.ItemArray.GetValue(9).ToString();
                     int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
                     dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
                     string iTipo = dRowPedido.ItemArray.GetValue(8).ToString();
@@ -650,10 +655,10 @@ namespace DexComanda
                     }
 
                     // Caso o pedido for mesa ele altera o Status da Mesa
-                    if (ControlaMesas && iCodMesa != 0)
+                    if (ControlaMesas && NumeroMesa != "0")
                     {
                         //  NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
-                        Utils.AtualizaMesa(Convert.ToString(iCodMesa), 1);
+                        Utils.AtualizaMesa(NumeroMesa, 1);
                     }
 
                     // Grava Débito caso o Tipo de Pagamento gerar financeiro 
@@ -1512,12 +1517,11 @@ namespace DexComanda
 
                 if (iPedidosAberto != pedidosGridView.Rows.Count && cbxFiltroTipo.Text == "")
                 {
-
+                    TotalizaPedidos();
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
 
                 }
 
-               // double dblTotalPedidos = 0;
                 for (int i = 0; i < pedidosGridView.Rows.Count; i++)
                 {
                   

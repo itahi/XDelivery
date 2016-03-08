@@ -202,7 +202,46 @@ namespace DexComanda
             }
             return iResposta;
         }
+        public static void ImprimirHistoricoCliente_Epson(int iCodPessoa, DateTime iDtInici, DateTime idtFim)
+        {
+            RelHistoricoCliente_Epson report;
+            try
+            {
+                report = new RelHistoricoCliente_Epson();
 
+                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                report.Load(Directory.GetCurrentDirectory() + @"\RelHistoricoCliente_Epson.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "dex";
+                crConnectionInfo.Password = "1234";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+
+                report.SetParameterValue("@CodPessoa", iCodPessoa);
+                report.SetParameterValue("@DataInicio", iDtInici.Date);
+                report.SetParameterValue("@DataFim", idtFim.Date);
+
+
+                report.PrintToPrinter(0, true, 0, 0);
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message);
+            }
+
+        }
         public static void ImprimirHistoricoCliente(int iCodPessoa, DateTime iDtInici, DateTime idtFim)
         {
             RelHistoricoCliente report;
@@ -242,6 +281,70 @@ namespace DexComanda
                 MessageBox.Show(erro.Message);
             }
 
+        }
+        public static string ImpressaoEntre_Epson(int iCodPedido, decimal iValorPago, string iPrevisaoEntrega, Boolean iExport = false, int iNumCopias = 0)
+        {
+            string iRetorno = ""; ;
+
+            RelDelivery_Epson
+                report;
+            try
+            {
+                report = new RelDelivery_Epson();
+                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery_Epson.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "dex";
+                crConnectionInfo.Password = "1234";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+
+                report.SetParameterValue("@Codigo", iCodPedido);
+                report.SetParameterValue("ValorPago", iValorPago);
+                report.SetParameterValue("PrevEntrega", iPrevisaoEntrega);
+                if (iExport)
+                {
+                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
+                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery_Epson.txt";
+
+                    report.ExportOptions.ExportDestinationType =
+                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+                    report.ExportOptions.ExportFormatType =
+                    CrystalDecisions.Shared.ExportFormatType.Text;
+
+                    report.ExportOptions.DestinationOptions = reportExport;
+                    report.Export();
+                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery_Epson.txt";
+                }
+                else
+                {
+                    for (int i = 0; i < iNumCopias; i++)
+                    {
+                        report.PrintToPrinter(1, false, 0, 0);
+                    }
+
+
+                }
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show("Erro na impressao :" + erro.Message);
+            }
+            return iRetorno;
         }
         public static string ImpressaoEntreganova(int iCodPedido, decimal iValorPago, string iPrevisaoEntrega, Boolean iExport = false, int iNumCopias = 0)
         {
@@ -801,6 +904,10 @@ namespace DexComanda
             conexao = new Conexao();
             try
             {
+                if (Sessions.returnEmpresa.CNPJ== "22695578000142"||Sessions.returnEmpresa.CNPJ == "18907495000100" || Sessions.returnEmpresa.CNPJ == "22678091000151")
+                {
+
+                }
                 //if (Sessions.returnUsuario != null)
                 //{
                 dsCaixa = conexao.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", iDataRegistro, iNumero);
@@ -815,6 +922,10 @@ namespace DexComanda
                     {
                         frmAberturaCaixa frm = new frmAberturaCaixa();
                         frm.ShowDialog();
+                    }
+                    else
+                    {
+                        iRetorno = true;
                     }
                    // MessageBox.Show("O Caixa não esta aberto, sistema funcionará somente no modo consulta");
                 }
@@ -1129,11 +1240,11 @@ namespace DexComanda
         public static string EnviaSMS_LOCASMS(DataSet ds, string iMessagem, string iNomeCampanha, string iUser, string iSenha)
         {
             string strRetorno = "";
-            DialogResult resultado = MessageBox.Show("O Sistema enviará SMS para " + ds.Tables[0].Rows.Count + " Clientes , deseja continuar?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (resultado == DialogResult.Yes)
+            
+            if (Utils.MessageBoxQuestion("O Sistema enviará SMS para " + ds.Tables[0].Rows.Count + " Clientes , deseja continuar?"))
             {
                 System.String[] Telefone = new System.String[ds.Tables[0].Rows.Count];
+                System.String[] Nome = new System.String[ds.Tables[0].Rows.Count];
 
                 for (int i = 0; i < ds.Tables["Pessoa"].Rows.Count; i++)
                 {
@@ -1144,12 +1255,13 @@ namespace DexComanda
                     if (iNumero.Length == 8)
                     {
                         Telefone[i] = "279" + iNumero;
+
                     }
                     else
                     {
                         Telefone[i] = "27" + iNumero;
                     }
-
+                    Nome[i] = NomeCliente;
                 }
 
                 Integração.EnviaSMS_LOCASMS EnviarSMS = new EnviaSMS_LOCASMS();

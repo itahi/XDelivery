@@ -799,6 +799,10 @@ namespace DexComanda
                     con.Update("spAlterarProduto", prod);
                 }
             }
+            else
+            {
+                MessageBox.Show("Senha mestra errada");
+            }
         }
     }
 }

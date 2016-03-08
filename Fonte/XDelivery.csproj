@@ -413,6 +413,12 @@
       <DependentUpon>RelCreditoDebito.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Clientes\RelHistoricoCliente_Epson.cs">
+      <DependentUpon>RelHistoricoCliente_Epson.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Relatorios\Clientes\RelHistoricoCliente.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -424,6 +430,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RelBalcao.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelDelivery.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelDelivery.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelDelivery_Epson.cs">
+      <DependentUpon>RelDelivery_Epson.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Relatorios\Delivery\RelDelivery_Matricial.cs">
       <DependentUpon>RelDelivery_Matricial.rpt</DependentUpon>
@@ -682,12 +700,6 @@
     <Compile Include="Relatorios\Fechamentos\frmReportVendasPorProduto.Designer.cs">
       <DependentUpon>frmReportVendasPorProduto.cs</DependentUpon>
     </Compile>
-    <Compile Include="Relatorios\Delivery\RelDelivery.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RelDelivery.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Relatorios\Gerenciais\Cristal\RelEvolucaoVendas.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -795,6 +807,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelCreditoDebito.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Clientes\RelHistoricoCliente_Epson.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelHistoricoCliente_Epson.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\RelHistoricoCliente.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelHistoricoCliente.cs</LastGenOutput>
@@ -802,6 +818,14 @@
     <EmbeddedResource Include="Relatorios\Delivery\RelBalcao.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelBalcao.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelDelivery.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDelivery.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelDelivery_Epson.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDelivery_Epson.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelDelivery_Matricial.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -931,10 +955,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\Splashcreen.resx">
       <DependentUpon>Splashcreen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Delivery\RelDelivery.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelDelivery.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelEvolucaoVendas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

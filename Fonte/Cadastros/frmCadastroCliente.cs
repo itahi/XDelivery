@@ -310,8 +310,8 @@ namespace DexComanda
             try
             {
                 this.Close(); 
-                DialogResult resultado = MessageBox.Show("Deseja realizar um Pedido para pessoa cadastrada?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (resultado == DialogResult.Yes)
+             //   DialogResult resultado = MessageBox.Show("Deseja realizar um Pedido para pessoa cadastrada?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (Utils.MessageBoxQuestion("Deseja realizar um Pedido para pessoa cadastrada?"))
                 {
                     DBExpertDataSet dbExpert = new DBExpertDataSet();
                     DataSet pessoaTelefone = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", telefone);
@@ -325,15 +325,15 @@ namespace DexComanda
                         DataRow dRow = Pessoa.Tables["Pessoa"].Rows[0];
 
                         int iCodPessoa = int.Parse(dRow.ItemArray.GetValue(0).ToString());
-                        this.parentMain.txtNome.Text = dRow.ItemArray.GetValue(1).ToString();
-                        this.parentMain.txtEndereco.Text = dRow.ItemArray.GetValue(2).ToString();
-                        this.parentMain.txtBairro.Text = dRow.ItemArray.GetValue(3).ToString();
-                        this.parentMain.txtCidade.Text = dRow.ItemArray.GetValue(4).ToString();
-                        this.parentMain.txtPontoReferencia.Text = dRow.ItemArray.GetValue(5).ToString();
+                        //this.parentMain.txtNome.Text = dRow.ItemArray.GetValue(1).ToString();
+                        //this.parentMain.txtEndereco.Text = dRow.ItemArray.GetValue(2).ToString();
+                        //this.parentMain.txtBairro.Text = dRow.ItemArray.GetValue(3).ToString();
+                        //this.parentMain.txtCidade.Text = dRow.ItemArray.GetValue(4).ToString();
+                        //this.parentMain.txtPontoReferencia.Text = dRow.ItemArray.GetValue(5).ToString();
 
                         var TaxaEntrega = Utils.RetornaTaxaPorCliente(iCodPessoa, con);
                         frmCadastrarPedido frmCadastrarPedido = new frmCadastrarPedido(false, "0,00", "", "", TaxaEntrega, false, DateTime.Now, 0, int.Parse(dRow.ItemArray.GetValue(0).ToString()),
-                                                                                       "", "", "", "", this.parentMain, 0.00M);
+                                                                                       "", "", "", "");
                         frmCadastrarPedido.ShowDialog();
                     }
                 }
@@ -832,7 +832,15 @@ namespace DexComanda
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            Utils.ImprimirHistoricoCliente(codigoClienteParaAlterar,dataInicio.Value,dataFim.Value);
+            if (Sessions.returnEmpresa.CNPJ== "13004606798")
+            {
+                Utils.ImprimirHistoricoCliente(codigoClienteParaAlterar, dataInicio.Value, dataFim.Value);
+
+            }
+            else
+            {
+                Utils.ImprimirHistoricoCliente_Epson(codigoClienteParaAlterar, dataInicio.Value, dataFim.Value);
+            }
             //  frm.ShowDialog();
         }
 
