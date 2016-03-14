@@ -64,7 +64,6 @@
         private System.Windows.Forms.Button btnCalGarcon;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.CheckedListBox chkListAdicionais;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.GroupBox grpBoxTamanhos;
         private System.Windows.Forms.RadioButton radioButton6;
@@ -82,5 +81,7 @@
         private System.Windows.Forms.RadioButton rb11;
         private System.Windows.Forms.RadioButton rb10;
         private System.Windows.Forms.Button btnAtlCadastro;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblStatusPedido;
     }
 }

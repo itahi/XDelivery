@@ -141,6 +141,7 @@ namespace DexComanda
             }
             return Logado;
         }
+      
        
         public static void HistoricoCancelamentos(int iCodPessoa)
         {
@@ -982,13 +983,13 @@ namespace DexComanda
 
         }
 
-        public static void AtualizaMesa(string iNumeroMesa, int iStatus)
+        public static void AtualizaMesa(int iCodigoMesa, int iStatus)
         {
             conexao = new Conexao();
             Mesas mesas = new Mesas()
             {
-                // Codigo = iCodigo,
-                NumeroMesa = iNumeroMesa,
+                 Codigo = iCodigoMesa,
+                //NumeroMesa = iNumeroMesa,
                 StatusMesa = iStatus
             };
             conexao.Update("spAlteraStatusMesa", mesas);
@@ -999,7 +1000,7 @@ namespace DexComanda
             DataSet iDados;
             int iRetorno = 0;
             conexao = new Conexao();
-            iDados = conexao.SelectRegistroPorCodigo("Mesas", "spObterCodigoMesa", int.Parse(iNumMesa));
+            iDados = conexao.SelectRegistroPorCodigo("Mesas", "spObterCodigoMesa",0,iNumMesa);
             if (iDados != null)
             {
                 DataRow iLinha = iDados.Tables[0].Rows[0];

@@ -290,6 +290,7 @@ namespace DexComanda.Operações
                 request.AddParameter("valor", ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("TaxaServico"));
                 request.AddParameter("referencia_id", ds.Tables["RegiaoEntrega"].Rows[i].Field<int>("Codigo"));
                 request.AddParameter("ativo", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<Boolean>("OnlineSN")));
+
                 if (ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("valorMinimoFreteGratis")>0)
                 {
                     request.AddParameter("valorMinimoFreteGratis", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("valorMinimoFreteGratis")));

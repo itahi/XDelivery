@@ -15,7 +15,7 @@ namespace DexComanda.Models
         public string FormaPagamento { get; set; }
         public DateTime RealizadoEm { get; set; }
         public string Tipo { get; set; }
-        public int NumeroMesa { get; set; }
+        public string NumeroMesa { get; set; }
         public string Status { get; set; }
         public string PedidoOrigem { get; set; }
         public int CodigoMesa { get; set; }

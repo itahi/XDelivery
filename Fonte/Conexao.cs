@@ -141,7 +141,7 @@ namespace DexComanda
             return ds;
 
         }
-        public void AlteraStatusPedido(int iCodPedido, int iCodUser, int iCodStatus)
+        public void AtualizaSitucao(int iCodPedido, int iCodUser, int iCodStatus, DataGridView grid = null)
         {
             PedidoStatusMovimento ped = new PedidoStatusMovimento()
             {
@@ -151,7 +151,7 @@ namespace DexComanda
                 DataAlteracao = DateTime.Now
             };
             Insert("spAdicionarPedidoStatusMovimento", ped);
-
+           // Utils.PopulaGrid_Novo("Pedido", grid, Sessions.SqlPedido);
         }
         public decimal RetornaPrecoComEmbalagem(string iGrupoProduto, int iCodProduto)
         {
@@ -421,7 +421,7 @@ namespace DexComanda
                 {
                     lSqlConsulta = "select Telefone,Nome from Pessoa P" +
                                   "  where  " +
-                                  "  P.Codigo not in ( Select Codigo from Pedido where RealizadoEm between @Data1 and @Data2 )" +
+                                  "  P.Codigo not in ( Select CodPessoa from Pedido where RealizadoEm between @Data1 and @Data2 )" +
                                   "  and " +
                                   "  (SUBSTRING(Telefone,0,2) = 9 " +
                                   "  or SUBSTRING(Telefone,0,2) =8)";
@@ -770,8 +770,19 @@ namespace DexComanda
 
                     if (iTable == "Pedido")
                     {
-                        iSql = iSql + " Pd join Pessoa P on P.Codigo=Pd.CodPessoa";
-                        iSql = iSql.Replace(iSubSelect, "") + " where Finalizado = 0 and [status] ='Aberto'"+ iFiltrosAdicionais+" ORDER BY Pd.Codigo DESC";
+                        //if (iSql.Contains("PS.Nome"))
+                        //{
+                        //    iSql = iSql + " PD (select Nome from PedidoStatus PS where PS.Codigo in (select top 1 CodStatus from PedidoStatusMovimento PSM where PSM.CodPedido=Pd.Codigo)  ) ";
+                        //}
+                        //else
+                        //{
+                            iSql = iSql + " Pd join Pessoa P on P.Codigo=Pd.CodPessoa";
+                        //}
+
+                     //   iSql = iSql + " Pd join Pessoa P on P.Codigo=Pd.CodPessoa";
+                       
+                        
+                        iSql = iSql.Replace(iSubSelect, "") + " where Finalizado = 0 and PD.status ='Aberto'"+ iFiltrosAdicionais+" ORDER BY Pd.Codigo DESC";
                     }
                     else
                     if (iTable == "Produto")
@@ -1093,13 +1104,20 @@ namespace DexComanda
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
                 }
-                else if (spName == "spAlterarItemPedido" || spName == "spAlteraStatusMesa" || spName == "spFecharCaixa")
+                else if (spName == "spAlterarItemPedido" || spName == "spFecharCaixa")
                 {
-                    if (!p.Name.Equals("Codigo") && !p.Name.Equals("ValorAbertura"))
+                    if (!p.Name.Equals("Codigo") && !p.Name.Equals("ValorAbertura") && !p.Name.Equals("NumeroMesa"))
                     {
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
 
+                }
+                else if (spName== "spAlteraStatusMesa")
+                {
+                    if (!p.Name.Equals("NumeroMesa"))
+                    {
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
                 }
                 else if (spName == "spAlterarUsuario")
                 {
@@ -1459,13 +1477,13 @@ namespace DexComanda
             return ds;
         }
 
-        public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo)
+        public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo,string iCodString="0")
         {
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
             if (spName == "spObterCodigoMesa")
             {
-                command.Parameters.AddWithValue("@NumeroMesa", codigo);
+                command.Parameters.AddWithValue("@NumeroMesa", iCodString);
             }
             else if (spName == "spObterHistoricoPorPessoa")
             {

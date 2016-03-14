@@ -174,10 +174,6 @@
             this.chkDescricao = new System.Windows.Forms.CheckBox();
             this.chkNomeProd = new System.Windows.Forms.CheckBox();
             this.chkCodigo = new System.Windows.Forms.CheckBox();
-            this.btnCancelar = new System.Windows.Forms.Button();
-            this.btnSalvar = new System.Windows.Forms.Button();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
@@ -187,6 +183,10 @@
             this.label34 = new System.Windows.Forms.Label();
             this.txtLink1 = new System.Windows.Forms.TextBox();
             this.cbxPlataforma1 = new System.Windows.Forms.ComboBox();
+            this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnSalvar = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -1473,9 +1473,9 @@
             this.chkstatus.AutoSize = true;
             this.chkstatus.Location = new System.Drawing.Point(131, 12);
             this.chkstatus.Name = "chkstatus";
-            this.chkstatus.Size = new System.Drawing.Size(54, 17);
+            this.chkstatus.Size = new System.Drawing.Size(56, 17);
             this.chkstatus.TabIndex = 44;
-            this.chkstatus.Text = "status";
+            this.chkstatus.Text = "Status";
             this.chkstatus.UseVisualStyleBackColor = true;
             // 
             // chkNumeroMesa
@@ -1706,36 +1706,6 @@
             this.chkCodigo.Text = "Código";
             this.chkCodigo.UseVisualStyleBackColor = true;
             // 
-            // btnCancelar
-            // 
-            this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
-            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(592, 432);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelar.TabIndex = 24;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            // 
-            // btnSalvar
-            // 
-            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
-            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalvar.Location = new System.Drawing.Point(511, 433);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(75, 23);
-            this.btnSalvar.TabIndex = 23;
-            this.btnSalvar.Text = "Salvar";
-            this.btnSalvar.UseVisualStyleBackColor = true;
-            this.btnSalvar.Click += new System.EventHandler(this.SalvaConfig);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.label31);
@@ -1831,6 +1801,36 @@
             this.cbxPlataforma1.Name = "cbxPlataforma1";
             this.cbxPlataforma1.Size = new System.Drawing.Size(121, 21);
             this.cbxPlataforma1.TabIndex = 9;
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.Location = new System.Drawing.Point(592, 432);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.TabIndex = 24;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
+            // btnSalvar
+            // 
+            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
+            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSalvar.Location = new System.Drawing.Point(511, 433);
+            this.btnSalvar.Name = "btnSalvar";
+            this.btnSalvar.Size = new System.Drawing.Size(75, 23);
+            this.btnSalvar.TabIndex = 23;
+            this.btnSalvar.Text = "Salvar";
+            this.btnSalvar.UseVisualStyleBackColor = true;
+            this.btnSalvar.Click += new System.EventHandler(this.SalvaConfig);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // frmConfiguracoes
             // 

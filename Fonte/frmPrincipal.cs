@@ -515,21 +515,27 @@ namespace DexComanda
                 MenuItem FinalizaSelecionados = new MenuItem(" 2 - Finalizar Todos Selecionado?");
                 MenuItem ImprimeConferenciaMesa = new MenuItem(" Imprimir Conferencia desta Mesa");
                 MenuItem PedidoONline = new MenuItem(" X - Status Pedido");
-                PedidoONline.Enabled = true;
+               
                 if (pedidosGridView.Rows.Count > 0)
                 {
-                    PedidoONline.Enabled = true;
                     PedidoONline = new MenuItem(" X - Status Pedido");
-                    MenuItem StatusNaCozinha = new MenuItem(" 0 - Pedido na Cozinha");
-                    MenuItem StatusNaEntrega = new MenuItem(" 1 - Saiu pra entrega");
-                    MenuItem StatusCancelado = new MenuItem(" 2 - Cancelado");
 
-                    PedidoONline.MenuItems.Add(StatusNaCozinha);
-                    PedidoONline.MenuItems.Add(StatusNaEntrega);
-                    PedidoONline.MenuItems.Add(StatusCancelado);
-                    StatusCancelado.Enabled = Sessions.returnUsuario.CancelaPedidosSN;
-                    StatusNaCozinha.Click += PedidoNaCozinha;
-                    StatusNaEntrega.Click += PedidoNaEntrega;
+                    DataSet dsStatus = con.SelectAll("PedidoStatus","", "select * from PedidoStatus");
+                    //for (int i = 0; i < dsStatus.Tables[0].Rows.Count; i++)
+                    //{
+                        
+                        MenuItem StatusNaCozinha = new MenuItem(" 0 - Pedido na Cozinha");
+                        MenuItem StatusNaEntrega = new MenuItem(" 1 - Saiu pra entrega");
+                        MenuItem StatusCancelado = new MenuItem(" 2 - Cancelado");
+
+                        PedidoONline.MenuItems.Add(StatusNaCozinha);
+                        PedidoONline.MenuItems.Add(StatusNaEntrega);
+                        PedidoONline.MenuItems.Add(StatusCancelado);
+                        StatusCancelado.Enabled = Sessions.returnUsuario.CancelaPedidosSN;
+                        StatusNaCozinha.Click += PedidoNaCozinha;
+                        StatusNaEntrega.Click += PedidoNaEntrega;
+                    //}
+                   
 
                 }
 
@@ -561,7 +567,8 @@ namespace DexComanda
                 bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
                 int codigo;
                 bool Marcado;
-                string NumeroMesa, iCodMesa;
+                string NumeroMesa;
+                int iCodMesa;
 
                 if (Utils.MessageBoxQuestion("Deseja ** FINALIZAR ** Todos Pedidos Selecionado?"))
                 {
@@ -597,10 +604,10 @@ namespace DexComanda
                             // Grava Movimento De Caixa
                             GravaMOvimentoCaixa(strFormaPagamento, dblTotalPedido, codigo);
 
-                            NumeroMesa = dRowPedido.ItemArray.GetValue(9).ToString();
-                            if (ControlaMesas && NumeroMesa != "0")
+                            iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
+                            if (ControlaMesas && iCodMesa != 0)
                             {
-                                Utils.AtualizaMesa(NumeroMesa, 1);
+                                Utils.AtualizaMesa(iCodMesa, 1);
                             }
                             con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 
@@ -627,8 +634,7 @@ namespace DexComanda
                 bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
                 int codigo, iCodMesa;
                 decimal dblTotalPedido;
-                string NumeroMesa;
-
+             
                 if (Utils.MessageBoxQuestion("Deseja ** FINALIZAR ** este pedido?"))
                 {
                     codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
@@ -642,7 +648,7 @@ namespace DexComanda
                         MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
                     }
 
-                    NumeroMesa = dRowPedido.ItemArray.GetValue(9).ToString();
+                    iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
                     int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
                     dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
                     string iTipo = dRowPedido.ItemArray.GetValue(8).ToString();
@@ -655,10 +661,10 @@ namespace DexComanda
                     }
 
                     // Caso o pedido for mesa ele altera o Status da Mesa
-                    if (ControlaMesas && NumeroMesa != "0")
+                    if (ControlaMesas && iCodMesa != 0)
                     {
                         //  NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
-                        Utils.AtualizaMesa(NumeroMesa, 1);
+                        Utils.AtualizaMesa(iCodMesa, 1);
                     }
 
                     // Grava Débito caso o Tipo de Pagamento gerar financeiro 
@@ -814,9 +820,9 @@ namespace DexComanda
                         cancelPedid.Codigo = Codigo;
                         cancelPedid.RealizadoEm = DateTime.Now;
 
-                        string iCodMesa = dRowPedido.ItemArray.GetValue(9).ToString();
+                        int iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
 
-                        if (ControlaMesas && iCodMesa != "0")
+                        if (ControlaMesas && iCodMesa != 0)
                         {
                             Utils.AtualizaMesa(iCodMesa, 1);
                         }
@@ -890,7 +896,7 @@ namespace DexComanda
                     AlteraStatusPedido(CodPedidoWS, 3);
                 }
 
-                con.AlteraStatusPedido(intCodPedido, Sessions.retunrUsuario.Codigo, 2);
+                con.AtualizaSitucao(intCodPedido, Sessions.retunrUsuario.Codigo, 2,pedidosGridView);
 
             }
             catch (Exception erro)
@@ -910,7 +916,7 @@ namespace DexComanda
                 {
                     AlteraStatusPedido(CodPedidoWS, 4);
                 }
-                con.AlteraStatusPedido(intCodPedido, Sessions.retunrUsuario.Codigo, 3);
+                con.AtualizaSitucao(intCodPedido, Sessions.retunrUsuario.Codigo, 3,pedidosGridView);
             }
             catch (Exception erro)
             {

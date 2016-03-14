@@ -773,7 +773,7 @@ namespace DexComanda
                         if (ControlaMesas && iCodMesa != "0")
                         {
                             //   string NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
-                            Utils.AtualizaMesa(iCodMesa, 1);
+                            Utils.AtualizaMesa(1, 1);
                         }
                         cancelPedid.status = "Cancelado";
                         if (Sessions.returnConfig.RegistraCancelamentos)
@@ -871,7 +871,7 @@ namespace DexComanda
                             iCodMesa = dRowPedido.ItemArray.GetValue(9).ToString();
                             if (ControlaMesas && iCodMesa != "0")
                             {
-                                Utils.AtualizaMesa(iCodMesa, 1);
+                                Utils.AtualizaMesa(1, 1);
                             }
                             con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 
@@ -1000,7 +1000,7 @@ namespace DexComanda
                     if (ControlaMesas && iCodMesa != 0)
                     {
                         //  NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
-                        Utils.AtualizaMesa(Convert.ToString(iCodMesa), 1);
+                        Utils.AtualizaMesa(iCodMesa, 1);
                     }
 
                     // Grava Débito caso o Tipo de Pagamento gerar financeiro 
