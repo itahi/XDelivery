@@ -29,6 +29,7 @@ namespace DexComanda
 
         private void Main_Load(object sender, EventArgs e)
         {
+            Utils.MontaCombox(cbxFamilia, "Nome", "Codigo", "Familia", "spObterFamilia");
             pnlImpressora.Enabled = chkImprimeCozinha.Checked;
         }
 
@@ -52,6 +53,14 @@ namespace DexComanda
                 {
                     grupo.NomeImpressora = "";
                 }
+                if (cbxFamilia.SelectedValue!=null)
+                {
+                    grupo.CodFamilia = int.Parse(cbxFamilia.SelectedValue.ToString());
+                }
+                else
+                {
+                    grupo.CodFamilia = 0;
+                }
 
                 if (txbNomeGrupo.Text !="")
                 {
@@ -66,21 +75,31 @@ namespace DexComanda
                 }
                 
             }
-            catch
+            catch (Exception erro)
             {
-                MessageBox.Show("Ocorreu um erro na gravaçao do registro","Dex Aviso");
+                MessageBox.Show("Ocorreu um erro na gravaçao do registro "+erro.Message,"xSistemas Aviso");
             }
         }
 
         private void EditarGrupo(object sender, EventArgs e)
         {
 
-            codigo = int.Parse(this.gruposGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-            this.txbNomeGrupo.Text = this.gruposGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
-            chkImprimeCozinha.Checked =Convert.ToBoolean( this.gruposGridView.SelectedRows[rowIndex].Cells[2].Value.ToString());
-            cbxNomeImpressora.Text = this.gruposGridView.SelectedRows[rowIndex].Cells["NomeImpressora"].Value.ToString();
-            chkOnline.Checked = Convert.ToBoolean(this.gruposGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
-            chkAtivo.Checked = Convert.ToBoolean(this.gruposGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
+            codigo = int.Parse(this.gruposGridView.Rows[rowIndex].Cells[0].Value.ToString());
+            this.txbNomeGrupo.Text = this.gruposGridView.Rows[rowIndex].Cells[1].Value.ToString();
+            chkImprimeCozinha.Checked =Convert.ToBoolean( this.gruposGridView.Rows[rowIndex].Cells[2].Value.ToString());
+            cbxNomeImpressora.Text = this.gruposGridView.Rows[rowIndex].Cells["NomeImpressora"].Value.ToString();
+            chkOnline.Checked = Convert.ToBoolean(this.gruposGridView.Rows[rowIndex].Cells[3].Value.ToString());
+            chkAtivo.Checked = Convert.ToBoolean(this.gruposGridView.Rows[rowIndex].Cells[4].Value.ToString());
+
+            if (gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString()!="0")
+            {
+                Utils.MontaCombox(cbxFamilia, "Nome", "Codigo", "Familia", "spObterFamiliaPorCodigo", int.Parse(gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString()));
+            }
+            else
+            {
+                cbxFamilia.DisplayMember = "";
+                cbxFamilia.SelectedValue = null;
+            }
 
             this.btnAdicionarGrupo.Text = "Salvar [F12]";
             this.btnAdicionarGrupo.Click += new System.EventHandler(this.SalvarGrupo);
@@ -130,6 +149,14 @@ namespace DexComanda
             {
                 grupo.NomeImpressora = "";
             }
+            if (cbxFamilia.SelectedValue != null)
+            {
+                grupo.CodFamilia = int.Parse(cbxFamilia.SelectedValue.ToString());
+            }
+            else
+            {
+                grupo.CodFamilia = 0;
+            }
 
             if (txbNomeGrupo.Text !="")
             {
@@ -170,16 +197,9 @@ namespace DexComanda
 
         private void gruposGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int total = this.gruposGridView.SelectedRows.Count;
 
-            for (int i = 0; i < total; i++)
-            {
-                if (this.gruposGridView.Rows[i].Selected)
-                {
-                    rowIndex = this.gruposGridView.Rows[i].Index;
-                }
-            }
-
+            rowIndex = e.RowIndex;
+       
         }
 
         private void DeletaGrupo(object sender, EventArgs e)
@@ -255,6 +275,11 @@ namespace DexComanda
         private void chkImprimeCozinha_CheckedChanged_1(object sender, EventArgs e)
         {
             pnlImpressora.Enabled = chkImprimeCozinha.Checked;
+        }
+
+        private void EditarFamilia(object sender, EventArgs e)
+        {
+            Utils.MontaCombox(cbxFamilia, "Nome", "Codigo", "Familia", "spObterFamilia");
         }
     }
 }

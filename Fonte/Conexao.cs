@@ -882,13 +882,24 @@ namespace DexComanda
                 }
                 foreach (PropertyInfo propriedade in properties)
                 {
-
+                    //if (spName== "spAdicionarGrupo")
+                    //{
+                        
+                    //}
                     if (!propriedade.Name.Equals("Codigo"))
                     {
                         if (!propriedade.Name.Equals("cod"))
                         {
-                            Console.WriteLine(propriedade.Name);
-                            command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                            if (propriedade.Name.ToString() == "CodFamilia" && propriedade.GetValue(obj).ToString() == "0")
+                            {
+                                command.Parameters.AddWithValue("@" + propriedade.Name, DBNull.Value);
+                            }
+                            else
+                            {
+                                Console.WriteLine(propriedade.Name);
+                                command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                            }
+                            
                         }
                     }
                 }
@@ -1083,13 +1094,24 @@ namespace DexComanda
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
                 }
-                //else if (spName=="spAlterarOpcaoProduto")
-                //{
-                //    if (!p.Name.Equals("DataSincronismo") ||!p.Name.Equals("Codigo"))
-                //    {
-                //        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
-                //    }
-                //}
+                else if (spName == "spAlterarGrupo")
+                {
+                    if (!p.Name.Equals("DataSincronismo") || !p.Name.Equals("Codigo"))
+                    {
+                        if (p.Name.ToString() == "CodFamilia" && p.GetValue(obj).ToString() == "0")
+                        {
+                            command.Parameters.AddWithValue("@" + p.Name, DBNull.Value);
+                        }
+                        else
+                        {
+                            //  Console.WriteLine(p.Name);
+                            command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                        }
+                     //   command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                    }
+
+                  
+                }
                 else if (spName == "spAlteraOpcao")
                 {
                     if (!p.Name.Equals("DataSincronismo"))
