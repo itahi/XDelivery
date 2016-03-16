@@ -183,6 +183,12 @@
     <Compile Include="Cadastros\frmFinalizacaoPedido.Designer.cs">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cadastros\Produto\frmFamilia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Produto\frmFamilia.Designer.cs">
+      <DependentUpon>frmFamilia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cadastros\Produto\frmTipoOpcao.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -240,6 +246,7 @@
     <Compile Include="Models\CaixaDiferenca.cs" />
     <Compile Include="Models\CaixaMovimento.cs" />
     <Compile Include="Models\DescontoPedido.cs" />
+    <Compile Include="Models\Familia.cs" />
     <Compile Include="Models\FinalizaPedido.cs" />
     <Compile Include="Models\HistoricoPessoa.cs" />
     <Compile Include="Models\Opcao.cs" />
@@ -739,6 +746,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmFinalizacaoPedido.resx">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\Produto\frmFamilia.resx">
+      <DependentUpon>frmFamilia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Produto\frmTipoOpcao.resx">
       <DependentUpon>frmTipoOpcao.cs</DependentUpon>

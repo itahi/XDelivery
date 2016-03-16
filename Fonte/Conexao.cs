@@ -871,7 +871,7 @@ namespace DexComanda
             if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" || spName == "spAdicionarCaixa" || spName == "spAdicionaHistorico" ||
                 spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
                 spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" || spName== "spAdicionarPedidoStatus"||
-                spName == "spAdicionarEmpresa" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento" || spName == "spAdicionarOpcaProduto" || spName == "spAdicionarProduto_OpcaoTipo")
+                spName == "spAdicionarEmpresa" || spName == "spAdicionarFamilia" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento" || spName == "spAdicionarOpcaProduto" || spName == "spAdicionarProduto_OpcaoTipo")
             {
 
                 if (spName == "spAdicionarProduto")

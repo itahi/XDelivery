@@ -1,0 +1,148 @@
+﻿using DexComanda.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace DexComanda.Cadastros.Produto
+{
+    public partial class frmFamilia : Form
+    {
+        private Conexao con;
+        int rowIndex;
+        int codigo;
+        public frmFamilia()
+        {
+            con = new Conexao();
+            InitializeComponent();
+        }
+
+        private void btnAdicionarGrupo_Click(object sender, EventArgs e)
+        {
+            Familia fami = new Familia()
+            {
+                Nome = txtNome.Text,
+                AtivoSN = chkAtivo.Checked,
+                DataAlteracao = DateTime.Now,
+                OnlineSN = chkOnline.Checked
+            };
+            con.Insert("spAdicionarFamilia", fami);
+            Utils.ControlaEventos("Inserir", this.Name);
+            Utils.LimpaForm(this);
+            Utils.PopularGrid("Familia", FamiliaGridView, "Codigo,Nome");
+        }
+
+        private void EditarFamilia(object sender, EventArgs e)
+        {
+            codigo = int.Parse(this.FamiliaGridView.Rows[rowIndex].Cells[0].Value.ToString());
+            DataSet dsFamilia = con.SelectRegistroPorCodigo("Familia", "spObterFamiliaPorCodigo", codigo);
+            if (dsFamilia.Tables[0].Rows.Count>0)
+            {
+                txtNome.Text = dsFamilia.Tables[0].Rows[0].Field<string>("Nome");
+                chkAtivo.Checked = dsFamilia.Tables[0].Rows[0].Field<Boolean>("AtivoSN");
+                chkOnline.Checked = dsFamilia.Tables[0].Rows[0].Field<Boolean>("OnlineSN");
+            }
+
+            this.btnAdicionarGrupo.Text = "Salvar [F12]";
+            this.btnAdicionarGrupo.Click += new System.EventHandler(this.SalvarGrupo);
+            this.btnAdicionarGrupo.Click -= new System.EventHandler(this.btnAdicionarGrupo_Click);
+
+            this.btnEditarGrupo.Text = "Cancelar [ESC]";
+            this.btnEditarGrupo.Click += new System.EventHandler(this.Cancelar);
+            this.btnEditarGrupo.Click -= new System.EventHandler(this.EditarFamilia);
+           
+        }
+        private void Cancelar(object sender, EventArgs e)
+        {
+
+           
+            this.btnAdicionarGrupo.Text = "Adicionar";
+            this.btnAdicionarGrupo.Click += new System.EventHandler(this.btnAdicionarGrupo_Click);
+            this.btnAdicionarGrupo.Click -= new System.EventHandler(this.SalvarGrupo);
+
+            this.btnEditarGrupo.Text = "Editar";
+            this.btnEditarGrupo.Click += new System.EventHandler(this.EditarFamilia);
+            this.btnEditarGrupo.Click -= new System.EventHandler(this.Cancelar);
+        }
+        private void SalvarGrupo(object sender, EventArgs e)
+        {
+            Familia fam = new Familia()
+            {
+                Codigo = codigo,
+                Nome = txtNome.Text,
+                AtivoSN = chkAtivo.Checked,
+                DataAlteracao = DateTime.Now,
+                OnlineSN = chkOnline.Checked
+            };
+            con.Update("spAlterarFamilia", fam);
+            Utils.LimpaForm(this);
+            Utils.PopularGrid("Familia", FamiliaGridView, "Codigo,Nome");
+            Utils.ControlaEventos("Alterar", this.Name);
+            this.btnAdicionarGrupo.Text = "Adicionar [F12]";
+            this.btnAdicionarGrupo.Click += new System.EventHandler(this.btnAdicionarGrupo_Click);
+            this.btnAdicionarGrupo.Click -= new System.EventHandler(this.SalvarGrupo);
+
+            this.btnEditarGrupo.Text = "Editar [F11]";
+            this.btnEditarGrupo.Click += new System.EventHandler(this.EditarFamilia);
+            this.btnEditarGrupo.Click -= new System.EventHandler(this.Cancelar);
+          
+        }
+
+        private void FamiliaGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            rowIndex = e.RowIndex;
+        }
+
+        private void frmFamilia_Load(object sender, EventArgs e)
+        {
+            Utils.PopularGrid("Familia", FamiliaGridView, "Codigo,Nome");
+        }
+
+        private void MenuAuxiliar(object sender, MouseEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu m = new ContextMenu();
+                MenuItem ExcluirFamilia = new MenuItem("Excluir Familia");
+                ExcluirFamilia.Click += DeletarFamilia;
+                m.MenuItems.Add(ExcluirFamilia);
+
+                int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
+                m.Show(dgv, new Point(e.X, e.Y));
+
+            }
+        }
+        private void DeletarFamilia(object sender, EventArgs e)
+        {
+            try
+            {
+                if (FamiliaGridView.SelectedRows.Count > 0)
+                {
+                    int CodGrupo = int.Parse(this.FamiliaGridView.SelectedCells[0].Value.ToString());
+                    con.DeleteAll("Familia", "spExcluirFamilia", CodGrupo);
+                    Utils.ControlaEventos("Excluir", this.Name);
+                    MessageBox.Show("Item excluído com sucesso.");
+                    Utils.PopularGrid("Familia", FamiliaGridView, "Codigo,Nome");
+
+                }
+                else
+                {
+                    MessageBox.Show("Selecione a Familia para excluir");
+                }
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show("Não foi possivel excluir o registro " + erro.Message);
+            }
+            
+
+        }
+    }
+}

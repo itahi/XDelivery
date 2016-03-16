@@ -1415,11 +1415,11 @@ namespace DexComanda
 
         }
 
-        public static DataSet PopularGrid(string table, DataGridView gridView, string iParametrosConsulta)
+        public static DataSet PopularGrid(string table, DataGridView gridView, string iCamposConsulta)
         {
             Conexao con = new Conexao();
             DataSet Dados = null;
-            Dados = con.SelectMontaGrid(table, iParametrosConsulta);
+            Dados = con.SelectMontaGrid(table, iCamposConsulta);
 
             gridView.DataSource = null;
             gridView.AutoGenerateColumns = true;

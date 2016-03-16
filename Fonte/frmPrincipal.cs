@@ -1219,8 +1219,7 @@ namespace DexComanda
 
         private void gruposCategoriasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAdicionarGrupo frm = new frmAdicionarGrupo();
-            frm.ShowDialog();
+            
         }
 
         private void tipoOpçãoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1551,6 +1550,18 @@ namespace DexComanda
         private void pedidosGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             TotalizaPedidos();
+        }
+
+        private void grupoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAdicionarGrupo frm = new frmAdicionarGrupo();
+            frm.ShowDialog();
+        }
+
+        private void familiaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmFamilia frm = new frmFamilia();
+            frm.Show();
         }
     }
 }
