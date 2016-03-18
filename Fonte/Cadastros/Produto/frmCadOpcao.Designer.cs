@@ -165,7 +165,7 @@
             this.Controls.Add(this.OpcaoGridView);
             this.KeyPreview = true;
             this.Name = "frmCadOpcao";
-            this.Text = "[xSistemas] Cadastro Opções";
+            this.Text = "       ";
             this.Load += new System.EventHandler(this.frmCadOpcao_Load);
             ((System.ComponentModel.ISupportInitialize)(this.OpcaoGridView)).EndInit();
             this.ResumeLayout(false);

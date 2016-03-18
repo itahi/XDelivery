@@ -256,6 +256,7 @@
     <Compile Include="Models\Operacoes\NovoTotalPedido.cs" />
     <Compile Include="Models\PedidoStatus.cs" />
     <Compile Include="Models\PedidoStatusMovimento.cs" />
+    <Compile Include="Models\ProdutoGrupo.cs" />
     <Compile Include="Models\ProdutoOpcao_Tipo.cs" />
     <Compile Include="Models\Produto_Estoque.cs" />
     <Compile Include="Models\Produto_Opcao.cs" />

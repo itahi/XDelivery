@@ -516,9 +516,8 @@ namespace DexComanda.Operações
                 int iCodOpcao = 0;
                 MudaLabel("Opcoes/Adicionais");
                 DataRow dRow;
-                if (ds.Tables[0].Rows.Count > 0)
+                if (ds.Tables[0].Rows.Count > 0 )
                 {
-                    
                     int iCodProd = ds.Tables["Produto_Opcao"].Rows[0].Field<int>("CodProduto");
                     string[] opcao = new string[ds.Tables[0].Rows.Count];
                     request.AddParameter("token", iParamToken);
@@ -526,20 +525,24 @@ namespace DexComanda.Operações
 
                     for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
-                        dRow = ds.Tables[0].Rows[i];
-                        DateTime dtFimPromo = Convert.ToDateTime(dRow.ItemArray.GetValue(7).ToString());
-                        decimal iprice = 0;
-                        iCodOpcao = int.Parse(dRow.ItemArray.GetValue(1).ToString());
-                        if (dtFimPromo >= Convert.ToDateTime(DateTime.Now.ToShortDateString()) && decimal.Parse(dRow.ItemArray.GetValue(6).ToString()) > 0)
-                        {
-                            iprice = decimal.Parse(dRow.ItemArray.GetValue(6).ToString());
-                        }
-                        else
-                        {
-                            iprice = decimal.Parse(dRow.ItemArray.GetValue(2).ToString());
-                        }
+                        //if (ds.Tables[0].Rows[i].Field<Boolean>("OnlineSN"))
+                        //{
+                            dRow = ds.Tables[0].Rows[i];
+                            DateTime dtFimPromo = Convert.ToDateTime(dRow.ItemArray.GetValue(7).ToString());
+                            decimal iprice = 0;
+                            iCodOpcao = int.Parse(dRow.ItemArray.GetValue(1).ToString());
+                            if (dtFimPromo >= Convert.ToDateTime(DateTime.Now.ToShortDateString()) && decimal.Parse(dRow.ItemArray.GetValue(6).ToString()) > 0)
+                            {
+                                iprice = decimal.Parse(dRow.ItemArray.GetValue(6).ToString());
+                            }
+                            else
+                            {
+                                iprice = decimal.Parse(dRow.ItemArray.GetValue(2).ToString());
+                            }
 
-                        request.AddParameter("opcao[" + iCodOpcao + "]", iprice);
+                            request.AddParameter("opcao[" + iCodOpcao + "]", iprice);
+                        //}
+                        
                     }
 
                     RestResponse response = (RestResponse)client.Execute(request);

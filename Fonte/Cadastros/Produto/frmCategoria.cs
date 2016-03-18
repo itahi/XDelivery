@@ -98,7 +98,7 @@ namespace DexComanda
             else
             {
                 cbxFamilia.DisplayMember = "";
-                cbxFamilia.SelectedValue = null;
+                cbxFamilia.Text = null;
             }
 
             this.btnAdicionarGrupo.Text = "Salvar [F12]";
@@ -161,6 +161,14 @@ namespace DexComanda
             if (txbNomeGrupo.Text !="")
             {
                 con.Update("spAlterarGrupo", grupo);
+
+                ProdutoGrupo prod = new ProdutoGrupo()
+                {
+                    AtivoSN = chkAtivo.Checked,
+                    OnlineSN = chkOnline.Checked,
+                    CodGrupo = grupo.Codigo
+                };
+                con.Update("spAlterarProdutoPorGrupo", prod);
                 Utils.ControlaEventos("Alterar", this.Name);
                 this.btnAdicionarGrupo.Text = "Adicionar [F12]";
                 this.btnAdicionarGrupo.Click += new System.EventHandler(this.AdicionarGrupo);

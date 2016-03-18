@@ -247,11 +247,9 @@ namespace DexComanda
                 // this_FormClosing();
                 MessageBox.Show("Produto cadastrado com sucesso.");
                 SalvarAdicionais(con.getLastCodigo());
-                Utils.PopulaGrid_Novo("Produto", parentMain.produtosGridView, Sessions.SqlProduto);
+             
                 Utils.ControlaEventos("Inserir", this.Name);
-                nomeProdutoTextBox.Text = "";
-                txtPrecoDesconto.Text = "";
-                this.nomeProdutoTextBox.Focus();
+                
 
             }
             catch (Exception errro)

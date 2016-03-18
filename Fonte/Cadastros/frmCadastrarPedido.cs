@@ -712,8 +712,11 @@ namespace DexComanda
                         pedido.Tipo = cbxTipoPedido.Text;
                         if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa")
                         {
-                            pedido.Tipo = cbxTipoPedido.Text;
                             pedido.NumeroMesa = cbxListaMesas.Text;
+                        }
+                        else
+                        {
+                            pedido.NumeroMesa = "";
                         }
 
                         if (codPedido != 0)
@@ -766,8 +769,8 @@ namespace DexComanda
                                 CodPedido = 0,
                                 NomeProduto = itemNome,
                                 Quantidade = int.Parse(this.txtQuantidade.Text),
-                                PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$ ", "")),
-                                PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", "")),
+                                PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$", "")),
+                                PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$", "")),
                                 Item = txtItemDescricao.Text
                             };
                             if (!Sessions.returnConfig.ProdutoPorCodigo)
@@ -784,6 +787,12 @@ namespace DexComanda
                             atualizarGrid(item);
 
                         }
+                        this.cbxProdutosGrid.Text = "";
+                        this.txtPrecoUnitario.Text = "";
+                        this.txtQuantidade.Text = "1";
+                        this.txtPrecoTotal.Text = "";
+                        this.txtItemDescricao.Text = "";
+                        this.txtCodProduto1.Text = "";
                         if (ProdutosPorCodigo)
                         {
                             txtCodProduto1.Focus();
@@ -792,12 +801,7 @@ namespace DexComanda
                         {
                             cbxTipoProduto.Focus();
                         }
-                        this.cbxProdutosGrid.Text = "";
-                        this.txtPrecoUnitario.Text = "";
-                        this.txtQuantidade.Text = "1";
-                        this.txtPrecoTotal.Text = "";
-                        this.txtItemDescricao.Text = "";
-                        this.txtCodProduto1.Text = "";
+                       
 
                     }
                 }
@@ -1023,14 +1027,14 @@ namespace DexComanda
             {
                 pedido.Tipo = cbxTipoPedido.Text;
                 pedido.NumeroMesa = cbxListaMesas.Text;
-                Utils.RetornaCodigoMesa(cbxListaMesas.Text);
+              //  Utils.RetornaCodigoMesa(cbxListaMesas.Text);
                 pedido.CodigoMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
                 pedido.PedidoOrigem = pedido.PedidoOrigem;
             }
             else
             {
-                pedido.Tipo = "Entrega";
-                //   pedido.NumeroMesa = null;
+                pedido.Tipo = "0 - Entrega";
+                pedido.NumeroMesa = "";
             }
 
             con.Update("spAlterarTotalPedido", pedido);
