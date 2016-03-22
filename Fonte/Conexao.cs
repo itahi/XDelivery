@@ -520,7 +520,19 @@ namespace DexComanda
       
         public DataSet SelectRegistroONline(string iNomeTable)
         {
-            string lSqlConsulta = " select * from " + iNomeTable + " where DataAlteracao>DataSincronismo or DataSincronismo is null ";
+            string lSqlConsulta = "";
+            //if (iNomeTable!="Grupo")
+            //{
+                lSqlConsulta = " select * from " + iNomeTable + " where DataAlteracao>DataSincronismo or DataSincronismo is null ";
+
+            //}
+            ////else
+            ////{
+            ////    lSqlConsulta = " select G.* ,F.Codigo as CodFamilia,F.Nome as NOmeFamlia" +
+            ////                   "   from Grupo G left " +
+            ////                   "   join Familia F on F.Codigo = G.CodFamilia ";
+            ////}
+            
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;

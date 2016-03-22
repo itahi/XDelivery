@@ -249,7 +249,7 @@
             this.txtTelefone2.Location = new System.Drawing.Point(440, 25);
             this.txtTelefone2.Name = "txtTelefone2";
             this.txtTelefone2.Size = new System.Drawing.Size(124, 29);
-            this.txtTelefone2.TabIndex = 50;
+            this.txtTelefone2.TabIndex = 30;
             this.txtTelefone2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTelefone2_KeyPress);
             // 
             // lblTelefone2

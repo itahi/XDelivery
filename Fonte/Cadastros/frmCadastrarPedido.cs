@@ -115,8 +115,7 @@ namespace DexComanda
                 trocoPara = tPara;
                 txtTrocoPara.Text = tPara;
                 formaPagamento = fPagamento;
-                cbxTipoPedido.Text = TipoPedido;
-                cbxListaMesas.Items.Add(MesaBalcao);
+                
                 DataPed = DataPedido;
                 PedidoRepetio = iPedidoRepetio;
                 dTotalPedido = iTotalPedido;
@@ -145,9 +144,10 @@ namespace DexComanda
                     TrocoPagar = "0,00";
                 }
 
-
                 cbxListaMesas.Text = iNumeMesa;
                 gNUmeroMesa = iNumeMesa;
+                cbxTipoPedido.Text = TipoPedido;
+                cbxListaMesas.Items.Add(MesaBalcao);
 
             }
             catch (Exception mx)
@@ -213,15 +213,16 @@ namespace DexComanda
                 cbxTipoProduto.Visible = true;
                 lblGrupo.Text = "Grupo";
                 txtCodProduto1.Visible = false;
+               // Utils.MontaCombox(cbxTipoPedido, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
                 this.cbxTipoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupoAtivo").Tables["Grupo"];
                 this.cbxTipoProduto.DisplayMember = "NomeGrupo";
                 this.cbxTipoProduto.ValueMember = "Codigo";
             }
 
-
-            this.cmbFPagamento.DataSource = con.SelectAll("FormaPagamento", "spObterFormaPagamento").Tables["FormaPagamento"];
-            this.cmbFPagamento.DisplayMember = "Descricao";
-            this.cmbFPagamento.ValueMember = "Codigo";
+            Utils.MontaCombox(cmbFPagamento, "Descricao", "Codigo", "FormaPagamento", "spObterFormaPagamento");
+            //this.cmbFPagamento.DataSource = con.SelectAll("FormaPagamento", "spObterFormaPagamento").Tables["FormaPagamento"];
+            //this.cmbFPagamento.DisplayMember = "Descricao";
+            //this.cmbFPagamento.ValueMember = "Codigo";
 
             if (codPedido != 0 || PedidoRepetio)
             {
@@ -964,8 +965,6 @@ namespace DexComanda
                             con.AtualizaSitucao(iCodPedido, Sessions.retunrUsuario.Codigo, 1);
                             MessageBox.Show("Pedido gerado com sucesso.");
 
-//                            Utils.PopulaGrid_Novo("Produto", parentWindow.produtosGridView, Sessions.SqlProduto);
-
                             if (ContraMesas && cbxTipoPedido.Text != "1 - Mesa")
                             {
                                 prepareToPrint();
@@ -1350,12 +1349,14 @@ namespace DexComanda
             if (gridViewItemsPedido.SelectedRows.Count > 0)
             {
                 string iNomeProduto = gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
+                codigoItemParaAlterar = int.Parse(gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
+
                 if (!Utils.MessageBoxQuestion("Deseja excluir o item " + iNomeProduto
                     + " Do Pedido?"))
                 {
                     return;
                 }
-                rowIndex = this.gridViewItemsPedido.CurrentRow.Index;
+              //  rowIndex = this.gridViewItemsPedido.CurrentRow.Index;
 
                 var itemPedido = new ItemPedido()
                 {
@@ -1369,7 +1370,7 @@ namespace DexComanda
                 items.RemoveAt(rowIndex);
 
                 this.txtPrecoUnitario.Text = "";
-                this.txtQuantidade.Text = "";
+                this.txtQuantidade.Text = "1";
                 this.txtPrecoTotal.Text = "";
 
                 ValorTotal = 0;
@@ -1392,6 +1393,10 @@ namespace DexComanda
                     pedido.NumeroMesa = cbxListaMesas.Text;
                     pedido.CodigoMesa = CodMesa;
                     Utils.AtualizaMesa(CodMesa, 2);
+                }
+                else
+                {
+                    pedido.NumeroMesa = "";
                 }
                 con.Delete("spExcluirItemPedido", itemPedido);
                 con.Update("spAlterarTotalPedido", pedido);
@@ -2166,6 +2171,7 @@ namespace DexComanda
             this.lblDescricaoDoItem = new System.Windows.Forms.Label();
             this.btnReimprimir = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lblStatusPedido = new System.Windows.Forms.Label();
             this.btnMultiploPagamento = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.btnCalGarcon = new System.Windows.Forms.Button();
@@ -2188,6 +2194,7 @@ namespace DexComanda
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.cbxListaMesas = new System.Windows.Forms.ComboBox();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
             this.lblEndereco = new System.Windows.Forms.Label();
             this.lblNomeCliente = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -2206,8 +2213,6 @@ namespace DexComanda
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.label9 = new System.Windows.Forms.Label();
             this.chkListAdicionais = new System.Windows.Forms.CheckedListBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.lblStatusPedido = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -2476,6 +2481,7 @@ namespace DexComanda
             this.gridViewItemsPedido.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridViewItemsPedido.Size = new System.Drawing.Size(598, 124);
             this.gridViewItemsPedido.TabIndex = 47;
+            this.gridViewItemsPedido.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridViewItemsPedido_CellClick);
             this.gridViewItemsPedido.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridViewItemsPedido_CellMouseClick);
             this.gridViewItemsPedido.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.EditarItem);
             this.gridViewItemsPedido.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gridViewItemsPedido_MouseClick);
@@ -2561,6 +2567,17 @@ namespace DexComanda
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(652, 126);
             this.panel2.TabIndex = 42;
+            // 
+            // lblStatusPedido
+            // 
+            this.lblStatusPedido.AutoSize = true;
+            this.lblStatusPedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatusPedido.ForeColor = System.Drawing.Color.DarkSlateGray;
+            this.lblStatusPedido.Location = new System.Drawing.Point(7, 90);
+            this.lblStatusPedido.Name = "lblStatusPedido";
+            this.lblStatusPedido.Size = new System.Drawing.Size(169, 29);
+            this.lblStatusPedido.TabIndex = 66;
+            this.lblStatusPedido.Text = "StatusPedido";
             // 
             // btnMultiploPagamento
             // 
@@ -2805,7 +2822,6 @@ namespace DexComanda
             // 
             this.cbxListaMesas.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbxListaMesas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbxListaMesas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxListaMesas.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxListaMesas.FormattingEnabled = true;
             this.cbxListaMesas.Location = new System.Drawing.Point(546, 100);
@@ -2826,6 +2842,16 @@ namespace DexComanda
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1051, 43);
             this.panel4.TabIndex = 63;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(669, 19);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(146, 16);
+            this.label6.TabIndex = 66;
+            this.label6.Text = "Opções do Produto:";
             // 
             // lblEndereco
             // 
@@ -3058,27 +3084,6 @@ namespace DexComanda
             this.chkListAdicionais.TabIndex = 0;
             this.chkListAdicionais.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkListAdicionais_ItemCheck);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(669, 19);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(146, 16);
-            this.label6.TabIndex = 66;
-            this.label6.Text = "Opções do Produto:";
-            // 
-            // lblStatusPedido
-            // 
-            this.lblStatusPedido.AutoSize = true;
-            this.lblStatusPedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatusPedido.ForeColor = System.Drawing.Color.DarkSlateGray;
-            this.lblStatusPedido.Location = new System.Drawing.Point(7, 90);
-            this.lblStatusPedido.Name = "lblStatusPedido";
-            this.lblStatusPedido.Size = new System.Drawing.Size(169, 29);
-            this.lblStatusPedido.TabIndex = 66;
-            this.lblStatusPedido.Text = "StatusPedido";
-            // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3143,7 +3148,11 @@ namespace DexComanda
 
         private void txtQuantidade_TextChanged(object sender, EventArgs e)
         {
-            CalcularTotalItem();
+            if (txtQuantidade.Text!="")
+            {
+                CalcularTotalItem();
+            }
+           
 
         }
 
@@ -3205,16 +3214,16 @@ namespace DexComanda
                 lblEntrega.Text = "R$ " + dcTaxaEntrega;
             }
 
-            AlteraTotalPedido();
+            AlteraTotalPedido(gNUmeroMesa,dTotalPedido);
         }
 
-        private void AlteraTotalPedido()
+        private void AlteraTotalPedido(string iNumMesa,decimal iTotalPedido)
         {
             NovoTotalPedido pedi = new NovoTotalPedido()
             {
                 Codigo = codPedido,
-                NumeroMesa = cbxListaMesas.Text,
-                TotalPedido = double.Parse(lbTotal.Text.Replace("R$", "")),
+                NumeroMesa = gNUmeroMesa,
+                TotalPedido = Convert.ToDouble(dTotalPedido),
                 Tipo = cbxTipoPedido.Text
             };
             con.Update("spAlterarTotalPedido", pedi);
@@ -3685,52 +3694,64 @@ namespace DexComanda
 
         private void EditarItem(object sender, DataGridViewCellMouseEventArgs e)
         {
-            DataGridView dgv = sender as DataGridView;
-            if (dgv.SelectedRows.Count > 0)
+            try
             {
-                rowIndex = dgv.CurrentRow.Index;
-
-                int codItem = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
-                MontaMenuOpcoes(codItem);
-                var itemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codigoItemParaAlterar);
-                string itemNome = this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
-
-                string[] sabores = (this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString()).Split('/');
-                List<string> list = new List<string>();
-
-                foreach (string sabor in sabores)
+                if (gridViewItemsPedido.SelectedRows.Count > 0)
                 {
-                    list.Add(sabor);
+
+                    int codItem = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
+                    MontaMenuOpcoes(codItem);
+                    var itemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codigoItemParaAlterar);
+                    string itemNome = this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
+
+                    string[] sabores = (this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString()).Split('/');
+                    List<string> list = new List<string>();
+
+                    foreach (string sabor in sabores)
+                    {
+                        list.Add(sabor);
+                    }
+
+                    if (list.Count > 1)
+                    {
+                        this.cbxMeiaPizza.Checked = true;
+                        this.cbxSabor.Enabled = true;
+                        this.cbxProdutosGrid.Text = sabores[0];
+                        this.cbxSabor.Text = sabores[1];
+                    }
+                    else
+                    {
+                        this.cbxMeiaPizza.Checked = false;
+                        this.cbxSabor.Enabled = false;
+                        this.cbxSabor.Text = "";
+                        this.cbxProdutosGrid.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
+                    }
+
+                    codigoItemParaAlterar = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
+                    txtCodProduto1.Text = codItem.ToString();
+                    this.txtPrecoUnitario.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value.ToString();
+                    this.txtQuantidade.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
+                    this.txtPrecoTotal.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value.ToString();
+                    this.txtItemDescricao.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value.ToString();
+                    //   btnAdicionarItemNoPedido.
+
+                    this.btnAdicionarItemNoPedido.Text = "Alterar Item";
+                    this.btnAdicionarItemNoPedido.Click += new System.EventHandler(this.AlterarItem);
+                    this.btnAdicionarItemNoPedido.Click -= new System.EventHandler(this.btnAdicionarItemNoPedido_Click);
+
                 }
-
-                if (list.Count > 1)
-                {
-                    this.cbxMeiaPizza.Checked = true;
-                    this.cbxSabor.Enabled = true;
-                    this.cbxProdutosGrid.Text = sabores[0];
-                    this.cbxSabor.Text = sabores[1];
-                }
-                else
-                {
-                    this.cbxMeiaPizza.Checked = false;
-                    this.cbxSabor.Enabled = false;
-                    this.cbxSabor.Text = "";
-                    this.cbxProdutosGrid.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
-                }
-
-                codigoItemParaAlterar = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
-                txtCodProduto1.Text = codItem.ToString();
-                this.txtQuantidade.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
-                this.txtPrecoUnitario.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value.ToString();
-                this.txtPrecoTotal.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value.ToString();
-                this.txtItemDescricao.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value.ToString();
-                //   btnAdicionarItemNoPedido.
-
-                this.btnAdicionarItemNoPedido.Text = "Alterar Item";
-                this.btnAdicionarItemNoPedido.Click += new System.EventHandler(this.AlterarItem);
-                this.btnAdicionarItemNoPedido.Click -= new System.EventHandler(this.btnAdicionarItemNoPedido_Click);
-
             }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Não foi possivel selecionar o Item para edição " + erro.Message);
+            }
+           // DataGridView dgv = sender as DataGridView;
+            
+        }
+
+        private void gridViewItemsPedido_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            rowIndex = e.RowIndex;
         }
 
         private void cbxSabor_SelectedIndexChanged(object sender, EventArgs e)

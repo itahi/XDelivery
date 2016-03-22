@@ -29,12 +29,13 @@ namespace DexComanda.Cadastros.Produto
                 Nome = txtNome.Text,
                 AtivoSN = chkAtivo.Checked,
                 DataAlteracao = DateTime.Now,
-                OnlineSN = chkOnline.Checked
+                OnlineSN = chkOnline.Checked,
+                PaiSN = true
             };
             con.Insert("spAdicionarFamilia", fami);
             Utils.ControlaEventos("Inserir", this.Name);
             Utils.LimpaForm(this);
-            Utils.PopularGrid("Familia", FamiliaGridView, "Codigo,Nome");
+            Utils.PopularGrid_SP("Grupo", FamiliaGridView, "spObterFamilia");
         }
 
         private void EditarFamilia(object sender, EventArgs e)
@@ -77,11 +78,12 @@ namespace DexComanda.Cadastros.Produto
                 Nome = txtNome.Text,
                 AtivoSN = chkAtivo.Checked,
                 DataAlteracao = DateTime.Now,
-                OnlineSN = chkOnline.Checked
+                OnlineSN = chkOnline.Checked,
+                PaiSN = true
             };
             con.Update("spAlterarFamilia", fam);
             Utils.LimpaForm(this);
-            Utils.PopularGrid("Familia", FamiliaGridView, "Codigo,Nome");
+            Utils.PopularGrid_SP("Grupo", FamiliaGridView, "spObterFamilia");
             Utils.ControlaEventos("Alterar", this.Name);
             this.btnAdicionarGrupo.Text = "Adicionar [F12]";
             this.btnAdicionarGrupo.Click += new System.EventHandler(this.btnAdicionarGrupo_Click);
@@ -100,7 +102,7 @@ namespace DexComanda.Cadastros.Produto
 
         private void frmFamilia_Load(object sender, EventArgs e)
         {
-            Utils.PopularGrid("Familia", FamiliaGridView, "Codigo,Nome");
+            Utils.PopularGrid_SP("Grupo", FamiliaGridView, "spObterFamilia");
         }
 
         private void MenuAuxiliar(object sender, MouseEventArgs e)

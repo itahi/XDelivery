@@ -52,6 +52,7 @@ namespace DexComanda.Operações
                 }
                 if (chkProdutos.Checked)
                 {
+                   
                     // Sincronizar Grupos
                     CadastraCategorias(ObterDados("Grupo"));
                     // Sincronizar Tipo Opcao
@@ -291,11 +292,11 @@ namespace DexComanda.Operações
                 request.AddParameter("referencia_id", ds.Tables["RegiaoEntrega"].Rows[i].Field<int>("Codigo"));
                 request.AddParameter("ativo", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<Boolean>("OnlineSN")));
 
-                if (ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("valorMinimoFreteGratis")>0)
+                if (ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("valorMinimoFreteGratis") > 0)
                 {
                     request.AddParameter("valorMinimoFreteGratis", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("valorMinimoFreteGratis")));
                 }
-               
+
                 RestResponse response = (RestResponse)client.Execute(request);
                 prgBarRegiao.Value = i + 1;
 
@@ -347,6 +348,53 @@ namespace DexComanda.Operações
             lblSinc.Visible = true;
             lblSinc.Text = "Sincronizando " + iNomeTabela;
         }
+        //private void CadastrarFamilia(DataSet ds)
+        //{
+        //    try
+        //    {
+        //        RestClient client = new RestClient(iUrlWS);
+        //        RestRequest request = new RestRequest("ws/categorias/set", Method.POST);
+        //        prgBarProduto.Value = 0;
+        //        prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
+        //        DataRow dRow;
+        //        MudaLabel("Familia");
+        //        GerarToken();
+        //        for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+        //        {
+        //            int AtivoSN = 0, iCod;
+        //            string inome = "", idReferenciaCategoriaPai = "0";
+        //            dRow = ds.Tables[0].Rows[i];
+
+        //            iCod = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+        //            inome = dRow.ItemArray.GetValue(1).ToString();
+        //            if (Convert.ToBoolean(dRow.ItemArray.GetValue(2).ToString()) == true)
+        //            {
+        //                AtivoSN = 1;
+        //            }
+        //            request.AddParameter("idReferenciaCategoriaPai", 0);
+        //            request.AddParameter("token", iParamToken);
+        //            request.AddParameter("nomeCategoria", inome);
+        //            request.AddParameter("ativo", AtivoSN);
+        //            request.AddParameter("idReferencia", iCod);
+        //            RestResponse response = (RestResponse)client.Execute(request);
+        //            prgBarProduto.Value = i + 1;
+
+        //            if (response.Content.ToString() == "true")
+        //            {
+        //                con.AtualizaDataSincronismo("Familia", iCod);
+        //            }
+        //            prgBarProduto.Value = i + 1;
+
+        //        }
+
+        //    }
+        //    catch (Exception er)
+        //    {
+
+        //        MessageBox.Show("Erro ao cadastrarar Grupo" + er.Message + er.InnerException);
+        //    }
+
+        //}
         private void CadastraCategorias(DataSet ds)
         {
             try
@@ -361,14 +409,23 @@ namespace DexComanda.Operações
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     dRow = ds.Tables[0].Rows[i];
-                    string inome = dRow.ItemArray.GetValue(1).ToString();
-                    int iCod = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+                    string inome;
+                    int iCod;
                     int AtivoSN = 0;
+                    string idReferenciaCategoriaPai = "0";
+                    iCod = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+                    if (dRow.ItemArray.GetValue(8).ToString() != "")
+                    {
+                        idReferenciaCategoriaPai = dRow.ItemArray.GetValue(8).ToString();
+                    }
+
+                    inome = dRow.ItemArray.GetValue(1).ToString();
+
                     if (Convert.ToBoolean(dRow.ItemArray.GetValue(6).ToString()) == true)
                     {
                         AtivoSN = 1;
                     }
-
+                    request.AddParameter("idReferenciaCategoriaPai", idReferenciaCategoriaPai);
                     request.AddParameter("token", iParamToken);
                     request.AddParameter("nomeCategoria", inome);
                     request.AddParameter("ativo", AtivoSN);
@@ -439,7 +496,7 @@ namespace DexComanda.Operações
 
                     request.AddParameter("preco", prProduto);
                     decimal prPromocao = decimal.Parse(dRow.ItemArray.GetValue(5).ToString());
-                    if (dRow.ItemArray.GetValue(14).ToString()!="")
+                    if (dRow.ItemArray.GetValue(14).ToString() != "")
                     {
                         if (Convert.ToDateTime(dRow.ItemArray.GetValue(14).ToString()) > DateTime.Now && prPromocao > 0)
                         {
@@ -448,7 +505,7 @@ namespace DexComanda.Operações
                             request.AddParameter("dataFinal", dRow.ItemArray.GetValue(14).ToString());
                         }
                     }
-                   
+
                     if (File.Exists(iCaminhoImagem) && dtFoto > dtSinc)
                     {
                         request.AddFile("imagem", iCaminhoImagem);
@@ -516,7 +573,7 @@ namespace DexComanda.Operações
                 int iCodOpcao = 0;
                 MudaLabel("Opcoes/Adicionais");
                 DataRow dRow;
-                if (ds.Tables[0].Rows.Count > 0 )
+                if (ds.Tables[0].Rows.Count > 0)
                 {
                     int iCodProd = ds.Tables["Produto_Opcao"].Rows[0].Field<int>("CodProduto");
                     string[] opcao = new string[ds.Tables[0].Rows.Count];
@@ -527,22 +584,22 @@ namespace DexComanda.Operações
                     {
                         //if (ds.Tables[0].Rows[i].Field<Boolean>("OnlineSN"))
                         //{
-                            dRow = ds.Tables[0].Rows[i];
-                            DateTime dtFimPromo = Convert.ToDateTime(dRow.ItemArray.GetValue(7).ToString());
-                            decimal iprice = 0;
-                            iCodOpcao = int.Parse(dRow.ItemArray.GetValue(1).ToString());
-                            if (dtFimPromo >= Convert.ToDateTime(DateTime.Now.ToShortDateString()) && decimal.Parse(dRow.ItemArray.GetValue(6).ToString()) > 0)
-                            {
-                                iprice = decimal.Parse(dRow.ItemArray.GetValue(6).ToString());
-                            }
-                            else
-                            {
-                                iprice = decimal.Parse(dRow.ItemArray.GetValue(2).ToString());
-                            }
+                        dRow = ds.Tables[0].Rows[i];
+                        DateTime dtFimPromo = Convert.ToDateTime(dRow.ItemArray.GetValue(7).ToString());
+                        decimal iprice = 0;
+                        iCodOpcao = int.Parse(dRow.ItemArray.GetValue(1).ToString());
+                        if (dtFimPromo >= Convert.ToDateTime(DateTime.Now.ToShortDateString()) && decimal.Parse(dRow.ItemArray.GetValue(6).ToString()) > 0)
+                        {
+                            iprice = decimal.Parse(dRow.ItemArray.GetValue(6).ToString());
+                        }
+                        else
+                        {
+                            iprice = decimal.Parse(dRow.ItemArray.GetValue(2).ToString());
+                        }
 
-                            request.AddParameter("opcao[" + iCodOpcao + "]", iprice);
+                        request.AddParameter("opcao[" + iCodOpcao + "]", iprice);
                         //}
-                        
+
                     }
 
                     RestResponse response = (RestResponse)client.Execute(request);

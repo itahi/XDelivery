@@ -494,9 +494,8 @@ namespace DexComanda
 
         private void txtTelefone_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                if (txtTelefone.Text != "" && txtTelefone2.Visible == true)
+           
+                if (txtTelefone.Text != "" && txtTelefone2.Visible)
                 {
                     txtTelefone2.Focus();
                 }
@@ -504,7 +503,7 @@ namespace DexComanda
                 {
                     txtCEP.Focus();
                 }
-            }
+           
         }
 
         private void txtEndereco_KeyDown(object sender, KeyEventArgs e)

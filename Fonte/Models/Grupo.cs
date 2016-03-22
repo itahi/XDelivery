@@ -15,7 +15,8 @@ namespace DexComanda.Models
         public DateTime DataAlteracao { get; set; }
         public string NomeImpressora { get; set; }
         public int CodFamilia { get; set; }
-        
+       // public Boolean PaiSN { get; set; }
+
 
     }
 }

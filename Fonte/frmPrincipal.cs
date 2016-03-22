@@ -1420,25 +1420,34 @@ namespace DexComanda
         }
         private void ImpressaoAutomatica(int iCodPedido, string iNumMesa)
         {
-
-            DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpresso", iCodPedido);
-            if (itemsPedido.Tables[0].Rows.Count > 0)
+            try
             {
-                items = new List<ItemPedido>();
-                ItemPedido itemPedido = new ItemPedido();
-                string lRetorno = "";
-                Boolean imprimirAgora = false;
-                //string strNomeImpressora,strImpressoraAnterior = "";
-                lRetorno = Utils.ImpressaMesaNova(iCodPedido, false, int.Parse(Sessions.returnConfig.ViasCozinha), "", imprimirAgora);
-                for (int i = 0; i < itemsPedido.Tables[0].Rows.Count; i++)
+                DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpresso", iCodPedido);
+                if (itemsPedido.Tables[0].Rows.Count > 0)
                 {
-                    AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
-                    Atualiza.CodPedido = iCodPedido;
-                    Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("CodProduto");
-                    Atualiza.ImpressoSN = true;
-                    con.Update("spInformaItemImpresso", Atualiza);
+                    items = new List<ItemPedido>();
+                    ItemPedido itemPedido = new ItemPedido();
+                    string lRetorno = "";
+                    Boolean imprimirAgora = false;
+                    //string strNomeImpressora,strImpressoraAnterior = "";
+                    lRetorno = Utils.ImpressaMesaNova(iCodPedido, false, 1, "", imprimirAgora);
+                    for (int i = 0; i < itemsPedido.Tables[0].Rows.Count; i++)
+                    {
+                        AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
+                        Atualiza.CodPedido = iCodPedido;
+                        Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("CodProduto");
+                        Atualiza.ImpressoSN = true;
+                        con.Update("spInformaItemImpresso", Atualiza);
 
+                    }
                 }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Não foi possivel imprimir o Item da Mesa verificar a impressora" + erro.Message);
+            }
+        }
+            
                 //if (ImprimeLPT && lRetorno != "")
                 //{
                 //    StreamReader tempDex = new StreamReader(lRetorno);
@@ -1493,8 +1502,8 @@ namespace DexComanda
 
                 //}
 
-            }
-        }
+           
+        //}
         private void MudarCorLinha(int iCodPedido, DataGridView grdPedido)
         {
             DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spStatusPedido", iCodPedido);
@@ -1527,16 +1536,20 @@ namespace DexComanda
 
                 }
 
-                for (int i = 0; i < pedidosGridView.Rows.Count; i++)
+                for (int i = 0; i < dsPedidosAbertos.Tables[0].Rows.Count; i++)
                 {
-                  
-                   // MudarCorLinha(int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString()), pedidosGridView);
-                    DataRow dRowPedido = dsPedidosAbertos.Tables[0].Rows[i];
-                    Boolean iMesa = dRowPedido.ItemArray.GetValue(5).ToString() != "0";
-                    if (iMesa && chkGerenciaImpressao.Checked)
+                    // MudarCorLinha(int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString()), pedidosGridView);
+                    DataSet dsPedidos = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString()));
+                    DataRow dRowPedido = dsPedidos.Tables[0].Rows[0];
+                    if (dRowPedido.Table.Rows.Count>0)
                     {
-                        ImpressaoAutomatica(int.Parse(dRowPedido.ItemArray.GetValue(1).ToString()), dRowPedido.ItemArray.GetValue(5).ToString());
+                        Boolean iMesa = dRowPedido.ItemArray.GetValue(9).ToString() != "0";
+                        if (iMesa && chkGerenciaImpressao.Checked)
+                        {
+                            ImpressaoAutomatica(int.Parse(dRowPedido.ItemArray.GetValue(1).ToString()), dRowPedido.ItemArray.GetValue(5).ToString());
+                        }
                     }
+                    
                 }
                 
             }

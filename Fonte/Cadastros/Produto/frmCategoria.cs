@@ -29,7 +29,7 @@ namespace DexComanda
 
         private void Main_Load(object sender, EventArgs e)
         {
-            Utils.MontaCombox(cbxFamilia, "Nome", "Codigo", "Familia", "spObterFamilia");
+            Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Grupo", "spObterFamilia");
             pnlImpressora.Enabled = chkImprimeCozinha.Checked;
         }
 
@@ -193,7 +193,7 @@ namespace DexComanda
         {
             this.gruposGridView.DataSource = null;
             this.gruposGridView.AutoGenerateColumns = true;
-            this.gruposGridView.DataSource = con.SelectAll("Grupo", "spObterGrupo");
+            this.gruposGridView.DataSource = Utils.PopularGrid_SP("Grupo", gruposGridView, "spObterGrupo");
             this.gruposGridView.DataMember = "Grupo";
 
         }
@@ -287,7 +287,7 @@ namespace DexComanda
 
         private void EditarFamilia(object sender, EventArgs e)
         {
-            Utils.MontaCombox(cbxFamilia, "Nome", "Codigo", "Familia", "spObterFamilia");
+            Utils.MontaCombox(cbxFamilia, "Nome", "Codigo", "Grupo", "spObterFamilia");
         }
     }
 }

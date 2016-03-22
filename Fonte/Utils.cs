@@ -919,15 +919,23 @@ namespace DexComanda
                 }
                 else
                 {
-                    if (MessageBoxQuestion("O Caixa não esta aberto sistema funcionará somente no modo consulta, deseja abrir agora?"))
+                    if (Sessions.returnEmpresa.CNPJ != "22695578000142" || Sessions.returnEmpresa.CNPJ != "18907495000100" || Sessions.returnEmpresa.CNPJ != "22678091000151")
                     {
-                        frmAberturaCaixa frm = new frmAberturaCaixa();
-                        frm.ShowDialog();
+                        if (MessageBoxQuestion("O Caixa não esta aberto sistema funcionará somente no modo consulta, deseja abrir agora?"))
+                        {
+                            frmAberturaCaixa frm = new frmAberturaCaixa();
+                            frm.ShowDialog();
+                        }
+                        else
+                        {
+                            iRetorno = true;
+                        }
                     }
                     else
                     {
                         iRetorno = true;
                     }
+                   
                    // MessageBox.Show("O Caixa não esta aberto, sistema funcionará somente no modo consulta");
                 }
 
