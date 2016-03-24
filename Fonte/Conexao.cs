@@ -612,8 +612,16 @@ namespace DexComanda
 
         public void AtualizaDataSincronismo(string iNomeTable, int iCodigo, string iDataAtualizar = "DataSincronismo")
         {
-
-            string lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where Codigo=" + iCodigo;// and AtivoSN=1";
+            string lSqlConsulta;
+            if (iCodigo!=-1)
+            {
+                lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where Codigo=" + iCodigo;
+            }
+            else
+            {
+                lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate()";
+            }
+            // and AtivoSN=1";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;

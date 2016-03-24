@@ -93,7 +93,7 @@ namespace DexComanda
 
             if (gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString()!="0")
             {
-                Utils.MontaCombox(cbxFamilia, "Nome", "Codigo", "Familia", "spObterFamiliaPorCodigo", int.Parse(gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString()));
+                Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Familia", "spObterFamiliaPorCodigo", int.Parse(gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString()));
             }
             else
             {
@@ -168,7 +168,7 @@ namespace DexComanda
                     OnlineSN = chkOnline.Checked,
                     CodGrupo = grupo.Codigo
                 };
-                con.Update("spAlterarProdutoPorGrupo", prod);
+             //   con.Update("spAlterarProdutoPorGrupo", prod);
                 Utils.ControlaEventos("Alterar", this.Name);
                 this.btnAdicionarGrupo.Text = "Adicionar [F12]";
                 this.btnAdicionarGrupo.Click += new System.EventHandler(this.AdicionarGrupo);
@@ -287,7 +287,7 @@ namespace DexComanda
 
         private void EditarFamilia(object sender, EventArgs e)
         {
-            Utils.MontaCombox(cbxFamilia, "Nome", "Codigo", "Grupo", "spObterFamilia");
+            Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Grupo", "spObterFamilia");
         }
     }
 }

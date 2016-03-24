@@ -37,7 +37,7 @@ namespace DexComanda
 
         }
         public frmCadastrarProduto(int CodProduto, string iNomeProduto, string iCodGrupo, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
-                                   decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo, DateTime idtFimPromo)
+                                   decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo, DateTime idtFimPromo,bool iAtivoSN)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace DexComanda
                 cbxGrupoProduto.Text = iGrupo;
                 cbxGrupoProduto.ValueMember = iCodGrupo;
                 descricaoProdutoTextBox.Text = iDescricao;
-                chkAtivo.Checked = true;
+                chkAtivo.Checked = iAtivoSN;
                 chkOnline.Checked = iVendaOnline;
                 txtMaxAdicionais.Text = iMaximoAdicionais;
                 txtcaminhoImage.Text = iUrlImagem;

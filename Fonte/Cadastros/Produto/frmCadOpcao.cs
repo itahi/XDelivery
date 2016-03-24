@@ -54,9 +54,17 @@ namespace DexComanda.Cadastros.Produto
             }
         }
 
-        private void ListaOpcao()
+        private void ListaOpcao(int iTipoOpcao=0)
         {
-            Utils.PopularGrid("Opcao", OpcaoGridView);
+            if (iTipoOpcao==0)
+            {
+                Utils.PopularGrid("Opcao", OpcaoGridView); 
+            }
+            else
+            {
+                Utils.PopularGrid_SP("Opcao", OpcaoGridView, "spObterOpcaoPorTipo", iTipoOpcao);
+            }
+            
         }
 
         private void frmCadOpcao_Load(object sender, EventArgs e)
@@ -156,7 +164,7 @@ namespace DexComanda.Cadastros.Produto
                     AtivoSN = chkAtivoSN.Checked
                 };
                 con.Update("spAlteraOpcao", opcao);
-                Utils.LimpaForm(this);
+               // Utils.LimpaForm(this);
 
                 this.btnAdicionar.Text = "Adicionar";
                 this.btnAdicionar.Click += new System.EventHandler(this.CadastraOpcao);
@@ -166,7 +174,7 @@ namespace DexComanda.Cadastros.Produto
                 this.btnEditar.Click += new System.EventHandler(this.EditarOpcao);
                 this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
               
-                ListaOpcao();
+                ListaOpcao(int.Parse(opcao.Tipo));
 
             }
             catch (Exception erro)
@@ -209,5 +217,21 @@ namespace DexComanda.Cadastros.Produto
         {
             Utils.MontaCombox(cbxTipo, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
         }
+
+        private void cbxTipo_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (cbxTipo.SelectedIndex != null)
+            {
+                ListaOpcao(int.Parse(cbxTipo.SelectedValue.ToString()));
+            }
+        }
+
+        //private void FiltraOpcaoPorTipo(object sender, EventArgs e)
+        //{
+        //    if (cbxTipo.SelectedIndex != null)
+        //    {
+        //        ListaOpcao(int.Parse(cbxTipo.SelectedValue.ToString()));
+        //    }
+        //}
     }
 }

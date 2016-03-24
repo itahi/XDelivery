@@ -38,6 +38,7 @@ using DexComanda.Relatorios.Clientes;
 using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Operações.Financeiro;
 using DexComanda.Operações;
+using Microsoft.VisualBasic;
 
 namespace DexComanda
 {
@@ -203,6 +204,16 @@ namespace DexComanda
             }
             return iResposta;
         }
+        public static Boolean ImputStringQuestion()
+        {
+            Boolean iReturn = false;
+            string strValor = Interaction.InputBox("Informe a senha mestre", "[xSistemas]", "", 100, 200);
+            iReturn = strValor == "xAdminx77";
+
+            return iReturn;
+
+
+            }
         public static void ImprimirHistoricoCliente_Epson(int iCodPessoa, DateTime iDtInici, DateTime idtFim)
         {
             RelHistoricoCliente_Epson report;

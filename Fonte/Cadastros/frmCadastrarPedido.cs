@@ -358,16 +358,16 @@ namespace DexComanda
                     //   lol = DiaDaPromocao.Split(new char[] { ';' });
                     if (DiaDaPromocao.IndexOf(DiaDaSema) > 0)
                     {
-                        ValorProduto = "R$ " + produto.Rows[0]["PrecoDesconto"].ToString();
+                        ValorProduto = produto.Rows[0]["PrecoDesconto"].ToString();
                     }
                     else
                     {
-                        ValorProduto = "R$ " + produto.Rows[0]["PrecoProduto"].ToString();
+                        ValorProduto = produto.Rows[0]["PrecoProduto"].ToString();
                     }
                 }
                 else
                 {
-                    ValorProduto = "R$ " + produto.Rows[0]["PrecoProduto"].ToString();
+                    ValorProduto =produto.Rows[0]["PrecoProduto"].ToString();
                 }
 
 
@@ -399,11 +399,11 @@ namespace DexComanda
 
                         if (valorProduto > valorSabor)
                         {
-                            this.txtPrecoUnitario.Text = "R$ " + valorProduto;
+                            this.txtPrecoUnitario.Text = valorProduto.ToString();
                         }
                         else
                         {
-                            this.txtPrecoUnitario.Text = "R$ " + valorSabor;
+                            this.txtPrecoUnitario.Text = valorSabor.ToString();
                         }
                     }
                     else
@@ -412,11 +412,11 @@ namespace DexComanda
                         valorSabor = decimal.Parse(sabor.Rows[0]["PrecoProduto"].ToString());
                         if (valorProduto > valorSabor)
                         {
-                            this.txtPrecoUnitario.Text = "R$ " + valorProduto;
+                            this.txtPrecoUnitario.Text =valorProduto.ToString();
                         }
                         else
                         {
-                            this.txtPrecoUnitario.Text = "R$ " + valorSabor;
+                            this.txtPrecoUnitario.Text = valorSabor.ToString();
                         }
                     }
 
@@ -488,7 +488,7 @@ namespace DexComanda
                     var precoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.ToString().Replace("R$ ", ""));
                     var quantidade = int.Parse(this.txtQuantidade.Text);
                     var total = precoUnitario * quantidade;
-                    this.txtPrecoTotal.Text = "R$ " + total.ToString();
+                    this.txtPrecoTotal.Text = total.ToString();
                     this.btnAdicionarItemNoPedido.Focus();
                 }
             }
@@ -788,12 +788,12 @@ namespace DexComanda
                             atualizarGrid(item);
 
                         }
-                        this.cbxProdutosGrid.Text = "";
-                        this.txtPrecoUnitario.Text = "";
+                        //this.cbxProdutosGrid.Text = "";
+                        //this.txtPrecoUnitario.Text = "";
                         this.txtQuantidade.Text = "1";
-                        this.txtPrecoTotal.Text = "";
+                        //this.txtPrecoTotal.Text = "";
                         this.txtItemDescricao.Text = "";
-                        this.txtCodProduto1.Text = "";
+                        //this.txtCodProduto1.Text = "";
                         if (ProdutosPorCodigo)
                         {
                             txtCodProduto1.Focus();
@@ -1820,7 +1820,7 @@ namespace DexComanda
             decimal[] valores = new decimal[2];
             var valorSabor = decimal.Parse("0.00");
             decimal iValue = 0.00M;
-            if (cbxProdutosGrid.SelectedItem != null)
+            if (cbxProdutosGrid.Text != null)
             {
 
 
@@ -1880,11 +1880,11 @@ namespace DexComanda
 
                     if (valorProduto > valorSabor)
                     {
-                        this.txtPrecoUnitario.Text = "R$ " + valorProduto;
+                        this.txtPrecoUnitario.Text =valorProduto.ToString();
                     }
                     else
                     {
-                        this.txtPrecoUnitario.Text = "R$ " + valorSabor;
+                        this.txtPrecoUnitario.Text = valorSabor.ToString();
                     }
 
 
@@ -1936,7 +1936,7 @@ namespace DexComanda
                 valores[0] = valorProduto;
                 valores[1] = valorSabor;
 
-                txtPrecoUnitario.Text = "R$" + valores.Max();
+                txtPrecoUnitario.Text = valores.Max().ToString();
                 // Calcula o preço total forçando a multiplicação
                 txtPrecoTotal.Text = Convert.ToString(decimal.Parse(txtQuantidade.Text) * valores.Max());
 
@@ -2058,16 +2058,16 @@ namespace DexComanda
                             lol = DiaDaPromocao.Split(new char[] { ';' });
                             if (DiaDaPromocao.IndexOf(DiaDaSema) > 0)
                             {
-                                txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoDesconto"].ToString();
+                                txtPrecoUnitario.Text = produto.Rows[0]["PrecoDesconto"].ToString();
                             }
                             else
                             {
-                                txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoProduto"].ToString();
+                                txtPrecoUnitario.Text =produto.Rows[0]["PrecoProduto"].ToString();
                             }
                         }
                         else
                         {
-                            txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoProduto"].ToString();
+                            txtPrecoUnitario.Text = produto.Rows[0]["PrecoProduto"].ToString();
                         }
 
                         this.txtQuantidade.Text = "1";
@@ -2101,16 +2101,16 @@ namespace DexComanda
                             lol = DiaDaPromocao.Split(new char[] { ';' });
                             if (DiaDaPromocao.IndexOf(DiaDaSema) > 0)
                             {
-                                txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoDesconto"].ToString();
+                                txtPrecoUnitario.Text =produto.Rows[0]["PrecoDesconto"].ToString();
                             }
                             else
                             {
-                                txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoProduto"].ToString();
+                                txtPrecoUnitario.Text =produto.Rows[0]["PrecoProduto"].ToString();
                             }
                         }
                         else
                         {
-                            txtPrecoUnitario.Text = "R$ " + produto.Rows[0]["PrecoProduto"].ToString();
+                            txtPrecoUnitario.Text =  produto.Rows[0]["PrecoProduto"].ToString();
                         }
 
 
@@ -3163,7 +3163,7 @@ namespace DexComanda
                 var precoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.ToString().Replace("R$ ", ""));
                 var quantidade = int.Parse(this.txtQuantidade.Text);
                 var total = precoUnitario * quantidade;
-                this.txtPrecoTotal.Text = "R$ " + total.ToString();
+                this.txtPrecoTotal.Text =total.ToString();
                 this.btnAdicionarItemNoPedido.Focus();
             }
         }

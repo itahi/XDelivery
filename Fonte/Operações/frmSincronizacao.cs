@@ -50,9 +50,20 @@ namespace DexComanda.Operações
                     // Envia as formas de pagamento ao site , enviando a imagem da bandeira 
                     CadastraFormaPagamento(ObterDados("FormaPagamento"));
                 }
+                if (chkLink.Checked)
+                {
+                    if (Utils.MessageBoxQuestion("Essa operação irá sincronizar todos produtos de seu banco de dados para o servidor Online , deseja continuar?"))
+                    {
+                        if (Utils.ImputStringQuestion())
+                        {
+                            con.AtualizaDataSincronismo("Produto", -1, "DataAlteracao");
+                            LimparUrlAmigaveis();
+                        }
+                    }
+                }
                 if (chkProdutos.Checked)
                 {
-                   
+
                     // Sincronizar Grupos
                     CadastraCategorias(ObterDados("Grupo"));
                     // Sincronizar Tipo Opcao
@@ -89,6 +100,28 @@ namespace DexComanda.Operações
             {
 
                 MessageBox.Show("Erro ao sincronizar " + erro.Message);
+            }
+        }
+        private void LimparUrlAmigaveis()
+        {
+            try
+
+            {
+                RestClient client = new RestClient(iUrlWS);
+                RestResponse response = new RestResponse();
+                RestRequest request = new RestRequest("ws/urlamigaveis/deleteall", Method.POST);
+                request.AddParameter("token", iParamToken);
+                MudaLabel("URL amigaveis");
+                response = (RestResponse)client.Execute(request);
+                ReturnPadrao lRetorno = new ReturnPadrao();
+                lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+
+            }
+
+            catch (Exception er)
+            {
+
+                MessageBox.Show("Erro LimparUrlAmigaveis" + er.Message + er.InnerException);
             }
         }
         private void CadastraLinkApp()
@@ -175,13 +208,14 @@ namespace DexComanda.Operações
         {
             try
             {
-                RestClient client = new RestClient(iUrlWS);
-                RestRequest request = new RestRequest("ws/opcao/tipo/set", Method.POST);
+
                 int iMaxOpcionais = 0; int iMinumum = 0;
                 MudaLabel("Tipo de Opção");
                 DataRow dRow;
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
+                    RestClient client = new RestClient(iUrlWS);
+                    RestRequest request = new RestRequest("ws/opcao/tipo/set", Method.POST);
                     dRow = ds.Tables[0].Rows[i];
 
                     iMaxOpcionais = int.Parse(dRow.ItemArray.GetValue(3).ToString());
@@ -279,12 +313,13 @@ namespace DexComanda.Operações
 
         private void CadastraRegioes(DataSet ds)
         {
-            RestClient client = new RestClient(iUrlWS);
-            RestRequest request = new RestRequest("ws/regiaoEntrega/set", Method.POST);
+
             MudaLabel("Regioes de Entrega");
             prgBarRegiao.Maximum = ds.Tables[0].Rows.Count;
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
+                RestClient client = new RestClient(iUrlWS);
+                RestRequest request = new RestRequest("ws/regiaoEntrega/set", Method.POST);
                 request.AddParameter("token", iParamToken);
                 request.AddParameter("cep", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("CEP"));
                 request.AddParameter("nome", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("NomeRegiao"));
@@ -312,14 +347,15 @@ namespace DexComanda.Operações
         {
             try
             {
-                RestClient client = new RestClient(iUrlWS);
-                RestRequest request = new RestRequest("ws/opcoes/set", Method.POST);
+
                 prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
                 DataRow dRow;
                 MudaLabel("Opções");
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
+                    RestClient client = new RestClient(iUrlWS);
+                    RestRequest request = new RestRequest("ws/opcoes/set", Method.POST);
                     dRow = ds.Tables[0].Rows[i];
                     request.AddParameter("token", iParamToken);
                     request.AddParameter("tipo", dRow.ItemArray.GetValue(2).ToString());
@@ -399,8 +435,7 @@ namespace DexComanda.Operações
         {
             try
             {
-                RestClient client = new RestClient(iUrlWS);
-                RestRequest request = new RestRequest("ws/categorias/set", Method.POST);
+
                 prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
                 DataRow dRow;
@@ -408,6 +443,8 @@ namespace DexComanda.Operações
                 GerarToken();
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
+                    RestClient client = new RestClient(iUrlWS);
+                    RestRequest request = new RestRequest("ws/categorias/set", Method.POST);
                     dRow = ds.Tables[0].Rows[i];
                     string inome;
                     int iCod;
@@ -421,7 +458,7 @@ namespace DexComanda.Operações
 
                     inome = dRow.ItemArray.GetValue(1).ToString();
 
-                    if (Convert.ToBoolean(dRow.ItemArray.GetValue(6).ToString()) == true)
+                    if (Convert.ToBoolean(dRow.ItemArray.GetValue(3).ToString()) == true)
                     {
                         AtivoSN = 1;
                     }
@@ -454,8 +491,6 @@ namespace DexComanda.Operações
         {
             try
             {
-                RestClient client = new RestClient(iUrlWS);
-                RestRequest request = new RestRequest("ws/produto/set", Method.POST);
                 MudaLabel("Produto");
                 decimal iPrecoProduto = 0;
                 prgBarProduto.Value = 0;
@@ -463,6 +498,8 @@ namespace DexComanda.Operações
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
+                    RestClient client = new RestClient(iUrlWS);
+                    RestRequest request = new RestRequest("ws/produto/set", Method.POST);
                     GerarToken();
                     dRow = ds.Tables[0].Rows[i];
                     decimal prProduto = decimal.Parse(dRow.ItemArray.GetValue(3).ToString());
@@ -531,6 +568,8 @@ namespace DexComanda.Operações
                         CadastrarOpcaoProduto(int.Parse(dRow.ItemArray.GetValue(0).ToString()));
                     }
                     iCaminhoImagem = "";
+
+                    // request = null;
                 }
             }
             catch (Exception er)
@@ -567,14 +606,15 @@ namespace DexComanda.Operações
 
             try
             {
-                RestClient client = new RestClient(iUrlWS);
-                RestRequest request = new RestRequest("ws/produto/opcao/set", Method.POST);
+
                 DataSet ds = con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcaoProdutoCodigo", iCodProduto);
                 int iCodOpcao = 0;
                 MudaLabel("Opcoes/Adicionais");
                 DataRow dRow;
                 if (ds.Tables[0].Rows.Count > 0)
                 {
+                    RestClient client = new RestClient(iUrlWS);
+                    RestRequest request = new RestRequest("ws/produto/opcao/set", Method.POST);
                     int iCodProd = ds.Tables["Produto_Opcao"].Rows[0].Field<int>("CodProduto");
                     string[] opcao = new string[ds.Tables[0].Rows.Count];
                     request.AddParameter("token", iParamToken);
@@ -621,15 +661,14 @@ namespace DexComanda.Operações
         }
         private void CadastraFormaPagamento(DataSet ds)
         {
-            RestClient client = new RestClient(iUrlWS);
-            RestRequest request = new RestRequest("ws/loja/cartoes", Method.POST);
-
             prgBarpagamento.Maximum = ds.Tables[0].Rows.Count;
-            request.AddParameter("token", iParamToken);
             int iCod = 0;
             DataRow dRow;
+            RestClient client = new RestClient(iUrlWS);
+            RestRequest request = new RestRequest("ws/loja/cartoes", Method.POST);
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
+                request.AddParameter("token", iParamToken);
                 dRow = ds.Tables[0].Rows[i];
                 if (File.Exists(dRow.ItemArray.GetValue(7).ToString()))
                 {

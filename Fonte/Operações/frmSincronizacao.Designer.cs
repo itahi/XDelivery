@@ -63,6 +63,7 @@
             this.lblReturn = new System.Windows.Forms.Label();
             this.chkDesconto = new System.Windows.Forms.CheckBox();
             this.txtPercentualDesconto = new System.Windows.Forms.TextBox();
+            this.chkLink = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -81,11 +82,12 @@
             this.tabControl1.Location = new System.Drawing.Point(5, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(278, 266);
+            this.tabControl1.Size = new System.Drawing.Size(278, 300);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.chkLink);
             this.tabPage1.Controls.Add(this.prgBarMobile);
             this.tabPage1.Controls.Add(this.chkMobile);
             this.tabPage1.Controls.Add(this.lblMinimo);
@@ -105,14 +107,14 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(270, 240);
+            this.tabPage1.Size = new System.Drawing.Size(270, 274);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Cadastros";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // prgBarMobile
             // 
-            this.prgBarMobile.Location = new System.Drawing.Point(128, 104);
+            this.prgBarMobile.Location = new System.Drawing.Point(128, 125);
             this.prgBarMobile.Name = "prgBarMobile";
             this.prgBarMobile.Size = new System.Drawing.Size(114, 18);
             this.prgBarMobile.TabIndex = 22;
@@ -120,7 +122,7 @@
             // chkMobile
             // 
             this.chkMobile.AutoSize = true;
-            this.chkMobile.Location = new System.Drawing.Point(5, 105);
+            this.chkMobile.Location = new System.Drawing.Point(5, 126);
             this.chkMobile.Name = "chkMobile";
             this.chkMobile.Size = new System.Drawing.Size(81, 17);
             this.chkMobile.TabIndex = 21;
@@ -130,7 +132,7 @@
             // lblMinimo
             // 
             this.lblMinimo.AutoSize = true;
-            this.lblMinimo.Location = new System.Drawing.Point(93, 159);
+            this.lblMinimo.Location = new System.Drawing.Point(93, 180);
             this.lblMinimo.Name = "lblMinimo";
             this.lblMinimo.Size = new System.Drawing.Size(74, 13);
             this.lblMinimo.TabIndex = 20;
@@ -139,7 +141,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 140);
+            this.label2.Location = new System.Drawing.Point(5, 161);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(93, 13);
             this.label2.TabIndex = 19;
@@ -147,7 +149,7 @@
             // 
             // txtVlrMinimo
             // 
-            this.txtVlrMinimo.Location = new System.Drawing.Point(8, 156);
+            this.txtVlrMinimo.Location = new System.Drawing.Point(8, 177);
             this.txtVlrMinimo.Name = "txtVlrMinimo";
             this.txtVlrMinimo.Size = new System.Drawing.Size(75, 20);
             this.txtVlrMinimo.TabIndex = 18;
@@ -157,7 +159,7 @@
             // lblSinc
             // 
             this.lblSinc.AutoSize = true;
-            this.lblSinc.Location = new System.Drawing.Point(23, 179);
+            this.lblSinc.Location = new System.Drawing.Point(23, 200);
             this.lblSinc.Name = "lblSinc";
             this.lblSinc.Size = new System.Drawing.Size(74, 13);
             this.lblSinc.TabIndex = 17;
@@ -166,7 +168,7 @@
             // 
             // prgBarPrevisao
             // 
-            this.prgBarPrevisao.Location = new System.Drawing.Point(128, 78);
+            this.prgBarPrevisao.Location = new System.Drawing.Point(128, 99);
             this.prgBarPrevisao.Name = "prgBarPrevisao";
             this.prgBarPrevisao.Size = new System.Drawing.Size(114, 18);
             this.prgBarPrevisao.TabIndex = 16;
@@ -174,7 +176,7 @@
             // chkPrevisao
             // 
             this.chkPrevisao.AutoSize = true;
-            this.chkPrevisao.Location = new System.Drawing.Point(5, 79);
+            this.chkPrevisao.Location = new System.Drawing.Point(5, 100);
             this.chkPrevisao.Name = "chkPrevisao";
             this.chkPrevisao.Size = new System.Drawing.Size(88, 17);
             this.chkPrevisao.TabIndex = 15;
@@ -183,7 +185,7 @@
             // 
             // btnSincronizar
             // 
-            this.btnSincronizar.Location = new System.Drawing.Point(89, 198);
+            this.btnSincronizar.Location = new System.Drawing.Point(89, 219);
             this.btnSincronizar.Name = "btnSincronizar";
             this.btnSincronizar.Size = new System.Drawing.Size(75, 23);
             this.btnSincronizar.TabIndex = 14;
@@ -193,14 +195,14 @@
             // 
             // prgBarRegiao
             // 
-            this.prgBarRegiao.Location = new System.Drawing.Point(128, 51);
+            this.prgBarRegiao.Location = new System.Drawing.Point(128, 72);
             this.prgBarRegiao.Name = "prgBarRegiao";
             this.prgBarRegiao.Size = new System.Drawing.Size(114, 18);
             this.prgBarRegiao.TabIndex = 13;
             // 
             // prgBarpagamento
             // 
-            this.prgBarpagamento.Location = new System.Drawing.Point(128, 29);
+            this.prgBarpagamento.Location = new System.Drawing.Point(128, 50);
             this.prgBarpagamento.Name = "prgBarpagamento";
             this.prgBarpagamento.Size = new System.Drawing.Size(114, 16);
             this.prgBarpagamento.TabIndex = 12;
@@ -215,7 +217,7 @@
             // chkRegiaoEntrega
             // 
             this.chkRegiaoEntrega.AutoSize = true;
-            this.chkRegiaoEntrega.Location = new System.Drawing.Point(5, 52);
+            this.chkRegiaoEntrega.Location = new System.Drawing.Point(5, 73);
             this.chkRegiaoEntrega.Name = "chkRegiaoEntrega";
             this.chkRegiaoEntrega.Size = new System.Drawing.Size(105, 17);
             this.chkRegiaoEntrega.TabIndex = 10;
@@ -225,7 +227,7 @@
             // chkFPagamento
             // 
             this.chkFPagamento.AutoSize = true;
-            this.chkFPagamento.Location = new System.Drawing.Point(5, 29);
+            this.chkFPagamento.Location = new System.Drawing.Point(5, 50);
             this.chkFPagamento.Name = "chkFPagamento";
             this.chkFPagamento.Size = new System.Drawing.Size(117, 17);
             this.chkFPagamento.TabIndex = 9;
@@ -421,11 +423,21 @@
             this.txtPercentualDesconto.Size = new System.Drawing.Size(45, 20);
             this.txtPercentualDesconto.TabIndex = 9;
             // 
+            // chkLink
+            // 
+            this.chkLink.AutoSize = true;
+            this.chkLink.Location = new System.Drawing.Point(6, 27);
+            this.chkLink.Name = "chkLink";
+            this.chkLink.Size = new System.Drawing.Size(102, 17);
+            this.chkLink.TabIndex = 23;
+            this.chkLink.Text = "Links Amigaveis";
+            this.chkLink.UseVisualStyleBackColor = true;
+            // 
             // frmSincronizacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(286, 268);
+            this.ClientSize = new System.Drawing.Size(286, 300);
             this.Controls.Add(this.tabControl1);
             this.Name = "frmSincronizacao";
             this.Text = "[XSistemas] Sincronizacao";
@@ -479,5 +491,6 @@
         private System.Windows.Forms.TextBox txtVlrMinimo;
         private System.Windows.Forms.ProgressBar prgBarMobile;
         private System.Windows.Forms.CheckBox chkMobile;
+        private System.Windows.Forms.CheckBox chkLink;
     }
 }
