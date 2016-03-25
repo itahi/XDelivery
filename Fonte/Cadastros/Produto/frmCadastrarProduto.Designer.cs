@@ -92,8 +92,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.horaInicio = new System.Windows.Forms.DateTimePicker();
+            this.HoraFim = new System.Windows.Forms.DateTimePicker();
             grupoProdutoLabel = new System.Windows.Forms.Label();
             precoProdutoLabel = new System.Windows.Forms.Label();
             descricaoProdutoLabel = new System.Windows.Forms.Label();
@@ -674,9 +674,9 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(483, 18);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(51, 17);
+            this.checkBox1.Size = new System.Drawing.Size(68, 17);
             this.checkBox1.TabIndex = 32;
-            this.checkBox1.Text = "Dom.";
+            this.checkBox1.Text = "Domingo";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // checkBox2
@@ -743,8 +743,8 @@
             // 
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.dateTimePicker1);
-            this.groupBox2.Controls.Add(this.dateTimePicker2);
+            this.groupBox2.Controls.Add(this.horaInicio);
+            this.groupBox2.Controls.Add(this.HoraFim);
             this.groupBox2.Location = new System.Drawing.Point(3, 62);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(594, 72);
@@ -755,7 +755,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(282, 16);
+            this.label9.Location = new System.Drawing.Point(282, 21);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(23, 13);
             this.label9.TabIndex = 14;
@@ -764,27 +764,28 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(160, 16);
+            this.label8.Location = new System.Drawing.Point(160, 21);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(32, 13);
             this.label8.TabIndex = 13;
             this.label8.Text = "Inicio";
             // 
-            // dateTimePicker1
+            // horaInicio
             // 
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePicker1.Location = new System.Drawing.Point(163, 40);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(82, 20);
-            this.dateTimePicker1.TabIndex = 11;
+            this.horaInicio.Checked = false;
+            this.horaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.horaInicio.Location = new System.Drawing.Point(163, 40);
+            this.horaInicio.Name = "horaInicio";
+            this.horaInicio.Size = new System.Drawing.Size(82, 20);
+            this.horaInicio.TabIndex = 11;
             // 
-            // dateTimePicker2
+            // HoraFim
             // 
-            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePicker2.Location = new System.Drawing.Point(285, 40);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(86, 20);
-            this.dateTimePicker2.TabIndex = 12;
+            this.HoraFim.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.HoraFim.Location = new System.Drawing.Point(285, 40);
+            this.HoraFim.Name = "HoraFim";
+            this.HoraFim.Size = new System.Drawing.Size(86, 20);
+            this.HoraFim.TabIndex = 12;
             // 
             // frmCadastrarProduto
             // 
@@ -875,8 +876,8 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker horaInicio;
+        private System.Windows.Forms.DateTimePicker HoraFim;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;

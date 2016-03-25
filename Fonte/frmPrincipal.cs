@@ -186,10 +186,10 @@ namespace DexComanda
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
-            
+
             int iNumeroCaixa = Sessions.returnUsuario.CaixaLogado;
             iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now, iNumeroCaixa).Tables["Caixa"].Rows.Count;
-            if (iCaixaAberto>0)
+            if (iCaixaAberto > 0)
             {
                 aberturaCaixaToolStripMenuItem.Enabled = false;
                 lblCaixa.Text = "Caixa Aberto";
@@ -376,7 +376,7 @@ namespace DexComanda
                 this.pedidosGridView.DataSource = ds;
                 this.pedidosGridView.DataMember = "Pedido";
                 TotalizaPedidos();
-                
+
 
             }
             catch (Exception ex)
@@ -385,7 +385,7 @@ namespace DexComanda
                 MessageBox.Show("Erro ao buscar clientes" + ex.Message);
             }
         }
-        private void TotalizaPedidos ()
+        private void TotalizaPedidos()
         {
             double dblTotalPedidos = 0;
             for (int i = 0; i < pedidosGridView.Rows.Count; i++)
@@ -394,7 +394,7 @@ namespace DexComanda
                 {
                     dblTotalPedidos = dblTotalPedidos + double.Parse(pedidosGridView.Rows[i].Cells["TotalPedido"].Value.ToString());
                 }
-                
+
             }
             lblValor.Text = dblTotalPedidos.ToString();
             lblQtd.Text = pedidosGridView.Rows.Count.ToString();
@@ -494,7 +494,7 @@ namespace DexComanda
                     CarregaPedido(codigo);
 
                 }
-                Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido); 
+                Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
 
             }
             catch (Exception es)
@@ -516,27 +516,27 @@ namespace DexComanda
                 MenuItem FinalizaSelecionados = new MenuItem(" 2 - Finalizar Todos Selecionado?");
                 MenuItem ImprimeConferenciaMesa = new MenuItem(" Imprimir Conferencia desta Mesa");
                 MenuItem PedidoONline = new MenuItem(" X - Status Pedido");
-               
+
                 if (pedidosGridView.Rows.Count > 0)
                 {
                     PedidoONline = new MenuItem(" X - Status Pedido");
 
-                    DataSet dsStatus = con.SelectAll("PedidoStatus","", "select * from PedidoStatus");
+                    DataSet dsStatus = con.SelectAll("PedidoStatus", "", "select * from PedidoStatus");
                     //for (int i = 0; i < dsStatus.Tables[0].Rows.Count; i++)
                     //{
-                        
-                        MenuItem StatusNaCozinha = new MenuItem(" 0 - Pedido na Cozinha");
-                        MenuItem StatusNaEntrega = new MenuItem(" 1 - Saiu pra entrega");
-                        MenuItem StatusCancelado = new MenuItem(" 2 - Cancelado");
 
-                        PedidoONline.MenuItems.Add(StatusNaCozinha);
-                        PedidoONline.MenuItems.Add(StatusNaEntrega);
-                        PedidoONline.MenuItems.Add(StatusCancelado);
-                        StatusCancelado.Enabled = Sessions.returnUsuario.CancelaPedidosSN;
-                        StatusNaCozinha.Click += PedidoNaCozinha;
-                        StatusNaEntrega.Click += PedidoNaEntrega;
+                    MenuItem StatusNaCozinha = new MenuItem(" 0 - Pedido na Cozinha");
+                    MenuItem StatusNaEntrega = new MenuItem(" 1 - Saiu pra entrega");
+                    MenuItem StatusCancelado = new MenuItem(" 2 - Cancelado");
+
+                    PedidoONline.MenuItems.Add(StatusNaCozinha);
+                    PedidoONline.MenuItems.Add(StatusNaEntrega);
+                    PedidoONline.MenuItems.Add(StatusCancelado);
+                    StatusCancelado.Enabled = Sessions.returnUsuario.CancelaPedidosSN;
+                    StatusNaCozinha.Click += PedidoNaCozinha;
+                    StatusNaEntrega.Click += PedidoNaEntrega;
                     //}
-                   
+
 
                 }
 
@@ -635,7 +635,7 @@ namespace DexComanda
                 bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
                 int codigo, iCodMesa;
                 decimal dblTotalPedido;
-             
+
                 if (Utils.MessageBoxQuestion("Deseja ** FINALIZAR ** este pedido?"))
                 {
                     codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
@@ -897,7 +897,7 @@ namespace DexComanda
                     AlteraStatusPedido(CodPedidoWS, 3);
                 }
 
-                con.AtualizaSitucao(intCodPedido, Sessions.retunrUsuario.Codigo, 2,pedidosGridView);
+                con.AtualizaSitucao(intCodPedido, Sessions.retunrUsuario.Codigo, 2, pedidosGridView);
 
             }
             catch (Exception erro)
@@ -917,7 +917,7 @@ namespace DexComanda
                 {
                     AlteraStatusPedido(CodPedidoWS, 4);
                 }
-                con.AtualizaSitucao(intCodPedido, Sessions.retunrUsuario.Codigo, 3,pedidosGridView);
+                con.AtualizaSitucao(intCodPedido, Sessions.retunrUsuario.Codigo, 3, pedidosGridView);
             }
             catch (Exception erro)
             {
@@ -1143,10 +1143,10 @@ namespace DexComanda
                 //  DataSet dsFormaPagamento = con.SelectRegistroONline("FormaPagamento");
                 DataSet dsGrupo = con.SelectRegistroONline("Grupo");
 
-                if (dsProduto.Tables[0].Rows.Count > 0 || dsOpcao.Tables[0].Rows.Count > 0 || dsProdutOpcao.Tables[0].Rows.Count > 0 || /*dsFormaPagamento.Tables[0].Rows.Count > 0 ||*/ dsGrupo.Tables[0].Rows.Count > 0)
+                if (dsProduto.Tables[0].Rows.Count > 0 || dsOpcao.Tables[0].Rows.Count > 0 || dsProdutOpcao.Tables[0].Rows.Count > 0 || dsGrupo.Tables[0].Rows.Count > 0)
                 {
-                    DialogResult resposta = MessageBox.Show("Há registros que precisam ser sincronizados com o servidor , deseja fazer isso agora?", "[xSistemas]", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (resposta == DialogResult.Yes)
+                    //    DialogResult resposta = MessageBox.Show("Há registros que precisam ser sincronizados com o servidor , deseja fazer isso agora?", "[xSistemas]", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (Utils.MessageBoxQuestion("Há registros que precisam ser sincronizados com o servidor, deseja fazer isso agora ? "))
                     {
                         frmSincronizacao frm = new frmSincronizacao();
                         frm.ShowDialog();
@@ -1220,7 +1220,7 @@ namespace DexComanda
 
         private void gruposCategoriasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void tipoOpçãoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1448,62 +1448,62 @@ namespace DexComanda
                 MessageBox.Show("Não foi possivel imprimir o Item da Mesa verificar a impressora" + erro.Message);
             }
         }
-            
-                //if (ImprimeLPT && lRetorno != "")
-                //{
-                //    StreamReader tempDex = new StreamReader(lRetorno);
-                //    line = tempDex.ReadToEnd();
 
-                //    string RetornoTxt = Directory.GetCurrentDirectory() + @"\" + "ConfigImpressao" + ".txt";
-                //    if (System.IO.File.Exists(RetornoTxt))
-                //    {
-                //        tempDex = new StreamReader(RetornoTxt);
-                //        // line = tempDex.ReadLine();
-                //        RetornoTxt = tempDex.ReadLine();
+        //if (ImprimeLPT && lRetorno != "")
+        //{
+        //    StreamReader tempDex = new StreamReader(lRetorno);
+        //    line = tempDex.ReadToEnd();
 
-                //        if (RetornoTxt != "")
-                //        {
-                //            string iPortaUSB = "", iModelo = "";
-                //            string[] words = RetornoTxt.Split(';');
+        //    string RetornoTxt = Directory.GetCurrentDirectory() + @"\" + "ConfigImpressao" + ".txt";
+        //    if (System.IO.File.Exists(RetornoTxt))
+        //    {
+        //        tempDex = new StreamReader(RetornoTxt);
+        //        // line = tempDex.ReadLine();
+        //        RetornoTxt = tempDex.ReadLine();
 
-                //            for (int i = 0; i < words.Length; i++)
-                //            {
-                //                iModelo = words[0];
-                //                iPortaUSB = words[1];
-                //            }
-                //            int iRetorno;
-                //            MP2032 bema = new MP2032();
-                //            try
-                //            {
-                //                iRetorno = MP2032.ConfiguraModeloImpressora(int.Parse(iModelo));
-                //                iRetorno = MP2032.IniciaPorta(iPortaUSB);
-                //                if (iRetorno == 1)
-                //                {
-                //                    MP2032.FormataTX(line, 2, 0, 0, 1, 0);
-                //                    iRetorno = MP2032.BematechTX(line + "\r\n\r\n");
-                //                    MP2032.AcionaGuilhotina(1);
-                //                }
-                //                else
-                //                {
-                //                    MessageBox.Show("Erro de  conexão impressora" + iModelo + " Porta" + iPortaUSB);
-                //                }
-                //            }
-                //            catch (Exception erro)
-                //            {
+        //        if (RetornoTxt != "")
+        //        {
+        //            string iPortaUSB = "", iModelo = "";
+        //            string[] words = RetornoTxt.Split(';');
 
-                //                MessageBox.Show(erro.Message);
-                //            }
+        //            for (int i = 0; i < words.Length; i++)
+        //            {
+        //                iModelo = words[0];
+        //                iPortaUSB = words[1];
+        //            }
+        //            int iRetorno;
+        //            MP2032 bema = new MP2032();
+        //            try
+        //            {
+        //                iRetorno = MP2032.ConfiguraModeloImpressora(int.Parse(iModelo));
+        //                iRetorno = MP2032.IniciaPorta(iPortaUSB);
+        //                if (iRetorno == 1)
+        //                {
+        //                    MP2032.FormataTX(line, 2, 0, 0, 1, 0);
+        //                    iRetorno = MP2032.BematechTX(line + "\r\n\r\n");
+        //                    MP2032.AcionaGuilhotina(1);
+        //                }
+        //                else
+        //                {
+        //                    MessageBox.Show("Erro de  conexão impressora" + iModelo + " Porta" + iPortaUSB);
+        //                }
+        //            }
+        //            catch (Exception erro)
+        //            {
 
-
-
-                //        }
-                //    }
-                //    //    }
+        //                MessageBox.Show(erro.Message);
+        //            }
 
 
-                //}
 
-           
+        //        }
+        //    }
+        //    //    }
+
+
+        //}
+
+
         //}
         private void MudarCorLinha(int iCodPedido, DataGridView grdPedido)
         {
@@ -1541,18 +1541,20 @@ namespace DexComanda
                 {
                     // MudarCorLinha(int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString()), pedidosGridView);
                     DataSet dsPedidos = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString()));
-                    DataRow dRowPedido = dsPedidos.Tables[0].Rows[0];
-                    if (dRowPedido.Table.Rows.Count>0)
+                    if (dsPedidos.Tables[0].Rows.Count > 0)
                     {
+                        DataRow dRowPedido = dsPedidos.Tables[0].Rows[0];
                         Boolean iMesa = dRowPedido.ItemArray.GetValue(9).ToString() != "0";
                         if (iMesa && chkGerenciaImpressao.Checked)
                         {
                             ImpressaoAutomatica(int.Parse(dRowPedido.ItemArray.GetValue(1).ToString()), dRowPedido.ItemArray.GetValue(5).ToString());
                         }
                     }
-                    
+
+
+
                 }
-                
+
             }
             catch (Exception erro)
             {

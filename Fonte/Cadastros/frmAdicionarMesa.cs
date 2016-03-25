@@ -141,20 +141,20 @@ namespace DexComanda.Cadastros
                         NumeroMesa = txtNumeroMesa.Text
                     };
 
-                    if (cbxStatusMesa.SelectedItem == "Aberta")
+                    if (cbxStatusMesa.Text == "Aberta")
                     {
                         mesas.StatusMesa = 1;
                     }
-                    else if (cbxStatusMesa.SelectedItem == "Ocupada")
+                    else if (cbxStatusMesa.Text == "Ocupada")
                     {
                         mesas.StatusMesa = 2;
                     }
-                    else if (cbxStatusMesa.SelectedItem == "Reservada")
+                    else if (cbxStatusMesa.Text == "Reservada")
                     {
                         mesas.StatusMesa = 3;
                     }
 
-                    if (txtNumeroMesa.Text != "" && cbxStatusMesa.SelectedItem != "")
+                    if (txtNumeroMesa.Text != "" && cbxStatusMesa.Text != "")
                     {
                         con.Insert("spAdicionarMesas", mesas);
                         Utils.ControlaEventos("Inserir", this.Name);

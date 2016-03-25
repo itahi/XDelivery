@@ -56,6 +56,7 @@ namespace DexComanda.Operações
                     {
                         if (Utils.ImputStringQuestion())
                         {
+                            con.AtualizaDataSincronismo("Grupo", -1, "DataAlteracao");
                             con.AtualizaDataSincronismo("Produto", -1, "DataAlteracao");
                             LimparUrlAmigaveis();
                         }

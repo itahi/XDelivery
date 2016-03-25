@@ -60,6 +60,7 @@
             // 
             // cbxStatusMesa
             // 
+            this.cbxStatusMesa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxStatusMesa.FormattingEnabled = true;
             this.cbxStatusMesa.Items.AddRange(new object[] {
             "Aberta",
@@ -91,7 +92,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(48, 66);
+            this.btnSalvar.Location = new System.Drawing.Point(27, 68);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(86, 37);
             this.btnSalvar.TabIndex = 2;

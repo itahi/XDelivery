@@ -34,6 +34,8 @@
             this.cadastrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.produtosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gruposCategoriasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.familiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.grupoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.opçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tipoOpçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.opçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -136,8 +138,6 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.familiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.grupoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -205,6 +205,20 @@
             this.gruposCategoriasToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
             this.gruposCategoriasToolStripMenuItem.Text = "Categorias";
             this.gruposCategoriasToolStripMenuItem.Click += new System.EventHandler(this.gruposCategoriasToolStripMenuItem_Click);
+            // 
+            // familiaToolStripMenuItem
+            // 
+            this.familiaToolStripMenuItem.Name = "familiaToolStripMenuItem";
+            this.familiaToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
+            this.familiaToolStripMenuItem.Text = "Familia";
+            this.familiaToolStripMenuItem.Click += new System.EventHandler(this.familiaToolStripMenuItem_Click);
+            // 
+            // grupoToolStripMenuItem
+            // 
+            this.grupoToolStripMenuItem.Name = "grupoToolStripMenuItem";
+            this.grupoToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
+            this.grupoToolStripMenuItem.Text = "Grupo";
+            this.grupoToolStripMenuItem.Click += new System.EventHandler(this.grupoToolStripMenuItem_Click);
             // 
             // opçãoToolStripMenuItem
             // 
@@ -655,7 +669,7 @@
             this.pnlPrincipal.Controls.Add(this.pnlBuscaCliente);
             this.pnlPrincipal.Controls.Add(this.pnlRetornaCliente);
             this.pnlPrincipal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPrincipal.ForeColor = System.Drawing.Color.DarkCyan;
+            this.pnlPrincipal.ForeColor = System.Drawing.Color.Black;
             this.pnlPrincipal.Location = new System.Drawing.Point(0, 29);
             this.pnlPrincipal.Name = "pnlPrincipal";
             this.pnlPrincipal.Size = new System.Drawing.Size(1044, 481);
@@ -717,7 +731,7 @@
             this.chkGerenciaImpressao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkGerenciaImpressao.AutoSize = true;
             this.chkGerenciaImpressao.ForeColor = System.Drawing.Color.Black;
-            this.chkGerenciaImpressao.Location = new System.Drawing.Point(165, 458);
+            this.chkGerenciaImpressao.Location = new System.Drawing.Point(204, 460);
             this.chkGerenciaImpressao.Name = "chkGerenciaImpressao";
             this.chkGerenciaImpressao.Size = new System.Drawing.Size(120, 17);
             this.chkGerenciaImpressao.TabIndex = 20;
@@ -732,7 +746,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.txtUsuarioLogado});
-            this.statusStrip1.Location = new System.Drawing.Point(3, 455);
+            this.statusStrip1.Location = new System.Drawing.Point(8, 455);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(159, 22);
             this.statusStrip1.TabIndex = 19;
@@ -1043,6 +1057,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.SystemColors.Menu;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(-1, 16);
             this.label9.Name = "label9";
@@ -1090,6 +1105,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.SystemColors.Menu;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.Location = new System.Drawing.Point(7, 131);
             this.label8.Name = "label8";
@@ -1100,6 +1116,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.SystemColors.Menu;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(191, 128);
             this.label7.Name = "label7";
@@ -1110,6 +1127,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.SystemColors.Menu;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(7, 190);
             this.label6.Name = "label6";
@@ -1133,6 +1151,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.SystemColors.Menu;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(7, 80);
             this.label5.Name = "label5";
@@ -1156,6 +1175,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.SystemColors.Menu;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(7, 48);
             this.label4.Name = "label4";
@@ -1168,7 +1188,7 @@
             this.btnConsultarTelefone.ForeColor = System.Drawing.Color.Black;
             this.btnConsultarTelefone.Location = new System.Drawing.Point(377, 3);
             this.btnConsultarTelefone.Name = "btnConsultarTelefone";
-            this.btnConsultarTelefone.Size = new System.Drawing.Size(111, 40);
+            this.btnConsultarTelefone.Size = new System.Drawing.Size(124, 40);
             this.btnConsultarTelefone.TabIndex = 20;
             this.btnConsultarTelefone.Text = "Consultar / Cadastra [F12] ";
             this.btnConsultarTelefone.UseVisualStyleBackColor = true;
@@ -1204,20 +1224,6 @@
             this.AtualizaGrid.Enabled = true;
             this.AtualizaGrid.Interval = 10000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
-            // 
-            // familiaToolStripMenuItem
-            // 
-            this.familiaToolStripMenuItem.Name = "familiaToolStripMenuItem";
-            this.familiaToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
-            this.familiaToolStripMenuItem.Text = "Familia";
-            this.familiaToolStripMenuItem.Click += new System.EventHandler(this.familiaToolStripMenuItem_Click);
-            // 
-            // grupoToolStripMenuItem
-            // 
-            this.grupoToolStripMenuItem.Name = "grupoToolStripMenuItem";
-            this.grupoToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
-            this.grupoToolStripMenuItem.Text = "Grupo";
-            this.grupoToolStripMenuItem.Click += new System.EventHandler(this.grupoToolStripMenuItem_Click);
             // 
             // frmPrincipal
             // 
