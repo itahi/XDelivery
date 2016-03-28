@@ -186,7 +186,7 @@ namespace DexComanda
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
-
+            
             int iNumeroCaixa = Sessions.returnUsuario.CaixaLogado;
             iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now, iNumeroCaixa).Tables["Caixa"].Rows.Count;
             if (iCaixaAberto > 0)
@@ -208,7 +208,7 @@ namespace DexComanda
         }
         private void MontaMenu() // Monta o menu de opções
         {
-            if (Sessions.returnEmpresa.CNPJ == "22695578000142" || Sessions.returnEmpresa.CNPJ == "22678091000151")
+            if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cTopsAcai || Sessions.returnEmpresa.CNPJ ==Bibliotecas.cElShaday || Sessions.returnEmpresa.CNPJ== Bibliotecas.cGaleto)
             {
                 aberturaCaixaToolStripMenuItem.Enabled = false;
                 controleDeEstoqueToolStripMenuItem.Enabled = false;
@@ -236,11 +236,7 @@ namespace DexComanda
 
         private void FiltraGrupo(object sender, EventArgs e)
         {
-            if (cbxGrupoProduto.SelectedIndex != 0)
-            {
-
-                Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto, !chkProdutosInativos.Checked, " and CodGrupo=" + cbxGrupoProduto.SelectedValue.ToString());
-            }
+           
         }
 
         private void BuscaProduto(object sender, KeyEventArgs e)
@@ -298,7 +294,15 @@ namespace DexComanda
                                                               Convert.ToDateTime(dRowProduto.ItemArray.GetValue(10).ToString()), Convert.ToDateTime(dRowProduto.ItemArray.GetValue(11).ToString()), Convert.ToBoolean(dRowProduto.ItemArray.GetValue(13).ToString()));
             frm.StartPosition = FormStartPosition.CenterParent;
             frm.ShowDialog();
-            Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
+            if (cbxGrupoProduto.SelectedValue.ToString()!="0")
+            {
+                Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto, !chkProdutosInativos.Checked, " and CodGrupo=" + cbxGrupoProduto.SelectedValue.ToString());
+            }
+            else
+            {
+                Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
+            }
+            
 
         }
         private void DeletarProduto(object sender, EventArgs e)
@@ -1536,18 +1540,23 @@ namespace DexComanda
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
 
                 }
-
-                for (int i = 0; i < dsPedidosAbertos.Tables[0].Rows.Count; i++)
+                string iSql= "select * "+
+                             "   from Pedido PE"+
+                             "  join"+
+                             "   ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0" +
+                             "   where PE.CodigoMesa > 0";
+                DataSet dsItemsNaoImpresso = con.SelectAll("ItemsPedido", "", iSql);
+                for (int i = 0; i < dsItemsNaoImpresso.Tables[0].Rows.Count ; i++)
                 {
                     // MudarCorLinha(int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString()), pedidosGridView);
-                    DataSet dsPedidos = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString()));
-                    if (dsPedidos.Tables[0].Rows.Count > 0)
+                  //  DataSet dsPedidos = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", dsItemsNaoImpresso.Tables[0].Rows[i].Field<int>("CodPedido"));
+                    if (dsItemsNaoImpresso.Tables[0].Rows.Count > 0)
                     {
-                        DataRow dRowPedido = dsPedidos.Tables[0].Rows[0];
-                        Boolean iMesa = dRowPedido.ItemArray.GetValue(9).ToString() != "0";
+                        DataRow dRowPedido = dsItemsNaoImpresso.Tables[0].Rows[0];
+                        Boolean iMesa = dRowPedido.ItemArray.GetValue(10).ToString() != "0";
                         if (iMesa && chkGerenciaImpressao.Checked)
                         {
-                            ImpressaoAutomatica(int.Parse(dRowPedido.ItemArray.GetValue(1).ToString()), dRowPedido.ItemArray.GetValue(5).ToString());
+                            ImpressaoAutomatica(int.Parse(dRowPedido.ItemArray.GetValue(0).ToString()), dRowPedido.ItemArray.GetValue(5).ToString());
                         }
                     }
 
@@ -1578,6 +1587,15 @@ namespace DexComanda
         {
             frmFamilia frm = new frmFamilia();
             frm.Show();
+        }
+
+        private void cbxGrupoProduto_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (cbxGrupoProduto.SelectedValue.ToString() != "0")
+            {
+
+                Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto, !chkProdutosInativos.Checked, " and CodGrupo=" + cbxGrupoProduto.SelectedValue.ToString());
+            }
         }
     }
 }

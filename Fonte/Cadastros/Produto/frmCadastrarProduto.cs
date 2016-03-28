@@ -692,7 +692,7 @@ namespace DexComanda
 
         private void cbxGrupoProduto_Click(object sender, EventArgs e)
         {
-            Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
+          
             //this.cbxGrupoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupoAtivo").Tables["Grupo"];
             //this.cbxGrupoProduto.DisplayMember = "NomeGrupo";
             //this.cbxGrupoProduto.ValueMember = "Codigo";
@@ -801,6 +801,11 @@ namespace DexComanda
             {
                 MessageBox.Show("Senha mestra errada");
             }
+        }
+
+        private void cbxGrupoProduto_DropDown(object sender, EventArgs e)
+        {
+            Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
         }
     }
 }

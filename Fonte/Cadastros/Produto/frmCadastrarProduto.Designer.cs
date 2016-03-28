@@ -79,8 +79,12 @@
             this.chkSegunda = new System.Windows.Forms.CheckBox();
             this.cbxGrupoProduto = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.button3 = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.horaInicio = new System.Windows.Forms.DateTimePicker();
+            this.HoraFim = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -89,11 +93,7 @@
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.horaInicio = new System.Windows.Forms.DateTimePicker();
-            this.HoraFim = new System.Windows.Forms.DateTimePicker();
+            this.button3 = new System.Windows.Forms.Button();
             grupoProdutoLabel = new System.Windows.Forms.Label();
             precoProdutoLabel = new System.Windows.Forms.Label();
             descricaoProdutoLabel = new System.Windows.Forms.Label();
@@ -112,8 +112,8 @@
             this.grpDesconto.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // grupoProdutoLabel
@@ -615,6 +615,7 @@
             this.cbxGrupoProduto.Name = "cbxGrupoProduto";
             this.cbxGrupoProduto.Size = new System.Drawing.Size(223, 26);
             this.cbxGrupoProduto.TabIndex = 24;
+            this.cbxGrupoProduto.DropDown += new System.EventHandler(this.cbxGrupoProduto_DropDown);
             this.cbxGrupoProduto.Click += new System.EventHandler(this.cbxGrupoProduto_Click);
             // 
             // tabControl1
@@ -631,16 +632,6 @@
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(4, 319);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 26);
-            this.button3.TabIndex = 39;
-            this.button3.Text = "Botão mestre";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.groupBox2);
@@ -652,6 +643,54 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Turno / Disponibilidade";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.horaInicio);
+            this.groupBox2.Controls.Add(this.HoraFim);
+            this.groupBox2.Location = new System.Drawing.Point(3, 62);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(594, 72);
+            this.groupBox2.TabIndex = 33;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Horario que o produto estará disponivel";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(282, 21);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(23, 13);
+            this.label9.TabIndex = 14;
+            this.label9.Text = "Fim";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(160, 21);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(32, 13);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "Inicio";
+            // 
+            // horaInicio
+            // 
+            this.horaInicio.Checked = false;
+            this.horaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.horaInicio.Location = new System.Drawing.Point(163, 40);
+            this.horaInicio.Name = "horaInicio";
+            this.horaInicio.Size = new System.Drawing.Size(82, 20);
+            this.horaInicio.TabIndex = 11;
+            // 
+            // HoraFim
+            // 
+            this.HoraFim.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.HoraFim.Location = new System.Drawing.Point(285, 40);
+            this.HoraFim.Name = "HoraFim";
+            this.HoraFim.Size = new System.Drawing.Size(86, 20);
+            this.HoraFim.TabIndex = 12;
             // 
             // groupBox1
             // 
@@ -739,53 +778,15 @@
             this.checkBox7.Text = "Segunda";
             this.checkBox7.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // button3
             // 
-            this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.horaInicio);
-            this.groupBox2.Controls.Add(this.HoraFim);
-            this.groupBox2.Location = new System.Drawing.Point(3, 62);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(594, 72);
-            this.groupBox2.TabIndex = 33;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Horario que o produto estará disponivel";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(282, 21);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(23, 13);
-            this.label9.TabIndex = 14;
-            this.label9.Text = "Fim";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(160, 21);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(32, 13);
-            this.label8.TabIndex = 13;
-            this.label8.Text = "Inicio";
-            // 
-            // horaInicio
-            // 
-            this.horaInicio.Checked = false;
-            this.horaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.horaInicio.Location = new System.Drawing.Point(163, 40);
-            this.horaInicio.Name = "horaInicio";
-            this.horaInicio.Size = new System.Drawing.Size(82, 20);
-            this.horaInicio.TabIndex = 11;
-            // 
-            // HoraFim
-            // 
-            this.HoraFim.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.HoraFim.Location = new System.Drawing.Point(285, 40);
-            this.HoraFim.Name = "HoraFim";
-            this.HoraFim.Size = new System.Drawing.Size(86, 20);
-            this.HoraFim.TabIndex = 12;
+            this.button3.Location = new System.Drawing.Point(4, 319);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 26);
+            this.button3.TabIndex = 39;
+            this.button3.Text = "Botão mestre";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // frmCadastrarProduto
             // 
@@ -819,10 +820,10 @@
             this.grpDesconto.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }

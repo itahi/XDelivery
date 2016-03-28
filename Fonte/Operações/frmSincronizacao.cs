@@ -50,21 +50,21 @@ namespace DexComanda.Operações
                     // Envia as formas de pagamento ao site , enviando a imagem da bandeira 
                     CadastraFormaPagamento(ObterDados("FormaPagamento"));
                 }
-                if (chkLink.Checked)
-                {
-                    if (Utils.MessageBoxQuestion("Essa operação irá sincronizar todos produtos de seu banco de dados para o servidor Online , deseja continuar?"))
-                    {
-                        if (Utils.ImputStringQuestion())
-                        {
-                            con.AtualizaDataSincronismo("Grupo", -1, "DataAlteracao");
-                            con.AtualizaDataSincronismo("Produto", -1, "DataAlteracao");
-                            LimparUrlAmigaveis();
-                        }
-                    }
-                }
+               
                 if (chkProdutos.Checked)
                 {
-
+                    if (chkLink.Checked)
+                    {
+                        if (Utils.MessageBoxQuestion("Essa operação irá sincronizar todos produtos de seu banco de dados para o servidor Online , deseja continuar?"))
+                        {
+                            if (Utils.ImputStringQuestion())
+                            {
+                                con.AtualizaDataSincronismo("Grupo", -1, "DataAlteracao");
+                                con.AtualizaDataSincronismo("Produto", -1, "DataAlteracao");
+                                LimparUrlAmigaveis();
+                            }
+                        }
+                    }
                     // Sincronizar Grupos
                     CadastraCategorias(ObterDados("Grupo"));
                     // Sincronizar Tipo Opcao
@@ -108,11 +108,12 @@ namespace DexComanda.Operações
             try
 
             {
+                GerarToken();
                 RestClient client = new RestClient(iUrlWS);
                 RestResponse response = new RestResponse();
                 RestRequest request = new RestRequest("ws/urlamigaveis/deleteall", Method.POST);
                 request.AddParameter("token", iParamToken);
-                MudaLabel("URL amigaveis");
+                MudaLabel("Links amigaveis");
                 response = (RestResponse)client.Execute(request);
                 ReturnPadrao lRetorno = new ReturnPadrao();
                 lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
@@ -783,6 +784,11 @@ namespace DexComanda.Operações
         private void txtVlrMinimo_KeyPress(object sender, KeyPressEventArgs e)
         {
             Utils.SoDecimais(e);
+        }
+
+        private void chkLink_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

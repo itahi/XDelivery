@@ -194,7 +194,7 @@
             this.produtoToolStripMenuItem});
             this.produtosToolStripMenuItem.Name = "produtosToolStripMenuItem";
             this.produtosToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
-            this.produtosToolStripMenuItem.Text = "Items";
+            this.produtosToolStripMenuItem.Text = "Items / Cardápio";
             // 
             // gruposCategoriasToolStripMenuItem
             // 
@@ -209,14 +209,14 @@
             // familiaToolStripMenuItem
             // 
             this.familiaToolStripMenuItem.Name = "familiaToolStripMenuItem";
-            this.familiaToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
+            this.familiaToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
             this.familiaToolStripMenuItem.Text = "Familia";
             this.familiaToolStripMenuItem.Click += new System.EventHandler(this.familiaToolStripMenuItem_Click);
             // 
             // grupoToolStripMenuItem
             // 
             this.grupoToolStripMenuItem.Name = "grupoToolStripMenuItem";
-            this.grupoToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
+            this.grupoToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
             this.grupoToolStripMenuItem.Text = "Grupo";
             this.grupoToolStripMenuItem.Click += new System.EventHandler(this.grupoToolStripMenuItem_Click);
             // 
@@ -920,6 +920,7 @@
             this.cbxGrupoProduto.Size = new System.Drawing.Size(220, 30);
             this.cbxGrupoProduto.TabIndex = 9;
             this.cbxGrupoProduto.SelectedIndexChanged += new System.EventHandler(this.FiltraGrupo);
+            this.cbxGrupoProduto.SelectionChangeCommitted += new System.EventHandler(this.cbxGrupoProduto_SelectionChangeCommitted);
             // 
             // label1
             // 

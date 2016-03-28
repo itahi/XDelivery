@@ -283,7 +283,7 @@ namespace DexComanda
             catch (Exception erro)
             {
 
-                throw;
+                MessageBox.Show(erro.Message);
             }
            
             return ds;
@@ -807,7 +807,7 @@ namespace DexComanda
                     else
                     if (iTable == "Produto")
                     {
-                        if (Sessions.returnEmpresa.CNPJ == "13004606798" || Sessions.returnEmpresa.CNPJ == "21207218000191")
+                        if (Sessions.returnEmpresa.CNPJ ==Bibliotecas.cNUTRIFOOD) //Nutrifood
                         {
                             iSql = iSql.Replace(iSubSelect, ",(select top 1 Quantidade from Produto_Estoque E where E.CodProduto = Produto.Codigo and E.DataAtualizacao between '" + DateTime.Now.Date.ToShortDateString() + " 00:00:00" + "' and '" + DateTime.Now.Date.ToShortDateString() + " 23:59:59') as QtdVendida");
                         }

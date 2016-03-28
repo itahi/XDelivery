@@ -51,9 +51,9 @@
             this.groupBox1.Controls.Add(this.btnSalvar);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtNumeroMesa);
-            this.groupBox1.Location = new System.Drawing.Point(5, 0);
+            this.groupBox1.Location = new System.Drawing.Point(5, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(322, 120);
+            this.groupBox1.Size = new System.Drawing.Size(303, 116);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cadastro ";
@@ -118,10 +118,13 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.MesasGridView);
-            this.groupBox2.Location = new System.Drawing.Point(5, 126);
+            this.groupBox2.Location = new System.Drawing.Point(5, 127);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(328, 139);
+            this.groupBox2.Size = new System.Drawing.Size(306, 152);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Lista Mesas";
@@ -139,14 +142,14 @@
             this.MesasGridView.Name = "MesasGridView";
             this.MesasGridView.ReadOnly = true;
             this.MesasGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.MesasGridView.Size = new System.Drawing.Size(322, 120);
+            this.MesasGridView.Size = new System.Drawing.Size(300, 133);
             this.MesasGridView.TabIndex = 3;
             // 
             // frmAdicionarMesa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(340, 275);
+            this.ClientSize = new System.Drawing.Size(318, 289);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

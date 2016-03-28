@@ -41,10 +41,10 @@ namespace DexComanda.Cadastros.Produto
         private void EditarFamilia(object sender, EventArgs e)
         {
             codigo = int.Parse(this.FamiliaGridView.Rows[rowIndex].Cells[0].Value.ToString());
-            DataSet dsFamilia = con.SelectRegistroPorCodigo("Familia", "spObterFamiliaPorCodigo", codigo);
+            DataSet dsFamilia = con.SelectRegistroPorCodigo("Grupo", "spObterFamiliaPorCodigo", codigo);
             if (dsFamilia.Tables[0].Rows.Count>0)
             {
-                txtNome.Text = dsFamilia.Tables[0].Rows[0].Field<string>("Nome");
+                txtNome.Text = dsFamilia.Tables[0].Rows[0].Field<string>("NomeGrupo");
                 chkAtivo.Checked = dsFamilia.Tables[0].Rows[0].Field<Boolean>("AtivoSN");
                 chkOnline.Checked = dsFamilia.Tables[0].Rows[0].Field<Boolean>("OnlineSN");
             }

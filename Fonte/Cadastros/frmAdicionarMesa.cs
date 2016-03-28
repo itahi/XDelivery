@@ -33,8 +33,9 @@ namespace DexComanda.Cadastros
         {
             this.MesasGridView.DataSource = null;
             this.MesasGridView.AutoGenerateColumns = true;
-            this.MesasGridView.DataSource = con.SelectAll("Mesas", "spObterMesas");
+            this.MesasGridView.DataSource = con.SelectAll("Mesas", "spObterMesas"); ;
             this.MesasGridView.DataMember = "Mesas";
+
 
         }
 

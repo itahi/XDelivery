@@ -12,6 +12,11 @@ namespace DexComanda
       public const string cEdicaoOK = "Registro editado com sucesso";
       public const string cDeleteOK = "Registro deletado com sucesso";
       public const string cErroGravacao = "Registro nao pode ser gravado";
+        public const string cNUTRIFOOD = "13004606798";
+        public const string cGaleto = "22678091000151";
+        public const string cTopsAcai = "18907495000100";
+        public const string cElShaday= "22695578000142";
+
     }
 
      
