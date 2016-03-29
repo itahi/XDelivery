@@ -532,8 +532,11 @@ namespace DexComanda
             ////                   "   from Grupo G left " +
             ////                   "   join Familia F on F.Codigo = G.CodFamilia ";
             ////}
-            
 
+            if (iNomeTable=="Grupo")
+            {
+                lSqlConsulta = lSqlConsulta + "order by PaiSN desc";
+            }
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
 
@@ -1534,7 +1537,6 @@ namespace DexComanda
             else
             {
                 command.Parameters.AddWithValue("@Codigo", codigo);
-
             }
 
             adapter = new SqlDataAdapter(command);

@@ -453,9 +453,9 @@ namespace DexComanda.Operações
                     int AtivoSN = 0;
                     string idReferenciaCategoriaPai = "0";
                     iCod = int.Parse(dRow.ItemArray.GetValue(0).ToString());
-                    if (dRow.ItemArray.GetValue(8).ToString() != "")
+                    if (dRow.ItemArray.GetValue(9).ToString() != "")
                     {
-                        idReferenciaCategoriaPai = dRow.ItemArray.GetValue(8).ToString();
+                        idReferenciaCategoriaPai = dRow.ItemArray.GetValue(9).ToString();
                     }
 
                     inome = dRow.ItemArray.GetValue(1).ToString();
@@ -603,15 +603,19 @@ namespace DexComanda.Operações
             return iIDReturn;
         }
 
+        private void ManipulaProgressBar(int imax)
+        {
+            prgBarProduto.Value = 0;
+            prgBarProduto.Maximum = imax;
+        }
         private void CadastrarOpcaoProduto(int iCodProduto)
         {
-
             try
             {
-
                 DataSet ds = con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcaoProdutoCodigo", iCodProduto);
                 int iCodOpcao = 0;
-                MudaLabel("Opcoes/Adicionais");
+                ManipulaProgressBar(ds.Tables[0].Rows.Count);
+                 MudaLabel("Opcoes/Adicionais");
                 DataRow dRow;
                 if (ds.Tables[0].Rows.Count > 0)
                 {
@@ -641,7 +645,7 @@ namespace DexComanda.Operações
 
                         request.AddParameter("opcao[" + iCodOpcao + "]", iprice);
                         //}
-
+                        prgBarProduto.Value = i + 1;
                     }
 
                     RestResponse response = (RestResponse)client.Execute(request);

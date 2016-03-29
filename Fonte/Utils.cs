@@ -168,8 +168,11 @@ namespace DexComanda
                 }
                 else
                 {
-                    icbxName.DataSource = conexao.SelectRegistroPorCodigo(iTable, iSP, iCod).Tables[iTable];
+                    DataSet ds = conexao.SelectRegistroPorCodigo(iTable, iSP, iCod);
+                    icbxName.DataSource = ds.Tables[0];
+                   // icbxName.Text = ds.Tables[0].Rows[0].Field<string>("NomeGrupo");
                 }
+                
 
                 icbxName.DisplayMember = idisplayName;
                 icbxName.ValueMember = iValueMember;

@@ -47,15 +47,18 @@ namespace DexComanda.Cadastros.Produto
                 txtNome.Text = dsFamilia.Tables[0].Rows[0].Field<string>("NomeGrupo");
                 chkAtivo.Checked = dsFamilia.Tables[0].Rows[0].Field<Boolean>("AtivoSN");
                 chkOnline.Checked = dsFamilia.Tables[0].Rows[0].Field<Boolean>("OnlineSN");
+
+                this.btnAdicionarGrupo.Text = "Salvar [F12]";
+                this.btnAdicionarGrupo.Click += new System.EventHandler(this.SalvarGrupo);
+                this.btnAdicionarGrupo.Click -= new System.EventHandler(this.btnAdicionarGrupo_Click);
+
+                this.btnEditarGrupo.Text = "Cancelar [ESC]";
+                this.btnEditarGrupo.Click += new System.EventHandler(this.Cancelar);
+                this.btnEditarGrupo.Click -= new System.EventHandler(this.EditarFamilia);
+
             }
 
-            this.btnAdicionarGrupo.Text = "Salvar [F12]";
-            this.btnAdicionarGrupo.Click += new System.EventHandler(this.SalvarGrupo);
-            this.btnAdicionarGrupo.Click -= new System.EventHandler(this.btnAdicionarGrupo_Click);
-
-            this.btnEditarGrupo.Text = "Cancelar [ESC]";
-            this.btnEditarGrupo.Click += new System.EventHandler(this.Cancelar);
-            this.btnEditarGrupo.Click -= new System.EventHandler(this.EditarFamilia);
+            
            
         }
         private void Cancelar(object sender, EventArgs e)

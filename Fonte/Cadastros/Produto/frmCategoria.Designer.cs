@@ -43,6 +43,7 @@
             this.cbxFamilia = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnEditarFamilia = new System.Windows.Forms.Button();
+            this.txtCodFamilia = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.gruposGridView)).BeginInit();
             this.pnlImpressora.SuspendLayout();
             this.SuspendLayout();
@@ -57,7 +58,7 @@
             this.gruposGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gruposGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.gruposGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gruposGridView.Location = new System.Drawing.Point(4, 243);
+            this.gruposGridView.Location = new System.Drawing.Point(4, 253);
             this.gruposGridView.MultiSelect = false;
             this.gruposGridView.Name = "gruposGridView";
             this.gruposGridView.ReadOnly = true;
@@ -69,7 +70,7 @@
             // 
             // btnAdicionarGrupo
             // 
-            this.btnAdicionarGrupo.Location = new System.Drawing.Point(4, 202);
+            this.btnAdicionarGrupo.Location = new System.Drawing.Point(4, 212);
             this.btnAdicionarGrupo.Name = "btnAdicionarGrupo";
             this.btnAdicionarGrupo.Size = new System.Drawing.Size(115, 35);
             this.btnAdicionarGrupo.TabIndex = 2;
@@ -82,7 +83,7 @@
             this.txbNomeGrupo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txbNomeGrupo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txbNomeGrupo.Location = new System.Drawing.Point(4, 170);
+            this.txbNomeGrupo.Location = new System.Drawing.Point(4, 180);
             this.txbNomeGrupo.Name = "txbNomeGrupo";
             this.txbNomeGrupo.Size = new System.Drawing.Size(300, 26);
             this.txbNomeGrupo.TabIndex = 1;
@@ -90,7 +91,7 @@
             // 
             // btnEditarGrupo
             // 
-            this.btnEditarGrupo.Location = new System.Drawing.Point(172, 202);
+            this.btnEditarGrupo.Location = new System.Drawing.Point(172, 212);
             this.btnEditarGrupo.Name = "btnEditarGrupo";
             this.btnEditarGrupo.Size = new System.Drawing.Size(131, 35);
             this.btnEditarGrupo.TabIndex = 3;
@@ -102,7 +103,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(1, 154);
+            this.label1.Location = new System.Drawing.Point(1, 164);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(85, 13);
             this.label1.TabIndex = 5;
@@ -111,7 +112,7 @@
             // chkOnline
             // 
             this.chkOnline.AutoSize = true;
-            this.chkOnline.Location = new System.Drawing.Point(92, 150);
+            this.chkOnline.Location = new System.Drawing.Point(92, 160);
             this.chkOnline.Name = "chkOnline";
             this.chkOnline.Size = new System.Drawing.Size(62, 17);
             this.chkOnline.TabIndex = 11;
@@ -121,7 +122,7 @@
             // chkAtivo
             // 
             this.chkAtivo.AutoSize = true;
-            this.chkAtivo.Location = new System.Drawing.Point(172, 150);
+            this.chkAtivo.Location = new System.Drawing.Point(172, 160);
             this.chkAtivo.Name = "chkAtivo";
             this.chkAtivo.Size = new System.Drawing.Size(56, 17);
             this.chkAtivo.TabIndex = 12;
@@ -175,16 +176,17 @@
             this.cbxFamilia.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxFamilia.FormattingEnabled = true;
-            this.cbxFamilia.Location = new System.Drawing.Point(9, 114);
+            this.cbxFamilia.Location = new System.Drawing.Point(9, 124);
             this.cbxFamilia.Name = "cbxFamilia";
             this.cbxFamilia.Size = new System.Drawing.Size(197, 21);
             this.cbxFamilia.TabIndex = 17;
+            this.cbxFamilia.DropDown += new System.EventHandler(this.ListaTodos);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 96);
+            this.label2.Location = new System.Drawing.Point(6, 101);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 13);
             this.label2.TabIndex = 18;
@@ -193,19 +195,30 @@
             // btnEditarFamilia
             // 
             this.btnEditarFamilia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditarFamilia.Location = new System.Drawing.Point(212, 112);
+            this.btnEditarFamilia.Location = new System.Drawing.Point(212, 122);
             this.btnEditarFamilia.Name = "btnEditarFamilia";
             this.btnEditarFamilia.Size = new System.Drawing.Size(91, 23);
             this.btnEditarFamilia.TabIndex = 18;
             this.btnEditarFamilia.Text = "Editar Familia";
             this.btnEditarFamilia.UseVisualStyleBackColor = true;
+            this.btnEditarFamilia.Visible = false;
             this.btnEditarFamilia.Click += new System.EventHandler(this.EditarFamilia);
+            // 
+            // txtCodFamilia
+            // 
+            this.txtCodFamilia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCodFamilia.Location = new System.Drawing.Point(51, 92);
+            this.txtCodFamilia.Name = "txtCodFamilia";
+            this.txtCodFamilia.Size = new System.Drawing.Size(61, 26);
+            this.txtCodFamilia.TabIndex = 19;
+            this.txtCodFamilia.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.BuscaFamilia);
             // 
             // frmAdicionarGrupo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(315, 493);
+            this.Controls.Add(this.txtCodFamilia);
             this.Controls.Add(this.btnEditarFamilia);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cbxFamilia);
@@ -249,5 +262,6 @@
         private System.Windows.Forms.ComboBox cbxFamilia;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnEditarFamilia;
+        private System.Windows.Forms.TextBox txtCodFamilia;
     }
 }

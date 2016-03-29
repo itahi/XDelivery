@@ -668,6 +668,10 @@ namespace DexComanda
                     // Caso o pedido for mesa ele altera o Status da Mesa
                     if (ControlaMesas && iCodMesa != 0)
                     {
+                        if (Utils.MessageBoxQuestion("Deseja imprimir a conferencia desta dessa mesa?"))
+                        {
+                            Utils.ImpressaoFechamentoNovo(codigo, false, 1);
+                        }
                         //  NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
                         Utils.AtualizaMesa(iCodMesa, 1);
                     }
@@ -1248,19 +1252,19 @@ namespace DexComanda
         private void usuáriosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCadastroUsuario frm = new frmCadastroUsuario();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void entregadorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCadastrarEntregador frm = new frmCadastrarEntregador();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void formasDePagamentoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCadastrarFormaPagamento frm = new frmCadastrarFormaPagamento();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void regiãoDeEntregaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1320,7 +1324,7 @@ namespace DexComanda
         private void geralToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmReportProdutos frm = new frmReportProdutos();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void maisVendidosToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1344,7 +1348,7 @@ namespace DexComanda
         private void sistemaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmConfiguracoes frm = new frmConfiguracoes();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void impressãoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1368,7 +1372,7 @@ namespace DexComanda
         private void opçãoToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmAlterarOpcao frm = new frmAlterarOpcao();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void clientesToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1586,7 +1590,7 @@ namespace DexComanda
         private void familiaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmFamilia frm = new frmFamilia();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void cbxGrupoProduto_SelectionChangeCommitted(object sender, EventArgs e)

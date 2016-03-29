@@ -42,7 +42,7 @@ namespace DexComanda
                     NomeGrupo = this.txbNomeGrupo.Text,
                     ImprimeCozinhaSN = chkImprimeCozinha.Checked,
                     AtivoSN = chkAtivo.Checked,
-                    OnlineSN =chkOnline.Checked,
+                    OnlineSN = chkOnline.Checked,
                     DataAlteracao = DateTime.Now
                 };
                 if (chkImprimeCozinha.Checked)
@@ -53,7 +53,7 @@ namespace DexComanda
                 {
                     grupo.NomeImpressora = "";
                 }
-                if (cbxFamilia.SelectedValue!=null)
+                if (cbxFamilia.SelectedValue != null)
                 {
                     grupo.CodFamilia = int.Parse(cbxFamilia.SelectedValue.ToString());
                 }
@@ -62,7 +62,7 @@ namespace DexComanda
                     grupo.CodFamilia = 0;
                 }
 
-                if (txbNomeGrupo.Text !="")
+                if (txbNomeGrupo.Text != "")
                 {
                     con.Insert("spAdicionarGrupo", grupo);
                     Utils.ControlaEventos("Inserir", this.Name);
@@ -73,11 +73,11 @@ namespace DexComanda
                 {
                     MessageBox.Show("Preenchar o Nome do Grupo para prosseguir", "Dex Aviso");
                 }
-                
+
             }
             catch (Exception erro)
             {
-                MessageBox.Show("Ocorreu um erro na gravaçao do registro "+erro.Message,"xSistemas Aviso");
+                MessageBox.Show("Ocorreu um erro na gravaçao do registro " + erro.Message, "xSistemas Aviso");
             }
         }
 
@@ -86,19 +86,18 @@ namespace DexComanda
 
             codigo = int.Parse(this.gruposGridView.Rows[rowIndex].Cells[0].Value.ToString());
             this.txbNomeGrupo.Text = this.gruposGridView.Rows[rowIndex].Cells[1].Value.ToString();
-            chkImprimeCozinha.Checked =Convert.ToBoolean( this.gruposGridView.Rows[rowIndex].Cells[2].Value.ToString());
+            chkImprimeCozinha.Checked = Convert.ToBoolean(this.gruposGridView.Rows[rowIndex].Cells[2].Value.ToString());
             cbxNomeImpressora.Text = this.gruposGridView.Rows[rowIndex].Cells["NomeImpressora"].Value.ToString();
             chkOnline.Checked = Convert.ToBoolean(this.gruposGridView.Rows[rowIndex].Cells[3].Value.ToString());
             chkAtivo.Checked = Convert.ToBoolean(this.gruposGridView.Rows[rowIndex].Cells[4].Value.ToString());
 
-            if (gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString()!="0")
+            if (gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString() != "0")
             {
-                Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Familia", "spObterFamiliaPorCodigo", int.Parse(gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString()));
+                Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Grupo", "spObterFamiliaPorCodFamilia", int.Parse(gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString()));
             }
             else
             {
-                cbxFamilia.DisplayMember = "";
-                cbxFamilia.Text = null;
+                Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Grupo", "spObterFamilia");
             }
 
             this.btnAdicionarGrupo.Text = "Salvar [F12]";
@@ -158,7 +157,7 @@ namespace DexComanda
                 grupo.CodFamilia = 0;
             }
 
-            if (txbNomeGrupo.Text !="")
+            if (txbNomeGrupo.Text != "")
             {
                 con.Update("spAlterarGrupo", grupo);
 
@@ -168,7 +167,7 @@ namespace DexComanda
                     OnlineSN = chkOnline.Checked,
                     CodGrupo = grupo.Codigo
                 };
-             //   con.Update("spAlterarProdutoPorGrupo", prod);
+                //   con.Update("spAlterarProdutoPorGrupo", prod);
                 Utils.ControlaEventos("Alterar", this.Name);
                 this.btnAdicionarGrupo.Text = "Adicionar [F12]";
                 this.btnAdicionarGrupo.Click += new System.EventHandler(this.AdicionarGrupo);
@@ -186,7 +185,7 @@ namespace DexComanda
                 MessageBox.Show("Preencha o nome para continuar", "Dex Aviso");
             }
 
-           
+
         }
 
         private void ExibirGrupos()
@@ -195,7 +194,6 @@ namespace DexComanda
             this.gruposGridView.AutoGenerateColumns = true;
             this.gruposGridView.DataSource = Utils.PopularGrid_SP("Grupo", gruposGridView, "spObterGrupo");
             this.gruposGridView.DataMember = "Grupo";
-
         }
 
         private void txbNomeGrupo_TextChanged(object sender, EventArgs e)
@@ -207,7 +205,7 @@ namespace DexComanda
         {
 
             rowIndex = e.RowIndex;
-       
+
         }
 
         private void DeletaGrupo(object sender, EventArgs e)
@@ -219,7 +217,7 @@ namespace DexComanda
                 Utils.ControlaEventos("Excluir", this.Name);
                 MessageBox.Show("Item excluído com sucesso.");
                 ExibirGrupos();
-                 
+
             }
             else
             {
@@ -255,12 +253,12 @@ namespace DexComanda
             {
                 SalvarGrupo(sender, e);
             }
-            
+
             else if (e.KeyCode == Keys.F11 && btnEditarGrupo.Text == "Editar [F11]")
             {
-                EditarGrupo(sender, e); 
+                EditarGrupo(sender, e);
             }
-            else if (btnEditarGrupo.Text =="Cancelar [ESC]" && e.KeyCode == Keys.Escape)
+            else if (btnEditarGrupo.Text == "Cancelar [ESC]" && e.KeyCode == Keys.Escape)
             {
                 Cancelar(sender, e);
             }
@@ -286,6 +284,19 @@ namespace DexComanda
         }
 
         private void EditarFamilia(object sender, EventArgs e)
+        {
+            Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Grupo", "spObterFamilia");
+        }
+
+        private void BuscaFamilia(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Grupo", "spObterFamiliaPorCodFamilia", int.Parse(txtCodFamilia.Text));
+            }
+        }
+
+        private void ListaTodos(object sender, EventArgs e)
         {
             Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Grupo", "spObterFamilia");
         }
