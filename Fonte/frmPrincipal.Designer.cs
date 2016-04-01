@@ -138,6 +138,7 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
+            this.chkSEmFotos = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -209,14 +210,14 @@
             // familiaToolStripMenuItem
             // 
             this.familiaToolStripMenuItem.Name = "familiaToolStripMenuItem";
-            this.familiaToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.familiaToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
             this.familiaToolStripMenuItem.Text = "Familia";
             this.familiaToolStripMenuItem.Click += new System.EventHandler(this.familiaToolStripMenuItem_Click);
             // 
             // grupoToolStripMenuItem
             // 
             this.grupoToolStripMenuItem.Name = "grupoToolStripMenuItem";
-            this.grupoToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.grupoToolStripMenuItem.Size = new System.Drawing.Size(129, 26);
             this.grupoToolStripMenuItem.Text = "Grupo";
             this.grupoToolStripMenuItem.Click += new System.EventHandler(this.grupoToolStripMenuItem_Click);
             // 
@@ -861,6 +862,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlBuscaProduto.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlBuscaProduto.Controls.Add(this.chkSEmFotos);
             this.pnlBuscaProduto.Controls.Add(this.label11);
             this.pnlBuscaProduto.Controls.Add(this.chkProdutosInativos);
             this.pnlBuscaProduto.Controls.Add(this.txtNomeProd);
@@ -949,6 +951,7 @@
             this.produtosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.produtosGridView.Size = new System.Drawing.Size(515, 127);
             this.produtosGridView.TabIndex = 7;
+            this.produtosGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.produtosGridView_CellClick);
             this.produtosGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.produtosGridView_CellMouseDoubleClick);
             this.produtosGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxiliar);
             // 
@@ -1223,8 +1226,19 @@
             // AtualizaGrid
             // 
             this.AtualizaGrid.Enabled = true;
-            this.AtualizaGrid.Interval = 10000;
+            this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
+            // 
+            // chkSEmFotos
+            // 
+            this.chkSEmFotos.AutoSize = true;
+            this.chkSEmFotos.Location = new System.Drawing.Point(377, 7);
+            this.chkSEmFotos.Name = "chkSEmFotos";
+            this.chkSEmFotos.Size = new System.Drawing.Size(116, 17);
+            this.chkSEmFotos.TabIndex = 26;
+            this.chkSEmFotos.Text = "Somente sem fotos";
+            this.chkSEmFotos.UseVisualStyleBackColor = true;
+            this.chkSEmFotos.CheckedChanged += new System.EventHandler(this.chkSEmFotos_CheckedChanged);
             // 
             // frmPrincipal
             // 
@@ -1378,5 +1392,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ToolStripMenuItem familiaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grupoToolStripMenuItem;
+        private System.Windows.Forms.CheckBox chkSEmFotos;
     }
 }

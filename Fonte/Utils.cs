@@ -624,7 +624,7 @@ namespace DexComanda
         /// <param name="iCodPedido">Inteiro Código do Pedido a ser impresso</param>
         ///  <param name="iExport">Boolean Código do Pedido a ser impresso</param>
         /// <returns>String do Pedido para impressoras Matriciais quando iExpport for True.</returns>
-        public static string ImpressaMesaNova(int iCodPedido, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
+        public static string ImpressaMesaNova(int iCodPedido,int iCodGupo, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
         {
             string iRetorno = ""; ;
             try
@@ -643,7 +643,7 @@ namespace DexComanda
 
                     System.Drawing.Printing.PrinterSettings printersettings = new System.Drawing.Printing.PrinterSettings();
                     printersettings.PrinterName = iNomeImpressora;
-                    printersettings.Copies = 1;//int.Parse(iNumCopias);
+                    printersettings.Copies = 1;
                     printersettings.Collate = false;
                     Tables CrTables;
 
@@ -662,36 +662,41 @@ namespace DexComanda
                         CrTable.ApplyLogOnInfo(crtableLogoninfo);
                     }
                     report.SetParameterValue("@Codigo", iCodPedido);
+                    report.SetParameterValue("@CodGrupo", iCodGupo);
 
-                    if (iExport)
-                    {
-                        CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
-                        new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                        reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelComandaMesa.txt";
-
-                        report.ExportOptions.ExportDestinationType =
-                        CrystalDecisions.Shared.ExportDestinationType.DiskFile;
-
-                        report.ExportOptions.ExportFormatType =
-                        CrystalDecisions.Shared.ExportFormatType.Text;
-
-                        report.ExportOptions.DestinationOptions = reportExport;
-                        report.Export();
-                        iRetorno = Directory.GetCurrentDirectory() + @"\RelComandaMesa.txt";
-                    }
-                    else
+                    if (report.Rows.Count > 0)
                     {
 
-                        for (int i = 0; i < iNumCopias; i++)
+
+                        if (iExport)
                         {
-                            report.PrintToPrinter(1, false, 0, 0);
-                        }
+                            CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+                            new CrystalDecisions.Shared.DiskFileDestinationOptions();
+                            reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelComandaMesa.txt";
 
+                            report.ExportOptions.ExportDestinationType =
+                            CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+                            report.ExportOptions.ExportFormatType =
+                            CrystalDecisions.Shared.ExportFormatType.Text;
+
+                            report.ExportOptions.DestinationOptions = reportExport;
+                            report.Export();
+                            iRetorno = Directory.GetCurrentDirectory() + @"\RelComandaMesa.txt";
+                        }
+                        else
+                        {
+                            for (int i = 0; i < iNumCopias; i++)
+                            {
+                                report.PrintToPrinter(1, false, 0, 0);
+                            }
+
+                        }
                     }
                 }
                 finally
                 {
-                    report.Dispose();
+                    //report.Dispose();
 
                 }
             }
@@ -957,7 +962,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cTopsAcai || Sessions.returnEmpresa.CNPJ == Bibliotecas.cElShaday || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGaleto)
+                    if (Sessions.returnEmpresa.CNPJ== Bibliotecas.cCasteloPlus || Sessions.returnEmpresa.CNPJ == Bibliotecas.cTopsAcai || Sessions.returnEmpresa.CNPJ == Bibliotecas.cElShaday || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGaleto)
                     {
                         if (MessageBoxQuestion("O Caixa não esta aberto sistema funcionará somente no modo consulta, deseja abrir agora?"))
                         {
@@ -1484,7 +1489,7 @@ namespace DexComanda
 
             return Dados;
         }
-        public static DataSet PopulaGrid_Novo(string table, DataGridView gridView, string iParametrosConsulta, bool iAtivo = true, string iFiltrosAd = "")
+        public static DataSet PopulaGrid_Novo(string table, DataGridView gridView, string iParametrosConsulta, bool iAtivo = true, string iFiltrosAd = "",int iRowIndex=0)
         {
             Conexao con = new Conexao();
             DataSet Dados = null;
@@ -1492,8 +1497,10 @@ namespace DexComanda
 
             gridView.DataSource = null;
             gridView.AutoGenerateColumns = true;
+           // gridView.TabIndex = iRowIndex;
             gridView.DataSource = Dados;
             gridView.DataMember = table;
+            
             con.Close();
 
             return Dados;

@@ -438,8 +438,7 @@ namespace DexComanda.Operações
             try
             {
 
-                prgBarProduto.Value = 0;
-                prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
+                ManipulaProgressBar(ds.Tables[0].Rows.Count);
                 DataRow dRow;
                 MudaLabel("Grupo");
                 GerarToken();
@@ -495,7 +494,7 @@ namespace DexComanda.Operações
             {
                 MudaLabel("Produto");
                 decimal iPrecoProduto = 0;
-                prgBarProduto.Value = 0;
+                ManipulaProgressBar(ds.Tables[0].Rows.Count);
                 DataRow dRow;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
@@ -605,8 +604,8 @@ namespace DexComanda.Operações
 
         private void ManipulaProgressBar(int imax)
         {
-            prgBarProduto.Value = 0;
-            prgBarProduto.Maximum = imax;
+            //prgBarProduto.Value = 0;
+            //prgBarProduto.Maximum = imax;
         }
         private void CadastrarOpcaoProduto(int iCodProduto)
         {

@@ -1522,7 +1522,7 @@ namespace DexComanda
             return ds;
         }
 
-        public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo,string iCodString="0")
+        public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo,string iCodString="0",int iCodigo2=0)
         {
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
@@ -1533,6 +1533,11 @@ namespace DexComanda
             else if (spName == "spObterHistoricoPorPessoa")
             {
                 command.Parameters.AddWithValue("@CodPessoa", codigo);
+            }
+            else if (spName == "spObterItemsNaoImpresso")
+            {
+                command.Parameters.AddWithValue("@Codigo", codigo);
+                command.Parameters.AddWithValue("@CodGrupo", iCodigo2);
             }
             else
             {

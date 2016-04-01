@@ -1396,7 +1396,7 @@ namespace DexComanda
                 string lRetorno = "";
                 Boolean imprimirAgora = false;
                 //string strNomeImpressora,strImpressoraAnterior = "";
-                lRetorno = Utils.ImpressaMesaNova(iCodPedido, ImprimeLPT, int.Parse(Sessions.returnConfig.ViasCozinha), "", imprimirAgora);
+               // lRetorno = Utils.ImpressaMesaNova(iCodPedido, ImprimeLPT, int.Parse(Sessions.returnConfig.ViasCozinha), "", imprimirAgora);
                 for (int i = 0; i < itemsPedido.Tables[0].Rows.Count; i++)
                 {
                     AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();

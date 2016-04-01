@@ -1346,67 +1346,76 @@ namespace DexComanda
         }
         private void ExcluirItem(object sender, EventArgs e)
         {
-            if (gridViewItemsPedido.SelectedRows.Count > 0)
+            try
             {
-                string iNomeProduto = gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
-                codigoItemParaAlterar = int.Parse(gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
-
-                if (!Utils.MessageBoxQuestion("Deseja excluir o item " + iNomeProduto
-                    + " Do Pedido?"))
+                if (gridViewItemsPedido.SelectedRows.Count > 0)
                 {
-                    return;
-                }
-              //  rowIndex = this.gridViewItemsPedido.CurrentRow.Index;
+                    string iNomeProduto = gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
+                    codigoItemParaAlterar = int.Parse(gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
 
-                var itemPedido = new ItemPedido()
-                {
-                    CodProduto = codigoItemParaAlterar,
-                    CodPedido = codPedido
-                };
+                    if (!Utils.MessageBoxQuestion("Deseja excluir o item " + iNomeProduto
+                        + " Do Pedido?"))
+                    {
+                        return;
+                    }
+                    //  rowIndex = this.gridViewItemsPedido.CurrentRow.Index;
 
-                ValorTotal = ValorTotal - decimal.Parse(((this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value.ToString()).Replace("R$ ", "")));
-                this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + decimal.Parse(lblEntrega.Text));
-                this.gridViewItemsPedido.Rows.RemoveAt(rowIndex);
-                items.RemoveAt(rowIndex);
+                    var itemPedido = new ItemPedido()
+                    {
+                        CodProduto = codigoItemParaAlterar,
+                        CodPedido = codPedido
+                    };
 
-                this.txtPrecoUnitario.Text = "";
-                this.txtQuantidade.Text = "1";
-                this.txtPrecoTotal.Text = "";
+                    ValorTotal = ValorTotal - decimal.Parse(((this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value.ToString()).Replace("R$ ", "")));
+                    this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + decimal.Parse(lblEntrega.Text));
+                    this.gridViewItemsPedido.Rows.RemoveAt(rowIndex);
+                    items.RemoveAt(rowIndex);
 
-                ValorTotal = 0;
+                    this.txtPrecoUnitario.Text = "";
+                    this.txtQuantidade.Text = "1";
+                    this.txtPrecoTotal.Text = "";
 
-                foreach (ItemPedido _item in items)
-                {
-                    ValorTotal = ValorTotal + _item.PrecoTotal;
-                }
+                    ValorTotal = 0;
 
-                var pedido = new Pedido()
-                {
-                    Codigo = codPedido,
-                    TotalPedido = ValorTotal,
-                    Tipo = cbxTipoPedido.Text
+                    foreach (ItemPedido _item in items)
+                    {
+                        ValorTotal = ValorTotal + _item.PrecoTotal;
+                    }
 
-                };
-                if (ContraMesas && cbxListaMesas.Visible)
-                {
-                    int CodMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
-                    pedido.NumeroMesa = cbxListaMesas.Text;
-                    pedido.CodigoMesa = CodMesa;
-                    Utils.AtualizaMesa(CodMesa, 2);
+                    var pedido = new Pedido()
+                    {
+                        Codigo = codPedido,
+                        TotalPedido = ValorTotal,
+                        Tipo = cbxTipoPedido.Text
+
+                    };
+                    if (ContraMesas && cbxListaMesas.Visible)
+                    {
+                        int CodMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
+                        pedido.NumeroMesa = cbxListaMesas.Text;
+                        pedido.CodigoMesa = CodMesa;
+                        Utils.AtualizaMesa(CodMesa, 2);
+                    }
+                    else
+                    {
+                        pedido.NumeroMesa = "";
+                    }
+                    con.Delete("spExcluirItemPedido", itemPedido);
+                    con.Update("spAlterarTotalPedido", pedido);
+                    Utils.ControlaEventos("Excluir", this.Name);
+                    MessageBox.Show("Item excluído com sucesso.", "DexPedido");
                 }
                 else
                 {
-                    pedido.NumeroMesa = "";
+                    MessageBox.Show("Selecione o produto para alterar", "Aviso");
                 }
-                con.Delete("spExcluirItemPedido", itemPedido);
-                con.Update("spAlterarTotalPedido", pedido);
-                Utils.ControlaEventos("Excluir", this.Name);
-                MessageBox.Show("Item excluído com sucesso.", "DexPedido");
             }
-            else
+            catch (Exception err)
             {
-                MessageBox.Show("Selecione o produto para alterar", "Aviso");
+
+                MessageBox.Show(Bibliotecas.cException + err.Message);
             }
+            
 
         }
         public void atualizarGrid(ItemPedido itemDoPedido)
