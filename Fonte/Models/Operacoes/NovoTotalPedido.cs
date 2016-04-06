@@ -9,7 +9,7 @@ namespace DexComanda.Models.Operacoes
     public class NovoTotalPedido
     {
         public int Codigo { get; set; }
-        public double TotalPedido { get; set; }
+        public decimal TotalPedido { get; set; }
         public string Tipo { get; set; }
         public string NumeroMesa { get; set; }
         

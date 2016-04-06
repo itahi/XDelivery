@@ -262,6 +262,7 @@ namespace DexComanda
                 {
                     var itemPedido = new ItemPedido()
                     {
+                        Codigo  = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("Codigo"),
                         CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("CodProduto"),
                         NomeProduto = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<string>("NomeProduto"),
                         Quantidade = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("Quantidade"),
@@ -1350,12 +1351,17 @@ namespace DexComanda
             {
                 if (gridViewItemsPedido.SelectedRows.Count > 0)
                 {
-                    string iNomeProduto = gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
-                    codigoItemParaAlterar = int.Parse(gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
-
+                    string iNomeProduto = gridViewItemsPedido.Rows[rowIndex].Cells["Nome do Produto"].Value.ToString();
+                    codigoItemParaAlterar = int.Parse(gridViewItemsPedido.Rows[rowIndex].Cells["CodProduto"].Value.ToString());
+                    int CodigoLinha = int.Parse(gridViewItemsPedido.Rows[rowIndex].Cells["Codigo"].Value.ToString());
                     if (!Utils.MessageBoxQuestion("Deseja excluir o item " + iNomeProduto
                         + " Do Pedido?"))
                     {
+                        return;
+                    }
+                    if (gridViewItemsPedido.Rows.Count == 1 && (codPedido!=0 && !PedidoRepetio) )
+                    {
+                        MessageBox.Show("Item não pode ser excluído pois o pedido deve conter 1 ou mais itens");
                         return;
                     }
                     //  rowIndex = this.gridViewItemsPedido.CurrentRow.Index;
@@ -1363,11 +1369,13 @@ namespace DexComanda
                     var itemPedido = new ItemPedido()
                     {
                         CodProduto = codigoItemParaAlterar,
-                        CodPedido = codPedido
+                        CodPedido = codPedido,
+                        Codigo = CodigoLinha
+
                     };
 
-                    ValorTotal = ValorTotal - decimal.Parse(((this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value.ToString()).Replace("R$ ", "")));
-                    this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + decimal.Parse(lblEntrega.Text));
+                    ValorTotal = ValorTotal - decimal.Parse(((this.gridViewItemsPedido.Rows[rowIndex].Cells["Preço Total"].Value.ToString()).Replace("R$ ", "")));
+                    this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + decimal.Parse(lblEntrega.Text.Replace("R$ ","")));
                     this.gridViewItemsPedido.Rows.RemoveAt(rowIndex);
                     items.RemoveAt(rowIndex);
 
@@ -1432,6 +1440,7 @@ namespace DexComanda
 
             DataTable dt = new DataTable();
             dt.Columns.Add(new DataColumn("Codigo", typeof(string)));
+            dt.Columns.Add(new DataColumn("CodProduto", typeof(string)));
             dt.Columns.Add(new DataColumn("Nome do Produto", typeof(string)));
             dt.Columns.Add(new DataColumn("Quantidade", typeof(string)));
             dt.Columns.Add(new DataColumn("Preço Unitário", typeof(string)));
@@ -1445,7 +1454,8 @@ namespace DexComanda
             {
                 row = dt.NewRow();
 
-                row["Codigo"] = items[i].CodProduto;
+                row["Codigo"] = items[i].Codigo;
+                row["CodProduto"] = items[i].CodProduto;
                 row["Nome do Produto"] = items[i].NomeProduto;
                 row["Quantidade"] = items[i].Quantidade;
                 row["Preço Unitário"] = "R$ " + items[i].PrecoUnitario;
@@ -3232,7 +3242,7 @@ namespace DexComanda
             {
                 Codigo = codPedido,
                 NumeroMesa = gNUmeroMesa,
-                TotalPedido = Convert.ToDouble(dTotalPedido),
+                TotalPedido = dTotalPedido,
                 Tipo = cbxTipoPedido.Text
             };
             con.Update("spAlterarTotalPedido", pedi);

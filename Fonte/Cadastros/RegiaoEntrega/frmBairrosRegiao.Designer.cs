@@ -120,6 +120,7 @@
             this.RegioesGridView.Size = new System.Drawing.Size(285, 179);
             this.RegioesGridView.TabIndex = 3;
             this.RegioesGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RegioesGridView_CellClick);
+            this.RegioesGridView.DoubleClick += new System.EventHandler(this.RegioesGridView_DoubleClick);
             this.RegioesGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxiliar);
             // 
             // btnEditar

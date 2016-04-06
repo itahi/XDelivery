@@ -116,7 +116,7 @@ namespace DexComanda.Cadastros
                     {
                         txtCEP.Enabled = false;
                         txtBairro.Enabled = false;
- 
+
                         DataRow dRow = dsRegiao.Tables[0].Rows[0];
                         cbxRegiao.SelectedValue = int.Parse(dRow.ItemArray.GetValue(0).ToString());
                         cbxRegiao.SelectedText = dRow.ItemArray.GetValue(2).ToString();
@@ -155,6 +155,8 @@ namespace DexComanda.Cadastros
             this.btnEditar.Text = "Editar";
             this.btnEditar.Click += new System.EventHandler(this.Editar);
             this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+            txtCEP.Enabled = true;
+            txtBairro.Enabled = true;
         }
 
         private void Salvar(object sender, EventArgs e)
@@ -272,6 +274,11 @@ namespace DexComanda.Cadastros
                 MessageBox.Show("Selecione o grupo para excluir");
             }
 
+        }
+
+        private void RegioesGridView_DoubleClick(object sender, EventArgs e)
+        {
+            Editar(sender, e);
         }
     }
 }

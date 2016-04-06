@@ -442,6 +442,8 @@ namespace DexComanda.Operações
                 DataRow dRow;
                 MudaLabel("Grupo");
                 GerarToken();
+                prgBarProduto.Maximum = 0;
+                prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     RestClient client = new RestClient(iUrlWS);
@@ -475,7 +477,7 @@ namespace DexComanda.Operações
                     {
                         con.AtualizaDataSincronismo("Grupo", iCod);
                     }
-                    prgBarProduto.Value = i + 1;
+                   // prgBarProduto.Value = i + 1;
 
                 }
 
@@ -494,8 +496,9 @@ namespace DexComanda.Operações
             {
                 MudaLabel("Produto");
                 decimal iPrecoProduto = 0;
-                ManipulaProgressBar(ds.Tables[0].Rows.Count);
+               // ManipulaProgressBar(ds.Tables[0].Rows.Count);
                 DataRow dRow;
+                prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
@@ -559,7 +562,7 @@ namespace DexComanda.Operações
                     request.AddParameter("ativo", bAtivoSn);
                     request.AddParameter("maxOptions", dRow.ItemArray.GetValue(11).ToString());
 
-                    prgBarProduto.Value = i + 1;
+                    prgBarProduto.Value = i;
 
                     RestResponse response = (RestResponse)client.Execute(request);
 
@@ -613,8 +616,9 @@ namespace DexComanda.Operações
             {
                 DataSet ds = con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcaoProdutoCodigo", iCodProduto);
                 int iCodOpcao = 0;
-                ManipulaProgressBar(ds.Tables[0].Rows.Count);
+              //  ManipulaProgressBar(ds.Tables[0].Rows.Count);
                  MudaLabel("Opcoes/Adicionais");
+                prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
                 DataRow dRow;
                 if (ds.Tables[0].Rows.Count > 0)
                 {
