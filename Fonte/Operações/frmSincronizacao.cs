@@ -214,6 +214,8 @@ namespace DexComanda.Operações
                 int iMaxOpcionais = 0; int iMinumum = 0;
                 MudaLabel("Tipo de Opção");
                 DataRow dRow;
+                prgBarProduto.Value = 0;
+                prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     RestClient client = new RestClient(iUrlWS);
@@ -233,6 +235,8 @@ namespace DexComanda.Operações
 
                     ReturnPadrao lRetorno = new ReturnPadrao();
                     lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+
+                    prgBarProduto.Increment(i + 1);
                     if (lRetorno.status == true)
                     {
                         con.AtualizaDataSincronismo("Produto_OpcaoTipo", int.Parse(dRow.ItemArray.GetValue(0).ToString()));
@@ -364,7 +368,7 @@ namespace DexComanda.Operações
                     request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
                     request.AddParameter("referenciaId", dRow.ItemArray.GetValue(0).ToString());
                     RestResponse response = (RestResponse)client.Execute(request);
-                    prgBarProduto.Value = i + 1;
+                    prgBarProduto.Increment (i + 1);
 
                     if (response.Content.ToString() == "true")
                     {
@@ -438,7 +442,7 @@ namespace DexComanda.Operações
             try
             {
 
-                ManipulaProgressBar(ds.Tables[0].Rows.Count);
+              //  ManipulaProgressBar(ds.Tables[0].Rows.Count);
                 DataRow dRow;
                 MudaLabel("Grupo");
                 GerarToken();
@@ -471,13 +475,12 @@ namespace DexComanda.Operações
                     request.AddParameter("ativo", AtivoSN);
                     request.AddParameter("idReferencia", iCod);
                     RestResponse response = (RestResponse)client.Execute(request);
-                    prgBarProduto.Value = i + 1;
+                    prgBarProduto.Increment(i+1);
 
                     if (response.Content.ToString() == "true")
                     {
                         con.AtualizaDataSincronismo("Grupo", iCod);
                     }
-                   // prgBarProduto.Value = i + 1;
 
                 }
 
@@ -562,7 +565,7 @@ namespace DexComanda.Operações
                     request.AddParameter("ativo", bAtivoSn);
                     request.AddParameter("maxOptions", dRow.ItemArray.GetValue(11).ToString());
 
-                    prgBarProduto.Value = i;
+                    prgBarProduto.Increment (i+1);
 
                     RestResponse response = (RestResponse)client.Execute(request);
 
@@ -618,6 +621,7 @@ namespace DexComanda.Operações
                 int iCodOpcao = 0;
               //  ManipulaProgressBar(ds.Tables[0].Rows.Count);
                  MudaLabel("Opcoes/Adicionais");
+                prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
                 DataRow dRow;
                 if (ds.Tables[0].Rows.Count > 0)
@@ -648,7 +652,7 @@ namespace DexComanda.Operações
 
                         request.AddParameter("opcao[" + iCodOpcao + "]", iprice);
                         //}
-                        prgBarProduto.Value = i + 1;
+                        prgBarProduto.Increment( i + 1);
                     }
 
                     RestResponse response = (RestResponse)client.Execute(request);

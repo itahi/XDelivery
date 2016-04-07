@@ -1219,7 +1219,7 @@ namespace DexComanda
 
                 if (spName == "spExcluirItemPedido")
                 {
-                    if (p.Name.Equals("CodProduto") || p.Name.Equals("CodPedido") )
+                    if (p.Name.Equals("CodProduto") || p.Name.Equals("CodPedido") || p.Name.Equals("Codigo"))
                     {
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }

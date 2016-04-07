@@ -223,6 +223,8 @@
             this.prgBarProduto.Location = new System.Drawing.Point(128, 7);
             this.prgBarProduto.Name = "prgBarProduto";
             this.prgBarProduto.Size = new System.Drawing.Size(114, 16);
+            this.prgBarProduto.Step = 1;
+            this.prgBarProduto.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.prgBarProduto.TabIndex = 11;
             // 
             // chkRegiaoEntrega

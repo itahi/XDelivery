@@ -1154,11 +1154,11 @@ namespace DexComanda
 
                         itemPedido.DataAtualizacao = DateTime.Now;
 
-                        this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value = itemPedido.NomeProduto;
-                        this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value = itemPedido.Quantidade;
-                        this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value = "R$ " + itemPedido.PrecoUnitario.ToString();
-                        this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value = "R$ " + itemPedido.PrecoTotal.ToString();
-                        this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value = itemPedido.Item.ToString();
+                        this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value = itemPedido.NomeProduto;
+                        this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value = itemPedido.Quantidade;
+                        this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value = "R$ " + itemPedido.PrecoUnitario.ToString();
+                        this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value = "R$ " + itemPedido.PrecoTotal.ToString();
+                        this.gridViewItemsPedido.Rows[rowIndex].Cells[6].Value = itemPedido.Item.ToString();
 
                         var ValorPedidoTotal = ValorTotal + decimal.Parse(lblEntrega.Text);
 
@@ -3718,12 +3718,12 @@ namespace DexComanda
                 if (gridViewItemsPedido.SelectedRows.Count > 0)
                 {
 
-                    int codItem = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
+                    int codItem = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells["CodProduto"].Value.ToString());
                     MontaMenuOpcoes(codItem);
-                    var itemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codigoItemParaAlterar);
-                    string itemNome = this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
+                    var itemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codItem);
+                    string itemNome = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
 
-                    string[] sabores = (this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString()).Split('/');
+                    string[] sabores = (this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value.ToString()).Split('/');
                     List<string> list = new List<string>();
 
                     foreach (string sabor in sabores)
@@ -3743,15 +3743,15 @@ namespace DexComanda
                         this.cbxMeiaPizza.Checked = false;
                         this.cbxSabor.Enabled = false;
                         this.cbxSabor.Text = "";
-                        this.cbxProdutosGrid.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
+                        this.cbxProdutosGrid.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
                     }
 
-                    codigoItemParaAlterar = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
+                    codigoItemParaAlterar = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells["CodProduto"].Value.ToString());
                     txtCodProduto1.Text = codItem.ToString();
-                    this.txtPrecoUnitario.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value.ToString();
-                    this.txtQuantidade.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
-                    this.txtPrecoTotal.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value.ToString();
-                    this.txtItemDescricao.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value.ToString();
+                    this.txtPrecoUnitario.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value.ToString();
+                    this.txtQuantidade.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value.ToString();
+                    this.txtPrecoTotal.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value.ToString();
+                    this.txtItemDescricao.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[6].Value.ToString();
                     //   btnAdicionarItemNoPedido.
 
                     this.btnAdicionarItemNoPedido.Text = "Alterar Item";
