@@ -611,6 +611,19 @@ namespace DexComanda
         //    return ds;
 
         //}
+        public void AtualizaProdutosOpcao( int iCodOpcao)
+        {
+            string lSqlConsulta;
+            lSqlConsulta = "Update Produto set DataAlteracao=GetDate() "+
+                           "where Codigo in (Select CodProduto from Produto_Opcao "+
+                           "where CodOpcao="+iCodOpcao.ToString()+")";   
+            // and AtivoSN=1";
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.ExecuteNonQuery();
+
+        }
 
 
         public void AtualizaDataSincronismo(string iNomeTable, int iCodigo, string iDataAtualizar = "DataSincronismo")
@@ -1618,65 +1631,80 @@ namespace DexComanda
         }
         public DataSet Liberacao(string iNomeEmpresa, string CNPJ, string iNomePC, string iMAC)
         {
-            int Tabela;
-            Boolean AtivoSn = false;
-            DataRow Colunas;
             try
             {
-                MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
-                // MysqlCommand.CommandTimeout = CmysqlTimeOut;
-                MysqlConnection.Open();
-                if (MysqlConnection.State == ConnectionState.Open)
+                int Tabela;
+                Boolean AtivoSn = false;
+                DataRow Colunas;
+
+                try
                 {
 
-                    MysqlCommand = new MySqlCommand("select cnpj,AtivoSN,NomePC,MACPC from Licenca where cnpj='" + CNPJ + "' and NomePC='" + iNomePC + "' and MACPC='" + iMAC + "'", MysqlConnection);
+                    MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
+                    // MysqlCommand.CommandTimeout = CmysqlTimeOut;
+                    MysqlConnection.Open();
 
-                    MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
-                    MysqlDataAdapter.Fill(ds, "Licenca");
-                    if (ds.Tables["Licenca"].Rows.Count > 0)
+                    if (MysqlConnection.State == ConnectionState.Open)
                     {
-                        Colunas = ds.Tables["Licenca"].Rows[0];
 
-                        if (Colunas.ItemArray.GetValue(1).ToString() == "1")
+                        MysqlCommand = new MySqlCommand("select cnpj,AtivoSN,NomePC,MACPC from Licenca where cnpj='" + CNPJ + "' and NomePC='" + iNomePC + "' and MACPC='" + iMAC + "'", MysqlConnection);
+
+                        MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
+                        MysqlDataAdapter.Fill(ds, "Licenca");
+                        if (ds.Tables["Licenca"].Rows.Count > 0)
                         {
-                            AtivoSn = true;
+                            Colunas = ds.Tables["Licenca"].Rows[0];
 
-                            if (!AtivoSn)
+                            if (Colunas.ItemArray.GetValue(1).ToString() == "1")
+                            {
+                                AtivoSn = true;
+
+                                if (!AtivoSn)
+                                {
+                                    ds = null;
+                                }
+                            }
+                            else
                             {
                                 ds = null;
                             }
+
                         }
                         else
                         {
                             ds = null;
+                            Utils.ExcluiRegistro();
                         }
 
+
+
+                        MysqlCommand.ExecuteNonQuery();
                     }
                     else
                     {
-                        ds = null;
-                        Utils.ExcluiRegistro();
+                        MessageBox.Show("Sem conexão com o servidor central para validação da Licença , tente novamente  reiniciando o sistema", "[xSistemas] Erro ");
                     }
 
-
-
-                    MysqlCommand.ExecuteNonQuery();
                 }
-                else
+                catch (Exception e)
                 {
-                    MessageBox.Show("Sem conexão com o servidor central para validação da Licença , tente novamente  reiniciando o sistema", "[xSistemas] Erro ");
+                    MessageBox.Show("Erro na validação da licença o sistema abrirá em modo segurança" + e.Message);
+                    int intAbriu5Vezes = Utils.ContaRegistro(iNomeEmpresa + CNPJ);
+                    if (intAbriu5Vezes >= 5)
+                    {
+                        MessageBox.Show(" Não foi possivel validar seu acesso o sistema  será encerrado!");
+                        Application.Exit();
+                    }
+                    else
+                    {
+                        Utils.IniciaSistema();
+                    }
                 }
-
             }
-            catch (Exception e)
+            finally
             {
-                MessageBox.Show("Erro na validação da licença" + e.Message);
-                int intAbriu5Vezes = Utils.ContaRegistro(iNomeEmpresa + CNPJ);
-                if (intAbriu5Vezes >= 5)
-                {
-                    MessageBox.Show(" Não foi possivel validar seu acesso o sistema  será encerrado!");
-                    Utils.Kill();
-                }
+                MysqlConnection.Close();
+
             }
             return ds;
         }

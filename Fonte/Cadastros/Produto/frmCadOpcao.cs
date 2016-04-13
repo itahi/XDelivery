@@ -164,8 +164,8 @@ namespace DexComanda.Cadastros.Produto
                     AtivoSN = chkAtivoSN.Checked
                 };
                 con.Update("spAlteraOpcao", opcao);
-               // Utils.LimpaForm(this);
-
+                // Utils.LimpaForm(this);
+                con.AtualizaProdutosOpcao(codigoAlterarDeletar);
                 this.btnAdicionar.Text = "Adicionar";
                 this.btnAdicionar.Click += new System.EventHandler(this.CadastraOpcao);
                 this.btnAdicionar.Click -= new System.EventHandler(this.Salvar);

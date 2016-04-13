@@ -107,5 +107,10 @@ namespace DexComanda.Operações.Financeiro
         {
 
         }
+
+        private void txtValor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
+        }
     }
 }

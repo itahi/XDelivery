@@ -62,6 +62,7 @@ namespace DexComanda.Operações
                                 con.AtualizaDataSincronismo("Grupo", -1, "DataAlteracao");
                                 con.AtualizaDataSincronismo("Produto", -1, "DataAlteracao");
                                 LimparUrlAmigaveis();
+                                CadastraLinkApp(true);
                             }
                         }
                     }
@@ -126,7 +127,7 @@ namespace DexComanda.Operações
                 MessageBox.Show("Erro LimparUrlAmigaveis" + er.Message + er.InnerException);
             }
         }
-        private void CadastraLinkApp()
+        private void CadastraLinkApp(Boolean iLimpar=false)
         {
             try
 
@@ -136,7 +137,26 @@ namespace DexComanda.Operações
                 RestClient client = new RestClient(iUrlWS);
                 RestResponse response = new RestResponse();
                 RestRequest request = new RestRequest("ws/loja/baixarrApp", Method.POST);
-
+                
+                if (iLimpar)
+                {
+                    string strPlataformas = Utils.GravaJson("android","");
+                  //  strPlataformas = strPlataformas + Utils.GravaJson("ios", "");
+                    newDados = JsonConvert.DeserializeObject<List<DadosApp>>(strPlataformas);
+                    foreach (var item in newDados)
+                    {
+                        request.AddParameter("token", iParamToken);
+                        request.AddParameter("plataforma", item.plataforma);
+                        request.AddParameter("urlBaixarApp", item.url);
+                        MudaLabel("Link APP");
+                        response = (RestResponse)client.Execute(request);
+                        prgBarMobile.Increment(1);
+                        ReturnPadrao lRetorno = new ReturnPadrao();
+                        lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+                    }
+                }
+                prgBarMobile.Value = 0;
+                prgBarMobile.Maximum = newDados.Count;
                 foreach (DadosApp item in newDados)
                 {
                     request.AddParameter("token", iParamToken);
@@ -144,6 +164,7 @@ namespace DexComanda.Operações
                     request.AddParameter("urlBaixarApp", item.url);
                     MudaLabel("Link APP");
                     response = (RestResponse)client.Execute(request);
+                    prgBarMobile.Increment(1);
                     ReturnPadrao lRetorno = new ReturnPadrao();
                     lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
                 }
@@ -458,9 +479,9 @@ namespace DexComanda.Operações
                     int AtivoSN = 0;
                     string idReferenciaCategoriaPai = "0";
                     iCod = int.Parse(dRow.ItemArray.GetValue(0).ToString());
-                    if (dRow.ItemArray.GetValue(9).ToString() != "")
+                    if (dRow.ItemArray.GetValue(8).ToString() != "")
                     {
-                        idReferenciaCategoriaPai = dRow.ItemArray.GetValue(9).ToString();
+                        idReferenciaCategoriaPai = dRow.ItemArray.GetValue(8).ToString();
                     }
 
                     inome = dRow.ItemArray.GetValue(1).ToString();

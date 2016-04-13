@@ -208,7 +208,7 @@ namespace DexComanda
         }
         private void MontaMenu() // Monta o menu de opções
         {
-            if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cTopsAcai || Sessions.returnEmpresa.CNPJ == Bibliotecas.cElShaday || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGaleto)
+            if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cTopsAcai || Sessions.returnEmpresa.CNPJ == Bibliotecas.cElShaday || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGaleto || Sessions.returnEmpresa.CNPJ == Bibliotecas.cCasteloPlus)
             {
                 aberturaCaixaToolStripMenuItem.Enabled = false;
                 controleDeEstoqueToolStripMenuItem.Enabled = false;
@@ -1439,7 +1439,7 @@ namespace DexComanda
         {
             Utils.SoPermiteNumeros(e);
         }
-        private void ImpressaoAutomatica(int iCodPedido, string iNumMesa, int iCodGrupo)
+        private void ImpressaoAutomatica(int iCodPedido, string iNumMesa, int iCodGrupo,string iNomeImpressora)
         {
             try
             {
@@ -1451,7 +1451,7 @@ namespace DexComanda
                     string lRetorno = "";
                     Boolean imprimirAgora = false;
                     //string strNomeImpressora,strImpressoraAnterior = "";
-                    lRetorno = Utils.ImpressaMesaNova(iCodPedido, iCodGrupo, false, 1, "", imprimirAgora);
+                    lRetorno = Utils.ImpressaMesaNova(iCodPedido, iCodGrupo, false, 1, iNomeImpressora, imprimirAgora);
                     for (int intFor = 0; intFor < itemsPedido.Tables[0].Rows.Count; intFor++)
                     {
                         AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
@@ -1559,25 +1559,29 @@ namespace DexComanda
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
 
                 }
-                string iSql = "select PE.*, " +
-                             " (select CodGrupo from Produto where Produto.Codigo=It.CodProduto ) as CodGrupo" +
-                             "   from Pedido PE" +
-                             "  join" +
-                             "   ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0" +
-                             "   where PE.CodigoMesa > 0 and Finalizado=0";
+                string iSql = "select PE.*,  " +
+                            "CodGrupo, " +
+                            "NomeImpressora " +
+                             "from Pedido PE " +
+                             "join ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0 " +
+                             " left join Produto P on P.Codigo = It.CodProduto " +
+                             " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo " +
+                             "  where PE.CodigoMesa > 0 and Finalizado = 0 ";
 
                 DataSet dsItemsNaoImpresso = con.SelectAll("ItemsPedido", "", iSql);
                 if (dsItemsNaoImpresso.Tables[0].Rows.Count > 0)
                 {
                     DataRow dRowPedido = dsItemsNaoImpresso.Tables[0].Rows[0];
+                    
                     int CodPedido = int.Parse(dRowPedido.ItemArray.GetValue(0).ToString());
                     int CodGrupo = int.Parse(dRowPedido.ItemArray.GetValue(17).ToString());
+                    string iNomeImpressora = dRowPedido.ItemArray.GetValue(18).ToString();
                     string numeroMesa = dRowPedido.ItemArray.GetValue(5).ToString();
 
                     Boolean iMesa = dRowPedido.ItemArray.GetValue(10).ToString() != "0";
                     if (iMesa && chkGerenciaImpressao.Checked)
                     {
-                        ImpressaoAutomatica(CodPedido, numeroMesa, CodGrupo);
+                        ImpressaoAutomatica(CodPedido, numeroMesa, CodGrupo,iNomeImpressora);
                     }
                 }
 

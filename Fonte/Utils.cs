@@ -39,6 +39,8 @@ using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Operações.Financeiro;
 using DexComanda.Operações;
 using Microsoft.VisualBasic;
+using DexComanda.Models.WS;
+using Newtonsoft.Json;
 
 namespace DexComanda
 {
@@ -157,6 +159,14 @@ namespace DexComanda
                 }
             }
         }
+        public static string GravaJson(string iPlataforma, string iUrl)
+        {
+            DadosApp dadosApp = new DadosApp();
+            dadosApp.plataforma = iPlataforma;
+            dadosApp.url = iUrl;
+            return '[' + JsonConvert.SerializeObject(dadosApp, Formatting.None) + ']';
+
+        }
         public static void MontaCombox(ComboBox icbxName, string idisplayName,
             string iValueMember, string iTable, string iSP, int iCod = -1)
         {
@@ -170,9 +180,9 @@ namespace DexComanda
                 {
                     DataSet ds = conexao.SelectRegistroPorCodigo(iTable, iSP, iCod);
                     icbxName.DataSource = ds.Tables[0];
-                   // icbxName.Text = ds.Tables[0].Rows[0].Field<string>("NomeGrupo");
+                    // icbxName.Text = ds.Tables[0].Rows[0].Field<string>("NomeGrupo");
                 }
-                
+
 
                 icbxName.DisplayMember = idisplayName;
                 icbxName.ValueMember = iValueMember;
@@ -366,61 +376,71 @@ namespace DexComanda
             string iRetorno = ""; ;
 
             RelDelivery report;
+            report = new RelDelivery();
             try
             {
-                report = new RelDelivery();
+                
                 TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
                 TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
                 ConnectionInfo crConnectionInfo = new ConnectionInfo();
                 Tables CrTables;
 
-                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
-                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
-                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                crConnectionInfo.UserID = "dex";
-                crConnectionInfo.Password = "1234";
-
-                CrTables = report.Database.Tables;
-                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                try
                 {
-                    crtableLogoninfo = CrTable.LogOnInfo;
-                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
-                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
-                }
 
-                report.SetParameterValue("@Codigo", iCodPedido);
-                report.SetParameterValue("ValorPago", iValorPago);
-                report.SetParameterValue("PrevEntrega", iPrevisaoEntrega);
-                if (iExport)
-                {
-                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
-                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
+                    report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
+                    crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                    crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                    crConnectionInfo.UserID = "dex";
+                    crConnectionInfo.Password = "1234";
 
-                    report.ExportOptions.ExportDestinationType =
-                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
-
-                    report.ExportOptions.ExportFormatType =
-                    CrystalDecisions.Shared.ExportFormatType.Text;
-
-                    report.ExportOptions.DestinationOptions = reportExport;
-                    report.Export();
-                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
-                }
-                else
-                {
-                    for (int i = 0; i < iNumCopias; i++)
+                    CrTables = report.Database.Tables;
+                    foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
                     {
-                        report.PrintToPrinter(1, false, 0, 0);
+                        crtableLogoninfo = CrTable.LogOnInfo;
+                        crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                        CrTable.ApplyLogOnInfo(crtableLogoninfo);
                     }
 
+                    report.SetParameterValue("@Codigo", iCodPedido);
+                    report.SetParameterValue("ValorPago", iValorPago);
+                    report.SetParameterValue("PrevEntrega", iPrevisaoEntrega);
+                    if (iExport)
+                    {
+                        CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+                        new CrystalDecisions.Shared.DiskFileDestinationOptions();
+                        reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
 
+                        report.ExportOptions.ExportDestinationType =
+                        CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+                        report.ExportOptions.ExportFormatType =
+                        CrystalDecisions.Shared.ExportFormatType.Text;
+
+                        report.ExportOptions.DestinationOptions = reportExport;
+                        report.Export();
+                        iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
+                    }
+                    else
+                    {
+                        for (int i = 0; i < iNumCopias; i++)
+                        {
+                            report.PrintToPrinter(1, false, 0, 0);
+                        }
+
+
+                    }
+                }
+                catch (Exception erro)
+                {
+
+                    MessageBox.Show("Erro na impressao :" + erro.Message);
                 }
             }
-            catch (Exception erro)
+            finally
             {
+                report.Dispose();
 
-                MessageBox.Show("Erro na impressao :" + erro.Message);
             }
             return iRetorno;
         }
@@ -488,65 +508,63 @@ namespace DexComanda
         }
         public static string ImpressaoEntreganova_20(int iCodPedido, decimal iValorPago, Boolean iExport = false, int iNumCopias = 0)
         {
-            string iRetorno = ""; ;
+            string iRetorno = "";
+            RelDelivery_20 report;
+            report = new RelDelivery_20();
+            TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+            TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+            ConnectionInfo crConnectionInfo = new ConnectionInfo();
+            Tables CrTables;
             try
             {
-                RelDelivery_20 report;
-                report = new RelDelivery_20();
 
-            try
-            {
-                
-                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
-                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
-                ConnectionInfo crConnectionInfo = new ConnectionInfo();
-                Tables CrTables;
-
-                report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery_20.rpt");
-                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
-                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                crConnectionInfo.UserID = "dex";
-                crConnectionInfo.Password = "1234";
-
-                CrTables = report.Database.Tables;
-                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                try
                 {
-                    crtableLogoninfo = CrTable.LogOnInfo;
-                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
-                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
-                }
 
+                    report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery_20.rpt");
+                    crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                    crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                    crConnectionInfo.UserID = "dex";
+                    crConnectionInfo.Password = "1234";
 
-                report.SetParameterValue("@Codigo", iCodPedido);
-                report.SetParameterValue("ValorPago", iValorPago);
-                if (iExport)
-                {
-                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
-                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery_20.txt";
-
-                    report.ExportOptions.ExportDestinationType =
-                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
-
-                    report.ExportOptions.ExportFormatType =
-                    CrystalDecisions.Shared.ExportFormatType.Text;
-
-                    report.ExportOptions.DestinationOptions = reportExport;
-                    report.Export();
-                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery_20.txt";
-                }
-                else
-                {
-                    for (int i = 0; i < iNumCopias; i++)
+                    CrTables = report.Database.Tables;
+                    foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
                     {
-                        report.PrintToPrinter(0, false, 0, 0);
+                        crtableLogoninfo = CrTable.LogOnInfo;
+                        crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                        CrTable.ApplyLogOnInfo(crtableLogoninfo);
                     }
 
-                }
+
+                    report.SetParameterValue("@Codigo", iCodPedido);
+                    report.SetParameterValue("ValorPago", iValorPago);
+                    if (iExport)
+                    {
+                        CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+                        new CrystalDecisions.Shared.DiskFileDestinationOptions();
+                        reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery_20.txt";
+
+                        report.ExportOptions.ExportDestinationType =
+                        CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+                        report.ExportOptions.ExportFormatType =
+                        CrystalDecisions.Shared.ExportFormatType.Text;
+
+                        report.ExportOptions.DestinationOptions = reportExport;
+                        report.Export();
+                        iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery_20.txt";
+                    }
+                    else
+                    {
+                        for (int i = 0; i < iNumCopias; i++)
+                        {
+                            report.PrintToPrinter(0, false, 0, 0);
+                        }
+
+                    }
                 }
                 finally
                 {
-
                     report.Dispose();
                 }
 
@@ -624,30 +642,28 @@ namespace DexComanda
         /// <param name="iCodPedido">Inteiro Código do Pedido a ser impresso</param>
         ///  <param name="iExport">Boolean Código do Pedido a ser impresso</param>
         /// <returns>String do Pedido para impressoras Matriciais quando iExpport for True.</returns>
-        public static string ImpressaMesaNova(int iCodPedido,int iCodGupo, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
+        public static string ImpressaMesaNova(int iCodPedido, int iCodGupo, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
         {
-            string iRetorno = ""; ;
+            string iRetorno = "";
+            RelComandaMesa report;
+            report = new RelComandaMesa();
+            crtableLogoninfos = new TableLogOnInfos();
+            crtableLogoninfo = new TableLogOnInfo();
+            crConnectionInfo = new ConnectionInfo();
             try
             {
 
-                RelComandaMesa report;
-                report = new RelComandaMesa();
                 try
                 {
-                   
-
-                    crtableLogoninfos = new TableLogOnInfos();
-                    crtableLogoninfo = new TableLogOnInfo();
-                    crConnectionInfo = new ConnectionInfo();
-
 
                     System.Drawing.Printing.PrinterSettings printersettings = new System.Drawing.Printing.PrinterSettings();
                     printersettings.PrinterName = iNomeImpressora;
                     printersettings.Copies = 1;
                     printersettings.Collate = false;
+
                     Tables CrTables;
 
-
+                    report.PrintOptions.PrinterName = iNomeImpressora;
                     report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
                     crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                     crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
@@ -688,7 +704,15 @@ namespace DexComanda
                         {
                             for (int i = 0; i < iNumCopias; i++)
                             {
-                                report.PrintToPrinter(1, false, 0, 0);
+                                //if (iNomeImpressora=="")
+                                //{
+                                    report.PrintToPrinter(1, false, 0, 0);
+                                //}
+                                //else
+                                //{
+                                   
+                                //}
+                                
                             }
 
                         }
@@ -696,7 +720,7 @@ namespace DexComanda
                 }
                 finally
                 {
-                    //report.Dispose();
+                   // report.Dispose();
 
                 }
             }
@@ -751,52 +775,52 @@ namespace DexComanda
             {
                 RelFechamentoMesa report;
                 report = new RelFechamentoMesa();
-            
-            
-            try
-            {
-                
 
-                crtableLogoninfos = new TableLogOnInfos();
-                crtableLogoninfo = new TableLogOnInfo();
-                crConnectionInfo = new ConnectionInfo();
-                Tables CrTables;
 
-                report.Load(Directory.GetCurrentDirectory() + @"\RelFechamentoMesa.rpt");
-                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
-                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                crConnectionInfo.UserID = "sa";
-                crConnectionInfo.Password = "1001";
-
-                CrTables = report.Database.Tables;
-                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
-                {
-                    crtableLogoninfo = CrTable.LogOnInfo;
-                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
-                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
-                }
-                report.SetParameterValue("@Codigo", iCodPedido);
-                if (iExport)
-                {
-                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
-                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelFechamentoMesa.txt";
-
-                    report.ExportOptions.ExportDestinationType =
-                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
-
-                    report.ExportOptions.ExportFormatType =
-                    CrystalDecisions.Shared.ExportFormatType.Text;
-
-                    report.ExportOptions.DestinationOptions = reportExport;
-                    report.Export();
-                    iRetorno = Directory.GetCurrentDirectory() + @"\RelFechamentoMesa.txt";
-                }
-                else
+                try
                 {
 
-                    report.PrintToPrinter(0, true, 0, 0);
-                }
+
+                    crtableLogoninfos = new TableLogOnInfos();
+                    crtableLogoninfo = new TableLogOnInfo();
+                    crConnectionInfo = new ConnectionInfo();
+                    Tables CrTables;
+
+                    report.Load(Directory.GetCurrentDirectory() + @"\RelFechamentoMesa.rpt");
+                    crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                    crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                    crConnectionInfo.UserID = "sa";
+                    crConnectionInfo.Password = "1001";
+
+                    CrTables = report.Database.Tables;
+                    foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                    {
+                        crtableLogoninfo = CrTable.LogOnInfo;
+                        crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                        CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                    }
+                    report.SetParameterValue("@Codigo", iCodPedido);
+                    if (iExport)
+                    {
+                        CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+                        new CrystalDecisions.Shared.DiskFileDestinationOptions();
+                        reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelFechamentoMesa.txt";
+
+                        report.ExportOptions.ExportDestinationType =
+                        CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+                        report.ExportOptions.ExportFormatType =
+                        CrystalDecisions.Shared.ExportFormatType.Text;
+
+                        report.ExportOptions.DestinationOptions = reportExport;
+                        report.Export();
+                        iRetorno = Directory.GetCurrentDirectory() + @"\RelFechamentoMesa.txt";
+                    }
+                    else
+                    {
+
+                        report.PrintToPrinter(0, true, 0, 0);
+                    }
                 }
                 finally
                 {
@@ -815,49 +839,60 @@ namespace DexComanda
         {
             string iRetorno = ""; ;
             RelFechamentoMesa_20 report;
+
             try
             {
                 report = new RelFechamentoMesa_20();
 
-                crtableLogoninfos = new TableLogOnInfos();
-                crtableLogoninfo = new TableLogOnInfo();
-                crConnectionInfo = new ConnectionInfo();
-                Tables CrTables;
-
-                report.Load(Directory.GetCurrentDirectory() + @"\RelFechamentoMesa_20.rpt");
-                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
-                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                crConnectionInfo.UserID = "sa";
-                crConnectionInfo.Password = "1001";
-
-                CrTables = report.Database.Tables;
-                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                try
                 {
-                    crtableLogoninfo = CrTable.LogOnInfo;
-                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
-                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+
+
+                    crtableLogoninfos = new TableLogOnInfos();
+                    crtableLogoninfo = new TableLogOnInfo();
+                    crConnectionInfo = new ConnectionInfo();
+                    Tables CrTables;
+
+                    report.Load(Directory.GetCurrentDirectory() + @"\RelFechamentoMesa_20.rpt");
+                    crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                    crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                    crConnectionInfo.UserID = "sa";
+                    crConnectionInfo.Password = "1001";
+
+                    CrTables = report.Database.Tables;
+                    foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                    {
+                        crtableLogoninfo = CrTable.LogOnInfo;
+                        crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                        CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                    }
+                    report.SetParameterValue("@Codigo", iCodPedido);
+                    if (iExport)
+                    {
+                        CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+                        new CrystalDecisions.Shared.DiskFileDestinationOptions();
+                        reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelFechamentoMesa_20.txt";
+
+                        report.ExportOptions.ExportDestinationType =
+                        CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+                        report.ExportOptions.ExportFormatType =
+                        CrystalDecisions.Shared.ExportFormatType.Text;
+
+                        report.ExportOptions.DestinationOptions = reportExport;
+                        report.Export();
+                        iRetorno = Directory.GetCurrentDirectory() + @"\RelFechamentoMesa_20.txt";
+                    }
+                    else
+                    {
+
+                        report.PrintToPrinter(0, true, 0, 0);
+                    }
                 }
-                report.SetParameterValue("@Codigo", iCodPedido);
-                if (iExport)
+                finally
                 {
-                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
-                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelFechamentoMesa_20.txt";
+                    report.Dispose();
 
-                    report.ExportOptions.ExportDestinationType =
-                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
-
-                    report.ExportOptions.ExportFormatType =
-                    CrystalDecisions.Shared.ExportFormatType.Text;
-
-                    report.ExportOptions.DestinationOptions = reportExport;
-                    report.Export();
-                    iRetorno = Directory.GetCurrentDirectory() + @"\RelFechamentoMesa_20.txt";
-                }
-                else
-                {
-
-                    report.PrintToPrinter(0, true, 0, 0);
                 }
             }
             catch (Exception erro)
@@ -922,6 +957,13 @@ namespace DexComanda
             }
             return iRetorno;
         }
+        public static Boolean LicencaSomenteOnline(string iCNPJ)
+        {
+            Boolean iReturn = false;
+
+
+            return iReturn;
+        }
         public static void LancarMovimentoCaixa(CaixaMovimento caixa)
         {
             caixa = new Models.CaixaMovimento()
@@ -962,7 +1004,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    if (Sessions.returnEmpresa.CNPJ== Bibliotecas.cCasteloPlus || Sessions.returnEmpresa.CNPJ == Bibliotecas.cTopsAcai || Sessions.returnEmpresa.CNPJ == Bibliotecas.cElShaday || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGaleto)
+                    if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus || Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai || Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday || Sessions.returnEmpresa.CNPJ != Bibliotecas.cGaleto)
                     {
                         if (MessageBoxQuestion("O Caixa não esta aberto sistema funcionará somente no modo consulta, deseja abrir agora?"))
                         {
@@ -1489,7 +1531,7 @@ namespace DexComanda
 
             return Dados;
         }
-        public static DataSet PopulaGrid_Novo(string table, DataGridView gridView, string iParametrosConsulta, bool iAtivo = true, string iFiltrosAd = "",int iRowIndex=0)
+        public static DataSet PopulaGrid_Novo(string table, DataGridView gridView, string iParametrosConsulta, bool iAtivo = true, string iFiltrosAd = "", int iRowIndex = 0)
         {
             Conexao con = new Conexao();
             DataSet Dados = null;
@@ -1497,10 +1539,10 @@ namespace DexComanda
 
             gridView.DataSource = null;
             gridView.AutoGenerateColumns = true;
-           // gridView.TabIndex = iRowIndex;
+            // gridView.TabIndex = iRowIndex;
             gridView.DataSource = Dados;
             gridView.DataMember = table;
-            
+
             con.Close();
 
             return Dados;
@@ -1796,7 +1838,7 @@ namespace DexComanda
 
             iContRegistro = con.SelectRegistroPorData("XSistemas", "spObterDados", DateTime.Now.Date).Tables[0].Rows.Count;
 
-            if ((iRetorno < 5) && (iContRegistro == 0))
+            if ((iRetorno < 15) && (iContRegistro == 0))
             {
                 AtualizaData data = new Models.AtualizaData()
                 {

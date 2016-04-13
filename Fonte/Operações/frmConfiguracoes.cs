@@ -86,7 +86,7 @@ namespace DexComanda
             config.ControlaFidelidade = chkFidelidade.Checked;
             config.EnviaSMS = chkEnviaSms.Checked;
             config.RegistraCancelamentos = chkRegCancelamentos.Checked;
-            config.DadosApp = GravaJson(cbxPlataforma1.Text, txtLink2.Text);// + cbxPlataforma2.Text + txtLink2.Text);
+            config.DadosApp = Utils.GravaJson(cbxPlataforma1.Text, txtLink2.Text);// + cbxPlataforma2.Text + txtLink2.Text);
 
             config.RepeteUltimoPedido = chkUltPedido.Checked;
             if (chkEnviaSms.Checked)
@@ -222,7 +222,7 @@ namespace DexComanda
             config.ImpLPT = chkImpLPT.Checked;
             config.RepeteUltimoPedido = chkUltPedido.Checked;
             config.RegistraCancelamentos = chkRegCancelamentos.Checked;
-            config.DadosApp = GravaJson(cbxPlataforma1.Text, txtLink1.Text);//+ cbxPlataforma2.Text +txtLink2.Text);
+            config.DadosApp = Utils.GravaJson(cbxPlataforma1.Text, txtLink1.Text);//+ cbxPlataforma2.Text +txtLink2.Text);
             if (chkEnviaSms.Checked)
             {
                 Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
@@ -274,14 +274,7 @@ namespace DexComanda
 
             return nomeImpressora;
         }
-        private string GravaJson(string iPlataforma , string iUrl)
-        {
-            DadosApp dadosApp = new DadosApp();
-            dadosApp.plataforma = iPlataforma;
-            dadosApp.url = iUrl;
-            return '['+JsonConvert.SerializeObject(dadosApp, Formatting.None)+']';
-
-        }
+       
        
         private void LoadImpressoras()
         {

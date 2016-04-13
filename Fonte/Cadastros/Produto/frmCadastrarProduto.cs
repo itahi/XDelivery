@@ -768,8 +768,9 @@ namespace DexComanda
 
         private void button3_Click(object sender, EventArgs e)
         {
-            string strValor = Interaction.InputBox("Informe a senha mestre", "[xSistemas]", "", 100, 200);
-            if (strValor == "xAdminx77")
+            //string strValor = Interaction.InputBox("Informe a senha mestre", "[xSistemas]", "", 100, 200);
+            //if (strValor == "xAdminx77")
+            if (Utils.ImputStringQuestion())
             {
                 DataSet dsProduto = con.SelectAll("Produto", "", "select * from Produto");
                 for (int i = 0; i < dsProduto.Tables[0].Rows.Count; i++)

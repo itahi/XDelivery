@@ -250,7 +250,7 @@ namespace DexComanda
                             else
                             {
 
-                                MessageBox.Show("Não foi encontrado uma conexão com a internet ", "Dex Aviso - Atenção");
+                                MessageBox.Show("Não foi encontrado uma conexão com a internet ", "xSistemas - Atenção");
                                // Utils.IniciaSistema();
                                 if (Utils.LeArquivoRegistro())
                                 {
