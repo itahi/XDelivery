@@ -662,8 +662,11 @@ namespace DexComanda
                     printersettings.Collate = false;
 
                     Tables CrTables;
-
-                    report.PrintOptions.PrinterName = iNomeImpressora;
+                    if (iNomeImpressora!="")
+                    {
+                        report.PrintOptions.PrinterName = iNomeImpressora;
+                    }
+                    
                     report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
                     crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                     crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
@@ -1004,7 +1007,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus || Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai || Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday || Sessions.returnEmpresa.CNPJ != Bibliotecas.cGaleto)
+                    if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus && Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai && Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday && Sessions.returnEmpresa.CNPJ != Bibliotecas.cGaleto && Sessions.returnEmpresa.CNPJ!=Bibliotecas.cCarangoVix)
                     {
                         if (MessageBoxQuestion("O Caixa não esta aberto sistema funcionará somente no modo consulta, deseja abrir agora?"))
                         {

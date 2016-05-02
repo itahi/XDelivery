@@ -35,6 +35,8 @@ namespace DexComanda.Models
         public bool RepeteUltimoPedido { get; set; }
         public bool RegistraCancelamentos { get; set; }
         public string DadosApp { get; set; }
+        public string Pushauthorization { get; set; }
+        public string Pushapp_id { get; set; }
         //public string ImpressoraCopaBalcao { get; set; }
     }
 }

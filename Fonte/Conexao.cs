@@ -1162,7 +1162,7 @@ namespace DexComanda
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
                 }
-                else if (spName == "spAlterarItemPedido" || spName == "spFecharCaixa")
+                else if (/*spName == "spAlterarItemPedido" ||*/ spName == "spFecharCaixa")
                 {
                     if (!p.Name.Equals("Codigo") && !p.Name.Equals("ValorAbertura") && !p.Name.Equals("NumeroMesa"))
                     {

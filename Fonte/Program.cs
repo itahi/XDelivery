@@ -142,7 +142,9 @@ namespace DexComanda
                                      EnviaSMS = bool.Parse(config.ItemArray.GetValue(23).ToString()),
                                      RepeteUltimoPedido = bool.Parse(config.ItemArray.GetValue(27).ToString()),
                                      RegistraCancelamentos = bool.Parse(config.ItemArray.GetValue(28).ToString()),
-                                     DadosApp = config.ItemArray.GetValue(29).ToString()
+                                     DadosApp = config.ItemArray.GetValue(29).ToString(),
+                                     Pushauthorization = config.ItemArray.GetValue(30).ToString(),
+                                     Pushapp_id = config.ItemArray.GetValue(31).ToString(),
                                 };
                                 if (config.ItemArray.GetValue(4).ToString() != "")
                                 {

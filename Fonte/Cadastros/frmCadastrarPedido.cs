@@ -794,7 +794,7 @@ namespace DexComanda
                         this.txtQuantidade.Text = "1";
                         //this.txtPrecoTotal.Text = "";
                         this.txtItemDescricao.Text = "";
-                        //this.txtCodProduto1.Text = "";
+                        this.txtCodProduto1.Text = "";
                         if (ProdutosPorCodigo)
                         {
                             txtCodProduto1.Focus();
@@ -1153,7 +1153,7 @@ namespace DexComanda
                         };
 
                         itemPedido.DataAtualizacao = DateTime.Now;
-
+                        itemPedido.Codigo = int.Parse(gridViewItemsPedido.Rows[rowIndex].Cells["Codigo"].Value.ToString());
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value = itemPedido.NomeProduto;
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value = itemPedido.Quantidade;
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value = "R$ " + itemPedido.PrecoUnitario.ToString();

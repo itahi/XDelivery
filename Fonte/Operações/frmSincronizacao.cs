@@ -343,10 +343,11 @@ namespace DexComanda.Operações
 
             MudaLabel("Regioes de Entrega");
             prgBarRegiao.Maximum = ds.Tables[0].Rows.Count;
+            RestClient client = new RestClient(iUrlWS);
+            RestRequest request = new RestRequest("ws/regiaoEntrega/set", Method.POST);
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                RestClient client = new RestClient(iUrlWS);
-                RestRequest request = new RestRequest("ws/regiaoEntrega/set", Method.POST);
+               
                 request.AddParameter("token", iParamToken);
                 request.AddParameter("cep", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("CEP"));
                 request.AddParameter("nome", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("NomeRegiao"));
@@ -682,6 +683,10 @@ namespace DexComanda.Operações
                     {
                         con.AtualizaDataSincronismo("Produto_Opcao", iCodProd, iCodOpcao);
                     }
+                    //else
+                    //{
+                    //    Utils.CriaArquivoTxt("LogNaoSincronizados", response.Content);
+                    //}
 
                 }
             }

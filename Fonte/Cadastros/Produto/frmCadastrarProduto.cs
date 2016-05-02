@@ -791,9 +791,17 @@ namespace DexComanda
                         OnlineSN = dsProduto.Tables[0].Rows[i].Field<Boolean>("OnlineSN"),
                         Preco = dsProduto.Tables[0].Rows[i].Field<decimal>("PrecoProduto"),
                         PrecoDesconto = dsProduto.Tables[0].Rows[i].Field<decimal>("PrecoDesconto"),
-                        UrlImagem = dsProduto.Tables[0].Rows[i].Field<string>("UrlImagem"),
-                    };
 
+                        //UrlImagem = dsProduto.Tables[0].Rows[i].Field<string>("UrlImagem"),
+                    };
+                    if (dsProduto.Tables[0].Rows[i].Field<string>("UrlImagem")!="")
+                    {
+                        prod.UrlImagem = dsProduto.Tables[0].Rows[i].Field<string>("UrlImagem");
+                    }
+                    else
+                    {
+                        prod.UrlImagem = "";
+                    }
 
                     con.Update("spAlterarProduto", prod);
                 }

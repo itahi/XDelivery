@@ -19,6 +19,7 @@ namespace DexComanda
         public const string cTopsAcai = "18907495000100";
         public const string cElShaday = "22695578000142";
         public const string cCasteloPlus = "123456789";
+        public const string cCarangoVix = "22481090000112";
     }
 
 

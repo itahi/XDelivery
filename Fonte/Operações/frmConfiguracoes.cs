@@ -87,7 +87,8 @@ namespace DexComanda
             config.EnviaSMS = chkEnviaSms.Checked;
             config.RegistraCancelamentos = chkRegCancelamentos.Checked;
             config.DadosApp = Utils.GravaJson(cbxPlataforma1.Text, txtLink2.Text);// + cbxPlataforma2.Text + txtLink2.Text);
-
+            config.Pushapp_id = txtAPPID.Text;
+            config.Pushauthorization = txtCodAutorização.Text;
             config.RepeteUltimoPedido = chkUltPedido.Checked;
             if (chkEnviaSms.Checked)
             {
@@ -222,7 +223,10 @@ namespace DexComanda
             config.ImpLPT = chkImpLPT.Checked;
             config.RepeteUltimoPedido = chkUltPedido.Checked;
             config.RegistraCancelamentos = chkRegCancelamentos.Checked;
-            config.DadosApp = Utils.GravaJson(cbxPlataforma1.Text, txtLink1.Text);//+ cbxPlataforma2.Text +txtLink2.Text);
+            config.DadosApp = Utils.GravaJson(cbxPlataforma1.Text, txtLink1.Text);
+            config.Pushauthorization = txtCodAutorização.Text;
+            config.Pushapp_id = txtAPPID.Text;
+            config.RepeteUltimoPedido = chkUltPedido.Checked;
             if (chkEnviaSms.Checked)
             {
                 Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);

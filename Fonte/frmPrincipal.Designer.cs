@@ -110,6 +110,7 @@
             this.txtBuscaPedido = new System.Windows.Forms.TextBox();
             this.pedidosGridView = new System.Windows.Forms.DataGridView();
             this.pnlBuscaProduto = new System.Windows.Forms.Panel();
+            this.chkSEmFotos = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.chkProdutosInativos = new System.Windows.Forms.CheckBox();
             this.txtNomeProd = new System.Windows.Forms.TextBox();
@@ -138,7 +139,7 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.chkSEmFotos = new System.Windows.Forms.CheckBox();
+            this.notificaçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -498,7 +499,8 @@
             this.aberturaCaixaToolStripMenuItem,
             this.sincronizaçãoToolStripMenuItem,
             this.controleDeEstoqueToolStripMenuItem,
-            this.pedidoToolStripMenuItem});
+            this.pedidoToolStripMenuItem,
+            this.notificaçõesToolStripMenuItem});
             this.operaçõesToolStripMenuItem.Name = "operaçõesToolStripMenuItem";
             this.operaçõesToolStripMenuItem.Size = new System.Drawing.Size(96, 25);
             this.operaçõesToolStripMenuItem.Text = "Operações";
@@ -589,6 +591,7 @@
             // 
             // aberturaCaixaToolStripMenuItem
             // 
+            this.aberturaCaixaToolStripMenuItem.Enabled = false;
             this.aberturaCaixaToolStripMenuItem.Name = "aberturaCaixaToolStripMenuItem";
             this.aberturaCaixaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.aberturaCaixaToolStripMenuItem.Text = "Abertura Caixa";
@@ -873,6 +876,17 @@
             this.pnlBuscaProduto.Name = "pnlBuscaProduto";
             this.pnlBuscaProduto.Size = new System.Drawing.Size(522, 201);
             this.pnlBuscaProduto.TabIndex = 1;
+            // 
+            // chkSEmFotos
+            // 
+            this.chkSEmFotos.AutoSize = true;
+            this.chkSEmFotos.Location = new System.Drawing.Point(377, 7);
+            this.chkSEmFotos.Name = "chkSEmFotos";
+            this.chkSEmFotos.Size = new System.Drawing.Size(116, 17);
+            this.chkSEmFotos.TabIndex = 26;
+            this.chkSEmFotos.Text = "Somente sem fotos";
+            this.chkSEmFotos.UseVisualStyleBackColor = true;
+            this.chkSEmFotos.CheckedChanged += new System.EventHandler(this.chkSEmFotos_CheckedChanged);
             // 
             // label11
             // 
@@ -1229,16 +1243,12 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // chkSEmFotos
+            // notificaçõesToolStripMenuItem
             // 
-            this.chkSEmFotos.AutoSize = true;
-            this.chkSEmFotos.Location = new System.Drawing.Point(377, 7);
-            this.chkSEmFotos.Name = "chkSEmFotos";
-            this.chkSEmFotos.Size = new System.Drawing.Size(116, 17);
-            this.chkSEmFotos.TabIndex = 26;
-            this.chkSEmFotos.Text = "Somente sem fotos";
-            this.chkSEmFotos.UseVisualStyleBackColor = true;
-            this.chkSEmFotos.CheckedChanged += new System.EventHandler(this.chkSEmFotos_CheckedChanged);
+            this.notificaçõesToolStripMenuItem.Name = "notificaçõesToolStripMenuItem";
+            this.notificaçõesToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.notificaçõesToolStripMenuItem.Text = "Notificações";
+            this.notificaçõesToolStripMenuItem.Click += new System.EventHandler(this.notificaçõesToolStripMenuItem_Click);
             // 
             // frmPrincipal
             // 
@@ -1393,5 +1403,6 @@
         private System.Windows.Forms.ToolStripMenuItem familiaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grupoToolStripMenuItem;
         private System.Windows.Forms.CheckBox chkSEmFotos;
+        private System.Windows.Forms.ToolStripMenuItem notificaçõesToolStripMenuItem;
     }
 }

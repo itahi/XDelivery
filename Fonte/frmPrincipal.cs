@@ -208,10 +208,14 @@ namespace DexComanda
         }
         private void MontaMenu() // Monta o menu de opções
         {
-            if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cTopsAcai || Sessions.returnEmpresa.CNPJ == Bibliotecas.cElShaday || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGaleto || Sessions.returnEmpresa.CNPJ == Bibliotecas.cCasteloPlus)
+            if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus && 
+                Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai && 
+                Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday && 
+                Sessions.returnEmpresa.CNPJ != Bibliotecas.cGaleto && 
+                Sessions.returnEmpresa.CNPJ != Bibliotecas.cCarangoVix)
             {
-                aberturaCaixaToolStripMenuItem.Enabled = false;
-                controleDeEstoqueToolStripMenuItem.Enabled = false;
+                aberturaCaixaToolStripMenuItem.Enabled = true;
+                controleDeEstoqueToolStripMenuItem.Enabled = true;
             }
 
             // Menu Visivel
@@ -1627,6 +1631,12 @@ namespace DexComanda
         private void chkSEmFotos_CheckedChanged(object sender, EventArgs e)
         {
             Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto, !chkSEmFotos.Checked);
+        }
+
+        private void notificaçõesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmNotificacao frm = new frmNotificacao();
+            frm.Show();
         }
     }
 }
