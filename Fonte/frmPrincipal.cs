@@ -211,7 +211,6 @@ namespace DexComanda
             if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus && 
                 Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai && 
                 Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday && 
-                Sessions.returnEmpresa.CNPJ != Bibliotecas.cGaleto && 
                 Sessions.returnEmpresa.CNPJ != Bibliotecas.cCarangoVix)
             {
                 aberturaCaixaToolStripMenuItem.Enabled = true;
@@ -1636,6 +1635,12 @@ namespace DexComanda
         private void notificaçõesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmNotificacao frm = new frmNotificacao();
+            frm.Show();
+        }
+
+        private void alterarSenhaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAlteraSenha frm = new frmAlteraSenha();
             frm.Show();
         }
     }

@@ -80,6 +80,28 @@
             this.cbxGrupoProduto = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.grpPrecosDia = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txtPrecoDomingo = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtPrecoSabado = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtPrecoSexta = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtPrecoQuinta = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtPrecoQuarta = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtPrecoTerca = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtPrecoSegunda = new System.Windows.Forms.TextBox();
+            this.chkDom = new System.Windows.Forms.CheckBox();
+            this.chkSex = new System.Windows.Forms.CheckBox();
+            this.chkQui = new System.Windows.Forms.CheckBox();
+            this.chkSab = new System.Windows.Forms.CheckBox();
+            this.chkQua = new System.Windows.Forms.CheckBox();
+            this.chkTer = new System.Windows.Forms.CheckBox();
+            this.chkSeg = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -112,6 +134,7 @@
             this.grpDesconto.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.grpPrecosDia.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -634,6 +657,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.grpPrecosDia);
             this.tabPage4.Controls.Add(this.groupBox2);
             this.tabPage4.Controls.Add(this.groupBox1);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
@@ -644,12 +668,254 @@
             this.tabPage4.Text = "Turno / Disponibilidade";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // grpPrecosDia
+            // 
+            this.grpPrecosDia.BackColor = System.Drawing.Color.Transparent;
+            this.grpPrecosDia.Controls.Add(this.label15);
+            this.grpPrecosDia.Controls.Add(this.txtPrecoDomingo);
+            this.grpPrecosDia.Controls.Add(this.label14);
+            this.grpPrecosDia.Controls.Add(this.txtPrecoSabado);
+            this.grpPrecosDia.Controls.Add(this.label13);
+            this.grpPrecosDia.Controls.Add(this.txtPrecoSexta);
+            this.grpPrecosDia.Controls.Add(this.label12);
+            this.grpPrecosDia.Controls.Add(this.txtPrecoQuinta);
+            this.grpPrecosDia.Controls.Add(this.label11);
+            this.grpPrecosDia.Controls.Add(this.txtPrecoQuarta);
+            this.grpPrecosDia.Controls.Add(this.label10);
+            this.grpPrecosDia.Controls.Add(this.txtPrecoTerca);
+            this.grpPrecosDia.Controls.Add(this.label7);
+            this.grpPrecosDia.Controls.Add(this.txtPrecoSegunda);
+            this.grpPrecosDia.Controls.Add(this.chkDom);
+            this.grpPrecosDia.Controls.Add(this.chkSex);
+            this.grpPrecosDia.Controls.Add(this.chkQui);
+            this.grpPrecosDia.Controls.Add(this.chkSab);
+            this.grpPrecosDia.Controls.Add(this.chkQua);
+            this.grpPrecosDia.Controls.Add(this.chkTer);
+            this.grpPrecosDia.Controls.Add(this.chkSeg);
+            this.grpPrecosDia.Location = new System.Drawing.Point(3, 140);
+            this.grpPrecosDia.Name = "grpPrecosDia";
+            this.grpPrecosDia.Size = new System.Drawing.Size(594, 89);
+            this.grpPrecosDia.TabIndex = 34;
+            this.grpPrecosDia.TabStop = false;
+            this.grpPrecosDia.Text = "Preço Diferente por Dia";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(480, 41);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(35, 13);
+            this.label15.TabIndex = 46;
+            this.label15.Text = "Preço";
+            // 
+            // txtPrecoDomingo
+            // 
+            this.txtPrecoDomingo.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPrecoDomingo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecoDomingo.Location = new System.Drawing.Point(483, 57);
+            this.txtPrecoDomingo.Name = "txtPrecoDomingo";
+            this.txtPrecoDomingo.Size = new System.Drawing.Size(69, 26);
+            this.txtPrecoDomingo.TabIndex = 45;
+            this.txtPrecoDomingo.Tag = "Sunday";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(396, 41);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(35, 13);
+            this.label14.TabIndex = 44;
+            this.label14.Text = "Preço";
+            // 
+            // txtPrecoSabado
+            // 
+            this.txtPrecoSabado.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPrecoSabado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecoSabado.Location = new System.Drawing.Point(399, 57);
+            this.txtPrecoSabado.Name = "txtPrecoSabado";
+            this.txtPrecoSabado.Size = new System.Drawing.Size(69, 26);
+            this.txtPrecoSabado.TabIndex = 43;
+            this.txtPrecoSabado.Tag = "Saturday";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(319, 41);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(35, 13);
+            this.label13.TabIndex = 42;
+            this.label13.Text = "Preço";
+            // 
+            // txtPrecoSexta
+            // 
+            this.txtPrecoSexta.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPrecoSexta.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecoSexta.Location = new System.Drawing.Point(322, 57);
+            this.txtPrecoSexta.Name = "txtPrecoSexta";
+            this.txtPrecoSexta.Size = new System.Drawing.Size(69, 26);
+            this.txtPrecoSexta.TabIndex = 41;
+            this.txtPrecoSexta.Tag = "Friday";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(236, 41);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(35, 13);
+            this.label12.TabIndex = 40;
+            this.label12.Text = "Preço";
+            // 
+            // txtPrecoQuinta
+            // 
+            this.txtPrecoQuinta.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPrecoQuinta.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecoQuinta.Location = new System.Drawing.Point(239, 57);
+            this.txtPrecoQuinta.Name = "txtPrecoQuinta";
+            this.txtPrecoQuinta.Size = new System.Drawing.Size(69, 26);
+            this.txtPrecoQuinta.TabIndex = 39;
+            this.txtPrecoQuinta.Tag = "Thursday";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(160, 41);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(35, 13);
+            this.label11.TabIndex = 38;
+            this.label11.Text = "Preço";
+            // 
+            // txtPrecoQuarta
+            // 
+            this.txtPrecoQuarta.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPrecoQuarta.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecoQuarta.Location = new System.Drawing.Point(163, 57);
+            this.txtPrecoQuarta.Name = "txtPrecoQuarta";
+            this.txtPrecoQuarta.Size = new System.Drawing.Size(69, 26);
+            this.txtPrecoQuarta.TabIndex = 37;
+            this.txtPrecoQuarta.Tag = "Wednesday";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(82, 41);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(35, 13);
+            this.label10.TabIndex = 36;
+            this.label10.Text = "Preço";
+            // 
+            // txtPrecoTerca
+            // 
+            this.txtPrecoTerca.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPrecoTerca.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecoTerca.Location = new System.Drawing.Point(85, 57);
+            this.txtPrecoTerca.Name = "txtPrecoTerca";
+            this.txtPrecoTerca.Size = new System.Drawing.Size(69, 26);
+            this.txtPrecoTerca.TabIndex = 35;
+            this.txtPrecoTerca.Tag = "Tuesday";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 41);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(38, 13);
+            this.label7.TabIndex = 34;
+            this.label7.Text = "Preço ";
+            // 
+            // txtPrecoSegunda
+            // 
+            this.txtPrecoSegunda.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPrecoSegunda.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecoSegunda.Location = new System.Drawing.Point(10, 57);
+            this.txtPrecoSegunda.Name = "txtPrecoSegunda";
+            this.txtPrecoSegunda.Size = new System.Drawing.Size(69, 26);
+            this.txtPrecoSegunda.TabIndex = 33;
+            this.txtPrecoSegunda.Tag = "Monday";
+            // 
+            // chkDom
+            // 
+            this.chkDom.AutoSize = true;
+            this.chkDom.Location = new System.Drawing.Point(483, 18);
+            this.chkDom.Name = "chkDom";
+            this.chkDom.Size = new System.Drawing.Size(68, 17);
+            this.chkDom.TabIndex = 32;
+            this.chkDom.Tag = "Sunday";
+            this.chkDom.Text = "Domingo";
+            this.chkDom.UseVisualStyleBackColor = true;
+            // 
+            // chkSex
+            // 
+            this.chkSex.AutoSize = true;
+            this.chkSex.Location = new System.Drawing.Point(322, 19);
+            this.chkSex.Name = "chkSex";
+            this.chkSex.Size = new System.Drawing.Size(53, 17);
+            this.chkSex.TabIndex = 31;
+            this.chkSex.Tag = "Friday";
+            this.chkSex.Text = "Sexta";
+            this.chkSex.UseVisualStyleBackColor = true;
+            // 
+            // chkQui
+            // 
+            this.chkQui.AutoSize = true;
+            this.chkQui.Location = new System.Drawing.Point(239, 18);
+            this.chkQui.Name = "chkQui";
+            this.chkQui.Size = new System.Drawing.Size(57, 17);
+            this.chkQui.TabIndex = 30;
+            this.chkQui.Tag = "Thursday";
+            this.chkQui.Text = "Quinta";
+            this.chkQui.UseVisualStyleBackColor = true;
+            // 
+            // chkSab
+            // 
+            this.chkSab.AutoSize = true;
+            this.chkSab.Location = new System.Drawing.Point(405, 18);
+            this.chkSab.Name = "chkSab";
+            this.chkSab.Size = new System.Drawing.Size(63, 17);
+            this.chkSab.TabIndex = 26;
+            this.chkSab.Tag = "Saturday";
+            this.chkSab.Text = "Sabado";
+            this.chkSab.UseVisualStyleBackColor = true;
+            // 
+            // chkQua
+            // 
+            this.chkQua.AutoSize = true;
+            this.chkQua.Location = new System.Drawing.Point(163, 18);
+            this.chkQua.Name = "chkQua";
+            this.chkQua.Size = new System.Drawing.Size(58, 17);
+            this.chkQua.TabIndex = 29;
+            this.chkQua.Tag = "Wednesday";
+            this.chkQua.Text = "Quarta";
+            this.chkQua.UseVisualStyleBackColor = true;
+            // 
+            // chkTer
+            // 
+            this.chkTer.AutoSize = true;
+            this.chkTer.Location = new System.Drawing.Point(85, 18);
+            this.chkTer.Name = "chkTer";
+            this.chkTer.Size = new System.Drawing.Size(54, 17);
+            this.chkTer.TabIndex = 28;
+            this.chkTer.Tag = "Tuesday";
+            this.chkTer.Text = "Terça";
+            this.chkTer.UseVisualStyleBackColor = true;
+            // 
+            // chkSeg
+            // 
+            this.chkSeg.AutoSize = true;
+            this.chkSeg.Location = new System.Drawing.Point(10, 19);
+            this.chkSeg.Name = "chkSeg";
+            this.chkSeg.Size = new System.Drawing.Size(69, 17);
+            this.chkSeg.TabIndex = 27;
+            this.chkSeg.Tag = "Monday";
+            this.chkSeg.Text = "Segunda";
+            this.chkSeg.UseVisualStyleBackColor = true;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.horaInicio);
             this.groupBox2.Controls.Add(this.HoraFim);
+            this.groupBox2.Enabled = false;
             this.groupBox2.Location = new System.Drawing.Point(3, 62);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(594, 72);
@@ -701,6 +967,7 @@
             this.groupBox1.Controls.Add(this.checkBox5);
             this.groupBox1.Controls.Add(this.checkBox6);
             this.groupBox1.Controls.Add(this.checkBox7);
+            this.groupBox1.Enabled = false;
             this.groupBox1.Location = new System.Drawing.Point(3, 6);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(594, 50);
@@ -820,6 +1087,8 @@
             this.grpDesconto.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
+            this.grpPrecosDia.ResumeLayout(false);
+            this.grpPrecosDia.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -887,5 +1156,27 @@
         private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.CheckBox checkBox6;
         private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.GroupBox grpPrecosDia;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox txtPrecoDomingo;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txtPrecoSabado;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtPrecoSexta;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtPrecoQuinta;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtPrecoQuarta;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtPrecoTerca;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtPrecoSegunda;
+        private System.Windows.Forms.CheckBox chkDom;
+        private System.Windows.Forms.CheckBox chkSex;
+        private System.Windows.Forms.CheckBox chkQui;
+        private System.Windows.Forms.CheckBox chkSab;
+        private System.Windows.Forms.CheckBox chkQua;
+        private System.Windows.Forms.CheckBox chkTer;
+        private System.Windows.Forms.CheckBox chkSeg;
     }
 }

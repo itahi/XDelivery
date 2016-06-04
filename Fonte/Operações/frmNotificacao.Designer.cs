@@ -34,15 +34,17 @@
             this.btnEnvio = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.grpAgendamento = new System.Windows.Forms.GroupBox();
-            this.dtEnvio = new System.Windows.Forms.DateTimePicker();
             this.horaEnvio = new System.Windows.Forms.DateTimePicker();
+            this.dtEnvio = new System.Windows.Forms.DateTimePicker();
             this.chkAgendarEnvio = new System.Windows.Forms.CheckBox();
+            this.txtTitulo = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.grpAgendamento.SuspendLayout();
             this.SuspendLayout();
             // 
             // msg
             // 
-            this.msg.Location = new System.Drawing.Point(12, 113);
+            this.msg.Location = new System.Drawing.Point(12, 177);
             this.msg.Name = "msg";
             this.msg.Size = new System.Drawing.Size(311, 157);
             this.msg.TabIndex = 0;
@@ -55,9 +57,9 @@
             // 
             // btnEnvio
             // 
-            this.btnEnvio.Location = new System.Drawing.Point(12, 276);
+            this.btnEnvio.Location = new System.Drawing.Point(108, 340);
             this.btnEnvio.Name = "btnEnvio";
-            this.btnEnvio.Size = new System.Drawing.Size(75, 23);
+            this.btnEnvio.Size = new System.Drawing.Size(102, 23);
             this.btnEnvio.TabIndex = 2;
             this.btnEnvio.Text = "Enviar";
             this.btnEnvio.UseVisualStyleBackColor = true;
@@ -66,11 +68,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 87);
+            this.label1.Location = new System.Drawing.Point(12, 151);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(198, 13);
+            this.label1.Size = new System.Drawing.Size(123, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Escreva aqui o conteudo da mensagem ";
+            this.label1.Text = "Conteudo da Mensagem";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // grpAgendamento
@@ -85,15 +87,6 @@
             this.grpAgendamento.TabStop = false;
             this.grpAgendamento.Text = "Agende o Envio";
             // 
-            // dtEnvio
-            // 
-            this.dtEnvio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtEnvio.Location = new System.Drawing.Point(6, 19);
-            this.dtEnvio.Name = "dtEnvio";
-            this.dtEnvio.ShowUpDown = true;
-            this.dtEnvio.Size = new System.Drawing.Size(96, 20);
-            this.dtEnvio.TabIndex = 5;
-            // 
             // horaEnvio
             // 
             this.horaEnvio.Format = System.Windows.Forms.DateTimePickerFormat.Time;
@@ -102,6 +95,15 @@
             this.horaEnvio.ShowUpDown = true;
             this.horaEnvio.Size = new System.Drawing.Size(80, 20);
             this.horaEnvio.TabIndex = 6;
+            // 
+            // dtEnvio
+            // 
+            this.dtEnvio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtEnvio.Location = new System.Drawing.Point(6, 19);
+            this.dtEnvio.Name = "dtEnvio";
+            this.dtEnvio.ShowUpDown = true;
+            this.dtEnvio.Size = new System.Drawing.Size(96, 20);
+            this.dtEnvio.TabIndex = 5;
             // 
             // chkAgendarEnvio
             // 
@@ -114,11 +116,30 @@
             this.chkAgendarEnvio.UseVisualStyleBackColor = true;
             this.chkAgendarEnvio.CheckStateChanged += new System.EventHandler(this.chkAgendarEnvio_CheckStateChanged);
             // 
+            // txtTitulo
+            // 
+            this.txtTitulo.Location = new System.Drawing.Point(12, 125);
+            this.txtTitulo.Name = "txtTitulo";
+            this.txtTitulo.Size = new System.Drawing.Size(310, 20);
+            this.txtTitulo.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 104);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(103, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Titulo da Mensagem";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // frmNotificacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(337, 306);
+            this.ClientSize = new System.Drawing.Size(334, 375);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtTitulo);
             this.Controls.Add(this.chkAgendarEnvio);
             this.Controls.Add(this.grpAgendamento);
             this.Controls.Add(this.label1);
@@ -142,5 +163,7 @@
         private System.Windows.Forms.DateTimePicker horaEnvio;
         private System.Windows.Forms.DateTimePicker dtEnvio;
         private System.Windows.Forms.CheckBox chkAgendarEnvio;
+        private System.Windows.Forms.TextBox txtTitulo;
+        private System.Windows.Forms.Label label2;
     }
 }

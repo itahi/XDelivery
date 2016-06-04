@@ -337,6 +337,8 @@ namespace DexComanda
                 txtViasBalcao.Text = Sessions.returnConfig.ViasBalcao;
                 chkUltPedido.Checked = Sessions.returnConfig.RepeteUltimoPedido;
                 chkRegCancelamentos.Checked = Sessions.returnConfig.RegistraCancelamentos;
+                txtAPPID.Text = Sessions.returnConfig.Pushapp_id;
+                txtCodAutorização.Text = Sessions.returnConfig.Pushauthorization;
 
                 this.btnSalvar.Text = "Alterar";
                 this.btnSalvar.Click -= SalvaConfig;

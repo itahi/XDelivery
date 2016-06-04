@@ -35,7 +35,7 @@ namespace DexComanda.Operações
         {
 
             iParamToken = Convert.ToString(DateTime.Now).Replace("/", "").Replace(":", "").Replace(" ", "").Substring(0, 11) + "Adminx";
-            iParamToken = Utils.CriptografarArquivo(iParamToken.Trim());
+            iParamToken = Utils.CriptografarArquivo("xsistemas");
             iParamToken = iParamToken.ToLower();
         }
         private void Sincroniza()
@@ -294,7 +294,7 @@ namespace DexComanda.Operações
 
             RestClient client = new RestClient(iUrlWS);
             RestRequest request = new RestRequest("ws/total/desconto", Method.POST);
-            request.AddParameter("token", iParamToken);
+            request.AddParameter("token", "959eaf56a662b353cc635dbd9d75a370");
             request.AddParameter("status", Convert.ToInt16(chkDesconto.Checked));
             int iTotalOrSub;
             if (rbSub.Checked)
@@ -519,87 +519,95 @@ namespace DexComanda.Operações
         {
             try
             {
-                MudaLabel("Produto");
-                decimal iPrecoProduto = 0;
-               // ManipulaProgressBar(ds.Tables[0].Rows.Count);
-                DataRow dRow;
-                prgBarProduto.Value = 0;
-                prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
-                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-                {
+               // MudaLabel("Produto");
+               // decimal iPrecoProduto = 0;
+               //// ManipulaProgressBar(ds.Tables[0].Rows.Count);
+               // DataRow dRow;
+               // prgBarProduto.Value = 0;
+               // prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
+               // for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+               // {
                     RestClient client = new RestClient(iUrlWS);
-                    RestRequest request = new RestRequest("ws/produto/set", Method.POST);
-                    GerarToken();
-                    dRow = ds.Tables[0].Rows[i];
-                    decimal prProduto = decimal.Parse(dRow.ItemArray.GetValue(3).ToString());
-                    DateTime dtSinc = DateTime.Now.AddYears(1);
-                    DateTime dtFoto = DateTime.Now.AddYears(1);
+                    RestRequest request = new RestRequest("ws/endereco", Method.POST);
+                request.AddParameter("token", "959eaf56a662b353cc635dbd9d75a370");
+                 request.AddParameter("cep", "29070450");
+                RestResponse response = (RestResponse)client.Execute(request);
+
+                //GerarToken();
+                //    dRow = ds.Tables[0].Rows[i];
+                //    decimal prProduto = decimal.Parse(dRow.ItemArray.GetValue(3).ToString());
+                //    DateTime dtSinc = DateTime.Now.AddYears(1);
+                //    DateTime dtFoto = DateTime.Now.AddYears(1);
 
 
-                    if (dRow.ItemArray.GetValue(10).ToString() != "")
-                    {
-                        dtSinc = Convert.ToDateTime(dRow.ItemArray.GetValue(10).ToString());
-                    }
-                    if (dRow.ItemArray.GetValue(15).ToString() != "")
-                    {
-                        dtFoto = Convert.ToDateTime(dRow.ItemArray.GetValue(15).ToString());
-                    }
+                //    if (dRow.ItemArray.GetValue(9).ToString() != "")
+                //    {
+                //        dtSinc = Convert.ToDateTime(dRow.ItemArray.GetValue(9).ToString());
+                //    }
+                //    else
+                //    {
+                //        dtSinc = DateTime.Now.AddYears(-1);
+                //    }
+                //    if (dRow.ItemArray.GetValue(14).ToString() != "")
+                //    {
+                //        dtFoto = Convert.ToDateTime(dRow.ItemArray.GetValue(14).ToString());
+                //    }
 
 
-                    string iCaminhoImagem = dRow.ItemArray.GetValue(12).ToString();
-                    request.AddParameter("token", iParamToken);
-                    request.AddParameter("idReferencia", dRow.ItemArray.GetValue(0).ToString());
-                    request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
+                //    string iCaminhoImagem = dRow.ItemArray.GetValue(11).ToString();
+                //    request.AddParameter("token", iParamToken);
+                //    request.AddParameter("idReferencia", dRow.ItemArray.GetValue(0).ToString());
+                //    request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
 
-                    if (Sessions.returnEmpresa.CNPJ == "09395874000160")
-                    {
-                        prProduto = prProduto + con.RetornaPrecoComEmbalagem(dRow.ItemArray.GetValue(4).ToString(), int.Parse(dRow.ItemArray.GetValue(0).ToString()));
-                    }
-                    else
-                    {
-                        prProduto = decimal.Parse(dRow.ItemArray.GetValue(3).ToString());
-                    }
+                //    if (Sessions.returnEmpresa.CNPJ == "09395874000160")
+                //    {
+                //        prProduto = prProduto + con.RetornaPrecoComEmbalagem(dRow.ItemArray.GetValue(4).ToString(), int.Parse(dRow.ItemArray.GetValue(0).ToString()));
+                //    }
+                //    else
+                //    {
+                //        prProduto = decimal.Parse(dRow.ItemArray.GetValue(3).ToString());
+                //    }
 
-                    request.AddParameter("preco", prProduto);
-                    decimal prPromocao = decimal.Parse(dRow.ItemArray.GetValue(5).ToString());
-                    if (dRow.ItemArray.GetValue(14).ToString() != "")
-                    {
-                        if (Convert.ToDateTime(dRow.ItemArray.GetValue(14).ToString()) > DateTime.Now && prPromocao > 0)
-                        {
-                            request.AddParameter("precoPromocao", prPromocao);
-                            request.AddParameter("dataInicial", dRow.ItemArray.GetValue(13).ToString());
-                            request.AddParameter("dataFinal", dRow.ItemArray.GetValue(14).ToString());
-                        }
-                    }
+                //    request.AddParameter("preco", prProduto);
+                //    decimal prPromocao = decimal.Parse(dRow.ItemArray.GetValue(5).ToString());
+                //    if (dRow.ItemArray.GetValue(13).ToString() != "")
+                //    {
+                //        if (Convert.ToDateTime(dRow.ItemArray.GetValue(13).ToString()) > DateTime.Now && prPromocao > 0)
+                //        {
+                //            request.AddParameter("precoPromocao", prPromocao);
+                //            request.AddParameter("dataInicial", dRow.ItemArray.GetValue(12).ToString());
+                //            request.AddParameter("dataFinal", dRow.ItemArray.GetValue(13).ToString());
+                //        }
+                //    }
 
-                    if (File.Exists(iCaminhoImagem) && dtFoto > dtSinc)
-                    {
-                        request.AddFile("imagem", iCaminhoImagem);
-                    }
-                    request.AddParameter("idReferenciaCategoria", dRow.ItemArray.GetValue(16).ToString());
-                    // request.AddParameter("idReferenciaCategoria", RetornaIDCategoria(dRow.ItemArray.GetValue(4).ToString()));
-                    request.AddParameter("descricao", dRow.ItemArray.GetValue(2).ToString());
-                    int bAtivoSn = 0;
-                    if (Convert.ToBoolean(dRow.ItemArray.GetValue(8).ToString()) == true)
-                    {
-                        bAtivoSn = 1;
-                    }
-                    request.AddParameter("ativo", bAtivoSn);
-                    request.AddParameter("maxOptions", dRow.ItemArray.GetValue(11).ToString());
+                //    if (File.Exists(iCaminhoImagem) && dtFoto > dtSinc)
+                //    {
+                //        request.AddFile("imagem", iCaminhoImagem);
+                //    }
+                //    request.AddParameter("idReferenciaCategoria", dRow.ItemArray.GetValue(15).ToString());
+                //    // request.AddParameter("idReferenciaCategoria", RetornaIDCategoria(dRow.ItemArray.GetValue(4).ToString()));
+                //    request.AddParameter("descricao", dRow.ItemArray.GetValue(2).ToString());
+                //    int bAtivoSn = 0;
+                //    if (Convert.ToBoolean(dRow.ItemArray.GetValue(7).ToString()) == true)
+                //    {
+                //        bAtivoSn = 1;
+                //    }
+                //    request.AddParameter("ativo", bAtivoSn);
+                //    request.AddParameter("maxOptions", dRow.ItemArray.GetValue(10).ToString());
 
-                    prgBarProduto.Increment (i+1);
+                //    prgBarProduto.Increment (i+1);
 
-                    RestResponse response = (RestResponse)client.Execute(request);
+                //    RestResponse response = (RestResponse)client.Execute(request);
 
-                    if (response.Content.ToString() == "true")
-                    {
-                        con.AtualizaDataSincronismo("Produto", int.Parse(dRow.ItemArray.GetValue(0).ToString()));
-                        CadastrarOpcaoProduto(int.Parse(dRow.ItemArray.GetValue(0).ToString()));
-                    }
-                    iCaminhoImagem = "";
+                //    if (response.Content.ToString() == "true")
+                //    {
+                //        con.AtualizaDataSincronismo("Produto", int.Parse(dRow.ItemArray.GetValue(0).ToString()));
+                //        CadastrarOpcaoProduto(int.Parse(dRow.ItemArray.GetValue(0).ToString()));
+                //    }
+                //    iCaminhoImagem = "";
 
-                    // request = null;
-                }
+                //    // request = null;
+                //}
             }
             catch (Exception er)
             {

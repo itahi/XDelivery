@@ -26,7 +26,7 @@ namespace DexComanda
         private List<string> DiasSelecionados;
         private string Marcados;
         private bool PromocaoDiasSemana = Sessions.returnConfig.DescontoDiaSemana;
-
+        private List<PrecoDiaProduto> listPrecos;
         public frmCadastrarProduto(Main parent)
         {
             InitializeComponent();
@@ -77,7 +77,8 @@ namespace DexComanda
                     chkDomingo.Checked = true;
                 }
 
-
+               
+                MontaListPrecos(iDiasPromocao);
                 nomeProdutoTextBox.Text = iNomeProduto;
                 precoProdutoTextBox.Text = iPreco.ToString();
                 cbxGrupoProduto.Text = iGrupo;
@@ -151,11 +152,78 @@ namespace DexComanda
             }
 
         }
+        private List<PrecoDiaProduto> RetornaDiasMarcados()
+        {
+            listPrecos = new List<PrecoDiaProduto>();
+           // var precosDia = new PrecoDiaProduto();
+            foreach (System.Windows.Forms.Control TEXT in grpPrecosDia.Controls)
+            {
+                //Loop through all controls 
+                if (object.ReferenceEquals(TEXT.GetType(), typeof(System.Windows.Forms.TextBox)))
+                {
+                    //Check to see if it's a textbox 
+                    if (((System.Windows.Forms.TextBox)TEXT).Text!="")
+                    {
+                        var precosDia = new PrecoDiaProduto()
+                        {
+                            Dia = (((System.Windows.Forms.TextBox)TEXT).Tag.ToString()),
+                            Preco = double.Parse((((System.Windows.Forms.TextBox)TEXT).Text.ToString()))
+
+                        };
+
+                        listPrecos.Add(precosDia);
+                    }
+                   
+                    //If it is then set the text to String.Empty (empty textbox) 
+                }
+                
+            }
+           
+            return listPrecos;
+        }
+        private void MontaListPrecos(string ivalor)
+        {
+            try
+            {
+                List<PrecoDiaProduto> pr = new List<PrecoDiaProduto>();
+                if (ivalor=="")
+                {
+                    return;
+                }
+                pr = Utils.DeserializaObjeto(ivalor);
+                if (pr.Count>1)
+                {
+                    foreach (var item in pr)
+                    {
+                        foreach (System.Windows.Forms.Control obj in grpPrecosDia.Controls)
+                        {
+                            if (object.ReferenceEquals(obj.GetType(), typeof(System.Windows.Forms.TextBox)))
+                            {
+                                if (item.Dia == ((System.Windows.Forms.TextBox)obj).Tag.ToString())
+                                {
+                                    ((System.Windows.Forms.TextBox)obj).Text = item.Preco.ToString();
+                                }
+                            }
+
+                        }
+                    }
+                }
+                
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message);
+            }
+            
+            
+        }
 
         private void frmCadastrarProduto_Load(object sender, EventArgs e)
         {
             con = new Conexao();
 
+            
             btnEditar.Enabled = codigoProdutoParaAlterar != 0;
             DiasSelecionados = new List<string>();
             tabPage2.IsAccessible = btnDoProduto.Text == "Alterar [F12]";
@@ -180,6 +248,7 @@ namespace DexComanda
 
                 codigoProdutoParaAlterar = produto.Codigo;
                 this.nomeProdutoTextBox.Text = produto.Nome;
+              //  MontaListPrecos(produto.DiaSemana);
                 cbxGrupoProduto.ValueMember = produto.CodGrupo.ToString();
                 this.cbxGrupoProduto.Text = produto.GrupoProduto;
                 this.precoProdutoTextBox.Text = produto.Preco.ToString();
@@ -194,6 +263,7 @@ namespace DexComanda
         {
             try
             {
+                
                 if (nomeProdutoTextBox.Text.Trim() == "" || precoProdutoTextBox.Text.Trim() == "" || cbxGrupoProduto.Text.Trim() == "")
                 {
                     MessageBox.Show("Campos obrigátórios não preenchidos");
@@ -211,7 +281,8 @@ namespace DexComanda
                     OnlineSN = chkOnline.Checked,
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
-                    DataAlteracao = DateTime.Now
+                    DataAlteracao = DateTime.Now,
+                    
                 };
                 produto.UrlImagem = "";
                 if (txtcaminhoImage.Text.Trim() != "")
@@ -228,7 +299,7 @@ namespace DexComanda
                 }
                 if (DescontoPordia)
                 {
-                    produto.DiaSemana = DiasSelecinado();
+                    produto.DiaSemana = Utils.SerializaObjeto(RetornaDiasMarcados());
                     if (txtPrecoDesconto.Text != "")
                     {
                         produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text.Replace(".", ","));
@@ -359,7 +430,8 @@ namespace DexComanda
                     produto.MaximoAdicionais = 0;
                 }
 
-                produto.DiaSemana = DiasSelecinado();
+                produto.DiaSemana = Utils.SerializaObjeto(RetornaDiasMarcados());
+                //  produto.DiaSemana = DiasSelecinado();
                 if (txtPrecoDesconto.Text != "")
                 {
                     produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text.Replace(".", ","));
@@ -645,6 +717,7 @@ namespace DexComanda
             {
                 ContextMenu m = new ContextMenu();
                 MenuItem Excluir = new MenuItem(" 0 - Excluir Opcao ");
+               
                 Excluir.Click += DeletarRegistro;
                 m.MenuItems.Add(Excluir);
                 int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
@@ -665,6 +738,10 @@ namespace DexComanda
         {
             try
             {
+                if (!Utils.MessageBoxQuestion("Deseja excluir a Opção " + AdicionaisGridView.Rows[rowIndex].Cells["Nome"].Value + " Do Produto"))
+                {
+                    return;
+                }
                 if (codigoProdutoParaAlterar != 0)
                 {
                     int intCodOpcao = Convert.ToInt16(AdicionaisGridView.Rows[rowIndex].Cells["CodOpcao"].Value);

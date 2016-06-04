@@ -175,6 +175,11 @@
             this.chkNomeProd = new System.Windows.Forms.CheckBox();
             this.chkCodigo = new System.Windows.Forms.CheckBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.txtCodAutorização = new System.Windows.Forms.TextBox();
+            this.txtAPPID = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.txtLink2 = new System.Windows.Forms.TextBox();
@@ -187,11 +192,8 @@
             this.btnSalvar = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.txtAPPID = new System.Windows.Forms.TextBox();
-            this.txtCodAutorização = new System.Windows.Forms.TextBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -216,6 +218,7 @@
             this.groupBox3.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -1714,6 +1717,7 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.groupBox9);
             this.tabPage5.Controls.Add(this.groupBox8);
             this.tabPage5.Controls.Add(this.label31);
             this.tabPage5.Controls.Add(this.label32);
@@ -1730,6 +1734,53 @@
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "App / Push";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.label36);
+            this.groupBox8.Controls.Add(this.label35);
+            this.groupBox8.Controls.Add(this.txtCodAutorização);
+            this.groupBox8.Controls.Add(this.txtAPPID);
+            this.groupBox8.Location = new System.Drawing.Point(6, 196);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(360, 126);
+            this.groupBox8.TabIndex = 18;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Dados Push";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Enabled = false;
+            this.label36.Location = new System.Drawing.Point(6, 71);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(99, 13);
+            this.label36.TabIndex = 19;
+            this.label36.Text = "Codigo Autorização";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Enabled = false;
+            this.label35.Location = new System.Drawing.Point(6, 20);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(42, 13);
+            this.label35.TabIndex = 18;
+            this.label35.Text = "APP ID";
+            // 
+            // txtCodAutorização
+            // 
+            this.txtCodAutorização.Location = new System.Drawing.Point(3, 89);
+            this.txtCodAutorização.Name = "txtCodAutorização";
+            this.txtCodAutorização.Size = new System.Drawing.Size(347, 20);
+            this.txtCodAutorização.TabIndex = 12;
+            // 
+            // txtAPPID
+            // 
+            this.txtAPPID.Location = new System.Drawing.Point(3, 38);
+            this.txtAPPID.Name = "txtAPPID";
+            this.txtAPPID.Size = new System.Drawing.Size(347, 20);
+            this.txtAPPID.TabIndex = 11;
             // 
             // label31
             // 
@@ -1839,52 +1890,22 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // groupBox8
+            // groupBox9
             // 
-            this.groupBox8.Controls.Add(this.label36);
-            this.groupBox8.Controls.Add(this.label35);
-            this.groupBox8.Controls.Add(this.txtCodAutorização);
-            this.groupBox8.Controls.Add(this.txtAPPID);
-            this.groupBox8.Location = new System.Drawing.Point(6, 196);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(360, 126);
-            this.groupBox8.TabIndex = 18;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Dados Push";
+            this.groupBox9.Controls.Add(this.textBox1);
+            this.groupBox9.Location = new System.Drawing.Point(390, 26);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(245, 296);
+            this.groupBox9.TabIndex = 19;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Cidades Atendidas";
             // 
-            // txtAPPID
+            // textBox1
             // 
-            this.txtAPPID.Location = new System.Drawing.Point(3, 38);
-            this.txtAPPID.Name = "txtAPPID";
-            this.txtAPPID.Size = new System.Drawing.Size(347, 20);
-            this.txtAPPID.TabIndex = 11;
-            // 
-            // txtCodAutorização
-            // 
-            this.txtCodAutorização.Location = new System.Drawing.Point(3, 89);
-            this.txtCodAutorização.Name = "txtCodAutorização";
-            this.txtCodAutorização.Size = new System.Drawing.Size(347, 20);
-            this.txtCodAutorização.TabIndex = 12;
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Enabled = false;
-            this.label35.Location = new System.Drawing.Point(6, 20);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(42, 13);
-            this.label35.TabIndex = 18;
-            this.label35.Text = "APP ID";
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Enabled = false;
-            this.label36.Location = new System.Drawing.Point(6, 71);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(99, 13);
-            this.label36.TabIndex = 19;
-            this.label36.Text = "Codigo Autorização";
+            this.textBox1.Location = new System.Drawing.Point(6, 43);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(144, 20);
+            this.textBox1.TabIndex = 11;
             // 
             // frmConfiguracoes
             // 
@@ -1944,6 +1965,8 @@
             this.tabPage5.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2113,5 +2136,7 @@
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.TextBox txtCodAutorização;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

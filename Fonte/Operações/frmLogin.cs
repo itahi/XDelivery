@@ -58,7 +58,6 @@ namespace DexComanda
                         this.Hide();
                         frmPrincipal.ShowDialog();
                     }
-
                 }
             }
             else

@@ -12,6 +12,7 @@ namespace DexComanda
         public const string cGravacaoOK = "Registro gravado com sucesso";
         public const string cEdicaoOK = "Registro editado com sucesso";
         public const string cDeleteOK = "Registro deletado com sucesso";
+        public const string cMsgEnviadaOK = "Mensagens enviadas com sucesso";
         public const string cErroGravacao = "Registro nao pode ser gravado";
         public const string cRegistroNaoEncontrado = "Sem registros com o filtro informado";
         public const string cNUTRIFOOD = "13004606798";

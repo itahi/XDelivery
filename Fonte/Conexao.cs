@@ -1442,6 +1442,30 @@ namespace DexComanda
 
             return ds;
         }
+        public DataSet LoginUsuario(string iLogin, string iSenha)
+        {
+            try
+            {
+                command = new SqlCommand("spLogin", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Nome", iLogin);
+                command.Parameters.AddWithValue("@Senha", iSenha);
+                adapter = new SqlDataAdapter(command);
+                adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+                ds = new DataSet();
+                adapter.Fill(ds, "Usuario");
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message);
+            }
+
+            
+
+            return ds;
+        }
 
         public DataSet SelectObterRegistroPorString(string iNome, string itable)
         {

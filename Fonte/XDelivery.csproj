@@ -249,17 +249,18 @@
     <Compile Include="Models\Familia.cs" />
     <Compile Include="Models\FinalizaPedido.cs" />
     <Compile Include="Models\HistoricoPessoa.cs" />
-    <Compile Include="Models\Opcao.cs" />
-    <Compile Include="Models\OpcaoItem.cs" />
-    <Compile Include="Models\OpcaoPedido.cs" />
+    <Compile Include="Models\Produto\Opcao.cs" />
+    <Compile Include="Models\Produto\OpcaoItem.cs" />
+    <Compile Include="Models\Produto\OpcaoPedido.cs" />
     <Compile Include="Models\Operacoes\PedidoStatus.cs" />
     <Compile Include="Models\Operacoes\NovoTotalPedido.cs" />
     <Compile Include="Models\PedidoStatus.cs" />
     <Compile Include="Models\PedidoStatusMovimento.cs" />
-    <Compile Include="Models\ProdutoGrupo.cs" />
-    <Compile Include="Models\ProdutoOpcao_Tipo.cs" />
-    <Compile Include="Models\Produto_Estoque.cs" />
-    <Compile Include="Models\Produto_Opcao.cs" />
+    <Compile Include="Models\Produto\PrecoDiaProduto.cs" />
+    <Compile Include="Models\Produto\ProdutoGrupo.cs" />
+    <Compile Include="Models\Produto\ProdutoOpcao_Tipo.cs" />
+    <Compile Include="Models\Produto\Produto_Estoque.cs" />
+    <Compile Include="Models\Produto\Produto_Opcao.cs" />
     <Compile Include="Models\RegiaoEntrega_Bairros.cs" />
     <Compile Include="Models\RemoveDezPorcento.cs" />
     <Compile Include="Models\ReturnPadrao.cs" />
@@ -413,6 +414,12 @@
     </Compile>
     <Compile Include="Operações\frmSincronizacao.Designer.cs">
       <DependentUpon>frmSincronizacao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operações\Funções\frmLiberação.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Funções\frmLiberação.Designer.cs">
+      <DependentUpon>frmLiberação.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\Funções\RotinasGlobal.cs" />
     <Compile Include="Operações\Pedido\frmAlterarStatusPedido.cs">
@@ -616,7 +623,7 @@
     <Compile Include="Models\Pessoa.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Produto.cs">
+    <Compile Include="Models\Produto\Produto.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\SMS.cs" />
@@ -816,6 +823,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmSincronizacao.resx">
       <DependentUpon>frmSincronizacao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Funções\frmLiberação.resx">
+      <DependentUpon>frmLiberação.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\Pedido\frmAlterarStatusPedido.resx">
       <DependentUpon>frmAlterarStatusPedido.cs</DependentUpon>
@@ -1148,182 +1158,182 @@
   <ItemGroup>
     <PublishFile Include="de\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="Dlls\mp2032.dll">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="Dlls\SiUSBXp.dll">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="es\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="fr\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="it\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="ja\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="ko\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.ReportViewer.Common">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.ReportViewer.DataVisualization">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.ReportViewer.WinForms">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.SqlServer.Types">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="pt\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="pt\Microsoft.SqlServer.Types.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="Reports">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Resources\login.ico">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="Resources\login.png">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="XSistemas.ico">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>

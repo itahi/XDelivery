@@ -91,6 +91,7 @@
             this.pedidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastroStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alteracaoStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notificaçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoAtivaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlPrincipal = new System.Windows.Forms.Panel();
@@ -139,7 +140,6 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.notificaçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -549,6 +549,7 @@
             this.alterarSenhaToolStripMenuItem.Name = "alterarSenhaToolStripMenuItem";
             this.alterarSenhaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.alterarSenhaToolStripMenuItem.Text = "Alterar Senha";
+            this.alterarSenhaToolStripMenuItem.Click += new System.EventHandler(this.alterarSenhaToolStripMenuItem_Click);
             // 
             // FinanceiroToolStripMenuItem
             // 
@@ -646,6 +647,13 @@
             this.alteracaoStatusToolStripMenuItem.Name = "alteracaoStatusToolStripMenuItem";
             this.alteracaoStatusToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.alteracaoStatusToolStripMenuItem.Text = "Alteracao Status";
+            // 
+            // notificaçõesToolStripMenuItem
+            // 
+            this.notificaçõesToolStripMenuItem.Name = "notificaçõesToolStripMenuItem";
+            this.notificaçõesToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.notificaçõesToolStripMenuItem.Text = "Notificações";
+            this.notificaçõesToolStripMenuItem.Click += new System.EventHandler(this.notificaçõesToolStripMenuItem_Click);
             // 
             // contatoToolStripMenuItem
             // 
@@ -1242,13 +1250,6 @@
             this.AtualizaGrid.Enabled = true;
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
-            // 
-            // notificaçõesToolStripMenuItem
-            // 
-            this.notificaçõesToolStripMenuItem.Name = "notificaçõesToolStripMenuItem";
-            this.notificaçõesToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
-            this.notificaçõesToolStripMenuItem.Text = "Notificações";
-            this.notificaçõesToolStripMenuItem.Click += new System.EventHandler(this.notificaçõesToolStripMenuItem_Click);
             // 
             // frmPrincipal
             // 

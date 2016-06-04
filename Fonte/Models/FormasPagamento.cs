@@ -13,6 +13,7 @@ namespace DexComanda.Models
         public Boolean DescontoSN { get; set; }
         public Boolean GeraFinanceiro { get; set; }
         public Boolean OnlineSN { get; set; }
+        public Boolean AtivoSN { get; set; }
         public DateTime DataAlteracao { get; set; }
         public string CaminhoImagem { get; set; }
     }

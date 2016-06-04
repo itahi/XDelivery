@@ -73,56 +73,45 @@ namespace DexComanda
         public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1)
         {
 
-            if (nomeUsuario.Equals(""))
+            try
             {
-                MessageBox.Show("Informe seu usuário.");
-                Logado = false;
-            }
-            else if (senha.Equals(""))
-            {
-                MessageBox.Show("Informe sua senha.");
-                Logado = false;
-            }
-            else
-            {
-                string hashSenha = EncryptMd5(nomeUsuario, senha);
-                conexao = new Conexao();
-                NomeEmpresa = Sessions.returnEmpresa.Nome;
-                DataSet usuarios = conexao.SelectAll("Usuario", "spObterUsuario");
-
-                DataView dv = usuarios.Tables[0].DefaultView;
-                //  Sessions.returnUsuario = dv; 
-                string query = "Nome = '" + nomeUsuario + "' AND Senha = '" + hashSenha + "'";
-
-                dv.RowFilter = query;
-
-                if (dv.Count > 0)
+                if (nomeUsuario.Equals(""))
                 {
-                    //_CodUserLogado = int.Parse(dv[0].Row["Codigo"].ToString());
-                    string _nome = dv[0].Row["Nome"].ToString();
-                    string _senha = dv[0].Row["Senha"].ToString();
-
-                    if (_nome.Equals(nomeUsuario) && _senha.Equals(hashSenha))
+                    MessageBox.Show("Informe seu usuário.");
+                    Logado = false;
+                }
+                else if (senha.Equals(""))
+                {
+                    MessageBox.Show("Informe sua senha.");
+                    Logado = false;
+                }
+                else
+                {
+                    Conexao conexao = new Conexao();
+                    string hashSenha = EncryptMd5(nomeUsuario, senha);
+                    DataSet dsUsuario = conexao.LoginUsuario(nomeUsuario, hashSenha);
+                    if (hashSenha == dsUsuario.Tables[0].Rows[0].Field<string>("Senha").ToString())
                     {
                         Sessions.returnUsuario = new Usuario()
                         {
-                            Nome = _nome,
-                            Senha = _senha,
-                            Codigo = Convert.ToInt16(dv[0].Row["Codigo"].ToString()),
-                            AcessaRelatoriosSN = Convert.ToBoolean(dv[0].Row["AcessaRelatoriosSN"].ToString()),
-                            AdministradorSN = Convert.ToBoolean(dv[0].Row["AdministradorSN"].ToString()),
-                            FinalizaPedidoSN = Convert.ToBoolean(dv[0].Row["FinalizaPedidoSN"].ToString()),
-                            CancelaPedidosSN = Convert.ToBoolean(dv[0].Row["CancelaPedidosSN"].ToString()),
-                            AlteraProdutosSN = Convert.ToBoolean(dv[0].Row["AlteraProdutosSN"].ToString()),
-                            DescontoPedidoSN = Convert.ToBoolean(dv[0].Row["DescontoPedidoSN"].ToString()),
-                            DescontoMax = Convert.ToDouble(dv[0].Row["DescontoMax"].ToString()),
+                            Nome = nomeUsuario,
+                            Senha = dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(2).ToString(),
+                            Codigo = int.Parse(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(0).ToString()),
+                            AcessaRelatoriosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(6).ToString()),
+                            AdministradorSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(5).ToString()),
+                            FinalizaPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(8).ToString()),
+                            CancelaPedidosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(3).ToString()),
+                            AlteraProdutosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(5).ToString()),
+                            DescontoPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(7).ToString()),
+                            DescontoMax = Convert.ToDouble(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(9).ToString()),
+                            AbreFechaCaixaSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(12).ToString()),
+                            EditaPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(10).ToString()),
+                            VisualizaDadosClienteSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(11).ToString()),
                             CaixaLogado = iNumCaixa
-                        };
 
+                        };
                         Sessions.retunrUsuario = Sessions.returnUsuario;
                         Logado = true;
-
-
                     }
                     else
                     {
@@ -130,18 +119,75 @@ namespace DexComanda
                         Logado = false;
                     }
                 }
-                else if (nomeUsuario.Equals("admin"))
+
+                if (nomeUsuario.Equals("admin"))
                 {
                     frmConfiguracoes frmConfiguracoes = new frmConfiguracoes();
                     frmConfiguracoes.ShowDialog();
                 }
-                else
-                {
-                    MessageBox.Show("Usuário ou senha incorretos", "[XSistemas] Aviso");
-                    Logado = false;
-                }
-
+               
             }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+            
+            //conexao = new Conexao();
+            //NomeEmpresa = Sessions.returnEmpresa.Nome;
+            //DataSet usuarios = conexao.SelectAll("Usuario", "spObterUsuario");
+
+            //DataView dv = usuarios.Tables[0].DefaultView;
+            ////  Sessions.returnUsuario = dv; 
+            //string query = "Nome = '" + nomeUsuario + "' AND Senha = '" + hashSenha + "'";
+
+            //dv.RowFilter = query;
+
+            //    if (dv.Count > 0)
+            //    {
+            //        //_CodUserLogado = int.Parse(dv[0].Row["Codigo"].ToString());
+            //        string _nome = dv[0].Row["Nome"].ToString();
+            //        string _senha = dv[0].Row["Senha"].ToString();
+
+            //        if (_nome.Equals(nomeUsuario) && _senha.Equals(hashSenha))
+            //        {
+            //            Sessions.returnUsuario = new Usuario()
+            //            {
+            //                Nome = _nome,
+            //                Senha = _senha,
+            //                Codigo = Convert.ToInt16(dv[0].Row["Codigo"].ToString()),
+            //                AcessaRelatoriosSN = Convert.ToBoolean(dv[0].Row["AcessaRelatoriosSN"].ToString()),
+            //                AdministradorSN = Convert.ToBoolean(dv[0].Row["AdministradorSN"].ToString()),
+            //                FinalizaPedidoSN = Convert.ToBoolean(dv[0].Row["FinalizaPedidoSN"].ToString()),
+            //                CancelaPedidosSN = Convert.ToBoolean(dv[0].Row["CancelaPedidosSN"].ToString()),
+            //                AlteraProdutosSN = Convert.ToBoolean(dv[0].Row["AlteraProdutosSN"].ToString()),
+            //                DescontoPedidoSN = Convert.ToBoolean(dv[0].Row["DescontoPedidoSN"].ToString()),
+            //                DescontoMax = Convert.ToDouble(dv[0].Row["DescontoMax"].ToString()),
+            //                CaixaLogado = iNumCaixa
+            //            };
+
+            //            Sessions.retunrUsuario = Sessions.returnUsuario;
+            //            Logado = true;
+
+
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Usuário ou Senha incorretos.", "[XSistemas] Aviso");
+            //            Logado = false;
+            //        }
+            //    }
+            //    else if (nomeUsuario.Equals("admin"))
+            //    {
+            //        frmConfiguracoes frmConfiguracoes = new frmConfiguracoes();
+            //        frmConfiguracoes.ShowDialog();
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Usuário ou senha incorretos", "[XSistemas] Aviso");
+            //        Logado = false;
+            //    }
+
+            //}
             return Logado;
         }
 
@@ -165,6 +211,19 @@ namespace DexComanda
             dadosApp.plataforma = iPlataforma;
             dadosApp.url = iUrl;
             return '[' + JsonConvert.SerializeObject(dadosApp, Formatting.None) + ']';
+
+        }
+        public static string SerializaObjeto(List<PrecoDiaProduto> iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
+        public static List<PrecoDiaProduto> DeserializaObjeto(string iValores)
+        {
+            if (iValores == "")
+            {
+                return null;
+            }
+            return JsonConvert.DeserializeObject<List<PrecoDiaProduto>>(iValores);
 
         }
         public static void MontaCombox(ComboBox icbxName, string idisplayName,
@@ -379,7 +438,7 @@ namespace DexComanda
             report = new RelDelivery();
             try
             {
-                
+
                 TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
                 TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
                 ConnectionInfo crConnectionInfo = new ConnectionInfo();
@@ -662,11 +721,11 @@ namespace DexComanda
                     printersettings.Collate = false;
 
                     Tables CrTables;
-                    if (iNomeImpressora!="")
+                    if (iNomeImpressora != "")
                     {
                         report.PrintOptions.PrinterName = iNomeImpressora;
                     }
-                    
+
                     report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
                     crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                     crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
@@ -709,13 +768,13 @@ namespace DexComanda
                             {
                                 //if (iNomeImpressora=="")
                                 //{
-                                    report.PrintToPrinter(1, false, 0, 0);
+                                report.PrintToPrinter(1, false, 0, 0);
                                 //}
                                 //else
                                 //{
-                                   
+
                                 //}
-                                
+
                             }
 
                         }
@@ -723,7 +782,7 @@ namespace DexComanda
                 }
                 finally
                 {
-                   // report.Dispose();
+                    // report.Dispose();
 
                 }
             }
@@ -1007,7 +1066,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus && Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai && Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday && Sessions.returnEmpresa.CNPJ != Bibliotecas.cGaleto && Sessions.returnEmpresa.CNPJ!=Bibliotecas.cCarangoVix)
+                    if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus && Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai && Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday && Sessions.returnEmpresa.CNPJ != Bibliotecas.cCarangoVix)
                     {
                         if (MessageBoxQuestion("O Caixa não esta aberto sistema funcionará somente no modo consulta, deseja abrir agora?"))
                         {
