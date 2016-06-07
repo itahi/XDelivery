@@ -21,6 +21,8 @@ namespace DexComanda
         public const string cElShaday = "22695578000142";
         public const string cCasteloPlus = "123456789";
         public const string cCarangoVix = "22481090000112";
+        public const string cSolicitarPermissao = "Seu usuário não tem permissão para Executar essa ação, deseja solicitar Autorização?";
+        public const string cUsuarioSemPermissao = "Seu usuário não tem permissão para Executar essa ação";
     }
 
 

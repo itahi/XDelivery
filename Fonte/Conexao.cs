@@ -1594,6 +1594,10 @@ namespace DexComanda
             {
                 command.Parameters.AddWithValue("@NumeroMesa", codigo);
             }
+             else if (spName == "spObterUsuarioPorCodigo")
+            {
+                command.Parameters.AddWithValue("@Codigo", codigo);
+            }
             else if (spName == "spObterHistoricoPorPessoa")
             {
                 command.Parameters.AddWithValue("@CodPessoa", codigo);

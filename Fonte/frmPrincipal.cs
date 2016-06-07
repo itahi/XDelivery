@@ -5,6 +5,7 @@ using DexComanda.Models;
 using DexComanda.Operações;
 using DexComanda.Operações.Alteracoes;
 using DexComanda.Operações.Financeiro;
+using DexComanda.Operações.Funções;
 using DexComanda.Relatorios;
 using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Relatorios.Gerenciais;
@@ -182,7 +183,107 @@ namespace DexComanda
                 MessageBox.Show(errobusca.Message, "Erro");
             }
         }
+        private void ExecutaCancelamento()
+        {
+            string NomeCliente = (this.pedidosGridView.CurrentRow.Cells["Nome Cliente"].Value.ToString());
+            int CodUser;
+            DateTime dtPedido;
 
+            if (pedidosGridView.SelectedRows.Count > 0)
+            {
+                if (MessageBox.Show("Deseja **CANCELAR** o  pedido do Cliente " + NomeCliente + "?", "Cancelamento de Pedido !!!", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
+                    cancelPedid = new CancelarPedido();
+                    int Codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+
+                    DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", Codigo);
+                    dtPedido = dsPedido.Tables[0].Rows[0].Field<DateTime>("RealizadoEm");
+                    DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
+
+                    if (Sessions.returnEmpresa.CNPJ == "13004606798")
+                    {
+                        DataSet dsItensPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsPedido", Codigo);
+
+                        for (int i = 0; i < dsItensPedido.Tables[0].Rows.Count; i++)
+                        {
+                            DataRow dRow = dsItensPedido.Tables[0].Rows[i];
+                            AtualizaEstoque atl = new AtualizaEstoque()
+                            {
+                                CodProduto = int.Parse(dRow.ItemArray.GetValue(2).ToString()),
+                                Quantidade = -decimal.Parse(dRow.ItemArray.GetValue(4).ToString()),
+                                DataAtualizacao = Convert.ToDateTime(dtPedido.ToShortDateString()) //dsItensPedido.Tables[0].Rows[i]
+
+                            };
+                            con.Update("spAtualizaEstoque", atl);
+                        }
+                    }
+
+                    CodPedidoWS = VerificaPedidoOnline(Codigo);
+
+                    if (CodPedidoWS > 0)
+                    {
+                        if (Utils.MessageBoxQuestion("Este é um pedido gerado/recebido na plataforma Online , tem certeza que deseja cancela-lo?"))
+                        {
+                            AlteraStatusPedido(CodPedidoWS, 6);
+                            // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
+                        }
+                    }
+
+
+                    cancelPedid.Codigo = Codigo;
+                    cancelPedid.RealizadoEm = DateTime.Now;
+
+                    string iCodMesa = dRowPedido.ItemArray.GetValue(9).ToString();
+
+                    if (ControlaMesas && iCodMesa != "0")
+                    {
+                        //   string NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
+                        Utils.AtualizaMesa(1, 1);
+                    }
+                    cancelPedid.status = "Cancelado";
+                    if (Sessions.returnConfig.RegistraCancelamentos)
+                    {
+                        frmHistoricoCancelamento frm = new frmHistoricoCancelamento();
+                        int CodPessoa;
+                        try
+                        {
+                            frm.ShowDialog();
+                            if (frm.DialogResult == DialogResult.OK)
+                            {
+                                HistoricoCancelamento Hist = new HistoricoCancelamento()
+                                {
+                                    CodMotivo = frm.CodMotivo,
+                                    CodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()),
+                                    Data = DateTime.Now,
+                                    Motivo = frm.ObsCancelamento
+                                };
+
+                                con.Insert("spAdicionaHistoricoCancelamento", Hist);
+                            }
+                        }
+
+                        finally
+                        {
+                            // dsPedido.Dispose();
+
+                        }
+
+
+                    }
+
+                    con.Update("spCancelarPedido", cancelPedid);
+                    Utils.ControlaEventos("CancPedido", this.Name);
+                    MessageBox.Show("Pedido Cancelado com sucesso.");
+
+                    //   Utils.PopulaGrid_Novo("Produto", parentWindow.produtosGridView, Sessions.SqlProduto);
+                    Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selecione um Pedido para **CANCELAR**");
+            }
+        }
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
@@ -556,12 +657,12 @@ namespace DexComanda
                 CancPedido.Click += CancelarPedidos;
                 FinalizarPed.Click += FinalizaCancelaPEdidos;
                 FinalizaSelecionados.Click += FinalizaTodos;
-                if (Sessions.retunrUsuario != null)
-                {
-                    FinalizaSelecionados.Enabled = Sessions.returnUsuario.FinalizaPedidoSN;
-                    FinalizarPed.Enabled = Sessions.retunrUsuario.FinalizaPedidoSN;
-                    CancPedido.Enabled = Sessions.retunrUsuario.CancelaPedidosSN;
-                }
+                //if (Sessions.retunrUsuario != null)
+                //{
+                //    FinalizaSelecionados.Enabled = Sessions.returnUsuario.FinalizaPedidoSN;
+                //    FinalizarPed.Enabled = Sessions.retunrUsuario.FinalizaPedidoSN;
+                //    CancPedido.Enabled = Sessions.retunrUsuario.CancelaPedidosSN;
+                //}
 
                 m.MenuItems.Add(CancPedido);
                 m.MenuItems.Add(FinalizarPed);
@@ -640,7 +741,7 @@ namespace DexComanda
             }
 
         }
-        private void FinalizaCancelaPEdidos(object sender, EventArgs e)
+        private void ExecutaFinalizacao()
         {
             try
             {
@@ -711,7 +812,31 @@ namespace DexComanda
                 MessageBox.Show("Não foi possivel selecionar o Pedido" + erro.Message);
             }
 
+        }
+        private void FinalizaCancelaPEdidos(object sender, EventArgs e)
+        {
 
+            if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "FinalizaPedidoSN"))
+            {
+                if (Utils.MessageBoxQuestion(Bibliotecas.cSolicitarPermissao))
+                {
+                    frmLiberação frm = new frmLiberação("FinalizaPedidoSN");
+                    //frm.ShowDialog();
+                    if (frm.Autorizacao)
+                    {
+                        ExecutaFinalizacao();
+                        frm.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show(Bibliotecas.cUsuarioSemPermissao);
+                    }
+                }
+            }
+            else
+            {
+                ExecutaFinalizacao();
+            }
         }
         private void InformaMotoboyPedido(int iCodPedido)
         {
@@ -784,109 +909,54 @@ namespace DexComanda
             }
 
         }
+        //private void CancelarPedidos(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+
+
+        //    }
+        //    catch (Exception ER)
+        //    {
+        //        MessageBox.Show("Não foi possivel **CANCELAR O PEDIDO**" + ER.Message);
+        //    }
+        //}
         private void CancelarPedidos(object sender, EventArgs e)
         {
             try
             {
-
-                string NomeCliente = (this.pedidosGridView.CurrentRow.Cells["Nome Cliente"].Value.ToString());
-                int CodUser;
-                DateTime dtPedido;
-
-                if (pedidosGridView.SelectedRows.Count > 0)
+                if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "CancelaPedidosSN"))
                 {
-                    cancelPedid = new CancelarPedido();
-                    if (Utils.MessageBoxQuestion("Deseja **CANCELAR** o  pedido do Cliente " + NomeCliente + "?"))
+                    if (Utils.MessageBoxQuestion(Bibliotecas.cSolicitarPermissao))
                     {
-                        int Codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
-
-                        DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", Codigo);
-                        dtPedido = dsPedido.Tables[0].Rows[0].Field<DateTime>("RealizadoEm");
-                        DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
-
-                        if (Sessions.returnEmpresa.CNPJ == "13004606798")
+                        frmLiberação frm = new frmLiberação("CancelaPedidosSN");
+                        //frm.ShowDialog();
+                        if (frm.Autorizacao)
                         {
-                            DataSet dsItensPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsPedido", Codigo);
-
-                            for (int i = 0; i < dsItensPedido.Tables[0].Rows.Count; i++)
-                            {
-                                DataRow dRow = dsItensPedido.Tables[0].Rows[i];
-                                AtualizaEstoque atl = new AtualizaEstoque()
-                                {
-                                    CodProduto = int.Parse(dRow.ItemArray.GetValue(2).ToString()),
-                                    Quantidade = -decimal.Parse(dRow.ItemArray.GetValue(4).ToString()),
-                                    DataAtualizacao = Convert.ToDateTime(dtPedido.ToShortDateString()) //dsItensPedido.Tables[0].Rows[i]
-
-                                };
-                                con.Update("spAtualizaEstoque", atl);
-                            }
+                            ExecutaCancelamento();
+                            frm.Close();
                         }
-
-                        CodPedidoWS = VerificaPedidoOnline(Codigo);
-
-                        if (CodPedidoWS > 0)
+                        else
                         {
-                            if (Utils.MessageBoxQuestion("Este é um pedido gerado/recebido na plataforma Online , tem certeza que deseja cancela-lo?"))
-                            {
-                                AlteraStatusPedido(CodPedidoWS, 6);
-                                // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
-                            }
+                            MessageBox.Show(Bibliotecas.cUsuarioSemPermissao);
                         }
-
-
-                        cancelPedid.Codigo = Codigo;
-                        cancelPedid.RealizadoEm = DateTime.Now;
-
-                        int iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
-
-                        if (ControlaMesas && iCodMesa != 0)
-                        {
-                            Utils.AtualizaMesa(iCodMesa, 1);
-                        }
-                        cancelPedid.status = "Cancelado";
-                        if (Sessions.returnConfig.RegistraCancelamentos)
-                        {
-                            frmHistoricoCancelamento frm = new frmHistoricoCancelamento();
-                            int CodPessoa;
-                            try
-                            {
-                                frm.ShowDialog();
-                                if (frm.DialogResult == DialogResult.OK)
-                                {
-                                    HistoricoCancelamento Hist = new HistoricoCancelamento()
-                                    {
-                                        CodMotivo = frm.CodMotivo,
-                                        CodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()),
-                                        Data = DateTime.Now,
-                                        Motivo = frm.ObsCancelamento
-                                    };
-
-                                    con.Insert("spAdicionaHistoricoCancelamento", Hist);
-                                }
-                            }
-
-                            finally
-                            {
-                                // dsPedido.Dispose();
-
-                            }
-
-
-                        }
-
-                        con.Update("spCancelarPedido", cancelPedid);
-                        Utils.ControlaEventos("CancPedido", this.Name);
-                        MessageBox.Show("Pedido Cancelado com sucesso.");
-
-                        //   Utils.PopulaGrid_Novo("Produto", parentWindow.produtosGridView, Sessions.SqlProduto);
-                        Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
+                        //if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "CancelaPedidosSN"))
+                        //{
+                        //    ExecutaCancelamento();
+                        //}
+                        //else
+                        //{
+                        //    MessageBox.Show(Bibliotecas.cUsuarioSemPermissao);
+                        //}
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Selecione um Pedido para **CANCELAR**");
+                    ExecutaCancelamento();
                 }
+                
             }
+
             catch (Exception ER)
             {
                 MessageBox.Show("Não foi possivel **CANCELAR O PEDIDO**" + ER.Message);

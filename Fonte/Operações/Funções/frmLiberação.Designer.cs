@@ -31,11 +31,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtUser = new System.Windows.Forms.TextBox();
-            this.txtSenha = new System.Windows.Forms.TextBox();
             this.btnAutorizar = new System.Windows.Forms.Button();
+            this.txtSenha = new System.Windows.Forms.TextBox();
+            this.txtUser = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -70,14 +70,30 @@
             this.panel2.Size = new System.Drawing.Size(293, 114);
             this.panel2.TabIndex = 1;
             // 
-            // label2
+            // btnAutorizar
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 26);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Usuario";
+            this.btnAutorizar.Location = new System.Drawing.Point(178, 42);
+            this.btnAutorizar.Name = "btnAutorizar";
+            this.btnAutorizar.Size = new System.Drawing.Size(75, 23);
+            this.btnAutorizar.TabIndex = 2;
+            this.btnAutorizar.Text = "Autorizar";
+            this.btnAutorizar.UseVisualStyleBackColor = true;
+            this.btnAutorizar.Click += new System.EventHandler(this.btnAutorizar_Click);
+            // 
+            // txtSenha
+            // 
+            this.txtSenha.Location = new System.Drawing.Point(62, 60);
+            this.txtSenha.Name = "txtSenha";
+            this.txtSenha.PasswordChar = '*';
+            this.txtSenha.Size = new System.Drawing.Size(100, 20);
+            this.txtSenha.TabIndex = 1;
+            // 
+            // txtUser
+            // 
+            this.txtUser.Location = new System.Drawing.Point(62, 26);
+            this.txtUser.Name = "txtUser";
+            this.txtUser.Size = new System.Drawing.Size(100, 20);
+            this.txtUser.TabIndex = 0;
             // 
             // label3
             // 
@@ -88,29 +104,14 @@
             this.label3.TabIndex = 1;
             this.label3.Text = "Senha:";
             // 
-            // txtUser
+            // label2
             // 
-            this.txtUser.Location = new System.Drawing.Point(62, 26);
-            this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(100, 20);
-            this.txtUser.TabIndex = 0;
-            // 
-            // txtSenha
-            // 
-            this.txtSenha.Location = new System.Drawing.Point(62, 60);
-            this.txtSenha.Name = "txtSenha";
-            this.txtSenha.PasswordChar = '*';
-            this.txtSenha.Size = new System.Drawing.Size(100, 20);
-            this.txtSenha.TabIndex = 1;
-            // 
-            // btnAutorizar
-            // 
-            this.btnAutorizar.Location = new System.Drawing.Point(178, 42);
-            this.btnAutorizar.Name = "btnAutorizar";
-            this.btnAutorizar.Size = new System.Drawing.Size(75, 23);
-            this.btnAutorizar.TabIndex = 2;
-            this.btnAutorizar.Text = "Autorizar";
-            this.btnAutorizar.UseVisualStyleBackColor = true;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(10, 26);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Usuario";
             // 
             // frmLiberação
             // 
@@ -125,7 +126,6 @@
             this.Name = "frmLiberação";
             this.Text = "[xSistemas] Autorização Extra";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmLiberação_KeyDown);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmLiberação_KeyPress);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

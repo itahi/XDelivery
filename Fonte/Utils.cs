@@ -90,7 +90,13 @@ namespace DexComanda
                     Conexao conexao = new Conexao();
                     string hashSenha = EncryptMd5(nomeUsuario, senha);
                     DataSet dsUsuario = conexao.LoginUsuario(nomeUsuario, hashSenha);
-                    if (hashSenha == dsUsuario.Tables[0].Rows[0].Field<string>("Senha").ToString())
+                    if (dsUsuario.Tables[0].Rows.Count==0)
+                    {
+                        MessageBox.Show("Usuário o senha incorretos");
+                        Logado = false;
+                        
+                    }
+                    else if (hashSenha == dsUsuario.Tables[0].Rows[0].Field<string>("Senha").ToString())
                     {
                         Sessions.returnUsuario = new Usuario()
                         {
@@ -125,13 +131,13 @@ namespace DexComanda
                     frmConfiguracoes frmConfiguracoes = new frmConfiguracoes();
                     frmConfiguracoes.ShowDialog();
                 }
-               
+
             }
             catch (Exception erro)
             {
                 MessageBox.Show(erro.Message);
             }
-            
+
             //conexao = new Conexao();
             //NomeEmpresa = Sessions.returnEmpresa.Nome;
             //DataSet usuarios = conexao.SelectAll("Usuario", "spObterUsuario");
@@ -190,8 +196,50 @@ namespace DexComanda
             //}
             return Logado;
         }
+        public static Usuario RetornaDadosUsuario(string iNome, string iSenha)
+        {
+            Conexao conexao = new Conexao();
+            string hashSenha = EncryptMd5(iNome, iSenha);
+            DataSet dsUsuario = conexao.LoginUsuario(iNome, hashSenha);
 
+            Sessions.returnUsuario = new Usuario()
+            {
+                Nome = iNome,
+                Senha = dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(2).ToString(),
+                Codigo = int.Parse(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(0).ToString()),
+                AcessaRelatoriosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(6).ToString()),
+                AdministradorSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(5).ToString()),
+                FinalizaPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(8).ToString()),
+                CancelaPedidosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(3).ToString()),
+                AlteraProdutosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(5).ToString()),
+                DescontoPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(7).ToString()),
+                DescontoMax = Convert.ToDouble(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(9).ToString()),
+                AbreFechaCaixaSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(12).ToString()),
+                EditaPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(10).ToString()),
+                VisualizaDadosClienteSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(11).ToString()),
+               // CaixaLogado = iNumCaixa
 
+            };
+
+            return Sessions.retunrUsuario;
+        }
+        public static Boolean ValidaPermissao(int iCodUser, string iNomePermissao)
+        {
+            Boolean retur = false;
+            Conexao con = new Conexao();
+            DataSet ds = con.SelectRegistroPorCodigo("Usuario", "spObterUsuarioPorCodigo", iCodUser, true);
+            for (int i = 0; i < ds.Tables[0].Columns.Count; i++)
+            {
+                if (iNomePermissao == ds.Tables[0].Columns[i].ColumnName)
+                {
+                    retur = Boolean.Parse(ds.Tables[0].Rows[0].ItemArray.GetValue(i).ToString());
+                    break;
+                }
+            }
+
+            return retur;
+
+        }
         public static void HistoricoCancelamentos(int iCodPessoa)
         {
             int intQuantidadeCancelamento = conexao.SelectRegistroPorCodigo("HistoricoCancelamentos", "spObterCancelamentoPorPessoa", iCodPessoa).Tables[0].Rows.Count;

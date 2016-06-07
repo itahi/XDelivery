@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DexComanda.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,27 +13,45 @@ namespace DexComanda.Operações.Funções
 {
     public partial class frmLiberação : Form
     {
+        private string PermissaoConsultada;
+        public Boolean Autorizacao;
+        public int CodUser;
         public frmLiberação()
         {
             InitializeComponent();
+            Conexao con;
         }
 
-        private void frmLiberação_KeyPress(object sender, KeyPressEventArgs e)
+        public frmLiberação(string iNOmePermissao)
         {
+            InitializeComponent();
+            PermissaoConsultada = iNOmePermissao;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.ShowDialog();
+        }
+        private void btnAutorizar_Click(object sender, EventArgs e)
+        {
+            if (Utils.EfetuarLogin(txtUser.Text,txtSenha.Text,false,0))
+            {
+                Usuario user = new Usuario();
+                user = Utils.RetornaDadosUsuario(txtUser.Text, txtSenha.Text);
+                CodUser = user.Codigo;
+                Autorizacao = Utils.ValidaPermissao(user.Codigo, PermissaoConsultada);
+                this.Hide();
+            }
 
-           
         }
 
         private void frmLiberação_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                Autorizacao();
+                btnAutorizar_Click(sender, e);
             }
-        }
-        private void Autorizacao()
-        {
-            Utils.EfetuarLogin(txtUser.Text, txtSenha.Text, false, 1);
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
         }
     }
 }

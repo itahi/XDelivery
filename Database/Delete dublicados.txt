@@ -1,0 +1,1 @@
+DELETE a FROM Pessoa AS a, Pessoa AS b WHERE a.Telefone=b.Telefone AND a.Codigo < b.Codigo
