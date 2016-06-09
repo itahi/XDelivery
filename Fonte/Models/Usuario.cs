@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DexComanda.Models
 {
-    public class Usuario
+    public class Usuario 
     {
         public int Codigo { get; set; }
         public string Nome { get; set; }
@@ -22,6 +22,8 @@ namespace DexComanda.Models
         public bool EditaPedidoSN { get; set; }
         public bool VisualizaDadosClienteSN { get; set; }
         public bool AbreFechaCaixaSN { get; set; }
+        public bool AlteraDadosClienteSN { get; set; }
+        
 
     }
 }

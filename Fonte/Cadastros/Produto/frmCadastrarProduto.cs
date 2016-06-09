@@ -90,7 +90,7 @@ namespace DexComanda
                 txtcaminhoImage.Text = iUrlImagem;
                 dtInicio.Value = idtInicioPromo;
                 dtFim.Value = idtFimPromo;
-                this.btnDoProduto.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
+           //     this.btnDoProduto.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
                 this.btnDoProduto.Text = "Alterar [F12]";
                 this.btnDoProduto.Click -= AdicionarProduto;
                 this.btnDoProduto.Click += AlterarProduto;
@@ -223,7 +223,6 @@ namespace DexComanda
         {
             con = new Conexao();
 
-            
             btnEditar.Enabled = codigoProdutoParaAlterar != 0;
             DiasSelecionados = new List<string>();
             tabPage2.IsAccessible = btnDoProduto.Text == "Alterar [F12]";
@@ -233,15 +232,6 @@ namespace DexComanda
 
             if (produto != null)
             {
-                if (Sessions.retunrUsuario != null)
-                {
-                    this.btnDoProduto.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
-                }
-                else
-                {
-                    this.btnDoProduto.Enabled = true;
-                }
-
                 this.btnDoProduto.Text = "Alterar [F12]";
                 this.btnDoProduto.Click -= AdicionarProduto;
                 this.btnDoProduto.Click += AlterarProduto;
@@ -388,6 +378,10 @@ namespace DexComanda
         {
             try
             {
+                if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AlteraProdutosSN"))
+                {
+                    return;
+                }
                 if (nomeProdutoTextBox.Text.Trim() == "" || precoProdutoTextBox.Text.Trim() == "" || cbxGrupoProduto.Text.Trim() == "")
                 {
                     MessageBox.Show("Campos obrigátórios não preenchidos");

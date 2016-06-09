@@ -63,11 +63,11 @@ namespace DexComanda
         private int iCaixaAberto;
         private PrintDocument pd;
         // Permissões de Usuarios
-        //private bool UserAdmin = Sessions.returnUsuario.AdministradorSN;
-        //private bool UserCancelaPedido = Sessions.returnUsuario.CancelaPedidosSN;
-        //private int UserLogado = Sessions.returnUsuario.Codigo;
-        //private bool UserAlteraProdutos = Sessions.returnUsuario.AlteraProdutosSN;
-        //private bool UserDescPedido = Sessions.returnUsuario.DescontoPedidoSN;
+        //private bool UserAdmin = Sessions.retunrUsuario.AdministradorSN;
+        //private bool UserCancelaPedido = Sessions.retunrUsuario.CancelaPedidosSN;
+        //private int UserLogado = Sessions.retunrUsuario.Codigo;
+        //private bool UserAlteraProdutos = Sessions.retunrUsuario.AlteraProdutosSN;
+        //private bool UserDescPedido = Sessions.retunrUsuario.DescontoPedidoSN;
 
 
         public Main()
@@ -124,11 +124,11 @@ namespace DexComanda
         {
             chkGerenciaImpressao.Checked = Utils.RetornaNomePc() == Sessions.returnEmpresa.Servidor;
 
-            if (Sessions.returnUsuario != null)
+            if (Sessions.retunrUsuario != null)
             {
                 con = new Conexao();
 
-                int iNumeroCaixa = Sessions.returnUsuario.CaixaLogado;
+                int iNumeroCaixa = Sessions.retunrUsuario.CaixaLogado;
                 iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now, iNumeroCaixa).Tables["Caixa"].Rows.Count;
                 if (Sessions.returnEmpresa.CNPJ == "22695578000142" || Sessions.returnEmpresa.CNPJ == "22678091000151" || Sessions.returnEmpresa.CNPJ == "18907495000100")
                 {
@@ -170,7 +170,7 @@ namespace DexComanda
             }
 
             // Menu Visivel
-            //relatórioToolStripMenuItem.Enabled = Sessions.returnUsuario.AcessaRelatoriosSN;
+            //relatórioToolStripMenuItem.Enabled = Sessions.retunrUsuario.AcessaRelatoriosSN;
             entregadorToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
             envioDeSMSToolStripMenuItem.Enabled = Sessions.returnConfig.EnviaSMS;
             alterarSenhaToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
@@ -178,9 +178,9 @@ namespace DexComanda
             entregasPorMotoboyToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
            // entregadorToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
 
-            if (Sessions.returnUsuario != null)
+            if (Sessions.retunrUsuario != null)
             {
-                this.txtUsuarioLogado.Text = Sessions.returnUsuario.Nome;
+                this.txtUsuarioLogado.Text = Sessions.retunrUsuario.Nome;
                 usuáriosToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
                 relatórioToolStripMenuItem.Enabled = Sessions.retunrUsuario.AcessaRelatoriosSN;
                 configuraçãoToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
@@ -1657,7 +1657,7 @@ namespace DexComanda
                         PedidoONline.MenuItems.Add(StatusNaCozinha);
                         PedidoONline.MenuItems.Add(StatusNaEntrega);
                         PedidoONline.MenuItems.Add(StatusCancelado);
-                        StatusCancelado.Enabled = Sessions.returnUsuario.CancelaPedidosSN;
+                        StatusCancelado.Enabled = Sessions.retunrUsuario.CancelaPedidosSN;
                         StatusNaCozinha.Click += PedidoNaCozinha;
                         StatusNaEntrega.Click += PedidoNaEntrega;
                     }
@@ -1669,7 +1669,7 @@ namespace DexComanda
                 FinalizaSelecionados.Click += FinalizaTodos;
                 //if (Sessions.retunrUsuario != null)
                 //{
-                //    FinalizaSelecionados.Enabled = Sessions.returnUsuario.FinalizaPedidoSN;
+                //    FinalizaSelecionados.Enabled = Sessions.retunrUsuario.FinalizaPedidoSN;
                 //    FinalizarPed.Enabled = Sessions.retunrUsuario.FinalizaPedidoSN;
                 //    CancPedido.Enabled = Sessions.retunrUsuario.CancelaPedidosSN;
                 //}

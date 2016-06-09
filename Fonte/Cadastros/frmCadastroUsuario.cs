@@ -51,7 +51,11 @@ namespace DexComanda
                     AcessaRelatoriosSN = chkAcessaRelat.Checked,
                     FinalizaPedidoSN = chkFechaPedido.Checked,
                     DescontoPedidoSN = chkDescSN.Checked,
-                    DescontoMax = double.Parse(txtDesconto.Text)
+                    DescontoMax = double.Parse(txtDesconto.Text),
+                    AbreFechaCaixaSN = chkAbreCaixa.Checked,
+                    AlteraDadosClienteSN = chkEditaCliente.Checked,
+                    EditaPedidoSN = chkAlteraPedido.Checked,
+                    VisualizaDadosClienteSN = chkAbreCliente.Checked
                 };
 
 
@@ -90,6 +94,12 @@ namespace DexComanda
                 chkDescSN.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[8].Value.ToString());
                 txtDesconto.Text = usuariosGridView.SelectedRows[rowIndex].Cells[9].Value.ToString();
 
+                chkAlteraPedido.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[10].Value.ToString());
+                chkAbreCliente.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[11].Value.ToString());
+                chkAbreCaixa.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[12].Value.ToString());
+                chkEditaCliente.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[13].Value.ToString());
+
+
                 btnSalvar.Text = " Salvar ";
                 btnSalvar.Click += new System.EventHandler(this.SalvarEdicao);
                 btnSalvar.Click -= new System.EventHandler(this.AdicionarSalvarUsuario);
@@ -126,7 +136,11 @@ namespace DexComanda
                     AcessaRelatoriosSN = chkAcessaRelat.Checked,
                     FinalizaPedidoSN = chkFechaPedido.Checked,
                     DescontoPedidoSN = chkDescSN.Checked,
-                    DescontoMax = double.Parse(txtDesconto.Text)
+                    DescontoMax = double.Parse(txtDesconto.Text),
+                    AbreFechaCaixaSN = chkAbreCaixa.Checked,
+                    AlteraDadosClienteSN = chkEditaCliente.Checked,
+                    EditaPedidoSN = chkAlteraPedido.Checked,
+                    VisualizaDadosClienteSN = chkAbreCliente.Checked
                 };
 
                 con.Update("spAlterarUsuario", user);

@@ -10,7 +10,7 @@ namespace DexComanda
     public class Sessions
     {
         public static Configuracao returnConfig;
-        public static Usuario returnUsuario;
+      //  public static Usuario retunrUsuario;
         public static Empresa returnEmpresa;
         public static Pessoa returnPessoa;
         public static Produto returnProduto;

@@ -45,6 +45,10 @@
             this.txtDesconto = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkAbreCliente = new System.Windows.Forms.CheckBox();
+            this.chkAbreCaixa = new System.Windows.Forms.CheckBox();
+            this.chkEditaCliente = new System.Windows.Forms.CheckBox();
+            this.chkAlteraPedido = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.usuariosGridView)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -113,12 +117,12 @@
             this.usuariosGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.usuariosGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.usuariosGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.usuariosGridView.Location = new System.Drawing.Point(5, 142);
+            this.usuariosGridView.Location = new System.Drawing.Point(5, 163);
             this.usuariosGridView.MultiSelect = false;
             this.usuariosGridView.Name = "usuariosGridView";
             this.usuariosGridView.ReadOnly = true;
             this.usuariosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.usuariosGridView.Size = new System.Drawing.Size(399, 154);
+            this.usuariosGridView.Size = new System.Drawing.Size(399, 133);
             this.usuariosGridView.TabIndex = 7;
             // 
             // chkCancelaPedidos
@@ -209,11 +213,55 @@
             this.panel1.Size = new System.Drawing.Size(218, 35);
             this.panel1.TabIndex = 16;
             // 
+            // chkAbreCliente
+            // 
+            this.chkAbreCliente.AutoSize = true;
+            this.chkAbreCliente.Location = new System.Drawing.Point(187, 109);
+            this.chkAbreCliente.Name = "chkAbreCliente";
+            this.chkAbreCliente.Size = new System.Drawing.Size(83, 17);
+            this.chkAbreCliente.TabIndex = 20;
+            this.chkAbreCliente.Text = "Abre Cliente";
+            this.chkAbreCliente.UseVisualStyleBackColor = true;
+            // 
+            // chkAbreCaixa
+            // 
+            this.chkAbreCaixa.AutoSize = true;
+            this.chkAbreCaixa.Location = new System.Drawing.Point(285, 111);
+            this.chkAbreCaixa.Name = "chkAbreCaixa";
+            this.chkAbreCaixa.Size = new System.Drawing.Size(112, 17);
+            this.chkAbreCaixa.TabIndex = 19;
+            this.chkAbreCaixa.Text = "Abre/Fecha Caixa";
+            this.chkAbreCaixa.UseVisualStyleBackColor = true;
+            // 
+            // chkEditaCliente
+            // 
+            this.chkEditaCliente.AutoSize = true;
+            this.chkEditaCliente.Location = new System.Drawing.Point(187, 132);
+            this.chkEditaCliente.Name = "chkEditaCliente";
+            this.chkEditaCliente.Size = new System.Drawing.Size(85, 17);
+            this.chkEditaCliente.TabIndex = 18;
+            this.chkEditaCliente.Text = "Edita Cliente";
+            this.chkEditaCliente.UseVisualStyleBackColor = true;
+            // 
+            // chkAlteraPedido
+            // 
+            this.chkAlteraPedido.AutoSize = true;
+            this.chkAlteraPedido.Location = new System.Drawing.Point(287, 89);
+            this.chkAlteraPedido.Name = "chkAlteraPedido";
+            this.chkAlteraPedido.Size = new System.Drawing.Size(89, 17);
+            this.chkAlteraPedido.TabIndex = 17;
+            this.chkAlteraPedido.Text = "Altera Pedido";
+            this.chkAlteraPedido.UseVisualStyleBackColor = true;
+            // 
             // frmCadastroUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(416, 303);
+            this.Controls.Add(this.chkAbreCliente);
+            this.Controls.Add(this.chkAbreCaixa);
+            this.Controls.Add(this.chkEditaCliente);
+            this.Controls.Add(this.chkAlteraPedido);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.chkFechaPedido);
             this.Controls.Add(this.chkAdministrador);
@@ -259,5 +307,9 @@
         private System.Windows.Forms.TextBox txtDesconto;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.CheckBox chkAbreCliente;
+        private System.Windows.Forms.CheckBox chkAbreCaixa;
+        private System.Windows.Forms.CheckBox chkEditaCliente;
+        private System.Windows.Forms.CheckBox chkAlteraPedido;
     }
 }

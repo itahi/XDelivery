@@ -15,6 +15,7 @@ namespace DexComanda.Operações.Funções
     {
         private string PermissaoConsultada;
         public Boolean Autorizacao;
+        private Usuario user;
         public int CodUser;
         public frmLiberação()
         {
@@ -26,20 +27,16 @@ namespace DexComanda.Operações.Funções
         {
             InitializeComponent();
             PermissaoConsultada = iNOmePermissao;
+
             this.StartPosition = FormStartPosition.CenterParent;
             this.ShowDialog();
         }
         private void btnAutorizar_Click(object sender, EventArgs e)
         {
-            if (Utils.EfetuarLogin(txtUser.Text,txtSenha.Text,false,0))
-            {
-                Usuario user = new Usuario();
-                user = Utils.RetornaDadosUsuario(txtUser.Text, txtSenha.Text);
-                CodUser = user.Codigo;
-                Autorizacao = Utils.ValidaPermissao(user.Codigo, PermissaoConsultada);
-                this.Hide();
-            }
-
+            user = Utils.RetornaDadosUsuario(txtUser.Text, txtSenha.Text);
+            CodUser = user.Codigo;
+            Autorizacao = Utils.ValidaPermissao(user.Codigo, PermissaoConsultada);
+            this.Hide();
         }
 
         private void frmLiberação_KeyDown(object sender, KeyEventArgs e)

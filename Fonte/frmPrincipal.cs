@@ -288,7 +288,7 @@ namespace DexComanda
         {
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
 
-            int iNumeroCaixa = Sessions.returnUsuario.CaixaLogado;
+            int iNumeroCaixa = Sessions.retunrUsuario.CaixaLogado;
             iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now, iNumeroCaixa).Tables["Caixa"].Rows.Count;
             if (iCaixaAberto > 0)
             {
@@ -309,9 +309,9 @@ namespace DexComanda
         }
         private void MontaMenu() // Monta o menu de opções
         {
-            if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus && 
-                Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai && 
-                Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday && 
+            if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus &&
+                Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai &&
+                Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday &&
                 Sessions.returnEmpresa.CNPJ != Bibliotecas.cCarangoVix)
             {
                 aberturaCaixaToolStripMenuItem.Enabled = true;
@@ -319,7 +319,7 @@ namespace DexComanda
             }
 
             // Menu Visivel
-            //relatórioToolStripMenuItem.Enabled = Sessions.returnUsuario.AcessaRelatoriosSN;
+            //relatórioToolStripMenuItem.Enabled = Sessions.retunrUsuario.AcessaRelatoriosSN;
             entregadorToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
             envioDeSMSToolStripMenuItem.Enabled = Sessions.returnConfig.EnviaSMS;
             alterarSenhaToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
@@ -328,8 +328,8 @@ namespace DexComanda
             // entregadorToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
 
 
-            this.txtUsuarioLogado.Text = Sessions.returnUsuario.Nome;
-            usuáriosToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
+            this.txtUsuarioLogado.Text = Sessions.retunrUsuario.Nome;
+            //usuáriosToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
             relatórioToolStripMenuItem.Enabled = Sessions.retunrUsuario.AcessaRelatoriosSN;
             configuraçãoToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
             usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
@@ -368,7 +368,7 @@ namespace DexComanda
                 }
 
             }
-            
+
 
         }
 
@@ -645,7 +645,7 @@ namespace DexComanda
                     PedidoONline.MenuItems.Add(StatusNaCozinha);
                     PedidoONline.MenuItems.Add(StatusNaEntrega);
                     PedidoONline.MenuItems.Add(StatusCancelado);
-                    StatusCancelado.Enabled = Sessions.returnUsuario.CancelaPedidosSN;
+                    StatusCancelado.Enabled = Sessions.retunrUsuario.CancelaPedidosSN;
                     StatusNaCozinha.Click += PedidoNaCozinha;
                     StatusNaEntrega.Click += PedidoNaEntrega;
                     //}
@@ -659,7 +659,7 @@ namespace DexComanda
                 FinalizaSelecionados.Click += FinalizaTodos;
                 //if (Sessions.retunrUsuario != null)
                 //{
-                //    FinalizaSelecionados.Enabled = Sessions.returnUsuario.FinalizaPedidoSN;
+                //    FinalizaSelecionados.Enabled = Sessions.retunrUsuario.FinalizaPedidoSN;
                 //    FinalizarPed.Enabled = Sessions.retunrUsuario.FinalizaPedidoSN;
                 //    CancPedido.Enabled = Sessions.retunrUsuario.CancelaPedidosSN;
                 //}
@@ -925,36 +925,11 @@ namespace DexComanda
         {
             try
             {
-                if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "CancelaPedidosSN"))
-                {
-                    if (Utils.MessageBoxQuestion(Bibliotecas.cSolicitarPermissao))
-                    {
-                        frmLiberação frm = new frmLiberação("CancelaPedidosSN");
-                        //frm.ShowDialog();
-                        if (frm.Autorizacao)
-                        {
-                            ExecutaCancelamento();
-                            frm.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show(Bibliotecas.cUsuarioSemPermissao);
-                        }
-                        //if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "CancelaPedidosSN"))
-                        //{
-                        //    ExecutaCancelamento();
-                        //}
-                        //else
-                        //{
-                        //    MessageBox.Show(Bibliotecas.cUsuarioSemPermissao);
-                        //}
-                    }
-                }
-                else
+                if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "CancelaPedidosSN"))
                 {
                     ExecutaCancelamento();
                 }
-                
+
             }
 
             catch (Exception ER)
@@ -1153,20 +1128,21 @@ namespace DexComanda
 
         private void EditarCliente(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (clientesGridView.SelectedCells.Count > 0)
+            if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "VisualizaDadosClienteSN"))
             {
+                if (clientesGridView.SelectedCells.Count > 0)
+                {
+                    DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", int.Parse(clientesGridView.SelectedCells[0].Value.ToString()));
+                    DataRow dRowPessoa = dsPessoa.Tables["Pessoa"].Rows[0];
 
-                DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", int.Parse(clientesGridView.SelectedCells[0].Value.ToString()));
-                DataRow dRowPessoa = dsPessoa.Tables["Pessoa"].Rows[0];
-
-                frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
-                                                                  dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
-                                                                  , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
-                                                                  , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString());
+                    frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
+                                                                      dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
+                                                                      , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
+                                                                      , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString());
 
 
-                Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
-
+                    Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
+                }
 
             }
         }
@@ -1249,13 +1225,13 @@ namespace DexComanda
             string strServidor = Sessions.returnEmpresa.Servidor;
             string strBanco = Sessions.returnEmpresa.Banco;
             string strCaminhoBkp = Sessions.returnEmpresa.CaminhoBackup;
-        // VerificaRegistroASincronizar();
+            // VerificaRegistroASincronizar();
             con.BackupBanco(strServidor, strBanco, strCaminhoBkp);
 
             this.Dispose();
             con.Close();
             Utils.Kill();
-            
+
         }
 
         private void frmPrincipal_KeyDown(object sender, KeyEventArgs e)
@@ -1274,7 +1250,7 @@ namespace DexComanda
                 ImpressaRapida();
             }
             else
-            if (produtosGridView.SelectedRows.Count>0 && e.KeyCode == Keys.Enter)
+            if (produtosGridView.SelectedRows.Count > 0 && e.KeyCode == Keys.Enter)
             {
                 CarregaProduto(int.Parse(produtosGridView.SelectedCells[0].Value.ToString()));
             }
@@ -1336,8 +1312,12 @@ namespace DexComanda
 
         private void usuáriosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmCadastroUsuario frm = new frmCadastroUsuario();
-            frm.ShowDialog();
+            if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AdministradorSN"))
+            {
+                frmCadastroUsuario frm = new frmCadastroUsuario();
+                frm.ShowDialog();
+            }
+
         }
 
         private void entregadorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1512,7 +1492,7 @@ namespace DexComanda
         {
             Utils.SoPermiteNumeros(e);
         }
-        private void ImpressaoAutomatica(int iCodPedido, string iNumMesa, int iCodGrupo,string iNomeImpressora)
+        private void ImpressaoAutomatica(int iCodPedido, string iNumMesa, int iCodGrupo, string iNomeImpressora)
         {
             try
             {
@@ -1645,7 +1625,7 @@ namespace DexComanda
                 if (dsItemsNaoImpresso.Tables[0].Rows.Count > 0)
                 {
                     DataRow dRowPedido = dsItemsNaoImpresso.Tables[0].Rows[0];
-                    
+
                     int CodPedido = int.Parse(dRowPedido.ItemArray.GetValue(0).ToString());
                     int CodGrupo = int.Parse(dRowPedido.ItemArray.GetValue(17).ToString());
                     string iNomeImpressora = dRowPedido.ItemArray.GetValue(18).ToString();
@@ -1654,7 +1634,7 @@ namespace DexComanda
                     Boolean iMesa = dRowPedido.ItemArray.GetValue(10).ToString() != "0";
                     if (iMesa && chkGerenciaImpressao.Checked)
                     {
-                        ImpressaoAutomatica(CodPedido, numeroMesa, CodGrupo,iNomeImpressora);
+                        ImpressaoAutomatica(CodPedido, numeroMesa, CodGrupo, iNomeImpressora);
                     }
                 }
 
@@ -1712,6 +1692,17 @@ namespace DexComanda
         {
             frmAlteraSenha frm = new frmAlteraSenha();
             frm.Show();
+        }
+
+        private void relatórioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        //    relatórioToolStripMenuItem.Enabled = Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AcessaRelatoriosSN");
+           
+        }
+
+        private void relatórioToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
+        {
+         //   relatórioToolStripMenuItem = Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AcessaRelatoriosSN");
         }
     }
 }

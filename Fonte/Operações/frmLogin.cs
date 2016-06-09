@@ -46,11 +46,10 @@ namespace DexComanda
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-
             if (cbxCaixas.Text != "")
             {
                 int iNumeroCaixa = int.Parse(cbxCaixas.Text);
-                if (Utils.EfetuarLogin(this.txtUsuario.Text.ToString(), this.txtSenha.Text.ToString(), true, iNumeroCaixa))
+                if (Utils.EfetuarLogin(this.txtUsuario.Text.ToString(), this.txtSenha.Text.ToString(), true, iNumeroCaixa,true))
                 {
                     if (Utils.CaixaAberto(DateTime.Now,iNumeroCaixa))
                     {

@@ -343,6 +343,8 @@
             this.relatórioToolStripMenuItem.Name = "relatórioToolStripMenuItem";
             this.relatórioToolStripMenuItem.Size = new System.Drawing.Size(85, 25);
             this.relatórioToolStripMenuItem.Text = "Relatório";
+            this.relatórioToolStripMenuItem.DropDownOpened += new System.EventHandler(this.relatórioToolStripMenuItem_DropDownOpened);
+            this.relatórioToolStripMenuItem.Click += new System.EventHandler(this.relatórioToolStripMenuItem_Click);
             // 
             // porPessoaToolStripMenuItem
             // 

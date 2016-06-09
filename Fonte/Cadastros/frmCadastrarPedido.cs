@@ -179,10 +179,10 @@ namespace DexComanda
         public void frmCadastrarPedido_Load(object sender, EventArgs e)
         {
 
-            if (Sessions.returnUsuario != null)
+            if (Sessions.retunrUsuario != null)
             {
                 // Define se o Usuario pode ou não dar Desconto
-                txtDesconto.Enabled = Sessions.returnUsuario.DescontoPedidoSN;
+                txtDesconto.Enabled = Sessions.retunrUsuario.DescontoPedidoSN;
             }
 
             if (gNUmeroMesa == "")
@@ -226,6 +226,7 @@ namespace DexComanda
 
             if (codPedido != 0 || PedidoRepetio)
             {
+               
                 ConsultaStatusPedido(codPedido);
                 if (!PedidoRepetio)
                 {
@@ -750,6 +751,10 @@ namespace DexComanda
 
                         if (codPedido != 0)
                         {
+                            if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "EditaPedidoSN"))
+                            {
+                                return;
+                            }
                             if (this.txtQuantidade.Text == "" || this.txtPrecoUnitario.Text == "" && this.txtPrecoTotal.Text == "")
                             {
                                 MessageBox.Show("Informe a Quantidade.");
@@ -898,10 +903,10 @@ namespace DexComanda
                             }
 
                             // Validar o Desconto Máximo Por Usuario
-                            if (Sessions.returnUsuario != null)
+                            if (Sessions.retunrUsuario != null)
                             {
-                                bool PermiteDesconto = Sessions.returnUsuario.DescontoPedidoSN;
-                                double DescMAxPermitido = Sessions.returnUsuario.DescontoMax;
+                                bool PermiteDesconto = Sessions.retunrUsuario.DescontoPedidoSN;
+                                double DescMAxPermitido = Sessions.retunrUsuario.DescontoMax;
                                 double TotalPedido = double.Parse(lbTotal.Text.Replace("R$", ""));
 
                                 if (txtDesconto.Text != "" && PermiteDesconto)
@@ -1116,6 +1121,10 @@ namespace DexComanda
         }
         private void AlterarItem(object sender, EventArgs e)
         {
+            if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "EditaPedidoSN"))
+            {
+                return;
+            }
             ValorTotal = 0;
             ValorTroco = 0;
             if (radioButton1.Visible && !radioButton1.Checked && !radioButton2.Checked && !radioButton3.Checked
@@ -1234,6 +1243,7 @@ namespace DexComanda
         }
         private void gridViewItemsPedido_MouseClick(object sender, MouseEventArgs e)
         {
+           
             DataGridView dgv = sender as DataGridView;
             if (e.Button == MouseButtons.Right)
             {
@@ -1252,6 +1262,10 @@ namespace DexComanda
         {
             //   if (ValidaTroco())
             //{
+            if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "EditaPedidoSN"))
+            {
+                return;
+            }
             ValorTotal = 0;
             ValorTroco = 0;
             if (radioButton1.Visible && !radioButton1.Checked && !radioButton2.Checked && !radioButton3.Checked
@@ -1374,6 +1388,10 @@ namespace DexComanda
         {
             try
             {
+                if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "EditaPedidoSN"))
+                {
+                    return;
+                }
                 if (gridViewItemsPedido.SelectedRows.Count > 0)
                 {
                     string iNomeProduto = gridViewItemsPedido.Rows[rowIndex].Cells["Nome do Produto"].Value.ToString();
@@ -3725,14 +3743,26 @@ namespace DexComanda
 
         private void AtualizarCadastro(object sender, EventArgs e)
         {
-            DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
-            DataRow dRowPessoa = dsPessoa.Tables["Pessoa"].Rows[0];
+            try
+            {
+                if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "VisualizaDadosClienteSN"))
+                {
 
-            frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
-                                                              dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
-                                                              , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
-                                                              , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString());
-            //GetFocus(e);
+
+                    DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
+                    DataRow dRowPessoa = dsPessoa.Tables["Pessoa"].Rows[0];
+
+                    frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
+                                                                      dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
+                                                                      , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
+                                                                  , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString());
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message + erro.InnerException);
+            }
+           
         }
 
         private void txtDesconto_KeyUp(object sender, KeyEventArgs e)
@@ -3768,6 +3798,7 @@ namespace DexComanda
         {
             try
             {
+              
                 if (gridViewItemsPedido.SelectedRows.Count > 0)
                 {
 
@@ -3796,7 +3827,7 @@ namespace DexComanda
                         this.cbxMeiaPizza.Checked = false;
                         this.cbxSabor.Enabled = false;
                         this.cbxSabor.Text = "";
-                        this.cbxProdutosGrid.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
+                        this.cbxProdutosGrid.Text = gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
                     }
 
                     codigoItemParaAlterar = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells["CodProduto"].Value.ToString());

@@ -41,6 +41,7 @@ using DexComanda.Operações;
 using Microsoft.VisualBasic;
 using DexComanda.Models.WS;
 using Newtonsoft.Json;
+using DexComanda.Operações.Funções;
 
 namespace DexComanda
 {
@@ -70,7 +71,7 @@ namespace DexComanda
         public static Boolean bMult;
         private static string strProxImpressora = "";
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
-        public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1)
+        public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1,Boolean iAlterarUserLogado=false)
         {
 
             try
@@ -98,25 +99,31 @@ namespace DexComanda
                     }
                     else if (hashSenha == dsUsuario.Tables[0].Rows[0].Field<string>("Senha").ToString())
                     {
-                        Sessions.returnUsuario = new Usuario()
+                        if (iAlterarUserLogado)
                         {
-                            Nome = nomeUsuario,
-                            Senha = dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(2).ToString(),
-                            Codigo = int.Parse(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(0).ToString()),
-                            AcessaRelatoriosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(6).ToString()),
-                            AdministradorSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(5).ToString()),
-                            FinalizaPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(8).ToString()),
-                            CancelaPedidosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(3).ToString()),
-                            AlteraProdutosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(5).ToString()),
-                            DescontoPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(7).ToString()),
-                            DescontoMax = Convert.ToDouble(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(9).ToString()),
-                            AbreFechaCaixaSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(12).ToString()),
-                            EditaPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(10).ToString()),
-                            VisualizaDadosClienteSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(11).ToString()),
-                            CaixaLogado = iNumCaixa
 
-                        };
-                        Sessions.retunrUsuario = Sessions.returnUsuario;
+
+                            Sessions.retunrUsuario = new Usuario()
+                            {
+                                Nome = nomeUsuario,
+                                Senha = dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(2).ToString(),
+                                Codigo = int.Parse(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(0).ToString()),
+                                AcessaRelatoriosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(6).ToString()),
+                                AdministradorSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(5).ToString()),
+                                FinalizaPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(8).ToString()),
+                                CancelaPedidosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(3).ToString()),
+                                AlteraProdutosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(5).ToString()),
+                                DescontoPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(7).ToString()),
+                                DescontoMax = Convert.ToDouble(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(9).ToString()),
+                                AbreFechaCaixaSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(12).ToString()),
+                                EditaPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(10).ToString()),
+                                VisualizaDadosClienteSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(11).ToString()),
+                                AlteraDadosClienteSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(12).ToString()),
+                                CaixaLogado = iNumCaixa
+
+                            };
+                            Sessions.retunrUsuario = Sessions.retunrUsuario;
+                        }
                         Logado = true;
                     }
                     else
@@ -143,7 +150,7 @@ namespace DexComanda
             //DataSet usuarios = conexao.SelectAll("Usuario", "spObterUsuario");
 
             //DataView dv = usuarios.Tables[0].DefaultView;
-            ////  Sessions.returnUsuario = dv; 
+            ////  Sessions.retunrUsuario = dv; 
             //string query = "Nome = '" + nomeUsuario + "' AND Senha = '" + hashSenha + "'";
 
             //dv.RowFilter = query;
@@ -156,7 +163,7 @@ namespace DexComanda
 
             //        if (_nome.Equals(nomeUsuario) && _senha.Equals(hashSenha))
             //        {
-            //            Sessions.returnUsuario = new Usuario()
+            //            Sessions.retunrUsuario = new Usuario()
             //            {
             //                Nome = _nome,
             //                Senha = _senha,
@@ -171,7 +178,7 @@ namespace DexComanda
             //                CaixaLogado = iNumCaixa
             //            };
 
-            //            Sessions.retunrUsuario = Sessions.returnUsuario;
+            //            Sessions.retunrUsuario = Sessions.retunrUsuario;
             //            Logado = true;
 
 
@@ -199,29 +206,41 @@ namespace DexComanda
         public static Usuario RetornaDadosUsuario(string iNome, string iSenha)
         {
             Conexao conexao = new Conexao();
+            Usuario user = new Usuario();
             string hashSenha = EncryptMd5(iNome, iSenha);
             DataSet dsUsuario = conexao.LoginUsuario(iNome, hashSenha);
 
-            Sessions.returnUsuario = new Usuario()
+            if (dsUsuario.Tables[0].Rows.Count>0)
             {
-                Nome = iNome,
-                Senha = dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(2).ToString(),
-                Codigo = int.Parse(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(0).ToString()),
-                AcessaRelatoriosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(6).ToString()),
-                AdministradorSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(5).ToString()),
-                FinalizaPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(8).ToString()),
-                CancelaPedidosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(3).ToString()),
-                AlteraProdutosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(5).ToString()),
-                DescontoPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(7).ToString()),
-                DescontoMax = Convert.ToDouble(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(9).ToString()),
-                AbreFechaCaixaSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(12).ToString()),
-                EditaPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(10).ToString()),
-                VisualizaDadosClienteSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(11).ToString()),
-               // CaixaLogado = iNumCaixa
+                 user =
+                 new Usuario()
+                {
+                    Nome = iNome,
+                    Codigo = int.Parse(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(0).ToString()),
+                    Senha = dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(2).ToString(),
+                    CancelaPedidosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(3).ToString()),
+                    AlteraProdutosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(4).ToString()),
+                    AdministradorSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(5).ToString()),
+                    AcessaRelatoriosSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(6).ToString()),
+                    DescontoPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(7).ToString()),
+                    FinalizaPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(8).ToString()),
+                    DescontoMax = Convert.ToDouble(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(9).ToString()),
+                    EditaPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(10).ToString()),
+                    VisualizaDadosClienteSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(11).ToString()),
+                    AbreFechaCaixaSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(12).ToString()),
+                    AlteraDadosClienteSN = Boolean.Parse(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(13).ToString()),
 
-            };
+                    // CaixaLogado = iNumCaixa
 
-            return Sessions.retunrUsuario;
+                };
+
+            }
+            else
+            {
+                MessageBox.Show("Usuario ou Senha incorretos");
+            }
+
+            return user;
         }
         public static Boolean ValidaPermissao(int iCodUser, string iNomePermissao)
         {
@@ -237,6 +256,28 @@ namespace DexComanda
                 }
             }
 
+            if (!retur)
+            {
+                if (MessageBoxQuestion(Bibliotecas.cSolicitarPermissao))
+                {
+                    frmLiberação frm = new frmLiberação(iNomePermissao);
+                    //frm.ShowDialog();
+                    if (frm.Autorizacao)
+                    {
+                        retur = true;
+                        frm.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show(Bibliotecas.cUsuarioSemPermissao);
+                    }
+                }
+
+            }
+            else
+            {
+                retur = true;
+            }
             return retur;
 
         }
@@ -1116,14 +1157,17 @@ namespace DexComanda
                 {
                     if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus && Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai && Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday && Sessions.returnEmpresa.CNPJ != Bibliotecas.cCarangoVix)
                     {
-                        if (MessageBoxQuestion("O Caixa não esta aberto sistema funcionará somente no modo consulta, deseja abrir agora?"))
+                        if (ValidaPermissao(Sessions.retunrUsuario.Codigo, "AbreFechaCaixaSN"))
                         {
-                            frmAberturaCaixa frm = new frmAberturaCaixa();
-                            frm.ShowDialog();
-                        }
-                        else
-                        {
-                            iRetorno = true;
+                            if (MessageBoxQuestion("O Caixa não esta aberto sistema funcionará somente no modo consulta, deseja abrir agora?"))
+                            {
+                                frmAberturaCaixa frm = new frmAberturaCaixa();
+                                frm.ShowDialog();
+                            }
+                            else
+                            {
+                                iRetorno = true;
+                            }
                         }
                     }
                     else
@@ -1269,6 +1313,50 @@ namespace DexComanda
             }
             return iRetorno;
 
+        }
+        public static void ExibirDadosForm(Control parent,Boolean iExibir)
+        {
+            foreach (System.Windows.Forms.Control ctrControl in parent.Controls)
+            {
+                //Loop through all controls 
+                if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.TextBox)))
+                {
+                    //Check to see if it's a textbox 
+                    if (!iExibir && ((System.Windows.Forms.TextBox)ctrControl).Name!= "txtNomeCliente")
+                    {
+                        ((System.Windows.Forms.TextBox)ctrControl).PasswordChar = 'X';
+                    
+                    }
+                    
+                    //If it is then set the text to String.Empty (empty textbox) 
+                }
+                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RichTextBox)))
+                {
+                    //If its a RichTextBox clear the text
+                    ((System.Windows.Forms.RichTextBox)ctrControl).Visible = iExibir;
+                }
+                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.ComboBox)))
+                {
+                    //Next check if it's a dropdown list 
+                    ((System.Windows.Forms.ComboBox)ctrControl).Visible = iExibir;
+                    //If it is then set its SelectedIndex to 0 
+                }
+                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                {
+                    //Next uncheck all checkboxes
+                    ((System.Windows.Forms.CheckBox)ctrControl).Visible = iExibir;
+                }
+                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))
+                {
+                    //Unselect all RadioButtons
+                    ((System.Windows.Forms.RadioButton)ctrControl).Visible = iExibir;
+                }
+                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.PictureBox)))
+                {
+                    ((System.Windows.Forms.PictureBox)ctrControl).Visible = iExibir;
+                    // (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))(
+                }
+            }
         }
         public static void LimpaForm(System.Windows.Forms.Control parent)
         {

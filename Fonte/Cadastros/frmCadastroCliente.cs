@@ -57,7 +57,7 @@ namespace DexComanda
                               string iDataCadastro, string iDataNascimento)
         {
             InitializeComponent();
-
+            
             codigoClienteParaAlterar = iCodPessoa;
             txtNomeCliente.Text = iNomeCliente;
             txtTelefone.Text = iTelefone;
@@ -99,20 +99,8 @@ namespace DexComanda
             }
             if (cliente != null)
             {
-                if (Sessions.returnConfig != null)
-                {
-                    if (Sessions.returnConfig.UsaDataNascimento)
-                    {
-                        this.txtDataNascimento.Enabled = true;
-
-                    }
-                    else
-                    {
-                        this.txtDataNascimento.Enabled = false;
-                    }
-
-                }
-
+                Utils.ExibirDadosForm(tbPrincipal, !Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "VisualizaDadosClienteSN"));
+                this.txtDataNascimento.Enabled = Sessions.returnConfig.UsaDataNascimento;
                 this.btnAdicionarCliente.Text = "Alterar [F12]";
                 this.btnAdicionarCliente.Click -= AdicionarCliente;
                 this.btnAdicionarCliente.Click += AlterarCliente;
@@ -349,6 +337,10 @@ namespace DexComanda
         {
             try
             {
+                if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AlteraDadosClienteSN"))
+                {
+                    return;
+                }
                 //int _cep = int.Parse(this.txtCEP.Text);
                 string _cep = "0";
                 if (this.txtCEP.Text.ToString() != "")
@@ -728,6 +720,10 @@ namespace DexComanda
 
         private void AlteraRegiao(object sender, EventArgs e)
         {
+            if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AlteraDadosClienteSN"))
+            {
+                return;
+            }
             CarregaRegiao(0);
         }
 
