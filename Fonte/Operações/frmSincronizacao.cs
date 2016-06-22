@@ -35,7 +35,16 @@ namespace DexComanda.Operações
         {
 
             iParamToken = Convert.ToString(DateTime.Now).Replace("/", "").Replace(":", "").Replace(" ", "").Substring(0, 11) + "Adminx";
-            iParamToken = Utils.CriptografarArquivo("xsistemas");
+            if (Sessions.returnEmpresa.Nome== "NOME SUA EMPRESA")
+            {
+                iParamToken = Utils.CriptografarArquivo("xsistemas");
+            }
+            else
+            {
+                iParamToken = Utils.CriptografarArquivo(iParamToken);
+            }
+            
+            
             iParamToken = iParamToken.ToLower();
         }
         private void Sincroniza()
@@ -294,7 +303,7 @@ namespace DexComanda.Operações
 
             RestClient client = new RestClient(iUrlWS);
             RestRequest request = new RestRequest("ws/total/desconto", Method.POST);
-            request.AddParameter("token", "959eaf56a662b353cc635dbd9d75a370");
+            request.AddParameter("token", iParamToken);
             request.AddParameter("status", Convert.ToInt16(chkDesconto.Checked));
             int iTotalOrSub;
             if (rbSub.Checked)
@@ -340,36 +349,44 @@ namespace DexComanda.Operações
 
         private void CadastraRegioes(DataSet ds)
         {
-
-            MudaLabel("Regioes de Entrega");
-            prgBarRegiao.Maximum = ds.Tables[0].Rows.Count;
-            RestClient client = new RestClient(iUrlWS);
-            RestRequest request = new RestRequest("ws/regiaoEntrega/set", Method.POST);
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-               
-                request.AddParameter("token", iParamToken);
-                request.AddParameter("cep", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("CEP"));
-                request.AddParameter("nome", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("NomeRegiao"));
-                request.AddParameter("valor", ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("TaxaServico"));
-                request.AddParameter("referencia_id", ds.Tables["RegiaoEntrega"].Rows[i].Field<int>("Codigo"));
-                request.AddParameter("ativo", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<Boolean>("OnlineSN")));
-
-                if (ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("valorMinimoFreteGratis") > 0)
+                MudaLabel("Regioes de Entrega");
+                prgBarRegiao.Maximum = ds.Tables[0].Rows.Count;
+                RestClient client = new RestClient(iUrlWS);
+                RestRequest request = new RestRequest("ws/regiaoEntrega/set", Method.POST);
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    request.AddParameter("valorMinimoFreteGratis", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("valorMinimoFreteGratis")));
+
+                    request.AddParameter("token", iParamToken);
+                    request.AddParameter("cep", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("CEP"));
+                    request.AddParameter("nome", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("NomeRegiao"));
+                    request.AddParameter("valor", ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("TaxaServico"));
+                    request.AddParameter("referencia_id", ds.Tables["RegiaoEntrega"].Rows[i].Field<int>("Codigo"));
+                    request.AddParameter("ativo", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<Boolean>("OnlineSN")));
+
+                    if (ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("valorMinimoFreteGratis") > 0)
+                    {
+                        request.AddParameter("valorMinimoFreteGratis", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("valorMinimoFreteGratis")));
+                    }
+
+                    RestResponse response = (RestResponse)client.Execute(request);
+                    prgBarRegiao.Value = i + 1;
+
+                    if (response.Content.Contains("true"))
+                    {
+                        con.AtualizaDataSincronismo("RegiaoEntrega_Bairros", ds.Tables[0].Rows[i].Field<int>("Codigo"), "DataSincronismo", "CodRegiao");
+                    }
+
+
                 }
-
-                RestResponse response = (RestResponse)client.Execute(request);
-                prgBarRegiao.Value = i + 1;
-
-                if (response.Content.ToString() == "true")
-                {
-                    con.AtualizaDataSincronismo("RegiaoEntrega", ds.Tables[0].Rows[i].Field<int>("Codigo"));
-                }
-
-
             }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message + "Erro ao cadastrar/sincronizar Regiões de Entrega ");
+            }
+            
         }
         private void CadastrarOpcao(DataSet ds)
         {
@@ -412,53 +429,6 @@ namespace DexComanda.Operações
             lblSinc.Visible = true;
             lblSinc.Text = "Sincronizando " + iNomeTabela;
         }
-        //private void CadastrarFamilia(DataSet ds)
-        //{
-        //    try
-        //    {
-        //        RestClient client = new RestClient(iUrlWS);
-        //        RestRequest request = new RestRequest("ws/categorias/set", Method.POST);
-        //        prgBarProduto.Value = 0;
-        //        prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
-        //        DataRow dRow;
-        //        MudaLabel("Familia");
-        //        GerarToken();
-        //        for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-        //        {
-        //            int AtivoSN = 0, iCod;
-        //            string inome = "", idReferenciaCategoriaPai = "0";
-        //            dRow = ds.Tables[0].Rows[i];
-
-        //            iCod = int.Parse(dRow.ItemArray.GetValue(0).ToString());
-        //            inome = dRow.ItemArray.GetValue(1).ToString();
-        //            if (Convert.ToBoolean(dRow.ItemArray.GetValue(2).ToString()) == true)
-        //            {
-        //                AtivoSN = 1;
-        //            }
-        //            request.AddParameter("idReferenciaCategoriaPai", 0);
-        //            request.AddParameter("token", iParamToken);
-        //            request.AddParameter("nomeCategoria", inome);
-        //            request.AddParameter("ativo", AtivoSN);
-        //            request.AddParameter("idReferencia", iCod);
-        //            RestResponse response = (RestResponse)client.Execute(request);
-        //            prgBarProduto.Value = i + 1;
-
-        //            if (response.Content.ToString() == "true")
-        //            {
-        //                con.AtualizaDataSincronismo("Familia", iCod);
-        //            }
-        //            prgBarProduto.Value = i + 1;
-
-        //        }
-
-        //    }
-        //    catch (Exception er)
-        //    {
-
-        //        MessageBox.Show("Erro ao cadastrarar Grupo" + er.Message + er.InnerException);
-        //    }
-
-        //}
         private void CadastraCategorias(DataSet ds)
         {
             try
@@ -519,95 +489,94 @@ namespace DexComanda.Operações
         {
             try
             {
-               // MudaLabel("Produto");
-               // decimal iPrecoProduto = 0;
-               //// ManipulaProgressBar(ds.Tables[0].Rows.Count);
-               // DataRow dRow;
-               // prgBarProduto.Value = 0;
-               // prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
-               // for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-               // {
+                MudaLabel("Produto");
+                decimal iPrecoProduto = 0;
+                // ManipulaProgressBar(ds.Tables[0].Rows.Count);
+                DataRow dRow;
+                prgBarProduto.Value = 0;
+                prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
                     RestClient client = new RestClient(iUrlWS);
-                    RestRequest request = new RestRequest("ws/endereco", Method.POST);
-                request.AddParameter("token", "959eaf56a662b353cc635dbd9d75a370");
-                 request.AddParameter("cep", "29070450");
-                RestResponse response = (RestResponse)client.Execute(request);
-
-                //GerarToken();
-                //    dRow = ds.Tables[0].Rows[i];
-                //    decimal prProduto = decimal.Parse(dRow.ItemArray.GetValue(3).ToString());
-                //    DateTime dtSinc = DateTime.Now.AddYears(1);
-                //    DateTime dtFoto = DateTime.Now.AddYears(1);
-
-
-                //    if (dRow.ItemArray.GetValue(9).ToString() != "")
-                //    {
-                //        dtSinc = Convert.ToDateTime(dRow.ItemArray.GetValue(9).ToString());
-                //    }
-                //    else
-                //    {
-                //        dtSinc = DateTime.Now.AddYears(-1);
-                //    }
-                //    if (dRow.ItemArray.GetValue(14).ToString() != "")
-                //    {
-                //        dtFoto = Convert.ToDateTime(dRow.ItemArray.GetValue(14).ToString());
-                //    }
+                    RestRequest request = new RestRequest("ws/produto/set", Method.POST);
+                    request.AddParameter("token", iParamToken);
+               //     request.AddParameter("cep", "29070450");
+                    
+                    //GerarToken();
+                    dRow = ds.Tables[0].Rows[i];
+                    decimal prProduto = decimal.Parse(dRow.ItemArray.GetValue(3).ToString());
+                    DateTime dtSinc = DateTime.Now.AddYears(1);
+                    DateTime dtFoto = DateTime.Now.AddYears(1);
 
 
-                //    string iCaminhoImagem = dRow.ItemArray.GetValue(11).ToString();
-                //    request.AddParameter("token", iParamToken);
-                //    request.AddParameter("idReferencia", dRow.ItemArray.GetValue(0).ToString());
-                //    request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
+                    if (dRow.ItemArray.GetValue(9).ToString() != "")
+                    {
+                        dtSinc = Convert.ToDateTime(dRow.ItemArray.GetValue(9).ToString());
+                    }
+                    else
+                    {
+                        dtSinc = DateTime.Now.AddYears(-1);
+                    }
+                    if (dRow.ItemArray.GetValue(14).ToString() != "")
+                    {
+                        dtFoto = Convert.ToDateTime(dRow.ItemArray.GetValue(14).ToString());
+                    }
 
-                //    if (Sessions.returnEmpresa.CNPJ == "09395874000160")
-                //    {
-                //        prProduto = prProduto + con.RetornaPrecoComEmbalagem(dRow.ItemArray.GetValue(4).ToString(), int.Parse(dRow.ItemArray.GetValue(0).ToString()));
-                //    }
-                //    else
-                //    {
-                //        prProduto = decimal.Parse(dRow.ItemArray.GetValue(3).ToString());
-                //    }
 
-                //    request.AddParameter("preco", prProduto);
-                //    decimal prPromocao = decimal.Parse(dRow.ItemArray.GetValue(5).ToString());
-                //    if (dRow.ItemArray.GetValue(13).ToString() != "")
-                //    {
-                //        if (Convert.ToDateTime(dRow.ItemArray.GetValue(13).ToString()) > DateTime.Now && prPromocao > 0)
-                //        {
-                //            request.AddParameter("precoPromocao", prPromocao);
-                //            request.AddParameter("dataInicial", dRow.ItemArray.GetValue(12).ToString());
-                //            request.AddParameter("dataFinal", dRow.ItemArray.GetValue(13).ToString());
-                //        }
-                //    }
+                    string iCaminhoImagem = dRow.ItemArray.GetValue(11).ToString();
+                    request.AddParameter("token", iParamToken);
+                    request.AddParameter("idReferencia", dRow.ItemArray.GetValue(0).ToString());
+                    request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
 
-                //    if (File.Exists(iCaminhoImagem) && dtFoto > dtSinc)
-                //    {
-                //        request.AddFile("imagem", iCaminhoImagem);
-                //    }
-                //    request.AddParameter("idReferenciaCategoria", dRow.ItemArray.GetValue(15).ToString());
-                //    // request.AddParameter("idReferenciaCategoria", RetornaIDCategoria(dRow.ItemArray.GetValue(4).ToString()));
-                //    request.AddParameter("descricao", dRow.ItemArray.GetValue(2).ToString());
-                //    int bAtivoSn = 0;
-                //    if (Convert.ToBoolean(dRow.ItemArray.GetValue(7).ToString()) == true)
-                //    {
-                //        bAtivoSn = 1;
-                //    }
-                //    request.AddParameter("ativo", bAtivoSn);
-                //    request.AddParameter("maxOptions", dRow.ItemArray.GetValue(10).ToString());
+                    if (Sessions.returnEmpresa.CNPJ == "09395874000160")
+                    {
+                        prProduto = prProduto + con.RetornaPrecoComEmbalagem(dRow.ItemArray.GetValue(4).ToString(), int.Parse(dRow.ItemArray.GetValue(0).ToString()));
+                    }
+                    else
+                    {
+                        prProduto = decimal.Parse(dRow.ItemArray.GetValue(3).ToString());
+                    }
 
-                //    prgBarProduto.Increment (i+1);
+                    request.AddParameter("preco", prProduto);
+                    decimal prPromocao = decimal.Parse(dRow.ItemArray.GetValue(5).ToString());
+                    if (dRow.ItemArray.GetValue(13).ToString() != "")
+                    {
+                        if (Convert.ToDateTime(dRow.ItemArray.GetValue(13).ToString()) > DateTime.Now && prPromocao > 0)
+                        {
+                            request.AddParameter("precoPromocao", prPromocao);
+                            request.AddParameter("dataInicial", dRow.ItemArray.GetValue(12).ToString());
+                            request.AddParameter("dataFinal", dRow.ItemArray.GetValue(13).ToString());
+                        }
+                    }
 
-                //    RestResponse response = (RestResponse)client.Execute(request);
+                    if (File.Exists(iCaminhoImagem) && dtFoto > dtSinc)
+                    {
+                        request.AddFile("imagem", iCaminhoImagem);
+                    }
+                    request.AddParameter("idReferenciaCategoria", dRow.ItemArray.GetValue(15).ToString());
+                    // request.AddParameter("idReferenciaCategoria", RetornaIDCategoria(dRow.ItemArray.GetValue(4).ToString()));
+                    request.AddParameter("descricao", dRow.ItemArray.GetValue(2).ToString());
+                    int bAtivoSn = 0;
+                    if (Convert.ToBoolean(dRow.ItemArray.GetValue(7).ToString()) == true)
+                    {
+                        bAtivoSn = 1;
+                    }
+                    request.AddParameter("ativo", bAtivoSn);
+                    request.AddParameter("maxOptions", dRow.ItemArray.GetValue(10).ToString());
 
-                //    if (response.Content.ToString() == "true")
-                //    {
-                //        con.AtualizaDataSincronismo("Produto", int.Parse(dRow.ItemArray.GetValue(0).ToString()));
-                //        CadastrarOpcaoProduto(int.Parse(dRow.ItemArray.GetValue(0).ToString()));
-                //    }
-                //    iCaminhoImagem = "";
+                    prgBarProduto.Increment(i + 1);
 
-                //    // request = null;
-                //}
+                    RestResponse response = (RestResponse)client.Execute(request);
+
+                    if (response.Content.ToString() == "true")
+                    {
+                        con.AtualizaDataSincronismo("Produto", int.Parse(dRow.ItemArray.GetValue(0).ToString()));
+                        CadastrarOpcaoProduto(int.Parse(dRow.ItemArray.GetValue(0).ToString()));
+                    }
+                    iCaminhoImagem = "";
+
+                    // request = null;
+                }
             }
             catch (Exception er)
             {

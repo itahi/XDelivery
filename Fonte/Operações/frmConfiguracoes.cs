@@ -14,6 +14,7 @@ using DexComanda.Integração;
 using System.Configuration;
 using Newtonsoft.Json;
 using DexComanda.Models.WS;
+using DexComanda.Models.Operacoes;
 
 namespace DexComanda
 {
@@ -47,7 +48,64 @@ namespace DexComanda
         {
 
         }
+        private List<CidadesAtendidas> CidadesAtendidas()
+        {
+            List<CidadesAtendidas> Listcdd = new List<CidadesAtendidas>();
+            Listcdd = new List<Models.WS.CidadesAtendidas>();
+            foreach (Control item in grpCidades.Controls)
+            {
+                if (object.ReferenceEquals(item.GetType(), typeof(System.Windows.Forms.TextBox)))
+                {
+                    if (((System.Windows.Forms.TextBox)item).Text != "")
+                    {
+                        var cdd = new CidadesAtendidas()
+                        {
+                            Cidade = ((System.Windows.Forms.TextBox)item).Text
+                        };
+                        Listcdd.Add(cdd);
+                    };
+                }
 
+            }
+            return Listcdd;
+        }
+        private List<HorarioFuncionamento> HorariosFuncionamento(Control controGeral)
+        {
+            List<HorarioFuncionamento> listHorario = new List<HorarioFuncionamento>();
+            // var precosDia = new PrecoDiaProduto();
+            foreach (System.Windows.Forms.Control obj in controGeral.Controls)
+            {
+                //Loop through all controls 
+                if (object.ReferenceEquals(controGeral.GetType(), typeof(DateTimePicker)))
+                {
+                    if (((System.Windows.Forms.DateTimePicker)obj).Value.ToString() !="")
+                    {
+                        var listaHoras = new HorarioFuncionamento()
+                        {
+                            Dia = obj.Tag.ToString(),
+                            Inicio = "",
+                            Fim = ""
+                        };
+                        listHorario.Add(listaHoras);
+                    }
+                    //foreach (DateTimePicker item in controGeral.Controls)
+                    //{
+                    //    var listaHoras = new HorarioFuncionamento()
+                    //    {
+                    //        Dia = controGeral.Tag.ToString(),
+                    //        Inicio = item.Value.ToString(),
+                    //        Fim = item.Value.ToString()
+                    //    };
+                    //    listHorario.Add(listaHoras);
+                    //}
+
+                }
+            }
+              
+
+            return listHorario;
+
+        }
         private void SalvaConfig(object sender, EventArgs e)
         {
             //con = new Conexao(); 
@@ -70,7 +128,9 @@ namespace DexComanda
                 DataInicio = DateTime.Now,
                 VersaoBanco = "1",
                 CaminhoBackup = txtCaminhoBkp.Text,
-                UrlServidor = txtURL.Text
+                UrlServidor = txtURL.Text,
+                HorarioFuncionamento = HorariosFuncionamento(tabPage3).ToString()
+
 
             };
             // Grava as configurações
@@ -90,6 +150,8 @@ namespace DexComanda
             config.Pushapp_id = txtAPPID.Text;
             config.Pushauthorization = txtCodAutorização.Text;
             config.RepeteUltimoPedido = chkUltPedido.Checked;
+            config.CidadesAtendidas = Utils.SerializaObjeto(CidadesAtendidas());
+
             if (chkEnviaSms.Checked)
             {
                 Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
@@ -196,7 +258,8 @@ namespace DexComanda
                 DataInicio = DateTime.Now,
                 VersaoBanco = "0",
                 CaminhoBackup = txtCaminhoBkp.Text,
-                UrlServidor = txtURL.Text
+                UrlServidor = txtURL.Text,
+                HorarioFuncionamento = HorariosFuncionamento(tabControl1.TabPages[1]).ToString()
             };
 
             config.cod = Sessions.returnConfig.cod;
@@ -227,6 +290,8 @@ namespace DexComanda
             config.Pushauthorization = txtCodAutorização.Text;
             config.Pushapp_id = txtAPPID.Text;
             config.RepeteUltimoPedido = chkUltPedido.Checked;
+            config.CidadesAtendidas = Utils.SerializaObjeto(CidadesAtendidas());
+            //config.CidadesAtendidas = "";
             if (chkEnviaSms.Checked)
             {
                 Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
@@ -278,8 +343,8 @@ namespace DexComanda
 
             return nomeImpressora;
         }
-       
-       
+
+
         private void LoadImpressoras()
         {
             // LOAD do Formulário para configuração de portas e Modelos de impressoras

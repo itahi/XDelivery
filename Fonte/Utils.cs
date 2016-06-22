@@ -306,6 +306,11 @@ namespace DexComanda
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
         }
+        public static string SerializaObjeto(List<CidadesAtendidas> iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
+
         public static List<PrecoDiaProduto> DeserializaObjeto(string iValores)
         {
             if (iValores == "")

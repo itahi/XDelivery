@@ -181,7 +181,7 @@ namespace DexComanda.Cadastros
                 }
 
                 con.Update("spAlterarBairrosRegiao", reg);
-                con.AtualizaDataSincronismo("RegiaoEntrega", reg.CodRegiao, "DataAlteracao");
+                con.AtualizaDataSincronismo("RegiaoEntrega_Bairros", reg.CodRegiao, "DataAlteracao");
                 Utils.ControlaEventos("Alterar", this.Name);
                 txtCEP.Enabled = true;
                 txtBairro.Enabled = true;

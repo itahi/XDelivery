@@ -270,7 +270,7 @@ namespace DexComanda
 
 
                     }
-
+                    Utils.ControlaEventos("CancelaPedido", this.Name);
                     con.Update("spCancelarPedido", cancelPedid);
                     Utils.ControlaEventos("CancPedido", this.Name);
                     MessageBox.Show("Pedido Cancelado com sucesso.");
@@ -723,6 +723,7 @@ namespace DexComanda
                             {
                                 Utils.AtualizaMesa(iCodMesa, 1);
                             }
+                            Utils.ControlaEventos("BaixaPedido", this.Name);
                             con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 
                         }
@@ -796,6 +797,7 @@ namespace DexComanda
                     AtualizarFidelidade(intCodPessoa);
 
                     // Enfim finaliza o Pedido
+                    Utils.ControlaEventos("BaixaPedido", this.Name);
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 
                     //  Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
@@ -1065,7 +1067,7 @@ namespace DexComanda
                     m.MenuItems.Add(ExcluirCliente);
                     // Se o caixa estiver aberto ele Libera pra criar PEdido
 
-                    MontarPedido.Enabled = Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado);
+                   
                     int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
 
                     m.Show(dgv, new Point(e.X, e.Y));
@@ -1111,6 +1113,11 @@ namespace DexComanda
         {
             try
             {
+                if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado))
+                {
+                   
+                    return;
+                } 
                 rowIndex = clientesGridView.CurrentRow.Index;
                 int CodCliente = int.Parse(clientesGridView.Rows[rowIndex].Cells[0].Value.ToString());
                 if (Sessions.returnConfig.RegistraCancelamentos)

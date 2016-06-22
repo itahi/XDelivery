@@ -521,18 +521,7 @@ namespace DexComanda
         public DataSet SelectRegistroONline(string iNomeTable)
         {
             string lSqlConsulta = "";
-            //if (iNomeTable!="Grupo")
-            //{
             lSqlConsulta = " select * from " + iNomeTable + " where DataAlteracao>DataSincronismo or DataSincronismo is null ";
-
-            //}
-            ////else
-            ////{
-            ////    lSqlConsulta = " select G.* ,F.Codigo as CodFamilia,F.Nome as NOmeFamlia" +
-            ////                   "   from Grupo G left " +
-            ////                   "   join Familia F on F.Codigo = G.CodFamilia ";
-            ////}
-
             if (iNomeTable == "Grupo")
             {
                 lSqlConsulta = lSqlConsulta + "order by PaiSN desc";
@@ -566,9 +555,9 @@ namespace DexComanda
                                   "  ,RB.CEP ,Isnull(RB.OnlineSN,0) as OnlineSN , " +
                                   "  Isnull(RG.valorMinimoFreteGratis,0) as valorMinimoFreteGratis" +
                                   "   from RegiaoEntrega RG " +
-                                  "  join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo and RB.OnlineSN=1 " +
-                                  "  WHERE (RG.DataAlteracao > RG.DataSincronismo or RG.DataSincronismo is null ) " +
-                                  " and RG.ONLINESN=1 ";
+                                  "  join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo" +
+                                  "  WHERE (RG.DataAlteracao > RG.DataSincronismo or RG.DataSincronismo is null ) ";
+                                 // " and RG.ONLINESN=1 ";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -626,12 +615,12 @@ namespace DexComanda
         }
 
 
-        public void AtualizaDataSincronismo(string iNomeTable, int iCodigo, string iDataAtualizar = "DataSincronismo")
+        public void AtualizaDataSincronismo(string iNomeTable, int iCodigo, string iDataAtualizar = "DataSincronismo",string NomeCod="Codigo")
         {
             string lSqlConsulta;
             if (iCodigo != -1)
             {
-                lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where Codigo=" + iCodigo;
+                lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where "+ NomeCod +"= " + iCodigo;
             }
             else
             {
@@ -644,7 +633,7 @@ namespace DexComanda
             command.ExecuteNonQuery();
 
         }
-        public void AtualizaDataSincronismo(string iNomeTable, int iCodProduto, int iCodOpcao, string iDataAtualizar = "DataSincronismo")
+        public void AtualizaDataSincronismo(string iNomeTable, int iCodProduto, int iCodOpcao, string iDataAtualizar = "DataSincronismo",string NomeCod = "Codigo")
         {
             string lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where CodProduto=" + iCodProduto + " and CodOpcao=" + iCodOpcao;// and AtivoSN=1";
 

@@ -4,6 +4,7 @@ alter table Configuracao add [Pushauthorization] nvarchar(max);
 alter table Configuracao add [Pushapp_id] nvarchar(max);
 GO
 update Configuracao set Pushapp_id='' , Pushauthorization=''
+GO
 ALTER procedure [dbo].[spAdicionarConfiguracao]
 @ImpViaCozinha bit,
 @UsaDataNascimento bit,

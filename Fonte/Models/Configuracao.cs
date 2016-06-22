@@ -37,6 +37,6 @@ namespace DexComanda.Models
         public string DadosApp { get; set; }
         public string Pushauthorization { get; set; }
         public string Pushapp_id { get; set; }
-        //public string ImpressoraCopaBalcao { get; set; }
+        public string CidadesAtendidas { get; set; }
     }
 }

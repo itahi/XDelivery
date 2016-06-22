@@ -100,6 +100,7 @@ namespace DexComanda
                     regioes.valorMinimoFreteGratis = valorFrete;
 
                     con.Update("spAlteraRegiao", regioes);
+                    
                     Utils.ControlaEventos("Altera", this.Name);
                     this.btnSalvar.Text = "Adicionar [F12]";
                     this.btnSalvar.Click += new System.EventHandler(this.AdicionarRegiao);

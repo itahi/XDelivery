@@ -267,34 +267,36 @@ namespace DexComanda
                         ImpressoSN = Convert.ToBoolean(itemsPedido.Tables["ItemsPedido"].Rows[i].Field<Boolean>("ImpressoSN"))
                     };
 
-                    if (PromocaoDiasSemana)
-                    {
-                        var produto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", itemPedido.CodProduto, true).Tables["Produto"];
-                        DiaDaPromocao = produto.Rows[0]["DiaSemana"].ToString();
-                        if (produto != null && DiaDaPromocao.IndexOf(DiaDaSema) > 0)
-                        {
-                            if (con.RetornaOpcoesProduto(itemPedido.CodProduto).Tables[0].Rows.Count == 0)
-                            {
-                                if (DiaDaPromocao.IndexOf(DiaDaSema) > 0)
-                                {
-                                    itemPedido.PrecoUnitario = decimal.Parse(produto.Rows[0]["PrecoDesconto"].ToString());
-                                }
-                                else
-                                {
-                                    itemPedido.PrecoUnitario = decimal.Parse(produto.Rows[0]["PrecoProduto"].ToString());
-                                }
+                    //if (PromocaoDiasSemana)
+                    //{
+                    //    List<PrecoDiaProduto> listPreco = new List<PrecoDiaProduto>();
+                    //    var produto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", itemPedido.CodProduto, true).Tables["Produto"];
+                    //    listPreco = Utils.DeserializaObjeto(produto.Rows[0]["DiaSemana"].ToString());
+                       
+                    //    if (listPreco != null && listPreco.Count > 0)
+                    //    {
+                    //        if (con.RetornaOpcoesProduto(itemPedido.CodProduto).Tables[0].Rows.Count == 0)
+                    //        {
+                    //            if (listPreco.Count> 0)
+                    //            {
+                    //                itemPedido.PrecoUnitario = decimal.Parse(produto.Rows[0]["PrecoDesconto"].ToString());
+                    //            }
+                    //            else
+                    //            {
+                    //                itemPedido.PrecoUnitario = decimal.Parse(produto.Rows[0]["PrecoProduto"].ToString());
+                    //            }
 
-                            }
-                            else
-                            {
-                                itemPedido.PrecoUnitario = decimal.Parse(produto.Rows[0]["PrecoProduto"].ToString());
-                                // itemPedido.PrecoUnitario = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<decimal>("PrecoItem");
-                            }
+                    //        }
+                    //        else
+                    //        {
+                    //            itemPedido.PrecoUnitario = decimal.Parse(produto.Rows[0]["PrecoProduto"].ToString());
+                    //            // itemPedido.PrecoUnitario = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<decimal>("PrecoItem");
+                    //        }
 
-                            itemPedido.PrecoTotal = itemPedido.Quantidade * itemPedido.PrecoUnitario;
-                        }
+                    //        itemPedido.PrecoTotal = itemPedido.Quantidade * itemPedido.PrecoUnitario;
+                    //    }
 
-                    }
+                    //}
                     this.txtTrocoPara.Text = trocoPara;
                     this.cmbFPagamento.Text = formaPagamento;
 
@@ -337,6 +339,11 @@ namespace DexComanda
             lblNomeCliente.Text = dsPessoa.Tables[0].Rows[0].Field<string>("Nome") + " - " + dsPessoa.Tables[0].Rows[0].Field<string>("Telefone");
             lblEndereco.Text = dsPessoa.Tables[0].Rows[0].Field<string>("Endereco") + "," + dsPessoa.Tables[0].Rows[0].Field<string>("Numero") + "-" + dsPessoa.Tables[0].Rows[0].Field<string>("Bairro") + " " + dsPessoa.Tables[0].Rows[0].Field<string>("Cidade");
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbxProdutosGrid_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -352,7 +359,7 @@ namespace DexComanda
                 {
                     List<PrecoDiaProduto> listPreco = new List<PrecoDiaProduto>();
                     listPreco = Utils.DeserializaObjeto(produto.Rows[0]["DiaSemana"].ToString());
-                    if (listPreco != null)
+                    if (listPreco != null && listPreco.Count!=0)
                     {
                         foreach (var item in listPreco)
                         {
@@ -502,11 +509,21 @@ namespace DexComanda
         }
         private void cbxTipoProduto_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.cbxProdutosGrid.DataSource = con.SelectRegistroPorNome("@GrupoProduto", "Produto", "spObterProdutoPorGrupo", this.cbxTipoProduto.Text).Tables["Produto"];
-            this.cbxProdutosGrid.DisplayMember = "NomeProduto";
-            this.cbxProdutosGrid.ValueMember = "Codigo";
-            this.txtQuantidade.Text = "1";
-            SemMeiaPizza();
+            try
+            {
+                string grupo = this.cbxTipoProduto.Text;
+                this.cbxProdutosGrid.DataSource = con.SelectRegistroPorNome("@GrupoProduto", "Produto", "spObterProdutoPorGrupo", grupo).Tables["Produto"];
+                this.cbxProdutosGrid.DisplayMember = "NomeProduto";
+                this.cbxProdutosGrid.ValueMember = "Codigo";
+                this.txtQuantidade.Text = "1";
+                SemMeiaPizza();
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+            
         }
         private void txtQuantidade_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -3798,7 +3815,6 @@ namespace DexComanda
         {
             try
             {
-              
                 if (gridViewItemsPedido.SelectedRows.Count > 0)
                 {
 
