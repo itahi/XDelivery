@@ -122,7 +122,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MaximizeBox = false;
             this.Name = "frmCadastrarEntregador";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "[XDelivery] Cadastro Entregador";
             this.Load += new System.EventHandler(this.frmCadastrarEntregador_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastrarEntregador_KeyDown);

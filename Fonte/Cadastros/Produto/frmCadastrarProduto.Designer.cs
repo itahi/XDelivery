@@ -632,6 +632,7 @@
             // 
             this.cbxGrupoProduto.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
             this.cbxGrupoProduto.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbxGrupoProduto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxGrupoProduto.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxGrupoProduto.FormattingEnabled = true;
             this.cbxGrupoProduto.Location = new System.Drawing.Point(8, 141);

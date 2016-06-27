@@ -81,8 +81,10 @@ namespace DexComanda
                 MontaListPrecos(iDiasPromocao);
                 nomeProdutoTextBox.Text = iNomeProduto;
                 precoProdutoTextBox.Text = iPreco.ToString();
-                cbxGrupoProduto.Text = iGrupo;
-                cbxGrupoProduto.ValueMember = iCodGrupo;
+                Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoPorCodigo", int.Parse(iCodGrupo));
+                //cbxGrupoProduto.DataSource = "Grupo";
+                //cbxGrupoProduto.DisplayMember = iGrupo;
+                //cbxGrupoProduto.ValueMember = iCodGrupo;
                 descricaoProdutoTextBox.Text = iDescricao;
                 chkAtivo.Checked = iAtivoSN;
                 chkOnline.Checked = iVendaOnline;

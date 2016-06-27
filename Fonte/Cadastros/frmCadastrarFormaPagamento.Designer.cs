@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarFormaPagamento));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.chkAtivoSN = new System.Windows.Forms.CheckBox();
             this.chkOnline = new System.Windows.Forms.CheckBox();
             this.chkFinanceiro = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -44,7 +45,6 @@
             this.btnImg = new System.Windows.Forms.Button();
             this.txtcaminhoImage = new System.Windows.Forms.TextBox();
             this.img = new System.Windows.Forms.PictureBox();
-            this.chkAtivoSN = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FPGridView)).BeginInit();
@@ -54,12 +54,15 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(2, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(279, 387);
+            this.tabControl1.Size = new System.Drawing.Size(276, 367);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -76,10 +79,20 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(271, 361);
+            this.tabPage1.Size = new System.Drawing.Size(268, 341);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Cadastro";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // chkAtivoSN
+            // 
+            this.chkAtivoSN.AutoSize = true;
+            this.chkAtivoSN.Location = new System.Drawing.Point(128, 49);
+            this.chkAtivoSN.Name = "chkAtivoSN";
+            this.chkAtivoSN.Size = new System.Drawing.Size(71, 17);
+            this.chkAtivoSN.TabIndex = 19;
+            this.chkAtivoSN.Text = "AtivoSN?";
+            this.chkAtivoSN.UseVisualStyleBackColor = true;
             // 
             // chkOnline
             // 
@@ -123,6 +136,8 @@
             // 
             // txtNomeFP
             // 
+            this.txtNomeFP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNomeFP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNomeFP.Location = new System.Drawing.Point(8, 72);
             this.txtNomeFP.Name = "txtNomeFP";
@@ -153,15 +168,18 @@
             // 
             this.FPGridView.AllowUserToAddRows = false;
             this.FPGridView.AllowUserToDeleteRows = false;
+            this.FPGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.FPGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.FPGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.FPGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.FPGridView.Location = new System.Drawing.Point(0, 160);
+            this.FPGridView.Location = new System.Drawing.Point(5, 160);
             this.FPGridView.MultiSelect = false;
             this.FPGridView.Name = "FPGridView";
             this.FPGridView.ReadOnly = true;
             this.FPGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.FPGridView.Size = new System.Drawing.Size(268, 195);
+            this.FPGridView.Size = new System.Drawing.Size(257, 173);
             this.FPGridView.TabIndex = 11;
             // 
             // tabPage2
@@ -173,7 +191,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(271, 361);
+            this.tabPage2.Size = new System.Drawing.Size(268, 341);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Imagen";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -200,6 +218,8 @@
             // 
             // txtcaminhoImage
             // 
+            this.txtcaminhoImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtcaminhoImage.Location = new System.Drawing.Point(10, 21);
             this.txtcaminhoImage.Name = "txtcaminhoImage";
             this.txtcaminhoImage.Size = new System.Drawing.Size(242, 20);
@@ -208,32 +228,25 @@
             // 
             // img
             // 
+            this.img.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.img.Location = new System.Drawing.Point(6, 82);
             this.img.Name = "img";
             this.img.Size = new System.Drawing.Size(259, 178);
             this.img.TabIndex = 0;
             this.img.TabStop = false;
             // 
-            // chkAtivoSN
-            // 
-            this.chkAtivoSN.AutoSize = true;
-            this.chkAtivoSN.Location = new System.Drawing.Point(128, 49);
-            this.chkAtivoSN.Name = "chkAtivoSN";
-            this.chkAtivoSN.Size = new System.Drawing.Size(71, 17);
-            this.chkAtivoSN.TabIndex = 19;
-            this.chkAtivoSN.Text = "AtivoSN?";
-            this.chkAtivoSN.UseVisualStyleBackColor = true;
-            // 
             // frmCadastrarFormaPagamento
             // 
-            this.ClientSize = new System.Drawing.Size(286, 398);
+            this.ClientSize = new System.Drawing.Size(283, 378);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
             this.Name = "frmCadastrarFormaPagamento";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[XDelivery]  Formas De Pagamento";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmCadastrarFormaPagamento_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

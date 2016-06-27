@@ -2241,8 +2241,8 @@ namespace DexComanda
         public static void ControlaEventos(string iTipoEvento, string LocalEvento)
         {
 
-            if (Sessions.retunrUsuario != null)
-            {
+            //if (Sessions.retunrUsuario != null)
+            //{
                 EventosSistema eventos = new EventosSistema()
                 {
                     CodUsuario = Sessions.retunrUsuario.Codigo,
@@ -2252,7 +2252,7 @@ namespace DexComanda
 
                 };
                 conexao.Insert("spAdicionarEvento", eventos);
-            }
+            //}
 
         }
         public static void SalvarConfiguracao(string iChave, string iValue)
@@ -2277,7 +2277,7 @@ namespace DexComanda
             catch (Exception erro)
             {
 
-                throw;
+                MessageBox.Show("Não foi possível carregar o arquivo de configuração " + erro.Message);
             }
 
 

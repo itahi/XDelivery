@@ -34,7 +34,19 @@ namespace DexComanda
             Utils.PopularGrid_SP("Usuario", usuariosGridView, "spObterUsuario");
 
         }
-
+        private Boolean NomeCadastrado(string iNomeUser)
+        {
+            Boolean iRetur=true;
+            for (int i = 0; i < usuariosGridView.Rows.Count; i++)
+            {
+                if (iNomeUser == usuariosGridView.Rows[i].Cells["Nome"].Value.ToString())
+                {
+                    MessageBox.Show("Existe um usuario cadastrado com esse nome");
+                    iRetur = false;
+                }
+            }
+            return iRetur;
+        }
         private void AdicionarSalvarUsuario(object sender, EventArgs e)
         {
             if (txtNomeUsuario.Text != "")

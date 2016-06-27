@@ -268,14 +268,11 @@ namespace DexComanda
 
                         }
 
-
                     }
-                    Utils.ControlaEventos("CancelaPedido", this.Name);
+                   //Utils.ControlaEventos("CancPedido", this.Name);
                     con.Update("spCancelarPedido", cancelPedid);
                     Utils.ControlaEventos("CancPedido", this.Name);
                     MessageBox.Show("Pedido Cancelado com sucesso.");
-
-                    //   Utils.PopulaGrid_Novo("Produto", parentWindow.produtosGridView, Sessions.SqlProduto);
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
                 }
             }
@@ -723,7 +720,7 @@ namespace DexComanda
                             {
                                 Utils.AtualizaMesa(iCodMesa, 1);
                             }
-                            Utils.ControlaEventos("BaixaPedido", this.Name);
+                            Utils.ControlaEventos("BaixaPed", this.Name);
                             con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 
                         }
@@ -797,7 +794,7 @@ namespace DexComanda
                     AtualizarFidelidade(intCodPessoa);
 
                     // Enfim finaliza o Pedido
-                    Utils.ControlaEventos("BaixaPedido", this.Name);
+                    Utils.ControlaEventos("BaixaPed", this.Name);
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
 
                     //  Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);

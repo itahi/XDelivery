@@ -522,6 +522,7 @@ namespace DexComanda
         {
             string lSqlConsulta = "";
             lSqlConsulta = " select * from " + iNomeTable + " where DataAlteracao>DataSincronismo or DataSincronismo is null ";
+
             if (iNomeTable == "Grupo")
             {
                 lSqlConsulta = lSqlConsulta + "order by PaiSN desc";

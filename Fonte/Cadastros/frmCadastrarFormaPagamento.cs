@@ -226,7 +226,7 @@ namespace DexComanda
 
         private void txtcaminhoImage_TextChanged(object sender, EventArgs e)
         {
-            if (File.Exists(txtcaminhoImage.Text))
+            if (File.Exists(txtcaminhoImage.Text) && txtcaminhoImage.Text!="")
             {
                 img.Load(txtcaminhoImage.Text);
             }

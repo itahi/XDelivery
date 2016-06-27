@@ -237,6 +237,7 @@
             this.Name = "frmAdicionarGrupo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[XDelivery] Cadastro Grupos ";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Main_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmAdicionarGrupo_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.gruposGridView)).EndInit();
