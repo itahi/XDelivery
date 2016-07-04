@@ -357,10 +357,10 @@
   </wsdl:binding>
   <wsdl:service name="ServiceSMS">
     <wsdl:port name="ServiceSMSSoap" binding="tns:ServiceSMSSoap">
-      <soap:address location="http://209.133.196.250/painel/ServiceSms.asmx" />
+      <soap:address location="http://54.173.24.177/painel/ServiceSms.asmx" />
     </wsdl:port>
     <wsdl:port name="ServiceSMSSoap12" binding="tns:ServiceSMSSoap12">
-      <soap12:address location="http://209.133.196.250/painel/ServiceSms.asmx" />
+      <soap12:address location="http://54.173.24.177/painel/ServiceSms.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

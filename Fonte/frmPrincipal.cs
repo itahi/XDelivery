@@ -1112,7 +1112,6 @@ namespace DexComanda
             {
                 if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado))
                 {
-                   
                     return;
                 } 
                 rowIndex = clientesGridView.CurrentRow.Index;

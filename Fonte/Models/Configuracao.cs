@@ -38,5 +38,6 @@ namespace DexComanda.Models
         public string Pushauthorization { get; set; }
         public string Pushapp_id { get; set; }
         public string CidadesAtendidas { get; set; }
+        public bool ExigeVendedorSN { get; set; }
     }
 }

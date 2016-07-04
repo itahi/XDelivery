@@ -39,7 +39,12 @@
             this.chkAgendarEnvio = new System.Windows.Forms.CheckBox();
             this.txtTitulo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rbInstantaneo = new System.Windows.Forms.RadioButton();
+            this.rbControlado = new System.Windows.Forms.RadioButton();
+            this.tpRadio = new System.Windows.Forms.ToolTip(this.components);
             this.grpAgendamento.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // msg
@@ -80,9 +85,9 @@
             this.grpAgendamento.Controls.Add(this.horaEnvio);
             this.grpAgendamento.Controls.Add(this.dtEnvio);
             this.grpAgendamento.Enabled = false;
-            this.grpAgendamento.Location = new System.Drawing.Point(12, 28);
+            this.grpAgendamento.Location = new System.Drawing.Point(12, 29);
             this.grpAgendamento.Name = "grpAgendamento";
-            this.grpAgendamento.Size = new System.Drawing.Size(198, 56);
+            this.grpAgendamento.Size = new System.Drawing.Size(167, 72);
             this.grpAgendamento.TabIndex = 6;
             this.grpAgendamento.TabStop = false;
             this.grpAgendamento.Text = "Agende o Envio";
@@ -90,10 +95,10 @@
             // horaEnvio
             // 
             this.horaEnvio.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.horaEnvio.Location = new System.Drawing.Point(112, 19);
+            this.horaEnvio.Location = new System.Drawing.Point(92, 19);
             this.horaEnvio.Name = "horaEnvio";
             this.horaEnvio.ShowUpDown = true;
-            this.horaEnvio.Size = new System.Drawing.Size(80, 20);
+            this.horaEnvio.Size = new System.Drawing.Size(68, 20);
             this.horaEnvio.TabIndex = 6;
             // 
             // dtEnvio
@@ -102,7 +107,7 @@
             this.dtEnvio.Location = new System.Drawing.Point(6, 19);
             this.dtEnvio.Name = "dtEnvio";
             this.dtEnvio.ShowUpDown = true;
-            this.dtEnvio.Size = new System.Drawing.Size(96, 20);
+            this.dtEnvio.Size = new System.Drawing.Size(80, 20);
             this.dtEnvio.TabIndex = 5;
             // 
             // chkAgendarEnvio
@@ -133,11 +138,47 @@
             this.label2.Text = "Titulo da Mensagem";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.rbControlado);
+            this.groupBox1.Controls.Add(this.rbInstantaneo);
+            this.groupBox1.Location = new System.Drawing.Point(185, 29);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(138, 72);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Tipo Envio";
+            // 
+            // rbInstantaneo
+            // 
+            this.rbInstantaneo.AutoSize = true;
+            this.rbInstantaneo.Location = new System.Drawing.Point(13, 21);
+            this.rbInstantaneo.Name = "rbInstantaneo";
+            this.rbInstantaneo.Size = new System.Drawing.Size(81, 17);
+            this.rbInstantaneo.TabIndex = 0;
+            this.rbInstantaneo.Text = "Instantaneo";
+            this.tpRadio.SetToolTip(this.rbInstantaneo, "Entrega a todos ao mesmo tempo");
+            this.rbInstantaneo.UseVisualStyleBackColor = true;
+            // 
+            // rbControlado
+            // 
+            this.rbControlado.AutoSize = true;
+            this.rbControlado.Checked = true;
+            this.rbControlado.Location = new System.Drawing.Point(13, 44);
+            this.rbControlado.Name = "rbControlado";
+            this.rbControlado.Size = new System.Drawing.Size(76, 17);
+            this.rbControlado.TabIndex = 1;
+            this.rbControlado.TabStop = true;
+            this.rbControlado.Text = "Controlado";
+            this.tpRadio.SetToolTip(this.rbControlado, "Entrega no horario que o cliente costuma acessar o site/app");
+            this.rbControlado.UseVisualStyleBackColor = true;
+            // 
             // frmNotificacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 375);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtTitulo);
             this.Controls.Add(this.chkAgendarEnvio);
@@ -148,6 +189,8 @@
             this.Name = "frmNotificacao";
             this.Text = "[xSistemas] Push/Notificação";
             this.grpAgendamento.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,5 +208,9 @@
         private System.Windows.Forms.CheckBox chkAgendarEnvio;
         private System.Windows.Forms.TextBox txtTitulo;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton rbControlado;
+        private System.Windows.Forms.RadioButton rbInstantaneo;
+        private System.Windows.Forms.ToolTip tpRadio;
     }
 }

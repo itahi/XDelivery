@@ -436,7 +436,7 @@ namespace DexComanda
                                   "  where  " +
                                   "  Cast(DataNascimento as date) between @Data1 and @Data2 " +
                                   "  and " +
-                                  "  (SUBSTRING(Telefone,0,2) = 9 " +
+                                  "  (SUBSTRING(Telefone,0,2) =9 " +
                                   "  or SUBSTRING(Telefone,0,2) =8 )";
 
                     command.Parameters.AddWithValue("@Data1", iData1);

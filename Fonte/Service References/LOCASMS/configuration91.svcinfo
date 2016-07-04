@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="ServiceSMSSoap" contract="LOCASMS.ServiceSMSSoap" bindingType="basicHttpBinding" address="http://209.133.196.250/painel/ServiceSms.asmx" bindingConfiguration="ServiceSMSSoap">
+    <endpoint name="ServiceSMSSoap" contract="LOCASMS.ServiceSMSSoap" bindingType="basicHttpBinding" address="http://54.173.24.177/painel/ServiceSms.asmx" bindingConfiguration="ServiceSMSSoap">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://209.133.196.250/painel/ServiceSms.asmx</serializedValue>
+          <serializedValue>http://54.173.24.177/painel/ServiceSms.asmx</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

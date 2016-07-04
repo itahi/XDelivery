@@ -175,7 +175,7 @@ namespace DexComanda
                                     configs.ViasBalcao = config.ItemArray.GetValue(26).ToString();
                                 }
 
-
+                                configs.ExigeVendedorSN = bool.Parse(config.ItemArray.GetValue(33).ToString());
                                 Sessions.returnConfig = configs;
                             }
                             else

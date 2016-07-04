@@ -250,6 +250,7 @@
     <Compile Include="Models\FinalizaPedido.cs" />
     <Compile Include="Models\HistoricoPessoa.cs" />
     <Compile Include="Models\Operacoes\HorarioFuncionamento.cs" />
+    <Compile Include="Models\Operacoes\Notificacao.cs" />
     <Compile Include="Models\Produto\Opcao.cs" />
     <Compile Include="Models\Produto\OpcaoItem.cs" />
     <Compile Include="Models\Produto\OpcaoPedido.cs" />

@@ -151,7 +151,7 @@ namespace DexComanda
             config.Pushauthorization = txtCodAutorização.Text;
             config.RepeteUltimoPedido = chkUltPedido.Checked;
             config.CidadesAtendidas = Utils.SerializaObjeto(CidadesAtendidas());
-
+            config.ExigeVendedorSN = chkVendedor.Checked;
             if (chkEnviaSms.Checked)
             {
                 Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
@@ -291,6 +291,7 @@ namespace DexComanda
             config.Pushapp_id = txtAPPID.Text;
             config.RepeteUltimoPedido = chkUltPedido.Checked;
             config.CidadesAtendidas = Utils.SerializaObjeto(CidadesAtendidas());
+            config.ExigeVendedorSN = chkVendedor.Checked;
             //config.CidadesAtendidas = "";
             if (chkEnviaSms.Checked)
             {
@@ -404,6 +405,7 @@ namespace DexComanda
                 chkRegCancelamentos.Checked = Sessions.returnConfig.RegistraCancelamentos;
                 txtAPPID.Text = Sessions.returnConfig.Pushapp_id;
                 txtCodAutorização.Text = Sessions.returnConfig.Pushauthorization;
+                chkVendedor.Checked = Sessions.returnConfig.ExigeVendedorSN;
 
                 this.btnSalvar.Text = "Alterar";
                 this.btnSalvar.Click -= SalvaConfig;

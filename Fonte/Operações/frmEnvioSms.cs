@@ -47,9 +47,9 @@ namespace DexComanda
         {
             try
             {
-                if (ConfigurationManager.AppSettings.Keys.Count ==4)
+                if (ConfigurationManager.AppSettings["ConfigSMS"]!=null)
                 {
-                    string Itext = ConfigurationManager.AppSettings["ConfigSMS"];
+                    string Itext = ConfigurationManager.AppSettings["ConfigSMS"].ToString();
 
                     string[] words = Itext.Split(',');
                     for (int i = 0; i < words.Length - 1; i++)
@@ -62,14 +62,16 @@ namespace DexComanda
                 else
                 {
                     MessageBox.Show("Arquivo de configuração para envio de SMS não está na pasta , favor ir até Configurações > Promoção preencher os campos e salvar");
+                    frmConfiguracoes frm = new frmConfiguracoes();
+                    frm.Show();
                 }
-                
+
 
             }
             catch (Exception erro)
             {
 
-                MessageBox.Show(erro.Message);
+                MessageBox.Show("Erro na leitura do arquivo de configuração " + erro.Message);
             }
 
             // Caracters restantes no texto
@@ -122,7 +124,7 @@ namespace DexComanda
             if (dsLista.Tables[0].Rows.Count > 0)
             {
 
-                Utils.EnviaSMS_LOCASMS(dsLista, txtMensagem.Text, "Teste", pLogin, pSenha);
+                Utils.EnviaSMS_LOCASMS(dsLista, txtMensagem.Text, "Teste", "27981667827", "546936");
                 lbl.Text = Convert.ToString(TotalSelecionado);
                 this.Cursor = Cursors.Default;
             }
