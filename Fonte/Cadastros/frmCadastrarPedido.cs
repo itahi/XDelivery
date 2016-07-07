@@ -99,7 +99,7 @@ namespace DexComanda
         //private int HoraPedido = Sessions.returnPedido.RealizadoEm.Minute;
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, string iNumeMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara, string fPagamento, string TipoPedido, string MesaBalcao,
-            Main parent = null, decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M)
+            Main parent = null, decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M,int iCodVendedor=0)
         {
             try
             {
@@ -148,6 +148,7 @@ namespace DexComanda
                 gNUmeroMesa = iNumeMesa;
                 cbxTipoPedido.Text = TipoPedido;
                 cbxListaMesas.Items.Add(MesaBalcao);
+                Utils.MontaCombox(cbxVendedor, "Nome", "Codigo", "Usuario", "spObterUsuarioPorCodigo", iCodVendedor);
 
             }
             catch (Exception mx)
@@ -181,6 +182,7 @@ namespace DexComanda
             //    lblEntrega.Text = Utils.RetornaTaxaPorCliente(codPessoa, con).ToString();
             //    AtualizaTotalPedido();
 
+            grpVendedor.Enabled = Sessions.returnConfig.ExigeVendedorSN;
             if (gNUmeroMesa == "")
             {
                 CarregaMesas();
@@ -925,6 +927,29 @@ namespace DexComanda
 
             return iReturn = DescCalculado < DescMAxPermitido;
         }
+        private int RetornaCodVendedor()
+        {
+            int iReturn = 0;
+            try
+            {
+                
+                if (!Sessions.returnConfig.ExigeVendedorSN)
+                {
+                    return 0;
+                }
+                if (cbxVendedor.SelectedValue != null)
+                {
+                    iReturn = int.Parse(cbxVendedor.SelectedValue.ToString());
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cErroGravacao);
+            }
+           
+
+            return iReturn;
+        }
         public void btnGerarPedido_Click(object sender, EventArgs e)
         {
             int iRetur = 0;
@@ -959,7 +984,8 @@ namespace DexComanda
                                 RealizadoEm = DateTime.Now,
                                 Status = "Aberto",
                                 PedidoOrigem = "Balcao",
-                                CodigoPedidoWS = 0
+                                CodigoPedidoWS = 0,
+                                CodUsuario = RetornaCodVendedor()
 
                             };
                             if (txtTrocoPara.Text != "")
@@ -1039,6 +1065,14 @@ namespace DexComanda
                                 //  pedido.CodigoMesa
                             }
 
+                            if (Sessions.returnConfig.ExigeVendedorSN && pedido.CodUsuario==0)
+                            {
+                                MessageBox.Show("Selecione o vendedor/atendente para continuar");
+                                txtCodVendedor.Focus();
+                                txtCodVendedor.BackColor = Color.Red;
+                                return;
+                                
+                            }
                             con.Insert("spAdicionarPedido", pedido);
                             //  DataEntrada = DateTime.Now;
 
@@ -1053,7 +1087,7 @@ namespace DexComanda
                                     PrecoUnitario = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[4].Value.ToString().Replace("R$", "")),
                                     PrecoTotal = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[3].Value.ToString()) * decimal.Parse(gridViewItemsPedido.Rows[i].Cells[4].Value.ToString().Replace("R$", "")),
                                     ImpressoSN = false,
-                                    Item = items[i].Item
+                                    Item = items[i].Item.ToUpper()
                                 };
                                 itemDoPedido.DataAtualizacao = DateTime.Now;
                                 con.Insert("spCriarPedido", itemDoPedido);
@@ -1142,58 +1176,16 @@ namespace DexComanda
                 pedido.Tipo = "0 - Entrega";
                 pedido.NumeroMesa = "";
             }
-
+            pedido.CodUsuario = RetornaCodVendedor();
+            if (Sessions.returnConfig.ExigeVendedorSN && pedido.CodUsuario==0)
+            {
+                MessageBox.Show("Selecione o vendedor/atendente para continuar");
+                txtCodVendedor.Focus();
+                txtCodVendedor.BackColor = Color.Red;
+                return;
+            }
             con.Update("spAlterarTotalPedido", pedido);
             // Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
-        }
-        private void gridViewItemsPedido_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            //DataGridView dgv = sender as DataGridView;
-            //if (dgv.SelectedRows.Count > 0)
-            //{
-            //    rowIndex = dgv.CurrentRow.Index;
-
-            //    int codItem = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
-            //    MontaMenuOpcoes(codItem);
-            //    var itemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codigoItemParaAlterar);
-            //    string itemNome = this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
-
-            //    string[] sabores = (this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString()).Split('/');
-            //    List<string> list = new List<string>();
-
-            //    foreach (string sabor in sabores)
-            //    {
-            //        list.Add(sabor);
-            //    }
-
-            //    if (list.Count > 1)
-            //    {
-            //        this.cbxMeiaPizza.Checked = true;
-            //        this.cbxSabor.Enabled = true;
-            //        this.cbxProdutosGrid.Text = sabores[0];
-            //        this.cbxSabor.Text = sabores[1];
-            //    }
-            //    else
-            //    {
-            //        this.cbxMeiaPizza.Checked = false;
-            //        this.cbxSabor.Enabled = false;
-            //        this.cbxSabor.Text = "";
-            //        this.cbxProdutosGrid.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[1].Value.ToString();
-            //    }
-
-            //    codigoItemParaAlterar = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells[0].Value.ToString());
-            //    txtCodProduto1.Text = codItem.ToString();
-            //    this.txtQuantidade.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
-            //    this.txtPrecoUnitario.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value.ToString();
-            //    this.txtPrecoTotal.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value.ToString();
-            //    this.txtItemDescricao.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value.ToString();
-            //    //   btnAdicionarItemNoPedido.
-
-            //    this.btnAdicionarItemNoPedido.Text = "Alterar Item";
-            //    this.btnAdicionarItemNoPedido.Click += new System.EventHandler(this.AlterarItem);
-            //    this.btnAdicionarItemNoPedido.Click -= new System.EventHandler(this.btnAdicionarItemNoPedido_Click);
-
-            //}
         }
         private void AlterarItem(object sender, EventArgs e)
         {
@@ -1724,159 +1716,7 @@ namespace DexComanda
 
             }
         }
-        //private void ImpressaoEntrega()
-        //{
-        //    int i = 0;
-        //    foreach (ItemPedido item in items)
-        //    {
-        //        string strLinhaCodigo, strLinhaDataHora;
-        //        if (i == 0)
-        //        {
-        //            strLinhaDataHora = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + "\r\n\n";
-
-        //            if (Sessions.returnEmpresa.CNPJ == "21207218000191")
-        //            {
-        //                line = QuebrarString(Sessions.returnEmpresa.Nome);
-        //            }
-        //            else
-        //            {
-        //                line = QuebrarString(Sessions.returnEmpresa.Nome);
-        //                line += QuebrarString(Sessions.returnEmpresa.Telefone + " / " + Sessions.returnEmpresa.Telefone2);
-        //                line += QuebrarString(Sessions.returnEmpresa.Endereco + ", " + Sessions.returnEmpresa.Cidade + " - " + Sessions.returnEmpresa.Bairro);
-
-        //            }
-
-        //            if (con.getLastCodigo().ToString() == "0")
-        //            {
-        //                strLinhaCodigo = "PEDIDO:" + codPedido;
-        //            }
-        //            else
-        //            {
-        //                strLinhaCodigo = "PEDIDO:" + con.getLastCodigo();
-        //            }
-        //            line += strLinhaCodigo + "   " + strLinhaDataHora;
-        //            if (ControlaFidelidade)
-        //            {
-        //                line += QuebrarString("Tick Fidelidade -" + NumeroPedidos + "/" + PedidosParaFidelidade);
-        //            }
-
-        //            line += "-----------------------------------------------------------\r\n";
-        //            line += "Nome  :";
-        //            line += QuebrarString(pCliente.Nome);
-        //            if (QuebrarString(pCliente.Telefone2.ToString()) != "0")
-        //            {
-        //                line += QuebrarString("Tel  : " + pCliente.Telefone.ToString());
-        //                line += QuebrarString("Tel  :" + pCliente.Telefone2.ToString());
-        //            }
-        //            else
-        //            {
-        //                line += "Tel :";
-        //                line += pCliente.Telefone.ToString();
-        //            }
-        //            line += QuebrarString("End.: " + pCliente.Endereco + QuebrarString("," + pCliente.Numero.ToString()));
-        //            if (pCliente.Observacao.ToString() != "")
-        //            {
-        //                line += "Obs:";
-        //                line += QuebrarString(pCliente.Observacao) + "\r\n";
-        //            }
-        //            line += QuebrarString("Bairro:" + pCliente.Bairro);
-        //            if (pCliente.PontoReferencia != "")
-        //            {
-        //                line += QuebrarString("REF.:");
-        //                line += QuebrarString(pCliente.PontoReferencia) + "\r\n";
-        //            }
-        //            if (pCliente.Observacao != "")
-        //            {
-        //                line += QuebrarString("Obs.:");
-        //                line += QuebrarString(pCliente.Observacao);
-        //            }
-
-        //            line += "-----------------------------------------------------------\r\n";
-
-        //        }
-
-        //        if (PromocaoDiasSemana && DiaDaPromocao.IndexOf(DiaDaSema) > 0 && FPPermiteDesconto)
-        //        {
-        //            line += QuebrarString("**Preço Promocional**");
-        //            line += QuebrarString(item.NomeProduto.ToString() + "        " + "Quant." + item.Quantidade.ToString());
-        //            line += " R$: " + item.PrecoTotal + "\r\n";
-        //            if (item.Item != "")
-        //            {
-        //                line += " Obs:" + QuebrarString(item.Item.ToString()) + "\r\n";
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (CNPJRETORNO == "18367525000125")
-        //            {
-        //                line += QuebrarString(item.NomeProduto.ToString());
-        //                line += "Quant." + QuebrarString(item.Quantidade.ToString());
-        //                line += " R$  : " + item.PrecoTotal + "\r\n";
-        //                if (item.Item != "")
-        //                {
-        //                    line += " Obs:" + QuebrarString(item.Item.ToString());
-        //                }
-        //            }
-        //            else
-        //            {
-        //                ItemPedido itemPedidos = new ItemPedido();
-
-        //                item.PrecoTotal = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[3].Value.ToString().Replace("R$", ""));
-
-        //                line += QuebrarString(item.NomeProduto.ToString() + "        " + "Quant." + item.Quantidade.ToString());
-        //                line += " R$  : " + item.PrecoTotal + "\r\n";
-
-        //                if (item.Item != "")
-        //                {
-        //                    line += " Obs:" + QuebrarString(item.Item.ToString());
-        //                }
-
-        //            }
-
-        //        }
-
-        //        // ev.HasMorePages = true;
-        //        i++;
-        //    }
-        //    ValorTotal = 0;
-        //    foreach (ItemPedido _item in items)
-        //    {
-        //        ValorTotal += _item.PrecoTotal * _item.Quantidade;
-        //    }
-        //    //decimal TotaItems = decimal.Parse(lbTotal.Text.Replace("R$", ""));
-        //    // decimal TotalPago = TotaItems + ValorTroco;
-        //    var TotalPedido = ValorTotal + decimal.Parse(lblEntrega.Text);
-        //    line += "-----------------------------------------------------------\r\n";
-        //    line += QuebrarString("Tx. Serv     :" + lblEntrega.Text);
-        //    line += QuebrarString("Total Itens  :" + ValorTotal);
-        //    line += QuebrarString("F. Pagamento :" + cmbFPagamento.Text);
-        //    if (txtDesconto.Text != "0,00")
-        //    {
-        //        line += QuebrarString("Desconto   :" + txtDesconto.Text);
-        //    }
-        //    line += QuebrarString("Total Pedido :" + TotalPedido);
-        //    line += QuebrarString("Troco Para   :" + txtTrocoPara.Text + " - Troco:" + lblTroco.Text);
-        //    if (ControlaFidelidade && lblFidelidade.Visible)
-        //    {
-        //        line += "-----------------------------------------------------------\r\n";
-        //        line += QuebrarString(" Parabens você é nosso cliente Fiel , este e seu pedido N.:" + NumeroPedidos.ToString()) + "\r\n";
-        //    }
-        //    if (ControlaPrevisao)
-        //    {
-        //        line += QuebrarString("Previsão de Entrega:  " + DataPed.AddMinutes(TempPrevisto).ToShortTimeString()) + "\r\n";
-        //    }
-        //    line += "Obrigado Pela Preferencia \r\n\n";
-
-        //    //ev.Graphics.DrawString(line, printFont, Brushes.Black, 0, 0);
-        //    //ev.HasMorePages = false;
-        //    if (ImprimeLPT)
-        //    {
-        //        Utils.CriaArquivoTxt("Impressao", line);
-        //    }
-
-        //    i++;
-
-        //}
+        
         private void imprimirViaEntrega(object sender, PrintPageEventArgs ev)
         {
             if (!ImprimeLPT)
@@ -2099,6 +1939,7 @@ namespace DexComanda
         private void btnAtualizar_Click(object sender, EventArgs e)
         {
             AtualizaTroco();
+            AtualizaTotalPedido();
         }
 
         private Boolean AtualizaTroco(Boolean SemTroco = false)
@@ -2175,18 +2016,7 @@ namespace DexComanda
                 return false;
             }
         }
-
-        private void frmCadastrarPedido_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //Utils.PopulaGrid_Novo("Pedido", parentWindow.pedidosGridView, Sessions.SqlPedido);
-            //this.Dispose();
-        }
-
-        private void cmbFPagamento_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void BuscaProduto1(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -2376,6 +2206,9 @@ namespace DexComanda
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.label9 = new System.Windows.Forms.Label();
             this.chkListAdicionais = new System.Windows.Forms.CheckedListBox();
+            this.grpVendedor = new System.Windows.Forms.GroupBox();
+            this.cbxVendedor = new System.Windows.Forms.ComboBox();
+            this.txtCodVendedor = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -2385,6 +2218,7 @@ namespace DexComanda
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
             this.grpBoxTamanhos.SuspendLayout();
+            this.grpVendedor.SuspendLayout();
             this.SuspendLayout();
             // 
             // dBExpertDataSet
@@ -2430,7 +2264,7 @@ namespace DexComanda
             this.cbxTipoProduto.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cbxTipoProduto.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxTipoProduto.FormattingEnabled = true;
-            this.cbxTipoProduto.Location = new System.Drawing.Point(54, 101);
+            this.cbxTipoProduto.Location = new System.Drawing.Point(54, 89);
             this.cbxTipoProduto.Name = "cbxTipoProduto";
             this.cbxTipoProduto.Size = new System.Drawing.Size(232, 26);
             this.cbxTipoProduto.TabIndex = 0;
@@ -2440,7 +2274,7 @@ namespace DexComanda
             // lblGrupo
             // 
             this.lblGrupo.AutoSize = true;
-            this.lblGrupo.Location = new System.Drawing.Point(9, 107);
+            this.lblGrupo.Location = new System.Drawing.Point(9, 95);
             this.lblGrupo.Name = "lblGrupo";
             this.lblGrupo.Size = new System.Drawing.Size(39, 13);
             this.lblGrupo.TabIndex = 32;
@@ -2449,7 +2283,7 @@ namespace DexComanda
             // txtQuantidade
             // 
             this.txtQuantidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtQuantidade.Location = new System.Drawing.Point(55, 164);
+            this.txtQuantidade.Location = new System.Drawing.Point(55, 152);
             this.txtQuantidade.Name = "txtQuantidade";
             this.txtQuantidade.Size = new System.Drawing.Size(149, 26);
             this.txtQuantidade.TabIndex = 2;
@@ -2460,7 +2294,7 @@ namespace DexComanda
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 171);
+            this.label1.Location = new System.Drawing.Point(9, 160);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(30, 13);
             this.label1.TabIndex = 34;
@@ -2469,7 +2303,7 @@ namespace DexComanda
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(231, 171);
+            this.label2.Location = new System.Drawing.Point(231, 159);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 13);
             this.label2.TabIndex = 36;
@@ -2479,7 +2313,7 @@ namespace DexComanda
             // 
             this.txtPrecoUnitario.Enabled = false;
             this.txtPrecoUnitario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecoUnitario.Location = new System.Drawing.Point(314, 164);
+            this.txtPrecoUnitario.Location = new System.Drawing.Point(314, 152);
             this.txtPrecoUnitario.Name = "txtPrecoUnitario";
             this.txtPrecoUnitario.Size = new System.Drawing.Size(149, 26);
             this.txtPrecoUnitario.TabIndex = 4;
@@ -2487,7 +2321,7 @@ namespace DexComanda
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(477, 172);
+            this.label4.Location = new System.Drawing.Point(477, 160);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 13);
             this.label4.TabIndex = 38;
@@ -2497,7 +2331,7 @@ namespace DexComanda
             // 
             this.txtPrecoTotal.Enabled = false;
             this.txtPrecoTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecoTotal.Location = new System.Drawing.Point(547, 163);
+            this.txtPrecoTotal.Location = new System.Drawing.Point(547, 151);
             this.txtPrecoTotal.Name = "txtPrecoTotal";
             this.txtPrecoTotal.Size = new System.Drawing.Size(105, 26);
             this.txtPrecoTotal.TabIndex = 5;
@@ -2505,7 +2339,7 @@ namespace DexComanda
             // btnAdicionarItemNoPedido
             // 
             this.btnAdicionarItemNoPedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.btnAdicionarItemNoPedido.Location = new System.Drawing.Point(546, 196);
+            this.btnAdicionarItemNoPedido.Location = new System.Drawing.Point(546, 184);
             this.btnAdicionarItemNoPedido.Name = "btnAdicionarItemNoPedido";
             this.btnAdicionarItemNoPedido.Size = new System.Drawing.Size(106, 43);
             this.btnAdicionarItemNoPedido.TabIndex = 4;
@@ -2518,7 +2352,7 @@ namespace DexComanda
             this.btnCancelarPedido.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnCancelarPedido.FlatAppearance.BorderSize = 5;
             this.btnCancelarPedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnCancelarPedido.Location = new System.Drawing.Point(411, 42);
+            this.btnCancelarPedido.Location = new System.Drawing.Point(409, 44);
             this.btnCancelarPedido.Name = "btnCancelarPedido";
             this.btnCancelarPedido.Size = new System.Drawing.Size(104, 37);
             this.btnCancelarPedido.TabIndex = 9;
@@ -2613,11 +2447,11 @@ namespace DexComanda
             // txbProduto
             // 
             this.txbProduto.AutoSize = true;
-            this.txbProduto.Location = new System.Drawing.Point(1, 140);
+            this.txbProduto.Location = new System.Drawing.Point(9, 128);
             this.txbProduto.Name = "txbProduto";
-            this.txbProduto.Size = new System.Drawing.Size(47, 13);
+            this.txbProduto.Size = new System.Drawing.Size(29, 13);
             this.txbProduto.TabIndex = 44;
-            this.txbProduto.Text = "Produto:";
+            this.txbProduto.Text = "Prod";
             // 
             // cbxProdutosGrid
             // 
@@ -2625,7 +2459,7 @@ namespace DexComanda
             this.cbxProdutosGrid.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbxProdutosGrid.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxProdutosGrid.FormattingEnabled = true;
-            this.cbxProdutosGrid.Location = new System.Drawing.Point(54, 133);
+            this.cbxProdutosGrid.Location = new System.Drawing.Point(54, 121);
             this.cbxProdutosGrid.Name = "cbxProdutosGrid";
             this.cbxProdutosGrid.Size = new System.Drawing.Size(232, 26);
             this.cbxProdutosGrid.TabIndex = 1;
@@ -2638,14 +2472,13 @@ namespace DexComanda
             this.gridViewItemsPedido.AllowUserToDeleteRows = false;
             this.gridViewItemsPedido.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridViewItemsPedido.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridViewItemsPedido.Location = new System.Drawing.Point(54, 250);
+            this.gridViewItemsPedido.Location = new System.Drawing.Point(12, 230);
             this.gridViewItemsPedido.Name = "gridViewItemsPedido";
             this.gridViewItemsPedido.ReadOnly = true;
             this.gridViewItemsPedido.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridViewItemsPedido.Size = new System.Drawing.Size(598, 124);
+            this.gridViewItemsPedido.Size = new System.Drawing.Size(640, 113);
             this.gridViewItemsPedido.TabIndex = 47;
             this.gridViewItemsPedido.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridViewItemsPedido_CellClick);
-            this.gridViewItemsPedido.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridViewItemsPedido_CellMouseClick);
             this.gridViewItemsPedido.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.EditarItem);
             this.gridViewItemsPedido.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gridViewItemsPedido_MouseClick);
             // 
@@ -2681,7 +2514,7 @@ namespace DexComanda
             // txtItemDescricao
             // 
             this.txtItemDescricao.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.txtItemDescricao.Location = new System.Drawing.Point(54, 196);
+            this.txtItemDescricao.Location = new System.Drawing.Point(54, 184);
             this.txtItemDescricao.Multiline = true;
             this.txtItemDescricao.Name = "txtItemDescricao";
             this.txtItemDescricao.Size = new System.Drawing.Size(480, 43);
@@ -2690,7 +2523,7 @@ namespace DexComanda
             // lblDescricaoDoItem
             // 
             this.lblDescricaoDoItem.AutoSize = true;
-            this.lblDescricaoDoItem.Location = new System.Drawing.Point(18, 204);
+            this.lblDescricaoDoItem.Location = new System.Drawing.Point(9, 192);
             this.lblDescricaoDoItem.Name = "lblDescricaoDoItem";
             this.lblDescricaoDoItem.Size = new System.Drawing.Size(29, 13);
             this.lblDescricaoDoItem.TabIndex = 53;
@@ -2701,7 +2534,7 @@ namespace DexComanda
             this.btnReimprimir.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnReimprimir.FlatAppearance.BorderSize = 5;
             this.btnReimprimir.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnReimprimir.Location = new System.Drawing.Point(284, 42);
+            this.btnReimprimir.Location = new System.Drawing.Point(284, 43);
             this.btnReimprimir.Name = "btnReimprimir";
             this.btnReimprimir.Size = new System.Drawing.Size(121, 37);
             this.btnReimprimir.TabIndex = 54;
@@ -2726,9 +2559,9 @@ namespace DexComanda
             this.panel2.Controls.Add(this.lbTotalPedido);
             this.panel2.Controls.Add(this.btnReimprimir);
             this.panel2.Controls.Add(this.btnGerarPedido);
-            this.panel2.Location = new System.Drawing.Point(0, 442);
+            this.panel2.Location = new System.Drawing.Point(10, 449);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(652, 123);
+            this.panel2.Size = new System.Drawing.Size(647, 116);
             this.panel2.TabIndex = 42;
             // 
             // lblStatusPedido
@@ -2747,9 +2580,9 @@ namespace DexComanda
             this.btnMultiploPagamento.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnMultiploPagamento.FlatAppearance.BorderSize = 5;
             this.btnMultiploPagamento.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnMultiploPagamento.Location = new System.Drawing.Point(275, 85);
+            this.btnMultiploPagamento.Location = new System.Drawing.Point(275, 82);
             this.btnMultiploPagamento.Name = "btnMultiploPagamento";
-            this.btnMultiploPagamento.Size = new System.Drawing.Size(178, 37);
+            this.btnMultiploPagamento.Size = new System.Drawing.Size(178, 31);
             this.btnMultiploPagamento.TabIndex = 61;
             this.btnMultiploPagamento.Text = "+ F. Pagamento [F10]";
             this.btnMultiploPagamento.UseVisualStyleBackColor = true;
@@ -2774,7 +2607,7 @@ namespace DexComanda
             this.btnCalGarcon.FlatAppearance.BorderSize = 5;
             this.btnCalGarcon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCalGarcon.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnCalGarcon.Location = new System.Drawing.Point(521, 42);
+            this.btnCalGarcon.Location = new System.Drawing.Point(519, 44);
             this.btnCalGarcon.Name = "btnCalGarcon";
             this.btnCalGarcon.Size = new System.Drawing.Size(117, 37);
             this.btnCalGarcon.TabIndex = 59;
@@ -2822,7 +2655,7 @@ namespace DexComanda
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.label5.ForeColor = System.Drawing.Color.DarkSlateGray;
-            this.label5.Location = new System.Drawing.Point(467, 15);
+            this.label5.Location = new System.Drawing.Point(464, 15);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(59, 20);
             this.label5.TabIndex = 55;
@@ -2831,11 +2664,11 @@ namespace DexComanda
             // cbxMeiaPizza
             // 
             this.cbxMeiaPizza.AutoSize = true;
-            this.cbxMeiaPizza.Location = new System.Drawing.Point(550, 137);
+            this.cbxMeiaPizza.Location = new System.Drawing.Point(580, 124);
             this.cbxMeiaPizza.Name = "cbxMeiaPizza";
-            this.cbxMeiaPizza.Size = new System.Drawing.Size(115, 17);
+            this.cbxMeiaPizza.Size = new System.Drawing.Size(72, 17);
             this.cbxMeiaPizza.TabIndex = 54;
-            this.cbxMeiaPizza.Text = "Pizza de 2 sabores";
+            this.cbxMeiaPizza.Text = "2 sabores";
             this.cbxMeiaPizza.UseVisualStyleBackColor = true;
             this.cbxMeiaPizza.CheckedChanged += new System.EventHandler(this.cbxMeiaPizza_CheckedChanged);
             // 
@@ -2846,7 +2679,7 @@ namespace DexComanda
             this.cbxSabor.Enabled = false;
             this.cbxSabor.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.cbxSabor.FormattingEnabled = true;
-            this.cbxSabor.Location = new System.Drawing.Point(315, 133);
+            this.cbxSabor.Location = new System.Drawing.Point(315, 121);
             this.cbxSabor.Name = "cbxSabor";
             this.cbxSabor.Size = new System.Drawing.Size(225, 26);
             this.cbxSabor.TabIndex = 55;
@@ -2876,9 +2709,9 @@ namespace DexComanda
             this.panel3.Controls.Add(this.lblTrocoPara);
             this.panel3.Controls.Add(this.txtTrocoPara);
             this.panel3.Controls.Add(this.lblFormaDePagamento);
-            this.panel3.Location = new System.Drawing.Point(55, 379);
+            this.panel3.Location = new System.Drawing.Point(12, 348);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(597, 55);
+            this.panel3.Size = new System.Drawing.Size(640, 55);
             this.panel3.TabIndex = 57;
             // 
             // label7
@@ -2912,8 +2745,8 @@ namespace DexComanda
             this.cmbFPagamento.Location = new System.Drawing.Point(303, 23);
             this.cmbFPagamento.Name = "cmbFPagamento";
             this.cmbFPagamento.Size = new System.Drawing.Size(208, 26);
-            this.cmbFPagamento.TabIndex = 7;
-            this.cmbFPagamento.SelectedIndexChanged += new System.EventHandler(this.cmbFPagamento_SelectedIndexChanged);
+            this.cmbFPagamento.TabIndex = 99;
+
             this.cmbFPagamento.SelectionChangeCommitted += new System.EventHandler(this.cmbFPagamento_SelectionChangeCommitted);
             // 
             // cbxTrocoParaOK
@@ -2922,14 +2755,14 @@ namespace DexComanda
             this.cbxTrocoParaOK.Location = new System.Drawing.Point(7, 5);
             this.cbxTrocoParaOK.Name = "cbxTrocoParaOK";
             this.cbxTrocoParaOK.Size = new System.Drawing.Size(65, 17);
-            this.cbxTrocoParaOK.TabIndex = 5;
+            this.cbxTrocoParaOK.TabIndex = 7;
             this.cbxTrocoParaOK.Text = "S/ troco";
             this.cbxTrocoParaOK.UseVisualStyleBackColor = true;
             this.cbxTrocoParaOK.CheckedChanged += new System.EventHandler(this.cbxTrocoParaOK_CheckedChanged);
             // 
             // btnReceita
             // 
-            this.btnReceita.Location = new System.Drawing.Point(292, 135);
+            this.btnReceita.Location = new System.Drawing.Point(292, 123);
             this.btnReceita.Name = "btnReceita";
             this.btnReceita.Size = new System.Drawing.Size(17, 23);
             this.btnReceita.TabIndex = 58;
@@ -2940,7 +2773,7 @@ namespace DexComanda
             // txtCodProduto1
             // 
             this.txtCodProduto1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCodProduto1.Location = new System.Drawing.Point(54, 101);
+            this.txtCodProduto1.Location = new System.Drawing.Point(54, 89);
             this.txtCodProduto1.Name = "txtCodProduto1";
             this.txtCodProduto1.Size = new System.Drawing.Size(71, 26);
             this.txtCodProduto1.TabIndex = 0;
@@ -2951,7 +2784,7 @@ namespace DexComanda
             // txtCodProduto2
             // 
             this.txtCodProduto2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCodProduto2.Location = new System.Drawing.Point(315, 100);
+            this.txtCodProduto2.Location = new System.Drawing.Point(315, 88);
             this.txtCodProduto2.Name = "txtCodProduto2";
             this.txtCodProduto2.Size = new System.Drawing.Size(71, 26);
             this.txtCodProduto2.TabIndex = 60;
@@ -2968,7 +2801,7 @@ namespace DexComanda
             "0 - Entrega",
             "1 - Mesa",
             "2 - Balcao"});
-            this.cbxTipoPedido.Location = new System.Drawing.Point(409, 100);
+            this.cbxTipoPedido.Location = new System.Drawing.Point(409, 88);
             this.cbxTipoPedido.Name = "cbxTipoPedido";
             this.cbxTipoPedido.Size = new System.Drawing.Size(132, 26);
             this.cbxTipoPedido.TabIndex = 61;
@@ -2986,7 +2819,7 @@ namespace DexComanda
             this.cbxListaMesas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbxListaMesas.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxListaMesas.FormattingEnabled = true;
-            this.cbxListaMesas.Location = new System.Drawing.Point(546, 100);
+            this.cbxListaMesas.Location = new System.Drawing.Point(546, 88);
             this.cbxListaMesas.Name = "cbxListaMesas";
             this.cbxListaMesas.Size = new System.Drawing.Size(106, 26);
             this.cbxListaMesas.TabIndex = 62;
@@ -3246,12 +3079,47 @@ namespace DexComanda
             this.chkListAdicionais.TabIndex = 0;
             this.chkListAdicionais.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkListAdicionais_ItemCheck);
             // 
+            // grpVendedor
+            // 
+            this.grpVendedor.Controls.Add(this.cbxVendedor);
+            this.grpVendedor.Controls.Add(this.txtCodVendedor);
+            this.grpVendedor.Location = new System.Drawing.Point(12, 404);
+            this.grpVendedor.Name = "grpVendedor";
+            this.grpVendedor.Size = new System.Drawing.Size(218, 44);
+            this.grpVendedor.TabIndex = 69;
+            this.grpVendedor.TabStop = false;
+            this.grpVendedor.Text = "Vendedor / Atendente";
+            // 
+            // cbxVendedor
+            // 
+            this.cbxVendedor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbxVendedor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbxVendedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxVendedor.Enabled = false;
+            this.cbxVendedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.cbxVendedor.FormattingEnabled = true;
+            this.cbxVendedor.Location = new System.Drawing.Point(59, 12);
+            this.cbxVendedor.Name = "cbxVendedor";
+            this.cbxVendedor.Size = new System.Drawing.Size(137, 26);
+            this.cbxVendedor.TabIndex = 69;
+            // 
+            // txtCodVendedor
+            // 
+            this.txtCodVendedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCodVendedor.Location = new System.Drawing.Point(5, 13);
+            this.txtCodVendedor.Name = "txtCodVendedor";
+            this.txtCodVendedor.Size = new System.Drawing.Size(40, 26);
+            this.txtCodVendedor.TabIndex = 68;
+            this.txtCodVendedor.TextChanged += new System.EventHandler(this.BuscaVendedor);
+            this.txtCodVendedor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodVendedor_KeyPress);
+            // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1051, 568);
+            this.Controls.Add(this.grpVendedor);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.cbxListaMesas);
@@ -3286,7 +3154,6 @@ namespace DexComanda
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[XDelivery ] Cadastrar Pedido";
             this.Activated += new System.EventHandler(this.frmCadastrarPedido_Activated);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCadastrarPedido_FormClosed);
             this.Load += new System.EventHandler(this.frmCadastrarPedido_Load);
             this.Shown += new System.EventHandler(this.frmCadastrarPedido_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastrarPedido_KeyDown);
@@ -3305,6 +3172,8 @@ namespace DexComanda
             this.panel5.PerformLayout();
             this.grpBoxTamanhos.ResumeLayout(false);
             this.grpBoxTamanhos.PerformLayout();
+            this.grpVendedor.ResumeLayout(false);
+            this.grpVendedor.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3388,7 +3257,8 @@ namespace DexComanda
                 Codigo = codPedido,
                 NumeroMesa = gNUmeroMesa,
                 TotalPedido = dTotalPedido,
-                Tipo = cbxTipoPedido.Text
+                Tipo = cbxTipoPedido.Text,
+                CodUsuario = int.Parse(txtCodVendedor.Text)
             };
             con.Update("spAlterarTotalPedido", pedi);
         }
@@ -4037,6 +3907,26 @@ namespace DexComanda
         private void frmCadastrarPedido_Activated(object sender, EventArgs e)
         {
          
+        }
+
+        private void BuscaVendedor(object sender, EventArgs e)
+        {
+            if (codPedido!=0 && !PedidoRepetio)
+            {
+                if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "EditaPedidoSN"))
+                {
+                    return;
+                }
+            }
+            if (txtCodVendedor.Text!="")
+            {
+                Utils.MontaCombox(cbxVendedor, "Nome","Codigo","Usuario", "spObterUsuarioPorCodigo", int.Parse(txtCodVendedor.Text));
+            }
+        }
+
+        private void txtCodVendedor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoPermiteNumeros(e);
         }
 
         private void cbxSabor_SelectedIndexChanged(object sender, EventArgs e)

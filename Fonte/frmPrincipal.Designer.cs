@@ -1008,22 +1008,23 @@
             // 
             // txtBurcarValor
             // 
-            this.txtBurcarValor.AccessibleName = "\\";
+            this.txtBurcarValor.AccessibleName = "";
             this.txtBurcarValor.BackColor = System.Drawing.SystemColors.Window;
             this.txtBurcarValor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBurcarValor.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
             this.txtBurcarValor.Location = new System.Drawing.Point(227, 6);
             this.txtBurcarValor.Name = "txtBurcarValor";
             this.txtBurcarValor.Size = new System.Drawing.Size(276, 29);
-            this.txtBurcarValor.TabIndex = 20;
+            this.txtBurcarValor.TabIndex = 2;
             this.txtBurcarValor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BuscarCliente);
             // 
             // cbxBuscarPor
             // 
-            this.cbxBuscarPor.AccessibleName = "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\";
+            this.cbxBuscarPor.AccessibleName = "";
             this.cbxBuscarPor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxBuscarPor.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F);
             this.cbxBuscarPor.FormattingEnabled = true;
+            this.cbxBuscarPor.ItemHeight = 22;
             this.cbxBuscarPor.Items.AddRange(new object[] {
             "Nome",
             "Telefone",
@@ -1217,7 +1218,7 @@
             this.btnConsultarTelefone.Location = new System.Drawing.Point(377, 3);
             this.btnConsultarTelefone.Name = "btnConsultarTelefone";
             this.btnConsultarTelefone.Size = new System.Drawing.Size(124, 40);
-            this.btnConsultarTelefone.TabIndex = 20;
+            this.btnConsultarTelefone.TabIndex = 1;
             this.btnConsultarTelefone.Text = "Consultar / Cadastra [F12] ";
             this.btnConsultarTelefone.UseVisualStyleBackColor = true;
             this.btnConsultarTelefone.Click += new System.EventHandler(this.ConsultarCliente);
@@ -1230,7 +1231,7 @@
             this.txbTelefoneCliente.Location = new System.Drawing.Point(73, 11);
             this.txbTelefoneCliente.Name = "txbTelefoneCliente";
             this.txbTelefoneCliente.Size = new System.Drawing.Size(292, 29);
-            this.txbTelefoneCliente.TabIndex = 19;
+            this.txbTelefoneCliente.TabIndex = 0;
             this.txbTelefoneCliente.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbTelefoneCliente_KeyPress);
             // 
             // lblCaixa

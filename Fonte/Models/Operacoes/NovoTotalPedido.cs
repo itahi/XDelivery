@@ -12,6 +12,7 @@ namespace DexComanda.Models.Operacoes
         public decimal TotalPedido { get; set; }
         public string Tipo { get; set; }
         public string NumeroMesa { get; set; }
-        
+        public int CodUsuario { get; set; }
+
     }
 }

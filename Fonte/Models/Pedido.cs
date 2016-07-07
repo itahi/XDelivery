@@ -21,6 +21,6 @@ namespace DexComanda.Models
         public int CodigoMesa { get; set; }
         public decimal DescontoValor { get; set; }
         public int CodigoPedidoWS { get; set; }
-       // public int CodUsuario { get; set; }
+        public int CodUsuario { get; set; }
     }
 }

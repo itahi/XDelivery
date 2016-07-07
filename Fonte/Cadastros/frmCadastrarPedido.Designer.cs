@@ -83,5 +83,8 @@
         private System.Windows.Forms.Button btnAtlCadastro;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblStatusPedido;
+        private System.Windows.Forms.GroupBox grpVendedor;
+        private System.Windows.Forms.ComboBox cbxVendedor;
+        private System.Windows.Forms.TextBox txtCodVendedor;
     }
 }

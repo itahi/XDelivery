@@ -572,6 +572,7 @@ namespace DexComanda
             string strDescPedido = DvPedido.ItemArray.GetValue(14).ToString();
             string strTroco = "0,00";
             decimal MargemGarcon = decimal.Parse(DvPedido.ItemArray.GetValue(16).ToString());
+            int intCodVendedor = int.Parse(DvPedido.ItemArray.GetValue(17).ToString());
             if (strTrocoPara != "0,00" && strTrocoPara != "0")
             {
                 strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
@@ -580,7 +581,7 @@ namespace DexComanda
             frmCadastrarPedido frm = new frmCadastrarPedido(false, strDescPedido, DvPedido.ItemArray.GetValue(9).ToString(),
                                       strTroco, TaxaServico, true, Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString()),
                                       int.Parse(DvPedido.ItemArray.GetValue(1).ToString()), int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), DvPedido.ItemArray.GetValue(4).ToString(),
-                                      DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(), null, decimal.Parse(strTotalPedido), MargemGarcon);
+                                      DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(), null, decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor);
             frm.ShowDialog();
         }
         private void EditarPedido(object sender, DataGridViewCellEventArgs e)
@@ -1152,22 +1153,22 @@ namespace DexComanda
 
         private void BuscarCliente(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                if (cbxBuscarPor.Text != "")
-                {
-                    string propriedade = cbxBuscarPor.SelectedItem.ToString();
+            //if (e.KeyCode == Keys.Enter)
+            //{
+                //if (cbxBuscarPor.Text != "")
+                //{
+                    string propriedade = cbxBuscarPor.SelectedText.ToString();
                     string valor = txtBurcarValor.Text;
                     DataSet dsResult;
-                    if (!propriedade.Equals(""))
-                    {
-                        if (!valor.Equals(""))
-                        {
+                    //if (!propriedade.Equals(""))
+                    //{
+                        //if (!valor.Equals(""))
+                        //{
                             if (propriedade.Equals("Telefone"))
                             {
                                 dsResult = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", valor);
                             }
-                            else if (propriedade.Equals("Nome"))
+                            else if (propriedade.Equals("Nome") || propriedade.Equals(""))
                             {
                                 dsResult = con.SelectPessoaPorNome(valor, Sessions.SqlPessoa, "Nome");
                             }
@@ -1180,23 +1181,23 @@ namespace DexComanda
                             this.clientesGridView.AutoGenerateColumns = true;
                             this.clientesGridView.DataSource = dsResult;
                             this.clientesGridView.DataMember = "Pessoa";
-                        }
-                        else
-                        {
-                            MessageBox.Show("Informe Nome ou Telefone.");
-                            Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
-                            // Utils.PopularGrid("Pessoas", this.clientesGridView);
+                        //}
+                        //else
+                        //{
+                        //    MessageBox.Show("Informe Nome ou Telefone.");
+                        //    Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
+                        //    // Utils.PopularGrid("Pessoas", this.clientesGridView);
 
 
-                        }
-                    }
+                        //}
+                   // }
 
-                }
-                else
-                {
-                    MessageBox.Show("Informe se a busca é por Nome ou Telefone");
-                }
-            }
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Informe se a busca é por Nome ou Telefone");
+                //}
+          //  }
         }
         private void VerificaRegistroASincronizar()
         {
@@ -1244,6 +1245,10 @@ namespace DexComanda
                 if (txbTelefoneCliente.Focused)
                 {
                     BuscarCliente(txbTelefoneCliente.Text);
+                }
+                else
+                {
+                    txtBurcarValor.Focus();
                 }
 
             }

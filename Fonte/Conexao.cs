@@ -558,7 +558,7 @@ namespace DexComanda
                                   "   from RegiaoEntrega RG " +
                                   "  join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo" +
                                   "  WHERE (RG.DataAlteracao > RG.DataSincronismo or RG.DataSincronismo is null ) ";
-                                 // " and RG.ONLINESN=1 ";
+            // " and RG.ONLINESN=1 ";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -601,12 +601,12 @@ namespace DexComanda
         //    return ds;
 
         //}
-        public void AtualizaProdutosOpcao( int iCodOpcao)
+        public void AtualizaProdutosOpcao(int iCodOpcao)
         {
             string lSqlConsulta;
-            lSqlConsulta = "Update Produto set DataAlteracao=GetDate() "+
-                           "where Codigo in (Select CodProduto from Produto_Opcao "+
-                           "where CodOpcao="+iCodOpcao.ToString()+")";   
+            lSqlConsulta = "Update Produto set DataAlteracao=GetDate() " +
+                           "where Codigo in (Select CodProduto from Produto_Opcao " +
+                           "where CodOpcao=" + iCodOpcao.ToString() + ")";
             // and AtivoSN=1";
 
             command = new SqlCommand(lSqlConsulta, conn);
@@ -616,12 +616,12 @@ namespace DexComanda
         }
 
 
-        public void AtualizaDataSincronismo(string iNomeTable, int iCodigo, string iDataAtualizar = "DataSincronismo",string NomeCod="Codigo")
+        public void AtualizaDataSincronismo(string iNomeTable, int iCodigo, string iDataAtualizar = "DataSincronismo", string NomeCod = "Codigo")
         {
             string lSqlConsulta;
             if (iCodigo != -1)
             {
-                lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where "+ NomeCod +"= " + iCodigo;
+                lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where " + NomeCod + "= " + iCodigo;
             }
             else
             {
@@ -634,7 +634,7 @@ namespace DexComanda
             command.ExecuteNonQuery();
 
         }
-        public void AtualizaDataSincronismo(string iNomeTable, int iCodProduto, int iCodOpcao, string iDataAtualizar = "DataSincronismo",string NomeCod = "Codigo")
+        public void AtualizaDataSincronismo(string iNomeTable, int iCodProduto, int iCodOpcao, string iDataAtualizar = "DataSincronismo", string NomeCod = "Codigo")
         {
             string lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where CodProduto=" + iCodProduto + " and CodOpcao=" + iCodOpcao;// and AtivoSN=1";
 
@@ -908,10 +908,6 @@ namespace DexComanda
                 }
                 foreach (PropertyInfo propriedade in properties)
                 {
-                    //if (spName== "spAdicionarGrupo")
-                    //{
-
-                    //}
                     if (!propriedade.Name.Equals("Codigo"))
                     {
                         if (!propriedade.Name.Equals("cod"))
@@ -996,8 +992,16 @@ namespace DexComanda
                 {
                     if (!propriedade.Name.Equals("Codigo"))
                     {
-                        Console.WriteLine(propriedade.Name);
-                        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                        if (propriedade.Name.ToString() == "CodUsuario" && propriedade.GetValue(obj).ToString() == "0")
+                        {
+                            command.Parameters.AddWithValue("@" + propriedade.Name, DBNull.Value);
+                        }
+                        else
+                        {
+                            Console.WriteLine(propriedade.Name);
+                            command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                        }
+                        
                     }
                 }
 
@@ -1027,7 +1031,6 @@ namespace DexComanda
                 {
                     if (!propriedade.Name.Equals("Codigo"))
                     {
-
                         Console.WriteLine(propriedade.Name);
                         command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
                     }
@@ -1115,7 +1118,7 @@ namespace DexComanda
 
                 if (spName == "spAlterarTotalPedido")
                 {
-                    if (p.Name.Equals("Codigo") || p.Name.Equals("TotalPedido") || p.Name.Equals("Tipo") || p.Name.Equals("NumeroMesa"))
+                    if (p.Name.Equals("CodUsuario")|| p.Name.Equals("Codigo") || p.Name.Equals("TotalPedido") || p.Name.Equals("Tipo") || p.Name.Equals("NumeroMesa"))
                     {
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
@@ -1452,7 +1455,7 @@ namespace DexComanda
                 MessageBox.Show(erro.Message);
             }
 
-            
+
 
             return ds;
         }
@@ -1584,7 +1587,7 @@ namespace DexComanda
             {
                 command.Parameters.AddWithValue("@NumeroMesa", codigo);
             }
-             else if (spName == "spObterUsuarioPorCodigo")
+            else if (spName == "spObterUsuarioPorCodigo")
             {
                 command.Parameters.AddWithValue("@Codigo", codigo);
             }
