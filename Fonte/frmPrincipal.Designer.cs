@@ -140,6 +140,8 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
+            this.impressãoTermicaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vendasPorVendedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -338,7 +340,8 @@
             this.porPessoaToolStripMenuItem,
             this.diárioToolStripMenuItem,
             this.mensalToolStripMenuItem,
-            this.exportarDadosToolStripMenuItem});
+            this.exportarDadosToolStripMenuItem,
+            this.impressãoTermicaToolStripMenuItem});
             this.relatórioToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.relatórioToolStripMenuItem.Name = "relatórioToolStripMenuItem";
             this.relatórioToolStripMenuItem.Size = new System.Drawing.Size(85, 25);
@@ -1254,6 +1257,21 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
+            // impressãoTermicaToolStripMenuItem
+            // 
+            this.impressãoTermicaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.vendasPorVendedorToolStripMenuItem});
+            this.impressãoTermicaToolStripMenuItem.Name = "impressãoTermicaToolStripMenuItem";
+            this.impressãoTermicaToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
+            this.impressãoTermicaToolStripMenuItem.Text = "Impressão Termica";
+            // 
+            // vendasPorVendedorToolStripMenuItem
+            // 
+            this.vendasPorVendedorToolStripMenuItem.Name = "vendasPorVendedorToolStripMenuItem";
+            this.vendasPorVendedorToolStripMenuItem.Size = new System.Drawing.Size(229, 26);
+            this.vendasPorVendedorToolStripMenuItem.Text = "Vendas por Vendedor";
+            this.vendasPorVendedorToolStripMenuItem.Click += new System.EventHandler(this.vendasPorVendedorToolStripMenuItem_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1408,5 +1426,7 @@
         private System.Windows.Forms.ToolStripMenuItem grupoToolStripMenuItem;
         private System.Windows.Forms.CheckBox chkSEmFotos;
         private System.Windows.Forms.ToolStripMenuItem notificaçõesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem impressãoTermicaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem vendasPorVendedorToolStripMenuItem;
     }
 }

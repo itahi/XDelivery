@@ -34,7 +34,8 @@ namespace DexComanda.Cadastros.Produto
                         Nome = txtNome.Text,
                         Tipo = cbxTipo.SelectedValue.ToString(),
                         OnlineSN = chkOnlineSN.Checked,
-                        AtivoSN = chkAtivoSN.Checked
+                        AtivoSN = chkAtivoSN.Checked,
+                        SinalOpcao = txtSinalOpcao.Text
 
                     };
                     con.Insert("spAdicionarOpcao", opcao);
@@ -120,6 +121,7 @@ namespace DexComanda.Cadastros.Produto
                 txtNome.Text = ds.Tables[0].Rows[0].Field<string>("Nome");
                 chkAtivoSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("AtivoSN");
                 chkOnlineSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("OnlineSN");
+                txtSinalOpcao.Text = ds.Tables[0].Rows[0].Field<string>("SinalOpcao");
 
                 this.btnAdicionar.Text = "Salvar [F12]";
                 this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
@@ -161,7 +163,8 @@ namespace DexComanda.Cadastros.Produto
                     Tipo = cbxTipo.SelectedValue.ToString(),
                     DataAlteracao= DateTime.Now,
                     OnlineSN = chkOnlineSN.Checked,
-                    AtivoSN = chkAtivoSN.Checked
+                    AtivoSN = chkAtivoSN.Checked,
+                    SinalOpcao = txtSinalOpcao.Text
                 };
                 con.Update("spAlteraOpcao", opcao);
                 // Utils.LimpaForm(this);

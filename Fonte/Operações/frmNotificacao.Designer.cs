@@ -40,8 +40,8 @@
             this.txtTitulo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rbInstantaneo = new System.Windows.Forms.RadioButton();
             this.rbControlado = new System.Windows.Forms.RadioButton();
+            this.rbInstantaneo = new System.Windows.Forms.RadioButton();
             this.tpRadio = new System.Windows.Forms.ToolTip(this.components);
             this.grpAgendamento.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -118,6 +118,7 @@
             this.chkAgendarEnvio.Size = new System.Drawing.Size(102, 17);
             this.chkAgendarEnvio.TabIndex = 7;
             this.chkAgendarEnvio.Text = "Agendar Envio?";
+            this.tpRadio.SetToolTip(this.chkAgendarEnvio, "Programa o inicio do envio para o dia e horario pré definidos");
             this.chkAgendarEnvio.UseVisualStyleBackColor = true;
             this.chkAgendarEnvio.CheckStateChanged += new System.EventHandler(this.chkAgendarEnvio_CheckStateChanged);
             // 
@@ -149,17 +150,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tipo Envio";
             // 
-            // rbInstantaneo
-            // 
-            this.rbInstantaneo.AutoSize = true;
-            this.rbInstantaneo.Location = new System.Drawing.Point(13, 21);
-            this.rbInstantaneo.Name = "rbInstantaneo";
-            this.rbInstantaneo.Size = new System.Drawing.Size(81, 17);
-            this.rbInstantaneo.TabIndex = 0;
-            this.rbInstantaneo.Text = "Instantaneo";
-            this.tpRadio.SetToolTip(this.rbInstantaneo, "Entrega a todos ao mesmo tempo");
-            this.rbInstantaneo.UseVisualStyleBackColor = true;
-            // 
             // rbControlado
             // 
             this.rbControlado.AutoSize = true;
@@ -172,6 +162,22 @@
             this.rbControlado.Text = "Controlado";
             this.tpRadio.SetToolTip(this.rbControlado, "Entrega no horario que o cliente costuma acessar o site/app");
             this.rbControlado.UseVisualStyleBackColor = true;
+            // 
+            // rbInstantaneo
+            // 
+            this.rbInstantaneo.AutoSize = true;
+            this.rbInstantaneo.Location = new System.Drawing.Point(13, 21);
+            this.rbInstantaneo.Name = "rbInstantaneo";
+            this.rbInstantaneo.Size = new System.Drawing.Size(81, 17);
+            this.rbInstantaneo.TabIndex = 0;
+            this.rbInstantaneo.Text = "Instantaneo";
+            this.tpRadio.SetToolTip(this.rbInstantaneo, "Entrega a todos ao mesmo tempo");
+            this.rbInstantaneo.UseVisualStyleBackColor = true;
+            // 
+            // tpRadio
+            // 
+            this.tpRadio.IsBalloon = true;
+            this.tpRadio.OwnerDraw = true;
             // 
             // frmNotificacao
             // 

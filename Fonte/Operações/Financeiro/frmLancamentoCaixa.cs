@@ -58,7 +58,7 @@ namespace DexComanda.Cadastros
             {
                 intNumCaixa =int.Parse(cbxCaixas.SelectedText.ToString());
             }
-            if (Utils.CaixaAberto(Convert.ToDateTime(dtMovimento.Value.ToShortDateString()), intNumCaixa))
+            if (Utils.CaixaAberto(Convert.ToDateTime(dtMovimento.Value.ToShortDateString()), intNumCaixa,Sessions.retunrUsuario.Turno))
             {
                 CaixaMovimento cxMovimento = new CaixaMovimento()
                 {

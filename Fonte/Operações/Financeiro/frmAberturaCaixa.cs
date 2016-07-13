@@ -44,6 +44,21 @@ namespace DexComanda.Operações.Financeiro
         {
             try
             {
+                if (cbxTurno.Text=="")
+                {
+                    MessageBox.Show("Selecione o turno que deseja abrir");
+                    return;
+                }
+
+                DataSet dsCaixa = con.RetornaCaixaPorTurno(int.Parse(cbxCaixas.Text), cbxTurno.Text, Convert.ToDateTime(dtAbertura.Value.ToShortDateString()));
+                if (dsCaixa.Tables[0].Rows.Count>0)
+                {
+                    if (Boolean.Parse(dsCaixa.Tables[0].Rows[0].ItemArray.GetValue(7).ToString())==false)
+                    {
+                        MessageBox.Show(Bibliotecas.cCaixaAbertoTurno);
+                        return;
+                    }
+                }
                 if (Utils.EfetuarLogin(cbxFuncionario.Text, txtSenha.Text, false))
                 {
                     Caixa caixa = new Caixa()
@@ -52,7 +67,8 @@ namespace DexComanda.Operações.Financeiro
                         Estado = false /*Caixa Aber*/,
                         Historico = "Abertura Inicial",
                         ValorAbertura = decimal.Parse(txtValor.Text),
-                        Numero = cbxCaixas.Text
+                        Numero = cbxCaixas.Text,
+                        Turno = cbxTurno.Text.ToString()
 
                     };
                     if (cbxFuncionario.Text != "")

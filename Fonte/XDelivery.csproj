@@ -165,6 +165,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bibliotecas.cs" />
+    <Compile Include="Cadastros\Financeiro\frmCadTurno.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Financeiro\frmCadTurno.Designer.cs">
+      <DependentUpon>frmCadTurno.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cadastros\frmAdicionarMesa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,10 +207,10 @@
     <Compile Include="Cadastros\RegiaoEntrega\frmBairrosRegiao.Designer.cs">
       <DependentUpon>frmBairrosRegiao.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cadastros\frmCadCaixa.cs">
+    <Compile Include="Cadastros\Financeiro\frmCadCaixa.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cadastros\frmCadCaixa.Designer.cs">
+    <Compile Include="Cadastros\Financeiro\frmCadCaixa.Designer.cs">
       <DependentUpon>frmCadCaixa.cs</DependentUpon>
     </Compile>
     <Compile Include="Cadastros\frmCadHistorico.cs">
@@ -517,10 +523,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsRelatorio.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Cadastros\frmCadastrarFormaPagamento.cs">
+    <Compile Include="Cadastros\Financeiro\frmCadastrarFormaPagamento.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cadastros\frmCadastrarFormaPagamento.Designer.cs">
+    <Compile Include="Cadastros\Financeiro\frmCadastrarFormaPagamento.Designer.cs">
       <DependentUpon>frmCadastrarFormaPagamento.cs</DependentUpon>
     </Compile>
     <Compile Include="Cadastros\frmCadastrarPedido.cs">
@@ -736,6 +742,18 @@
       <DependentUpon>RelTickeMedio.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportVendasPorVendedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportVendasPorVendedor.Designer.cs">
+      <DependentUpon>frmReportVendasPorVendedor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\Impressao Termica\RelVendasPorVendedor.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelVendasPorVendedor.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Gerenciais\frmReportTickeMedio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -755,6 +773,9 @@
       <DependentUpon>Splashcreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils.cs" />
+    <EmbeddedResource Include="Cadastros\Financeiro\frmCadTurno.resx">
+      <DependentUpon>frmCadTurno.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmAdicionarMesa.resx">
       <DependentUpon>frmAdicionarMesa.cs</DependentUpon>
     </EmbeddedResource>
@@ -773,7 +794,7 @@
     <EmbeddedResource Include="Cadastros\RegiaoEntrega\frmBairrosRegiao.resx">
       <DependentUpon>frmBairrosRegiao.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\frmCadCaixa.resx">
+    <EmbeddedResource Include="Cadastros\Financeiro\frmCadCaixa.resx">
       <DependentUpon>frmCadCaixa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmCadHistorico.resx">
@@ -919,7 +940,7 @@
     <EmbeddedResource Include="Cadastros\frmCadastrarEntregador.resx">
       <DependentUpon>frmCadastrarEntregador.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\frmCadastrarFormaPagamento.resx">
+    <EmbeddedResource Include="Cadastros\Financeiro\frmCadastrarFormaPagamento.resx">
       <DependentUpon>frmCadastrarFormaPagamento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmCadastrarPedido.resx">
@@ -993,6 +1014,13 @@
     <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelTickeMedio.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelTickeMedio.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportVendasPorVendedor.resx">
+      <DependentUpon>frmReportVendasPorVendedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\Impressao Termica\RelVendasPorVendedor.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelVendasPorVendedor.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\frmReportTickeMedio.resx">
       <DependentUpon>frmReportTickeMedio.cs</DependentUpon>

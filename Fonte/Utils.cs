@@ -71,7 +71,7 @@ namespace DexComanda
         public static Boolean bMult;
         private static string strProxImpressora = "";
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
-        public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1,Boolean iAlterarUserLogado=false)
+        public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1,Boolean iAlterarUserLogado=false,string iTurno="Dia")
         {
 
             try
@@ -119,7 +119,8 @@ namespace DexComanda
                                 EditaPedidoSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(10).ToString()),
                                 VisualizaDadosClienteSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(11).ToString()),
                                 AlteraDadosClienteSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(12).ToString()),
-                                CaixaLogado = iNumCaixa
+                                CaixaLogado = iNumCaixa,
+                                Turno = iTurno
 
                             };
                             Sessions.retunrUsuario = Sessions.retunrUsuario;
@@ -203,6 +204,7 @@ namespace DexComanda
             //}
             return Logado;
         }
+     
         public static Usuario RetornaDadosUsuario(string iNome, string iSenha)
         {
             Conexao conexao = new Conexao();
@@ -1144,7 +1146,7 @@ namespace DexComanda
 
         }
 
-        public static bool CaixaAberto(DateTime iDataRegistro, int iNumero)
+        public static bool CaixaAberto(DateTime iDataRegistro, int iNumero,string iTurno)
         {
             bool iRetorno = false;
             DataRow dRow;
@@ -1152,7 +1154,7 @@ namespace DexComanda
             conexao = new Conexao();
             try
             {
-                dsCaixa = conexao.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", iDataRegistro, iNumero);
+                dsCaixa = conexao.RetornaCaixaPorTurno(iNumero,iTurno ,Convert.ToDateTime(iDataRegistro.ToShortDateString()));
                 if (dsCaixa.Tables[0].Rows.Count > 0)
                 {
                     dRow = dsCaixa.Tables[0].Rows[0];

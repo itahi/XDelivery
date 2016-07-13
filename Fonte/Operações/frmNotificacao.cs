@@ -32,44 +32,53 @@ namespace DexComanda.Operações
             }
             else
             {
-                strModoEntrega = "timezone";
+                return "";
+               // strModoEntrega = "timezone";
             }
 
             return "\"delayed_option\": \"" + strModoEntrega + "\" ,";
         }
-        //private string Agendamento()
-        //{
-        //    CultureInfo culturaAmericana = new CultureInfo("en-US", true);
+        private string Agendamento()
+        {
+            string idata = "";
+            try
+            {
+                CultureInfo culturaAmericana = new CultureInfo("en-US", true);
+                TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
+                DateTime dt = DateTime.Parse(dtEnvio.Value.ToShortDateString());
+                DateTime time = DateTime.Parse(horaEnvio.Value.ToShortDateString());
+                DateTime dtAgendamento = DateTime.Parse(dt.ToShortDateString());
+                if (grpAgendamento.Enabled)
+                {
+                    // Cria uma instância com as informações da cultura americana
 
-        //    TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
-        //    DateTime dtAgendamento = TimeZoneInfo.ConvertTimeToUtc(Convert.ToDateTime(dtEnvio.Value + " " + horaEnvio.Value).ToUniversalTime(), tz);
-        //    if (grpAgendamento.Enabled)
-        //    {
-        //        // Cria uma instância com as informações da cultura americana
+                    culturaAmericana.DateTimeFormat.FullDateTimePattern = "";
+                    ////if (Convert.ToDateTime(dtAgendamento) <= DateTime.Now)
+                    ////{
+                    ////    MessageBox.Show("Data/Hora Agendamento não pode ser inferior a Data/Hora Atual");
+                    ////    return;
+                    ////}
 
-        //        // culturaAmericana.DateTimeFormat.FullDateTimePattern = "";
-        //        //if (Convert.ToDateTime(dtAgendamento) <= DateTime.Now)
-        //        //{
-        //        //    MessageBox.Show("Data/Hora Agendamento não pode ser inferior a Data/Hora Atual");
-        //        //   // return;
-        //        //}
+                    idata = dtAgendamento.ToString();
+                    string ihora = horaEnvio.Value.TimeOfDay.ToString("hh\\:mm\\:ss\\.ffffff") ; //time.ToString(culturaAmericana).Substring(11, 8);
+                    idata = "\"send_after\": \"" + dtEnvio.Value.ToShortDateString() + " " + ihora + "\" ,";
+                }
 
-        //        dtAgendamento = "\"send_after\": \"" + dtAgendamento.ToString() + "\" ,";
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            
+            return idata;
+        }
 
-        //    }
-        //    else
-        //    {
-        //        dtAgendamento = ""; // DateTime.UtcNow.ToString();
-        //    }
-        //    return dtAgendamento;
-
-
-        //}
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
+                string isr = string.Format("{0,3}", CultureInfo.InstalledUICulture.Parent.LCID.ToString("X")).Replace(" ", "0");
                 if (!Utils.MessageBoxQuestion("Essa mensagem será enviada diretamente aos clientes do Site/App tem certeza que o texto foi revisado?")
                )
                 {
@@ -95,9 +104,10 @@ namespace DexComanda.Operações
                                                         + "\"app_id\": \"" + Sessions.returnConfig.Pushapp_id + "\","
                                                         + "\"headings\": {\"en\": \"" + txtTitulo.Text + "\"},"
                                                         + "\"contents\": {\"en\": \"" + msg.Text + "\"},"
-                                                    //    + Agendamento()
+                                                        + Agendamento()
                                                         + ModoEntrega()
                                                         + "\"included_segments\": [\"All\"]}");
+
 
                 string responseContent = null;
 

@@ -37,6 +37,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.chkAtivoSN = new System.Windows.Forms.CheckBox();
             this.chkOnlineSN = new System.Windows.Forms.CheckBox();
+            this.txtSinalOpcao = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.OpcaoGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,12 +52,12 @@
             this.OpcaoGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.OpcaoGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.OpcaoGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.OpcaoGridView.Location = new System.Drawing.Point(4, 156);
+            this.OpcaoGridView.Location = new System.Drawing.Point(4, 206);
             this.OpcaoGridView.MultiSelect = false;
             this.OpcaoGridView.Name = "OpcaoGridView";
             this.OpcaoGridView.ReadOnly = true;
             this.OpcaoGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.OpcaoGridView.Size = new System.Drawing.Size(288, 251);
+            this.OpcaoGridView.Size = new System.Drawing.Size(288, 238);
             this.OpcaoGridView.TabIndex = 2;
             this.OpcaoGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OpcaoGridView_CellClick);
             this.OpcaoGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OpcaoGridView_MouseClick);
@@ -72,7 +74,7 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(158, 115);
+            this.btnEditar.Location = new System.Drawing.Point(158, 165);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(130, 35);
             this.btnEditar.TabIndex = 2;
@@ -93,7 +95,7 @@
             // 
             // btnAdicionar
             // 
-            this.btnAdicionar.Location = new System.Drawing.Point(4, 117);
+            this.btnAdicionar.Location = new System.Drawing.Point(4, 167);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(114, 35);
             this.btnAdicionar.TabIndex = 1;
@@ -109,7 +111,7 @@
             "Selecao unica",
             "Multipla Selecao",
             "Texto livre"});
-            this.cbxTipo.Location = new System.Drawing.Point(4, 87);
+            this.cbxTipo.Location = new System.Drawing.Point(4, 137);
             this.cbxTipo.Name = "cbxTipo";
             this.cbxTipo.Size = new System.Drawing.Size(186, 21);
             this.cbxTipo.TabIndex = 17;
@@ -120,7 +122,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(1, 71);
+            this.label2.Location = new System.Drawing.Point(1, 121);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(28, 13);
             this.label2.TabIndex = 18;
@@ -150,11 +152,34 @@
             this.chkOnlineSN.Text = "OnlineSN";
             this.chkOnlineSN.UseVisualStyleBackColor = true;
             // 
+            // txtSinalOpcao
+            // 
+            this.txtSinalOpcao.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSinalOpcao.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSinalOpcao.Location = new System.Drawing.Point(4, 91);
+            this.txtSinalOpcao.MaxLength = 30;
+            this.txtSinalOpcao.Name = "txtSinalOpcao";
+            this.txtSinalOpcao.Size = new System.Drawing.Size(64, 26);
+            this.txtSinalOpcao.TabIndex = 68;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(1, 74);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(67, 13);
+            this.label3.TabIndex = 69;
+            this.label3.Text = "Sinal Padrão";
+            // 
             // frmCadOpcao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(295, 409);
+            this.ClientSize = new System.Drawing.Size(295, 449);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtSinalOpcao);
             this.Controls.Add(this.chkAtivoSN);
             this.Controls.Add(this.chkOnlineSN);
             this.Controls.Add(this.label2);
@@ -185,5 +210,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox chkAtivoSN;
         private System.Windows.Forms.CheckBox chkOnlineSN;
+        private System.Windows.Forms.TextBox txtSinalOpcao;
+        private System.Windows.Forms.Label label3;
     }
 }

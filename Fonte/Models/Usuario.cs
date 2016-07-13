@@ -23,7 +23,7 @@ namespace DexComanda.Models
         public bool VisualizaDadosClienteSN { get; set; }
         public bool AbreFechaCaixaSN { get; set; }
         public bool AlteraDadosClienteSN { get; set; }
-        
+        public string Turno { get; set; }
 
     }
 }

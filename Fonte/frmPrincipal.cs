@@ -9,6 +9,7 @@ using DexComanda.Operações.Funções;
 using DexComanda.Relatorios;
 using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Relatorios.Gerenciais;
+using DexComanda.Relatorios.Impressao_Termica;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -108,7 +109,7 @@ namespace DexComanda
                 }
                 else if ((pessoaTelefone.Tables["Pessoa"].Rows.Count == 1))
                 {
-                    if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado))
+                    if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado,Sessions.retunrUsuario.Turno))
                     {
                         DataSet Pessoa = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", telefone);
                         DataRow dRow = Pessoa.Tables["Pessoa"].Rows[0];
@@ -286,7 +287,8 @@ namespace DexComanda
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
 
             int iNumeroCaixa = Sessions.retunrUsuario.CaixaLogado;
-            iCaixaAberto = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixa", DateTime.Now, iNumeroCaixa).Tables["Caixa"].Rows.Count;
+            DataSet dsCaixa = con.RetornaCaixaPorTurno(iNumeroCaixa, Sessions.retunrUsuario.Turno, DateTime.Now);
+            iCaixaAberto = dsCaixa.Tables[0].Rows.Count;
             if (iCaixaAberto > 0)
             {
                 aberturaCaixaToolStripMenuItem.Enabled = false;
@@ -1111,7 +1113,7 @@ namespace DexComanda
         {
             try
             {
-                if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado))
+                if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado,Sessions.retunrUsuario.Turno))
                 {
                     return;
                 } 
@@ -1711,6 +1713,12 @@ namespace DexComanda
         private void relatórioToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
         {
          //   relatórioToolStripMenuItem = Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AcessaRelatoriosSN");
+        }
+
+        private void vendasPorVendedorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReportVendasPorVendedor frm = new frmReportVendasPorVendedor();
+            frm.Show();
         }
     }
 }

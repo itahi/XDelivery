@@ -36,7 +36,7 @@ namespace DexComanda.Operações
 
             iParamToken = Convert.ToString(DateTime.Now).Replace("/", "").Replace(":", "").Replace(" ", "").Substring(0, 11) + "Adminx";
             if (Sessions.returnEmpresa.Nome == "NOME SUA EMPRESA" || 
-                Sessions.returnEmpresa.CNPJ== "23267492000018" || 
+                Sessions.returnEmpresa.CNPJ== "23267492000018" || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGaleto|| 
                 Sessions.returnEmpresa.CNPJ== Bibliotecas.cCarangoVix
                 //||
                 //Sessions.returnEmpresa.CNPJ== Bibliotecas.cSkinaLanches
@@ -446,6 +446,11 @@ namespace DexComanda.Operações
                 GerarToken();
                 prgBarProduto.Maximum = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
+                if (ds.Tables[0].Rows.Count<=0)
+                {
+                    MessageBox.Show(Bibliotecas.cSemRegistrosASincronizar + "Grupo");
+                    return;
+                }
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     RestClient client = new RestClient(iUrlWS);
@@ -501,19 +506,20 @@ namespace DexComanda.Operações
                 DataRow dRow;
                 prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
+                if (ds.Tables[0].Rows.Count <= 0)
+                {
+                    MessageBox.Show(Bibliotecas.cSemRegistrosASincronizar + "Produto");
+                    return;
+                }
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     RestClient client = new RestClient(iUrlWS);
                     RestRequest request = new RestRequest("ws/produto/set", Method.POST);
                     request.AddParameter("token", iParamToken);
-               //     request.AddParameter("cep", "29070450");
-                    
-                    //GerarToken();
                     dRow = ds.Tables[0].Rows[i];
                     decimal prProduto = decimal.Parse(dRow.ItemArray.GetValue(3).ToString());
                     DateTime dtSinc = DateTime.Now.AddYears(1);
                     DateTime dtFoto = DateTime.Now.AddYears(1);
-
 
                     if (dRow.ItemArray.GetValue(9).ToString() != "")
                     {
@@ -628,7 +634,13 @@ namespace DexComanda.Operações
                  MudaLabel("Opcoes/Adicionais");
                 prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
+
                 DataRow dRow;
+                if (ds.Tables[0].Rows.Count <= 0)
+                {
+                    MessageBox.Show(Bibliotecas.cSemRegistrosASincronizar + "Opções do Produto");
+                    return;
+                }
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     RestClient client = new RestClient(iUrlWS);

@@ -351,3 +351,5 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmNotificacao.res
 D:\#Projetos\xDelivery\Fonte\obj\Debug\RdlCompile.cache
 D:\#Projetos\xDelivery\Fonte\obj\Debug\RdlCompile.compiled
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Funções.frmLiberação.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Impressao_Termica.frmReportVendasPorVendedor.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Financeiro.frmCadTurno.resources

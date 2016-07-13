@@ -48,6 +48,7 @@ namespace DexComanda
             }
         }
 
+
         // Rotina para efetuar Backup Automátizado do Banco de dados ao Encerrar o Programa
         public void BackupBanco(string iNomeServidor, string iNomeBanco, string iLocalBackup)
         {
@@ -123,6 +124,22 @@ namespace DexComanda
             }
 
             return iIDReturn;
+        }
+
+        public DataSet RetornaCaixaPorTurno(int iCodCaixa , string iTurno , DateTime iData)
+        {
+            string iSqlConsulta = "select * from Caixa " +
+                                   " where Numero=@Numero and " +
+                                   " Turno=@Turno and Data=@Data";
+            command = new SqlCommand(iSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@Numero", iCodCaixa);
+            command.Parameters.AddWithValue("@Turno", iTurno);
+            command.Parameters.AddWithValue("@Data", iData.ToShortDateString());
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Caixa");
+            return ds;
         }
         public DataSet RetornarTaxaPorBairro(string iNOmeBairro)
         {

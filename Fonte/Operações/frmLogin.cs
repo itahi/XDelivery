@@ -24,6 +24,7 @@ namespace DexComanda
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
+            cbxTurno.SelectedIndex = 0;
             DataSet dsCaixa = con.SelectAll("CaixaCadastro", "spObterCaixa");
             if (dsCaixa.Tables[0].Rows.Count > 0)
             {
@@ -46,12 +47,12 @@ namespace DexComanda
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (cbxCaixas.Text != "")
+            if (cbxCaixas.Text != "" && cbxTurno.Text!="")
             {
                 int iNumeroCaixa = int.Parse(cbxCaixas.Text);
                 if (Utils.EfetuarLogin(this.txtUsuario.Text.ToString(), this.txtSenha.Text.ToString(), true, iNumeroCaixa,true))
                 {
-                    if (Utils.CaixaAberto(DateTime.Now,iNumeroCaixa))
+                    if (Utils.CaixaAberto(DateTime.Now,iNumeroCaixa,cbxTurno.Text))
                     {
                         frmPrincipal frmPrincipal = new frmPrincipal();
                         this.Hide();
@@ -61,7 +62,7 @@ namespace DexComanda
             }
             else
             {
-                MessageBox.Show("Selecione o Caixa para entrar", "[XSistemas] Aviso");
+                MessageBox.Show("Selecione o Caixa  e turno para entrar", "[XSistemas] Aviso");
                 return;
             }
 

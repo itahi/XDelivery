@@ -135,7 +135,7 @@ namespace DexComanda
                     MessageBox.Show("Sua licença permite o uso apenas do módulo de vendas Online");
                     // return;
                 }
-                if (Utils.CaixaAberto(DateTime.Now, iNumeroCaixa))
+                if (Utils.CaixaAberto(DateTime.Now, iNumeroCaixa,Sessions.retunrUsuario.Turno))
                 {
                     aberturaCaixaToolStripMenuItem.Enabled = false;
                     lblCaixa.Text = "Caixa Aberto";
@@ -373,7 +373,7 @@ namespace DexComanda
                 }
                 else if ((pessoaTelefone.Tables["Pessoa"].Rows.Count == 1))
                 {
-                    if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado))
+                    if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado,Sessions.retunrUsuario.Turno))
                     {
                         DataSet Pessoa = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", telefone);
                         DataRow dRow = Pessoa.Tables["Pessoa"].Rows[0];
@@ -1176,7 +1176,7 @@ namespace DexComanda
                     m.MenuItems.Add(ExcluirCliente);
                     // Se o caixa estiver aberto ele Libera pra criar PEdido
 
-                    MontarPedido.Enabled = Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado);
+                    MontarPedido.Enabled = Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado,Sessions.retunrUsuario.Turno);
                     int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
 
                     m.Show(dgv, new Point(e.X, e.Y));

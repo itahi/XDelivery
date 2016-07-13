@@ -726,6 +726,7 @@ namespace DexComanda
                         if (lTipo == 2)
                         {
                             chkListAdicionais.Items.Add(lnome + "(+" + lPreco + ")", false);
+                           
                         }
 
                     }

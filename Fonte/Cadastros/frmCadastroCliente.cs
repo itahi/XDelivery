@@ -269,11 +269,11 @@ namespace DexComanda
                     pessoa.Numero = txtNumero.Text;
                     con.Insert("spAdicionarClienteDelivery", pessoa);
                     Utils.ControlaEventos("Inserir", this.Name);
-                    MessageBox.Show("Cliente cadastrado com sucesso.", "Dex Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                    MessageBox.Show("Cliente cadastrado com sucesso.", "[xSistemas] Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
                     this.Close();
                     
                   //  this_FormClosing();
-                    if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado))
+                    if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado,Sessions.retunrUsuario.Turno))
                     {
                         RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
                     }
