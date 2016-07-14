@@ -47,6 +47,8 @@
             this.cbxCaixas = new System.Windows.Forms.ComboBox();
             this.btnExecutar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.cbxTurno = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FechamentosGrid)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -57,7 +59,7 @@
             this.groupBox1.Controls.Add(this.FechamentosGrid);
             this.groupBox1.Location = new System.Drawing.Point(1, 118);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(448, 134);
+            this.groupBox1.Size = new System.Drawing.Size(448, 154);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Valores Somados";
@@ -72,11 +74,13 @@
             this.FechamentosGrid.Location = new System.Drawing.Point(3, 16);
             this.FechamentosGrid.Name = "FechamentosGrid";
             this.FechamentosGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.FechamentosGrid.Size = new System.Drawing.Size(442, 115);
+            this.FechamentosGrid.Size = new System.Drawing.Size(442, 132);
             this.FechamentosGrid.TabIndex = 9;
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.cbxTurno);
             this.groupBox3.Controls.Add(this.dtFechamento);
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.txtVlrFechamento);
@@ -202,6 +206,7 @@
             // 
             // cbxCaixas
             // 
+            this.cbxCaixas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxCaixas.FormattingEnabled = true;
             this.cbxCaixas.Location = new System.Drawing.Point(10, 26);
             this.cbxCaixas.Name = "cbxCaixas";
@@ -214,9 +219,9 @@
             // 
             this.btnExecutar.Image = ((System.Drawing.Image)(resources.GetObject("btnExecutar.Image")));
             this.btnExecutar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExecutar.Location = new System.Drawing.Point(94, 258);
+            this.btnExecutar.Location = new System.Drawing.Point(94, 274);
             this.btnExecutar.Name = "btnExecutar";
-            this.btnExecutar.Size = new System.Drawing.Size(121, 57);
+            this.btnExecutar.Size = new System.Drawing.Size(121, 39);
             this.btnExecutar.TabIndex = 13;
             this.btnExecutar.Text = "Fechar";
             this.btnExecutar.UseVisualStyleBackColor = true;
@@ -227,12 +232,33 @@
             this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Abort;
             this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(232, 258);
+            this.btnCancelar.Location = new System.Drawing.Point(232, 275);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(121, 57);
+            this.btnCancelar.Size = new System.Drawing.Size(121, 39);
             this.btnCancelar.TabIndex = 14;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
+            // 
+            // cbxTurno
+            // 
+            this.cbxTurno.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTurno.FormattingEnabled = true;
+            this.cbxTurno.Items.AddRange(new object[] {
+            "Dia",
+            "Noite"});
+            this.cbxTurno.Location = new System.Drawing.Point(10, 67);
+            this.cbxTurno.Name = "cbxTurno";
+            this.cbxTurno.Size = new System.Drawing.Size(66, 21);
+            this.cbxTurno.TabIndex = 24;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 51);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 25;
+            this.label1.Text = "Turno";
             // 
             // frmCaixaFechamento
             // 
@@ -275,5 +301,7 @@
         private System.Windows.Forms.DateTimePicker dtFechamento;
         private System.Windows.Forms.Button btnExecutar;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbxTurno;
     }
 }

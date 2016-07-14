@@ -24,13 +24,14 @@ namespace DexComanda.Operações.Financeiro
 
         private void frmCaixaFechamento_Load(object sender, EventArgs e)
         {
-
+            cbxTurno.SelectedIndex = 0;
         }
 
         private void FiltraCaixa(object sender, EventArgs e)
         {
             iDataFiltro = DateTime.Now.ToShortDateString();//Convert.ToDateTime(txtDtAbertura.Text + " 23:59:59");
-            DataSet dsCaixa = con.SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixaPorCodigo", Convert.ToDateTime(iDataFiltro), int.Parse(cbxCaixas.Text));
+            DataSet dsCaixa = con.RetornaCaixaPorTurno(int.Parse(cbxCaixas.Text), cbxTurno.Text, Convert.ToDateTime(iDataFiltro));
+                //SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixaPorCodigo", Convert.ToDateTime(iDataFiltro), int.Parse(cbxCaixas.Text));
             if (dsCaixa.Tables[0].Rows.Count > 0)
             {
                 DataRow dRow = dsCaixa.Tables[0].Rows[0];
@@ -134,6 +135,7 @@ namespace DexComanda.Operações.Financeiro
                     Historico = "Fechamento Caixa",
                     Numero = cbxCaixas.Text,
                     ValorFechamento = vlrValorTotal,
+                    Turno = cbxTurno.Text
 
                 };
                 con.Update("spFecharCaixa", caixa);

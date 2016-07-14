@@ -1135,9 +1135,18 @@ namespace DexComanda
 
                 if (spName == "spAlterarTotalPedido")
                 {
+                   
                     if (p.Name.Equals("CodUsuario")|| p.Name.Equals("Codigo") || p.Name.Equals("TotalPedido") || p.Name.Equals("Tipo") || p.Name.Equals("NumeroMesa"))
                     {
-                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                        if (p.Name.ToString() == "CodUsuario" && p.GetValue(obj).ToString() == "0")
+                        {
+                            command.Parameters.AddWithValue("@" + p.Name, DBNull.Value);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                        }
+                       
                     }
                 }
                 else if (spName == "spAlterarGrupo")

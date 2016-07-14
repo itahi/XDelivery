@@ -22,6 +22,7 @@ namespace DexComanda.Cadastros
 
         private void frmLancamentoCaixa_Load(object sender, EventArgs e)
         {
+            cbxTurno.SelectedIndex = 0;
             DataSet dsCaixas = con.SelectAll("Caixa", "spObterCaixaAberto");
             cbxCaixas.DataSource = dsCaixas.Tables["Caixa"];
             cbxCaixas.DisplayMember = "Numero";
@@ -53,12 +54,20 @@ namespace DexComanda.Cadastros
 
         private void Salvar(object sender, EventArgs e)
         {
+           
             int intNumCaixa=1;
+            DateTime Dt = Convert.ToDateTime(dtMovimento.Value.ToShortDateString());
             if (cbxCaixas.SelectedText.ToString()!="")
             {
                 intNumCaixa =int.Parse(cbxCaixas.SelectedText.ToString());
             }
-            if (Utils.CaixaAberto(Convert.ToDateTime(dtMovimento.Value.ToShortDateString()), intNumCaixa,Sessions.retunrUsuario.Turno))
+            DataSet ds = con.RetornaCaixaPorTurno(intNumCaixa, cbxTurno.Text, Dt);
+            if (Convert.ToBoolean(ds.Tables[0].Rows[0].ItemArray.GetValue(7)))
+            {
+                MessageBox.Show(Bibliotecas.cCaixaFechado);
+                return;
+            }
+            if (Utils.CaixaAberto(Dt, intNumCaixa,Sessions.retunrUsuario.Turno))
             {
                 CaixaMovimento cxMovimento = new CaixaMovimento()
                 {
@@ -101,6 +110,15 @@ namespace DexComanda.Cadastros
 
             }
         }
-        
+
+        private void rbSaida_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

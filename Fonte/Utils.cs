@@ -1161,6 +1161,7 @@ namespace DexComanda
                     iRetorno = dRow.ItemArray.GetValue(7).ToString() == Convert.ToString(false);
                 }
                 else
+
                 {
                     if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus && Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai && Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday && Sessions.returnEmpresa.CNPJ != Bibliotecas.cCarangoVix)
                     {

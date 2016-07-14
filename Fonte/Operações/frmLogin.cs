@@ -50,13 +50,17 @@ namespace DexComanda
             if (cbxCaixas.Text != "" && cbxTurno.Text!="")
             {
                 int iNumeroCaixa = int.Parse(cbxCaixas.Text);
-                if (Utils.EfetuarLogin(this.txtUsuario.Text.ToString(), this.txtSenha.Text.ToString(), true, iNumeroCaixa,true))
+                if (Utils.EfetuarLogin(this.txtUsuario.Text.ToString(), this.txtSenha.Text.ToString(), true, iNumeroCaixa,true,cbxTurno.Text))
                 {
                     if (Utils.CaixaAberto(DateTime.Now,iNumeroCaixa,cbxTurno.Text))
                     {
                         frmPrincipal frmPrincipal = new frmPrincipal();
                         this.Hide();
                         frmPrincipal.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show(Bibliotecas.cCaixaFechado);
                     }
                 }
             }

@@ -47,11 +47,15 @@
             this.dtMovimento = new System.Windows.Forms.DateTimePicker();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.cbxTurno = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbxTurno);
+            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.cbxCaixas);
             this.groupBox1.Controls.Add(this.cbxFormaPagamento);
             this.groupBox1.Controls.Add(this.label7);
@@ -79,7 +83,7 @@
             this.cbxCaixas.FormattingEnabled = true;
             this.cbxCaixas.Location = new System.Drawing.Point(214, 29);
             this.cbxCaixas.Name = "cbxCaixas";
-            this.cbxCaixas.Size = new System.Drawing.Size(59, 21);
+            this.cbxCaixas.Size = new System.Drawing.Size(44, 21);
             this.cbxCaixas.TabIndex = 17;
             // 
             // cbxFormaPagamento
@@ -128,7 +132,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(317, 16);
+            this.label4.Location = new System.Drawing.Point(327, 13);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(90, 13);
             this.label4.TabIndex = 10;
@@ -137,18 +141,19 @@
             // rbSaida
             // 
             this.rbSaida.AutoSize = true;
-            this.rbSaida.Location = new System.Drawing.Point(398, 32);
+            this.rbSaida.Location = new System.Drawing.Point(398, 34);
             this.rbSaida.Name = "rbSaida";
             this.rbSaida.Size = new System.Drawing.Size(52, 17);
             this.rbSaida.TabIndex = 4;
             this.rbSaida.Text = "Saida";
             this.rbSaida.UseVisualStyleBackColor = true;
+            this.rbSaida.CheckedChanged += new System.EventHandler(this.rbSaida_CheckedChanged);
             // 
             // rbEntrada
             // 
             this.rbEntrada.AutoSize = true;
             this.rbEntrada.Checked = true;
-            this.rbEntrada.Location = new System.Drawing.Point(320, 32);
+            this.rbEntrada.Location = new System.Drawing.Point(330, 33);
             this.rbEntrada.Name = "rbEntrada";
             this.rbEntrada.Size = new System.Drawing.Size(62, 17);
             this.rbEntrada.TabIndex = 3;
@@ -231,6 +236,28 @@
             this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancelar.UseVisualStyleBackColor = true;
             // 
+            // cbxTurno
+            // 
+            this.cbxTurno.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTurno.FormattingEnabled = true;
+            this.cbxTurno.Items.AddRange(new object[] {
+            "Dia",
+            "Noite"});
+            this.cbxTurno.Location = new System.Drawing.Point(265, 29);
+            this.cbxTurno.Name = "cbxTurno";
+            this.cbxTurno.Size = new System.Drawing.Size(46, 21);
+            this.cbxTurno.TabIndex = 19;
+            this.cbxTurno.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(264, 13);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(35, 13);
+            this.label8.TabIndex = 18;
+            this.label8.Text = "Turno";
+            // 
             // frmLancamentoCaixa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -273,5 +300,7 @@
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.ComboBox cbxCaixas;
+        private System.Windows.Forms.ComboBox cbxTurno;
+        private System.Windows.Forms.Label label8;
     }
 }

@@ -26,6 +26,8 @@ namespace DexComanda
         public const string cUsuarioSemPermissao = "Seu usuário não tem permissão para Executar essa ação";
         public const string cSemRegistrosASincronizar = "Não há nada a sincronizar na tabela de ";
         public const string cCaixaAbertoTurno = "Caixa já esta aberto no turno selecionado";
+        public const string cCaixaFechado = "Este Caixa já está fechado e não pode ter mais lançamentos";
+       // public const string cCaixaSomenteConsulta = ""
     }
 
 

@@ -258,7 +258,7 @@ namespace DexComanda
                         Codigo = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("Codigo"),
                         CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("CodProduto"),
                         NomeProduto = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<string>("NomeProduto"),
-                        Quantidade = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<int>("Quantidade"),
+                        Quantidade = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<decimal>("Quantidade"),
                         PrecoUnitario = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<decimal>("PrecoItem"),
                         PrecoTotal = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<decimal>("PrecoTotalItem"),
                         Item = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<string>("Item"),
@@ -568,12 +568,12 @@ namespace DexComanda
         }
         private void txtQuantidade_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Utils.SoPermiteNumeros(e))
+            if (Utils.SoDecimais(e))
             {
                 if (e.KeyChar == 13 || e.KeyChar == (char)Keys.Tab || e.KeyChar == 11 || e.KeyChar == 9)
                 {
                     var precoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.ToString().Replace("R$ ", ""));
-                    var quantidade = int.Parse(this.txtQuantidade.Text);
+                    var quantidade = decimal.Parse(this.txtQuantidade.Text);
                     var total = precoUnitario * quantidade;
                     this.txtPrecoTotal.Text = total.ToString();
                     this.btnAdicionarItemNoPedido.Focus();
@@ -777,7 +777,7 @@ namespace DexComanda
 
                 if (txtQuantidade.Text != "")
                 {
-                    var quantidade = int.Parse(this.txtQuantidade.Text.ToString());
+                    var quantidade = decimal.Parse(this.txtQuantidade.Text.ToString());
 
                     if (!quantidade.Equals(""))
                     {
@@ -824,7 +824,7 @@ namespace DexComanda
                                 {
                                     CodPedido = codPedido,
                                     NomeProduto = itemNome,
-                                    Quantidade = int.Parse(this.txtQuantidade.Text),
+                                    Quantidade = decimal.Parse(this.txtQuantidade.Text),
                                     PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$ ", "")),
                                     PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", "")),
                                     Item = txtItemDescricao.Text
@@ -860,7 +860,7 @@ namespace DexComanda
                             {
                                 CodPedido = 0,
                                 NomeProduto = itemNome,
-                                Quantidade = int.Parse(this.txtQuantidade.Text),
+                                Quantidade = decimal.Parse(this.txtQuantidade.Text),
                                 PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$", "")),
                                 PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$", "")),
                                 Item = txtItemDescricao.Text
@@ -1084,7 +1084,7 @@ namespace DexComanda
                                     CodPedido = con.getLastCodigo(),
                                     CodProduto = int.Parse(gridViewItemsPedido.Rows[i].Cells["CodProduto"].Value.ToString()),
                                     NomeProduto = gridViewItemsPedido.Rows[i].Cells[2].Value.ToString(),
-                                    Quantidade = int.Parse(gridViewItemsPedido.Rows[i].Cells[3].Value.ToString()),
+                                    Quantidade = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[3].Value.ToString()),
                                     PrecoUnitario = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[4].Value.ToString().Replace("R$", "")),
                                     PrecoTotal = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[3].Value.ToString()) * decimal.Parse(gridViewItemsPedido.Rows[i].Cells[4].Value.ToString().Replace("R$", "")),
                                     ImpressoSN = false,
@@ -1248,7 +1248,7 @@ namespace DexComanda
                             CodProduto = codigoItemParaAlterar,
                             CodPedido = codPedido,
                             NomeProduto = itemNome,
-                            Quantidade = int.Parse(this.txtQuantidade.Text),
+                            Quantidade = decimal.Parse(this.txtQuantidade.Text),
                             PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$ ", "")),
                             PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", "")),
                             Item = this.txtItemDescricao.Text.ToString()
@@ -1389,7 +1389,7 @@ namespace DexComanda
                             CodProduto = codigoItemParaAlterar,
                             CodPedido = codPedido,
                             NomeProduto = itemNome,
-                            Quantidade = int.Parse(this.txtQuantidade.Text),
+                            Quantidade = decimal.Parse(this.txtQuantidade.Text),
                             PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$ ", "")),
                             PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", "")),
                             Item = this.txtItemDescricao.Text.ToString()
@@ -3182,7 +3182,7 @@ namespace DexComanda
 
         private void txtQuantidade_TextChanged(object sender, EventArgs e)
         {
-            if (txtQuantidade.Text != "")
+            if (txtQuantidade.Text != "" && txtQuantidade.Text!="0," && txtQuantidade.Text!="0.")
             {
                 CalcularTotalItem();
             }
@@ -3195,9 +3195,9 @@ namespace DexComanda
             if (txtQuantidade.Text != "" && txtPrecoUnitario.Text != "" || cbxProdutosGrid.SelectedItem != null)
             {
                 var precoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.ToString().Replace("R$ ", ""));
-                var quantidade = int.Parse(this.txtQuantidade.Text);
-                var total = precoUnitario * quantidade;
-                this.txtPrecoTotal.Text = total.ToString();
+                var quantidade = decimal.Parse(this.txtQuantidade.Text);
+                var total = Math.Round(precoUnitario * quantidade,2);
+                this.txtPrecoTotal.Text =total.ToString();
                 this.btnAdicionarItemNoPedido.Focus();
             }
         }
@@ -3253,15 +3253,33 @@ namespace DexComanda
 
         private void AlteraTotalPedido(string iNumMesa, decimal iTotalPedido)
         {
-            NovoTotalPedido pedi = new NovoTotalPedido()
+            try
             {
-                Codigo = codPedido,
-                NumeroMesa = gNUmeroMesa,
-                TotalPedido = dTotalPedido,
-                Tipo = cbxTipoPedido.Text,
-                CodUsuario = int.Parse(txtCodVendedor.Text)
-            };
-            con.Update("spAlterarTotalPedido", pedi);
+                NovoTotalPedido pedi = new NovoTotalPedido()
+                {
+                    Codigo = codPedido,
+                    NumeroMesa = gNUmeroMesa,
+                    TotalPedido = dTotalPedido,
+                    Tipo = cbxTipoPedido.Text,
+
+                };
+                if (txtCodVendedor.Text != "")
+                {
+                    pedi.CodUsuario = int.Parse(txtCodVendedor.Text);
+                }
+                else
+                {
+                    pedi.CodUsuario = 0;
+                }
+
+                con.Update("spAlterarTotalPedido", pedi);
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+           
         }
 
         private void cbxTrocoParaOK_CheckedChanged(object sender, EventArgs e)

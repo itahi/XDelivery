@@ -11,7 +11,7 @@ namespace DexComanda.Models
         public int CodPedido { get; set; }
         public int CodProduto { get; set;}
         public string NomeProduto { get; set; }
-        public int Quantidade { get; set; }
+        public decimal Quantidade { get; set; }
         public decimal PrecoUnitario { get; set; }
         public decimal PrecoTotal { get; set; }
         public bool ImpressoSN { get; set; }
