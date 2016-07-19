@@ -689,7 +689,7 @@ namespace DexComanda
             adapter.Fill(ds, table);
             return ds;
         }
-        public DataSet SelectCaixaMovimetoFiltro(string iDataI, string iDataF, string iTipo, string iCdFormaPagt, string table = "CaixaMovimento", string iNumCaixa = "1")
+        public DataSet SelectCaixaMovimetoFiltro(string iDataI, string iDataF, string iTipo, string iCdFormaPagt, string table = "CaixaMovimento", string iNumCaixa = "1",string iTurno="Dia")
         {
             string lSqlConsulta = " select " +
                                     " CX.Numero as 'Numero Caixa'," +
@@ -706,9 +706,12 @@ namespace DexComanda
                                     " 'Tipo Movimento' " +
                                     " from CaixaMovimento  CXM " +
                                     " LEFT JOIN FormaPagamento FP ON FP.Codigo = CXM.CodFormaPagamento " +
-                                    " LEFT JOIN Caixa          CX ON CX.Codigo = CXM.CodCaixa " +
+                                    " LEFT JOIN Caixa          CX ON CX.Codigo = CXM.CodCaixa"+
+                                    
                                 " where " +
-                                "  CXM.Data BETWEEN  '" + iDataI.ToString() + "' AND '" + iDataF.ToString() + "'";
+                                " CXM.Turno ='" + iTurno + "'" +
+                                " and CXM.Data BETWEEN  '" + iDataI.ToString() + "' AND '" + iDataF.ToString() + "'";
+                               
 
             if (iNumCaixa != "")
             {
@@ -722,6 +725,8 @@ namespace DexComanda
             {
                 lSqlConsulta = lSqlConsulta + " and  CXM.Tipo ='" + iTipo + "'";
             }
+
+     //      lSqlConsulta = lSqlConsulta + " and CX.Turno ='" + iTurno + "'";
 
 
             command = new SqlCommand(lSqlConsulta, conn);
@@ -978,7 +983,7 @@ namespace DexComanda
             {
                 foreach (PropertyInfo propriedade in properties)
                 {
-                    if (!propriedade.Name.Equals("CaixaLogado") && !propriedade.Name.Equals("Codigo"))
+                    if (!propriedade.Name.Equals("CaixaLogado") && !propriedade.Name.Equals("Codigo") && !propriedade.Name.Equals("Turno"))
                     {
                         Console.WriteLine(propriedade.Name);
                         command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
@@ -1199,7 +1204,7 @@ namespace DexComanda
                 else if (spName == "spAlterarUsuario")
                 {
 
-                    if (!p.Name.Equals("CaixaLogado"))
+                    if (!p.Name.Equals("CaixaLogado")&& !p.Name.Equals("Turno"))
                     {
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }

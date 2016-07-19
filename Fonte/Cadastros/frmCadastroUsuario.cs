@@ -67,7 +67,8 @@ namespace DexComanda
                     AbreFechaCaixaSN = chkAbreCaixa.Checked,
                     AlteraDadosClienteSN = chkEditaCliente.Checked,
                     EditaPedidoSN = chkAlteraPedido.Checked,
-                    VisualizaDadosClienteSN = chkAbreCliente.Checked
+                    VisualizaDadosClienteSN = chkAbreCliente.Checked,
+                    
                 };
 
 

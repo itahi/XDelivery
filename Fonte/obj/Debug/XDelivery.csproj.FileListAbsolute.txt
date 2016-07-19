@@ -353,3 +353,6 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\RdlCompile.compiled
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Funções.frmLiberação.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Impressao_Termica.frmReportVendasPorVendedor.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Financeiro.frmCadTurno.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Fechamentos.Novos.frmOpcoesProdutoVendidos.resources
+D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.rpt
+D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.cs

@@ -84,7 +84,8 @@ namespace DexComanda.Operações.Financeiro
                             NumeroDocumento = caixa.Numero,
                             Tipo = 'E',
                             Valor = caixa.ValorAbertura,
-                            CodUser = caixa.CodUsuario
+                            CodUser = caixa.CodUsuario,
+                            Turno = cbxTurno.Text
                         };
 
                         // Lança movimento no Caixa de abertura

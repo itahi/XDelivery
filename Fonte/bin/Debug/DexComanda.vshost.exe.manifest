@@ -350,14 +350,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DexComanda.exe" size="5467136">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DexComanda.exe" size="5457920">
       <assemblyIdentity name="DexComanda" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>B5ZG8iuIdl+CbQkPRevkjPo2G+tf0A3hCWJn9X6Ph+Y=</dsig:DigestValue>
+        <dsig:DigestValue>mscnOG7IE6r84iQdi/NeH2zJ/x+mzSwAC7aHZcdoI4E=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -782,6 +782,24 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>MaByfT3Okvvv8MAQpi46xrEA+lqwnMFkYSD5JXg0XiQ=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.rpt" size="16384">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>W+U5SjP5giKJZyk2Yf33Nj28zGzYfuMnRzSAzqHiJ3A=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Relatorios\Fechamentos\RelEntregasPorMotoboy.rpt" size="32768">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>MRMt+ASvtp9+/8X+8FfaZ1cOHUk+sgj2RXQxsaRz99M=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Relatorios\Microsoft.ReportViewer.Common.dll" size="8670136">

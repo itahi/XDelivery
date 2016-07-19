@@ -29,14 +29,14 @@ namespace DexComanda.Cadastros
         {
 
         }
-        public frmFinalizacaoPedido(decimal iTotalPedido, frmCadastrarPedido frm,Boolean iInserir,int iCodPedido=0)
+        public frmFinalizacaoPedido(decimal iTotalPedido,Boolean iInserir,int iCodPedido=0)
         {
             try
             {
                 InitializeComponent();
                 bInserir = iInserir;
                 intCodPedido = iCodPedido;
-                iFrm = frm;
+              //  iFrm = frm;
                 lblTotalPedido.Text = iTotalPedido.ToString();
                 lblFalta.Text = iTotalPedido.ToString();
               //  intCodPedido = iCodPedido;
@@ -55,6 +55,10 @@ namespace DexComanda.Cadastros
                         if (gridFormasPagamento.Columns["Codigo"].HeaderText == "Codigo")
                         {
                             gridFormasPagamento.Columns["Codigo"].Visible = false;
+                        }
+                        if (gridFormasPagamento.Columns["Descricao"].HeaderText== "Descricao")
+                        {
+                            gridFormasPagamento.Columns["Descricao"].ReadOnly = true;
                         }
                     }
 
@@ -117,7 +121,8 @@ namespace DexComanda.Cadastros
                         Utils.bMult = true;
                         iFrm.btnGerarPedido_Click(sender, e);
                     }
-                    
+
+                    int intCodPedid = intCodPedido;
                     for (int intFor = 0; intFor < gridFormasPagamento.Rows.Count; intFor++)
                     {
                         if (gridFormasPagamento.Rows[intFor].Cells["Valor"].Value != null)
@@ -146,6 +151,10 @@ namespace DexComanda.Cadastros
                         }
 
 
+                    }
+                    if (Utils.MessageBoxQuestion("Deseja imprimir a conferencia desta dessa mesa?"))
+                    {
+                        Utils.ImpressaoFechamentoNovo(intCodPedid, false, 1);
                     }
                     this.Close();
                 }
@@ -181,16 +190,6 @@ namespace DexComanda.Cadastros
             lblFalta.Text = Convert.ToString(decimal.Parse(lblTotalPedido.Text) - iValorDigitado);
         }
 
-        private void gridFormasPagamento_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-        }
-
-        private void gridFormasPagamento_KeyDown(object sender, KeyEventArgs e)
-        {
-         
-        }
-
         private void gridFormasPagamento_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             decimal iValue=0;
@@ -211,14 +210,7 @@ namespace DexComanda.Cadastros
             {
                 Finaliza(sender, e);
             }
-            else if (e.KeyCode == Keys.Escape)
-            {
-                this.Close();
-            }
-            //if (e.KeyCode == Keys.Multiply)
-            //{
-            //    gridFormasPagamento.SelectedRows[gridFormasPagamento.CurrentRow.Index].Cells["Valor"].Value = lblFalta.Text;
-            //}
+           
         }
     }
 }

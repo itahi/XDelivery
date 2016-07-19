@@ -17,5 +17,6 @@ namespace DexComanda.Models
        public decimal Valor { get; set; }
        public char Tipo { get; set; }
        public string NumeroDocumento { get; set; }
+        public string Turno { get; set; }
     }
 }

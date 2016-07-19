@@ -760,7 +760,7 @@ namespace DexComanda
                     if (CodPedidoWS > 0)
                     {
                         AlteraStatusPedido(CodPedidoWS, 5);
-                        MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
+                        MessageBox.Show("Atualização realizada com sucesso, pedido entregue");
                     }
 
                     iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
@@ -778,10 +778,9 @@ namespace DexComanda
                     // Caso o pedido for mesa ele altera o Status da Mesa
                     if (ControlaMesas && iCodMesa != 0)
                     {
-                        if (Utils.MessageBoxQuestion("Deseja imprimir a conferencia desta dessa mesa?"))
-                        {
-                            Utils.ImpressaoFechamentoNovo(codigo, false, 1);
-                        }
+                        frmFinalizacaoPedido frm = new frmFinalizacaoPedido(dblTotalPedido, false, codigo);
+                        frm.ShowDialog();
+                       
                         //  NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
                         Utils.AtualizaMesa(iCodMesa, 1);
                     }
@@ -898,7 +897,8 @@ namespace DexComanda
                     NumeroDocumento = iCodPedido.ToString(),
                     Tipo = 'E',
                     Valor = iValor,
-                    CodUser = Sessions.retunrUsuario.Codigo
+                    CodUser = Sessions.retunrUsuario.Codigo,
+                    Turno = Sessions.retunrUsuario.Turno
 
                 };
                 con.Insert("spInserirMovimentoCaixa", caixa);
@@ -907,7 +907,7 @@ namespace DexComanda
             catch (Exception erro)
             {
 
-                MessageBox.Show(erro.Message);
+                MessageBox.Show(Bibliotecas.cException +  erro.Message);
             }
 
         }

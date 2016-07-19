@@ -22,6 +22,7 @@ namespace DexComanda.Operações
 
         private void ExecutaFiltro(object sender, EventArgs e)
         {
+            MovimentosGridView.DataSource = null;
             string iTipo="E";
             string iFPagamento="";
             if (rbEntrada.Checked)
@@ -48,7 +49,7 @@ namespace DexComanda.Operações
                 iFPagamento = cbxFPagamento.SelectedValue.ToString();
             }
 
-            dsMovimentoFiltro = con.SelectCaixaMovimetoFiltro(dtInicio.Value.ToShortDateString() + " 00:00:00", dtFim.Value.ToShortDateString() + " 23:59:59", iTipo, iFPagamento, "CaixaMovimento", cbxNumCaixa.Text);
+            dsMovimentoFiltro = con.SelectCaixaMovimetoFiltro(dtInicio.Value.ToShortDateString() + " 00:00:00", dtFim.Value.ToShortDateString() + " 23:59:59", iTipo, iFPagamento, "CaixaMovimento", cbxNumCaixa.Text,cbxTurno.Text);
 
             if (dsMovimentoFiltro.Tables[0].Rows.Count>0)
             {
@@ -94,6 +95,7 @@ namespace DexComanda.Operações
 
         private void frmCaixaMovimento_Load(object sender, EventArgs e)
         {
+            cbxTurno.SelectedIndex = 0;
             DataSet dsCaixas = con.SelectAll("CaixaCadastro", "spObterCaixa");
             cbxNumCaixa.DataSource = dsCaixas.Tables["CaixaCadastro"];
             cbxNumCaixa.DisplayMember = "Numero";

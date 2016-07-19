@@ -52,6 +52,8 @@
             this.lblLiquido = new System.Windows.Forms.Label();
             this.lblSaidas = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbxTurno = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MovimentosGridView)).BeginInit();
@@ -60,6 +62,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.cbxTurno);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.cbxFPagamento);
             this.groupBox1.Controls.Add(this.label6);
@@ -101,7 +105,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(489, 50);
+            this.label6.Location = new System.Drawing.Point(445, 45);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(33, 13);
             this.label6.TabIndex = 10;
@@ -111,9 +115,9 @@
             // 
             this.cbxNumCaixa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxNumCaixa.FormattingEnabled = true;
-            this.cbxNumCaixa.Location = new System.Drawing.Point(528, 45);
+            this.cbxNumCaixa.Location = new System.Drawing.Point(449, 62);
             this.cbxNumCaixa.Name = "cbxNumCaixa";
-            this.cbxNumCaixa.Size = new System.Drawing.Size(48, 21);
+            this.cbxNumCaixa.Size = new System.Drawing.Size(35, 21);
             this.cbxNumCaixa.TabIndex = 9;
             // 
             // btnFiltrar
@@ -311,6 +315,27 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "Total Saidas $:";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(499, 43);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Turno";
+            // 
+            // cbxTurno
+            // 
+            this.cbxTurno.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTurno.FormattingEnabled = true;
+            this.cbxTurno.Items.AddRange(new object[] {
+            "Dia",
+            "Noite"});
+            this.cbxTurno.Location = new System.Drawing.Point(503, 60);
+            this.cbxTurno.Name = "cbxTurno";
+            this.cbxTurno.Size = new System.Drawing.Size(59, 21);
+            this.cbxTurno.TabIndex = 13;
+            // 
             // frmCaixaMovimento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -360,5 +385,7 @@
         private System.Windows.Forms.Label lblLiquido;
         protected System.Windows.Forms.Label lblSaidas;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cbxTurno;
     }
 }

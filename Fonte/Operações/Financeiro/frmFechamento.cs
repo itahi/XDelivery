@@ -139,6 +139,10 @@ namespace DexComanda.Operações.Financeiro
 
                 };
                 con.Update("spFecharCaixa", caixa);
+                if (Utils.MessageBoxQuestion("Deseja imprimir o fechamento de caixa ?"))
+                {
+                    Utils.ImpressaoCaixa(int.Parse(caixa.Numero), caixa.Turno, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(dtFechamento.Text));
+                }
                 Utils.Restart();
             }
 

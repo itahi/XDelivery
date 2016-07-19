@@ -78,7 +78,7 @@ namespace DexComanda.Operações
         {
             try
             {
-                string isr = string.Format("{0,3}", CultureInfo.InstalledUICulture.Parent.LCID.ToString("X")).Replace(" ", "0");
+             //   string isr = string.Format("{0,3}", CultureInfo.InstalledUICulture.Parent.LCID.ToString("X")).Replace(" ", "0");
                 if (!Utils.MessageBoxQuestion("Essa mensagem será enviada diretamente aos clientes do Site/App tem certeza que o texto foi revisado?")
                )
                 {
@@ -150,7 +150,7 @@ namespace DexComanda.Operações
             }
             catch (Exception erro)
             {
-                MessageBox.Show(erro.Message);
+                MessageBox.Show(Bibliotecas.cException +  erro.Message);
             }
 
         }

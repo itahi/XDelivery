@@ -662,6 +662,12 @@
     <Compile Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.Designer.cs">
       <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\frmOpcoesProdutoVendidos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\frmOpcoesProdutoVendidos.Designer.cs">
+      <DependentUpon>frmOpcoesProdutoVendidos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\frmReportEntregasMotoboy.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -686,6 +692,13 @@
     <Compile Include="Relatorios\Fechamentos\Novos\frmReportItensVendidos.Designer.cs">
       <DependentUpon>frmReportItensVendidos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelFechamentoCaixa.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboy.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -702,6 +715,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelItemsVendidosPeriodo.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\RelOpcoesProdutoVendidospt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelOpcoesProdutoVendidospt.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.cs">
@@ -908,6 +927,9 @@
     <EmbeddedResource Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.resx">
       <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmOpcoesProdutoVendidos.resx">
+      <DependentUpon>frmOpcoesProdutoVendidos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmReportEntregasMotoboy.resx">
       <DependentUpon>frmReportEntregasMotoboy.cs</DependentUpon>
     </EmbeddedResource>
@@ -920,6 +942,11 @@
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmReportItensVendidos.resx">
       <DependentUpon>frmReportItensVendidos.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelFechamentoCaixa.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboy.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelEntregasMotoboy.cs</LastGenOutput>
@@ -932,10 +959,14 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelItemsVendidosPeriodo.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.rpt">
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelOpcoesProdutoVendidospt.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelOpcoesProdutoVendidospt.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Content Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelEntregasPorMotoboy.cs</LastGenOutput>
-    </EmbeddedResource>
+    </Content>
     <EmbeddedResource Include="Relatorios\Fechamentos\RelFechamentoDetalhado.rdlc" />
     <EmbeddedResource Include="Cadastros\frmCadastrarEntregador.resx">
       <DependentUpon>frmCadastrarEntregador.cs</DependentUpon>

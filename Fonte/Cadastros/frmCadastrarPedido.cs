@@ -1116,7 +1116,7 @@ namespace DexComanda
                                 prepareToPrint();
                             }
 
-                            if (!Utils.bMult)
+                            if (!Utils.bMult && cbxTipoPedido.Text != "1 - Mesa")
                             {
                                 FinalizaPedido finaliza = new FinalizaPedido()
                                 {
@@ -3685,7 +3685,7 @@ namespace DexComanda
             if (ValidaTroco())
             {
                 Boolean iInsereAtualiza = this.btnGerarPedido.Text != "Alterar";
-                frmFinalizacaoPedido frm = new frmFinalizacaoPedido(decimal.Parse(lbTotal.Text.Replace("R$", "")), this, iInsereAtualiza, codPedido);
+                frmFinalizacaoPedido frm = new frmFinalizacaoPedido(decimal.Parse(lbTotal.Text.Replace("R$", "")), iInsereAtualiza, codPedido);
                 frm.ShowDialog();
             }
             else

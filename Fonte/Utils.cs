@@ -42,6 +42,7 @@ using Microsoft.VisualBasic;
 using DexComanda.Models.WS;
 using Newtonsoft.Json;
 using DexComanda.Operações.Funções;
+using DexComanda.Relatorios.Fechamentos.Novos.Impressao_Termica;
 
 namespace DexComanda
 {
@@ -71,7 +72,7 @@ namespace DexComanda
         public static Boolean bMult;
         private static string strProxImpressora = "";
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
-        public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1,Boolean iAlterarUserLogado=false,string iTurno="Dia")
+        public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1, Boolean iAlterarUserLogado = false, string iTurno = "Dia")
         {
 
             try
@@ -91,11 +92,11 @@ namespace DexComanda
                     Conexao conexao = new Conexao();
                     string hashSenha = EncryptMd5(nomeUsuario, senha);
                     DataSet dsUsuario = conexao.LoginUsuario(nomeUsuario, hashSenha);
-                    if (dsUsuario.Tables[0].Rows.Count==0)
+                    if (dsUsuario.Tables[0].Rows.Count == 0)
                     {
                         MessageBox.Show("Usuário o senha incorretos");
                         Logado = false;
-                        
+
                     }
                     else if (hashSenha == dsUsuario.Tables[0].Rows[0].Field<string>("Senha").ToString())
                     {
@@ -204,7 +205,7 @@ namespace DexComanda
             //}
             return Logado;
         }
-     
+
         public static Usuario RetornaDadosUsuario(string iNome, string iSenha)
         {
             Conexao conexao = new Conexao();
@@ -212,10 +213,10 @@ namespace DexComanda
             string hashSenha = EncryptMd5(iNome, iSenha);
             DataSet dsUsuario = conexao.LoginUsuario(iNome, hashSenha);
 
-            if (dsUsuario.Tables[0].Rows.Count>0)
+            if (dsUsuario.Tables[0].Rows.Count > 0)
             {
-                 user =
-                 new Usuario()
+                user =
+                new Usuario()
                 {
                     Nome = iNome,
                     Codigo = int.Parse(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(0).ToString()),
@@ -232,9 +233,9 @@ namespace DexComanda
                     AbreFechaCaixaSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(12).ToString()),
                     AlteraDadosClienteSN = Boolean.Parse(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(13).ToString()),
 
-                    // CaixaLogado = iNumCaixa
+                     // CaixaLogado = iNumCaixa
 
-                };
+                 };
 
             }
             else
@@ -599,6 +600,7 @@ namespace DexComanda
             }
             return iRetorno;
         }
+
         public static string ImpressaoEntreganova_Matricial(int iCodPedido, decimal iValorPago, string iPrevisaoEntrega, Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
@@ -1115,6 +1117,62 @@ namespace DexComanda
             }
             return iRetorno;
         }
+
+        public static string ImpressaoCaixa(int iCaixa, string iTurno, DateTime dtInicio, DateTime dtFim)
+        {
+            string iRetorno = ""; ;
+
+            RelFechamentoCaixa report;
+            report = new RelFechamentoCaixa();
+            try
+            {
+
+                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                try
+                {
+
+                    string str = Directory.GetCurrentDirectory();
+                    report.Load(Directory.GetCurrentDirectory() + @"\RelFechamentoCaixa.rpt");
+                    crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                    crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                    crConnectionInfo.UserID = "dex";
+                    crConnectionInfo.Password = "1234";
+
+                    CrTables = report.Database.Tables;
+                    foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                    {
+                        crtableLogoninfo = CrTable.LogOnInfo;
+                        crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                        CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                    }
+
+                    report.SetParameterValue("@Caixa", iCaixa);
+                    report.SetParameterValue("@Turno", iTurno);
+                    report.SetParameterValue("@DataI", dtInicio);
+                    report.SetParameterValue("@DataF", dtFim);
+
+                    report.PrintToPrinter(1, false, 0, 0);
+
+
+
+                }
+                catch (Exception erro)
+                {
+
+                    MessageBox.Show("Erro na impressao :" + erro.Message);
+                }
+            }
+            finally
+            {
+                report.Dispose();
+
+            }
+            return iRetorno;
+        }
         public static Boolean LicencaSomenteOnline(string iCNPJ)
         {
             Boolean iReturn = false;
@@ -1146,7 +1204,7 @@ namespace DexComanda
 
         }
 
-        public static bool CaixaAberto(DateTime iDataRegistro, int iNumero,string iTurno)
+        public static bool CaixaAberto(DateTime iDataRegistro, int iNumero, string iTurno)
         {
             bool iRetorno = false;
             DataRow dRow;
@@ -1154,7 +1212,7 @@ namespace DexComanda
             conexao = new Conexao();
             try
             {
-                dsCaixa = conexao.RetornaCaixaPorTurno(iNumero,iTurno ,Convert.ToDateTime(iDataRegistro.ToShortDateString()));
+                dsCaixa = conexao.RetornaCaixaPorTurno(iNumero, iTurno, Convert.ToDateTime(iDataRegistro.ToShortDateString()));
                 if (dsCaixa.Tables[0].Rows.Count > 0)
                 {
                     dRow = dsCaixa.Tables[0].Rows[0];
@@ -1322,7 +1380,7 @@ namespace DexComanda
             return iRetorno;
 
         }
-        public static void ExibirDadosForm(Control parent,Boolean iExibir)
+        public static void ExibirDadosForm(Control parent, Boolean iExibir)
         {
             foreach (System.Windows.Forms.Control ctrControl in parent.Controls)
             {
@@ -1330,12 +1388,12 @@ namespace DexComanda
                 if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.TextBox)))
                 {
                     //Check to see if it's a textbox 
-                    if (!iExibir && ((System.Windows.Forms.TextBox)ctrControl).Name!= "txtNomeCliente")
+                    if (!iExibir && ((System.Windows.Forms.TextBox)ctrControl).Name != "txtNomeCliente")
                     {
                         ((System.Windows.Forms.TextBox)ctrControl).PasswordChar = 'X';
-                    
+
                     }
-                    
+
                     //If it is then set the text to String.Empty (empty textbox) 
                 }
                 else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RichTextBox)))
@@ -2246,15 +2304,15 @@ namespace DexComanda
 
             //if (Sessions.retunrUsuario != null)
             //{
-                EventosSistema eventos = new EventosSistema()
-                {
-                    CodUsuario = Sessions.retunrUsuario.Codigo,
-                    TipoEvento = iTipoEvento,
-                    DataEvento = DateTime.Now,
-                    LocalEvento = LocalEvento,
+            EventosSistema eventos = new EventosSistema()
+            {
+                CodUsuario = Sessions.retunrUsuario.Codigo,
+                TipoEvento = iTipoEvento,
+                DataEvento = DateTime.Now,
+                LocalEvento = LocalEvento,
 
-                };
-                conexao.Insert("spAdicionarEvento", eventos);
+            };
+            conexao.Insert("spAdicionarEvento", eventos);
             //}
 
         }
