@@ -446,11 +446,7 @@ namespace DexComanda.Operações
                 GerarToken();
                 prgBarProduto.Maximum = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
-                if (ds.Tables[0].Rows.Count<=0)
-                {
-                    MessageBox.Show(Bibliotecas.cSemRegistrosASincronizar + "Grupo");
-                    return;
-                }
+               
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     RestClient client = new RestClient(iUrlWS);
@@ -480,7 +476,7 @@ namespace DexComanda.Operações
                     RestResponse response = (RestResponse)client.Execute(request);
                     prgBarProduto.Increment(i+1);
 
-                    if (response.Content.ToString() == "true")
+                    if (response.Content.Contains("true"))
                     {
                         con.AtualizaDataSincronismo("Grupo", iCod);
                     }
@@ -506,11 +502,7 @@ namespace DexComanda.Operações
                 DataRow dRow;
                 prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
-                if (ds.Tables[0].Rows.Count <= 0)
-                {
-                    MessageBox.Show(Bibliotecas.cSemRegistrosASincronizar + "Produto");
-                    return;
-                }
+               
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     RestClient client = new RestClient(iUrlWS);
@@ -580,7 +572,7 @@ namespace DexComanda.Operações
 
                     RestResponse response = (RestResponse)client.Execute(request);
 
-                    if (response.Content.ToString() == "true")
+                    if (response.Content.Contains("true"))
                     {
                         con.AtualizaDataSincronismo("Produto", int.Parse(dRow.ItemArray.GetValue(0).ToString()));
                         CadastrarOpcaoProduto(int.Parse(dRow.ItemArray.GetValue(0).ToString()));
@@ -636,11 +628,7 @@ namespace DexComanda.Operações
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
 
                 DataRow dRow;
-                if (ds.Tables[0].Rows.Count <= 0)
-                {
-                    MessageBox.Show(Bibliotecas.cSemRegistrosASincronizar + "Opções do Produto");
-                    return;
-                }
+              
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     RestClient client = new RestClient(iUrlWS);

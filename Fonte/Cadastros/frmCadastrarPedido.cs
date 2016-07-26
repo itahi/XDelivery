@@ -410,7 +410,7 @@ namespace DexComanda
                 {
                     ValorProduto = produto.Rows[0]["PrecoProduto"].ToString();
                     iTotalItem = txtPrecoUnitario.Text;
-                    if (cbxMeiaPizza.Checked)
+                    if (cbxMeiaPizza.Checked && cbxSabor.Focused)
                     {
                         iNomeProd = cbxSabor.Text;
                     }
@@ -849,6 +849,7 @@ namespace DexComanda
                                 items.Add(item);
                                 atualizarGrid(item);
                                 SemMeiaPizza();
+                                iNomeProd = "";
                                 // Utils.PopulaGrid_Novo("Pedido", parentWindow.pedidosGridView, Sessions.SqlPedido);
                             }
 
@@ -1284,7 +1285,7 @@ namespace DexComanda
                             ValorPagamento = pedido.TotalPedido
                         };
 
-                        con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
+                      //  con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
 
                         con.Update("spAlterarItemPedido", itemPedido);
 

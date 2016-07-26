@@ -1,0 +1,1 @@
+Data Source=.\;Initial Catalog=DBExpert_xSistemas; User ID=dex; Password=1234; Trusted_Connection=False; 
