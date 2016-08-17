@@ -233,9 +233,9 @@ namespace DexComanda
                     AbreFechaCaixaSN = Convert.ToBoolean(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(12).ToString()),
                     AlteraDadosClienteSN = Boolean.Parse(dsUsuario.Tables[0].Rows[0].ItemArray.GetValue(13).ToString()),
 
-                     // CaixaLogado = iNumCaixa
+                    // CaixaLogado = iNumCaixa
 
-                 };
+                };
 
             }
             else
@@ -340,6 +340,24 @@ namespace DexComanda
                 }
 
 
+                icbxName.DisplayMember = idisplayName;
+                icbxName.ValueMember = iValueMember;
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show("Erro ao listar itens do " + icbxName + erro.Message);
+            }
+
+        }
+        public static void MontaCombox(ComboBox icbxName, string idisplayName,
+           string iValueMember, string iGrupo)
+        {
+            try
+            {
+
+                DataSet ds = conexao.SelectRegistroPorNome("@GrupoProduto", "Produto", "spObterProdutoPorGrupo",iGrupo);
+                icbxName.DataSource = ds.Tables[0];
                 icbxName.DisplayMember = idisplayName;
                 icbxName.ValueMember = iValueMember;
             }

@@ -189,6 +189,12 @@
     <Compile Include="Cadastros\frmFinalizacaoPedido.Designer.cs">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cadastros\Pedido\frmSabores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Pedido\frmSabores.Designer.cs">
+      <DependentUpon>frmSabores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cadastros\Produto\frmFamilia.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -529,10 +535,10 @@
     <Compile Include="Cadastros\Financeiro\frmCadastrarFormaPagamento.Designer.cs">
       <DependentUpon>frmCadastrarFormaPagamento.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cadastros\frmCadastrarPedido.cs">
+    <Compile Include="Cadastros\Pedido\frmCadastrarPedido.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cadastros\frmCadastrarPedido.Designer.cs">
+    <Compile Include="Cadastros\Pedido\frmCadastrarPedido.Designer.cs">
       <DependentUpon>frmCadastrarPedido.cs</DependentUpon>
     </Compile>
     <Compile Include="Conexao.cs" />
@@ -804,6 +810,9 @@
     <EmbeddedResource Include="Cadastros\frmFinalizacaoPedido.resx">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\Pedido\frmSabores.resx">
+      <DependentUpon>frmSabores.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Produto\frmFamilia.resx">
       <DependentUpon>frmFamilia.cs</DependentUpon>
     </EmbeddedResource>
@@ -974,7 +983,7 @@
     <EmbeddedResource Include="Cadastros\Financeiro\frmCadastrarFormaPagamento.resx">
       <DependentUpon>frmCadastrarFormaPagamento.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\frmCadastrarPedido.resx">
+    <EmbeddedResource Include="Cadastros\Pedido\frmCadastrarPedido.resx">
       <DependentUpon>frmCadastrarPedido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Produto\frmCategoria.resx">

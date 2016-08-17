@@ -113,6 +113,29 @@ namespace DexComanda
             return ds;
 
         }
+        public DataSet RetornaMaioresPrecos(string iCod1, string iCod2, string iCod3, string iCod4,string iCodOpcao)
+        {
+            string iSqlConsulta = "select" +
+                                    " max(PO.Preco + P.PrecoProduto) as Preco" +
+                                    " from" +
+                                    " Produto_Opcao PO" +
+                                    " join Produto P on P.Codigo = PO.CodProduto" +
+                                    " join Opcao O on O.Codigo = PO.CodOpcao and O.Tipo = 1" +
+                                    " where CodProduto in (@Cod1,@Cod2,@Cod3,@Cod4) and CodOpcao =@CodOpcao";
+            
+            command = new SqlCommand(iSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@Cod1", iCod1);
+            command.Parameters.AddWithValue("@Cod2", iCod2);
+            command.Parameters.AddWithValue("@Cod3", iCod3);
+            command.Parameters.AddWithValue("@Cod4", iCod4);
+            command.Parameters.AddWithValue("@CodOpcao", iCodOpcao);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto_Opcao");
+            return ds;
+
+        }
         public int RetornaIDCategoria(string iNomeCategoria)
         {
             int iIDReturn = 1;
@@ -311,12 +334,13 @@ namespace DexComanda
                                   " PoT.Tipo," +
                                   " Prod.Preco," +
                                   " ISNULL((select MaximoAdicionais from Produto P where P.Codigo=Prod.CodProduto  ),0) as MaximoAdicionais," +
-                                  " PoT.Nome as NomeTipo " +
+                                  " PoT.Nome as NomeTipo, " +
+                                  " Prod.CodOpcao " +
                                   " from Produto_Opcao Prod" +
                                   " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
                                   " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
                                   "  where Prod.CodProduto = @CodProduto" +
-                                  " order by PoT.Nome";
+                                  " order by Prod.Preco";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@CodProduto", iDProduto);
