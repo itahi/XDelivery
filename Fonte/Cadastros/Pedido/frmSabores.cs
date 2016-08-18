@@ -18,6 +18,8 @@ namespace DexComanda.Cadastros.Pedido
         private string iCod2 = "0";
         private string iCod3 = "0";
         private string iCod4 = "0";
+        public string strNomeProduto, strTamanho, strPreco,strNome = "";
+
         private string iCodOpcao;
         public frmSabores()
         {
@@ -45,7 +47,7 @@ namespace DexComanda.Cadastros.Pedido
         private void ListaSabor1(object sender, EventArgs e)
         {
             Utils.MontaCombox(comboBox1, "NomeProduto", "Codigo", strGrupo);
-            
+
         }
 
         private void ListaSabor2(object sender, EventArgs e)
@@ -84,34 +86,38 @@ namespace DexComanda.Cadastros.Pedido
                 //    //Loop through all controls 
                 //    if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.ComboBox)))
                 //    {
-                        if (comboBox1.SelectedIndex!=-1)
-                        {
-                            iCod1 = comboBox1.SelectedValue.ToString();
-                        }
-                        if (comboBox2.SelectedIndex != -1)
-                        {
-                            iCod2 = comboBox2.SelectedValue.ToString();
-                        }
-                        if (comboBox3.SelectedIndex != -1)
-                        {
-                            iCod3 = comboBox3.SelectedValue.ToString();
-                        }
-                        if (comboBox4.SelectedIndex != -1)
-                        {
-                            iCod4 = comboBox4.SelectedValue.ToString();
-                        }
+                if (comboBox1.SelectedIndex != -1)
+                {
+                    iCod1 = comboBox1.SelectedValue.ToString();
+                    strNomeProduto = strNomeProduto + comboBox1.Text +"/ ";
+                }
+                if (comboBox2.SelectedIndex != -1)
+                {
+                    iCod2 = comboBox2.SelectedValue.ToString();
+                    strNomeProduto = strNomeProduto + comboBox2.Text + "/ ";
+                }
+                if (comboBox3.SelectedIndex != -1)
+                {
+                    iCod3 = comboBox3.SelectedValue.ToString();
+                    strNomeProduto = strNomeProduto + comboBox3.Text + "/ ";
+                }
+                if (comboBox4.SelectedIndex != -1)
+                {
+                    iCod4 = comboBox4.SelectedValue.ToString();
+                    strNomeProduto = strNomeProduto + comboBox4.Text + "/ ";
+                }
                 //    }
                 //}
 
-                DataSet dsOpcoesProduto = con.RetornaOpcoesProduto(int.Parse(iCod1));
+                DataSet dsOpcoesProduto = con.RetornaOpcoesProduto2(int.Parse(iCod1));
                 for (int i = 0; i < dsOpcoesProduto.Tables[0].Rows.Count; i++)
                 {
                     string iCodOpcao = dsOpcoesProduto.Tables[0].Rows[i].ItemArray.GetValue(5).ToString();
                     DataSet dsMaiorPreco = con.RetornaMaioresPrecos(iCod1, iCod2, iCod3, iCod4, iCodOpcao);
                     string strPreco = dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString();
-                    string strNome = dsOpcoesProduto.Tables[0].Rows[i].ItemArray.GetValue(0).ToString();
+                    strNome = dsOpcoesProduto.Tables[0].Rows[i].ItemArray.GetValue(0).ToString();
 
-                    if (dsMaiorPreco.Tables[0].Rows.Count>0)
+                    if (dsMaiorPreco.Tables[0].Rows.Count > 0)
                     {
                         if (!radioButton1.Visible)
                         {
@@ -131,7 +137,7 @@ namespace DexComanda.Cadastros.Pedido
                             radioButton3.Tag = strPreco;
                             radioButton3.Text = strNome + " " + strPreco;
                         }
-                       else if (!radioButton4.Visible)
+                        else if (!radioButton4.Visible)
                         {
                             radioButton4.Visible = true;
                             radioButton4.Tag = strPreco;
@@ -152,6 +158,23 @@ namespace DexComanda.Cadastros.Pedido
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
-       
+
+        private void ConfirmaSelecao(object sender, EventArgs e)
+        {
+            foreach (System.Windows.Forms.Control ctrControl in grpTamanhos.Controls)
+            {
+                //Loop through all controls 
+                if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))
+                {
+                    if (((System.Windows.Forms.RadioButton)ctrControl).Checked)
+                    {
+                        // strNomeProduto = strNomeProduto + ((System.Windows.Forms.RadioButton)ctrControl).Text;
+                        strPreco = ((System.Windows.Forms.RadioButton)ctrControl).Tag.ToString();
+                        strTamanho = strNome;
+                    }
+                }
+            }
+            this.Close();
+        }
     }
 }

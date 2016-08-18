@@ -23,5 +23,6 @@ namespace DexComanda.Models
         public DateTime DataCadastro { get; set; }
         public int TicketFidelidade { get; set; }
         public int CodRegiao { get; set; }
+        public string user_id { get; set; }
     }
 }

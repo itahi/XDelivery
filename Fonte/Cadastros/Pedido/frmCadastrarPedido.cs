@@ -765,14 +765,19 @@ namespace DexComanda
         {
             try
             {
-                if (radioButton1.Visible && !radioButton1.Checked && !radioButton2.Checked && !radioButton3.Checked
-                    && !radioButton4.Checked && !radioButton5.Checked && !radioButton6.Checked && !rb7.Checked
-                     && !rb8.Checked && !rb9.Checked && !rb10.Checked && !rb11.Checked && !rb12.Checked)
+                if (grpBoxTamanhos.Enabled)
                 {
-                    MessageBox.Show("É obrigatório selecionar o tamanho ", "[xSistemas]", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
 
+                    if (radioButton1.Visible && !radioButton1.Checked && !radioButton2.Checked && !radioButton3.Checked
+                        && !radioButton4.Checked && !radioButton5.Checked && !radioButton6.Checked && !rb7.Checked
+                         && !rb8.Checked && !rb9.Checked && !rb10.Checked && !rb11.Checked && !rb12.Checked)
+                    {
+                        MessageBox.Show("É obrigatório selecionar o tamanho ", "[xSistemas]", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return;
+                    }
+                }
+                chkSabores.Checked = false;
+                grpBoxTamanhos.Enabled = true;
                 MeiaPizza();
 
 
@@ -3126,6 +3131,7 @@ namespace DexComanda
             this.chkSabores.Text = "3°/4º Sb";
             this.chkSabores.UseVisualStyleBackColor = true;
             this.chkSabores.CheckedChanged += new System.EventHandler(this.chkSabores_CheckedChanged);
+            this.chkSabores.CheckStateChanged += new System.EventHandler(this.chkSabores_CheckStateChanged);
             // 
             // frmCadastrarPedido
             // 
@@ -3964,8 +3970,22 @@ namespace DexComanda
 
         private void chkSabores_CheckedChanged(object sender, EventArgs e)
         {
-            frmSabores frm = new frmSabores(cbxTipoProduto.Text);
-            frm.ShowDialog();
+            
+           
+        }
+
+        private void chkSabores_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (chkSabores.Checked)
+            {
+                grpBoxTamanhos.Enabled = !chkSabores.Checked;
+                frmSabores frm = new frmSabores(cbxTipoProduto.Text);
+                frm.ShowDialog();
+                cbxProdutosGrid.Text = frm.strNomeProduto + " " + frm.strTamanho;
+                txtPrecoUnitario.Text = frm.strPreco;
+                CalcularTotalItem();
+            }
+            
         }
 
         private void cbxSabor_SelectedIndexChanged(object sender, EventArgs e)

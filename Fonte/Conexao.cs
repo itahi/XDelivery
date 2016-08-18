@@ -351,6 +351,29 @@ namespace DexComanda
             adapter.Fill(ds, "Produto_Opcao");
             return ds;
         }
+        public DataSet RetornaOpcoesProduto2(int iDProduto)
+        {
+            string lSqlConsulta = " select Op.Nome, " +
+                                  " PoT.Tipo," +
+                                  " Prod.Preco," +
+                                  " ISNULL((select MaximoAdicionais from Produto P where P.Codigo=Prod.CodProduto  ),0) as MaximoAdicionais," +
+                                  " PoT.Nome as NomeTipo, " +
+                                  " Prod.CodOpcao " +
+                                  " from Produto_Opcao Prod" +
+                                  " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
+                                  " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo and Op.Tipo=1" +
+                                  "  where Prod.CodProduto = @CodProduto" +
+                                  " order by Prod.Preco";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@CodProduto", iDProduto);
+
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto_Opcao");
+            return ds;
+        }
         public DataSet RetornaOpcoes(int iIDOpcao)
         {
             string lSqlConsulta = " select " +

@@ -236,7 +236,7 @@ namespace DexComanda
                     Telefone2 = txtTelefone2.Text,
                     UF = this.txtEstado.Text,
                     TicketFidelidade = 0,
-                    
+                    user_id = "",
                     DataCadastro = DateTime.Now
 
                 };
@@ -367,7 +367,8 @@ namespace DexComanda
                     UF = this.txtEstado.Text,
                     TicketFidelidade = 0,
                     CodRegiao = mCodRegiao,
-                    DataCadastro = Convert.ToDateTime(txtDataCadastro.Text)
+                    DataCadastro = Convert.ToDateTime(txtDataCadastro.Text),
+                    user_id = ""
                 };
                 if (txtTelefone2.Visible == true)
                 {
