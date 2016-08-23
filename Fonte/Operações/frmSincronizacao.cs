@@ -37,9 +37,7 @@ namespace DexComanda.Operações
             iParamToken = Convert.ToString(DateTime.Now).Replace("/", "").Replace(":", "").Replace(" ", "").Substring(0, 11) + "Adminx";
             if (Sessions.returnEmpresa.Nome == "NOME SUA EMPRESA" || 
                 Sessions.returnEmpresa.CNPJ== "23267492000018" || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGaleto|| 
-                Sessions.returnEmpresa.CNPJ== Bibliotecas.cCarangoVix
-                //||
-                //Sessions.returnEmpresa.CNPJ== Bibliotecas.cSkinaLanches
+                Sessions.returnEmpresa.CNPJ== Bibliotecas.cCarangoVix || Sessions.returnEmpresa.CNPJ== Bibliotecas.cTropicalExpress
                 )
             {
                 iParamToken = Utils.CriptografarArquivo("xsistemas");

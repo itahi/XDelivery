@@ -100,7 +100,7 @@ namespace DexComanda
         //private int HoraPedido = Sessions.returnPedido.RealizadoEm.Minute;
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, string iNumeMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara, string fPagamento, string TipoPedido, string MesaBalcao,
-            Main parent = null, decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M,int iCodVendedor=0)
+            Main parent = null, decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0)
         {
             try
             {
@@ -375,7 +375,7 @@ namespace DexComanda
                                 {
                                     iNomeProd = cbxProdutosGrid.Text;
                                 }
-                               
+
                                 return;
                             }
                             else
@@ -631,6 +631,13 @@ namespace DexComanda
                 {
                     for (int i = 0; i < dsOpcoes.Tables[0].Rows.Count; i++)
                     {
+
+                        DataSet dsMaiorPreco = con.RetornaMaioresPrecos(iCodProduto.ToString(), iCodProduto2.ToString(), "", "", dsOpcoes.Tables[0].Rows[0].ItemArray.GetValue(5).ToString());
+                        if (dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString() != "")
+                        {
+                            lPreco = Convert.ToDecimal(dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString());
+                        }
+
                         if (iCodProduto2 != 0 && lTipo == 1)
                         {
                             lPreco = RetornaMaiorValor(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco"), dsOpcoes2.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco"));
@@ -639,11 +646,12 @@ namespace DexComanda
                         {
                             lPreco = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
                         }
+
                         gMaximoOpcaoProduto = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<int>("MaximoAdicionais");
                         lnome = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();//.Substring(1, 10);
                         lTipo = int.Parse(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo"));
-                        // lPreco = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
-
+                      
+                       
                         if (lTipo == 1)
                         {
                             lNomeOpcao = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();
@@ -727,7 +735,7 @@ namespace DexComanda
                         if (lTipo == 2)
                         {
                             chkListAdicionais.Items.Add(lnome + "(+" + lPreco + ")", false);
-                           
+
                         }
 
                     }
@@ -925,7 +933,7 @@ namespace DexComanda
         private Boolean ValidaMaximoDesconto()
         {
             Boolean iReturn = false;
-           // bool PermiteDesconto = Sessions.retunrUsuario.DescontoPedidoSN;
+            // bool PermiteDesconto = Sessions.retunrUsuario.DescontoPedidoSN;
             double DescMAxPermitido = Sessions.retunrUsuario.DescontoMax;
             //MessageBox.Show(lbTotal.Text + "- "+ lbTotalPedido.ToString() + " 2 "+ lbTotal.ToString());
             double TotalPedido = double.Parse(lbTotal.Text.Replace("R$", ""));
@@ -940,7 +948,7 @@ namespace DexComanda
             int iReturn = 0;
             try
             {
-                
+
                 if (!Sessions.returnConfig.ExigeVendedorSN)
                 {
                     return 0;
@@ -954,7 +962,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cErroGravacao);
             }
-           
+
 
             return iReturn;
         }
@@ -1073,13 +1081,13 @@ namespace DexComanda
                                 //  pedido.CodigoMesa
                             }
 
-                            if (Sessions.returnConfig.ExigeVendedorSN && pedido.CodUsuario==0)
+                            if (Sessions.returnConfig.ExigeVendedorSN && pedido.CodUsuario == 0)
                             {
                                 MessageBox.Show("Selecione o vendedor/atendente para continuar");
                                 txtCodVendedor.Focus();
                                 txtCodVendedor.BackColor = Color.Red;
                                 return;
-                                
+
                             }
                             con.Insert("spAdicionarPedido", pedido);
                             //  DataEntrada = DateTime.Now;
@@ -1151,7 +1159,7 @@ namespace DexComanda
         }
         private void AtualizaTotalPedido()
         {
-            
+
             pedido = new Pedido()
             {
                 Codigo = codPedido,
@@ -1185,7 +1193,7 @@ namespace DexComanda
                 pedido.NumeroMesa = "";
             }
             pedido.CodUsuario = RetornaCodVendedor();
-            if (Sessions.returnConfig.ExigeVendedorSN && pedido.CodUsuario==0)
+            if (Sessions.returnConfig.ExigeVendedorSN && pedido.CodUsuario == 0)
             {
                 MessageBox.Show("Selecione o vendedor/atendente para continuar");
                 txtCodVendedor.Focus();
@@ -1291,7 +1299,7 @@ namespace DexComanda
                             ValorPagamento = pedido.TotalPedido
                         };
 
-                      //  con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
+                        //  con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
 
                         con.Update("spAlterarItemPedido", itemPedido);
 
@@ -1724,7 +1732,7 @@ namespace DexComanda
 
             }
         }
-        
+
         private void imprimirViaEntrega(object sender, PrintPageEventArgs ev)
         {
             if (!ImprimeLPT)
@@ -2024,7 +2032,7 @@ namespace DexComanda
                 return false;
             }
         }
-        
+
         private void BuscaProduto1(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -2408,7 +2416,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(749, 6);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -3076,8 +3084,8 @@ namespace DexComanda
             // 
             // chkListAdicionais
             // 
-            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chkListAdicionais.CheckOnClick = true;
             this.chkListAdicionais.FormattingEnabled = true;
@@ -3202,7 +3210,7 @@ namespace DexComanda
 
         private void txtQuantidade_TextChanged(object sender, EventArgs e)
         {
-            if (txtQuantidade.Text != "" && txtQuantidade.Text!="0," && txtQuantidade.Text!="0.")
+            if (txtQuantidade.Text != "" && txtQuantidade.Text != "0," && txtQuantidade.Text != "0.")
             {
                 CalcularTotalItem();
             }
@@ -3216,8 +3224,8 @@ namespace DexComanda
             {
                 var precoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.ToString().Replace("R$ ", ""));
                 var quantidade = decimal.Parse(this.txtQuantidade.Text);
-                var total = Math.Round(precoUnitario * quantidade,2);
-                this.txtPrecoTotal.Text =total.ToString();
+                var total = Math.Round(precoUnitario * quantidade, 2);
+                this.txtPrecoTotal.Text = total.ToString();
                 this.btnAdicionarItemNoPedido.Focus();
             }
         }
@@ -3299,7 +3307,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-           
+
         }
 
         private void cbxTrocoParaOK_CheckedChanged(object sender, EventArgs e)
@@ -3363,12 +3371,12 @@ namespace DexComanda
 
         private void CalculaDesconto(object sender, KeyPressEventArgs e)
         {
-            if(e.KeyChar != Convert.ToChar(Keys.Enter))
+            if (e.KeyChar != Convert.ToChar(Keys.Enter))
             {
                 return;
             }
 
-            decimal TotalPedido = ValorTotal + Convert.ToDecimal(lblEntrega.Text.Replace("R$",""));
+            decimal TotalPedido = ValorTotal + Convert.ToDecimal(lblEntrega.Text.Replace("R$", ""));
             if (Utils.SoDecimais(e))
             {
                 if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "DescontoPedidoSN"))
@@ -3837,7 +3845,7 @@ namespace DexComanda
                                                                       dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
                                                                   , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString());
-                    
+
                 }
             }
             catch (Exception erro)
@@ -3940,26 +3948,26 @@ namespace DexComanda
 
         private void frmCadastrarPedido_Shown(object sender, EventArgs e)
         {
-           
+
         }
 
         private void frmCadastrarPedido_Activated(object sender, EventArgs e)
         {
-         
+
         }
 
         private void BuscaVendedor(object sender, EventArgs e)
         {
-            if (codPedido!=0 && !PedidoRepetio)
+            if (codPedido != 0 && !PedidoRepetio)
             {
                 if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "EditaPedidoSN"))
                 {
                     return;
                 }
             }
-            if (txtCodVendedor.Text!="")
+            if (txtCodVendedor.Text != "")
             {
-                Utils.MontaCombox(cbxVendedor, "Nome","Codigo","Usuario", "spObterUsuarioPorCodigo", int.Parse(txtCodVendedor.Text));
+                Utils.MontaCombox(cbxVendedor, "Nome", "Codigo", "Usuario", "spObterUsuarioPorCodigo", int.Parse(txtCodVendedor.Text));
             }
         }
 
@@ -3970,8 +3978,8 @@ namespace DexComanda
 
         private void chkSabores_CheckedChanged(object sender, EventArgs e)
         {
-            
-           
+
+
         }
 
         private void chkSabores_CheckStateChanged(object sender, EventArgs e)
@@ -3981,11 +3989,11 @@ namespace DexComanda
                 grpBoxTamanhos.Enabled = !chkSabores.Checked;
                 frmSabores frm = new frmSabores(cbxTipoProduto.Text);
                 frm.ShowDialog();
-                cbxProdutosGrid.Text = frm.strNomeProduto + " " + frm.strTamanho;
+                cbxProdutosGrid.Text = cbxTipoProduto.Text + " " + frm.strNomeProduto + " " + frm.strTamanho;
                 txtPrecoUnitario.Text = frm.strPreco;
                 CalcularTotalItem();
             }
-            
+
         }
 
         private void cbxSabor_SelectedIndexChanged(object sender, EventArgs e)

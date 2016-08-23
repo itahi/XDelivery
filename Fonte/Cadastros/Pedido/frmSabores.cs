@@ -149,6 +149,12 @@ namespace DexComanda.Cadastros.Pedido
                             radioButton5.Tag = strPreco;
                             radioButton5.Text = strNome + " " + strPreco;
                         }
+                        else if (!radioButton6.Visible)
+                        {
+                            radioButton6.Visible = true;
+                            radioButton6.Tag = strPreco;
+                            radioButton6.Text = strNome + " " + strPreco;
+                        }
                     }
                 }
 
@@ -170,7 +176,7 @@ namespace DexComanda.Cadastros.Pedido
                     {
                         // strNomeProduto = strNomeProduto + ((System.Windows.Forms.RadioButton)ctrControl).Text;
                         strPreco = ((System.Windows.Forms.RadioButton)ctrControl).Tag.ToString();
-                        strTamanho = strNome;
+                        strTamanho = ((System.Windows.Forms.RadioButton)ctrControl).Text.ToString().Replace(strPreco,""); 
                     }
                 }
             }

@@ -119,8 +119,8 @@ namespace DexComanda
                                     " max(PO.Preco + P.PrecoProduto) as Preco" +
                                     " from" +
                                     " Produto_Opcao PO" +
-                                    " join Produto P on P.Codigo = PO.CodProduto" +
-                                    " join Opcao O on O.Codigo = PO.CodOpcao and O.Tipo = 1" +
+                                    " left join Produto P on P.Codigo = PO.CodProduto" +
+                                    " left join Opcao O on O.Codigo = PO.CodOpcao and O.Tipo = 1" +
                                     " where CodProduto in (@Cod1,@Cod2,@Cod3,@Cod4) and CodOpcao =@CodOpcao";
             
             command = new SqlCommand(iSqlConsulta, conn);
