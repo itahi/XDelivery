@@ -38,6 +38,7 @@ namespace DexComanda.Operações
             if (Sessions.returnEmpresa.Nome == "NOME SUA EMPRESA" || 
                 Sessions.returnEmpresa.CNPJ== "23267492000018" || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGaleto|| 
                 Sessions.returnEmpresa.CNPJ== Bibliotecas.cCarangoVix || Sessions.returnEmpresa.CNPJ== Bibliotecas.cTropicalExpress
+               || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiFood
                 )
             {
                 iParamToken = Utils.CriptografarArquivo("xsistemas");

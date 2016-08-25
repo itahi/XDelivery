@@ -17,6 +17,8 @@ namespace DexComanda
         public const string cRegistroNaoEncontrado = "Sem registros com o filtro informado";
         public const string cNUTRIFOOD = "13004606798";
         public const string cGaleto = "22678091000151";
+
+        public const string cAcaiFood = "15014504000138";
         public const string cTopsAcai = "";
         public const string cSkinaLanches = "24829903000148";
         public const string cElShaday = "22695578000142";
