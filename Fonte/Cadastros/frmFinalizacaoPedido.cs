@@ -15,6 +15,7 @@ namespace DexComanda.Cadastros
     {
         private Conexao con;
         public bool bMultiPlasFP = false;
+        public bool boolFinalizou = false;
         private Boolean bInserir;
         private frmCadastrarPedido iFrm;
         private int intCodPedido;
@@ -152,8 +153,10 @@ namespace DexComanda.Cadastros
 
 
                     }
+                    boolFinalizou = true;
                     if (Utils.MessageBoxQuestion("Deseja imprimir a conferencia desta dessa mesa?"))
                     {
+                       
                         Utils.ImpressaoFechamentoNovo(intCodPedid, false, 1);
                     }
                     this.Close();

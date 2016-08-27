@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCaixaMovimento));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbxTurno = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cbxFPagamento = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -52,8 +54,7 @@
             this.lblLiquido = new System.Windows.Forms.Label();
             this.lblSaidas = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cbxTurno = new System.Windows.Forms.ComboBox();
+            this.btnImprimir = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MovimentosGridView)).BeginInit();
@@ -62,6 +63,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnImprimir);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.cbxTurno);
             this.groupBox1.Controls.Add(this.label5);
@@ -83,6 +85,27 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(499, 43);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Turno";
+            // 
+            // cbxTurno
+            // 
+            this.cbxTurno.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTurno.FormattingEnabled = true;
+            this.cbxTurno.Items.AddRange(new object[] {
+            "Dia",
+            "Noite"});
+            this.cbxTurno.Location = new System.Drawing.Point(503, 60);
+            this.cbxTurno.Name = "cbxTurno";
+            this.cbxTurno.Size = new System.Drawing.Size(59, 21);
+            this.cbxTurno.TabIndex = 13;
             // 
             // label5
             // 
@@ -124,9 +147,9 @@
             // 
             this.btnFiltrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFiltrar.ImageKey = "(none)";
-            this.btnFiltrar.Location = new System.Drawing.Point(582, 19);
+            this.btnFiltrar.Location = new System.Drawing.Point(582, 17);
             this.btnFiltrar.Name = "btnFiltrar";
-            this.btnFiltrar.Size = new System.Drawing.Size(83, 50);
+            this.btnFiltrar.Size = new System.Drawing.Size(83, 30);
             this.btnFiltrar.TabIndex = 8;
             this.btnFiltrar.Text = "Filtrar";
             this.btnFiltrar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -315,26 +338,18 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "Total Saidas $:";
             // 
-            // label7
+            // btnImprimir
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(499, 43);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 13);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Turno";
-            // 
-            // cbxTurno
-            // 
-            this.cbxTurno.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxTurno.FormattingEnabled = true;
-            this.cbxTurno.Items.AddRange(new object[] {
-            "Dia",
-            "Noite"});
-            this.cbxTurno.Location = new System.Drawing.Point(503, 60);
-            this.cbxTurno.Name = "cbxTurno";
-            this.cbxTurno.Size = new System.Drawing.Size(59, 21);
-            this.cbxTurno.TabIndex = 13;
+            this.btnImprimir.Enabled = false;
+            this.btnImprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImprimir.ImageKey = "(none)";
+            this.btnImprimir.Location = new System.Drawing.Point(582, 50);
+            this.btnImprimir.Name = "btnImprimir";
+            this.btnImprimir.Size = new System.Drawing.Size(83, 30);
+            this.btnImprimir.TabIndex = 15;
+            this.btnImprimir.Text = "Imprimir";
+            this.btnImprimir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnImprimir.UseVisualStyleBackColor = true;
             // 
             // frmCaixaMovimento
             // 
@@ -387,5 +402,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbxTurno;
+        private System.Windows.Forms.Button btnImprimir;
     }
 }

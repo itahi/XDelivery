@@ -780,9 +780,17 @@ namespace DexComanda
                     {
                         frmFinalizacaoPedido frm = new frmFinalizacaoPedido(dblTotalPedido, false, codigo);
                         frm.ShowDialog();
-                       
-                        //  NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
-                        Utils.AtualizaMesa(iCodMesa, 1);
+
+                        if (frm.boolFinalizou)
+                        {
+                            //  NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
+                            Utils.AtualizaMesa(iCodMesa, 1);
+                        }
+                        else
+                        {
+                            return;
+                        }
+                        
                     }
 
                     // Grava Débito caso o Tipo de Pagamento gerar financeiro 

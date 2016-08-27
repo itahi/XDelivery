@@ -77,7 +77,9 @@ namespace DexComanda.Cadastros
                     CodUser = Sessions.retunrUsuario.Codigo,
                     Historico = txtDescricao.Text,
                     Valor = decimal.Parse(txtValor.Text),
-                    NumeroDocumento = txtDocumento.Text
+                    NumeroDocumento = txtDocumento.Text,
+                    Turno = cbxTurno.Text
+                    
 
                 };
                 if (intNumCaixa.ToString() == "" || txtValor.Text == "")
