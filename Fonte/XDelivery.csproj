@@ -705,6 +705,13 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\RelCaixaHistorico.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelCaixaHistorico.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboy.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -956,6 +963,11 @@
       <LastGenOutput>RelFechamentoCaixa.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelCaixaHistorico.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelCaixaHistorico.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboy.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelEntregasMotoboy.cs</LastGenOutput>

@@ -345,14 +345,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DexComanda.exe" size="5450240">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DexComanda.exe" size="5470208">
       <assemblyIdentity name="DexComanda" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>vpdOTwYewkVoZW9KpkhiHK6hXiMMkAuQ5uIhNmRgNL4=</dsig:DigestValue>
+        <dsig:DigestValue>UiY8+lJRpPFbX0TaodX69GlZwVUIu44qaY9Pt5ZATeo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -680,13 +680,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="DexComanda.exe.config" size="547">
+  <file name="DexComanda.exe.config" size="686">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>mw7d4c1PDESp4X+mtE3PRjE8pFBeKtk/Nj6GnkXKCXk=</dsig:DigestValue>
+      <dsig:DigestValue>rj7CIDMDquFNZkcIxF8woXYdvGx4/9ttu2zHmQ36XEo=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Dlls\HumanAPIClient.dll" size="16384">

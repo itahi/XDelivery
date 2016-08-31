@@ -35,6 +35,7 @@
             this.btnFinalizar = new System.Windows.Forms.Button();
             this.gridFormasPagamento = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
+            this.lblNumeroMesa = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gridFormasPagamento)).BeginInit();
             this.SuspendLayout();
             // 
@@ -112,19 +113,29 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Poor Richard", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(5, 9);
+            this.label2.Font = new System.Drawing.Font("Showcard Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(12, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(358, 19);
+            this.label2.Size = new System.Drawing.Size(177, 20);
             this.label2.TabIndex = 8;
-            this.label2.Text = "( * ) Preenche o valor restante na linha selecionada";
-            this.label2.Visible = false;
+            this.label2.Text = "Fechamento Mesa";
+            // 
+            // lblNumeroMesa
+            // 
+            this.lblNumeroMesa.AutoSize = true;
+            this.lblNumeroMesa.Font = new System.Drawing.Font("Showcard Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNumeroMesa.Location = new System.Drawing.Point(187, 9);
+            this.lblNumeroMesa.Name = "lblNumeroMesa";
+            this.lblNumeroMesa.Size = new System.Drawing.Size(44, 20);
+            this.lblNumeroMesa.TabIndex = 9;
+            this.lblNumeroMesa.Text = "txt";
             // 
             // frmFinalizacaoPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(375, 339);
+            this.Controls.Add(this.lblNumeroMesa);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.gridFormasPagamento);
             this.Controls.Add(this.btnFinalizar);
@@ -154,5 +165,6 @@
         private System.Windows.Forms.Button btnFinalizar;
         private System.Windows.Forms.DataGridView gridFormasPagamento;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblNumeroMesa;
     }
 }

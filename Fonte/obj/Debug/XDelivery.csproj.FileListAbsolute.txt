@@ -355,3 +355,5 @@ D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.CommonOb
 D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.ObjectFactory.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\ShockwaveFlashObjects.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.CommonControls.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\RelCaixaHistorico.rpt
+D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\RelCaixaHistorico.cs

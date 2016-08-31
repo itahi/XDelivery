@@ -13,7 +13,7 @@ namespace DexComanda.Operações
     public partial class frmCaixaMovimento : Form
     {
         private Conexao con;
-        private DataSet dsMovimentoFiltro;
+        public DataSet dsMovimentoFiltro;
         public frmCaixaMovimento()
         {
             con = new Conexao();
@@ -110,6 +110,11 @@ namespace DexComanda.Operações
         private void chkFPagamento_CheckedChanged(object sender, EventArgs e)
         {
             cbxFPagamento.Enabled = !chkFPagamento.Checked;
+        }
+
+        private void btnImprimir_Click(object sender, EventArgs e)
+        {
+            Utils.RelCaixaHistorico(dtInicio.Value,dtFim.Value,cbxNumCaixa.Text,"E",cbxFPagamento.SelectedValue.ToString(),cbxTurno.Text);
         }
     }
 }

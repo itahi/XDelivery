@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCaixaMovimento));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnImprimir = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.cbxTurno = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -54,7 +55,6 @@
             this.lblLiquido = new System.Windows.Forms.Label();
             this.lblSaidas = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnImprimir = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MovimentosGridView)).BeginInit();
@@ -85,6 +85,19 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
+            // 
+            // btnImprimir
+            // 
+            this.btnImprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImprimir.ImageKey = "(none)";
+            this.btnImprimir.Location = new System.Drawing.Point(582, 50);
+            this.btnImprimir.Name = "btnImprimir";
+            this.btnImprimir.Size = new System.Drawing.Size(83, 30);
+            this.btnImprimir.TabIndex = 15;
+            this.btnImprimir.Text = "Imprimir";
+            this.btnImprimir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnImprimir.UseVisualStyleBackColor = true;
+            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
             // label7
             // 
@@ -337,19 +350,6 @@
             this.label3.Size = new System.Drawing.Size(78, 13);
             this.label3.TabIndex = 8;
             this.label3.Text = "Total Saidas $:";
-            // 
-            // btnImprimir
-            // 
-            this.btnImprimir.Enabled = false;
-            this.btnImprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnImprimir.ImageKey = "(none)";
-            this.btnImprimir.Location = new System.Drawing.Point(582, 50);
-            this.btnImprimir.Name = "btnImprimir";
-            this.btnImprimir.Size = new System.Drawing.Size(83, 30);
-            this.btnImprimir.TabIndex = 15;
-            this.btnImprimir.Text = "Imprimir";
-            this.btnImprimir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnImprimir.UseVisualStyleBackColor = true;
             // 
             // frmCaixaMovimento
             // 

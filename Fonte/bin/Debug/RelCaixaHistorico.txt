@@ -1,0 +1,60 @@
+                Caixa
+
+
+DATA      Descricao          Valor
+DINHEIR
+25/08/20  DINHEIRO          100,00
+Lançamento abertura
+27/08/20  DINHEIRO          100,00
+Lançamento abertura
+27/08/20  DINHEIRO          5,00
+Pedido 1
+29/08/20  DINHEIRO          100,00
+Lançamento abertura
+             Total por Tip   305,00
+
+             Total Geral     305,00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

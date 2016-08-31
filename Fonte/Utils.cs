@@ -43,6 +43,7 @@ using DexComanda.Models.WS;
 using Newtonsoft.Json;
 using DexComanda.Operações.Funções;
 using DexComanda.Relatorios.Fechamentos.Novos.Impressao_Termica;
+using System.Data.Common;
 
 namespace DexComanda
 {
@@ -356,7 +357,7 @@ namespace DexComanda
             try
             {
 
-                DataSet ds = conexao.SelectRegistroPorNome("@GrupoProduto", "Produto", "spObterProdutoPorGrupo",iGrupo);
+                DataSet ds = conexao.SelectRegistroPorNome("@GrupoProduto", "Produto", "spObterProdutoPorGrupo", iGrupo);
                 icbxName.DataSource = ds.Tables[0];
                 icbxName.DisplayMember = idisplayName;
                 icbxName.ValueMember = iValueMember;
@@ -906,6 +907,53 @@ namespace DexComanda
             {
 
                 MessageBox.Show(erro.InnerException.Message);
+            }
+            return iRetorno;
+        }
+
+        public static string RelCaixaHistorico(DateTime idtInicio,DateTime idtFim,string iNumcaixa,string iEntradaSaida,string iCodPagamento,string iTurno)
+        {
+            string iRetorno = ""; ;
+
+            RelCaixaHistorico report;
+            report = new RelCaixaHistorico();
+            try
+            {
+                crtableLogoninfos = new TableLogOnInfos();
+                crtableLogoninfo = new TableLogOnInfo();
+                crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                report.Load(Directory.GetCurrentDirectory() + @"\RelCaixaHistorico.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "dex";
+                crConnectionInfo.Password = "1234";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+
+                report.SetParameterValue("@Turno", "Dia");
+                report.SetParameterValue("@CodCaixa", "1");
+                report.SetParameterValue("@DataI", "01/08/2016");
+                report.SetParameterValue("@DataF", "31/08/2016");
+                report.SetParameterValue("@CodPagamento", "1");
+                report.SetParameterValue("@EntradaSaida", "E");
+
+                report.SaveAs("Rel", false);
+                report.PrintToPrinter(1, false, 0, 0);
+               
+
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message + " - " + erro.StackTrace);
             }
             return iRetorno;
         }
