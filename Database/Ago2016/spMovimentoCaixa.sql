@@ -23,7 +23,7 @@ LEFT JOIN Caixa         CX ON CX.Codigo = CXM.CodCaixa
 where CXM.Turno =@Turno
 and CXM.CodCaixa=@CodCaixa
 and CXM.Data BETWEEN @DataI AND @DataF
-and CXM.CodFormaPagamento=@CodPagamento
+and CXM.CodFormaPagamento in ( @CodPagamento)
 and CXM.Tipo =@EntradaSaida
 
 

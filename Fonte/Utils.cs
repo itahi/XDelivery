@@ -71,6 +71,7 @@ namespace DexComanda
         private static ConnectionInfo crConnectionInfo;
         private static Tables CrTables;
         public static Boolean bMult;
+        public static int intCodUserAutorizador;
         private static string strProxImpressora = "";
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
         public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1, Boolean iAlterarUserLogado = false, string iTurno = "Dia")
@@ -268,6 +269,7 @@ namespace DexComanda
                     //frm.ShowDialog();
                     if (frm.Autorizacao)
                     {
+                        intCodUserAutorizador = frm.CodUser;
                         retur = true;
                         frm.Close();
                     }
@@ -280,6 +282,7 @@ namespace DexComanda
             }
             else
             {
+                intCodUserAutorizador = iCodUser;
                 retur = true;
             }
             return retur;
@@ -910,8 +913,81 @@ namespace DexComanda
             }
             return iRetorno;
         }
+        //public static string RelCaixaMOvimento()
+        //{
+        //    string iRetorno = "";
+        //    RelComandaMesa report;
+        //    report = new RelComandaMesa();
+        //    crtableLogoninfos = new TableLogOnInfos();
+        //    crtableLogoninfo = new TableLogOnInfo();
+        //    crConnectionInfo = new ConnectionInfo();
+        //    try
+        //    {
 
-        public static string RelCaixaHistorico(DateTime idtInicio,DateTime idtFim,string iNumcaixa,string iEntradaSaida,string iCodPagamento,string iTurno)
+        //        try
+        //        {
+        //            Tables CrTables;
+        //            report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
+        //            crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+        //            crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+        //            crConnectionInfo.UserID = "sa";
+        //            crConnectionInfo.Password = "1001";
+
+        //            CrTables = report.Database.Tables;
+        //            foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+        //            {
+        //                crtableLogoninfo = CrTable.LogOnInfo;
+        //                crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+        //                CrTable.ApplyLogOnInfo(crtableLogoninfo);
+        //            }
+        //            report.SetParameterValue("@Codigo", iCodPedido);
+        //            report.SetParameterValue("@CodGrupo", iCodGupo);
+
+        //            if (report.Rows.Count > 0)
+        //            {
+
+
+        //                if (iExport)
+        //                {
+        //                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
+        //                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
+        //                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelComandaMesa.txt";
+
+        //                    report.ExportOptions.ExportDestinationType =
+        //                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
+
+        //                    report.ExportOptions.ExportFormatType =
+        //                    CrystalDecisions.Shared.ExportFormatType.Text;
+
+        //                    report.ExportOptions.DestinationOptions = reportExport;
+        //                    report.Export();
+        //                    iRetorno = Directory.GetCurrentDirectory() + @"\RelComandaMesa.txt";
+        //                }
+        //                else
+        //                {
+        //                    for (int i = 0; i < iNumCopias; i++)
+        //                    {
+        //                        report.PrintToPrinter(1, false, 0, 0);
+        //                    }
+
+        //                }
+        //            }
+        //        }
+        //        finally
+        //        {
+        //            // report.Dispose();
+
+        //        }
+        //    }
+        //    catch (Exception erro)
+        //    {
+
+        //        MessageBox.Show(erro.InnerException.Message);
+        //    }
+        //    return iRetorno;
+        //}
+        // public static string RelCaixaHistorico(DateTime idtInicio, DateTime idtFim, string iNumcaixa, string iEntradaSaida, string iCodPagamento, string iTurno)
+        public static string RelCaixaHistorico(string iSqlExzecu)
         {
             string iRetorno = ""; ;
 
@@ -938,14 +1014,16 @@ namespace DexComanda
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
 
-                report.SetParameterValue("@Turno", "Dia");
-                report.SetParameterValue("@CodCaixa", "1");
-                report.SetParameterValue("@DataI", "01/08/2016");
-                report.SetParameterValue("@DataF", "31/08/2016");
-                report.SetParameterValue("@CodPagamento", "1");
-                report.SetParameterValue("@EntradaSaida", "E");
 
-                report.SaveAs("Rel", false);
+                report.SetSQLCommandTable(crConnectionInfo, "CaixaMovimento", iSqlExzecu);
+                //report.SetParameterValue("@Turno", iTurno);
+                //report.SetParameterValue("@CodCaixa", iNumcaixa);
+                //report.SetParameterValue("@DataI", idtInicio);
+                //report.SetParameterValue("@DataF", idtFim);
+                //report.SetParameterValue("@CodPagamento", iCodPagamento);
+                //report.SetParameterValue("@EntradaSaida", iEntradaSaida);
+
+
                 report.PrintToPrinter(1, false, 0, 0);
                
 
@@ -1173,7 +1251,11 @@ namespace DexComanda
                 }
                 else
                 {
-                    report.PrintToPrinter(0, false, 0, 0);
+                    for (int i = 0; i < iNumCopias; i++)
+                    {
+                        report.PrintToPrinter(0, false, 0, 0);
+                    }
+                   
                 }
             }
             catch (Exception erro)

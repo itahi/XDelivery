@@ -13,5 +13,6 @@ namespace DexComanda.Models
         public string Motivo { get; set; }
         public DateTime Data { get; set; }
         public int CodMotivo { get; set; }
+        public int CodPedido { get; set; }
     }
 }

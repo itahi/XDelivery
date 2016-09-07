@@ -15,6 +15,7 @@ namespace DexComanda.Operações
         Conexao con;
         public int CodMotivo;
         public string ObsCancelamento;
+        public Boolean boolCancelou = false;
         public frmHistoricoCancelamento()
         {
             InitializeComponent();
@@ -31,12 +32,18 @@ namespace DexComanda.Operações
 
         private void Salvar(object sender, EventArgs e)
         {
-            if (cbxMotivo.Text != "")
+            if (cbxMotivo.Text != "" && txtObservacao.Text.Length>10)
             {
                 this.DialogResult = DialogResult.OK;
                 CodMotivo         = int.Parse(cbxMotivo.SelectedValue.ToString());
                 ObsCancelamento   = txtObservacao.Text;
+                boolCancelou = true;
                 this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Preencha corretamente o campo ' Motivo ' ");
+                return;
             }
         }
 

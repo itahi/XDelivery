@@ -165,6 +165,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bibliotecas.cs" />
+    <Compile Include="Cadastros\Empresa\frmHorariosEntrega.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Empresa\frmHorariosEntrega.Designer.cs">
+      <DependentUpon>frmHorariosEntrega.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cadastros\Financeiro\frmCadTurno.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -188,6 +194,18 @@
     </Compile>
     <Compile Include="Cadastros\frmFinalizacaoPedido.Designer.cs">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\Pedido\frmOpcaoNumeric.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Pedido\frmOpcaoNumeric.Designer.cs">
+      <DependentUpon>frmOpcaoNumeric.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\Pedido\frmOpcaoRadio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Pedido\frmOpcaoRadio.Designer.cs">
+      <DependentUpon>frmOpcaoRadio.cs</DependentUpon>
     </Compile>
     <Compile Include="Cadastros\Pedido\frmSabores.cs">
       <SubType>Form</SubType>
@@ -261,6 +279,7 @@
     <Compile Include="Models\Familia.cs" />
     <Compile Include="Models\FinalizaPedido.cs" />
     <Compile Include="Models\HistoricoPessoa.cs" />
+    <Compile Include="Models\HorarioEntrega.cs" />
     <Compile Include="Models\Operacoes\HorarioFuncionamento.cs" />
     <Compile Include="Models\Operacoes\Notificacao.cs" />
     <Compile Include="Models\Produto\Opcao.cs" />
@@ -680,12 +699,6 @@
     <Compile Include="Relatorios\Fechamentos\Novos\frmReportEntregasMotoboy.Designer.cs">
       <DependentUpon>frmReportEntregasMotoboy.cs</DependentUpon>
     </Compile>
-    <Compile Include="Relatorios\Fechamentos\Novos\frmReportFechamentoDia.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Relatorios\Fechamentos\Novos\frmReportFechamentoDia.Designer.cs">
-      <DependentUpon>frmReportFechamentoDia.cs</DependentUpon>
-    </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\frmReportFechamentoResumido.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -697,6 +710,12 @@
     </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\frmReportItensVendidos.Designer.cs">
       <DependentUpon>frmReportItensVendidos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportCancelamentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportCancelamentos.Designer.cs">
+      <DependentUpon>frmReportCancelamentos.cs</DependentUpon>
     </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.cs">
       <AutoGen>True</AutoGen>
@@ -805,6 +824,9 @@
       <DependentUpon>Splashcreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils.cs" />
+    <EmbeddedResource Include="Cadastros\Empresa\frmHorariosEntrega.resx">
+      <DependentUpon>frmHorariosEntrega.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Financeiro\frmCadTurno.resx">
       <DependentUpon>frmCadTurno.cs</DependentUpon>
     </EmbeddedResource>
@@ -949,9 +971,6 @@
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmReportEntregasMotoboy.resx">
       <DependentUpon>frmReportEntregasMotoboy.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmReportFechamentoDia.resx">
-      <DependentUpon>frmReportFechamentoDia.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmReportFechamentoResumido.resx">
       <DependentUpon>frmReportFechamentoResumido.cs</DependentUpon>
     </EmbeddedResource>
@@ -963,6 +982,9 @@
       <LastGenOutput>RelFechamentoCaixa.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportCancelamentos.resx">
+      <DependentUpon>frmReportCancelamentos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelCaixaHistorico.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelCaixaHistorico.cs</LastGenOutput>

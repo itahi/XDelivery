@@ -30,7 +30,8 @@ namespace DexComanda
         public const string cSemRegistrosASincronizar = "Não há nada a sincronizar na tabela de ";
         public const string cCaixaAbertoTurno = "Caixa já esta aberto no turno selecionado";
         public const string cCaixaFechado = "Este Caixa já está fechado e não pode ter mais lançamentos";
-       // public const string cCaixaSomenteConsulta = ""
+        public const string cFiltroRetornaVazio = "Não há registros com filtro escolhido";
+        // public const string cCaixaSomenteConsulta = ""
     }
 
 

@@ -1,4 +1,5 @@
 ﻿using DexComanda.Cadastros;
+using DexComanda.Cadastros.Empresa;
 using DexComanda.Cadastros.Produto;
 using DexComanda.Integração;
 using DexComanda.Models;
@@ -184,7 +185,7 @@ namespace DexComanda
                 MessageBox.Show(errobusca.Message, "Erro");
             }
         }
-        private void ExecutaCancelamento()
+        private void ExecutaCancelamento(int CodUserCancelamento)
         {
             string NomeCliente = (this.pedidosGridView.CurrentRow.Cells["Nome Cliente"].Value.ToString());
             int CodUser;
@@ -256,11 +257,13 @@ namespace DexComanda
                                     CodMotivo = frm.CodMotivo,
                                     CodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()),
                                     Data = DateTime.Now,
-                                    Motivo = frm.ObsCancelamento
+                                    Motivo = frm.ObsCancelamento,
+                                    CodPedido = Codigo
                                 };
 
                                 con.Insert("spAdicionaHistoricoCancelamento", Hist);
                             }
+
                         }
 
                         finally
@@ -268,9 +271,10 @@ namespace DexComanda
                             // dsPedido.Dispose();
 
                         }
-
+                        
                     }
-                   //Utils.ControlaEventos("CancPedido", this.Name);
+                    cancelPedid.CodUsuario = CodUserCancelamento;
+                    //Utils.ControlaEventos("CancPedido", this.Name);
                     con.Update("spCancelarPedido", cancelPedid);
                     Utils.ControlaEventos("CancPedido", this.Name);
                     MessageBox.Show("Pedido Cancelado com sucesso.");
@@ -937,7 +941,7 @@ namespace DexComanda
             {
                 if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "CancelaPedidosSN"))
                 {
-                    ExecutaCancelamento();
+                    ExecutaCancelamento(Utils.intCodUserAutorizador);
                 }
 
             }
@@ -1726,6 +1730,12 @@ namespace DexComanda
         private void vendasPorVendedorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmReportVendasPorVendedor frm = new frmReportVendasPorVendedor();
+            frm.Show();
+        }
+
+        private void rotasDeEntregaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmHorariosEntrega frm = new frmHorariosEntrega();
             frm.Show();
         }
     }

@@ -11,7 +11,7 @@ namespace DexComanda.Models
         public int Codigo { get; set; }
         public string status { get; set; }
         public DateTime RealizadoEm { get; set; }
-        //public int CodUsuarioIncluiCancelou { get; set; }
+        public int CodUsuario { get; set; }
         //public DateTime DataCancelado { get; set; }
     }
 }

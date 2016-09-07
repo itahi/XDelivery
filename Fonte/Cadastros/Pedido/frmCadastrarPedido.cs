@@ -1015,7 +1015,7 @@ namespace DexComanda
 
                             // Validar o Desconto Máximo Por Usuario
 
-                            if (txtDesconto.Text != "")
+                            if (txtDesconto.Text!= "0,00")
                             {
                                 if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "DescontoPedidoSN"))
                                 {
@@ -1639,13 +1639,17 @@ namespace DexComanda
 
                     string iRetorno = Utils.ImpressaoBalcao(iCodigo, ImprimeLPT, QtdViasBalcao);
 
-                    if (ImprimeLPT && iRetorno != "")
-                    {
-                        StreamReader tempDex = new StreamReader(iRetorno);
-                        string sLine = "";
-                        sLine = tempDex.ReadToEnd();
-                        Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
-                    }
+                    //if (ImprimeViaCozinha)
+                    //{
+                    //    Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
+                    //}
+                    //if (ImprimeLPT && iRetorno != "")
+                    //{
+                    //    StreamReader tempDex = new StreamReader(iRetorno);
+                    //    string sLine = "";
+                    //    sLine = tempDex.ReadToEnd();
+                    //    Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
+                    //}
                 }
 
                 // Imprimindo via Entrega

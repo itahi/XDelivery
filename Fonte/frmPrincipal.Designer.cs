@@ -57,6 +57,7 @@
             this.entregasPorMotoboyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resumidoFormaDePagamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ticketMédioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cancelamentosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maisVendidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +67,8 @@
             this.envioDeSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.exportarDadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.impressãoTermicaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vendasPorVendedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configuraçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sistemaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.impressãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -140,8 +143,7 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.impressãoTermicaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vendasPorVendedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotasDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -256,10 +258,11 @@
             // 
             // empresaToolStripMenuItem
             // 
+            this.empresaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rotasDeEntregaToolStripMenuItem});
             this.empresaToolStripMenuItem.Name = "empresaToolStripMenuItem";
             this.empresaToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
             this.empresaToolStripMenuItem.Text = "Empresa";
-            this.empresaToolStripMenuItem.Visible = false;
             // 
             // usuáriosToolStripMenuItem
             // 
@@ -355,7 +358,8 @@
             this.geralToolStripMenuItem2,
             this.entregasPorMotoboyToolStripMenuItem,
             this.resumidoFormaDePagamentoToolStripMenuItem,
-            this.ticketMédioToolStripMenuItem});
+            this.ticketMédioToolStripMenuItem,
+            this.cancelamentosToolStripMenuItem});
             this.porPessoaToolStripMenuItem.Name = "porPessoaToolStripMenuItem";
             this.porPessoaToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.porPessoaToolStripMenuItem.Text = "Vendas";
@@ -387,6 +391,12 @@
             this.ticketMédioToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
             this.ticketMédioToolStripMenuItem.Text = "Ticket Médio";
             this.ticketMédioToolStripMenuItem.Click += new System.EventHandler(this.ticketMédioToolStripMenuItem_Click);
+            // 
+            // cancelamentosToolStripMenuItem
+            // 
+            this.cancelamentosToolStripMenuItem.Name = "cancelamentosToolStripMenuItem";
+            this.cancelamentosToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
+            this.cancelamentosToolStripMenuItem.Text = "Cancelamentos";
             // 
             // diárioToolStripMenuItem
             // 
@@ -455,6 +465,21 @@
             this.exportarDadosToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.exportarDadosToolStripMenuItem.Text = "Exportar/Importar Dados";
             this.exportarDadosToolStripMenuItem.Visible = false;
+            // 
+            // impressãoTermicaToolStripMenuItem
+            // 
+            this.impressãoTermicaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.vendasPorVendedorToolStripMenuItem});
+            this.impressãoTermicaToolStripMenuItem.Name = "impressãoTermicaToolStripMenuItem";
+            this.impressãoTermicaToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
+            this.impressãoTermicaToolStripMenuItem.Text = "Impressão Termica";
+            // 
+            // vendasPorVendedorToolStripMenuItem
+            // 
+            this.vendasPorVendedorToolStripMenuItem.Name = "vendasPorVendedorToolStripMenuItem";
+            this.vendasPorVendedorToolStripMenuItem.Size = new System.Drawing.Size(229, 26);
+            this.vendasPorVendedorToolStripMenuItem.Text = "Vendas por Vendedor";
+            this.vendasPorVendedorToolStripMenuItem.Click += new System.EventHandler(this.vendasPorVendedorToolStripMenuItem_Click);
             // 
             // configuraçãoToolStripMenuItem
             // 
@@ -1257,20 +1282,12 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // impressãoTermicaToolStripMenuItem
+            // rotasDeEntregaToolStripMenuItem
             // 
-            this.impressãoTermicaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.vendasPorVendedorToolStripMenuItem});
-            this.impressãoTermicaToolStripMenuItem.Name = "impressãoTermicaToolStripMenuItem";
-            this.impressãoTermicaToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
-            this.impressãoTermicaToolStripMenuItem.Text = "Impressão Termica";
-            // 
-            // vendasPorVendedorToolStripMenuItem
-            // 
-            this.vendasPorVendedorToolStripMenuItem.Name = "vendasPorVendedorToolStripMenuItem";
-            this.vendasPorVendedorToolStripMenuItem.Size = new System.Drawing.Size(229, 26);
-            this.vendasPorVendedorToolStripMenuItem.Text = "Vendas por Vendedor";
-            this.vendasPorVendedorToolStripMenuItem.Click += new System.EventHandler(this.vendasPorVendedorToolStripMenuItem_Click);
+            this.rotasDeEntregaToolStripMenuItem.Name = "rotasDeEntregaToolStripMenuItem";
+            this.rotasDeEntregaToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.rotasDeEntregaToolStripMenuItem.Text = "Rotas de Entrega";
+            this.rotasDeEntregaToolStripMenuItem.Click += new System.EventHandler(this.rotasDeEntregaToolStripMenuItem_Click);
             // 
             // frmPrincipal
             // 
@@ -1428,5 +1445,7 @@
         private System.Windows.Forms.ToolStripMenuItem notificaçõesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem impressãoTermicaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vendasPorVendedorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cancelamentosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rotasDeEntregaToolStripMenuItem;
     }
 }

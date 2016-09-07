@@ -1,1 +1,1 @@
-Data Source=.\;Initial Catalog=DbExpert_xSistemas; User ID=dex; Password=1234; Trusted_Connection=False; 
+Data Source=FRENTE_LOJA;Initial Catalog=DbExpert_xSistemas; User ID=dex; Password=1234; Trusted_Connection=False; 

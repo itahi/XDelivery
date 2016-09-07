@@ -29,6 +29,7 @@ namespace DexComanda
         private SqlCommand command;
         private static SqlConnection conn;
         private SqlDataAdapter adapter;
+        public string strSqlExecutado;
         private int lastCodigo;
         public static string connectionString = null;
 
@@ -773,9 +774,9 @@ namespace DexComanda
                 lSqlConsulta = lSqlConsulta + " and  CXM.Tipo ='" + iTipo + "'";
             }
 
-     //      lSqlConsulta = lSqlConsulta + " and CX.Turno ='" + iTurno + "'";
+            //      lSqlConsulta = lSqlConsulta + " and CX.Turno ='" + iTurno + "'";
 
-
+            strSqlExecutado = lSqlConsulta;
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
 
@@ -966,7 +967,8 @@ namespace DexComanda
             if (spName == "spAlterarEmpresa" || spName == "spAdicionarPessoa" || spName == "spAdicionarCaixa" || spName == "spAdicionaHistorico" ||
                 spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
                 spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" || spName == "spAdicionarPedidoStatus" ||
-                spName == "spAdicionarEmpresa" || spName == "spAdicionarFamilia" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento" || spName == "spAdicionarOpcaProduto" || spName == "spAdicionarProduto_OpcaoTipo")
+                spName == "spAdicionarEmpresa" || spName == "spAdicionarFamilia" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento" 
+                || spName == "spAdicionarOpcaProduto" || spName == "spAdicionarProduto_OpcaoTipo" || spName == "spAdicionarEmpresa_HorarioEntrega")
             {
 
                 if (spName == "spAdicionarProduto")

@@ -1,8 +1,12 @@
-﻿using System;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using DexComanda.Relatorios.Fechamentos.Novos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,76 +26,87 @@ namespace DexComanda.Operações
 
         private void ExecutaFiltro(object sender, EventArgs e)
         {
-            MovimentosGridView.DataSource = null;
-            string iTipo="E";
-            string iFPagamento="";
-            if (rbEntrada.Checked)
-	        {
-		     iTipo = "E";
-	        }
-            else if (rbSaida.Checked)
-	        {
-             iTipo = "S";
-	        }
-            else if (rbEntradaSaida.Checked)
-	        {
-		      iTipo = "ES";
-	        }
 
-            else
-	        {
-                MessageBox.Show("Selecione o tipo de movimento para filtrar","[XSistemas");
-                return;
-	        }
-
-            if (cbxFPagamento.Enabled)
+            string iRetorno = ""; ;
+            RelCaixaHistorico report;
+            report = new RelCaixaHistorico();
+            try
             {
-                iFPagamento = cbxFPagamento.SelectedValue.ToString();
-            }
 
-            dsMovimentoFiltro = con.SelectCaixaMovimetoFiltro(dtInicio.Value.ToShortDateString() + " 00:00:00", dtFim.Value.ToShortDateString() + " 23:59:59", iTipo, iFPagamento, "CaixaMovimento", cbxNumCaixa.Text,cbxTurno.Text);
+                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
 
-            if (dsMovimentoFiltro.Tables[0].Rows.Count>0)
-            {
-                MovimentosGridView.DataSource = null;
-                MovimentosGridView.AutoGenerateColumns = true;
-                MovimentosGridView.DataSource = dsMovimentoFiltro;
-                MovimentosGridView.DataMember = "CaixaMovimento";
-                con.Close();
-
-                SomaValores();
-            }
-            else
-            {
-                MessageBox.Show("Não há registros com o filtro selecionado", "[XSistemas] Aviso");
-                return;
-            }
-          
-          
-        }
-        private void SomaValores()
-        {
-            decimal vlrSaidas   =0.00M;
-            decimal  vlrEntrada =0.00M;
-            for (int i = 0; i < MovimentosGridView.Rows.Count; i++)
-            {
-                if (MovimentosGridView.Rows[i].Cells[6].Value.ToString() == "Entrada")
+                try
                 {
-                    vlrEntrada = vlrEntrada + decimal.Parse(MovimentosGridView.Rows[i].Cells[5].Value.ToString());
+                    string str = Directory.GetCurrentDirectory();
+                    report.Load(Directory.GetCurrentDirectory() + @"\RelCaixaHistorico.rpt");
+                    crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                    crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                    crConnectionInfo.UserID = "dex";
+                    crConnectionInfo.Password = "1234";
+
+                    CrTables = report.Database.Tables;
+                    foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                    {
+                        crtableLogoninfo = CrTable.LogOnInfo;
+                        crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                        CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                    }
+
+                    report.SetParameterValue("@Turno", cbxTurno.Text);
+                    report.SetParameterValue("@CodCaixa", cbxNumCaixa.Text);
+                    report.SetParameterValue("@DataI", dtInicio.Value);
+                    report.SetParameterValue("@DataF", dtFim.Value);
+                    report.SetParameterValue("@CodPagamento", cbxFPagamento.SelectedValue.ToString());
+                    report.SetParameterValue("@EntradaSaida", OperacaoMarcada());
+                    
+                    crystalReportViewer1.ReportSource = report;
+                    crystalReportViewer1.Refresh();
+
                 }
-                else if (MovimentosGridView.Rows[i].Cells[6].Value.ToString() == "Saida")
+                catch (Exception erro)
                 {
-                    vlrSaidas = vlrSaidas + decimal.Parse(MovimentosGridView.Rows[i].Cells[5].Value.ToString());
+
+                    MessageBox.Show("Erro na impressao :" + erro.Message);
                 }
             }
-
-            lblEntradas.Text = vlrEntrada.ToString();
-            lblSaidas.Text = vlrSaidas.ToString();
-            if (rbEntradaSaida.Checked)
+            finally
             {
-                lblLiquido.Text = Convert.ToString(vlrEntrada - vlrSaidas); 
+                report.Dispose();
+
             }
+
+            //
+           
+
+
+
         }
+        //private void SomaValores()
+        //{
+        //    decimal vlrSaidas = 0.00M;
+        //    decimal vlrEntrada = 0.00M;
+        //    for (int i = 0; i < MovimentosGridView.Rows.Count; i++)
+        //    {
+        //        if (MovimentosGridView.Rows[i].Cells[6].Value.ToString() == "Entrada")
+        //        {
+        //            vlrEntrada = vlrEntrada + decimal.Parse(MovimentosGridView.Rows[i].Cells[5].Value.ToString());
+        //        }
+        //        else if (MovimentosGridView.Rows[i].Cells[6].Value.ToString() == "Saida")
+        //        {
+        //            vlrSaidas = vlrSaidas + decimal.Parse(MovimentosGridView.Rows[i].Cells[5].Value.ToString());
+        //        }
+        //    }
+
+        //    lblEntradas.Text = vlrEntrada.ToString();
+        //    lblSaidas.Text = vlrSaidas.ToString();
+        //    if (rbEntradaSaida.Checked)
+        //    {
+        //        lblLiquido.Text = Convert.ToString(vlrEntrada - vlrSaidas);
+        //    }
+        //}
 
         private void frmCaixaMovimento_Load(object sender, EventArgs e)
         {
@@ -104,7 +119,7 @@ namespace DexComanda.Operações
             cbxFPagamento.DataSource = con.SelectAll("FormaPagamento", "spObterFormaPagamento").Tables["FormaPagamento"];
             cbxFPagamento.DisplayMember = "Descricao";
             cbxFPagamento.ValueMember = "Codigo";
-    
+
         }
 
         private void chkFPagamento_CheckedChanged(object sender, EventArgs e)
@@ -114,7 +129,51 @@ namespace DexComanda.Operações
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            Utils.RelCaixaHistorico(dtInicio.Value,dtFim.Value,cbxNumCaixa.Text,"E",cbxFPagamento.SelectedValue.ToString(),cbxTurno.Text);
+            Utils.RelCaixaHistorico(con.strSqlExecutado);
+
+            // Utils.RelCaixaHistorico(dtInicio.Value,dtFim.Value,cbxNumCaixa.Text, OperacaoMarcada(), FormaPagamento(), cbxTurno.Text);
+        }
+        private string OperacaoMarcada()
+        {
+            string iReturn = "";
+            foreach (System.Windows.Forms.Control TEXT in grpMovimento.Controls)
+            {
+                //Loop through all controls 
+                if (object.ReferenceEquals(TEXT.GetType(), typeof(System.Windows.Forms.RadioButton)))
+                {
+                    //Check to see if it's a textbox 
+                    if (((System.Windows.Forms.RadioButton)TEXT).Checked)
+                    {
+                        iReturn = ((System.Windows.Forms.RadioButton)TEXT).Tag.ToString();
+                    }
+                }
+            }
+            return iReturn;
+        }
+        private string FormaPagamento()
+        {
+            string iReturn = "";
+            if (!chkFPagamento.Checked)
+            {
+                iReturn = cbxFPagamento.SelectedValue.ToString();
+            }
+            else
+            {
+                DataSet dsFormasPagamento = con.SelectFormasPagamento();
+                for (int i = 0; i < dsFormasPagamento.Tables[0].Rows.Count; i++)
+                {
+                    //// Itext = dsFormasPagamento.Tables[0].Rows[i].ItemArray.GetValue(0).ToString()+ Itext;
+                    //iReturn = dsFormasPagamento.Tables[0].Rows[i].ItemArray.GetValue(0).ToString()+",";
+                    //if (i == dsFormasPagamento.Tables[0].Rows.Count)
+                    //{
+                    //    iReturn = iReturn + dsFormasPagamento.Tables[0].Rows[i].ItemArray.GetValue(0).ToString();
+                    //}
+
+                }
+
+            }
+            return iReturn;
+
         }
     }
 }

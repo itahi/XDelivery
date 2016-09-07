@@ -107,6 +107,7 @@
             this.horaInicio = new System.Windows.Forms.DateTimePicker();
             this.Inicio = new System.Windows.Forms.DateTimePicker();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.chkVendedor = new System.Windows.Forms.CheckBox();
             this.chkRegCancelamentos = new System.Windows.Forms.CheckBox();
             this.chkUltPedido = new System.Windows.Forms.CheckBox();
             this.chk10Garcon = new System.Windows.Forms.CheckBox();
@@ -237,7 +238,6 @@
             this.btnSalvar = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.chkVendedor = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -294,7 +294,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(652, 425);
+            this.tabPage1.Size = new System.Drawing.Size(652, 439);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Dados Empresa";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -314,7 +314,7 @@
             this.panel3.Controls.Add(this.label7);
             this.panel3.Location = new System.Drawing.Point(6, 6);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(637, 247);
+            this.panel3.Size = new System.Drawing.Size(637, 227);
             this.panel3.TabIndex = 26;
             // 
             // txtTelefone2
@@ -384,7 +384,7 @@
             this.groupBox5.Controls.Add(this.label9);
             this.groupBox5.Location = new System.Drawing.Point(301, 0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(324, 244);
+            this.groupBox5.Size = new System.Drawing.Size(324, 217);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Endereço";
@@ -559,9 +559,9 @@
             this.groupBox1.Controls.Add(this.txtServidor);
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.txtBanco);
-            this.groupBox1.Location = new System.Drawing.Point(6, 259);
+            this.groupBox1.Location = new System.Drawing.Point(6, 239);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(640, 160);
+            this.groupBox1.Size = new System.Drawing.Size(640, 110);
             this.groupBox1.TabIndex = 25;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Servidor/Banco de Dados";
@@ -1052,6 +1052,19 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Gerais";
             // 
+            // chkVendedor
+            // 
+            this.chkVendedor.AutoSize = true;
+            this.chkVendedor.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkVendedor.Location = new System.Drawing.Point(4, 66);
+            this.chkVendedor.Name = "chkVendedor";
+            this.chkVendedor.Size = new System.Drawing.Size(123, 17);
+            this.chkVendedor.TabIndex = 16;
+            this.chkVendedor.Text = "Vendedor no Pedido";
+            this.toolTip1.SetToolTip(this.chkVendedor, "Com essa configuração marcada na finalização do Pedido será obrigatório seleciona" +
+        "r um vendedor");
+            this.chkVendedor.UseVisualStyleBackColor = true;
+            // 
             // chkRegCancelamentos
             // 
             this.chkRegCancelamentos.AutoSize = true;
@@ -1468,7 +1481,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(652, 425);
+            this.tabPage2.Size = new System.Drawing.Size(652, 439);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Promoções";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1599,7 +1612,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(652, 425);
+            this.tabPage4.Size = new System.Drawing.Size(652, 439);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Licença";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1687,7 +1700,7 @@
             this.tbExibicao.Location = new System.Drawing.Point(4, 22);
             this.tbExibicao.Name = "tbExibicao";
             this.tbExibicao.Padding = new System.Windows.Forms.Padding(3);
-            this.tbExibicao.Size = new System.Drawing.Size(652, 425);
+            this.tbExibicao.Size = new System.Drawing.Size(652, 439);
             this.tbExibicao.TabIndex = 4;
             this.tbExibicao.Text = "Sistema  [Exibição]";
             this.tbExibicao.UseVisualStyleBackColor = true;
@@ -2154,7 +2167,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(652, 425);
+            this.tabPage5.Size = new System.Drawing.Size(652, 439);
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "App / Push";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -2386,19 +2399,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // chkVendedor
-            // 
-            this.chkVendedor.AutoSize = true;
-            this.chkVendedor.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkVendedor.Location = new System.Drawing.Point(4, 66);
-            this.chkVendedor.Name = "chkVendedor";
-            this.chkVendedor.Size = new System.Drawing.Size(123, 17);
-            this.chkVendedor.TabIndex = 16;
-            this.chkVendedor.Text = "Vendedor no Pedido";
-            this.toolTip1.SetToolTip(this.chkVendedor, "Com essa configuração marcada na finalização do Pedido será obrigatório seleciona" +
-        "r um vendedor");
-            this.chkVendedor.UseVisualStyleBackColor = true;
             // 
             // frmConfiguracoes
             // 

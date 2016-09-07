@@ -58,10 +58,9 @@ namespace DexComanda.Relatorios.Fechamentos.Novos
                 crystalReportViewer1.ReportSource = report;
                 crystalReportViewer1.Refresh();
             }
-            catch (Exception)
+            catch (Exception erro)
             {
-
-                throw;
+                MessageBox.Show(Bibliotecas.cErroGravacao);
             }
         }
     }
