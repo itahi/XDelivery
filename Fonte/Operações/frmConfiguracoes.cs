@@ -24,6 +24,7 @@ namespace DexComanda
         private Utils util;
         private Conexao con;
         private int iNumModelo = 7;
+        private List<CidadesAtendidas> listCidades;
         private string Porta = "";
         public string nomeImpressora;
         public frmConfiguracoes()
@@ -406,7 +407,7 @@ namespace DexComanda
                 txtAPPID.Text = Sessions.returnConfig.Pushapp_id;
                 txtCodAutorização.Text = Sessions.returnConfig.Pushauthorization;
                 chkVendedor.Checked = Sessions.returnConfig.ExigeVendedorSN;
-
+                PreencheCidades(Sessions.returnConfig.CidadesAtendidas);
                 this.btnSalvar.Text = "Alterar";
                 this.btnSalvar.Click -= SalvaConfig;
                 this.btnSalvar.Click += AlterarConfig;
@@ -449,8 +450,6 @@ namespace DexComanda
 
             }
 
-
-
         }
 
         private void ExibirCamposParaLogin(object sender, EventArgs e)
@@ -467,6 +466,33 @@ namespace DexComanda
 
         private void ConsultarCEP(object sender, KeyEventArgs e)
         {
+
+        }
+        private void PreencheCidades(string iListaJson)
+        {
+            List<CidadesAtendidas> cidades = new List<CidadesAtendidas>();
+            if (iListaJson == "")
+            {
+                return;
+            }
+            cidades = Utils.DeserializaObjeto2(iListaJson);
+            if (cidades.Count>0)
+            {
+                foreach (var item in cidades)
+                {
+                    foreach (System.Windows.Forms.Control obj in grpCidades.Controls)
+                    {
+                        if (object.ReferenceEquals(obj.GetType(), typeof(System.Windows.Forms.TextBox)))
+                        {
+                            if (((System.Windows.Forms.TextBox)obj).Text == "")
+                            {
+                                ((System.Windows.Forms.TextBox)obj).Text = item.Cidade;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
 
         }
 

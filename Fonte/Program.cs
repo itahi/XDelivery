@@ -145,6 +145,7 @@ namespace DexComanda
                                      DadosApp = config.ItemArray.GetValue(29).ToString(),
                                      Pushauthorization = config.ItemArray.GetValue(30).ToString(),
                                      Pushapp_id = config.ItemArray.GetValue(31).ToString(),
+                                     CidadesAtendidas = config.ItemArray.GetValue(32).ToString()
                                 };
                                 if (config.ItemArray.GetValue(4).ToString() != "")
                                 {

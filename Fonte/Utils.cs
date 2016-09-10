@@ -307,7 +307,6 @@ namespace DexComanda
             dadosApp.plataforma = iPlataforma;
             dadosApp.url = iUrl;
             return '[' + JsonConvert.SerializeObject(dadosApp, Formatting.None) + ']';
-
         }
         public static string SerializaObjeto(List<PrecoDiaProduto> iValores)
         {
@@ -317,6 +316,14 @@ namespace DexComanda
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
         }
+        public static string SerializaObjeto(List<HorariosEntregaJson> iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
+        //public static string SerializaObjeto(string iLista)
+        //{
+        //    return JsonConvert.SerializeObject(iLista Formatting.None);
+        //}
 
         public static List<PrecoDiaProduto> DeserializaObjeto(string iValores)
         {
@@ -325,6 +332,15 @@ namespace DexComanda
                 return null;
             }
             return JsonConvert.DeserializeObject<List<PrecoDiaProduto>>(iValores);
+
+        }
+        public static List<CidadesAtendidas> DeserializaObjeto2(string iValores)
+        {
+            if (iValores == "")
+            {
+                return null;
+            }
+            return JsonConvert.DeserializeObject<List<CidadesAtendidas>>(iValores);
 
         }
         public static void MontaCombox(ComboBox icbxName, string idisplayName,

@@ -221,7 +221,12 @@
             "2",
             "3",
             "4",
-            "5"});
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"});
             this.cbxOrdem.Location = new System.Drawing.Point(246, 39);
             this.cbxOrdem.Name = "cbxOrdem";
             this.cbxOrdem.Size = new System.Drawing.Size(42, 26);

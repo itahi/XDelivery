@@ -299,6 +299,7 @@
     <Compile Include="Models\ReturnPadrao.cs" />
     <Compile Include="Models\WS\CidadesAtendidas.cs" />
     <Compile Include="Models\WS\DadosApp.cs" />
+    <Compile Include="Models\WS\HorariosEntregaJson.cs" />
     <Compile Include="Models\WS\RetornoWS.cs" />
     <Compile Include="Operações\Alteracoes\frmAlteracaoCliente.cs">
       <SubType>Form</SubType>
@@ -838,6 +839,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmFinalizacaoPedido.resx">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\Pedido\frmOpcaoRadio.resx">
+      <DependentUpon>frmOpcaoRadio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Pedido\frmSabores.resx">
       <DependentUpon>frmSabores.cs</DependentUpon>

@@ -67,7 +67,7 @@ namespace DexComanda.Cadastros.Produto
         {
             try
             {
-                if (!rbMultipla.Checked && !rbTexto.Checked && !rbUnica.Checked && cbxOrdem.SelectedIndex<0)
+                if (!rbMultipla.Checked && !rbTexto.Checked && !rbUnica.Checked && (cbxOrdem.SelectedIndex<0))
                 {
                     MessageBox.Show("Marque uma opção para continuar");
                     grpMaxMin.Focus();

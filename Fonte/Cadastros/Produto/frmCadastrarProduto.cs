@@ -224,7 +224,7 @@ namespace DexComanda
         private void frmCadastrarProduto_Load(object sender, EventArgs e)
         {
             con = new Conexao();
-
+           
             btnEditar.Enabled = codigoProdutoParaAlterar != 0;
             DiasSelecionados = new List<string>();
             tabPage2.IsAccessible = btnDoProduto.Text == "Alterar [F12]";
@@ -331,6 +331,7 @@ namespace DexComanda
                         CodProduto = iCodProduto,
                         CodOpcao = int.Parse(AdicionaisGridView.Rows[i].Cells["CodOpcao"].Value.ToString()),
                         Preco = decimal.Parse(AdicionaisGridView.Rows[i].Cells["Preco"].Value.ToString()),
+                        CodTipo = int.Parse(AdicionaisGridView.Rows[i].Cells["CodTipo"].Value.ToString()),
                         DataAlteracao = DateTime.Now
                     };
                     con.Insert("spAdicionarOpcaProduto", prod);
@@ -532,10 +533,20 @@ namespace DexComanda
 
         private void ListaOpcao(object sender, EventArgs e)
         {
+            if (cbxTipoOpcao.SelectedValue.ToString()!="")
+            {
+                Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcaoPorTipo", int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
+            }
+            else
+            {
+                Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcao");
+            }
 
-            this.cbxOpcao.DataSource = con.SelectAll("Opcao", "spObterOpcao").Tables["Opcao"];
-            this.cbxOpcao.DisplayMember = "Nome";
-            this.cbxOpcao.ValueMember = "Codigo";
+           
+
+            //this.cbxOpcao.DataSource = con.SelectAll("Opcao", "spObterOpcao").Tables["Opcao"];
+            //this.cbxOpcao.DisplayMember = "Nome";
+            //this.cbxOpcao.ValueMember = "Codigo";
         }
 
         private void AdicionarOpcao(object sender, EventArgs e)
@@ -555,14 +566,16 @@ namespace DexComanda
                 int iCountLinhas = AdicionaisGridView.Rows.Count;
                 if (codigoProdutoParaAlterar != 0)
                 {
-                    if (txtPrecoOpcao.Text.Trim() != "")
+                    if (txtPrecoOpcao.Text.Trim() != "" && cbxTipoOpcao.SelectedValue.ToString()!=""
+                        && cbxOpcao.SelectedValue.ToString() != "")
                     {
                         Produto_Opcao prodOpcao = new Produto_Opcao()
                         {
                             CodProduto = codigoProdutoParaAlterar,
                             CodOpcao = int.Parse(cbxOpcao.SelectedValue.ToString()),
                             Preco = decimal.Parse(txtPrecoOpcao.Text),
-                            DataAlteracao = DateTime.Now
+                            DataAlteracao = DateTime.Now,
+                            CodTipo = int.Parse(cbxTipoOpcao.SelectedValue.ToString())
                         };
                         con.Insert("spAdicionarOpcaProduto", prodOpcao);
                         // con.AtualizaDataSincronismo("Produto", codigoProdutoParaAlterar, "DataAlteracao");
@@ -590,6 +603,7 @@ namespace DexComanda
                     AdicionaisGridView.Rows[iCountLinhas].Cells[0].Value = int.Parse(cbxOpcao.SelectedValue.ToString());
                     AdicionaisGridView.Rows[iCountLinhas].Cells[1].Value = decimal.Parse(txtPrecoOpcao.Text);
                     AdicionaisGridView.Rows[iCountLinhas].Cells[2].Value = cbxOpcao.Text.ToString();
+                    AdicionaisGridView.Rows[iCountLinhas].Cells[3].Value = cbxTipoOpcao.SelectedValue.ToString(); 
                     iCountLinhas = AdicionaisGridView.Rows.Count;
                 }
             }
@@ -616,6 +630,7 @@ namespace DexComanda
                 AdicionaisGridView.Columns.Add("Preco", "Preco");
                 AdicionaisGridView.Columns.Add("Nome", "Nome");
                 AdicionaisGridView.Columns.Add("Tipo", "Tipo");
+                AdicionaisGridView.Columns.Add("CodTipo", "CodTipo");
             }
 
         }
@@ -888,6 +903,17 @@ namespace DexComanda
         private void cbxGrupoProduto_DropDown(object sender, EventArgs e)
         {
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
+        }
+
+        private void FiltrarOpcaoPorTipo(object sender, EventArgs e)
+        {
+            //ListaOpcao(sender, e);
+        }
+
+        private void cbxTipoOpcao_DropDown(object sender, EventArgs e)
+        {
+            Utils.MontaCombox(cbxTipoOpcao, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
+            
         }
     }
 }

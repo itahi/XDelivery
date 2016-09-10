@@ -13,6 +13,6 @@ namespace DexComanda.Models
         public decimal Preco { get; set; }
         public decimal PrecoProcomocao { get; set; }
         public DateTime DataAlteracao { get; set; }
-
+        public int CodTipo { get; set; }
     }
 }

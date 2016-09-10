@@ -1521,11 +1521,8 @@ namespace DexComanda
                 DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpresso", iCodPedido, "", iCodGrupo);
                 for (int i = 0; i < itemsPedido.Tables[0].Rows.Count; i++)
                 {
-                    //items = new List<ItemPedido>();
-                    //ItemPedido itemPedido = new ItemPedido();
                     string lRetorno = "";
                     Boolean imprimirAgora = false;
-                    //string strNomeImpressora,strImpressoraAnterior = "";
                     lRetorno = Utils.ImpressaMesaNova(iCodPedido, iCodGrupo, false, 1, iNomeImpressora, imprimirAgora);
                     for (int intFor = 0; intFor < itemsPedido.Tables[0].Rows.Count; intFor++)
                     {
@@ -1634,14 +1631,14 @@ namespace DexComanda
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
 
                 }
-                string iSql = "select PE.*,  " +
-                            "CodGrupo, " +
-                            "NomeImpressora " +
-                             "from Pedido PE " +
-                             "join ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0 " +
-                             " left join Produto P on P.Codigo = It.CodProduto " +
-                             " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo " +
-                             "  where PE.CodigoMesa > 0 and Finalizado = 0 ";
+                string iSql = " select PE.*,  " +
+                              " CodGrupo, " +
+                              " NomeImpressora " +
+                              " from Pedido PE " +
+                              " join ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0 " +
+                              " left join Produto P on P.Codigo = It.CodProduto " +
+                              " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo " +
+                              " where PE.CodigoMesa > 0 and Finalizado = 0 ";
 
                 DataSet dsItemsNaoImpresso = con.SelectAll("ItemsPedido", "", iSql);
                 if (dsItemsNaoImpresso.Tables[0].Rows.Count > 0)

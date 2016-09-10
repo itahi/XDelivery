@@ -16,5 +16,16 @@ namespace DexComanda.Cadastros.Pedido
         {
             InitializeComponent();
         }
+
+        public frmOpcaoRadio(int iCodProduto)
+        {
+
+
+        }
+
+        private void frmOpcaoRadio_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

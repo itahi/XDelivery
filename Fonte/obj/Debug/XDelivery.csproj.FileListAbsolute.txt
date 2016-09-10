@@ -358,3 +358,4 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.exe
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.pdb
 D:\#Projetos\xDelivery\Fonte\obj\Debug\XDelivery.csprojResolveAssemblyReference.cache
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Empresa.frmHorariosEntrega.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pedido.frmOpcaoRadio.resources

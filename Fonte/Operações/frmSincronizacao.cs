@@ -47,8 +47,8 @@ namespace DexComanda.Operações
             {
                 iParamToken = Utils.CriptografarArquivo(iParamToken);
             }
-            
-            
+
+           // iParamToken = Utils.CriptografarArquivo(iParamToken);
             iParamToken = iParamToken.ToLower();
         }
         private void Sincroniza()
@@ -111,6 +111,10 @@ namespace DexComanda.Operações
 
                 CadastraPedidoMinimo();
 
+                if (chkHorarios.Checked)
+                {
+                    CadastrarHorarios(con.Select_Empresa_HorarioEntrega("Empresa_HorarioEntrega"));
+                }
             }
             catch (Exception erro)
             {
@@ -234,6 +238,10 @@ namespace DexComanda.Operações
             {
                 return con.SelectRegistroONline(iNomeTable);
             }
+            //else if (iNomeTable== "Empresa_HorarioEntrega")
+            //{
+            //    return con.Select_Empresa_HorarioEntrega(iNomeTable);
+            //}
             else
             {
                 return con.SelectRegistroONlineSemData(iNomeTable);
@@ -490,6 +498,56 @@ namespace DexComanda.Operações
             }
 
         }
+        private void CadastrarHorarios(DataSet ds)
+        {
+            try
+            {
+
+                //  ManipulaProgressBar(ds.Tables[0].Rows.Count);
+                DataRow dRow;
+                MudaLabel("Horarios Entrega");
+                GerarToken();
+                prgBarHorarios.Maximum = 0;
+                prgBarHorarios.Maximum = ds.Tables[0].Rows.Count;
+                List<HorariosEntregaJson> horariosList = new List<HorariosEntregaJson>();
+                RestClient client = new RestClient(iUrlWS);
+                RestRequest request = new RestRequest("ws/loja/horarioEntrega", Method.POST);
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {    
+                    dRow = ds.Tables[0].Rows[i];
+                    int AtivoSN = 0;
+                    if (Convert.ToBoolean(dRow.ItemArray.GetValue(3).ToString()) == true)
+                    {
+                        AtivoSN = 1;
+                    }
+
+                    HorariosEntregaJson horariosJson = new HorariosEntregaJson()
+                    {
+                        referencia_id = int.Parse(dRow.ItemArray.GetValue(0).ToString()),
+                        ativo = AtivoSN,
+                        horario_entrega = dRow.ItemArray.GetValue(2).ToString(),
+                        limite_horario_pedido = dRow.ItemArray.GetValue(1).ToString(),
+                    };
+                    horariosList.Add(horariosJson);
+                    prgBarHorarios.Increment(i + 1);
+                }
+                if (horariosList.Count<=0)
+                {
+                    MessageBox.Show("Não há horarios cadastrados para sincronizar");
+                    return;
+                }
+                string iretur = Utils.SerializaObjeto(horariosList);
+                request.AddParameter("horarios", Utils.SerializaObjeto(horariosList));
+                RestResponse response = (RestResponse)client.Execute(request);
+
+            }
+            catch (Exception er)
+            {
+
+                MessageBox.Show("Erro ao cadastrarar Grupo" + er.Message + er.InnerException);
+            }
+
+        }
 
         private void CadastrarProduto(DataSet ds)
         {
@@ -687,6 +745,7 @@ namespace DexComanda.Operações
             DataRow dRow;
             RestClient client = new RestClient(iUrlWS);
             RestRequest request = new RestRequest("ws/loja/cartoes", Method.POST);
+
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
                 request.AddParameter("token", iParamToken);

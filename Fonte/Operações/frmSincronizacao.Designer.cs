@@ -64,6 +64,8 @@
             this.lblReturn = new System.Windows.Forms.Label();
             this.chkDesconto = new System.Windows.Forms.CheckBox();
             this.txtPercentualDesconto = new System.Windows.Forms.TextBox();
+            this.prgBarHorarios = new System.Windows.Forms.ProgressBar();
+            this.chkHorarios = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -87,6 +89,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.prgBarHorarios);
+            this.tabPage1.Controls.Add(this.chkHorarios);
             this.tabPage1.Controls.Add(this.chkLink);
             this.tabPage1.Controls.Add(this.prgBarMobile);
             this.tabPage1.Controls.Add(this.chkMobile);
@@ -143,7 +147,7 @@
             // lblMinimo
             // 
             this.lblMinimo.AutoSize = true;
-            this.lblMinimo.Location = new System.Drawing.Point(93, 180);
+            this.lblMinimo.Location = new System.Drawing.Point(93, 206);
             this.lblMinimo.Name = "lblMinimo";
             this.lblMinimo.Size = new System.Drawing.Size(74, 13);
             this.lblMinimo.TabIndex = 20;
@@ -152,7 +156,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 161);
+            this.label2.Location = new System.Drawing.Point(5, 187);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(93, 13);
             this.label2.TabIndex = 19;
@@ -160,7 +164,7 @@
             // 
             // txtVlrMinimo
             // 
-            this.txtVlrMinimo.Location = new System.Drawing.Point(8, 177);
+            this.txtVlrMinimo.Location = new System.Drawing.Point(8, 203);
             this.txtVlrMinimo.Name = "txtVlrMinimo";
             this.txtVlrMinimo.Size = new System.Drawing.Size(75, 20);
             this.txtVlrMinimo.TabIndex = 18;
@@ -170,7 +174,7 @@
             // lblSinc
             // 
             this.lblSinc.AutoSize = true;
-            this.lblSinc.Location = new System.Drawing.Point(23, 200);
+            this.lblSinc.Location = new System.Drawing.Point(23, 228);
             this.lblSinc.Name = "lblSinc";
             this.lblSinc.Size = new System.Drawing.Size(74, 13);
             this.lblSinc.TabIndex = 17;
@@ -196,7 +200,7 @@
             // 
             // btnSincronizar
             // 
-            this.btnSincronizar.Location = new System.Drawing.Point(89, 219);
+            this.btnSincronizar.Location = new System.Drawing.Point(89, 247);
             this.btnSincronizar.Name = "btnSincronizar";
             this.btnSincronizar.Size = new System.Drawing.Size(75, 23);
             this.btnSincronizar.TabIndex = 14;
@@ -436,6 +440,23 @@
             this.txtPercentualDesconto.Size = new System.Drawing.Size(45, 20);
             this.txtPercentualDesconto.TabIndex = 9;
             // 
+            // prgBarHorarios
+            // 
+            this.prgBarHorarios.Location = new System.Drawing.Point(128, 149);
+            this.prgBarHorarios.Name = "prgBarHorarios";
+            this.prgBarHorarios.Size = new System.Drawing.Size(114, 18);
+            this.prgBarHorarios.TabIndex = 25;
+            // 
+            // chkHorarios
+            // 
+            this.chkHorarios.AutoSize = true;
+            this.chkHorarios.Location = new System.Drawing.Point(5, 150);
+            this.chkHorarios.Name = "chkHorarios";
+            this.chkHorarios.Size = new System.Drawing.Size(105, 17);
+            this.chkHorarios.TabIndex = 24;
+            this.chkHorarios.Text = "Horarios Entrega";
+            this.chkHorarios.UseVisualStyleBackColor = true;
+            // 
             // frmSincronizacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -495,5 +516,7 @@
         private System.Windows.Forms.ProgressBar prgBarMobile;
         private System.Windows.Forms.CheckBox chkMobile;
         private System.Windows.Forms.CheckBox chkLink;
+        private System.Windows.Forms.ProgressBar prgBarHorarios;
+        private System.Windows.Forms.CheckBox chkHorarios;
     }
 }

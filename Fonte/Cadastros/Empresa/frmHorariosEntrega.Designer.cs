@@ -28,31 +28,48 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gridViewHorarios = new System.Windows.Forms.DataGridView();
             this.dtLimite = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.dtEntregaFim = new System.Windows.Forms.DateTimePicker();
             this.dtEntregaInicio = new System.Windows.Forms.DateTimePicker();
             this.btnAdicionar = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
-            this.gridViewHorarios = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
             this.chkOnlineSN = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewHorarios)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.gridViewHorarios);
             this.groupBox1.Location = new System.Drawing.Point(10, 139);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(308, 244);
+            this.groupBox1.Size = new System.Drawing.Size(355, 270);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Horarios ";
+            // 
+            // gridViewHorarios
+            // 
+            this.gridViewHorarios.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.gridViewHorarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridViewHorarios.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridViewHorarios.GridColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridViewHorarios.Location = new System.Drawing.Point(3, 16);
+            this.gridViewHorarios.Name = "gridViewHorarios";
+            this.gridViewHorarios.Size = new System.Drawing.Size(349, 251);
+            this.gridViewHorarios.TabIndex = 0;
+            this.gridViewHorarios.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.BuscaRowIndex);
             // 
             // dtLimite
             // 
@@ -61,6 +78,7 @@
             this.dtLimite.Name = "dtLimite";
             this.dtLimite.Size = new System.Drawing.Size(66, 20);
             this.dtLimite.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.dtLimite, "Horario Limite que o pedido será aceito para esse grupo de horas");
             // 
             // label1
             // 
@@ -83,6 +101,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Horario Entrega";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(86, 23);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(19, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Às";
+            // 
             // dtEntregaFim
             // 
             this.dtEntregaFim.Format = System.Windows.Forms.DateTimePickerFormat.Time;
@@ -90,6 +117,7 @@
             this.dtEntregaFim.Name = "dtEntregaFim";
             this.dtEntregaFim.Size = new System.Drawing.Size(66, 20);
             this.dtEntregaFim.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.dtEntregaFim, "Horario fim da entrega a ser exibida");
             // 
             // dtEntregaInicio
             // 
@@ -98,6 +126,7 @@
             this.dtEntregaInicio.Name = "dtEntregaInicio";
             this.dtEntregaInicio.Size = new System.Drawing.Size(66, 20);
             this.dtEntregaInicio.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.dtEntregaInicio, "Horario inicio da entrega a ser exibida");
             // 
             // btnAdicionar
             // 
@@ -111,34 +140,13 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(182, 99);
+            this.btnEditar.Location = new System.Drawing.Point(229, 99);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(133, 36);
             this.btnEditar.TabIndex = 7;
             this.btnEditar.Text = "Editar";
             this.btnEditar.UseVisualStyleBackColor = true;
             this.btnEditar.Click += new System.EventHandler(this.EditarRegistro);
-            // 
-            // gridViewHorarios
-            // 
-            this.gridViewHorarios.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.gridViewHorarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridViewHorarios.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridViewHorarios.GridColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridViewHorarios.Location = new System.Drawing.Point(3, 16);
-            this.gridViewHorarios.Name = "gridViewHorarios";
-            this.gridViewHorarios.Size = new System.Drawing.Size(302, 225);
-            this.gridViewHorarios.TabIndex = 0;
-            this.gridViewHorarios.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.BuscaRowIndex);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(86, 23);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(19, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Às";
             // 
             // chkOnlineSN
             // 
@@ -154,7 +162,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(329, 388);
+            this.ClientSize = new System.Drawing.Size(370, 410);
             this.Controls.Add(this.chkOnlineSN);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnAdicionar);
@@ -166,9 +174,9 @@
             this.Text = "[xSistemas] Horarios Entrega";
             this.Load += new System.EventHandler(this.frmHorariosEntrega_Load);
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewHorarios)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridViewHorarios)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -187,5 +195,6 @@
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox chkOnlineSN;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

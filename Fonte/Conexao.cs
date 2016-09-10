@@ -352,6 +352,29 @@ namespace DexComanda
             adapter.Fill(ds, "Produto_Opcao");
             return ds;
         }
+        public DataSet RetornaOpcoesRadio(int iDProduto)
+        {
+            string lSqlConsulta = " select Op.Nome, " +
+                                  " PoT.Tipo," +
+                                  " Prod.Preco," +
+                                  " ISNULL((select MaximoAdicionais from Produto P where P.Codigo=Prod.CodProduto  ),0) as MaximoAdicionais," +
+                                  " PoT.Nome as NomeTipo, " +
+                                  " Prod.CodOpcao " +
+                                  " from Produto_Opcao Prod" +
+                                  " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
+                                  " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo and Pot.Tipo=1" +
+                                  "  where Prod.CodProduto = @CodProduto" +
+                                  " order by Prod.Preco";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@CodProduto", iDProduto);
+
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto_Opcao");
+            return ds;
+        }
         public DataSet RetornaOpcoesProduto2(int iDProduto)
         {
             string lSqlConsulta = " select Op.Nome, " +
@@ -592,6 +615,19 @@ namespace DexComanda
             {
                 lSqlConsulta = lSqlConsulta + "order by PaiSN desc";
             }
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, iNomeTable);
+            return ds;
+
+        }
+        public DataSet Select_Empresa_HorarioEntrega(string iNomeTable)
+        {
+            string lSqlConsulta = "";
+            lSqlConsulta = " select * from " + iNomeTable;
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
 
