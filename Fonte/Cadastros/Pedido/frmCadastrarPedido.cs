@@ -1032,21 +1032,7 @@ namespace DexComanda
                                     pedido.DescontoValor = decimal.Parse("0.00");
                                     return;
                                 }
-                                //else
-                                //{
-                                //    if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "DescontoPedidoSN"))
-                                //    {
-                                //        return;
-                                //    }
-                                //    else
-                                //    {
-                                //        pedido.DescontoValor = decimal.Parse(txtDesconto.Text);
-                                //    }
-                                //   // return;
-                                //}
-
-
-
+                              
                             }
                             //Finaliza Validação 
 

@@ -782,6 +782,18 @@
     <Compile Include="Relatorios\Fechamentos\frmReportVendasPorProduto.Designer.cs">
       <DependentUpon>frmReportVendasPorProduto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Relatorios\Gerenciais\Cristal\RelCancelamentos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelCancelamentos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\Cristal\RelEntregasPorRegiao.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelEntregasPorRegiao.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Gerenciais\Cristal\RelEvolucaoVendas.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -805,6 +817,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RelVendasPorVendedor.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\Cristal\RelVendasPorVendedor.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelVendasPorVendedor.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\frmEntregasPorRegiao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\frmEntregasPorRegiao.Designer.cs">
+      <DependentUpon>frmEntregasPorRegiao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\frmPedidosCancelados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\frmPedidosCancelados.Designer.cs">
+      <DependentUpon>frmPedidosCancelados.cs</DependentUpon>
     </Compile>
     <Compile Include="Relatorios\Gerenciais\frmReportTickeMedio.cs">
       <SubType>Form</SubType>
@@ -1085,6 +1115,14 @@
     <EmbeddedResource Include="Operações\Splashcreen.resx">
       <DependentUpon>Splashcreen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelCancelamentos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelCancelamentos.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelEntregasPorRegiao.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelEntregasPorRegiao.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelEvolucaoVendas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelEvolucaoVendas.cs</LastGenOutput>
@@ -1099,6 +1137,16 @@
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\Impressao Termica\RelVendasPorVendedor.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelVendasPorVendedor.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelVendasPorVendedor.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelVendasPorVendedor.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\frmEntregasPorRegiao.resx">
+      <DependentUpon>frmEntregasPorRegiao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\frmPedidosCancelados.resx">
+      <DependentUpon>frmPedidosCancelados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\frmReportTickeMedio.resx">
       <DependentUpon>frmReportTickeMedio.cs</DependentUpon>

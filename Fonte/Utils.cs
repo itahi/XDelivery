@@ -44,6 +44,7 @@ using Newtonsoft.Json;
 using DexComanda.Operações.Funções;
 using DexComanda.Relatorios.Fechamentos.Novos.Impressao_Termica;
 using System.Data.Common;
+using DexComanda.Relatorios.Gerenciais.Cristal;
 
 namespace DexComanda
 {
@@ -461,6 +462,7 @@ namespace DexComanda
             }
 
         }
+      
         public static void ImprimirHistoricoCliente(int iCodPessoa, DateTime iDtInici, DateTime idtFim)
         {
             RelHistoricoCliente report;
@@ -929,6 +931,50 @@ namespace DexComanda
             }
             return iRetorno;
         }
+        public static string ImprimirCancelamentos(DateTime dtInicio, DateTime dtFim)
+        {
+            string iRetorno = "";
+            RelCancelamentos report;
+            report = new RelCancelamentos();
+            crtableLogoninfos = new TableLogOnInfos();
+            crtableLogoninfo = new TableLogOnInfo();
+            crConnectionInfo = new ConnectionInfo();
+            try
+            {
+
+                try
+                {
+                    report.Load(Directory.GetCurrentDirectory() + @"\RelCancelamentos.rpt");
+                    crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                    crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                    crConnectionInfo.UserID = "sa";
+                    crConnectionInfo.Password = "1001";
+
+                    CrTables = report.Database.Tables;
+                    foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                    {
+                        crtableLogoninfo = CrTable.LogOnInfo;
+                        crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                        CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                    }
+                    report.SetParameterValue("@DataI", dtInicio);
+                    report.SetParameterValue("@DataF", dtFim);
+                    report.PrintToPrinter(1, false, 0, 0);
+
+                }
+                finally
+                {
+                    // report.Dispose();
+
+                }
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.InnerException.Message);
+            }
+            return iRetorno;
+        }
         //public static string RelCaixaMOvimento()
         //{
         //    string iRetorno = "";
@@ -1041,7 +1087,7 @@ namespace DexComanda
 
 
                 report.PrintToPrinter(1, false, 0, 0);
-               
+
 
             }
             catch (Exception erro)
@@ -1271,7 +1317,7 @@ namespace DexComanda
                     {
                         report.PrintToPrinter(0, false, 0, 0);
                     }
-                   
+
                 }
             }
             catch (Exception erro)

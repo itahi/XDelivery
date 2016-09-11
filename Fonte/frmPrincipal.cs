@@ -1735,5 +1735,17 @@ namespace DexComanda
             frmHorariosEntrega frm = new frmHorariosEntrega();
             frm.Show();
         }
+
+        private void cancelamentosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmPedidosCancelados frm = new frmPedidosCancelados();
+            frm.ShowDialog();
+        }
+
+        private void porRegiãoComTaxaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmEntregasPorRegiao frm = new frmEntregasPorRegiao();
+            frm.ShowDialog();
+        }
     }
 }

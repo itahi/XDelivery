@@ -172,7 +172,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(745, 509);
+            this.ClientSize = new System.Drawing.Size(737, 497);
             this.Controls.Add(this.chkCancelados);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cbxFormaPagamento);

@@ -34,6 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnAdicionar = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cbxMotivo
@@ -76,7 +77,7 @@
             // 
             this.btnAdicionar.Image = ((System.Drawing.Image)(resources.GetObject("btnAdicionar.Image")));
             this.btnAdicionar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAdicionar.Location = new System.Drawing.Point(83, 128);
+            this.btnAdicionar.Location = new System.Drawing.Point(83, 144);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(87, 23);
             this.btnAdicionar.TabIndex = 4;
@@ -85,11 +86,21 @@
             this.btnAdicionar.UseVisualStyleBackColor = true;
             this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 127);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(88, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Minimo 10 digitos";
+            // 
             // frmHistoricoCancelamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(283, 154);
+            this.ClientSize = new System.Drawing.Size(283, 168);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btnAdicionar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -117,5 +128,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnAdicionar;
+        private System.Windows.Forms.Label label3;
     }
 }

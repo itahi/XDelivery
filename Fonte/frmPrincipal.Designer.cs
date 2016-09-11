@@ -41,6 +41,7 @@
             this.opçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.produtoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.empresaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotasDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuáriosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entregadorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.formasDePagamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -143,7 +144,9 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.rotasDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.entregasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.porRegiãoComTaxaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.porMotoboyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -264,6 +267,13 @@
             this.empresaToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
             this.empresaToolStripMenuItem.Text = "Empresa";
             // 
+            // rotasDeEntregaToolStripMenuItem
+            // 
+            this.rotasDeEntregaToolStripMenuItem.Name = "rotasDeEntregaToolStripMenuItem";
+            this.rotasDeEntregaToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.rotasDeEntregaToolStripMenuItem.Text = "Rotas de Entrega";
+            this.rotasDeEntregaToolStripMenuItem.Click += new System.EventHandler(this.rotasDeEntregaToolStripMenuItem_Click);
+            // 
             // usuáriosToolStripMenuItem
             // 
             this.usuáriosToolStripMenuItem.Name = "usuáriosToolStripMenuItem";
@@ -344,7 +354,8 @@
             this.diárioToolStripMenuItem,
             this.mensalToolStripMenuItem,
             this.exportarDadosToolStripMenuItem,
-            this.impressãoTermicaToolStripMenuItem});
+            this.impressãoTermicaToolStripMenuItem,
+            this.entregasToolStripMenuItem});
             this.relatórioToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.relatórioToolStripMenuItem.Name = "relatórioToolStripMenuItem";
             this.relatórioToolStripMenuItem.Size = new System.Drawing.Size(85, 25);
@@ -397,6 +408,7 @@
             this.cancelamentosToolStripMenuItem.Name = "cancelamentosToolStripMenuItem";
             this.cancelamentosToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
             this.cancelamentosToolStripMenuItem.Text = "Cancelamentos";
+            this.cancelamentosToolStripMenuItem.Click += new System.EventHandler(this.cancelamentosToolStripMenuItem_Click);
             // 
             // diárioToolStripMenuItem
             // 
@@ -1282,12 +1294,27 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // rotasDeEntregaToolStripMenuItem
+            // entregasToolStripMenuItem
             // 
-            this.rotasDeEntregaToolStripMenuItem.Name = "rotasDeEntregaToolStripMenuItem";
-            this.rotasDeEntregaToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.rotasDeEntregaToolStripMenuItem.Text = "Rotas de Entrega";
-            this.rotasDeEntregaToolStripMenuItem.Click += new System.EventHandler(this.rotasDeEntregaToolStripMenuItem_Click);
+            this.entregasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.porRegiãoComTaxaToolStripMenuItem,
+            this.porMotoboyToolStripMenuItem});
+            this.entregasToolStripMenuItem.Name = "entregasToolStripMenuItem";
+            this.entregasToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
+            this.entregasToolStripMenuItem.Text = "Entregas";
+            // 
+            // porRegiãoComTaxaToolStripMenuItem
+            // 
+            this.porRegiãoComTaxaToolStripMenuItem.Name = "porRegiãoComTaxaToolStripMenuItem";
+            this.porRegiãoComTaxaToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
+            this.porRegiãoComTaxaToolStripMenuItem.Text = "Por Região com Taxa";
+            this.porRegiãoComTaxaToolStripMenuItem.Click += new System.EventHandler(this.porRegiãoComTaxaToolStripMenuItem_Click);
+            // 
+            // porMotoboyToolStripMenuItem
+            // 
+            this.porMotoboyToolStripMenuItem.Name = "porMotoboyToolStripMenuItem";
+            this.porMotoboyToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
+            this.porMotoboyToolStripMenuItem.Text = "Por Motoboy";
             // 
             // frmPrincipal
             // 
@@ -1447,5 +1474,8 @@
         private System.Windows.Forms.ToolStripMenuItem vendasPorVendedorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cancelamentosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rotasDeEntregaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem entregasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem porRegiãoComTaxaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem porMotoboyToolStripMenuItem;
     }
 }
