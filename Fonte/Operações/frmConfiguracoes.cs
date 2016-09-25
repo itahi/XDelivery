@@ -153,6 +153,7 @@ namespace DexComanda
             config.RepeteUltimoPedido = chkUltPedido.Checked;
             config.CidadesAtendidas = Utils.SerializaObjeto(CidadesAtendidas());
             config.ExigeVendedorSN = chkVendedor.Checked;
+            config.GCM = txtGoogleProjetc.Text;
             if (chkEnviaSms.Checked)
             {
                 Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
@@ -193,9 +194,6 @@ namespace DexComanda
             {
                 config.PortaLPT = "0";
             }
-            //config.ImpressoraEntrega = cbxEntregas.Text;
-            //config.ImpressoraCozinha = cbxCozinha.Text;
-            //config.ImpressoraCopaBalcao = cbxMesas.Text;
 
             if (txtCaracterImpressora.Text != "")
             {
@@ -293,6 +291,7 @@ namespace DexComanda
             config.RepeteUltimoPedido = chkUltPedido.Checked;
             config.CidadesAtendidas = Utils.SerializaObjeto(CidadesAtendidas());
             config.ExigeVendedorSN = chkVendedor.Checked;
+            config.GCM = txtGoogleProjetc.Text;
             //config.CidadesAtendidas = "";
             if (chkEnviaSms.Checked)
             {
@@ -408,6 +407,7 @@ namespace DexComanda
                 txtCodAutorização.Text = Sessions.returnConfig.Pushauthorization;
                 chkVendedor.Checked = Sessions.returnConfig.ExigeVendedorSN;
                 PreencheCidades(Sessions.returnConfig.CidadesAtendidas);
+                txtGoogleProjetc.Text = Sessions.returnConfig.GCM;
                 this.btnSalvar.Text = "Alterar";
                 this.btnSalvar.Click -= SalvaConfig;
                 this.btnSalvar.Click += AlterarConfig;

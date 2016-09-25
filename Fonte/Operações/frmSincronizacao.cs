@@ -79,6 +79,7 @@ namespace DexComanda.Operações
                             }
                         }
                     }
+                    CadastraPush();
                     // Sincronizar Grupos
                     CadastraCategorias(ObterDados("Grupo"));
                     // Sincronizar Tipo Opcao
@@ -121,6 +122,24 @@ namespace DexComanda.Operações
 
                 MessageBox.Show("Erro ao sincronizar " + erro.Message);
             }
+        }
+        private void CadastraPush()
+        {
+            GerarToken();
+            RestClient client = new RestClient(iUrlWS);
+            RestResponse response = new RestResponse();
+            RestRequest request = new RestRequest("ws/loja/setOpenSignalId", Method.POST);
+            request.AddParameter("token",iParamToken);
+            request.AddParameter("open_signal_id",Sessions.returnConfig.Pushapp_id);
+            request.AddParameter("store_id","0");
+            request.AddParameter("nome_cliente", Sessions.returnEmpresa.Nome);
+            request.AddParameter("gcm_sender_id",Sessions.returnConfig.GCM);
+            MudaLabel("Códigos OneSignal");
+            response = (RestResponse)client.Execute(request);
+            ReturnPadrao lRetorno = new ReturnPadrao();
+            lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+
+
         }
         private void LimparUrlAmigaveis()
         {

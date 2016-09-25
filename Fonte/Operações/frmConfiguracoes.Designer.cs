@@ -239,6 +239,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label51 = new System.Windows.Forms.Label();
+            this.txtGoogleProjetc = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -2247,13 +2249,15 @@
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.label51);
+            this.groupBox8.Controls.Add(this.txtGoogleProjetc);
             this.groupBox8.Controls.Add(this.label36);
             this.groupBox8.Controls.Add(this.label35);
             this.groupBox8.Controls.Add(this.txtCodAutorização);
             this.groupBox8.Controls.Add(this.txtAPPID);
             this.groupBox8.Location = new System.Drawing.Point(6, 196);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(360, 126);
+            this.groupBox8.Size = new System.Drawing.Size(360, 189);
             this.groupBox8.TabIndex = 18;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Dados Push";
@@ -2399,6 +2403,23 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Enabled = false;
+            this.label51.Location = new System.Drawing.Point(6, 113);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(117, 13);
+            this.label51.TabIndex = 21;
+            this.label51.Text = "Google Projetc Number";
+            // 
+            // txtGoogleProjetc
+            // 
+            this.txtGoogleProjetc.Location = new System.Drawing.Point(3, 131);
+            this.txtGoogleProjetc.Name = "txtGoogleProjetc";
+            this.txtGoogleProjetc.Size = new System.Drawing.Size(347, 20);
+            this.txtGoogleProjetc.TabIndex = 20;
             // 
             // frmConfiguracoes
             // 
@@ -2689,5 +2710,7 @@
         private System.Windows.Forms.DateTimePicker Inicio;
         private System.Windows.Forms.CheckBox chkVendedor;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.TextBox txtGoogleProjetc;
     }
 }

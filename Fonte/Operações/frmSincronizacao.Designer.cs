@@ -31,6 +31,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.prgBarHorarios = new System.Windows.Forms.ProgressBar();
+            this.chkHorarios = new System.Windows.Forms.CheckBox();
             this.chkLink = new System.Windows.Forms.CheckBox();
             this.prgBarMobile = new System.Windows.Forms.ProgressBar();
             this.chkMobile = new System.Windows.Forms.CheckBox();
@@ -47,7 +49,6 @@
             this.chkRegiaoEntrega = new System.Windows.Forms.CheckBox();
             this.chkFPagamento = new System.Windows.Forms.CheckBox();
             this.chkProdutos = new System.Windows.Forms.CheckBox();
-            this.lblSincronismo = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.grpBanner = new System.Windows.Forms.GroupBox();
@@ -64,8 +65,7 @@
             this.lblReturn = new System.Windows.Forms.Label();
             this.chkDesconto = new System.Windows.Forms.CheckBox();
             this.txtPercentualDesconto = new System.Windows.Forms.TextBox();
-            this.prgBarHorarios = new System.Windows.Forms.ProgressBar();
-            this.chkHorarios = new System.Windows.Forms.CheckBox();
+            this.lblSincronismo = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -115,6 +115,23 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Cadastros";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // prgBarHorarios
+            // 
+            this.prgBarHorarios.Location = new System.Drawing.Point(128, 149);
+            this.prgBarHorarios.Name = "prgBarHorarios";
+            this.prgBarHorarios.Size = new System.Drawing.Size(114, 18);
+            this.prgBarHorarios.TabIndex = 25;
+            // 
+            // chkHorarios
+            // 
+            this.chkHorarios.AutoSize = true;
+            this.chkHorarios.Location = new System.Drawing.Point(5, 150);
+            this.chkHorarios.Name = "chkHorarios";
+            this.chkHorarios.Size = new System.Drawing.Size(105, 17);
+            this.chkHorarios.TabIndex = 24;
+            this.chkHorarios.Text = "Horarios Entrega";
+            this.chkHorarios.UseVisualStyleBackColor = true;
             // 
             // chkLink
             // 
@@ -174,7 +191,7 @@
             // lblSinc
             // 
             this.lblSinc.AutoSize = true;
-            this.lblSinc.Location = new System.Drawing.Point(23, 228);
+            this.lblSinc.Location = new System.Drawing.Point(12, 226);
             this.lblSinc.Name = "lblSinc";
             this.lblSinc.Size = new System.Drawing.Size(74, 13);
             this.lblSinc.TabIndex = 17;
@@ -260,16 +277,6 @@
             this.chkProdutos.TabIndex = 8;
             this.chkProdutos.Text = "Produtos";
             this.chkProdutos.UseVisualStyleBackColor = true;
-            // 
-            // lblSincronismo
-            // 
-            this.lblSincronismo.AutoSize = true;
-            this.lblSincronismo.Location = new System.Drawing.Point(42, 288);
-            this.lblSincronismo.Name = "lblSincronismo";
-            this.lblSincronismo.Size = new System.Drawing.Size(23, 13);
-            this.lblSincronismo.TabIndex = 4;
-            this.lblSincronismo.Text = "labl";
-            this.lblSincronismo.Visible = false;
             // 
             // tabPage2
             // 
@@ -440,22 +447,15 @@
             this.txtPercentualDesconto.Size = new System.Drawing.Size(45, 20);
             this.txtPercentualDesconto.TabIndex = 9;
             // 
-            // prgBarHorarios
+            // lblSincronismo
             // 
-            this.prgBarHorarios.Location = new System.Drawing.Point(128, 149);
-            this.prgBarHorarios.Name = "prgBarHorarios";
-            this.prgBarHorarios.Size = new System.Drawing.Size(114, 18);
-            this.prgBarHorarios.TabIndex = 25;
-            // 
-            // chkHorarios
-            // 
-            this.chkHorarios.AutoSize = true;
-            this.chkHorarios.Location = new System.Drawing.Point(5, 150);
-            this.chkHorarios.Name = "chkHorarios";
-            this.chkHorarios.Size = new System.Drawing.Size(105, 17);
-            this.chkHorarios.TabIndex = 24;
-            this.chkHorarios.Text = "Horarios Entrega";
-            this.chkHorarios.UseVisualStyleBackColor = true;
+            this.lblSincronismo.AutoSize = true;
+            this.lblSincronismo.Location = new System.Drawing.Point(42, 288);
+            this.lblSincronismo.Name = "lblSincronismo";
+            this.lblSincronismo.Size = new System.Drawing.Size(23, 13);
+            this.lblSincronismo.TabIndex = 4;
+            this.lblSincronismo.Text = "labl";
+            this.lblSincronismo.Visible = false;
             // 
             // frmSincronizacao
             // 
@@ -490,7 +490,6 @@
         private System.Windows.Forms.CheckBox chkRegiaoEntrega;
         private System.Windows.Forms.CheckBox chkFPagamento;
         private System.Windows.Forms.CheckBox chkProdutos;
-        private System.Windows.Forms.Label lblSincronismo;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RadioButton rbTotal;
@@ -518,5 +517,6 @@
         private System.Windows.Forms.CheckBox chkLink;
         private System.Windows.Forms.ProgressBar prgBarHorarios;
         private System.Windows.Forms.CheckBox chkHorarios;
+        private System.Windows.Forms.Label lblSincronismo;
     }
 }
