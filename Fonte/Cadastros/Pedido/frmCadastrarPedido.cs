@@ -1075,6 +1075,7 @@ namespace DexComanda
                                 return;
 
                             }
+                            pedido.HorarioEntrega = "";
                             con.Insert("spAdicionarPedido", pedido);
                             //  DataEntrada = DateTime.Now;
 
@@ -1186,6 +1187,7 @@ namespace DexComanda
                 txtCodVendedor.BackColor = Color.Red;
                 return;
             }
+            pedido.HorarioEntrega = "";
             con.Update("spAlterarTotalPedido", pedido);
             // Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
         }

@@ -19,6 +19,8 @@ namespace DexComanda
         private Main parentMain;
         private int rowIndex;
         int codigoOpcao;
+        int codTipo;
+
         private string intCodGrupo;
         private Produto produto;
         private int codigoProdutoParaAlterar;
@@ -600,10 +602,10 @@ namespace DexComanda
                     }
 
                     AdicionaisGridView.Rows.Add();
-                    AdicionaisGridView.Rows[iCountLinhas].Cells[0].Value = int.Parse(cbxOpcao.SelectedValue.ToString());
-                    AdicionaisGridView.Rows[iCountLinhas].Cells[1].Value = decimal.Parse(txtPrecoOpcao.Text);
-                    AdicionaisGridView.Rows[iCountLinhas].Cells[2].Value = cbxOpcao.Text.ToString();
-                    AdicionaisGridView.Rows[iCountLinhas].Cells[3].Value = cbxTipoOpcao.SelectedValue.ToString(); 
+                    AdicionaisGridView.Rows[iCountLinhas].Cells["CodOpcao"].Value = int.Parse(cbxOpcao.SelectedValue.ToString());
+                    AdicionaisGridView.Rows[iCountLinhas].Cells["Preco"].Value = decimal.Parse(txtPrecoOpcao.Text);
+                    AdicionaisGridView.Rows[iCountLinhas].Cells["Nome"].Value = cbxOpcao.Text.ToString();
+                    AdicionaisGridView.Rows[iCountLinhas].Cells["CodTipo"].Value = cbxTipoOpcao.SelectedValue.ToString(); 
                     iCountLinhas = AdicionaisGridView.Rows.Count;
                 }
             }
@@ -667,7 +669,7 @@ namespace DexComanda
                 codigoOpcao = int.Parse(this.AdicionaisGridView.Rows[rowIndex].Cells[0].Value.ToString());
                 txtPrecoOpcao.Text = AdicionaisGridView.Rows[rowIndex].Cells[1].Value.ToString();
                 this.cbxOpcao.SelectedText = this.AdicionaisGridView.Rows[rowIndex].Cells[2].Value.ToString();
-
+                codTipo = int.Parse(AdicionaisGridView.Rows[rowIndex].Cells["Tipo"].Value.ToString());
 
                 this.btnAdicionarOpcao.Text = "Salvar";
                 this.btnAdicionarOpcao.Click += new System.EventHandler(this.SalvarRegistro);
@@ -694,6 +696,7 @@ namespace DexComanda
                 DataAlteracao = DateTime.Now,
                 Preco = decimal.Parse(txtPrecoOpcao.Text),
                 PrecoProcomocao = 0,
+                CodTipo = codTipo
             };
             if (txtPrecoOpcao.Text != "")
             {

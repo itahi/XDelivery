@@ -161,22 +161,25 @@ namespace DexComanda.Operações.Alteracoes
                                 {
                                     CodOpcao = dsOpcoes.Tables[0].Rows[intFor].Field<int>("CodOpcao"),
                                     CodProduto = prod.Codigo,
+                                    CodTipo = dsOpcoes.Tables[0].Rows[intFor].Field<int>("CodTipo"),
                                     DataAlteracao = DateTime.Now,
                                     Preco = dsOpcoes.Tables[0].Rows[intFor].Field<decimal>("Preco"),
                                     PrecoProcomocao = dsOpcoes.Tables[0].Rows[intFor].Field<decimal>("Preco") - dsOpcoes.Tables[0].Rows[intFor].Field<decimal>("Preco") * iPorcentagemDesc / 100
+                                    
                                 };
                                 con.Update("spAlterarOpcaoProduto", prodOp);
                             }
                             
                         }
 
-
                         if (AdicionaisGridView.Rows.Count > 0)
                         {
                             for (int intFor = 0; intFor < AdicionaisGridView.Rows.Count; intFor++)
                             {
                                 con.SalvarAdicionais(prod.Codigo, 
-                                    int.Parse(AdicionaisGridView.Rows[intFor].Cells["CodOpcao"].Value.ToString()), decimal.Parse(AdicionaisGridView.Rows[intFor].Cells["Valor"].Value.ToString()));
+                                    int.Parse(AdicionaisGridView.Rows[intFor].Cells["CodOpcao"].Value.ToString()),
+                                    decimal.Parse(AdicionaisGridView.Rows[intFor].Cells["Valor"].Value.ToString()),
+                                    int.Parse(AdicionaisGridView.Rows[intFor].Cells["CodTipo"].Value.ToString()));
                             }
                         }
                     }
@@ -283,12 +286,13 @@ namespace DexComanda.Operações.Alteracoes
             pnlAdicionais.Show();
             if (pnlAdicionais.Visible)
             {
-                this.cbxOpcao.DataSource = con.SelectAll("Opcao", "spObterOpcao").Tables["Opcao"];
-                this.cbxOpcao.DisplayMember = "Nome";
-                this.cbxOpcao.ValueMember = "Codigo";
+                //this.cbxOpcao.DataSource = con.SelectAll("Opcao", "spObterOpcao").Tables["Opcao"];
+                //this.cbxOpcao.DisplayMember = "Nome";
+                //this.cbxOpcao.ValueMember = "Codigo";
                 AdicionaisGridView.Columns.Add("CodOpcao", "CodOpcao");
                 AdicionaisGridView.Columns.Add("Valor", "Valor");
                 AdicionaisGridView.Columns.Add("Nome", "Nome");
+                AdicionaisGridView.Columns.Add("CodTipo", "CodTipo");
             }
             //frmOpcaoProduto frm = new frmOpcaoProduto();
             //frm.StartPosition = FormStartPosition.CenterParent;
@@ -312,26 +316,19 @@ namespace DexComanda.Operações.Alteracoes
                 AdicionaisGridView.Rows[iCountLinhas].Cells[0].Value = int.Parse(cbxOpcao.SelectedValue.ToString());
                 AdicionaisGridView.Rows[iCountLinhas].Cells[1].Value = decimal.Parse(txtPrecoOpcao.Text);
                 AdicionaisGridView.Rows[iCountLinhas].Cells[2].Value = cbxOpcao.Text.ToString();
+                AdicionaisGridView.Rows[iCountLinhas].Cells["CodTipo"].Value = int.Parse(cbxTipoOpcao.SelectedValue.ToString());
                 iCountLinhas = AdicionaisGridView.Rows.Count;
             }
             catch (Exception erro)
             {
 
-                MessageBox.Show(erro.Message);
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Utils.MessageBoxQuestion(" Todos Produtos Selecionados no Filtro receberão esses items adicionais, Deseja continuar?"))
-            {
-                return;
-                
-            }
-            else
-            {
-                pnlAdicionais.Visible = false;
-            }
+            
             
 
         }
@@ -384,6 +381,77 @@ namespace DexComanda.Operações.Alteracoes
         private void chkAlteraPreco_CheckedChanged(object sender, EventArgs e)
         {
             grpPrecos.Enabled = chkAlteraPreco.Checked;
+        }
+
+        private void cbxOpcao_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPrecoOpcao_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAdicionarOpcao_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                int iCountLinhas = AdicionaisGridView.Rows.Count;
+                if (AdicionaisGridView.DataSource != null)
+                {
+                    AdicionaisGridView.AutoGenerateColumns = false;
+                    AdicionaisGridView.DataSource = null;
+                    AdicionaisGridView.DataMember = null;
+                }
+
+                AdicionaisGridView.Rows.Add();
+                AdicionaisGridView.Rows[iCountLinhas].Cells[0].Value = int.Parse(cbxOpcao.SelectedValue.ToString());
+                AdicionaisGridView.Rows[iCountLinhas].Cells[1].Value = decimal.Parse(txtPrecoOpcao.Text);
+                AdicionaisGridView.Rows[iCountLinhas].Cells[2].Value = cbxOpcao.Text.ToString();
+                AdicionaisGridView.Rows[iCountLinhas].Cells["CodTipo"].Value = int.Parse(cbxTipoOpcao.SelectedValue.ToString());
+                iCountLinhas = AdicionaisGridView.Rows.Count;
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+        }
+
+        private void ListaTipos(object sender, EventArgs e)
+        {
+            Utils.MontaCombox(cbxTipoOpcao, "Nome", "Codigo", "Produto_OpcaoTipo","spObterTipoOpcao");
+        }
+
+        private void ListaOpcao(object sender, EventArgs e)
+        {
+            if (cbxTipoOpcao.SelectedIndex<=-1)
+            {
+                Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcao");
+            }
+            else
+            {
+                Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcaoPorTipo",int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
+            }
+        }
+
+        private void btnSalvar_Click_1(object sender, EventArgs e)
+        {
+            if (!Utils.MessageBoxQuestion(" Todos Produtos Selecionados no Filtro receberão esses items adicionais, Deseja continuar?"))
+            {
+                return;
+            }
+            else
+            {
+                pnlAdicionais.Visible = false;
+            }
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

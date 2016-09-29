@@ -24,5 +24,7 @@ namespace DexComanda.Models
         public int TicketFidelidade { get; set; }
         public int CodRegiao { get; set; }
         public string user_id { get; set; }
+        public string DDD { get; set; }
+        public string Sexo { get; set; }
     }
 }

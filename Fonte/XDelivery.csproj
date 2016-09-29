@@ -301,6 +301,7 @@
     <Compile Include="Models\WS\DadosApp.cs" />
     <Compile Include="Models\WS\HorariosEntregaJson.cs" />
     <Compile Include="Models\WS\RetornoWS.cs" />
+    <Compile Include="Models\WS\StatusPedido.cs" />
     <Compile Include="Operações\Alteracoes\frmAlteracaoCliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -469,6 +470,7 @@
     <Compile Include="Operações\Pedido\frmCadastrarStatus.Designer.cs">
       <DependentUpon>frmCadastrarStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Push\OneSignal.cs" />
     <Compile Include="Relatorios\Clientes\RelCreditoDebito.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -70,6 +70,9 @@
             this.exportarDadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.impressãoTermicaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vendasPorVendedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.entregasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.porRegiãoComTaxaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.porMotoboyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configuraçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sistemaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.impressãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -144,9 +147,6 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.entregasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.porRegiãoComTaxaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.porMotoboyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -492,6 +492,28 @@
             this.vendasPorVendedorToolStripMenuItem.Size = new System.Drawing.Size(229, 26);
             this.vendasPorVendedorToolStripMenuItem.Text = "Vendas por Vendedor";
             this.vendasPorVendedorToolStripMenuItem.Click += new System.EventHandler(this.vendasPorVendedorToolStripMenuItem_Click);
+            // 
+            // entregasToolStripMenuItem
+            // 
+            this.entregasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.porRegiãoComTaxaToolStripMenuItem,
+            this.porMotoboyToolStripMenuItem});
+            this.entregasToolStripMenuItem.Name = "entregasToolStripMenuItem";
+            this.entregasToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
+            this.entregasToolStripMenuItem.Text = "Entregas";
+            // 
+            // porRegiãoComTaxaToolStripMenuItem
+            // 
+            this.porRegiãoComTaxaToolStripMenuItem.Name = "porRegiãoComTaxaToolStripMenuItem";
+            this.porRegiãoComTaxaToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
+            this.porRegiãoComTaxaToolStripMenuItem.Text = "Por Região com Taxa";
+            this.porRegiãoComTaxaToolStripMenuItem.Click += new System.EventHandler(this.porRegiãoComTaxaToolStripMenuItem_Click);
+            // 
+            // porMotoboyToolStripMenuItem
+            // 
+            this.porMotoboyToolStripMenuItem.Name = "porMotoboyToolStripMenuItem";
+            this.porMotoboyToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
+            this.porMotoboyToolStripMenuItem.Text = "Por Motoboy";
             // 
             // configuraçãoToolStripMenuItem
             // 
@@ -985,6 +1007,7 @@
             this.cbxGrupoProduto.Name = "cbxGrupoProduto";
             this.cbxGrupoProduto.Size = new System.Drawing.Size(220, 30);
             this.cbxGrupoProduto.TabIndex = 9;
+            this.cbxGrupoProduto.DropDown += new System.EventHandler(this.cbxGrupoProduto_DropDown);
             this.cbxGrupoProduto.SelectedIndexChanged += new System.EventHandler(this.FiltraGrupo);
             this.cbxGrupoProduto.SelectionChangeCommitted += new System.EventHandler(this.cbxGrupoProduto_SelectionChangeCommitted);
             // 
@@ -1089,6 +1112,7 @@
             this.clientesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.clientesGridView.Size = new System.Drawing.Size(499, 193);
             this.clientesGridView.TabIndex = 11;
+            this.clientesGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.clientesGridView_CellContentClick);
             this.clientesGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.EditarCliente);
             this.clientesGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxiliarCliente);
             // 
@@ -1293,28 +1317,6 @@
             this.AtualizaGrid.Enabled = true;
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
-            // 
-            // entregasToolStripMenuItem
-            // 
-            this.entregasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.porRegiãoComTaxaToolStripMenuItem,
-            this.porMotoboyToolStripMenuItem});
-            this.entregasToolStripMenuItem.Name = "entregasToolStripMenuItem";
-            this.entregasToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
-            this.entregasToolStripMenuItem.Text = "Entregas";
-            // 
-            // porRegiãoComTaxaToolStripMenuItem
-            // 
-            this.porRegiãoComTaxaToolStripMenuItem.Name = "porRegiãoComTaxaToolStripMenuItem";
-            this.porRegiãoComTaxaToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
-            this.porRegiãoComTaxaToolStripMenuItem.Text = "Por Região com Taxa";
-            this.porRegiãoComTaxaToolStripMenuItem.Click += new System.EventHandler(this.porRegiãoComTaxaToolStripMenuItem_Click);
-            // 
-            // porMotoboyToolStripMenuItem
-            // 
-            this.porMotoboyToolStripMenuItem.Name = "porMotoboyToolStripMenuItem";
-            this.porMotoboyToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
-            this.porMotoboyToolStripMenuItem.Text = "Por Motoboy";
             // 
             // frmPrincipal
             // 

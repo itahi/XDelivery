@@ -38,19 +38,11 @@
             this.cbxGrupo = new System.Windows.Forms.ComboBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pnlAdicionais = new System.Windows.Forms.Panel();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnSalvar = new System.Windows.Forms.Button();
-            this.btnEditar = new System.Windows.Forms.Button();
-            this.btnAdicionarOpcao = new System.Windows.Forms.Button();
-            this.txtPrecoOpcao = new System.Windows.Forms.TextBox();
-            this.cbxOpcao = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.AdicionaisGridView = new System.Windows.Forms.DataGridView();
             this.GridViewProdutos = new System.Windows.Forms.DataGridView();
             this.btnExecutar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkAlteraPreco = new System.Windows.Forms.CheckBox();
             this.chkAtivaDesconto = new System.Windows.Forms.CheckBox();
             this.grpDesconto = new System.Windows.Forms.GroupBox();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
@@ -73,17 +65,28 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnOpcao = new System.Windows.Forms.Button();
-            this.chkAlteraPreco = new System.Windows.Forms.CheckBox();
+            this.pnlAdicionais = new System.Windows.Forms.Panel();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnSalvar = new System.Windows.Forms.Button();
+            this.btnEditar = new System.Windows.Forms.Button();
+            this.btnAdicionarOpcao = new System.Windows.Forms.Button();
+            this.txtPrecoOpcao = new System.Windows.Forms.TextBox();
+            this.cbxOpcao = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.AdicionaisGridView = new System.Windows.Forms.DataGridView();
+            this.cbxTipoOpcao = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             this.grpFiltros.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.pnlAdicionais.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AdicionaisGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridViewProdutos)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.grpDesconto.SuspendLayout();
             this.grpPrecos.SuspendLayout();
+            this.pnlAdicionais.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AdicionaisGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // label6
@@ -164,7 +167,6 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.pnlAdicionais);
             this.groupBox1.Controls.Add(this.GridViewProdutos);
             this.groupBox1.Location = new System.Drawing.Point(4, 275);
             this.groupBox1.Name = "groupBox1";
@@ -172,112 +174,6 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Resultado - Filtro";
-            // 
-            // pnlAdicionais
-            // 
-            this.pnlAdicionais.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pnlAdicionais.Controls.Add(this.btnCancel);
-            this.pnlAdicionais.Controls.Add(this.btnSalvar);
-            this.pnlAdicionais.Controls.Add(this.btnEditar);
-            this.pnlAdicionais.Controls.Add(this.btnAdicionarOpcao);
-            this.pnlAdicionais.Controls.Add(this.txtPrecoOpcao);
-            this.pnlAdicionais.Controls.Add(this.cbxOpcao);
-            this.pnlAdicionais.Controls.Add(this.label7);
-            this.pnlAdicionais.Controls.Add(this.AdicionaisGridView);
-            this.pnlAdicionais.Location = new System.Drawing.Point(180, 0);
-            this.pnlAdicionais.Name = "pnlAdicionais";
-            this.pnlAdicionais.Size = new System.Drawing.Size(382, 183);
-            this.pnlAdicionais.TabIndex = 3;
-            this.pnlAdicionais.Visible = false;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnCancel.Location = new System.Drawing.Point(309, 153);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(64, 23);
-            this.btnCancel.TabIndex = 45;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // btnSalvar
-            // 
-            this.btnSalvar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnSalvar.Location = new System.Drawing.Point(239, 153);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(64, 23);
-            this.btnSalvar.TabIndex = 44;
-            this.btnSalvar.Text = "Salvar";
-            this.btnSalvar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalvar.UseVisualStyleBackColor = true;
-            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
-            // 
-            // btnEditar
-            // 
-            this.btnEditar.Image = ((System.Drawing.Image)(resources.GetObject("btnEditar.Image")));
-            this.btnEditar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEditar.Location = new System.Drawing.Point(334, 3);
-            this.btnEditar.Name = "btnEditar";
-            this.btnEditar.Size = new System.Drawing.Size(41, 26);
-            this.btnEditar.TabIndex = 43;
-            this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnEditar.UseVisualStyleBackColor = true;
-            // 
-            // btnAdicionarOpcao
-            // 
-            this.btnAdicionarOpcao.Image = ((System.Drawing.Image)(resources.GetObject("btnAdicionarOpcao.Image")));
-            this.btnAdicionarOpcao.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAdicionarOpcao.Location = new System.Drawing.Point(291, 3);
-            this.btnAdicionarOpcao.Name = "btnAdicionarOpcao";
-            this.btnAdicionarOpcao.Size = new System.Drawing.Size(35, 26);
-            this.btnAdicionarOpcao.TabIndex = 42;
-            this.btnAdicionarOpcao.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAdicionarOpcao.UseVisualStyleBackColor = true;
-            this.btnAdicionarOpcao.Click += new System.EventHandler(this.btnAdicionarOpcao_Click);
-            // 
-            // txtPrecoOpcao
-            // 
-            this.txtPrecoOpcao.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecoOpcao.Location = new System.Drawing.Point(210, 2);
-            this.txtPrecoOpcao.Name = "txtPrecoOpcao";
-            this.txtPrecoOpcao.Size = new System.Drawing.Size(77, 26);
-            this.txtPrecoOpcao.TabIndex = 41;
-            // 
-            // cbxOpcao
-            // 
-            this.cbxOpcao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxOpcao.FormattingEnabled = true;
-            this.cbxOpcao.Location = new System.Drawing.Point(3, 6);
-            this.cbxOpcao.Name = "cbxOpcao";
-            this.cbxOpcao.Size = new System.Drawing.Size(201, 21);
-            this.cbxOpcao.TabIndex = 40;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 30);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(110, 13);
-            this.label7.TabIndex = 39;
-            this.label7.Text = "Adicionais do Produto";
-            // 
-            // AdicionaisGridView
-            // 
-            this.AdicionaisGridView.AllowUserToAddRows = false;
-            this.AdicionaisGridView.AllowUserToDeleteRows = false;
-            this.AdicionaisGridView.AllowUserToOrderColumns = true;
-            this.AdicionaisGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.AdicionaisGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.AdicionaisGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.AdicionaisGridView.Location = new System.Drawing.Point(3, 46);
-            this.AdicionaisGridView.MultiSelect = false;
-            this.AdicionaisGridView.Name = "AdicionaisGridView";
-            this.AdicionaisGridView.ReadOnly = true;
-            this.AdicionaisGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.AdicionaisGridView.Size = new System.Drawing.Size(370, 103);
-            this.AdicionaisGridView.TabIndex = 38;
-            this.AdicionaisGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Excluir);
             // 
             // GridViewProdutos
             // 
@@ -333,6 +229,17 @@
             this.groupBox2.TabIndex = 27;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Alterações";
+            // 
+            // chkAlteraPreco
+            // 
+            this.chkAlteraPreco.AutoSize = true;
+            this.chkAlteraPreco.Location = new System.Drawing.Point(9, 14);
+            this.chkAlteraPreco.Name = "chkAlteraPreco";
+            this.chkAlteraPreco.Size = new System.Drawing.Size(96, 17);
+            this.chkAlteraPreco.TabIndex = 36;
+            this.chkAlteraPreco.Text = "Alterar Preço ?";
+            this.chkAlteraPreco.UseVisualStyleBackColor = true;
+            this.chkAlteraPreco.CheckedChanged += new System.EventHandler(this.chkAlteraPreco_CheckedChanged);
             // 
             // chkAtivaDesconto
             // 
@@ -583,22 +490,152 @@
             this.btnOpcao.UseVisualStyleBackColor = true;
             this.btnOpcao.Click += new System.EventHandler(this.btnOpcao_Click);
             // 
-            // chkAlteraPreco
+            // pnlAdicionais
             // 
-            this.chkAlteraPreco.AutoSize = true;
-            this.chkAlteraPreco.Location = new System.Drawing.Point(9, 14);
-            this.chkAlteraPreco.Name = "chkAlteraPreco";
-            this.chkAlteraPreco.Size = new System.Drawing.Size(96, 17);
-            this.chkAlteraPreco.TabIndex = 36;
-            this.chkAlteraPreco.Text = "Alterar Preço ?";
-            this.chkAlteraPreco.UseVisualStyleBackColor = true;
-            this.chkAlteraPreco.CheckedChanged += new System.EventHandler(this.chkAlteraPreco_CheckedChanged);
+            this.pnlAdicionais.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlAdicionais.Controls.Add(this.label9);
+            this.pnlAdicionais.Controls.Add(this.label8);
+            this.pnlAdicionais.Controls.Add(this.cbxTipoOpcao);
+            this.pnlAdicionais.Controls.Add(this.btnCancel);
+            this.pnlAdicionais.Controls.Add(this.btnSalvar);
+            this.pnlAdicionais.Controls.Add(this.btnEditar);
+            this.pnlAdicionais.Controls.Add(this.btnAdicionarOpcao);
+            this.pnlAdicionais.Controls.Add(this.txtPrecoOpcao);
+            this.pnlAdicionais.Controls.Add(this.cbxOpcao);
+            this.pnlAdicionais.Controls.Add(this.label7);
+            this.pnlAdicionais.Controls.Add(this.AdicionaisGridView);
+            this.pnlAdicionais.Location = new System.Drawing.Point(210, 241);
+            this.pnlAdicionais.Name = "pnlAdicionais";
+            this.pnlAdicionais.Size = new System.Drawing.Size(382, 210);
+            this.pnlAdicionais.TabIndex = 31;
+            this.pnlAdicionais.Visible = false;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnCancel.Location = new System.Drawing.Point(309, 180);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(64, 23);
+            this.btnCancel.TabIndex = 45;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // btnSalvar
+            // 
+            this.btnSalvar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnSalvar.Location = new System.Drawing.Point(239, 180);
+            this.btnSalvar.Name = "btnSalvar";
+            this.btnSalvar.Size = new System.Drawing.Size(64, 23);
+            this.btnSalvar.TabIndex = 44;
+            this.btnSalvar.Text = "Salvar";
+            this.btnSalvar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSalvar.UseVisualStyleBackColor = true;
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click_1);
+            // 
+            // btnEditar
+            // 
+            this.btnEditar.Image = ((System.Drawing.Image)(resources.GetObject("btnEditar.Image")));
+            this.btnEditar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEditar.Location = new System.Drawing.Point(334, 27);
+            this.btnEditar.Name = "btnEditar";
+            this.btnEditar.Size = new System.Drawing.Size(41, 26);
+            this.btnEditar.TabIndex = 43;
+            this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnEditar.UseVisualStyleBackColor = true;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            // 
+            // btnAdicionarOpcao
+            // 
+            this.btnAdicionarOpcao.Image = ((System.Drawing.Image)(resources.GetObject("btnAdicionarOpcao.Image")));
+            this.btnAdicionarOpcao.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAdicionarOpcao.Location = new System.Drawing.Point(291, 27);
+            this.btnAdicionarOpcao.Name = "btnAdicionarOpcao";
+            this.btnAdicionarOpcao.Size = new System.Drawing.Size(35, 26);
+            this.btnAdicionarOpcao.TabIndex = 42;
+            this.btnAdicionarOpcao.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAdicionarOpcao.UseVisualStyleBackColor = true;
+            this.btnAdicionarOpcao.Click += new System.EventHandler(this.btnAdicionarOpcao_Click_1);
+            // 
+            // txtPrecoOpcao
+            // 
+            this.txtPrecoOpcao.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecoOpcao.Location = new System.Drawing.Point(210, 26);
+            this.txtPrecoOpcao.Name = "txtPrecoOpcao";
+            this.txtPrecoOpcao.Size = new System.Drawing.Size(77, 26);
+            this.txtPrecoOpcao.TabIndex = 41;
+            this.txtPrecoOpcao.TextChanged += new System.EventHandler(this.txtPrecoOpcao_TextChanged);
+            // 
+            // cbxOpcao
+            // 
+            this.cbxOpcao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxOpcao.FormattingEnabled = true;
+            this.cbxOpcao.Location = new System.Drawing.Point(46, 30);
+            this.cbxOpcao.Name = "cbxOpcao";
+            this.cbxOpcao.Size = new System.Drawing.Size(158, 21);
+            this.cbxOpcao.TabIndex = 40;
+            this.cbxOpcao.DropDown += new System.EventHandler(this.ListaOpcao);
+            this.cbxOpcao.SelectedIndexChanged += new System.EventHandler(this.cbxOpcao_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 54);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(110, 13);
+            this.label7.TabIndex = 39;
+            this.label7.Text = "Adicionais do Produto";
+            // 
+            // AdicionaisGridView
+            // 
+            this.AdicionaisGridView.AllowUserToAddRows = false;
+            this.AdicionaisGridView.AllowUserToDeleteRows = false;
+            this.AdicionaisGridView.AllowUserToOrderColumns = true;
+            this.AdicionaisGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.AdicionaisGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.AdicionaisGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.AdicionaisGridView.Location = new System.Drawing.Point(3, 71);
+            this.AdicionaisGridView.MultiSelect = false;
+            this.AdicionaisGridView.Name = "AdicionaisGridView";
+            this.AdicionaisGridView.ReadOnly = true;
+            this.AdicionaisGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.AdicionaisGridView.Size = new System.Drawing.Size(370, 103);
+            this.AdicionaisGridView.TabIndex = 38;
+            // 
+            // cbxTipoOpcao
+            // 
+            this.cbxTipoOpcao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTipoOpcao.FormattingEnabled = true;
+            this.cbxTipoOpcao.Location = new System.Drawing.Point(47, 4);
+            this.cbxTipoOpcao.Name = "cbxTipoOpcao";
+            this.cbxTipoOpcao.Size = new System.Drawing.Size(130, 21);
+            this.cbxTipoOpcao.TabIndex = 46;
+            this.cbxTipoOpcao.DropDown += new System.EventHandler(this.ListaTipos);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 6);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(28, 13);
+            this.label8.TabIndex = 47;
+            this.label8.Text = "Tipo";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 33);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(39, 13);
+            this.label9.TabIndex = 48;
+            this.label9.Text = "Opção";
             // 
             // frmAlteracaoProduto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(803, 544);
+            this.Controls.Add(this.pnlAdicionais);
             this.Controls.Add(this.btnOpcao);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -616,9 +653,6 @@
             this.grpFiltros.ResumeLayout(false);
             this.grpFiltros.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.pnlAdicionais.ResumeLayout(false);
-            this.pnlAdicionais.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AdicionaisGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridViewProdutos)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -626,6 +660,9 @@
             this.grpDesconto.PerformLayout();
             this.grpPrecos.ResumeLayout(false);
             this.grpPrecos.PerformLayout();
+            this.pnlAdicionais.ResumeLayout(false);
+            this.pnlAdicionais.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AdicionaisGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -665,16 +702,19 @@
         private System.Windows.Forms.DateTimePicker dtFim;
         private System.Windows.Forms.DateTimePicker dtInicio;
         private System.Windows.Forms.Button btnOpcao;
+        private System.Windows.Forms.CheckBox chkTodos;
+        private System.Windows.Forms.CheckBox chkAlteraPreco;
         private System.Windows.Forms.Panel pnlAdicionais;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DataGridView AdicionaisGridView;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnAdicionarOpcao;
         private System.Windows.Forms.TextBox txtPrecoOpcao;
         private System.Windows.Forms.ComboBox cbxOpcao;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnSalvar;
-        private System.Windows.Forms.CheckBox chkTodos;
-        private System.Windows.Forms.CheckBox chkAlteraPreco;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DataGridView AdicionaisGridView;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cbxTipoOpcao;
     }
 }

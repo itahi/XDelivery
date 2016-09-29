@@ -288,14 +288,15 @@ namespace DexComanda
             // conn.Close();
         }
 
-        public void SalvarAdicionais(int iCodProduto, int iCodOpcao, decimal iPreco)
+        public void SalvarAdicionais(int iCodProduto, int iCodOpcao, decimal iPreco,int iCodTipo)
         {
             Produto_Opcao prod = new Produto_Opcao()
             {
                 CodProduto = iCodProduto,
                 CodOpcao = iCodOpcao,//int.Parse(AdicionaisGridView.Rows[i].Cells["CodOpcao"].Value.ToString()),
                 Preco = iPreco,//decimal.Parse(AdicionaisGridView.Rows[i].Cells["Preco"].Value.ToString()),
-                DataAlteracao = DateTime.Now
+                DataAlteracao = DateTime.Now,
+                CodTipo = iCodTipo
             };
             Insert("spAdicionarOpcaProduto", prod);
 
@@ -341,7 +342,7 @@ namespace DexComanda
                                   " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
                                   " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
                                   "  where Prod.CodProduto = @CodProduto" +
-                                  " order by Prod.Preco";
+                                  " order by PoT.OrdenExibicao,Prod.Preco";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@CodProduto", iDProduto);
@@ -962,7 +963,7 @@ namespace DexComanda
         }
         public DataSet SelectOpcaoProduto(string iCodProduto)
         {
-            string iSql = " select PO.CODOPCAO, PO.Preco,OP.Nome,PRO.Tipo  " +
+            string iSql = " select PO.CODOPCAO, PO.Preco,OP.Nome,PRO.Tipo,PRO.Codigo as CodTipo  " +
                           "  from Produto_Opcao PO " +
                           " left join Opcao OP on OP.Codigo = PO.CodOpcao " +
                           "join Produto_OpcaoTipo PRO on PRO.Codigo = Op.Tipo" +

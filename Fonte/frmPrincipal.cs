@@ -3,10 +3,12 @@ using DexComanda.Cadastros.Empresa;
 using DexComanda.Cadastros.Produto;
 using DexComanda.Integração;
 using DexComanda.Models;
+using DexComanda.Models.WS;
 using DexComanda.Operações;
 using DexComanda.Operações.Alteracoes;
 using DexComanda.Operações.Financeiro;
 using DexComanda.Operações.Funções;
+using DexComanda.Push;
 using DexComanda.Relatorios;
 using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Relatorios.Gerenciais;
@@ -199,9 +201,10 @@ namespace DexComanda
                     int Codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
 
                     DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", Codigo);
+                   
                     dtPedido = dsPedido.Tables[0].Rows[0].Field<DateTime>("RealizadoEm");
                     DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
-
+                    int iCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
                     if (Sessions.returnEmpresa.CNPJ == "13004606798")
                     {
                         DataSet dsItensPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsPedido", Codigo);
@@ -226,7 +229,7 @@ namespace DexComanda
                     {
                         if (Utils.MessageBoxQuestion("Este é um pedido gerado/recebido na plataforma Online , tem certeza que deseja cancela-lo?"))
                         {
-                            AlteraStatusPedido(CodPedidoWS, 6);
+                            AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoCancelado, iCodPessoa);
                             // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
                         }
                     }
@@ -640,7 +643,6 @@ namespace DexComanda
 
                     DataSet dsStatus = con.SelectAll("PedidoStatus", "", "select * from PedidoStatus");
                     //for (int i = 0; i < dsStatus.Tables[0].Rows.Count; i++)
-                    //{
 
                     MenuItem StatusNaCozinha = new MenuItem(" 0 - Pedido na Cozinha");
                     MenuItem StatusNaEntrega = new MenuItem(" 1 - Saiu pra entrega");
@@ -702,11 +704,11 @@ namespace DexComanda
 
                             DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
                             DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
-
+                            int iCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
                             CodPedidoWS = VerificaPedidoOnline(codigo);
                             if (CodPedidoWS > 0)
                             {
-                                AlteraStatusPedido(CodPedidoWS, 5);
+                                AlteraStatusPedido(CodPedidoWS, 5, iCodPessoa);
                                 // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
                             }
                             int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
@@ -759,16 +761,16 @@ namespace DexComanda
                     codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
                     DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
                     DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
-
+                    int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
                     CodPedidoWS = VerificaPedidoOnline(codigo);
                     if (CodPedidoWS > 0)
                     {
-                        AlteraStatusPedido(CodPedidoWS, 5);
+                        AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoConcluido, intCodPessoa);
                         MessageBox.Show("Atualização realizada com sucesso, pedido entregue");
                     }
 
                     iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
-                    int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
+                   
                     dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
                     string iTipo = dRowPedido.ItemArray.GetValue(8).ToString();
 
@@ -967,12 +969,13 @@ namespace DexComanda
             try
             {
                 int intCodPedido = int.Parse(pedidosGridView.SelectedRows[rowIndex].Cells["Codigo"].Value.ToString());
+              //  int iCodPessoa = int.Parse(con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", intCodPedido).Tables[0].Rows[0].ItemArray.GetValue(2).ToString());
                 if (VerificaPedidoOnline(intCodPedido) > 0)
                 {
-                    AlteraStatusPedido(CodPedidoWS, 3);
+                    AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaCozinha,RetornaPessoa(intCodPedido));
                 }
 
-                con.AtualizaSitucao(intCodPedido, Sessions.retunrUsuario.Codigo, 2, pedidosGridView);
+                con.AtualizaSitucao(intCodPedido, Sessions.retunrUsuario.Codigo, StatusPedido.cPedidoNaCozinha, pedidosGridView);
 
             }
             catch (Exception erro)
@@ -982,17 +985,22 @@ namespace DexComanda
             }
 
         }
+        private int RetornaPessoa (int iCodPedido)
+        {
+            return int.Parse(con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).Tables[0].Rows[0].ItemArray.GetValue(2).ToString());
+
+        }
         private void PedidoNaEntrega(object sender, EventArgs e)
         {
             try
             {
                 int intCodPedido = int.Parse(pedidosGridView.SelectedRows[rowIndex].Cells["Codigo"].Value.ToString());
-
+                
                 if (VerificaPedidoOnline(intCodPedido) > 0)
                 {
-                    AlteraStatusPedido(CodPedidoWS, 4);
+                    AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaEntrega, RetornaPessoa(intCodPedido));
                 }
-                con.AtualizaSitucao(intCodPedido, Sessions.retunrUsuario.Codigo, 3, pedidosGridView);
+                con.AtualizaSitucao(intCodPedido, Sessions.retunrUsuario.Codigo, StatusPedido.cPedidoNaEntrega, pedidosGridView);
             }
             catch (Exception erro)
             {
@@ -1006,8 +1014,7 @@ namespace DexComanda
             try
             {
                 cUrlWs = Sessions.returnEmpresa.UrlServidor;
-                iParamToken = Convert.ToString(DateTime.Now).Replace("/", "").Replace(":", "").Replace(" ", "").Substring(0, 11) + "Adminx";
-                iParamToken = Utils.CriptografarArquivo(iParamToken.Trim(), false);
+                iParamToken = Utils.CriptografarArquivo("xsistemas", false);
             }
             catch (Exception e)
             {
@@ -1016,7 +1023,8 @@ namespace DexComanda
             }
 
         }
-        private void AlteraStatusPedido(int iCodPedidows, int iStatus)
+       
+        private void AlteraStatusPedido(int iCodPedidows, int iStatus,int iIdCliente=0)
         {
             GerarToken();
             RestClient client = new RestClient(cUrlWs);
@@ -1025,10 +1033,13 @@ namespace DexComanda
             request.AddParameter("idStatus", iStatus);
             request.AddParameter("token", iParamToken);
             RestResponse response = (RestResponse)client.Execute(request);
+            OneSignal on = new OneSignal();
 
+            on.BuscaCliente(iIdCliente, iStatus);
             if (response.Content.Contains("true"))
             {
                 MessageBox.Show("Alteração realizada com sucesso");
+
             }
             else
             {
@@ -1048,7 +1059,7 @@ namespace DexComanda
                 else
                 {
                     decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, con);
-                    frmCadastrarPedido frm = new frmCadastrarPedido(false, "", "", "0,00", TaxaServico, false, DateTime.Now, 0, CodPessoa,
+                    frmCadastrarPedido frm = new frmCadastrarPedido(false, "", "0,00", "0,00", TaxaServico, false, DateTime.Now, 0, CodPessoa,
                                                                         "", "", "", "", null, 0.00M);
                     frm.ShowDialog();
                 }
@@ -1514,7 +1525,7 @@ namespace DexComanda
         {
             Utils.SoPermiteNumeros(e);
         }
-        private void ImpressaoAutomatica(int iCodPedido, string iNumMesa, int iCodGrupo, string iNomeImpressora)
+        private void ImpressaoAutomatica(int iCodPedido, int iCodGrupo, string iNomeImpressora)
         {
             try
             {
@@ -1646,14 +1657,13 @@ namespace DexComanda
                     DataRow dRowPedido = dsItemsNaoImpresso.Tables[0].Rows[0];
 
                     int CodPedido = int.Parse(dRowPedido.ItemArray.GetValue(0).ToString());
-                    int CodGrupo = int.Parse(dRowPedido.ItemArray.GetValue(17).ToString());
-                    string iNomeImpressora = dRowPedido.ItemArray.GetValue(18).ToString();
-                    string numeroMesa = dRowPedido.ItemArray.GetValue(5).ToString();
+                    int CodGrupo = int.Parse(dRowPedido.ItemArray.GetValue(18).ToString());
+                    string iNomeImpressora = dRowPedido.ItemArray.GetValue(19).ToString();
 
                     Boolean iMesa = dRowPedido.ItemArray.GetValue(10).ToString() != "0";
                     if (iMesa && chkGerenciaImpressao.Checked)
                     {
-                        ImpressaoAutomatica(CodPedido, numeroMesa, CodGrupo, iNomeImpressora);
+                        ImpressaoAutomatica(CodPedido, CodGrupo, iNomeImpressora);
                     }
                 }
 
@@ -1746,6 +1756,17 @@ namespace DexComanda
         {
             frmEntregasPorRegiao frm = new frmEntregasPorRegiao();
             frm.ShowDialog();
+        }
+
+        private void clientesGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void cbxGrupoProduto_DropDown(object sender, EventArgs e)
+        {
+            Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
+
         }
     }
 }

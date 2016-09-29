@@ -22,5 +22,6 @@ namespace DexComanda.Models
         public decimal DescontoValor { get; set; }
         public int CodigoPedidoWS { get; set; }
         public int CodUsuario { get; set; }
+        public string HorarioEntrega { get; set; }
     }
 }

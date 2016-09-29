@@ -13,6 +13,8 @@ using DexComanda.Integração;
 using DexComanda.Relatorios.Clientes;
 using DexComanda.Relatorios.Delivery;
 using CrystalDecisions.Shared;
+using DexComanda.Push;
+
 namespace DexComanda
 {
     public partial class frmCadastroCliente : Form
@@ -237,7 +239,9 @@ namespace DexComanda
                     UF = this.txtEstado.Text,
                     TicketFidelidade = 0,
                     user_id = "",
-                    DataCadastro = DateTime.Now
+                    DataCadastro = DateTime.Now,
+                    Sexo ="1",
+                    DDD =""
 
                 };
                 if (cbxRegiao.SelectedValue.ToString()!="")
@@ -368,7 +372,9 @@ namespace DexComanda
                     TicketFidelidade = 0,
                     CodRegiao = mCodRegiao,
                     DataCadastro = Convert.ToDateTime(txtDataCadastro.Text),
-                    user_id = ""
+                    user_id = "",
+                    Sexo = "1",
+                    DDD = ""
                 };
                 if (txtTelefone2.Visible == true)
                 {
@@ -921,6 +927,7 @@ namespace DexComanda
         {
             Utils.SoDecimais(e);
         }
+
     }
 
 }

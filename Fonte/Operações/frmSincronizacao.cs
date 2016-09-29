@@ -35,20 +35,21 @@ namespace DexComanda.Operações
         {
 
             iParamToken = Convert.ToString(DateTime.Now).Replace("/", "").Replace(":", "").Replace(" ", "").Substring(0, 11) + "Adminx";
-            if (Sessions.returnEmpresa.Nome == "NOME DA SUA EMPRESA" || 
-                Sessions.returnEmpresa.CNPJ== "23267492000018" || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGaleto|| 
-                Sessions.returnEmpresa.CNPJ== Bibliotecas.cCarangoVix || Sessions.returnEmpresa.CNPJ== Bibliotecas.cTropicalExpress
-               || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiFood
-                )
-            {
-                iParamToken = Utils.CriptografarArquivo("xsistemas");
-            }
-            else
-            {
-                iParamToken = Utils.CriptografarArquivo(iParamToken);
-            }
+            //if (Sessions.returnEmpresa.Nome == "NOME DA SUA EMPRESA" || 
+            //    Sessions.returnEmpresa.CNPJ== "23267492000018" || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGaleto|| 
+            //    Sessions.returnEmpresa.CNPJ== Bibliotecas.cCarangoVix || Sessions.returnEmpresa.CNPJ== Bibliotecas.cTropicalExpress
+            //   || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiFood
+            //    )
+            //{
+            //    iParamToken = Utils.CriptografarArquivo("xsistemas");
+            //}
+            //else
+            //{
+            //    iParamToken = Utils.CriptografarArquivo(iParamToken);
+            //}
 
-           // iParamToken = Utils.CriptografarArquivo(iParamToken);
+            // iParamToken = Utils.CriptografarArquivo(iParamToken);
+            iParamToken = Utils.CriptografarArquivo("xsistemas");
             iParamToken = iParamToken.ToLower();
         }
         private void Sincroniza()

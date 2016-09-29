@@ -470,30 +470,38 @@ namespace DexComanda
         }
         private void PreencheCidades(string iListaJson)
         {
-            List<CidadesAtendidas> cidades = new List<CidadesAtendidas>();
-            if (iListaJson == "")
+            try
             {
-                return;
-            }
-            cidades = Utils.DeserializaObjeto2(iListaJson);
-            if (cidades.Count>0)
-            {
-                foreach (var item in cidades)
+                List<CidadesAtendidas> cidades = new List<CidadesAtendidas>();
+                if (iListaJson == "" || iListaJson==null)
                 {
-                    foreach (System.Windows.Forms.Control obj in grpCidades.Controls)
+                    return;
+                }
+                cidades = Utils.DeserializaObjeto2(iListaJson);
+                if (cidades.Count > 0)
+                {
+                    foreach (var item in cidades)
                     {
-                        if (object.ReferenceEquals(obj.GetType(), typeof(System.Windows.Forms.TextBox)))
+                        foreach (System.Windows.Forms.Control obj in grpCidades.Controls)
                         {
-                            if (((System.Windows.Forms.TextBox)obj).Text == "")
+                            if (object.ReferenceEquals(obj.GetType(), typeof(System.Windows.Forms.TextBox)))
                             {
-                                ((System.Windows.Forms.TextBox)obj).Text = item.Cidade;
-                                break;
+                                if (((System.Windows.Forms.TextBox)obj).Text == "")
+                                {
+                                    ((System.Windows.Forms.TextBox)obj).Text = item.Cidade;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
-            }
 
+            }
+            catch (Exception erros)
+            {
+                MessageBox.Show(Bibliotecas.cException + erros.Message);
+            }
+            
         }
 
         private void BuscarCep(object sender, KeyEventArgs e)
