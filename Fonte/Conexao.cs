@@ -182,8 +182,27 @@ namespace DexComanda
             return ds;
 
         }
+
+        protected bool ConsultaPedidoExiste(int iCodPedido,int iCodStatus)
+        {
+            Boolean iReturn = false;
+            string lSqlConsulta = "select * from PedidoStatusMovimento " +
+                                  " where CodPedido=@CodPedido and CodStatus=@CodStatus";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@CodPedido", iCodPedido);
+            command.Parameters.AddWithValue("@CodStatus", iCodStatus);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "PedidoStatusMovimento");
+            return iReturn = ds.Tables[0].Rows.Count>0;
+        }
         public void AtualizaSitucao(int iCodPedido, int iCodUser, int iCodStatus, DataGridView grid = null)
         {
+            if (ConsultaPedidoExiste(iCodPedido,iCodStatus))
+            {
+                return;
+            }
             PedidoStatusMovimento ped = new PedidoStatusMovimento()
             {
                 CodPedido = iCodPedido,
@@ -399,6 +418,17 @@ namespace DexComanda
             adapter.Fill(ds, "Produto_Opcao");
             return ds;
         }
+
+        public DataSet RetornaOpcoesPortipo(int iCodTipo)
+        {
+            command = new SqlCommand("spObterOpcaoPorTipo", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Codigo", iCodTipo);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Opcao");
+            return ds;
+        }
         public DataSet RetornaOpcoes(int iIDOpcao)
         {
             string lSqlConsulta = " select " +
@@ -409,7 +439,7 @@ namespace DexComanda
                                   " from Produto_Opcao Prod" +
                                   " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
                                   " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
-                                  "  where Prod.CodOpcao = @CodOpcao" +
+                                  " where Prod.CodOpcao = @CodOpcao" +
                                   " order by PoT.Nome";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;

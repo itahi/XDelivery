@@ -791,6 +791,7 @@ namespace DexComanda
             else
             {
                 histPessoa.Tipo = 'D';
+                histPessoa.Valor = -histPessoa.Valor;
             }
             con.Insert("spAdicionaHistorico", histPessoa);
             Utils.PopularGrid_SP("HistoricoPessoa", HistoricoGridView, "spObterHistoricoPorPessoa", histPessoa.CodPessoa);
@@ -803,16 +804,10 @@ namespace DexComanda
             double dblTotalDebito = 0.00;
             for (int i = 0; i < HistoricoGridView.Rows.Count; i++)
             {
-                if (HistoricoGridView.Rows[i].Cells["Tipo"].Value.ToString() == "D")
-                {
-                    dblTotalDebito = dblTotalDebito + double.Parse(HistoricoGridView.Rows[i].Cells["Valor"].Value.ToString());
-                }
-                else
-                {
-                    dblTotalCredito = dblTotalCredito + double.Parse(HistoricoGridView.Rows[i].Cells["Valor"].Value.ToString());
-                }
+
+                dblTotalDebito = double.Parse(HistoricoGridView.Rows[i].Cells["Valor"].Value.ToString())+ dblTotalDebito;
             }
-            lblTotal.Text = Convert.ToString(dblTotalCredito - dblTotalDebito);
+            lblTotal.Text = Convert.ToString(dblTotalDebito);
             txtValor.Text = txtHistorico.Text = "";
         }
 

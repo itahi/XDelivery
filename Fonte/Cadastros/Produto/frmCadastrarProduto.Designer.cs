@@ -1095,6 +1095,7 @@
             this.Name = "frmCadastrarProduto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[XDelivery] Cadastrar Produto ";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCadastrarProduto_FormClosed);
             this.Load += new System.EventHandler(this.frmCadastrarProduto_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastrarProduto_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).EndInit();

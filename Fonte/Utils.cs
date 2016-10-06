@@ -1983,7 +1983,7 @@ namespace DexComanda
                         Data = iData,
                         Historico = iHistorico,
                         Tipo = iTipo,
-                        Valor = iValor
+                        Valor = -iValor
                     };
                     con.Insert("spAdicionaHistorico", hist);
                 }

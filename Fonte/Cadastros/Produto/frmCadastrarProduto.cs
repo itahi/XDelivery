@@ -918,5 +918,10 @@ namespace DexComanda
             Utils.MontaCombox(cbxTipoOpcao, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
             
         }
+
+        private void frmCadastrarProduto_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
+        }
     }
 }

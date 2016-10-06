@@ -112,7 +112,7 @@ namespace DexComanda
                 }
                 else if ((pessoaTelefone.Tables["Pessoa"].Rows.Count == 1))
                 {
-                    if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado,Sessions.retunrUsuario.Turno))
+                    if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                     {
                         DataSet Pessoa = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", telefone);
                         DataRow dRow = Pessoa.Tables["Pessoa"].Rows[0];
@@ -201,14 +201,14 @@ namespace DexComanda
                     int Codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
 
                     DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", Codigo);
-                   
+
                     dtPedido = dsPedido.Tables[0].Rows[0].Field<DateTime>("RealizadoEm");
                     DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
                     int iCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
+
                     if (Sessions.returnEmpresa.CNPJ == "13004606798")
                     {
                         DataSet dsItensPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsPedido", Codigo);
-
                         for (int i = 0; i < dsItensPedido.Tables[0].Rows.Count; i++)
                         {
                             DataRow dRow = dsItensPedido.Tables[0].Rows[i];
@@ -274,7 +274,7 @@ namespace DexComanda
                             // dsPedido.Dispose();
 
                         }
-                        
+
                     }
                     cancelPedid.CodUsuario = CodUserCancelamento;
                     //Utils.ControlaEventos("CancPedido", this.Name);
@@ -770,7 +770,7 @@ namespace DexComanda
                     }
 
                     iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
-                   
+
                     dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
                     string iTipo = dRowPedido.ItemArray.GetValue(8).ToString();
 
@@ -796,7 +796,7 @@ namespace DexComanda
                         {
                             return;
                         }
-                        
+
                     }
 
                     // Grava Débito caso o Tipo de Pagamento gerar financeiro 
@@ -921,7 +921,7 @@ namespace DexComanda
             catch (Exception erro)
             {
 
-                MessageBox.Show(Bibliotecas.cException +  erro.Message);
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
         }
@@ -960,7 +960,6 @@ namespace DexComanda
             if (dPedido.Tables[0].Rows.Count > 0)
             {
                 iCodWs = dPedido.Tables[0].Rows[0].Field<int>("CodigoPedidoWS");
-
             }
             return iCodWs;
         }
@@ -969,10 +968,10 @@ namespace DexComanda
             try
             {
                 int intCodPedido = int.Parse(pedidosGridView.SelectedRows[rowIndex].Cells["Codigo"].Value.ToString());
-              //  int iCodPessoa = int.Parse(con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", intCodPedido).Tables[0].Rows[0].ItemArray.GetValue(2).ToString());
-                if (VerificaPedidoOnline(intCodPedido) > 0)
+                CodPedidoWS = VerificaPedidoOnline(intCodPedido);
+                if (CodPedidoWS > 0)
                 {
-                    AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaCozinha,RetornaPessoa(intCodPedido));
+                    AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaCozinha, RetornaPessoa(intCodPedido));
                 }
 
                 con.AtualizaSitucao(intCodPedido, Sessions.retunrUsuario.Codigo, StatusPedido.cPedidoNaCozinha, pedidosGridView);
@@ -985,7 +984,7 @@ namespace DexComanda
             }
 
         }
-        private int RetornaPessoa (int iCodPedido)
+        private int RetornaPessoa(int iCodPedido)
         {
             return int.Parse(con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).Tables[0].Rows[0].ItemArray.GetValue(2).ToString());
 
@@ -995,8 +994,8 @@ namespace DexComanda
             try
             {
                 int intCodPedido = int.Parse(pedidosGridView.SelectedRows[rowIndex].Cells["Codigo"].Value.ToString());
-                
-                if (VerificaPedidoOnline(intCodPedido) > 0)
+                CodPedidoWS = VerificaPedidoOnline(intCodPedido);
+                if (CodPedidoWS > 0)
                 {
                     AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaEntrega, RetornaPessoa(intCodPedido));
                 }
@@ -1023,8 +1022,8 @@ namespace DexComanda
             }
 
         }
-       
-        private void AlteraStatusPedido(int iCodPedidows, int iStatus,int iIdCliente=0)
+
+        private void AlteraStatusPedido(int iCodPedidows, int iStatus, int iIdCliente = 0)
         {
             GerarToken();
             RestClient client = new RestClient(cUrlWs);
@@ -1090,7 +1089,7 @@ namespace DexComanda
                     m.MenuItems.Add(ExcluirCliente);
                     // Se o caixa estiver aberto ele Libera pra criar PEdido
 
-                   
+
                     int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
 
                     m.Show(dgv, new Point(e.X, e.Y));
@@ -1136,10 +1135,10 @@ namespace DexComanda
         {
             try
             {
-                if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado,Sessions.retunrUsuario.Turno))
+                if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                 {
                     return;
-                } 
+                }
                 rowIndex = clientesGridView.CurrentRow.Index;
                 int CodCliente = int.Parse(clientesGridView.Rows[rowIndex].Cells[0].Value.ToString());
                 if (Sessions.returnConfig.RegistraCancelamentos)
@@ -1178,51 +1177,44 @@ namespace DexComanda
 
         private void BuscarCliente(object sender, KeyEventArgs e)
         {
-            //if (e.KeyCode == Keys.Enter)
+            string propriedade = cbxBuscarPor.Text.ToString();
+            string valor = txtBurcarValor.Text;
+            DataSet dsResult=null;
+            if (propriedade.Equals("Telefone") && e.KeyData == Keys.Enter)
+            {
+                dsResult = con.SelectPessoaPorNome(valor, Sessions.SqlPessoa, "Telefone");
+            }
+            else if (propriedade.Equals("Nome") || propriedade.Equals(""))
+            {
+                dsResult = con.SelectPessoaPorNome(valor, Sessions.SqlPessoa, "Nome");
+            }
+            else if (propriedade.Equals("Endereço"))
+            {
+                dsResult = con.SelectPessoaPorNome(valor, Sessions.SqlPessoa, "Endereco");
+            }
+
+
+            this.clientesGridView.DataSource = null;
+            this.clientesGridView.AutoGenerateColumns = true;
+            this.clientesGridView.DataSource = dsResult;
+            this.clientesGridView.DataMember = "Pessoa";
+            //}
+            //else
             //{
-                //if (cbxBuscarPor.Text != "")
-                //{
-                    string propriedade = cbxBuscarPor.SelectedText.ToString();
-                    string valor = txtBurcarValor.Text;
-                    DataSet dsResult;
-                    //if (!propriedade.Equals(""))
-                    //{
-                        //if (!valor.Equals(""))
-                        //{
-                            if (propriedade.Equals("Telefone"))
-                            {
-                                dsResult = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", valor);
-                            }
-                            else if (propriedade.Equals("Nome") || propriedade.Equals(""))
-                            {
-                                dsResult = con.SelectPessoaPorNome(valor, Sessions.SqlPessoa, "Nome");
-                            }
-                            else
-                            {
-                                dsResult = con.SelectPessoaPorNome(valor, Sessions.SqlPessoa, "Endereco");
-                            }
-
-                            this.clientesGridView.DataSource = null;
-                            this.clientesGridView.AutoGenerateColumns = true;
-                            this.clientesGridView.DataSource = dsResult;
-                            this.clientesGridView.DataMember = "Pessoa";
-                        //}
-                        //else
-                        //{
-                        //    MessageBox.Show("Informe Nome ou Telefone.");
-                        //    Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
-                        //    // Utils.PopularGrid("Pessoas", this.clientesGridView);
+            //    MessageBox.Show("Informe Nome ou Telefone.");
+            //    Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
+            //    // Utils.PopularGrid("Pessoas", this.clientesGridView);
 
 
-                        //}
-                   // }
+            //}
+            // }
 
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Informe se a busca é por Nome ou Telefone");
-                //}
-          //  }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Informe se a busca é por Nome ou Telefone");
+            //}
+            //  }
         }
         private void VerificaRegistroASincronizar()
         {
@@ -1341,6 +1333,7 @@ namespace DexComanda
         {
             frmCadastrarProduto frm = new frmCadastrarProduto(null);
             frm.ShowDialog();
+            Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
         }
 
         private void usuáriosToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1725,13 +1718,13 @@ namespace DexComanda
 
         private void relatórioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-        //    relatórioToolStripMenuItem.Enabled = Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AcessaRelatoriosSN");
-           
+            //    relatórioToolStripMenuItem.Enabled = Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AcessaRelatoriosSN");
+
         }
 
         private void relatórioToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
         {
-         //   relatórioToolStripMenuItem = Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AcessaRelatoriosSN");
+            //   relatórioToolStripMenuItem = Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AcessaRelatoriosSN");
         }
 
         private void vendasPorVendedorToolStripMenuItem_Click(object sender, EventArgs e)

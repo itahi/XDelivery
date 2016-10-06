@@ -168,7 +168,6 @@ namespace DexComanda.Operações
         private void CadastraLinkApp(Boolean iLimpar=false)
         {
             try
-
             {
                 newDados = new List<DadosApp>();
                 newDados = JsonConvert.DeserializeObject<List<DadosApp>>(Sessions.returnConfig.DadosApp);
@@ -206,13 +205,7 @@ namespace DexComanda.Operações
                     ReturnPadrao lRetorno = new ReturnPadrao();
                     lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
                 }
-
-
-
-
-
             }
-
             catch (Exception er)
             {
 
@@ -221,7 +214,6 @@ namespace DexComanda.Operações
         }
         private void CadastraPedidoMinimo()
         {
-
             RestClient client = new RestClient(iUrlWS);
             RestRequest request = new RestRequest("ws/pedido/minimo", Method.POST);
             request.AddParameter("token", iParamToken);

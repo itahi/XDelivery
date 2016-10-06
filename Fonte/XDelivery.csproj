@@ -471,19 +471,31 @@
       <DependentUpon>frmCadastrarStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="Push\OneSignal.cs" />
-    <Compile Include="Relatorios\Clientes\RelCreditoDebito.cs">
+    <Compile Include="Relatorios\Clientes\Crystal\RelDebitosGeral.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelDebitosGeral.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\frmDebitos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\frmDebitos.Designer.cs">
+      <DependentUpon>frmDebitos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\Crystal\RelCreditoDebito.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelCreditoDebito.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Relatorios\Clientes\RelHistoricoCliente_Epson.cs">
+    <Compile Include="Relatorios\Clientes\Crystal\RelHistoricoCliente_Epson.cs">
       <DependentUpon>RelHistoricoCliente_Epson.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Relatorios\Clientes\RelHistoricoCliente.cs">
+    <Compile Include="Relatorios\Clientes\Crystal\RelHistoricoCliente.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelHistoricoCliente.rpt</DependentUpon>
@@ -950,15 +962,22 @@
     <EmbeddedResource Include="Operações\Pedido\frmCadastrarStatus.resx">
       <DependentUpon>frmCadastrarStatus.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Clientes\RelCreditoDebito.rpt">
+    <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelDebitosGeral.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDebitosGeral.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Clientes\frmDebitos.resx">
+      <DependentUpon>frmDebitos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelCreditoDebito.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelCreditoDebito.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Clientes\RelHistoricoCliente_Epson.rpt">
+    <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelHistoricoCliente_Epson.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelHistoricoCliente_Epson.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Clientes\RelHistoricoCliente.rpt">
+    <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelHistoricoCliente.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelHistoricoCliente.cs</LastGenOutput>
     </EmbeddedResource>

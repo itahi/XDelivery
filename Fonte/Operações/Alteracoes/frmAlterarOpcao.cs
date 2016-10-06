@@ -34,14 +34,19 @@ namespace DexComanda.Operações.Alteracoes
         private void Filtrar(object sender, EventArgs e)
         {
             DataSet ds;
-            if (cbxOpcao.SelectedValue!=null)
+            if (cbxTipoOpcao.SelectedValue != "")
+            {
+                ds = con.RetornaOpcoesPortipo(int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
+                GridView.DataMember = "Opcao";
+            }
+            else
             {
                 ds = con.RetornaOpcoes(int.Parse(cbxOpcao.SelectedValue.ToString()));
-
-                GridView.DataSource = ds;
                 GridView.DataMember = "Produto_Opcao";
-                GridView.AutoGenerateColumns = true;
             }
+
+            GridView.AutoGenerateColumns = true;
+            GridView.DataSource = ds;
         }
 
         private void ExecutarAlteracao(object sender, EventArgs e)
@@ -50,13 +55,13 @@ namespace DexComanda.Operações.Alteracoes
             {
                 if (Utils.MessageBoxQuestion("Todos os registros os " + GridView.Rows.Count + " do Filtro abaixo serão alterados, deseja prosseguir?"))
                 {
-                    if (txtNovoPreco.Text=="0")
+                    if (txtNovoPreco.Text == "0")
                     {
                         if (!Utils.MessageBoxQuestion("Todos Produtos receberão o preço 0,00"))
                         {
                             return;
                         }
-                        
+
                     }
                     decimal dblNovoPreco;
                     Boolean boolAtivoSN = false;
@@ -65,7 +70,7 @@ namespace DexComanda.Operações.Alteracoes
                     for (int i = 0; i < GridView.Rows.Count; i++)
                     {
                         dblNovoPreco = decimal.Parse(txtNovoPreco.Text);
-                        boolAtivoSN= rbAtivo.Checked;
+                        boolAtivoSN = rbAtivo.Checked;
                         boolOnlineSN = rbOnline.Checked;
 
                         //Opcao opcao = new Opcao()
@@ -92,14 +97,14 @@ namespace DexComanda.Operações.Alteracoes
             }
             catch (Exception erro)
             {
-                MessageBox.Show("Não foi possivel executar a operação " + erro.Message);
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-           
+
         }
 
         private void BuscaOpcao(object sender, EventArgs e)
         {
-            Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcaoPorTipo",int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
+            Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcaoPorTipo", int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
         }
     }
 }
