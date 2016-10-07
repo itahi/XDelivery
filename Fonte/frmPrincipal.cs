@@ -10,6 +10,7 @@ using DexComanda.Operações.Financeiro;
 using DexComanda.Operações.Funções;
 using DexComanda.Push;
 using DexComanda.Relatorios;
+using DexComanda.Relatorios.Clientes;
 using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Relatorios.Gerenciais;
 using DexComanda.Relatorios.Impressao_Termica;
@@ -1760,6 +1761,12 @@ namespace DexComanda
         {
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
 
+        }
+
+        private void crediárioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmDebitos frm = new frmDebitos();
+            frm.Show();
         }
     }
 }

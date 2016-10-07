@@ -45,6 +45,7 @@ using DexComanda.Operações.Funções;
 using DexComanda.Relatorios.Fechamentos.Novos.Impressao_Termica;
 using System.Data.Common;
 using DexComanda.Relatorios.Gerenciais.Cristal;
+using DexComanda.Relatorios.Clientes.Crystal;
 
 namespace DexComanda
 {

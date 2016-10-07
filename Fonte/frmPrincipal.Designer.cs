@@ -147,6 +147,7 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
+            this.crediárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -370,7 +371,8 @@
             this.entregasPorMotoboyToolStripMenuItem,
             this.resumidoFormaDePagamentoToolStripMenuItem,
             this.ticketMédioToolStripMenuItem,
-            this.cancelamentosToolStripMenuItem});
+            this.cancelamentosToolStripMenuItem,
+            this.crediárioToolStripMenuItem});
             this.porPessoaToolStripMenuItem.Name = "porPessoaToolStripMenuItem";
             this.porPessoaToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.porPessoaToolStripMenuItem.Text = "Vendas";
@@ -1318,6 +1320,13 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
+            // crediárioToolStripMenuItem
+            // 
+            this.crediárioToolStripMenuItem.Name = "crediárioToolStripMenuItem";
+            this.crediárioToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
+            this.crediárioToolStripMenuItem.Text = "Crediário";
+            this.crediárioToolStripMenuItem.Click += new System.EventHandler(this.crediárioToolStripMenuItem_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1479,5 +1488,6 @@
         private System.Windows.Forms.ToolStripMenuItem entregasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem porRegiãoComTaxaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem porMotoboyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem crediárioToolStripMenuItem;
     }
 }
