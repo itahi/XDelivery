@@ -106,7 +106,7 @@ namespace DexComanda.Relatorios.Fechamentos.Novos {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_DataInicio {
+        public CrystalDecisions.Shared.IParameterField Parameter_DataI {
             get {
                 return this.DataDefinition.ParameterFields[0];
             }
@@ -114,7 +114,7 @@ namespace DexComanda.Relatorios.Fechamentos.Novos {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_DataFim {
+        public CrystalDecisions.Shared.IParameterField Parameter_DataF {
             get {
                 return this.DataDefinition.ParameterFields[1];
             }

@@ -635,6 +635,7 @@ namespace DexComanda
                 MenuItem CancPedido = new MenuItem(" 0 - Cancelar Pedidos");
                 MenuItem FinalizarPed = new MenuItem(" 1 - Finalizar Este Pedido?");
                 MenuItem FinalizaSelecionados = new MenuItem(" 2 - Finalizar Todos Selecionado?");
+                MenuItem InformaEntregador = new MenuItem(" 3 - Informar Entregador");
                 MenuItem ImprimeConferenciaMesa = new MenuItem(" Imprimir Conferencia desta Mesa");
                 MenuItem PedidoONline = new MenuItem(" X - Status Pedido");
 
@@ -664,6 +665,7 @@ namespace DexComanda
                 CancPedido.Click += CancelarPedidos;
                 FinalizarPed.Click += FinalizaCancelaPEdidos;
                 FinalizaSelecionados.Click += FinalizaTodos;
+                InformaEntregador.Click += SelecionaBoy;
                 //if (Sessions.retunrUsuario != null)
                 //{
                 //    FinalizaSelecionados.Enabled = Sessions.retunrUsuario.FinalizaPedidoSN;
@@ -674,6 +676,7 @@ namespace DexComanda
                 m.MenuItems.Add(CancPedido);
                 m.MenuItems.Add(FinalizarPed);
                 m.MenuItems.Add(FinalizaSelecionados);
+                m.MenuItems.Add(InformaEntregador);
                 m.MenuItems.Add(PedidoONline);
                 int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
                 m.Show(dgv, new Point(e.X, e.Y));
@@ -854,19 +857,33 @@ namespace DexComanda
                 ExecutaFinalizacao();
             }
         }
+
+        private void SelecionaBoy(object sender,EventArgs e)
+        {
+           int intCodPedido = int.Parse(pedidosGridView.Rows[rowIndex].Cells["Codigo"].Value.ToString());
+            InformaMotoboyPedido(intCodPedido);
+        }
         private void InformaMotoboyPedido(int iCodPedido)
         {
-            frmInformaMotoboy frm = new frmInformaMotoboy();
-            frm.ShowDialog();
-            if (frm.DialogResult == DialogResult.OK)
+            try
             {
-                InserirMotoboyPedido MotoBoy = new InserirMotoboyPedido()
+                frmInformaMotoboy frm = new frmInformaMotoboy();
+                frm.ShowDialog();
+                if (frm.DialogResult == DialogResult.OK)
                 {
-                    CodMotoBoy = frm.CodMotoboy,
-                    CodPedido = iCodPedido
-                };
-                con.Update("spInsereBoyPedido", MotoBoy);
+                    InserirMotoboyPedido MotoBoy = new InserirMotoboyPedido()
+                    {
+                        CodMotoBoy = frm.CodMotoboy,
+                        CodPedido = iCodPedido
+                    };
+                    con.Update("spInsereBoyPedido", MotoBoy);
+                }
             }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+           
         }
         public void LimpaCampos()
         {
@@ -1765,7 +1782,13 @@ namespace DexComanda
 
         private void crediárioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmDebitos frm = new frmDebitos();
+            frmDebitosPessoa frm = new frmDebitosPessoa();
+            frm.Show();
+        }
+
+        private void porMotoboyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReportEntregasMotoboy frm = new frmReportEntregasMotoboy();
             frm.Show();
         }
     }

@@ -320,7 +320,6 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmSincronizacao.r
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Funções.frmLiberação.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Pedido.frmAlterarStatusPedido.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Pedido.frmCadastrarStatus.resources
-D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Fechamentos.frmReportEntregasPorMotoboy.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Fechamentos.Novos.frmOpcoesProdutoVendidos.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Fechamentos.Novos.frmReportEntregasMotoboy.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Fechamentos.Novos.frmReportFechamentoResumido.resources
@@ -362,3 +361,4 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pedido.frmOpcaoRadio
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmPedidosCancelados.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmEntregasPorRegiao.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmDebitos.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmDebitosPessoa.resources

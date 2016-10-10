@@ -477,11 +477,23 @@
       <DependentUpon>RelDebitosGeral.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Clientes\Crystal\RelDebitosResumido.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelDebitosResumido.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Clientes\frmDebitos.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Relatorios\Clientes\frmDebitos.Designer.cs">
       <DependentUpon>frmDebitos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\frmDebitosPessoa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\frmDebitosPessoa.Designer.cs">
+      <DependentUpon>frmDebitosPessoa.cs</DependentUpon>
     </Compile>
     <Compile Include="Relatorios\Clientes\Crystal\RelCreditoDebito.cs">
       <AutoGen>True</AutoGen>
@@ -696,12 +708,6 @@
     <Compile Include="Relatorios\Clientes\frmReportPessoas.Designer.cs">
       <DependentUpon>frmReportPessoas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.Designer.cs">
-      <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
-    </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\frmOpcoesProdutoVendidos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -752,6 +758,12 @@
       <DependentUpon>RelEntregasMotoboy.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasResumido.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelEntregasResumido.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\RelFechamentoResumido.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -768,12 +780,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelOpcoesProdutoVendidospt.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RelEntregasPorMotoboy.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\frmReportProdutos.cs">
@@ -966,8 +972,15 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDebitosGeral.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelDebitosResumido.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDebitosResumido.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\frmDebitos.resx">
       <DependentUpon>frmDebitos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Clientes\frmDebitosPessoa.resx">
+      <DependentUpon>frmDebitosPessoa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelCreditoDebito.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -1017,9 +1030,6 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelFechamentoMesa_20.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Fechamentos\frmReportEntregasPorMotoboy.resx">
-      <DependentUpon>frmReportEntregasPorMotoboy.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmOpcoesProdutoVendidos.resx">
       <DependentUpon>frmOpcoesProdutoVendidos.cs</DependentUpon>
     </EmbeddedResource>
@@ -1049,6 +1059,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelEntregasMotoboy.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasResumido.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelEntregasResumido.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelFechamentoResumido.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelFechamentoResumido.cs</LastGenOutput>
@@ -1061,10 +1075,6 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelOpcoesProdutoVendidospt.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="Relatorios\Fechamentos\RelEntregasPorMotoboy.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelEntregasPorMotoboy.cs</LastGenOutput>
-    </Content>
     <EmbeddedResource Include="Relatorios\Fechamentos\RelFechamentoDetalhado.rdlc" />
     <EmbeddedResource Include="Cadastros\frmCadastrarEntregador.resx">
       <DependentUpon>frmCadastrarEntregador.cs</DependentUpon>

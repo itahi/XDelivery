@@ -59,6 +59,7 @@
             this.resumidoFormaDePagamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ticketMédioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cancelamentosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crediárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maisVendidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -147,7 +148,6 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.crediárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -412,6 +412,13 @@
             this.cancelamentosToolStripMenuItem.Text = "Cancelamentos";
             this.cancelamentosToolStripMenuItem.Click += new System.EventHandler(this.cancelamentosToolStripMenuItem_Click);
             // 
+            // crediárioToolStripMenuItem
+            // 
+            this.crediárioToolStripMenuItem.Name = "crediárioToolStripMenuItem";
+            this.crediárioToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
+            this.crediárioToolStripMenuItem.Text = "Crediário";
+            this.crediárioToolStripMenuItem.Click += new System.EventHandler(this.crediárioToolStripMenuItem_Click);
+            // 
             // diárioToolStripMenuItem
             // 
             this.diárioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -516,6 +523,7 @@
             this.porMotoboyToolStripMenuItem.Name = "porMotoboyToolStripMenuItem";
             this.porMotoboyToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
             this.porMotoboyToolStripMenuItem.Text = "Por Motoboy";
+            this.porMotoboyToolStripMenuItem.Click += new System.EventHandler(this.porMotoboyToolStripMenuItem_Click);
             // 
             // configuraçãoToolStripMenuItem
             // 
@@ -1319,13 +1327,6 @@
             this.AtualizaGrid.Enabled = true;
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
-            // 
-            // crediárioToolStripMenuItem
-            // 
-            this.crediárioToolStripMenuItem.Name = "crediárioToolStripMenuItem";
-            this.crediárioToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
-            this.crediárioToolStripMenuItem.Text = "Crediário";
-            this.crediárioToolStripMenuItem.Click += new System.EventHandler(this.crediárioToolStripMenuItem_Click);
             // 
             // frmPrincipal
             // 

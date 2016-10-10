@@ -13,16 +13,14 @@ using System.Windows.Forms;
 
 namespace DexComanda.Relatorios.Fechamentos.Novos
 {
-    public partial class frmReportEntregasMotoboy : Form
+    public partial class frmReportEntregasMotoboy: Form
     {
         public frmReportEntregasMotoboy()
         {
-            //dtInicio.Value = DateTime.Now.AddDays(-1);
-            //dtFim.Value = DateTime.Now;
             InitializeComponent();
         }
 
-        private void GerarReport(object sender, EventArgs e)
+        private void Filtrar(object sender, EventArgs e)
         {
             RelEntregasMotoboy report;
             try
@@ -47,22 +45,22 @@ namespace DexComanda.Relatorios.Fechamentos.Novos
                     crtableLogoninfo.ConnectionInfo = crConnectionInfo;
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
+                var dtInicio = Convert.ToDateTime(dtinicio.Value.ToShortDateString() + " 00:00:00");
+                var datFim = Convert.ToDateTime(dtFim.Value.ToShortDateString() + " 23:59:59");
 
-
-                report.SetParameterValue("@DataInicio", dtInicio.Value.ToShortDateString() + " 00:00:00");
-                report.SetParameterValue("@DataFim", dtFim.Value.ToShortDateString() + " 23:59:59");
+                report.SetParameterValue("@DataI", dtInicio);
+                report.SetParameterValue("@DataF", datFim);
                 if (report.Rows.Count == 0)
                 {
                     MessageBox.Show("Não há resultados com o filtro selecionado");
                     return;
                 }
                 crystalReportViewer1.ReportSource = report;
-               crystalReportViewer1.Refresh();
+                crystalReportViewer1.Refresh();
             }
-            catch (Exception ex)
+            catch (Exception erro)
             {
-
-                MessageBox.Show(ex.Message + "\n" + ex.InnerException.ToString());
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
     }
