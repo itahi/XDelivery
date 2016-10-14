@@ -853,6 +853,12 @@ namespace DexComanda
                                     item.CodProduto = int.Parse(this.txtCodProduto1.Text);
                                 }
 
+                                pedido.HorarioEntrega ="";
+                                if (cbxHorarioEntrega.Text != "")
+                                {
+                                    pedido.HorarioEntrega = cbxHorarioEntrega.Text;
+                                }
+
                                 item.DataAtualizacao = DateTime.Now;
 
                                 pedido.TotalPedido = pedido.TotalPedido + item.PrecoTotal;
@@ -1076,6 +1082,10 @@ namespace DexComanda
 
                             }
                             pedido.HorarioEntrega = "";
+                            if (cbxHorarioEntrega.Text!="")
+                            {
+                                pedido.HorarioEntrega = cbxHorarioEntrega.Text;
+                            }
                             con.Insert("spAdicionarPedido", pedido);
                             //  DataEntrada = DateTime.Now;
 
@@ -1188,6 +1198,10 @@ namespace DexComanda
                 return;
             }
             pedido.HorarioEntrega = "";
+            if (cbxHorarioEntrega.Text != "")
+            {
+                pedido.HorarioEntrega = cbxHorarioEntrega.Text;
+            }
             con.Update("spAlterarTotalPedido", pedido);
             // Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
         }
@@ -1522,6 +1536,11 @@ namespace DexComanda
                     else
                     {
                         pedido.NumeroMesa = "";
+                    }
+                    pedido.HorarioEntrega = "";
+                    if (cbxHorarioEntrega.Text != "")
+                    {
+                        pedido.HorarioEntrega = cbxHorarioEntrega.Text;
                     }
                     con.Delete("spExcluirItemPedido", itemPedido);
                     con.Update("spAlterarTotalPedido", pedido);
@@ -2218,6 +2237,8 @@ namespace DexComanda
             this.cbxVendedor = new System.Windows.Forms.ComboBox();
             this.txtCodVendedor = new System.Windows.Forms.TextBox();
             this.chkSabores = new System.Windows.Forms.CheckBox();
+            this.cbxHorarioEntrega = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -2408,7 +2429,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(749, 6);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -2883,9 +2904,9 @@ namespace DexComanda
             this.panel5.Controls.Add(this.grpBoxTamanhos);
             this.panel5.Controls.Add(this.label9);
             this.panel5.Controls.Add(this.chkListAdicionais);
-            this.panel5.Location = new System.Drawing.Point(671, 89);
+            this.panel5.Location = new System.Drawing.Point(671, 121);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(368, 467);
+            this.panel5.Size = new System.Drawing.Size(368, 435);
             this.panel5.TabIndex = 64;
             // 
             // grpBoxTamanhos
@@ -3076,14 +3097,14 @@ namespace DexComanda
             // 
             // chkListAdicionais
             // 
-            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chkListAdicionais.CheckOnClick = true;
             this.chkListAdicionais.FormattingEnabled = true;
             this.chkListAdicionais.Location = new System.Drawing.Point(3, 199);
             this.chkListAdicionais.Name = "chkListAdicionais";
-            this.chkListAdicionais.Size = new System.Drawing.Size(353, 259);
+            this.chkListAdicionais.Size = new System.Drawing.Size(353, 214);
             this.chkListAdicionais.TabIndex = 0;
             this.chkListAdicionais.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkListAdicionais_ItemCheck);
             // 
@@ -3133,12 +3154,35 @@ namespace DexComanda
             this.chkSabores.CheckedChanged += new System.EventHandler(this.chkSabores_CheckedChanged);
             this.chkSabores.CheckStateChanged += new System.EventHandler(this.chkSabores_CheckStateChanged);
             // 
+            // cbxHorarioEntrega
+            // 
+            this.cbxHorarioEntrega.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbxHorarioEntrega.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbxHorarioEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbxHorarioEntrega.FormattingEnabled = true;
+            this.cbxHorarioEntrega.Location = new System.Drawing.Point(757, 88);
+            this.cbxHorarioEntrega.Name = "cbxHorarioEntrega";
+            this.cbxHorarioEntrega.Size = new System.Drawing.Size(167, 26);
+            this.cbxHorarioEntrega.TabIndex = 71;
+            this.cbxHorarioEntrega.DropDown += new System.EventHandler(this.ListaHorarios);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(671, 96);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(81, 13);
+            this.label11.TabIndex = 72;
+            this.label11.Text = "Horário Entrega";
+            // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1051, 568);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.cbxHorarioEntrega);
             this.Controls.Add(this.chkSabores);
             this.Controls.Add(this.grpVendedor);
             this.Controls.Add(this.panel5);
@@ -3291,7 +3335,11 @@ namespace DexComanda
                 {
                     pedi.CodUsuario = 0;
                 }
-
+                pedido.HorarioEntrega = "";
+                if (cbxHorarioEntrega.Text != "")
+                {
+                    pedido.HorarioEntrega = cbxHorarioEntrega.Text;
+                }
                 con.Update("spAlterarTotalPedido", pedi);
 
             }
@@ -3986,6 +4034,18 @@ namespace DexComanda
                 CalcularTotalItem();
             }
 
+        }
+
+        private void ListaHorarios(object sender, EventArgs e)
+        {
+            try
+            {
+                Utils.MontaCombox(cbxHorarioEntrega, "Horario_Entrega", "Codigo", "Empresa_HorarioEntrega", "spObterEmpresa_HorarioEntrega");
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
         }
 
         private void cbxSabor_SelectedIndexChanged(object sender, EventArgs e)

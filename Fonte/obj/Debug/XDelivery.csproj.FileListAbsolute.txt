@@ -360,5 +360,4 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Empresa.frmHorariosE
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pedido.frmOpcaoRadio.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmPedidosCancelados.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmEntregasPorRegiao.resources
-D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmDebitos.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmDebitosPessoa.resources

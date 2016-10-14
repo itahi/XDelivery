@@ -87,5 +87,7 @@
         private System.Windows.Forms.ComboBox cbxVendedor;
         private System.Windows.Forms.TextBox txtCodVendedor;
         private System.Windows.Forms.CheckBox chkSabores;
+        private System.Windows.Forms.ComboBox cbxHorarioEntrega;
+        private System.Windows.Forms.Label label11;
     }
 }

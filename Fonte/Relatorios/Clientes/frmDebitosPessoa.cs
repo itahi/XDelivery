@@ -33,8 +33,8 @@ namespace DexComanda.Relatorios.Clientes
             report.Load(Directory.GetCurrentDirectory() + @"\RelDebitosGeral.rpt");
             crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
             crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-            crConnectionInfo.UserID = "dex";
-            crConnectionInfo.Password = "1234";
+            crConnectionInfo.UserID = "sa";
+            crConnectionInfo.Password = "1001";
 
             CrTables = report.Database.Tables;
             foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)

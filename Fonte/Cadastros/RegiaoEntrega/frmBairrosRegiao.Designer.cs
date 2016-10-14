@@ -159,7 +159,7 @@
             // chkAtivo
             // 
             this.chkAtivo.AutoSize = true;
-            this.chkAtivo.Location = new System.Drawing.Point(90, 52);
+            this.chkAtivo.Location = new System.Drawing.Point(193, 61);
             this.chkAtivo.Name = "chkAtivo";
             this.chkAtivo.Size = new System.Drawing.Size(71, 17);
             this.chkAtivo.TabIndex = 36;
@@ -169,7 +169,7 @@
             // chkOnlineSN
             // 
             this.chkOnlineSN.AutoSize = true;
-            this.chkOnlineSN.Location = new System.Drawing.Point(90, 75);
+            this.chkOnlineSN.Location = new System.Drawing.Point(193, 84);
             this.chkOnlineSN.Name = "chkOnlineSN";
             this.chkOnlineSN.Size = new System.Drawing.Size(77, 17);
             this.chkOnlineSN.TabIndex = 37;

@@ -345,14 +345,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DexComanda.exe" size="5637120">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DexComanda.exe" size="5638144">
       <assemblyIdentity name="DexComanda" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>wkXFZnDQ1qek5eA/+nYGqjfJmfy2KzGwBTJdQaglX2M=</dsig:DigestValue>
+        <dsig:DigestValue>odERtaQ/WTyVnHw9NyotLFYMmfXwCsiQbu9S0HhMkYY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

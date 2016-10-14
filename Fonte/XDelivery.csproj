@@ -483,12 +483,6 @@
       <DependentUpon>RelDebitosResumido.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Relatorios\Clientes\frmDebitos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Relatorios\Clientes\frmDebitos.Designer.cs">
-      <DependentUpon>frmDebitos.cs</DependentUpon>
-    </Compile>
     <Compile Include="Relatorios\Clientes\frmDebitosPessoa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -975,9 +969,6 @@
     <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelDebitosResumido.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDebitosResumido.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Clientes\frmDebitos.resx">
-      <DependentUpon>frmDebitos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\frmDebitosPessoa.resx">
       <DependentUpon>frmDebitosPessoa.cs</DependentUpon>

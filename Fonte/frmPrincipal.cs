@@ -1076,7 +1076,7 @@ namespace DexComanda
                 else
                 {
                     decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, con);
-                    frmCadastrarPedido frm = new frmCadastrarPedido(false, "", "0,00", "0,00", TaxaServico, false, DateTime.Now, 0, CodPessoa,
+                    frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", "0,00", "0,00", TaxaServico, false, DateTime.Now, 0, CodPessoa,
                                                                         "", "", "", "", null, 0.00M);
                     frm.ShowDialog();
                 }

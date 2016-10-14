@@ -1257,7 +1257,8 @@ namespace DexComanda
                 if (spName == "spAlterarTotalPedido")
                 {
                    
-                    if (p.Name.Equals("CodUsuario")|| p.Name.Equals("Codigo") || p.Name.Equals("TotalPedido") || p.Name.Equals("Tipo") || p.Name.Equals("NumeroMesa"))
+                    if (p.Name.Equals("CodUsuario")|| p.Name.Equals("Codigo") || p.Name.Equals("TotalPedido")
+                        || p.Name.Equals("Tipo") || p.Name.Equals("NumeroMesa") || p.Name.Equals("HorarioEntrega"))
                     {
                         if (p.Name.ToString() == "CodUsuario" && p.GetValue(obj).ToString() == "0")
                         {
