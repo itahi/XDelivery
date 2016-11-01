@@ -48,7 +48,7 @@ namespace DexComanda.Cadastros
                     RegiaoEntrega_Bairros reg = new RegiaoEntrega_Bairros()
                     {
                         CodRegiao = int.Parse(cbxRegiao.SelectedValue.ToString()),
-                        CEP = txtCEP.Text,
+                        CEP = txtCEP.Text.Replace("-",""),
                         Nome = txtBairro.Text,
                         DataCadastro = DateTime.Now,
                         AtivoSN = chkAtivo.Checked,
@@ -61,6 +61,7 @@ namespace DexComanda.Cadastros
                     ListaBairrosPorRegiao(int.Parse(cbxRegiao.SelectedValue.ToString()));
                     txtBairro.Text = "";
                     txtCEP.Text = "";
+                    txtCEP.Focus();
                 }
                 catch (Exception erro)
                 {
@@ -84,16 +85,18 @@ namespace DexComanda.Cadastros
         private void ListaRegiao()
         {
             Utils.PopularGrid("RegiaoEntrega_Bairros", RegioesGridView);
+            Utils.LimpaForm(this);
         }
 
         private void txtCEP_KeyDown(object sender, KeyEventArgs e)
         {
-            if (txtCEP.Text.Length == 8 && e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
-                DataSet dsCEp = con.RetornaCEPporBairro(txtCEP.Text, false);
+                DataSet dsCEp = con.RetornaCEPporBairro(txtCEP.Text.Replace("-",""), false);
                 if (dsCEp.Tables[0].Rows.Count > 0)
                 {
-                    txtBairro.Text = con.RetornaCEPporBairro(txtCEP.Text, false).Tables[0].Rows[0].ItemArray.GetValue(1).ToString();
+                    txtBairro.Text = con.RetornaCEPporBairro(txtCEP.Text.Replace("-",""), false).Tables[0].Rows[0].ItemArray.GetValue(1).ToString();
+                    btnAdicionar.Focus();
                 }
                 else
                 {
@@ -111,7 +114,7 @@ namespace DexComanda.Cadastros
             {
                 if (RegioesGridView.SelectedRows.Count > 0)
                 {
-                    DataSet dsRegiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", int.Parse(this.RegioesGridView.SelectedRows[rowIndex].Cells[0].Value.ToString()));
+                    DataSet dsRegiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", int.Parse(this.RegioesGridView.CurrentRow.Cells["CodRegiao"].Value.ToString()));
                     if (dsRegiao.Tables[0].Rows.Count > 0)
                     {
                         txtCEP.Enabled = false;
@@ -181,7 +184,7 @@ namespace DexComanda.Cadastros
                 }
 
                 con.Update("spAlterarBairrosRegiao", reg);
-                con.AtualizaDataSincronismo("RegiaoEntrega_Bairros", reg.CodRegiao, "DataAlteracao");
+                con.AtualizaDataSincronismo("RegiaoEntrega_Bairros", reg.CodRegiao, "DataCadastro","CodRegiao");
                 Utils.ControlaEventos("Alterar", this.Name);
                 txtCEP.Enabled = true;
                 txtBairro.Enabled = true;
@@ -204,10 +207,9 @@ namespace DexComanda.Cadastros
             {
                 rowIndex = e.RowIndex;
             }
-            catch (Exception)
+            catch (Exception erro)
             {
-
-                throw;
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
                     
            

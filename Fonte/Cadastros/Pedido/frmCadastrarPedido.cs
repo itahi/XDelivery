@@ -144,10 +144,11 @@ namespace DexComanda
                     lblTroco.Text = "0,00";
                     TrocoPagar = "0,00";
                 }
-
-                cbxListaMesas.Text = iNumeMesa;
+               // CarregaMesas();
+               cbxListaMesas.Text = iNumeMesa;
                 gNUmeroMesa = iNumeMesa;
                 cbxTipoPedido.Text = TipoPedido;
+               
                 cbxListaMesas.Items.Add(MesaBalcao);
                 Utils.MontaCombox(cbxVendedor, "Nome", "Codigo", "Usuario", "spObterUsuarioPorCodigo", iCodVendedor);
 
@@ -1020,8 +1021,7 @@ namespace DexComanda
                             }
 
                             // Validar o Desconto Máximo Por Usuario
-
-                            if (txtDesconto.Text!= "0,00")
+                            if (txtDesconto.Text!= "0,00"||txtDesconto.Text!="")
                             {
                                 if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "DescontoPedidoSN"))
                                 {
@@ -1035,7 +1035,7 @@ namespace DexComanda
                                 else
                                 {
                                     MessageBox.Show("Desconto máximo superado ");
-                                    pedido.DescontoValor = decimal.Parse("0.00");
+                                    pedido.DescontoValor = decimal.Parse("0,00");
                                     return;
                                 }
                               
@@ -1190,6 +1190,7 @@ namespace DexComanda
                 pedido.NumeroMesa = "";
             }
             pedido.CodUsuario = RetornaCodVendedor();
+            pedido.DescontoValor = decimal.Parse(txtDesconto.Text);
             if (Sessions.returnConfig.ExigeVendedorSN && pedido.CodUsuario == 0)
             {
                 MessageBox.Show("Selecione o vendedor/atendente para continuar");
@@ -1341,7 +1342,7 @@ namespace DexComanda
                 int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
 
                 m.Show(dgv, new Point(e.X, e.Y));
-                AtualizaTroco();
+               
             }
         }
         private void AlterarItemPedido(object sender, EventArgs e)
@@ -1434,6 +1435,7 @@ namespace DexComanda
                         }
 
                         this.lblTroco.Text = "R$ " + TrocoPagar;
+                        AtualizaTroco();
                         AtualizaTotalPedido();
                         FinalizaPedido finaliza = new FinalizaPedido()
                         {
@@ -1545,7 +1547,8 @@ namespace DexComanda
                     con.Delete("spExcluirItemPedido", itemPedido);
                     con.Update("spAlterarTotalPedido", pedido);
                     Utils.ControlaEventos("Excluir", this.Name);
-                    MessageBox.Show("Item excluído com sucesso.", "DexPedido");
+                    AtualizaTroco();
+                    MessageBox.Show("Item excluído com sucesso.", "xSistemas");
                 }
                 else
                 {
@@ -1570,7 +1573,7 @@ namespace DexComanda
             {
                 ValorTotal += item.PrecoTotal;
             }
-
+            
 
             DataTable dt = new DataTable();
             dt.Columns.Add(new DataColumn("Codigo", typeof(string)));
@@ -1601,7 +1604,7 @@ namespace DexComanda
 
             this.gridViewItemsPedido.AutoGenerateColumns = true;
             this.gridViewItemsPedido.DataSource = dt;
-            this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + Convert.ToDecimal(lblEntrega.Text.Replace("R$", "")));
+            this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal-decimal.Parse(txtDesconto.Text) + Convert.ToDecimal(lblEntrega.Text.Replace("R$", "")));
             this.lblTroco.Text = Convert.ToString(lblTroco.Text);
         }
         private void prepareToPrint()
@@ -3102,8 +3105,10 @@ namespace DexComanda
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chkListAdicionais.CheckOnClick = true;
             this.chkListAdicionais.FormattingEnabled = true;
+            this.chkListAdicionais.HorizontalScrollbar = true;
             this.chkListAdicionais.Location = new System.Drawing.Point(3, 199);
             this.chkListAdicionais.Name = "chkListAdicionais";
+            this.chkListAdicionais.ScrollAlwaysVisible = true;
             this.chkListAdicionais.Size = new System.Drawing.Size(353, 214);
             this.chkListAdicionais.TabIndex = 0;
             this.chkListAdicionais.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkListAdicionais_ItemCheck);
@@ -3288,6 +3293,7 @@ namespace DexComanda
 
             if (cbxTipoPedido.Text == "1 - Mesa")
             {
+                CarregaMesas();
                 cbxListaMesas.Visible = true;
                 cbxListaMesas.Focus();
             }
@@ -3335,7 +3341,8 @@ namespace DexComanda
                 {
                     pedi.CodUsuario = 0;
                 }
-                pedido.HorarioEntrega = "";
+                pedi.HorarioEntrega = "";
+                pedi.DescontoValor = decimal.Parse(txtDesconto.Text);
                 if (cbxHorarioEntrega.Text != "")
                 {
                     pedido.HorarioEntrega = cbxHorarioEntrega.Text;
@@ -3435,9 +3442,9 @@ namespace DexComanda
                         TotalPedido = TotalPedido - decimal.Parse(txtDesconto.Text);
                         txtDesconto.Text = string.Format("{0:#,##0.00}", decimal.Parse(txtDesconto.Text));
                         lbTotal.Text = "R$" + TotalPedido.ToString();
-                        gridViewItemsPedido.Rows[0].Cells[4].Value = decimal.Parse(gridViewItemsPedido.Rows[0].Cells[4].Value.ToString().Replace("R$", "")) - decimal.Parse(txtDesconto.Text);
-
-                        gridViewItemsPedido.Rows[0].Cells[5].Value = decimal.Parse(gridViewItemsPedido.Rows[0].Cells[4].Value.ToString().Replace("R$", "")) * decimal.Parse(gridViewItemsPedido.Rows[0].Cells[3].Value.ToString());
+                        
+                        //gridViewItemsPedido.Rows[0].Cells[4].Value = decimal.Parse(gridViewItemsPedido.Rows[0].Cells[4].Value.ToString().Replace("R$", "")) - decimal.Parse(txtDesconto.Text);
+                        //gridViewItemsPedido.Rows[0].Cells[5].Value = decimal.Parse(gridViewItemsPedido.Rows[0].Cells[4].Value.ToString().Replace("R$", "")) * decimal.Parse(gridViewItemsPedido.Rows[0].Cells[3].Value.ToString());
 
                         AtualizaTroco();
                         AtualizaTotalPedido();
@@ -3884,7 +3891,7 @@ namespace DexComanda
                     frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
                                                                       dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
-                                                                  , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString());
+                                                                  , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(), dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString());
 
                 }
             }

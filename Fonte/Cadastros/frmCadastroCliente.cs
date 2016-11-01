@@ -56,7 +56,7 @@ namespace DexComanda
         public frmCadastroCliente(int iCodPessoa, string iNomeCliente, string iTelefone, string iTelefone2,
                               string iCEP, string iEndereco, string inumero, string iBairro, string iCidade,
                               string iEstado, string iPontoReferencia, string iObservacao, int iCodRegiao,
-                              string iDataCadastro, string iDataNascimento)
+                              string iDataCadastro, string iDataNascimento,string iUserID,string iPJPF)
         {
             InitializeComponent();
             
@@ -74,6 +74,8 @@ namespace DexComanda
             txtObservacaoCliente.Text = iObservacao;
             txtDataCadastro.Text = iDataCadastro;
             txtDataNascimento.Text = iDataNascimento;
+            txtUserID.Text = iUserID;
+            txtPJPF.Text = iPJPF;   
             CarregaRegiao(iCodRegiao);
 
             this.btnAdicionarCliente.Text = "Alterar [F12]";
@@ -241,7 +243,8 @@ namespace DexComanda
                     user_id = "",
                     DataCadastro = DateTime.Now,
                     Sexo ="1",
-                    DDD =""
+                    DDD ="",
+                    PFPJ ='F'
 
                 };
                 if (cbxRegiao.SelectedValue.ToString()!="")
@@ -372,7 +375,8 @@ namespace DexComanda
                     TicketFidelidade = 0,
                     CodRegiao = mCodRegiao,
                     DataCadastro = Convert.ToDateTime(txtDataCadastro.Text),
-                    user_id = "",
+                    user_id = txtUserID.Text,
+                    PFPJ = char.Parse(txtPJPF.Text),
                     Sexo = "1",
                     DDD = ""
                 };
@@ -800,14 +804,14 @@ namespace DexComanda
         }
         private void CalculaValores()
         {
-            double dblTotalCredito = 0.00;
-            double dblTotalDebito = 0.00;
+            Decimal dblTotalCredito = 0.00M;
+            Decimal dblTotalDebito = 0.00M;
             for (int i = 0; i < HistoricoGridView.Rows.Count; i++)
             {
 
-                dblTotalDebito = double.Parse(HistoricoGridView.Rows[i].Cells["Valor"].Value.ToString())+ dblTotalDebito;
+                dblTotalDebito = decimal.Parse(HistoricoGridView.Rows[i].Cells["Valor"].Value.ToString())+ dblTotalDebito;
             }
-            lblTotal.Text = Convert.ToString(dblTotalDebito);
+            lblTotal.Text = dblTotalDebito.ToString();
             txtValor.Text = txtHistorico.Text = "";
         }
 
@@ -829,16 +833,7 @@ namespace DexComanda
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            if (Sessions.returnEmpresa.CNPJ== "13004606798")
-            {
-                Utils.ImprimirHistoricoCliente(codigoClienteParaAlterar, dataInicio.Value, dataFim.Value);
-
-            }
-            else
-            {
-                Utils.ImprimirHistoricoCliente_Epson(codigoClienteParaAlterar, dataInicio.Value, dataFim.Value);
-            }
-            //  frm.ShowDialog();
+            Utils.ImprimirHistoricoCliente(codigoClienteParaAlterar, dataInicio.Value, dataFim.Value);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -901,7 +896,7 @@ namespace DexComanda
                     iValue = iTrocoPara - iTotalPedido;
                 }
 
-                Utils.ImpressaoEntreganova(codPedido, iValue, dtPedido.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString());
+                Utils.ImpressaoEntreganova(codPedido, iValue, dtPedido.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString(),false,1);
             }
             
         }

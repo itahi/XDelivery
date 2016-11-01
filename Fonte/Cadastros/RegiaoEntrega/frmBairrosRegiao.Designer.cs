@@ -67,7 +67,7 @@
             // txtCEP
             // 
             this.txtCEP.Location = new System.Drawing.Point(4, 65);
-            this.txtCEP.MaxLength = 8;
+            this.txtCEP.MaxLength = 9;
             this.txtCEP.Name = "txtCEP";
             this.txtCEP.Size = new System.Drawing.Size(80, 20);
             this.txtCEP.TabIndex = 2;

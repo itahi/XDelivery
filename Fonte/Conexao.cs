@@ -361,7 +361,7 @@ namespace DexComanda
                                   " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
                                   " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
                                   "  where Prod.CodProduto = @CodProduto" +
-                                  " order by PoT.OrdenExibicao,Prod.Preco";
+                                  " order by PoT.OrdenExibicao,Op.Nome";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@CodProduto", iDProduto);
@@ -759,7 +759,6 @@ namespace DexComanda
             {
                 lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate()";
             }
-            // and AtivoSN=1";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -1050,7 +1049,7 @@ namespace DexComanda
                     {
                         if (!propriedade.Name.Equals("cod"))
                         {
-                            if (propriedade.Name.ToString() == "CodFamilia" && propriedade.GetValue(obj).ToString() == "0")
+                            if ( (propriedade.Name.ToString()== "CodigoPersonalizado" || propriedade.Name.ToString() == "CodFamilia" )&& propriedade.GetValue(obj).ToString() == "0")
                             {
                                 command.Parameters.AddWithValue("@" + propriedade.Name, DBNull.Value);
                             }
@@ -1258,7 +1257,8 @@ namespace DexComanda
                 {
                    
                     if (p.Name.Equals("CodUsuario")|| p.Name.Equals("Codigo") || p.Name.Equals("TotalPedido")
-                        || p.Name.Equals("Tipo") || p.Name.Equals("NumeroMesa") || p.Name.Equals("HorarioEntrega"))
+                        || p.Name.Equals("Tipo") || p.Name.Equals("NumeroMesa") || p.Name.Equals("HorarioEntrega")
+                        || p.Name.Equals("DescontoValor"))
                     {
                         if (p.Name.ToString() == "CodUsuario" && p.GetValue(obj).ToString() == "0")
                         {

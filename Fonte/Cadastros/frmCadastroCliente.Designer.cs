@@ -101,6 +101,8 @@
             this.btnConsultar = new System.Windows.Forms.Button();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
+            this.txtUserID = new System.Windows.Forms.TextBox();
+            this.txtPJPF = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tbPrincipal.SuspendLayout();
             this.tbCreditoDebito.SuspendLayout();
@@ -125,6 +127,8 @@
             // 
             // tbPrincipal
             // 
+            this.tbPrincipal.Controls.Add(this.txtPJPF);
+            this.tbPrincipal.Controls.Add(this.txtUserID);
             this.tbPrincipal.Controls.Add(this.btnAlteraRegiao);
             this.tbPrincipal.Controls.Add(this.label16);
             this.tbPrincipal.Controls.Add(this.txtTaxaEntrega);
@@ -882,6 +886,26 @@
             this.dtInicio.Size = new System.Drawing.Size(82, 20);
             this.dtInicio.TabIndex = 0;
             // 
+            // txtUserID
+            // 
+            this.txtUserID.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUserID.Location = new System.Drawing.Point(120, 344);
+            this.txtUserID.MaxLength = 8;
+            this.txtUserID.Name = "txtUserID";
+            this.txtUserID.Size = new System.Drawing.Size(133, 29);
+            this.txtUserID.TabIndex = 59;
+            this.txtUserID.Visible = false;
+            // 
+            // txtPJPF
+            // 
+            this.txtPJPF.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPJPF.Location = new System.Drawing.Point(272, 344);
+            this.txtPJPF.MaxLength = 8;
+            this.txtPJPF.Name = "txtPJPF";
+            this.txtPJPF.Size = new System.Drawing.Size(60, 29);
+            this.txtPJPF.TabIndex = 60;
+            this.txtPJPF.Visible = false;
+            // 
             // frmCadastroCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -988,5 +1012,7 @@
         private System.Windows.Forms.DateTimePicker dataInicio;
         private System.Windows.Forms.Button btnImprimir;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox txtUserID;
+        private System.Windows.Forms.TextBox txtPJPF;
     }
 }

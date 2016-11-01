@@ -115,13 +115,13 @@ namespace DexComanda.Cadastros.Produto
             {
                 codigoAlterarDeletar = int.Parse(this.OpcaoGridView.Rows[rowIndex].Cells[0].Value.ToString());
 
-                DataSet ds = con.SelectRegistroPorCodigo("Opcao", "spObterOpcaoPorCodigo", codigoAlterarDeletar);
+                //DataSet ds = con.SelectRegistroPorCodigo("Opcao", "spObterOpcaoPorCodigo", codigoAlterarDeletar);
 
-                RetonaTipo(ds.Tables[0].Rows[0].Field<int>("Tipo"));
-                txtNome.Text = ds.Tables[0].Rows[0].Field<string>("Nome");
-                chkAtivoSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("AtivoSN");
-                chkOnlineSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("OnlineSN");
-                txtSinalOpcao.Text = ds.Tables[0].Rows[0].Field<string>("SinalOpcao");
+                RetonaTipo(int.Parse(OpcaoGridView.Rows[rowIndex].Cells["Tipo"].Value.ToString()));
+                txtNome.Text = this.OpcaoGridView.Rows[rowIndex].Cells["Nome"].Value.ToString();
+                chkAtivoSN.Checked = bool.Parse(OpcaoGridView.Rows[rowIndex].Cells[3].Value.ToString());
+                chkOnlineSN.Checked = bool.Parse(OpcaoGridView.Rows[rowIndex].Cells[4].Value.ToString());
+                txtSinalOpcao.Text = this.OpcaoGridView.Rows[rowIndex].Cells[5].Value.ToString();
 
                 this.btnAdicionar.Text = "Salvar [F12]";
                 this.btnAdicionar.Click += new System.EventHandler(this.Salvar);

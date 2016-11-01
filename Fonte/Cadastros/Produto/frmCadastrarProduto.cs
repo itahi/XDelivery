@@ -20,7 +20,7 @@ namespace DexComanda
         private int rowIndex;
         int codigoOpcao;
         int codTipo;
-
+        private string strNomeProd = "";
         private string intCodGrupo;
         private Produto produto;
         private int codigoProdutoParaAlterar;
@@ -39,7 +39,7 @@ namespace DexComanda
 
         }
         public frmCadastrarProduto(int CodProduto, string iNomeProduto, string iCodGrupo, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
-                                   decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo, DateTime idtFimPromo,bool iAtivoSN)
+                                   decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo, DateTime idtFimPromo, bool iAtivoSN)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace DexComanda
                     chkDomingo.Checked = true;
                 }
 
-               
+
                 MontaListPrecos(iDiasPromocao);
                 nomeProdutoTextBox.Text = iNomeProduto;
                 precoProdutoTextBox.Text = iPreco.ToString();
@@ -94,7 +94,7 @@ namespace DexComanda
                 txtcaminhoImage.Text = iUrlImagem;
                 dtInicio.Value = idtInicioPromo;
                 dtFim.Value = idtFimPromo;
-           //     this.btnDoProduto.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
+                //     this.btnDoProduto.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
                 this.btnDoProduto.Text = "Alterar [F12]";
                 this.btnDoProduto.Click -= AdicionarProduto;
                 this.btnDoProduto.Click += AlterarProduto;
@@ -159,14 +159,14 @@ namespace DexComanda
         private List<PrecoDiaProduto> RetornaDiasMarcados()
         {
             listPrecos = new List<PrecoDiaProduto>();
-           // var precosDia = new PrecoDiaProduto();
+            // var precosDia = new PrecoDiaProduto();
             foreach (System.Windows.Forms.Control TEXT in grpPrecosDia.Controls)
             {
                 //Loop through all controls 
                 if (object.ReferenceEquals(TEXT.GetType(), typeof(System.Windows.Forms.TextBox)))
                 {
                     //Check to see if it's a textbox 
-                    if (((System.Windows.Forms.TextBox)TEXT).Text!="")
+                    if (((System.Windows.Forms.TextBox)TEXT).Text != "")
                     {
                         var precosDia = new PrecoDiaProduto()
                         {
@@ -177,12 +177,12 @@ namespace DexComanda
 
                         listPrecos.Add(precosDia);
                     }
-                   
+
                     //If it is then set the text to String.Empty (empty textbox) 
                 }
-                
+
             }
-           
+
             return listPrecos;
         }
         private void MontaListPrecos(string ivalor)
@@ -190,12 +190,12 @@ namespace DexComanda
             try
             {
                 List<PrecoDiaProduto> pr = new List<PrecoDiaProduto>();
-                if (ivalor=="")
+                if (ivalor == "")
                 {
                     return;
                 }
                 pr = Utils.DeserializaObjeto(ivalor);
-                if (pr.Count>1)
+                if (pr.Count > 1)
                 {
                     foreach (var item in pr)
                     {
@@ -212,21 +212,21 @@ namespace DexComanda
                         }
                     }
                 }
-                
+
             }
             catch (Exception erro)
             {
 
                 MessageBox.Show(erro.Message);
             }
-            
-            
+
+
         }
 
         private void frmCadastrarProduto_Load(object sender, EventArgs e)
         {
             con = new Conexao();
-           
+
             btnEditar.Enabled = codigoProdutoParaAlterar != 0;
             DiasSelecionados = new List<string>();
             tabPage2.IsAccessible = btnDoProduto.Text == "Alterar [F12]";
@@ -242,7 +242,7 @@ namespace DexComanda
 
                 codigoProdutoParaAlterar = produto.Codigo;
                 this.nomeProdutoTextBox.Text = produto.Nome;
-              //  MontaListPrecos(produto.DiaSemana);
+                //  MontaListPrecos(produto.DiaSemana);
                 cbxGrupoProduto.ValueMember = produto.CodGrupo.ToString();
                 this.cbxGrupoProduto.Text = produto.GrupoProduto;
                 this.precoProdutoTextBox.Text = produto.Preco.ToString();
@@ -251,12 +251,31 @@ namespace DexComanda
             }
 
         }
+        private bool ValidaCodigoPersonalizado(int iCodigo)
+        {
+            Boolean retur = false;
+            DataSet dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoCodigoInterno", iCodigo);
+            if (dsProduto.Tables[0].Rows.Count>0)
+            {
+                retur = true;
+                strNomeProd = dsProduto.Tables[0].Rows[0].Field<string>("NomeProduto");
+            }
 
+            return retur;
+        }
 
         private void AdicionarProduto(object sender, EventArgs e)
         {
             try
             {
+                if (txtCodInterno.Text!="0" && txtCodInterno.Text!="")
+                {
+                    if (ValidaCodigoPersonalizado(int.Parse(txtCodInterno.Text)))
+                    {
+                        MessageBox.Show("Código já esta sendo usado no produto " + strNomeProd);
+                        return;
+                    }
+                }
                 
                 if (nomeProdutoTextBox.Text.Trim() == "" || precoProdutoTextBox.Text.Trim() == "" || cbxGrupoProduto.Text.Trim() == "")
                 {
@@ -276,9 +295,17 @@ namespace DexComanda
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                     DataAlteracao = DateTime.Now,
-                    
+
                 };
                 produto.UrlImagem = "";
+                if (txtCodInterno.Text!="0")
+                {
+                    produto.CodigoPersonalizado = txtCodInterno.Text;
+                }
+                else
+                {
+                    produto.CodigoPersonalizado ="0";
+                }
                 if (txtcaminhoImage.Text.Trim() != "")
                 {
                     produto.UrlImagem = txtcaminhoImage.Text;
@@ -312,9 +339,9 @@ namespace DexComanda
                 // this_FormClosing();
                 MessageBox.Show("Produto cadastrado com sucesso.");
                 SalvarAdicionais(con.getLastCodigo());
-             
+
                 Utils.ControlaEventos("Inserir", this.Name);
-                
+
 
             }
             catch (Exception errro)
@@ -383,9 +410,18 @@ namespace DexComanda
         {
             try
             {
+                
                 if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AlteraProdutosSN"))
                 {
                     return;
+                }
+                if (txtCodInterno.Text != "0" && txtCodInterno.Text != "")
+                {
+                    if (ValidaCodigoPersonalizado(int.Parse(txtCodInterno.Text)))
+                    {
+                        MessageBox.Show("Código já esta sendo usado no produto " + strNomeProd);
+                        return;
+                    }
                 }
                 if (nomeProdutoTextBox.Text.Trim() == "" || precoProdutoTextBox.Text.Trim() == "" || cbxGrupoProduto.Text.Trim() == "")
                 {
@@ -398,7 +434,6 @@ namespace DexComanda
                     Nome = nomeProdutoTextBox.Text,
                     Descricao = descricaoProdutoTextBox.Text,
                     Preco = Convert.ToDecimal(this.precoProdutoTextBox.Text.Replace(".", ",")),
-
                     GrupoProduto = cbxGrupoProduto.Text,
                     AtivoSN = chkAtivo.Checked,
                     OnlineSN = chkOnline.Checked,
@@ -406,6 +441,11 @@ namespace DexComanda
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                 };
+                produto.CodigoPersonalizado = "0";
+                if (txtCodInterno.Text!=""&& txtCodInterno.Text!="0")
+                {
+                    produto.CodigoPersonalizado = txtCodInterno.Text;
+                }
                 if (cbxGrupoProduto.SelectedValue != null)
                 {
                     produto.CodGrupo = int.Parse(cbxGrupoProduto.SelectedValue.ToString());
@@ -535,7 +575,7 @@ namespace DexComanda
 
         private void ListaOpcao(object sender, EventArgs e)
         {
-            if (cbxTipoOpcao.SelectedValue.ToString()!="")
+            if (cbxTipoOpcao.SelectedValue.ToString() != "")
             {
                 Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcaoPorTipo", int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
             }
@@ -544,7 +584,7 @@ namespace DexComanda
                 Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcao");
             }
 
-           
+
 
             //this.cbxOpcao.DataSource = con.SelectAll("Opcao", "spObterOpcao").Tables["Opcao"];
             //this.cbxOpcao.DisplayMember = "Nome";
@@ -568,7 +608,7 @@ namespace DexComanda
                 int iCountLinhas = AdicionaisGridView.Rows.Count;
                 if (codigoProdutoParaAlterar != 0)
                 {
-                    if (txtPrecoOpcao.Text.Trim() != "" && cbxTipoOpcao.SelectedValue.ToString()!=""
+                    if (txtPrecoOpcao.Text.Trim() != "" && cbxTipoOpcao.SelectedValue.ToString() != ""
                         && cbxOpcao.SelectedValue.ToString() != "")
                     {
                         Produto_Opcao prodOpcao = new Produto_Opcao()
@@ -605,7 +645,7 @@ namespace DexComanda
                     AdicionaisGridView.Rows[iCountLinhas].Cells["CodOpcao"].Value = int.Parse(cbxOpcao.SelectedValue.ToString());
                     AdicionaisGridView.Rows[iCountLinhas].Cells["Preco"].Value = decimal.Parse(txtPrecoOpcao.Text);
                     AdicionaisGridView.Rows[iCountLinhas].Cells["Nome"].Value = cbxOpcao.Text.ToString();
-                    AdicionaisGridView.Rows[iCountLinhas].Cells["CodTipo"].Value = cbxTipoOpcao.SelectedValue.ToString(); 
+                    AdicionaisGridView.Rows[iCountLinhas].Cells["CodTipo"].Value = cbxTipoOpcao.SelectedValue.ToString();
                     iCountLinhas = AdicionaisGridView.Rows.Count;
                 }
             }
@@ -731,7 +771,7 @@ namespace DexComanda
             {
                 ContextMenu m = new ContextMenu();
                 MenuItem Excluir = new MenuItem(" 0 - Excluir Opcao ");
-               
+
                 Excluir.Click += DeletarRegistro;
                 m.MenuItems.Add(Excluir);
                 int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
@@ -783,7 +823,7 @@ namespace DexComanda
 
         private void cbxGrupoProduto_Click(object sender, EventArgs e)
         {
-          
+
             //this.cbxGrupoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupoAtivo").Tables["Grupo"];
             //this.cbxGrupoProduto.DisplayMember = "NomeGrupo";
             //this.cbxGrupoProduto.ValueMember = "Codigo";
@@ -885,7 +925,7 @@ namespace DexComanda
 
                         //UrlImagem = dsProduto.Tables[0].Rows[i].Field<string>("UrlImagem"),
                     };
-                    if (dsProduto.Tables[0].Rows[i].Field<string>("UrlImagem")!="")
+                    if (dsProduto.Tables[0].Rows[i].Field<string>("UrlImagem") != "")
                     {
                         prod.UrlImagem = dsProduto.Tables[0].Rows[i].Field<string>("UrlImagem");
                     }
@@ -916,7 +956,7 @@ namespace DexComanda
         private void cbxTipoOpcao_DropDown(object sender, EventArgs e)
         {
             Utils.MontaCombox(cbxTipoOpcao, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
-            
+
         }
 
         private void frmCadastrarProduto_FormClosed(object sender, FormClosedEventArgs e)

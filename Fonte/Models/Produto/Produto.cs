@@ -23,5 +23,6 @@ namespace DexComanda.Models
         public string UrlImagem { get; set; }
         public DateTime DataInicioPromocao { get; set; }
         public DateTime DataFimPromocao { get; set; }
+        public string CodigoPersonalizado { get; set; }
     }
 }

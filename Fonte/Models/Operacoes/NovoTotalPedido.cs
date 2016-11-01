@@ -13,6 +13,8 @@ namespace DexComanda.Models.Operacoes
         public string Tipo { get; set; }
         public string NumeroMesa { get; set; }
         public int CodUsuario { get; set; }
+        public string HorarioEntrega { get; set; }
+        public decimal DescontoValor { get; set; }
 
     }
 }

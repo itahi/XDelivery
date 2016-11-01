@@ -384,6 +384,7 @@ namespace DexComanda.Operações
                 {
 
                     request.AddParameter("token", iParamToken);
+                   // request.AddParameter("store_id", "1");
                     request.AddParameter("cep", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("CEP"));
                     request.AddParameter("nome", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("NomeRegiao"));
                     request.AddParameter("valor", ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("TaxaServico"));
@@ -396,9 +397,12 @@ namespace DexComanda.Operações
                     }
 
                     RestResponse response = (RestResponse)client.Execute(request);
+                    //ReturnPadrao lReturn = new ReturnPadrao();
+                    //lReturn = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+
                     prgBarRegiao.Value = i + 1;
 
-                    if (response.Content.Contains("true"))
+                    if (response.Content.Equals(" true"))
                     {
                         con.AtualizaDataSincronismo("RegiaoEntrega_Bairros", ds.Tables[0].Rows[i].Field<int>("Codigo"), "DataSincronismo", "CodRegiao");
                     }

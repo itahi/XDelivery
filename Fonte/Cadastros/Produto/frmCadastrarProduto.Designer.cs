@@ -37,6 +37,7 @@
             System.Windows.Forms.Label label5;
             System.Windows.Forms.Label label6;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarProduto));
+            System.Windows.Forms.Label label17;
             this.dBExpertDataSet = new DexComanda.DBExpertDataSet();
             this.produtoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.produtoTableAdapter = new DexComanda.DBExpertDataSetTableAdapters.ProdutoTableAdapter();
@@ -117,7 +118,8 @@
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.txtCodInterno = new System.Windows.Forms.TextBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             grupoProdutoLabel = new System.Windows.Forms.Label();
             precoProdutoLabel = new System.Windows.Forms.Label();
             descricaoProdutoLabel = new System.Windows.Forms.Label();
@@ -125,6 +127,7 @@
             label1 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
+            label17 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -445,6 +448,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.txtCodInterno);
+            this.tabPage1.Controls.Add(label17);
             this.tabPage1.Controls.Add(this.button2);
             this.tabPage1.Controls.Add(label5);
             this.tabPage1.Controls.Add(this.txtMaxAdicionais);
@@ -1070,22 +1075,30 @@
             this.checkBox7.Text = "Segunda";
             this.checkBox7.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // txtCodInterno
             // 
-            this.button3.Location = new System.Drawing.Point(4, 319);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 26);
-            this.button3.TabIndex = 39;
-            this.button3.Text = "Botão mestre";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.txtCodInterno.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtCodInterno.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCodInterno.Location = new System.Drawing.Point(246, 86);
+            this.txtCodInterno.Name = "txtCodInterno";
+            this.txtCodInterno.Size = new System.Drawing.Size(92, 26);
+            this.txtCodInterno.TabIndex = 39;
+            this.toolTip1.SetToolTip(this.txtCodInterno, "Crie um Código Personalizado para esse produto");
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new System.Drawing.Point(243, 69);
+            label17.Name = "label17";
+            label17.Size = new System.Drawing.Size(65, 13);
+            label17.TabIndex = 40;
+            label17.Text = "Cod. Interno";
             // 
             // frmCadastrarProduto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 349);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnDoProduto);
             this.Controls.Add(this.tabControl1);
@@ -1167,7 +1180,6 @@
         private System.Windows.Forms.DateTimePicker dtInicio;
         private System.Windows.Forms.DateTimePicker dtFim;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label9;
@@ -1206,5 +1218,7 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ComboBox cbxTipoOpcao;
         private System.Windows.Forms.GroupBox grpPrecosDia;
+        private System.Windows.Forms.TextBox txtCodInterno;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
