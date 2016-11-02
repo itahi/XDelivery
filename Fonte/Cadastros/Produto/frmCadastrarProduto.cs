@@ -39,7 +39,8 @@ namespace DexComanda
 
         }
         public frmCadastrarProduto(int CodProduto, string iNomeProduto, string iCodGrupo, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
-                                   decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo, DateTime idtFimPromo, bool iAtivoSN)
+                                   decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo,
+                                   DateTime idtFimPromo, bool iAtivoSN,string iCodInterno)
         {
             try
             {
@@ -94,6 +95,7 @@ namespace DexComanda
                 txtcaminhoImage.Text = iUrlImagem;
                 dtInicio.Value = idtInicioPromo;
                 dtFim.Value = idtFimPromo;
+                txtCodInterno.Text = iCodInterno;
                 //     this.btnDoProduto.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
                 this.btnDoProduto.Text = "Alterar [F12]";
                 this.btnDoProduto.Click -= AdicionarProduto;
@@ -251,10 +253,10 @@ namespace DexComanda
             }
 
         }
-        private bool ValidaCodigoPersonalizado(int iCodigo)
+        private bool ValidaCodigoPersonalizado(int iCodigo,string iCodProduto)
         {
             Boolean retur = false;
-            DataSet dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoCodigoInterno", iCodigo);
+            DataSet dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoCodigoInterno", iCodigo, iCodProduto);
             if (dsProduto.Tables[0].Rows.Count>0)
             {
                 retur = true;
@@ -270,7 +272,7 @@ namespace DexComanda
             {
                 if (txtCodInterno.Text!="0" && txtCodInterno.Text!="")
                 {
-                    if (ValidaCodigoPersonalizado(int.Parse(txtCodInterno.Text)))
+                    if (ValidaCodigoPersonalizado(int.Parse(txtCodInterno.Text),"0"))
                     {
                         MessageBox.Show("Código já esta sendo usado no produto " + strNomeProd);
                         return;
@@ -417,7 +419,7 @@ namespace DexComanda
                 }
                 if (txtCodInterno.Text != "0" && txtCodInterno.Text != "")
                 {
-                    if (ValidaCodigoPersonalizado(int.Parse(txtCodInterno.Text)))
+                    if (ValidaCodigoPersonalizado(int.Parse(txtCodInterno.Text), Convert.ToString(codigoProdutoParaAlterar)))
                     {
                         MessageBox.Show("Código já esta sendo usado no produto " + strNomeProd);
                         return;

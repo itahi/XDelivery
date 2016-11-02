@@ -1714,6 +1714,11 @@ namespace DexComanda
                 command.Parameters.AddWithValue("@Codigo", codigo);
                 command.Parameters.AddWithValue("@CodGrupo", iCodigo2);
             }
+            else if (spName== "spObterProdutoCodigoInterno")
+            {
+                command.Parameters.AddWithValue("@Codigo", codigo);
+                command.Parameters.AddWithValue("@CodProduto", iCodString);
+            }
             else
             {
                 command.Parameters.AddWithValue("@Codigo", codigo);

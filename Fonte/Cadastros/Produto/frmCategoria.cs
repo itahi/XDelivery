@@ -91,13 +91,14 @@ namespace DexComanda
             chkOnline.Checked = Convert.ToBoolean(this.gruposGridView.Rows[rowIndex].Cells[3].Value.ToString());
             chkAtivo.Checked = Convert.ToBoolean(this.gruposGridView.Rows[rowIndex].Cells[4].Value.ToString());
 
-            if (gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString() != "0")
+            if (gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString() !="0")
             {
-                Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Grupo", "spObterFamiliaPorCodFamilia", int.Parse(gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString()));
+                Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Grupo", "spObterFamiliaPorCodigo", int.Parse(gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString()));
             }
             else
             {
                 Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Grupo", "spObterFamilia");
+                cbxFamilia.SelectedIndex = -1;
             }
 
             this.btnAdicionarGrupo.Text = "Salvar [F12]";

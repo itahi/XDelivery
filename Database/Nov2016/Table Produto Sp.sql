@@ -122,3 +122,9 @@ as
 	DiaSemana,PrecoDesconto,OnlineSN,Codigo,MaximoAdicionais,
 	UrlImagem,DataInicioPromocao,DataFimPromocao,CodGrupo,AtivoSN,CodigoPersonalizado
 	FROM Produto WHERE  AtivoSN= @AtivoSN and Codigo = @Codigo;
+	go
+	alter procedure spObterProdutoCodigoInterno
+	@Codigo nvarchar(5),
+	@CodProduto int
+	as
+	select * from Produto where CodigoPersonalizado=@Codigo and Codigo !=@CodProduto

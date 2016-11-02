@@ -60,12 +60,12 @@ namespace DexComanda
 
         private void Editar(object sender, EventArgs e)
         {
-            codigo = int.Parse(this.RegioesGridView.Rows[rowIndex].Cells["Codigo"].Value.ToString());
-            txtEntrega.Text = (this.RegioesGridView.Rows[rowIndex].Cells["TaxaServico"].Value.ToString());
-            txtRegiao.Text = (this.RegioesGridView.Rows[rowIndex].Cells["NomeRegiao"].Value.ToString());
-            chkAtivo.Checked =Convert.ToBoolean(RegioesGridView.Rows[rowIndex].Cells["AtivoSN"].Value.ToString());
-            chkOnline.Checked = Convert.ToBoolean(RegioesGridView.Rows[rowIndex].Cells["OnlineSN"].Value.ToString());
-            txtTaxaGratis.Text = RegioesGridView.Rows[rowIndex].Cells["valorMinimoFreteGratis"].Value.ToString();
+            codigo = int.Parse(this.RegioesGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+            txtEntrega.Text = (this.RegioesGridView.CurrentRow.Cells["TaxaServico"].Value.ToString());
+            txtRegiao.Text = (this.RegioesGridView.CurrentRow.Cells["NomeRegiao"].Value.ToString());
+            chkAtivo.Checked =Convert.ToBoolean(RegioesGridView.CurrentRow.Cells["AtivoSN"].Value.ToString());
+            chkOnline.Checked = Convert.ToBoolean(RegioesGridView.CurrentRow.Cells["OnlineSN"].Value.ToString());
+            txtTaxaGratis.Text = RegioesGridView.CurrentRow.Cells["valorMinimoFreteGratis"].Value.ToString();
 
             this.btnSalvar.Text = "Salvar [F12]";
             this.btnSalvar.Click += new System.EventHandler(this.SalvarRegiao);

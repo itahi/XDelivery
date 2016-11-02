@@ -144,11 +144,10 @@ namespace DexComanda
                     lblTroco.Text = "0,00";
                     TrocoPagar = "0,00";
                 }
-               // CarregaMesas();
-               cbxListaMesas.Text = iNumeMesa;
+                
+                cbxListaMesas.Text = iNumeMesa;
                 gNUmeroMesa = iNumeMesa;
                 cbxTipoPedido.Text = TipoPedido;
-               
                 cbxListaMesas.Items.Add(MesaBalcao);
                 Utils.MontaCombox(cbxVendedor, "Nome", "Codigo", "Usuario", "spObterUsuarioPorCodigo", iCodVendedor);
 
@@ -156,7 +155,7 @@ namespace DexComanda
             catch (Exception mx)
             {
 
-                MessageBox.Show(mx.Message);
+                MessageBox.Show(Bibliotecas.cException + mx.Message);
             }
         }
 
@@ -632,7 +631,7 @@ namespace DexComanda
                 {
                     for (int i = 0; i < dsOpcoes.Tables[0].Rows.Count; i++)
                     {
-                        
+
                         DataSet dsMaiorPreco = con.RetornaMaioresPrecos(iCodProduto.ToString(), iCodProduto2.ToString(), "", "", dsOpcoes.Tables[0].Rows[0].ItemArray.GetValue(5).ToString());
                         if (dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString() != "")
                         {
@@ -651,8 +650,8 @@ namespace DexComanda
                         gMaximoOpcaoProduto = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<int>("MaximoAdicionais");
                         lnome = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();//.Substring(1, 10);
                         lTipo = int.Parse(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo"));
-                      
-                       
+
+
                         if (lTipo == 1)
                         {
                             lNomeOpcao = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();
@@ -854,7 +853,7 @@ namespace DexComanda
                                     item.CodProduto = int.Parse(this.txtCodProduto1.Text);
                                 }
 
-                                pedido.HorarioEntrega ="";
+                                pedido.HorarioEntrega = "";
                                 if (cbxHorarioEntrega.Text != "")
                                 {
                                     pedido.HorarioEntrega = cbxHorarioEntrega.Text;
@@ -1021,7 +1020,7 @@ namespace DexComanda
                             }
 
                             // Validar o Desconto Máximo Por Usuario
-                            if (txtDesconto.Text!= "0,00"||txtDesconto.Text!="")
+                            if (txtDesconto.Text != "0,00" || txtDesconto.Text != "")
                             {
                                 if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "DescontoPedidoSN"))
                                 {
@@ -1038,7 +1037,7 @@ namespace DexComanda
                                     pedido.DescontoValor = decimal.Parse("0,00");
                                     return;
                                 }
-                              
+
                             }
                             //Finaliza Validação 
 
@@ -1082,7 +1081,7 @@ namespace DexComanda
 
                             }
                             pedido.HorarioEntrega = "";
-                            if (cbxHorarioEntrega.Text!="")
+                            if (cbxHorarioEntrega.Text != "")
                             {
                                 pedido.HorarioEntrega = cbxHorarioEntrega.Text;
                             }
@@ -1342,7 +1341,7 @@ namespace DexComanda
                 int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
 
                 m.Show(dgv, new Point(e.X, e.Y));
-               
+
             }
         }
         private void AlterarItemPedido(object sender, EventArgs e)
@@ -1573,7 +1572,7 @@ namespace DexComanda
             {
                 ValorTotal += item.PrecoTotal;
             }
-            
+
 
             DataTable dt = new DataTable();
             dt.Columns.Add(new DataColumn("Codigo", typeof(string)));
@@ -1604,7 +1603,7 @@ namespace DexComanda
 
             this.gridViewItemsPedido.AutoGenerateColumns = true;
             this.gridViewItemsPedido.DataSource = dt;
-            this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal-decimal.Parse(txtDesconto.Text) + Convert.ToDecimal(lblEntrega.Text.Replace("R$", "")));
+            this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal - decimal.Parse(txtDesconto.Text) + Convert.ToDecimal(lblEntrega.Text.Replace("R$", "")));
             this.lblTroco.Text = Convert.ToString(lblTroco.Text);
         }
         private void prepareToPrint()
@@ -2856,6 +2855,7 @@ namespace DexComanda
             this.cbxListaMesas.Size = new System.Drawing.Size(106, 26);
             this.cbxListaMesas.TabIndex = 62;
             this.cbxListaMesas.Visible = false;
+            this.cbxListaMesas.DropDown += new System.EventHandler(this.cbxListaMesas_DropDown);
             // 
             // panel4
             // 
@@ -3293,7 +3293,7 @@ namespace DexComanda
 
             if (cbxTipoPedido.Text == "1 - Mesa")
             {
-                CarregaMesas();
+              //  CarregaMesas();
                 cbxListaMesas.Visible = true;
                 cbxListaMesas.Focus();
             }
@@ -3442,7 +3442,7 @@ namespace DexComanda
                         TotalPedido = TotalPedido - decimal.Parse(txtDesconto.Text);
                         txtDesconto.Text = string.Format("{0:#,##0.00}", decimal.Parse(txtDesconto.Text));
                         lbTotal.Text = "R$" + TotalPedido.ToString();
-                        
+
                         //gridViewItemsPedido.Rows[0].Cells[4].Value = decimal.Parse(gridViewItemsPedido.Rows[0].Cells[4].Value.ToString().Replace("R$", "")) - decimal.Parse(txtDesconto.Text);
                         //gridViewItemsPedido.Rows[0].Cells[5].Value = decimal.Parse(gridViewItemsPedido.Rows[0].Cells[4].Value.ToString().Replace("R$", "")) * decimal.Parse(gridViewItemsPedido.Rows[0].Cells[3].Value.ToString());
 
@@ -4053,6 +4053,11 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
+        }
+
+        private void cbxListaMesas_DropDown(object sender, EventArgs e)
+        {
+            CarregaMesas();
         }
 
         private void cbxSabor_SelectedIndexChanged(object sender, EventArgs e)

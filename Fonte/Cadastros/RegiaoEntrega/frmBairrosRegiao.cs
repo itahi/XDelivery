@@ -123,10 +123,10 @@ namespace DexComanda.Cadastros
                         DataRow dRow = dsRegiao.Tables[0].Rows[0];
                         cbxRegiao.SelectedValue = int.Parse(dRow.ItemArray.GetValue(0).ToString());
                         cbxRegiao.SelectedText = dRow.ItemArray.GetValue(2).ToString();
-                        txtBairro.Text = RegioesGridView.Rows[rowIndex].Cells[1].Value.ToString();
-                        txtCEP.Text = RegioesGridView.Rows[rowIndex].Cells[2].Value.ToString();
-                        chkAtivo.Checked = Convert.ToBoolean(RegioesGridView.Rows[rowIndex].Cells[3].Value.ToString());
-                        chkOnlineSN.Checked = Convert.ToBoolean(RegioesGridView.Rows[rowIndex].Cells[4].Value.ToString());
+                        txtBairro.Text = RegioesGridView.CurrentRow.Cells["Nome"].Value.ToString();
+                        txtCEP.Text = RegioesGridView.CurrentRow.Cells["CEP"].Value.ToString();
+                        chkAtivo.Checked = bool.Parse(RegioesGridView.CurrentRow.Cells["AtivoSN"].Value.ToString());
+                        chkOnlineSN.Checked = bool.Parse(RegioesGridView.CurrentRow.Cells["OnlineSN"].Value.ToString());
                         this.btnAdicionar.Text = "Salvar";
                         this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
                         this.btnAdicionar.Click -= new System.EventHandler(this.Adicionar);
@@ -186,9 +186,11 @@ namespace DexComanda.Cadastros
                 con.Update("spAlterarBairrosRegiao", reg);
                 con.AtualizaDataSincronismo("RegiaoEntrega_Bairros", reg.CodRegiao, "DataCadastro","CodRegiao");
                 Utils.ControlaEventos("Alterar", this.Name);
+                txtBairro.Text = "";
+                txtCEP.Text = "";
                 txtCEP.Enabled = true;
                 txtBairro.Enabled = true;
-                ListaRegiao();
+                ListaBairrosPorRegiao(reg.CodRegiao);
             }
             catch (Exception erro)
             {
