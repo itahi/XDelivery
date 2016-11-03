@@ -51,6 +51,7 @@ namespace DexComanda.Operações.Financeiro
             decimal vlrSaida = 0.00M;
             DataSet dsMovimento = con.SelectCaixaFechamento(iDataFiltro + " 00:00:00", iDataFiltro + " 23:59:59", cbxCaixas.Text, "CaixaMovimento");
 
+           
             if (dsMovimento.Tables[0].Rows.Count > 0)
             {
 
@@ -58,9 +59,10 @@ namespace DexComanda.Operações.Financeiro
                 FechamentosGrid.AutoGenerateColumns = true;
                 FechamentosGrid.DataSource = dsMovimento;
                 FechamentosGrid.DataMember = "CaixaMovimento";
-
+                FechamentosGrid.Columns["Total Somado"].Visible = false;
                 for (int i = 0; i < FechamentosGrid.Rows.Count; i++)
                 {
+                    
                     if (FechamentosGrid.Rows[i].Cells["Tipo Movimento"].Value.ToString() == "Entradas")
                     {
                         vlrEntrada = vlrEntrada + decimal.Parse(FechamentosGrid.Rows[i].Cells["Total Somado"].Value.ToString());

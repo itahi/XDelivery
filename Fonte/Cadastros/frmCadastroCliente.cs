@@ -166,8 +166,7 @@ namespace DexComanda
 
         private void ConsultarEnderecoPorCep(object sender, KeyEventArgs e)
         {
-
-            if (txtCEP.Text.Length == 8)
+            if (txtCEP.Text.Trim().Length == 8 && e.KeyCode !=Keys.Back)
             {
                 ObterCidadePadrao();
                 if (this.txtCEP.Text.Equals("") && e.KeyCode == Keys.Enter)
@@ -918,6 +917,10 @@ namespace DexComanda
             Utils.SoDecimais(e);
         }
 
+        private void txtCEP_KeyUp(object sender, KeyEventArgs e)
+        {
+            ConsultarEnderecoPorCep(sender, e);
+        }
     }
 
 }

@@ -66,6 +66,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnOpcao = new System.Windows.Forms.Button();
             this.pnlAdicionais = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbxTipoOpcao = new System.Windows.Forms.ComboBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
@@ -74,9 +77,10 @@
             this.cbxOpcao = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.AdicionaisGridView = new System.Windows.Forms.DataGridView();
-            this.cbxTipoOpcao = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.CodOpcao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Valor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CodTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             this.grpFiltros.SuspendLayout();
@@ -510,6 +514,34 @@
             this.pnlAdicionais.TabIndex = 31;
             this.pnlAdicionais.Visible = false;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 33);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(39, 13);
+            this.label9.TabIndex = 48;
+            this.label9.Text = "Opção";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 6);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(28, 13);
+            this.label8.TabIndex = 47;
+            this.label8.Text = "Tipo";
+            // 
+            // cbxTipoOpcao
+            // 
+            this.cbxTipoOpcao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTipoOpcao.FormattingEnabled = true;
+            this.cbxTipoOpcao.Location = new System.Drawing.Point(47, 4);
+            this.cbxTipoOpcao.Name = "cbxTipoOpcao";
+            this.cbxTipoOpcao.Size = new System.Drawing.Size(130, 21);
+            this.cbxTipoOpcao.TabIndex = 46;
+            this.cbxTipoOpcao.DropDown += new System.EventHandler(this.ListaTipos);
+            // 
             // btnCancel
             // 
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
@@ -520,6 +552,7 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnSalvar
             // 
@@ -594,6 +627,11 @@
             this.AdicionaisGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.AdicionaisGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.AdicionaisGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.AdicionaisGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.CodOpcao,
+            this.Valor,
+            this.Nome,
+            this.CodTipo});
             this.AdicionaisGridView.Location = new System.Drawing.Point(3, 71);
             this.AdicionaisGridView.MultiSelect = false;
             this.AdicionaisGridView.Name = "AdicionaisGridView";
@@ -602,33 +640,29 @@
             this.AdicionaisGridView.Size = new System.Drawing.Size(370, 103);
             this.AdicionaisGridView.TabIndex = 38;
             // 
-            // cbxTipoOpcao
+            // CodOpcao
             // 
-            this.cbxTipoOpcao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxTipoOpcao.FormattingEnabled = true;
-            this.cbxTipoOpcao.Location = new System.Drawing.Point(47, 4);
-            this.cbxTipoOpcao.Name = "cbxTipoOpcao";
-            this.cbxTipoOpcao.Size = new System.Drawing.Size(130, 21);
-            this.cbxTipoOpcao.TabIndex = 46;
-            this.cbxTipoOpcao.DropDown += new System.EventHandler(this.ListaTipos);
+            this.CodOpcao.HeaderText = "CodOpcao";
+            this.CodOpcao.Name = "CodOpcao";
+            this.CodOpcao.ReadOnly = true;
             // 
-            // label8
+            // Valor
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 6);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(28, 13);
-            this.label8.TabIndex = 47;
-            this.label8.Text = "Tipo";
+            this.Valor.HeaderText = "Valor";
+            this.Valor.Name = "Valor";
+            this.Valor.ReadOnly = true;
             // 
-            // label9
+            // Nome
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 33);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(39, 13);
-            this.label9.TabIndex = 48;
-            this.label9.Text = "Opção";
+            this.Nome.HeaderText = "Nome";
+            this.Nome.Name = "Nome";
+            this.Nome.ReadOnly = true;
+            // 
+            // CodTipo
+            // 
+            this.CodTipo.HeaderText = "CodTipo";
+            this.CodTipo.Name = "CodTipo";
+            this.CodTipo.ReadOnly = true;
             // 
             // frmAlteracaoProduto
             // 
@@ -716,5 +750,9 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cbxTipoOpcao;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CodOpcao;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Valor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nome;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CodTipo;
     }
 }

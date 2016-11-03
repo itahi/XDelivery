@@ -1280,7 +1280,7 @@ namespace DexComanda
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value = "R$ " + itemPedido.PrecoTotal.ToString();
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[6].Value = itemPedido.Item.ToString();
 
-                        var ValorPedidoTotal = ValorTotal + decimal.Parse(lblEntrega.Text);
+                        var ValorPedidoTotal = ValorTotal + decimal.Parse(lblEntrega.Text.Replace("R$ ",""));
 
                         if (DMargemGarco != 0.00M)
                         {
@@ -3267,7 +3267,7 @@ namespace DexComanda
                 var quantidade = decimal.Parse(this.txtQuantidade.Text);
                 var total = Math.Round(precoUnitario * quantidade, 2);
                 this.txtPrecoTotal.Text = total.ToString();
-                this.btnAdicionarItemNoPedido.Focus();
+               // this.btnAdicionarItemNoPedido.Focus();
             }
         }
         private void CalculaTempPedido()

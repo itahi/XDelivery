@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroCliente));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbPrincipal = new System.Windows.Forms.TabPage();
+            this.txtPJPF = new System.Windows.Forms.TextBox();
+            this.txtUserID = new System.Windows.Forms.TextBox();
             this.btnAlteraRegiao = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.txtTaxaEntrega = new System.Windows.Forms.TextBox();
@@ -101,8 +103,6 @@
             this.btnConsultar = new System.Windows.Forms.Button();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
-            this.txtUserID = new System.Windows.Forms.TextBox();
-            this.txtPJPF = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tbPrincipal.SuspendLayout();
             this.tbCreditoDebito.SuspendLayout();
@@ -169,6 +169,26 @@
             this.tbPrincipal.TabIndex = 0;
             this.tbPrincipal.Text = "Dados do Cliente";
             this.tbPrincipal.UseVisualStyleBackColor = true;
+            // 
+            // txtPJPF
+            // 
+            this.txtPJPF.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPJPF.Location = new System.Drawing.Point(272, 344);
+            this.txtPJPF.MaxLength = 8;
+            this.txtPJPF.Name = "txtPJPF";
+            this.txtPJPF.Size = new System.Drawing.Size(60, 29);
+            this.txtPJPF.TabIndex = 60;
+            this.txtPJPF.Visible = false;
+            // 
+            // txtUserID
+            // 
+            this.txtUserID.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUserID.Location = new System.Drawing.Point(120, 344);
+            this.txtUserID.MaxLength = 8;
+            this.txtUserID.Name = "txtUserID";
+            this.txtUserID.Size = new System.Drawing.Size(133, 29);
+            this.txtUserID.TabIndex = 59;
+            this.txtUserID.Visible = false;
             // 
             // btnAlteraRegiao
             // 
@@ -414,6 +434,7 @@
             this.txtCEP.TabIndex = 30;
             this.txtCEP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ConsultarEnderecoPorCep);
             this.txtCEP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCEP_KeyPress);
+            this.txtCEP.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCEP_KeyUp);
             // 
             // txtTelefone
             // 
@@ -885,26 +906,6 @@
             this.dtInicio.Name = "dtInicio";
             this.dtInicio.Size = new System.Drawing.Size(82, 20);
             this.dtInicio.TabIndex = 0;
-            // 
-            // txtUserID
-            // 
-            this.txtUserID.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUserID.Location = new System.Drawing.Point(120, 344);
-            this.txtUserID.MaxLength = 8;
-            this.txtUserID.Name = "txtUserID";
-            this.txtUserID.Size = new System.Drawing.Size(133, 29);
-            this.txtUserID.TabIndex = 59;
-            this.txtUserID.Visible = false;
-            // 
-            // txtPJPF
-            // 
-            this.txtPJPF.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPJPF.Location = new System.Drawing.Point(272, 344);
-            this.txtPJPF.MaxLength = 8;
-            this.txtPJPF.Name = "txtPJPF";
-            this.txtPJPF.Size = new System.Drawing.Size(60, 29);
-            this.txtPJPF.TabIndex = 60;
-            this.txtPJPF.Visible = false;
             // 
             // frmCadastroCliente
             // 

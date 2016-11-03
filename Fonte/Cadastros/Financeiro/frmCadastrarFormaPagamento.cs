@@ -64,7 +64,8 @@ namespace DexComanda
 
             con.Update("spAlterarFormaPagamento", fp);
             Utils.ControlaEventos("Alterar", this.Name);
-            Utils.LimpaForm(this);
+            txtcaminhoImage.Text = "";
+            txtNomeFP.Text = "";
             this.btnAdicionar.Text = "Adicionar [F12]";
 
             this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
@@ -73,7 +74,6 @@ namespace DexComanda
             this.btnEditarFP.Text = "Editar [F11]";
             this.btnEditarFP.Click += new System.EventHandler(this.btnEditarFP_Click);
             this.btnEditarFP.Click -= new System.EventHandler(this.Cancelar);
-            
             
             Utils.PopularGrid_SP("FormaPagamento", FPGridView, "spObterFormaPagamento");
         }
@@ -201,13 +201,13 @@ namespace DexComanda
         {
             if (FPGridView.SelectedRows.Count > 0)
             {
-                codigo = int.Parse(this.FPGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-                this.txtNomeFP.Text = this.FPGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
-                chkDesconto2.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[2].Value.ToString());
-                chkFinanceiro.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
-                chkOnline.Checked = Convert.ToBoolean(this.FPGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
-                txtcaminhoImage.Text = FPGridView.SelectedRows[rowIndex].Cells[5].Value.ToString();
-                chkAtivoSN.Checked = Convert.ToBoolean(FPGridView.SelectedRows[rowIndex].Cells[6].Value.ToString());
+                codigo = int.Parse(this.FPGridView.CurrentRow.Cells[0].Value.ToString());
+                this.txtNomeFP.Text = this.FPGridView.CurrentRow.Cells[1].Value.ToString();
+                chkDesconto2.Checked = Convert.ToBoolean(this.FPGridView.CurrentRow.Cells[2].Value.ToString());
+                chkFinanceiro.Checked = Convert.ToBoolean(this.FPGridView.CurrentRow.Cells[3].Value.ToString());
+                chkOnline.Checked = Convert.ToBoolean(this.FPGridView.CurrentRow.Cells[4].Value.ToString());
+                txtcaminhoImage.Text = FPGridView.CurrentRow.Cells[5].Value.ToString();
+                chkAtivoSN.Checked = Convert.ToBoolean(FPGridView.CurrentRow.Cells[6].Value.ToString());
                 this.btnAdicionar.Text = "Salvar";
                 this.btnAdicionar.Click += new System.EventHandler(this.SalvarFP);
                 this.btnAdicionar.Click -= new System.EventHandler(this.btnAdicionar_Click);
@@ -226,7 +226,11 @@ namespace DexComanda
 
         private void txtcaminhoImage_TextChanged(object sender, EventArgs e)
         {
-            if (File.Exists(txtcaminhoImage.Text) && txtcaminhoImage.Text!="")
+            if (txtcaminhoImage.Text == "")
+            {
+                return;
+            }
+            if (File.Exists(txtcaminhoImage.Text)) 
             {
                 img.Load(txtcaminhoImage.Text);
             }

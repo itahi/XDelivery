@@ -193,6 +193,7 @@ namespace DexComanda.Operações.Alteracoes
             }
             GridViewProdutos.DataSource = null;
             GridViewProdutos.DataMember = null;
+            RemoveColunas(AdicionaisGridView);
             
         }
         public string DiasSelecinado()
@@ -279,6 +280,14 @@ namespace DexComanda.Operações.Alteracoes
             grpDesconto.Enabled = chkAtivaDesconto.Checked;
         }
 
+        private void RemoveColunas(DataGridView dv)
+        {
+            for (int i = 0; i < dv.Rows.Count; i++)
+            {
+                dv.Rows.Clear();
+            }
+           
+        }
         private void btnOpcao_Click(object sender, EventArgs e)
         {
 
@@ -286,17 +295,11 @@ namespace DexComanda.Operações.Alteracoes
             pnlAdicionais.Show();
             if (pnlAdicionais.Visible)
             {
-                //this.cbxOpcao.DataSource = con.SelectAll("Opcao", "spObterOpcao").Tables["Opcao"];
-                //this.cbxOpcao.DisplayMember = "Nome";
-                //this.cbxOpcao.ValueMember = "Codigo";
-                AdicionaisGridView.Columns.Add("CodOpcao", "CodOpcao");
-                AdicionaisGridView.Columns.Add("Valor", "Valor");
-                AdicionaisGridView.Columns.Add("Nome", "Nome");
-                AdicionaisGridView.Columns.Add("CodTipo", "CodTipo");
+                //AdicionaisGridView.Columns.Add("CodOpcao", "CodOpcao");
+                //AdicionaisGridView.Columns.Add("Valor", "Valor");
+                //AdicionaisGridView.Columns.Add("Nome", "Nome");
+                //AdicionaisGridView.Columns.Add("CodTipo", "CodTipo");
             }
-            //frmOpcaoProduto frm = new frmOpcaoProduto();
-            //frm.StartPosition = FormStartPosition.CenterParent;
-            //frm.ShowDialog();
             
         }
 
@@ -452,6 +455,12 @@ namespace DexComanda.Operações.Alteracoes
         private void btnEditar_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            pnlAdicionais.Visible = false;
+            RemoveColunas(AdicionaisGridView);
         }
     }
 }
