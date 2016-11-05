@@ -12,6 +12,7 @@ using DexComanda.Push;
 using DexComanda.Relatorios;
 using DexComanda.Relatorios.Clientes;
 using DexComanda.Relatorios.Fechamentos.Novos;
+using DexComanda.Relatorios.Fechamentos.Novos.Impressao_Termica;
 using DexComanda.Relatorios.Gerenciais;
 using DexComanda.Relatorios.Impressao_Termica;
 using RestSharp;
@@ -1761,7 +1762,7 @@ namespace DexComanda
 
         private void cancelamentosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmPedidosCancelados frm = new frmPedidosCancelados();
+            frmReportCancelamentos frm = new frmReportCancelamentos();
             frm.ShowDialog();
         }
 
@@ -1791,6 +1792,17 @@ namespace DexComanda
         private void porMotoboyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmReportEntregasMotoboy frm = new frmReportEntregasMotoboy();
+            frm.Show();
+        }
+
+        private void porPessoaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void melhoresClientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReporVendasPorCliente frm = new frmReporVendasPorCliente();
             frm.Show();
         }
     }

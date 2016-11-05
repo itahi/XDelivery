@@ -46,6 +46,8 @@ using DexComanda.Relatorios.Fechamentos.Novos.Impressao_Termica;
 using System.Data.Common;
 using DexComanda.Relatorios.Gerenciais.Cristal;
 using DexComanda.Relatorios.Clientes.Crystal;
+using CrystalDecisions.Windows.Forms;
+using DexComanda.Relatorios.Caixa;
 
 namespace DexComanda
 {
@@ -78,7 +80,6 @@ namespace DexComanda
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
         public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1, Boolean iAlterarUserLogado = false, string iTurno = "Dia")
         {
-
             try
             {
                 if (nomeUsuario.Equals(""))
@@ -463,7 +464,7 @@ namespace DexComanda
             }
 
         }
-      
+
         public static void ImprimirHistoricoCliente(int iCodPessoa, DateTime iDtInici, DateTime idtFim)
         {
             RelHistoricoCliente report;
@@ -834,6 +835,47 @@ namespace DexComanda
             }
             return iRetorno;
         }
+        public static ReportClass GerarReportSoDatas(ReportClass iReport, DateTime dtInicio, DateTime dtFim)
+        {
+
+            // iReport = new ReportClass();
+            //CrystalReportViewer crystalReportViewer1;
+            try
+            {
+                //     crystalReportViewer1 = new CrystalReportViewer();
+                var datInicio = Convert.ToDateTime(dtInicio.ToShortDateString() + " 00:00:00");
+                var datFim = Convert.ToDateTime(dtFim.ToShortDateString() + " 23:59:59");
+
+                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                string nameReport = iReport.FileName;
+                iReport.Load(Directory.GetCurrentDirectory() + @"\" + nameReport + ".rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
+
+                CrTables = iReport.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+
+                iReport.SetParameterValue("@DataInicio", datInicio);
+                iReport.SetParameterValue("@DataFim", datFim);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException);
+            }
+
+            return iReport;
+        }
         /// <summary>
         /// Função para imprimir Pedido
         /// </summary>
@@ -932,7 +974,37 @@ namespace DexComanda
             }
             return iRetorno;
         }
-        public static string ImprimirCancelamentos(DateTime dtInicio, DateTime dtFim)
+        public static void ImprimirCaixa(ReportClass iReport,string iValor, string iSolicitante)
+        {
+            string iRetorno = "";
+            crtableLogoninfos = new TableLogOnInfos();
+            crtableLogoninfo = new TableLogOnInfo();
+            crConnectionInfo = new ConnectionInfo();
+            Tables CrTables;
+
+            iReport.Load(Directory.GetCurrentDirectory() + @"\"+iReport.FileName+".rpt");
+            crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+            crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+            crConnectionInfo.UserID = "sa";
+            crConnectionInfo.Password = "1001";
+
+            CrTables = iReport.Database.Tables;
+            foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+            {
+                crtableLogoninfo = CrTable.LogOnInfo;
+                crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                CrTable.ApplyLogOnInfo(crtableLogoninfo);
+            }
+            iReport.SetParameterValue("Valor",iValor);
+            iReport.SetParameterValue("Solicitante", iSolicitante);
+            iReport.SetParameterValue("Usuario", Sessions.retunrUsuario.Nome);
+            iReport.PrintToPrinter(1, false, 0, 0);
+        }
+
+
+
+
+    public static string ImprimirCancelamentos(DateTime dtInicio, DateTime dtFim)
         {
             string iRetorno = "";
             RelCancelamentos report;
@@ -1463,7 +1535,7 @@ namespace DexComanda
             }
             catch (Exception erro)
             {
-                if (erro.Message.ToString() == "There is no row at position 0.")
+                if (erro.Message.ToString().Equals("There is no row at position 0."))
                 {
                     MessageBox.Show("Numero de caixa Inexiste , favor verificar");
                     // Environment.Exit(0);
@@ -2510,20 +2582,28 @@ namespace DexComanda
             return iRetorno;
         }
 
-        public static void ControlaEventos(string iTipoEvento, string LocalEvento)
+        public static void ControlaEventos(string iTipoEvento, string LocalEvento, int CodUser = 1)
         {
 
+            try
+            {
+                EventosSistema eventos = new EventosSistema()
+                {
+                    CodUsuario = CodUser,
+                    TipoEvento = iTipoEvento,
+                    DataEvento = DateTime.Now,
+                    LocalEvento = LocalEvento,
+
+                };
+                conexao.Insert("spAdicionarEvento", eventos);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
             //if (Sessions.retunrUsuario != null)
             //{
-            EventosSistema eventos = new EventosSistema()
-            {
-                CodUsuario = Sessions.retunrUsuario.Codigo,
-                TipoEvento = iTipoEvento,
-                DataEvento = DateTime.Now,
-                LocalEvento = LocalEvento,
 
-            };
-            conexao.Insert("spAdicionarEvento", eventos);
             //}
 
         }

@@ -11,7 +11,7 @@ Historico,
 Valor,
 P.Nome ,
 P.Telefone
-  from HistoricoPessoa  Hdd
+  from HistoricoPessoa  H
   join Pessoa P on P.Codigo=H.CodPessoa
  where 
  Data between @DataInicio and @DataFim

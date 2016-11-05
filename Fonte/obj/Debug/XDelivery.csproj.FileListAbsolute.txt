@@ -361,5 +361,6 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pedido.frmOpcaoRadio
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmPedidosCancelados.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmEntregasPorRegiao.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmDebitosPessoa.resources
-D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.Crystal.frmVendasCliente.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Empresa.frmCadastraFornecedor.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.Crystal.frmReportPadrao.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmReporVendasPorCliente.resources

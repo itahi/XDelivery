@@ -28,17 +28,25 @@ namespace DexComanda.Cadastros
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            CaixaCadastros cx = new CaixaCadastros()
+            try
             {
-                DataCadastro = DateTime.Now,
-                Nome = txtNome.Text,
-                Numero = txtNum.Text
-            };
+                CaixaCadastros cx = new CaixaCadastros()
+                {
+                    DataCadastro = DateTime.Now,
+                    Nome = txtNome.Text,
+                    Numero = txtNum.Text
+                };
 
-            con.Insert("spAdicionarCaixa", cx);
-            Utils.ControlaEventos("Cadastro", this.Name);
-            MessageBox.Show("Caixa cadastrado", "[XSistemas] Aviso");
-            Utils.LimpaForm(this);
+                con.Insert("spAdicionarCaixa", cx);
+                Utils.ControlaEventos("Cad", this.Name);
+                MessageBox.Show("Caixa cadastrado", "[xSistemas]");
+                Utils.LimpaForm(this);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException);
+            }
+          
         }
     }
 }

@@ -24,14 +24,10 @@ namespace DexComanda.Operações.Financeiro
         private void frmAberturaCaixa_Load(object sender, EventArgs e)
         {
             dtAbertura.Value = DateTime.Now;
-
-          //  cbxFuncionario.Enabled = true;
             DataSet dsUsuario = con.SelectAll("Usuario", "spObterUsuario");
             cbxFuncionario.DataSource = dsUsuario.Tables[0];
             cbxFuncionario.DisplayMember = "Nome";
             cbxFuncionario.ValueMember = "Codigo";
-            //cbxFuncionario.Enabled = false;
-
             DataSet dsCaixas = con.SelectAll("CaixaCadastro", "spObterCaixa");
             cbxCaixas.DataSource = dsCaixas.Tables["CaixaCadastro"];
             cbxCaixas.DisplayMember = "Numero";

@@ -1,4 +1,5 @@
 ﻿using DexComanda.Models;
+using DexComanda.Relatorios.Caixa;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -56,6 +57,11 @@ namespace DexComanda.Cadastros
         {
            
             int intNumCaixa=1;
+            if (txtDescricao.Text=="" || txtSolicitante.Text=="" || txtValor.Text=="")
+            {
+                MessageBox.Show(Bibliotecas.cCamposObrigatório);
+                return;
+            }
             DateTime Dt = Convert.ToDateTime(dtMovimento.Value.ToShortDateString());
             if (cbxCaixas.SelectedText.ToString()!="")
             {
@@ -79,12 +85,11 @@ namespace DexComanda.Cadastros
                     Valor = decimal.Parse(txtValor.Text),
                     NumeroDocumento = txtDocumento.Text,
                     Turno = cbxTurno.Text
-                    
 
                 };
                 if (intNumCaixa.ToString() == "" || txtValor.Text == "")
                 {
-                    MessageBox.Show("Campos obrigatórios não podem ficar vazios");
+                    MessageBox.Show(Bibliotecas.cCamposObrigatório);
                     return;
                 }
                 if (rbEntrada.Checked)
@@ -103,6 +108,19 @@ namespace DexComanda.Cadastros
 
                 con.Insert("spInserirMovimentoCaixa", cxMovimento);
                 MessageBox.Show("Movimento lançado", "[Xsistemas] Aviso");
+                if (cxMovimento.Tipo=='E')
+                {
+                    RelSuprimento repor;
+                    repor = new RelSuprimento();
+                    Utils.ImprimirCaixa(repor, cxMovimento.Valor.ToString(), txtSolicitante.Text);
+                }
+                else
+                {
+                    RelSangria repor;
+                    repor = new RelSangria();
+                    Utils.ImprimirCaixa(repor, cxMovimento.Valor.ToString(), txtSolicitante.Text);
+                }
+                
                 Utils.LimpaForm(this);
 
             }
@@ -121,6 +139,11 @@ namespace DexComanda.Cadastros
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtValor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
         }
     }
 }

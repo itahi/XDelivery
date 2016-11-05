@@ -30,6 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLancamentoCaixa));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtSolicitante = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cbxTurno = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.cbxCaixas = new System.Windows.Forms.ComboBox();
             this.cbxFormaPagamento = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -47,13 +51,13 @@
             this.dtMovimento = new System.Windows.Forms.DateTimePicker();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.cbxTurno = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtSolicitante);
+            this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.cbxTurno);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.cbxCaixas);
@@ -76,6 +80,44 @@
             this.groupBox1.Size = new System.Drawing.Size(458, 180);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // txtSolicitante
+            // 
+            this.txtSolicitante.Location = new System.Drawing.Point(142, 154);
+            this.txtSolicitante.Name = "txtSolicitante";
+            this.txtSolicitante.Size = new System.Drawing.Size(100, 20);
+            this.txtSolicitante.TabIndex = 20;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(139, 138);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(56, 13);
+            this.label9.TabIndex = 21;
+            this.label9.Text = "Solicitante";
+            // 
+            // cbxTurno
+            // 
+            this.cbxTurno.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTurno.FormattingEnabled = true;
+            this.cbxTurno.Items.AddRange(new object[] {
+            "Dia",
+            "Noite"});
+            this.cbxTurno.Location = new System.Drawing.Point(265, 29);
+            this.cbxTurno.Name = "cbxTurno";
+            this.cbxTurno.Size = new System.Drawing.Size(46, 21);
+            this.cbxTurno.TabIndex = 19;
+            this.cbxTurno.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(264, 13);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(35, 13);
+            this.label8.TabIndex = 18;
+            this.label8.Text = "Turno";
             // 
             // cbxCaixas
             // 
@@ -119,6 +161,7 @@
             this.txtValor.Name = "txtValor";
             this.txtValor.Size = new System.Drawing.Size(100, 20);
             this.txtValor.TabIndex = 7;
+            this.txtValor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtValor_KeyPress);
             // 
             // label5
             // 
@@ -236,28 +279,6 @@
             this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancelar.UseVisualStyleBackColor = true;
             // 
-            // cbxTurno
-            // 
-            this.cbxTurno.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxTurno.FormattingEnabled = true;
-            this.cbxTurno.Items.AddRange(new object[] {
-            "Dia",
-            "Noite"});
-            this.cbxTurno.Location = new System.Drawing.Point(265, 29);
-            this.cbxTurno.Name = "cbxTurno";
-            this.cbxTurno.Size = new System.Drawing.Size(46, 21);
-            this.cbxTurno.TabIndex = 19;
-            this.cbxTurno.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(264, 13);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(35, 13);
-            this.label8.TabIndex = 18;
-            this.label8.Text = "Turno";
-            // 
             // frmLancamentoCaixa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -302,5 +323,7 @@
         private System.Windows.Forms.ComboBox cbxCaixas;
         private System.Windows.Forms.ComboBox cbxTurno;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtSolicitante;
+        private System.Windows.Forms.Label label9;
     }
 }

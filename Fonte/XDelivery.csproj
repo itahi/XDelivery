@@ -477,11 +477,35 @@
       <DependentUpon>frmCadastrarStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="Push\OneSignal.cs" />
-    <Compile Include="Relatorios\Clientes\frmVendasCliente.cs">
+    <Compile Include="Relatorios\Caixa\RelSangria.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelSangria.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Caixa\RelSuprimento.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelSuprimento.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\Crystal\RelVendasPorCliente.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelVendasPorCliente.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\frmReporVendasPorCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Relatorios\Clientes\frmVendasCliente.Designer.cs">
-      <DependentUpon>frmVendasCliente.cs</DependentUpon>
+    <Compile Include="Relatorios\Clientes\frmReporVendasPorCliente.Designer.cs">
+      <DependentUpon>frmReporVendasPorCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\frmReportPadrao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\frmReportPadrao.Designer.cs">
+      <DependentUpon>frmReportPadrao.cs</DependentUpon>
     </Compile>
     <Compile Include="Relatorios\Clientes\Crystal\RelDebitosGeral.cs">
       <AutoGen>True</AutoGen>
@@ -977,6 +1001,14 @@
     <EmbeddedResource Include="Operações\Pedido\frmCadastrarStatus.resx">
       <DependentUpon>frmCadastrarStatus.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Caixa\RelSangria.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelSangria.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Caixa\RelSuprimento.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelSuprimento.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelDebitosGeral.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDebitosGeral.cs</LastGenOutput>
@@ -984,6 +1016,10 @@
     <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelDebitosResumido.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDebitosResumido.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelVendasPorCliente.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelVendasPorCliente.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\frmDebitosPessoa.resx">
       <DependentUpon>frmDebitosPessoa.cs</DependentUpon>
@@ -1000,8 +1036,11 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelHistoricoCliente.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Clientes\frmVendasCliente.resx">
-      <DependentUpon>frmVendasCliente.cs</DependentUpon>
+    <EmbeddedResource Include="Relatorios\Clientes\frmReporVendasPorCliente.resx">
+      <DependentUpon>frmReporVendasPorCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\frmReportPadrao.resx">
+      <DependentUpon>frmReportPadrao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelBalcao.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

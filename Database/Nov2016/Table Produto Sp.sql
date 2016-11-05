@@ -123,7 +123,7 @@ as
 	UrlImagem,DataInicioPromocao,DataFimPromocao,CodGrupo,AtivoSN,CodigoPersonalizado
 	FROM Produto WHERE  AtivoSN= @AtivoSN and Codigo = @Codigo;
 	go
-	alter procedure spObterProdutoCodigoInterno
+	create procedure spObterProdutoCodigoInterno
 	@Codigo nvarchar(5),
 	@CodProduto int
 	as

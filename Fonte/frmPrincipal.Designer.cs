@@ -148,6 +148,7 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
+            this.melhoresClientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -372,10 +373,12 @@
             this.resumidoFormaDePagamentoToolStripMenuItem,
             this.ticketMédioToolStripMenuItem,
             this.cancelamentosToolStripMenuItem,
-            this.crediárioToolStripMenuItem});
+            this.crediárioToolStripMenuItem,
+            this.melhoresClientesToolStripMenuItem});
             this.porPessoaToolStripMenuItem.Name = "porPessoaToolStripMenuItem";
             this.porPessoaToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.porPessoaToolStripMenuItem.Text = "Vendas";
+            this.porPessoaToolStripMenuItem.Click += new System.EventHandler(this.porPessoaToolStripMenuItem_Click);
             // 
             // geralToolStripMenuItem2
             // 
@@ -1328,6 +1331,13 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
+            // melhoresClientesToolStripMenuItem
+            // 
+            this.melhoresClientesToolStripMenuItem.Name = "melhoresClientesToolStripMenuItem";
+            this.melhoresClientesToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
+            this.melhoresClientesToolStripMenuItem.Text = "Melhores Clientes";
+            this.melhoresClientesToolStripMenuItem.Click += new System.EventHandler(this.melhoresClientesToolStripMenuItem_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1490,5 +1500,6 @@
         private System.Windows.Forms.ToolStripMenuItem porRegiãoComTaxaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem porMotoboyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem crediárioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem melhoresClientesToolStripMenuItem;
     }
 }

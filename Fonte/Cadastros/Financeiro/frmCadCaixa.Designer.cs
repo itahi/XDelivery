@@ -112,7 +112,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "frmCadCaixa";
-            this.Text = "[XSistemas] Cadastro de Caixas";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "[XSistemas] Caixas";
             this.Load += new System.EventHandler(this.frmCadCaixa_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

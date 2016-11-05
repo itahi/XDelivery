@@ -32,6 +32,7 @@ namespace DexComanda
         public const string cCaixaFechado = "Este Caixa já está fechado e não pode ter mais lançamentos";
         public const string cFiltroRetornaVazio = "Não há registros com filtro escolhido";
         public const string cSelecioneRegistro = "Selecione corretamente a linha pra editar";
+        public const string cCamposObrigatório = "Campos obrigatórios não preenchidos corretamente";
         // public const string cCaixaSomenteConsulta = ""
     }
 

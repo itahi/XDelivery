@@ -85,30 +85,22 @@ namespace DexComanda.Relatorios.Clientes
         {
             try
             {
-
-               
-                try
+                if (rbDetalhado.Checked)
                 {
-                    if (rbDetalhado.Checked)
-                    {
-                        Detalhado();
-                    }
-                    else
-                    {
-                        Resumido();
-                    }
-
+                    Detalhado();
                 }
-                catch (Exception erro)
+                else
                 {
-
-                    MessageBox.Show(erro.Message);
+                    Resumido();
                 }
+
             }
             catch (Exception erro)
             {
+
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
+
         }
     }
 }
