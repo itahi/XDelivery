@@ -409,7 +409,7 @@ namespace DexComanda
                                                               decimal.Parse(dRowProduto.ItemArray.GetValue(1).ToString()), dRowProduto.ItemArray.GetValue(2).ToString(),
                                                               Convert.ToBoolean(dRowProduto.ItemArray.GetValue(6).ToString()), decimal.Parse(dRowProduto.ItemArray.GetValue(5).ToString()),
                                                               dRowProduto.ItemArray.GetValue(4).ToString(), dRowProduto.ItemArray.GetValue(8).ToString(), dRowProduto.ItemArray.GetValue(9).ToString(),
-                                                              Convert.ToDateTime(dRowProduto.ItemArray.GetValue(10).ToString()), Convert.ToDateTime(dRowProduto.ItemArray.GetValue(11).ToString()), 
+                                                              Convert.ToDateTime(dRowProduto.ItemArray.GetValue(10).ToString()), Convert.ToDateTime(dRowProduto.ItemArray.GetValue(11).ToString()),
                                                               Convert.ToBoolean(dRowProduto.ItemArray.GetValue(13).ToString()), dRowProduto.ItemArray.GetValue(14).ToString());
             frm.StartPosition = FormStartPosition.CenterParent;
             frm.ShowDialog();
@@ -859,11 +859,21 @@ namespace DexComanda
                 ExecutaFinalizacao();
             }
         }
-
-        private void SelecionaBoy(object sender,EventArgs e)
+        private Boolean TipoPedido(int iCodPedido)
         {
-           int intCodPedido = int.Parse(pedidosGridView.Rows[rowIndex].Cells["Codigo"].Value.ToString());
+            return con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido)
+                .Tables[0].Rows[0].Field<string>("Tipo") == "0 - Entrega";
+                }
+        private void SelecionaBoy(object sender, EventArgs e)
+        {
+            int intCodPedido = int.Parse(pedidosGridView.Rows[rowIndex].Cells["Codigo"].Value.ToString());
+            if (!TipoPedido(intCodPedido))
+            {
+                MessageBox.Show("Este pedido não permite entregadores");
+                return;
+            }
             InformaMotoboyPedido(intCodPedido);
+
         }
         private void InformaMotoboyPedido(int iCodPedido)
         {
@@ -885,7 +895,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-           
+
         }
         public void LimpaCampos()
         {
@@ -1186,7 +1196,7 @@ namespace DexComanda
                     frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
                                                                       dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
-                                                                      , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(), 
+                                                                      , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(),
                                                                       dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString());
 
 
@@ -1200,7 +1210,7 @@ namespace DexComanda
         {
             string propriedade = cbxBuscarPor.Text.ToString();
             string valor = txtBurcarValor.Text;
-            DataSet dsResult=null;
+            DataSet dsResult = null;
             if (propriedade.Equals("Telefone") && e.KeyData == Keys.Enter)
             {
                 dsResult = con.SelectPessoaPorNome(valor, Sessions.SqlPessoa, "Telefone");

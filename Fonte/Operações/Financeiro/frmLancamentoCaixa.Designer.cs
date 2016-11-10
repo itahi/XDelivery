@@ -86,7 +86,7 @@
             this.txtSolicitante.Location = new System.Drawing.Point(142, 154);
             this.txtSolicitante.Name = "txtSolicitante";
             this.txtSolicitante.Size = new System.Drawing.Size(100, 20);
-            this.txtSolicitante.TabIndex = 20;
+            this.txtSolicitante.TabIndex = 7;
             // 
             // label9
             // 
@@ -107,7 +107,7 @@
             this.cbxTurno.Location = new System.Drawing.Point(265, 29);
             this.cbxTurno.Name = "cbxTurno";
             this.cbxTurno.Size = new System.Drawing.Size(46, 21);
-            this.cbxTurno.TabIndex = 19;
+            this.cbxTurno.TabIndex = 3;
             this.cbxTurno.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label8
@@ -126,7 +126,7 @@
             this.cbxCaixas.Location = new System.Drawing.Point(214, 29);
             this.cbxCaixas.Name = "cbxCaixas";
             this.cbxCaixas.Size = new System.Drawing.Size(44, 21);
-            this.cbxCaixas.TabIndex = 17;
+            this.cbxCaixas.TabIndex = 2;
             // 
             // cbxFormaPagamento
             // 
@@ -187,7 +187,7 @@
             this.rbSaida.Location = new System.Drawing.Point(398, 34);
             this.rbSaida.Name = "rbSaida";
             this.rbSaida.Size = new System.Drawing.Size(52, 17);
-            this.rbSaida.TabIndex = 4;
+            this.rbSaida.TabIndex = 5;
             this.rbSaida.Text = "Saida";
             this.rbSaida.UseVisualStyleBackColor = true;
             this.rbSaida.CheckedChanged += new System.EventHandler(this.rbSaida_CheckedChanged);
@@ -199,7 +199,7 @@
             this.rbEntrada.Location = new System.Drawing.Point(330, 33);
             this.rbEntrada.Name = "rbEntrada";
             this.rbEntrada.Size = new System.Drawing.Size(62, 17);
-            this.rbEntrada.TabIndex = 3;
+            this.rbEntrada.TabIndex = 4;
             this.rbEntrada.TabStop = true;
             this.rbEntrada.Text = "Entrada";
             this.rbEntrada.UseVisualStyleBackColor = true;
@@ -260,7 +260,7 @@
             this.btnSalvar.Location = new System.Drawing.Point(110, 186);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(87, 23);
-            this.btnSalvar.TabIndex = 1;
+            this.btnSalvar.TabIndex = 9;
             this.btnSalvar.Text = "Salvar[F12]";
             this.btnSalvar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSalvar.UseVisualStyleBackColor = true;

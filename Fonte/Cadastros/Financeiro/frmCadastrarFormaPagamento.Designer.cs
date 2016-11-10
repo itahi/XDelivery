@@ -181,6 +181,7 @@
             this.FPGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.FPGridView.Size = new System.Drawing.Size(257, 173);
             this.FPGridView.TabIndex = 11;
+            this.FPGridView.DoubleClick += new System.EventHandler(this.btnEditarFP_Click);
             // 
             // tabPage2
             // 

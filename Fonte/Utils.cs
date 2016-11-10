@@ -152,63 +152,56 @@ namespace DexComanda
                 MessageBox.Show(erro.Message);
             }
 
-            //conexao = new Conexao();
-            //NomeEmpresa = Sessions.returnEmpresa.Nome;
-            //DataSet usuarios = conexao.SelectAll("Usuario", "spObterUsuario");
 
-            //DataView dv = usuarios.Tables[0].DefaultView;
-            ////  Sessions.retunrUsuario = dv; 
-            //string query = "Nome = '" + nomeUsuario + "' AND Senha = '" + hashSenha + "'";
-
-            //dv.RowFilter = query;
-
-            //    if (dv.Count > 0)
-            //    {
-            //        //_CodUserLogado = int.Parse(dv[0].Row["Codigo"].ToString());
-            //        string _nome = dv[0].Row["Nome"].ToString();
-            //        string _senha = dv[0].Row["Senha"].ToString();
-
-            //        if (_nome.Equals(nomeUsuario) && _senha.Equals(hashSenha))
-            //        {
-            //            Sessions.retunrUsuario = new Usuario()
-            //            {
-            //                Nome = _nome,
-            //                Senha = _senha,
-            //                Codigo = Convert.ToInt16(dv[0].Row["Codigo"].ToString()),
-            //                AcessaRelatoriosSN = Convert.ToBoolean(dv[0].Row["AcessaRelatoriosSN"].ToString()),
-            //                AdministradorSN = Convert.ToBoolean(dv[0].Row["AdministradorSN"].ToString()),
-            //                FinalizaPedidoSN = Convert.ToBoolean(dv[0].Row["FinalizaPedidoSN"].ToString()),
-            //                CancelaPedidosSN = Convert.ToBoolean(dv[0].Row["CancelaPedidosSN"].ToString()),
-            //                AlteraProdutosSN = Convert.ToBoolean(dv[0].Row["AlteraProdutosSN"].ToString()),
-            //                DescontoPedidoSN = Convert.ToBoolean(dv[0].Row["DescontoPedidoSN"].ToString()),
-            //                DescontoMax = Convert.ToDouble(dv[0].Row["DescontoMax"].ToString()),
-            //                CaixaLogado = iNumCaixa
-            //            };
-
-            //            Sessions.retunrUsuario = Sessions.retunrUsuario;
-            //            Logado = true;
-
-
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Usuário ou Senha incorretos.", "[XSistemas] Aviso");
-            //            Logado = false;
-            //        }
-            //    }
-            //    else if (nomeUsuario.Equals("admin"))
-            //    {
-            //        frmConfiguracoes frmConfiguracoes = new frmConfiguracoes();
-            //        frmConfiguracoes.ShowDialog();
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Usuário ou senha incorretos", "[XSistemas] Aviso");
-            //        Logado = false;
-            //    }
-
-            //}
             return Logado;
+        }
+
+        public static void ImpressaoPorCozinha(int iCodPedido)
+        {
+            try
+            {
+                string iSql = " select PE.*,  " +
+                            " CodGrupo, " +
+                            " NomeImpressora, " +
+                            " IT.CodProduto " +
+                            " from Pedido PE " +
+                            " join ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0 " +
+                            " left join Produto P on P.Codigo = It.CodProduto " +
+                            " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo " +
+                            " where PE.Codigo=" + iCodPedido;
+
+                DataSet dsItemsNaoImpresso = conexao.SelectAll("ItemsPedido", "", iSql);
+
+                for (int i = 0; i < dsItemsNaoImpresso.Tables[0].Rows.Count; i++)
+                {
+                    int CodPedido = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(0).ToString());
+                    int CodGrupo = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(18).ToString());
+                    string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(19).ToString();
+
+
+                    DataSet itemsPedido = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpresso", CodPedido, "", CodGrupo);
+                    Utils.ImpressaoCozihanova_Separado(CodPedido, iNomeImpressora, CodGrupo);
+                    for (int intfor = 0; intfor < itemsPedido.Tables[0].Rows.Count; intfor++)
+                    {
+                        AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
+                        Atualiza.CodPedido = iCodPedido;
+                        Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[intfor].Field<int>("CodProduto");
+                        Atualiza.ImpressoSN = true;
+                        conexao.Update("spInformaItemImpresso", Atualiza);
+                    }
+                    //break;
+
+                }
+
+
+
+
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Não foi possivel imprimir o Item da Mesa verificar a impressora" + erro.Message);
+            }
         }
 
         public static Usuario RetornaDadosUsuario(string iNome, string iSenha)
@@ -775,6 +768,9 @@ namespace DexComanda
             }
             return iRetorno;
         }
+
+
+
         public static string ImpressaoCozihanova(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
@@ -876,12 +872,53 @@ namespace DexComanda
 
             return iReport;
         }
-        /// <summary>
-        /// Função para imprimir Pedido
-        /// </summary>
-        /// <param name="iCodPedido">Inteiro Código do Pedido a ser impresso</param>
-        ///  <param name="iExport">Boolean Código do Pedido a ser impresso</param>
-        /// <returns>String do Pedido para impressoras Matriciais quando iExpport for True.</returns>
+
+        public static string ImpressaoCozihanova_Separado(int iCodPedido, string iNomeImpressora,
+         int iCodGupo)
+        {
+            string iRetorno = ""; ;
+
+            RelComandaMesaSeparado report;
+            report = new RelComandaMesaSeparado();
+            crtableLogoninfos = new TableLogOnInfos();
+            crtableLogoninfo = new TableLogOnInfo();
+            crConnectionInfo = new ConnectionInfo();
+            try
+            {
+                Tables CrTables;
+                System.Drawing.Printing.PrinterSettings printersettings = new System.Drawing.Printing.PrinterSettings();
+                printersettings.Copies = 1;
+                printersettings.Collate = false;
+
+
+                if (iNomeImpressora != "")
+                {
+                    report.PrintOptions.PrinterName = iNomeImpressora;
+                }
+
+                report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesaSeparado.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "dex";
+                crConnectionInfo.Password = "1234";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+                report.SetParameterValue("@Codigo", iCodPedido);
+                report.SetParameterValue("@CodGrupo", iCodGupo);
+                report.PrintToPrinter(1, false, 0, 0);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.InnerException.Message);
+            }
+            return iRetorno;
+        }
         public static string ImpressaMesaNova(int iCodPedido, int iCodGupo, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
         {
             string iRetorno = "";
@@ -892,89 +929,47 @@ namespace DexComanda
             crConnectionInfo = new ConnectionInfo();
             try
             {
+                System.Drawing.Printing.PrinterSettings printersettings = new System.Drawing.Printing.PrinterSettings();
+                printersettings.PrinterName = iNomeImpressora;
+                printersettings.Copies = 1;
+                printersettings.Collate = false;
 
-                try
+                Tables CrTables;
+                if (iNomeImpressora != "")
                 {
-
-                    System.Drawing.Printing.PrinterSettings printersettings = new System.Drawing.Printing.PrinterSettings();
-                    printersettings.PrinterName = iNomeImpressora;
-                    printersettings.Copies = 1;
-                    printersettings.Collate = false;
-
-                    Tables CrTables;
-                    if (iNomeImpressora != "")
-                    {
-                        report.PrintOptions.PrinterName = iNomeImpressora;
-                    }
-
-                    report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
-                    crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
-                    crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                    crConnectionInfo.UserID = "sa";
-                    crConnectionInfo.Password = "1001";
-
-                    CrTables = report.Database.Tables;
-                    foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
-                    {
-                        crtableLogoninfo = CrTable.LogOnInfo;
-                        crtableLogoninfo.ConnectionInfo = crConnectionInfo;
-                        CrTable.ApplyLogOnInfo(crtableLogoninfo);
-                    }
-                    report.SetParameterValue("@Codigo", iCodPedido);
-                    report.SetParameterValue("@CodGrupo", iCodGupo);
-
-                    if (report.Rows.Count > 0)
-                    {
-
-
-                        if (iExport)
-                        {
-                            CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
-                            new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                            reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelComandaMesa.txt";
-
-                            report.ExportOptions.ExportDestinationType =
-                            CrystalDecisions.Shared.ExportDestinationType.DiskFile;
-
-                            report.ExportOptions.ExportFormatType =
-                            CrystalDecisions.Shared.ExportFormatType.Text;
-
-                            report.ExportOptions.DestinationOptions = reportExport;
-                            report.Export();
-                            iRetorno = Directory.GetCurrentDirectory() + @"\RelComandaMesa.txt";
-                        }
-                        else
-                        {
-                            for (int i = 0; i < iNumCopias; i++)
-                            {
-                                //if (iNomeImpressora=="")
-                                //{
-                                report.PrintToPrinter(1, false, 0, 0);
-                                //}
-                                //else
-                                //{
-
-                                //}
-
-                            }
-
-                        }
-                    }
+                    report.PrintOptions.PrinterName= printersettings.PrinterName;
                 }
-                finally
+
+                report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
                 {
-                    // report.Dispose();
-
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
+                report.SetParameterValue("@Codigo", iCodPedido);
+                report.SetParameterValue("@CodGrupo", iCodGupo);
+
+                for (int i = 0; i < iNumCopias; i++)
+                {
+                    report.PrintToPrinter(1, false, 0, 0);
+                }
+
             }
             catch (Exception erro)
             {
 
-                MessageBox.Show(erro.InnerException.Message);
+                MessageBox.Show(Bibliotecas.cException +  erro.InnerException.Message);
             }
             return iRetorno;
         }
-        public static void ImprimirCaixa(ReportClass iReport,string iValor, string iSolicitante)
+        public static void ImprimirCaixa(ReportClass iReport, string iValor, string iSolicitante)
         {
             string iRetorno = "";
             crtableLogoninfos = new TableLogOnInfos();
@@ -982,7 +977,7 @@ namespace DexComanda
             crConnectionInfo = new ConnectionInfo();
             Tables CrTables;
 
-            iReport.Load(Directory.GetCurrentDirectory() + @"\"+iReport.FileName+".rpt");
+            iReport.Load(Directory.GetCurrentDirectory() + @"\" + iReport.FileName + ".rpt");
             crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
             crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
             crConnectionInfo.UserID = "sa";
@@ -995,16 +990,12 @@ namespace DexComanda
                 crtableLogoninfo.ConnectionInfo = crConnectionInfo;
                 CrTable.ApplyLogOnInfo(crtableLogoninfo);
             }
-            iReport.SetParameterValue("Valor",iValor);
+            iReport.SetParameterValue("Valor", iValor);
             iReport.SetParameterValue("Solicitante", iSolicitante);
             iReport.SetParameterValue("Usuario", Sessions.retunrUsuario.Nome);
             iReport.PrintToPrinter(1, false, 0, 0);
         }
-
-
-
-
-    public static string ImprimirCancelamentos(DateTime dtInicio, DateTime dtFim)
+        public static string ImprimirCancelamentos(DateTime dtInicio, DateTime dtFim)
         {
             string iRetorno = "";
             RelCancelamentos report;

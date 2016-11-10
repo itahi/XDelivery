@@ -37,7 +37,6 @@
             this.chkOnline = new System.Windows.Forms.CheckBox();
             this.chkAtivo = new System.Windows.Forms.CheckBox();
             this.pnlImpressora = new System.Windows.Forms.Panel();
-            this.btnLista = new System.Windows.Forms.Button();
             this.cbxNomeImpressora = new System.Windows.Forms.ComboBox();
             this.chkImprimeCozinha = new System.Windows.Forms.CheckBox();
             this.cbxFamilia = new System.Windows.Forms.ComboBox();
@@ -133,32 +132,20 @@
             // 
             this.pnlImpressora.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlImpressora.Controls.Add(this.btnLista);
             this.pnlImpressora.Controls.Add(this.cbxNomeImpressora);
             this.pnlImpressora.Location = new System.Drawing.Point(4, 36);
             this.pnlImpressora.Name = "pnlImpressora";
             this.pnlImpressora.Size = new System.Drawing.Size(299, 48);
             this.pnlImpressora.TabIndex = 15;
             // 
-            // btnLista
-            // 
-            this.btnLista.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLista.Location = new System.Drawing.Point(206, 13);
-            this.btnLista.Name = "btnLista";
-            this.btnLista.Size = new System.Drawing.Size(78, 23);
-            this.btnLista.TabIndex = 17;
-            this.btnLista.Text = "Lista Impre.";
-            this.btnLista.UseVisualStyleBackColor = true;
-            // 
             // cbxNomeImpressora
             // 
-            this.cbxNomeImpressora.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxNomeImpressora.FormattingEnabled = true;
             this.cbxNomeImpressora.Location = new System.Drawing.Point(3, 13);
             this.cbxNomeImpressora.Name = "cbxNomeImpressora";
-            this.cbxNomeImpressora.Size = new System.Drawing.Size(197, 21);
+            this.cbxNomeImpressora.Size = new System.Drawing.Size(293, 21);
             this.cbxNomeImpressora.TabIndex = 16;
+            this.cbxNomeImpressora.DropDown += new System.EventHandler(this.ListaImpressoras);
             // 
             // chkImprimeCozinha
             // 
@@ -257,7 +244,6 @@
         private System.Windows.Forms.CheckBox chkOnline;
         private System.Windows.Forms.CheckBox chkAtivo;
         private System.Windows.Forms.Panel pnlImpressora;
-        private System.Windows.Forms.Button btnLista;
         private System.Windows.Forms.ComboBox cbxNomeImpressora;
         private System.Windows.Forms.CheckBox chkImprimeCozinha;
         private System.Windows.Forms.ComboBox cbxFamilia;

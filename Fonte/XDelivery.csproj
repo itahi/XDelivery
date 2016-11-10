@@ -501,6 +501,12 @@
     <Compile Include="Relatorios\Clientes\frmReporVendasPorCliente.Designer.cs">
       <DependentUpon>frmReporVendasPorCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Relatorios\Delivery\RelComandaMesaSeparado.cs">
+      <DependentUpon>RelComandaMesaSeparado.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Relatorios\frmReportPadrao.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1038,6 +1044,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\frmReporVendasPorCliente.resx">
       <DependentUpon>frmReporVendasPorCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesaSeparado.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelComandaMesaSeparado.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\frmReportPadrao.resx">
       <DependentUpon>frmReportPadrao.cs</DependentUpon>

@@ -55,80 +55,88 @@ namespace DexComanda.Cadastros
 
         private void Salvar(object sender, EventArgs e)
         {
-           
-            int intNumCaixa=1;
-            if (txtDescricao.Text=="" || txtSolicitante.Text=="" || txtValor.Text=="")
+            try
             {
-                MessageBox.Show(Bibliotecas.cCamposObrigatório);
-                return;
-            }
-            DateTime Dt = Convert.ToDateTime(dtMovimento.Value.ToShortDateString());
-            if (cbxCaixas.SelectedText.ToString()!="")
-            {
-                intNumCaixa =int.Parse(cbxCaixas.SelectedText.ToString());
-            }
-            DataSet ds = con.RetornaCaixaPorTurno(intNumCaixa, cbxTurno.Text, Dt);
-            if (Convert.ToBoolean(ds.Tables[0].Rows[0].ItemArray.GetValue(7)))
-            {
-                MessageBox.Show(Bibliotecas.cCaixaFechado);
-                return;
-            }
-            if (Utils.CaixaAberto(Dt, intNumCaixa,Sessions.retunrUsuario.Turno))
-            {
-                CaixaMovimento cxMovimento = new CaixaMovimento()
-                {
-                    CodCaixa = intNumCaixa,
-                    CodFormaPagamento = int.Parse(cbxFormaPagamento.SelectedValue.ToString()),
-                    Data = Convert.ToDateTime(dtMovimento.Value.ToShortDateString()),
-                    CodUser = Sessions.retunrUsuario.Codigo,
-                    Historico = txtDescricao.Text,
-                    Valor = decimal.Parse(txtValor.Text),
-                    NumeroDocumento = txtDocumento.Text,
-                    Turno = cbxTurno.Text
-
-                };
-                if (intNumCaixa.ToString() == "" || txtValor.Text == "")
+                int intNumCaixa = 1;
+                if (txtDescricao.Text == "" || txtSolicitante.Text == "" || txtValor.Text == "")
                 {
                     MessageBox.Show(Bibliotecas.cCamposObrigatório);
                     return;
                 }
-                if (rbEntrada.Checked)
+                DateTime Dt = Convert.ToDateTime(dtMovimento.Value.ToShortDateString());
+                if (cbxCaixas.SelectedText.ToString() != "")
                 {
-                    cxMovimento.Tipo = 'E';
+                    intNumCaixa = int.Parse(cbxCaixas.SelectedText.ToString());
                 }
-                else if (rbSaida.Checked)
+                DataSet ds = con.RetornaCaixaPorTurno(intNumCaixa, cbxTurno.Text, Dt);
+                if (Convert.ToBoolean(ds.Tables[0].Rows[0].ItemArray.GetValue(7)))
                 {
-                    cxMovimento.Tipo = 'S';
-                }
-                else
-                {
-                    MessageBox.Show("Selecione o tipo de movimento", "[XSistemas] Segurança");
+                    MessageBox.Show(Bibliotecas.cCaixaFechado);
                     return;
                 }
-
-                con.Insert("spInserirMovimentoCaixa", cxMovimento);
-                MessageBox.Show("Movimento lançado", "[Xsistemas] Aviso");
-                if (cxMovimento.Tipo=='E')
+                if (Utils.CaixaAberto(Dt, intNumCaixa, Sessions.retunrUsuario.Turno))
                 {
-                    RelSuprimento repor;
-                    repor = new RelSuprimento();
-                    Utils.ImprimirCaixa(repor, cxMovimento.Valor.ToString(), txtSolicitante.Text);
+                    CaixaMovimento cxMovimento = new CaixaMovimento()
+                    {
+                        CodCaixa = intNumCaixa,
+                        CodFormaPagamento = int.Parse(cbxFormaPagamento.SelectedValue.ToString()),
+                        Data = Convert.ToDateTime(dtMovimento.Value.ToShortDateString()),
+                        CodUser = Sessions.retunrUsuario.Codigo,
+                        Historico = txtDescricao.Text,
+                        Valor = decimal.Parse(txtValor.Text),
+                        NumeroDocumento = txtDocumento.Text,
+                        Turno = cbxTurno.Text
+
+                    };
+                    if (intNumCaixa.ToString() == "" || txtValor.Text == "")
+                    {
+                        MessageBox.Show(Bibliotecas.cCamposObrigatório);
+                        return;
+                    }
+                    if (rbEntrada.Checked)
+                    {
+                        cxMovimento.Tipo = 'E';
+                    }
+                    else if (rbSaida.Checked)
+                    {
+                        cxMovimento.Tipo = 'S';
+                    }
+                    else
+                    {
+                        MessageBox.Show("Selecione o tipo de movimento", "[XSistemas] Segurança");
+                        return;
+                    }
+
+                    con.Insert("spInserirMovimentoCaixa", cxMovimento);
+                    MessageBox.Show("Movimento lançado", "[Xsistemas] Aviso");
+                    if (cxMovimento.Tipo == 'E')
+                    {
+                        RelSuprimento repor;
+                        repor = new RelSuprimento();
+                        Utils.ImprimirCaixa(repor, cxMovimento.Valor.ToString(), txtSolicitante.Text);
+                    }
+                    else
+                    {
+                        RelSangria repor;
+                        repor = new RelSangria();
+                        Utils.ImprimirCaixa(repor, cxMovimento.Valor.ToString(), txtSolicitante.Text);
+                    }
+
+                    Utils.LimpaForm(this);
+
                 }
                 else
                 {
-                    RelSangria repor;
-                    repor = new RelSangria();
-                    Utils.ImprimirCaixa(repor, cxMovimento.Valor.ToString(), txtSolicitante.Text);
+                    MessageBox.Show("Caixa do dia " + dtMovimento.Value.ToString() + " já foi fechado , lançamento não permitido", "[Xsistemas] Aviso");
+
                 }
-                
-                Utils.LimpaForm(this);
-
             }
-            else
+            catch (Exception erro)
             {
-                MessageBox.Show("Caixa do dia " + dtMovimento.Value.ToString() + " já foi fechado , lançamento não permitido", "[Xsistemas] Aviso");
-
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
+           
+           
         }
 
         private void rbSaida_CheckedChanged(object sender, EventArgs e)

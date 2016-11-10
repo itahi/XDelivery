@@ -301,6 +301,14 @@ namespace DexComanda
         {
             Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Grupo", "spObterFamilia");
         }
+
+        private void ListaImpressoras(object sender, EventArgs e)
+        {
+            foreach (var item in PrinterSettings.InstalledPrinters)
+            {
+                cbxNomeImpressora.Items.Add(item);
+            }
+        }
     }
 }
 

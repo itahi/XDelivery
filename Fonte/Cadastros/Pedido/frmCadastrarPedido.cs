@@ -218,11 +218,8 @@ namespace DexComanda
                 this.cbxTipoProduto.ValueMember = "Codigo";
             }
 
-            Utils.MontaCombox(cmbFPagamento, "Descricao", "Codigo", "FormaPagamento", "spObterFormaPagamento");
-            //this.cmbFPagamento.DataSource = con.SelectAll("FormaPagamento", "spObterFormaPagamento").Tables["FormaPagamento"];
-            //this.cmbFPagamento.DisplayMember = "Descricao";
-            //this.cmbFPagamento.ValueMember = "Codigo";
-
+            Utils.MontaCombox(cmbFPagamento, "Descricao", "Codigo", "FormaPagamento", "spObterFormaPagamentoAtivo");
+            
             if (codPedido != 0 || PedidoRepetio)
             {
 
@@ -617,6 +614,7 @@ namespace DexComanda
 
             return valores.Max();
         }
+      
         private void MontaMenuOpcoes(int iCodProduto, int iCodProduto2 = 0)
         {
             try
@@ -631,7 +629,6 @@ namespace DexComanda
                 {
                     for (int i = 0; i < dsOpcoes.Tables[0].Rows.Count; i++)
                     {
-
                         DataSet dsMaiorPreco = con.RetornaMaioresPrecos(iCodProduto.ToString(), iCodProduto2.ToString(), "", "", dsOpcoes.Tables[0].Rows[0].ItemArray.GetValue(5).ToString());
                         if (dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString() != "")
                         {
@@ -734,7 +731,11 @@ namespace DexComanda
                         }
                         if (lTipo == 2)
                         {
-                            chkListAdicionais.Items.Add(lnome + "(+" + lPreco + ")", false);
+                            //while (lTipo==2)
+                            //{
+                                chkListAdicionais.Items.Add(lnome + "(+" + lPreco + ")", false);
+                            //}
+                            
 
                         }
 
@@ -1648,17 +1649,6 @@ namespace DexComanda
 
                     string iRetorno = Utils.ImpressaoBalcao(iCodigo, ImprimeLPT, QtdViasBalcao);
 
-                    //if (ImprimeViaCozinha)
-                    //{
-                    //    Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
-                    //}
-                    //if (ImprimeLPT && iRetorno != "")
-                    //{
-                    //    StreamReader tempDex = new StreamReader(iRetorno);
-                    //    string sLine = "";
-                    //    sLine = tempDex.ReadToEnd();
-                    //    Utils.ImpressaoSerial(sLine, PortaImpressa, 115200);
-                    //}
                 }
 
                 // Imprimindo via Entrega
@@ -1698,8 +1688,6 @@ namespace DexComanda
                         Utils.ImpressaoEntreganova_Matricial(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), dblPRevisao, false, 1);
                     }
 
-                    //  }
-
                 }
                 if (ImprimeViaCozinha && cbxTipoPedido.Text.Contains("0 - Entrega"))
                 {
@@ -1712,6 +1700,12 @@ namespace DexComanda
                     {
                         iCodigo = codPedido;
                     }
+                    if (Sessions.returnEmpresa.CNPJ== "21128650000197")
+                    {
+                        Utils.ImpressaoPorCozinha(iCodigo);
+                        return;
+                    }
+                   
 
                     string iRetorno = Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
 
@@ -2778,6 +2772,7 @@ namespace DexComanda
             this.cmbFPagamento.Name = "cmbFPagamento";
             this.cmbFPagamento.Size = new System.Drawing.Size(208, 26);
             this.cmbFPagamento.TabIndex = 99;
+            this.cmbFPagamento.DropDown += new System.EventHandler(this.ListaFormasPagamento);
             this.cmbFPagamento.SelectionChangeCommitted += new System.EventHandler(this.cmbFPagamento_SelectionChangeCommitted);
             // 
             // cbxTrocoParaOK
@@ -4058,6 +4053,11 @@ namespace DexComanda
         private void cbxListaMesas_DropDown(object sender, EventArgs e)
         {
             CarregaMesas();
+        }
+
+        private void ListaFormasPagamento(object sender, EventArgs e)
+        {
+            Utils.MontaCombox(cmbFPagamento, "Descricao", "Codigo", "FormaPagamento", "spObterFormaPagamentoAtivo");
         }
 
         private void cbxSabor_SelectedIndexChanged(object sender, EventArgs e)

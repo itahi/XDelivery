@@ -26,7 +26,7 @@ namespace DexComanda.Push
             switch (iDMsg)
             {
                 case 1:
-                    iTexto = "Opa seu pedido acaba de ser confirmado e impresso!";
+                    iTexto = "Seu pedido chegará em aproximadamente" + Sessions.returnConfig.PrevisaoEntrega + " minutos.";
                     break;
                 case 2:
                     iTexto = "Opa seu pedido acaba de ser confirmado e impresso!";

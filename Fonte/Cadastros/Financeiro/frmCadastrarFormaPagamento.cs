@@ -202,7 +202,7 @@ namespace DexComanda
             if (FPGridView.SelectedRows.Count > 0)
             {
                 codigo = int.Parse(this.FPGridView.CurrentRow.Cells[0].Value.ToString());
-                this.txtNomeFP.Text = this.FPGridView.CurrentRow.Cells[1].Value.ToString();
+                this.txtNomeFP.Text = this.FPGridView.CurrentRow.Cells["Descricao"].Value.ToString();
                 chkDesconto2.Checked = Convert.ToBoolean(this.FPGridView.CurrentRow.Cells[2].Value.ToString());
                 chkFinanceiro.Checked = Convert.ToBoolean(this.FPGridView.CurrentRow.Cells[3].Value.ToString());
                 chkOnline.Checked = Convert.ToBoolean(this.FPGridView.CurrentRow.Cells[4].Value.ToString());
