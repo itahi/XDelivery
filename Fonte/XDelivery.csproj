@@ -189,10 +189,10 @@
     <Compile Include="Cadastros\frmAdicionarMesa.Designer.cs">
       <DependentUpon>frmAdicionarMesa.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cadastros\frmCadastroStatus.cs">
+    <Compile Include="Cadastros\Pedido\frmCadastroStatus.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cadastros\frmCadastroStatus.Designer.cs">
+    <Compile Include="Cadastros\Pedido\frmCadastroStatus.Designer.cs">
       <DependentUpon>frmCadastroStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="Cadastros\frmFinalizacaoPedido.cs">
@@ -923,7 +923,7 @@
     <EmbeddedResource Include="Cadastros\frmAdicionarMesa.resx">
       <DependentUpon>frmAdicionarMesa.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\frmCadastroStatus.resx">
+    <EmbeddedResource Include="Cadastros\Pedido\frmCadastroStatus.resx">
       <DependentUpon>frmCadastroStatus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmFinalizacaoPedido.resx">

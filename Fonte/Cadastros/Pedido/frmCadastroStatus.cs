@@ -79,10 +79,10 @@ namespace DexComanda.Cadastros
 
         private void btnEditarGrupo_Click(object sender, EventArgs e)
         {
-            codigo = int.Parse(StatusGridView.Rows[rowIndex].Cells["Codigo"].Value.ToString());
-            txbNome.Text = StatusGridView.Rows[rowIndex].Cells["Nome"].Value.ToString();
-            chkAlertar.Checked = StatusGridView.Rows[rowIndex].Cells["Alerta Cliente"].Value.ToString() == "SIM";
-            cbxOrder.Text = StatusGridView.Rows[rowIndex].Cells["Status"].Value.ToString();
+            codigo = int.Parse(StatusGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+            txbNome.Text = StatusGridView.CurrentRow.Cells["Nome"].Value.ToString();
+            chkAlertar.Checked = StatusGridView.CurrentRow.Cells["Alerta Cliente"].Value.ToString() == "SIM";
+            cbxOrder.Text = StatusGridView.CurrentRow.Cells["Status"].Value.ToString();
 
             this.btnAdicionarGrupo.Text = "Salvar [F12]";
             this.btnAdicionarGrupo.Click += new System.EventHandler(this.Salvar);

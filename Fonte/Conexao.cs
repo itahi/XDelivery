@@ -199,18 +199,26 @@ namespace DexComanda
         }
         public void AtualizaSitucao(int iCodPedido, int iCodUser, int iCodStatus, DataGridView grid = null)
         {
-            if (ConsultaPedidoExiste(iCodPedido,iCodStatus))
+            try
             {
-                return;
+                if (ConsultaPedidoExiste(iCodPedido, iCodStatus))
+                {
+                    return;
+                }
+                PedidoStatusMovimento ped = new PedidoStatusMovimento()
+                {
+                    CodPedido = iCodPedido,
+                    CodStatus = iCodStatus,
+                    CodUsuario = iCodUser,
+                    DataAlteracao = DateTime.Now
+                };
+                Insert("spAdicionarPedidoStatusMovimento", ped);
             }
-            PedidoStatusMovimento ped = new PedidoStatusMovimento()
+            catch (Exception erro)
             {
-                CodPedido = iCodPedido,
-                CodStatus = iCodStatus,
-                CodUsuario = iCodUser,
-                DataAlteracao = DateTime.Now
-            };
-            Insert("spAdicionarPedidoStatusMovimento", ped);
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+         
             // Utils.PopulaGrid_Novo("Pedido", grid, Sessions.SqlPedido);
         }
         public decimal RetornaPrecoComEmbalagem(string iGrupoProduto, int iCodProduto)
