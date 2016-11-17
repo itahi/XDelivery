@@ -856,9 +856,9 @@ namespace DexComanda
             MessageBox.Show("Senha gravada", "[xSistemas]");
         }
 
-
-
-
-
+        private void txtPrevisao_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoPermiteNumeros(e);
+        }
     }
 }

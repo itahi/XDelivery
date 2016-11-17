@@ -84,8 +84,9 @@ namespace DexComanda
         {
             var TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, con);
 
-            frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", "", "0.00", TaxaEntrega, false, DateTime.Now, 0, CodPessoa,
-                                                                    "0.00", "", "", "");
+            frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", "0,00", "0,00", TaxaEntrega, 
+                                                                        false, DateTime.Now, 0, CodPessoa,
+                                                                        "", "", "", "", null, 0.00M);
             CadPedido.ShowDialog();
             Utils.LimpaForm(this);
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
@@ -1088,13 +1089,13 @@ namespace DexComanda
                 else
                 {
                     decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, con);
-                    frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", "0,00", "0,00", TaxaServico, false, DateTime.Now, 0, CodPessoa,
-                                                                        "", "", "", "", null, 0.00M);
+                    frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", "0,00", "0,00",
+                                                                    TaxaServico, false, DateTime.Now, 0,
+                                                                    CodPessoa,
+                                                                        "0,00", "", "", "", null, 0.00M);
                     frm.ShowDialog();
                 }
 
-
-                //  frm.Dispose();
             }
             catch (Exception x)
             {
@@ -1549,7 +1550,7 @@ namespace DexComanda
         {
             Utils.SoPermiteNumeros(e);
         }
-        private void ImpressaoAutomatica(int iCodPedido, int iCodGrupo, string iNomeImpressora)
+        private async void ImpressaoAutomatica(int iCodPedido, int iCodGrupo, string iNomeImpressora)
         {
             try
             {
@@ -1657,6 +1658,7 @@ namespace DexComanda
         {
             try
             {
+               
                 DataSet dsPedidosAbertos = con.SelectAll("Pedido", "spObterPedido");
                 int iPedidosAberto = dsPedidosAbertos.Tables["Pedido"].Rows.Count;
 
@@ -1666,7 +1668,7 @@ namespace DexComanda
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
 
                 }
-                string iSql = " select PE.*,  " +
+                string iSql = " select distinct (IT.CodProduto) ,PE.*,  " +
                               " CodGrupo, " +
                               " NomeImpressora " +
                               " from Pedido PE " +
@@ -1675,14 +1677,16 @@ namespace DexComanda
                               " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo " +
                               " where PE.CodigoMesa > 0 and Finalizado = 0 ";
 
+
                 DataSet dsItemsNaoImpresso = con.SelectAll("ItemsPedido", "", iSql);
                 if (dsItemsNaoImpresso.Tables[0].Rows.Count > 0)
                 {
                     DataRow dRowPedido = dsItemsNaoImpresso.Tables[0].Rows[0];
-
-                    int CodPedido = int.Parse(dRowPedido.ItemArray.GetValue(0).ToString());
-                    int CodGrupo = int.Parse(dRowPedido.ItemArray.GetValue(18).ToString());
-                    string iNomeImpressora = dRowPedido.ItemArray.GetValue(19).ToString();
+               
+                    int CodPedido = int.Parse(dRowPedido.ItemArray.GetValue(1).ToString());
+                  
+                    int CodGrupo = int.Parse(dRowPedido.ItemArray.GetValue(19).ToString());
+                    string iNomeImpressora = dRowPedido.ItemArray.GetValue(20).ToString();
 
                     Boolean iMesa = dRowPedido.ItemArray.GetValue(10).ToString() != "0";
                     if (iMesa && chkGerenciaImpressao.Checked)

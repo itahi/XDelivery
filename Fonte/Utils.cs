@@ -48,6 +48,7 @@ using DexComanda.Relatorios.Gerenciais.Cristal;
 using DexComanda.Relatorios.Clientes.Crystal;
 using CrystalDecisions.Windows.Forms;
 using DexComanda.Relatorios.Caixa;
+using System.Drawing.Printing;
 
 namespace DexComanda
 {
@@ -160,36 +161,36 @@ namespace DexComanda
         {
             try
             {
-                string iSql = " select PE.*,  " +
+                string iSql = " select distinct (IT.CodProduto) ,PE.*,  " +
                             " CodGrupo, " +
                             " NomeImpressora, " +
                             " IT.CodProduto " +
                             " from Pedido PE " +
                             " join ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0 " +
                             " left join Produto P on P.Codigo = It.CodProduto " +
-                            " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo " +
-                            " where PE.Codigo=" + iCodPedido;
+                            " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo "+
+                            " where  PE.Codigo=" + iCodPedido + "and ImprimeCozinhaSN = 1 " ;
 
                 DataSet dsItemsNaoImpresso = conexao.SelectAll("ItemsPedido", "", iSql);
 
                 for (int i = 0; i < dsItemsNaoImpresso.Tables[0].Rows.Count; i++)
                 {
-                    int CodPedido = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(0).ToString());
-                    int CodGrupo = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(18).ToString());
-                    string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(19).ToString();
-
+                    int CodPedido = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(1).ToString());
+                    int CodGrupo = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(19).ToString());
+                    string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(20).ToString();
 
                     DataSet itemsPedido = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpresso", CodPedido, "", CodGrupo);
                     Utils.ImpressaoCozihanova_Separado(CodPedido, iNomeImpressora, CodGrupo);
                     for (int intfor = 0; intfor < itemsPedido.Tables[0].Rows.Count; intfor++)
                     {
+                        
                         AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
                         Atualiza.CodPedido = iCodPedido;
                         Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[intfor].Field<int>("CodProduto");
                         Atualiza.ImpressoSN = true;
                         conexao.Update("spInformaItemImpresso", Atualiza);
                     }
-                    //break;
+                   
 
                 }
 
@@ -879,23 +880,18 @@ namespace DexComanda
             string iRetorno = ""; ;
 
             RelComandaMesaSeparado report;
-            report = new RelComandaMesaSeparado();
             crtableLogoninfos = new TableLogOnInfos();
             crtableLogoninfo = new TableLogOnInfo();
             crConnectionInfo = new ConnectionInfo();
+            report = new RelComandaMesaSeparado();
             try
             {
+                
                 Tables CrTables;
                 System.Drawing.Printing.PrinterSettings printersettings = new System.Drawing.Printing.PrinterSettings();
                 printersettings.Copies = 1;
                 printersettings.Collate = false;
-
-
-                if (iNomeImpressora != "")
-                {
-                    report.PrintOptions.PrinterName = iNomeImpressora;
-                }
-
+                printersettings.PrinterName = iNomeImpressora;
                 report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesaSeparado.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
@@ -909,17 +905,28 @@ namespace DexComanda
                     crtableLogoninfo.ConnectionInfo = crConnectionInfo;
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
+             
                 report.SetParameterValue("@Codigo", iCodPedido);
                 report.SetParameterValue("@CodGrupo", iCodGupo);
-                report.PrintToPrinter(1, false, 0, 0);
+
+                if (iNomeImpressora != "")
+                {
+                    report.PrintOptions.PrinterName = iNomeImpressora;
+                    report.PrintToPrinter(printersettings, new PageSettings(), false);
+                }
+                else
+                {
+                    report.PrintToPrinter(1, false, 0, 0);
+                }
+                
             }
-            catch (Exception erro)
+            finally
             {
-                MessageBox.Show(Bibliotecas.cException + erro.InnerException.Message);
+                report.Dispose();
             }
             return iRetorno;
         }
-        public static string ImpressaMesaNova(int iCodPedido, int iCodGupo, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
+        public   static string ImpressaMesaNova(int iCodPedido, int iCodGupo, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
         {
             string iRetorno = "";
             RelComandaMesa report;
@@ -929,16 +936,13 @@ namespace DexComanda
             crConnectionInfo = new ConnectionInfo();
             try
             {
-                System.Drawing.Printing.PrinterSettings printersettings = new System.Drawing.Printing.PrinterSettings();
+                PrinterSettings printersettings = new PrinterSettings();
                 printersettings.PrinterName = iNomeImpressora;
                 printersettings.Copies = 1;
                 printersettings.Collate = false;
 
                 Tables CrTables;
-                if (iNomeImpressora != "")
-                {
-                    report.PrintOptions.PrinterName= printersettings.PrinterName;
-                }
+           
 
                 report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
@@ -956,9 +960,14 @@ namespace DexComanda
                 report.SetParameterValue("@Codigo", iCodPedido);
                 report.SetParameterValue("@CodGrupo", iCodGupo);
 
-                for (int i = 0; i < iNumCopias; i++)
+                if (iNomeImpressora != "")
                 {
-                    report.PrintToPrinter(1, false, 0, 0);
+                    report.PrintOptions.PrinterName = iNomeImpressora;
+                }
+                for  (  int i = 0; i < iNumCopias; i++)
+                {
+                    //MessageBox.Show(report.PrintOptions.PrinterName.ToString());
+                    report.PrintToPrinter (1, false, 0, 0);
                 }
 
             }
@@ -1557,10 +1566,12 @@ namespace DexComanda
                 CodPedido = int.Parse(Linhas.ItemArray.GetValue(0).ToString());
                 CodPessoa = int.Parse(Linhas.ItemArray.GetValue(1).ToString());
                 FormaPagamento = Linhas.ItemArray.GetValue(3).ToString();
+                
                 // Retorna a Taxa de Entrega do cadastro do Cliente
                 TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, conexao);
 
-                frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", "", "", TaxaEntrega, false, DateTime.Now, CodPedido, CodPessoa,
+                frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", "", "", 0, false,
+                                                                            DateTime.Now, CodPedido, CodPessoa,
                                                                             "", FormaPagamento, "", "Balcao", iMain, 0.00M);
                 frmRepetePedido.ShowDialog();
 
@@ -1734,6 +1745,12 @@ namespace DexComanda
                 {
                     ((System.Windows.Forms.PictureBox)ctrControl).Image = null;
                     // (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))(
+                }
+
+                if (ctrControl.Controls.Count > 0)
+                {
+                    //Call itself to get all other controls in other containers
+                    LimpaForm(ctrControl);
                 }
             }
         }

@@ -1700,12 +1700,12 @@ namespace DexComanda
                     {
                         iCodigo = codPedido;
                     }
-                    if (Sessions.returnEmpresa.CNPJ== "21128650000197")
+                    if (Sessions.returnEmpresa.CNPJ == "21128650000197")
                     {
                         Utils.ImpressaoPorCozinha(iCodigo);
                         return;
                     }
-                   
+
 
                     string iRetorno = Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
 
@@ -2500,7 +2500,6 @@ namespace DexComanda
             this.gridViewItemsPedido.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridViewItemsPedido.Location = new System.Drawing.Point(12, 230);
             this.gridViewItemsPedido.Name = "gridViewItemsPedido";
-            this.gridViewItemsPedido.ReadOnly = true;
             this.gridViewItemsPedido.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridViewItemsPedido.Size = new System.Drawing.Size(640, 113);
             this.gridViewItemsPedido.TabIndex = 47;
