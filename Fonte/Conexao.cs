@@ -1720,12 +1720,17 @@ namespace DexComanda
             else if (spName == "spObterItemsNaoImpresso")
             {
                 command.Parameters.AddWithValue("@Codigo", codigo);
-                command.Parameters.AddWithValue("@CodGrupo", iCodigo2);
+                command.Parameters.AddWithValue("@NomeImpressora", iCodString);
             }
             else if (spName== "spObterProdutoCodigoInterno")
             {
                 command.Parameters.AddWithValue("@Codigo", codigo);
                 command.Parameters.AddWithValue("@CodProduto", iCodString);
+            }
+            else if (spName == "spObterItemsNaoImpressoPorCodigo")
+            {
+                command.Parameters.AddWithValue("@Codigo", codigo);
+                command.Parameters.AddWithValue("@CodGrupo", iCodigo2);
             }
             else
             {

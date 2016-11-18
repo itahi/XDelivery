@@ -54,6 +54,7 @@ namespace DexComanda
 {
     public class Utils
     {
+        private static DataSet dsItemsNaoImpresso;
         private static Conexao conexao;
         private static SimpleSending cliente;
         private static SimpleMessage mensagem;
@@ -157,40 +158,46 @@ namespace DexComanda
             return Logado;
         }
 
+        private static DataSet ItensSelect(int iCodPedido)
+        {
+            DataSet dsReturn;
+            string iSql = " select distinct (IT.CodProduto) ,PE.*,  " +
+                           " CodGrupo, " +
+                           " NomeImpressora, " +
+                           " IT.CodProduto " +
+                           " from Pedido PE " +
+                           " join ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0 " +
+                           " left join Produto P on P.Codigo = It.CodProduto " +
+                           " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo " +
+                           " where  PE.Codigo=" + iCodPedido + " and ImprimeCozinhaSN = 1 ";
+
+            dsReturn  = conexao.SelectAll("ItemsPedido", "", iSql);
+            return dsReturn;
+        }
         public static void ImpressaoPorCozinha(int iCodPedido)
         {
             try
             {
-                string iSql = " select distinct (IT.CodProduto) ,PE.*,  " +
-                            " CodGrupo, " +
-                            " NomeImpressora, " +
-                            " IT.CodProduto " +
-                            " from Pedido PE " +
-                            " join ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0 " +
-                            " left join Produto P on P.Codigo = It.CodProduto " +
-                            " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo "+
-                            " where  PE.Codigo=" + iCodPedido + "and ImprimeCozinhaSN = 1 " ;
-
-                DataSet dsItemsNaoImpresso = conexao.SelectAll("ItemsPedido", "", iSql);
+                dsItemsNaoImpresso = ItensSelect(iCodPedido);
 
                 for (int i = 0; i < dsItemsNaoImpresso.Tables[0].Rows.Count; i++)
                 {
+                   
                     int CodPedido = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(1).ToString());
                     int CodGrupo = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(19).ToString());
                     string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(20).ToString();
 
-                    DataSet itemsPedido = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpresso", CodPedido, "", CodGrupo);
-                    Utils.ImpressaoCozihanova_Separado(CodPedido, iNomeImpressora, CodGrupo);
+                    DataSet itemsPedido = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", CodPedido, "", CodGrupo);
+                    Utils.ImpressaoCozihanova_Separado(CodPedido, iNomeImpressora);
                     for (int intfor = 0; intfor < itemsPedido.Tables[0].Rows.Count; intfor++)
                     {
-                        
                         AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
                         Atualiza.CodPedido = iCodPedido;
                         Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[intfor].Field<int>("CodProduto");
                         Atualiza.ImpressoSN = true;
                         conexao.Update("spInformaItemImpresso", Atualiza);
                     }
-                   
+                    dsItemsNaoImpresso = ItensSelect(iCodPedido);
 
                 }
 
@@ -874,8 +881,7 @@ namespace DexComanda
             return iReport;
         }
 
-        public static string ImpressaoCozihanova_Separado(int iCodPedido, string iNomeImpressora,
-         int iCodGupo)
+        public static string ImpressaoCozihanova_Separado(int iCodPedido, string iNomeImpressora)
         {
             string iRetorno = ""; ;
 
@@ -907,7 +913,7 @@ namespace DexComanda
                 }
              
                 report.SetParameterValue("@Codigo", iCodPedido);
-                report.SetParameterValue("@CodGrupo", iCodGupo);
+                report.SetParameterValue("@NomeImpressora", iNomeImpressora);
 
                 if (iNomeImpressora != "")
                 {
