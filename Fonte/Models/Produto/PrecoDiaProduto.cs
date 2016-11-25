@@ -9,7 +9,7 @@ namespace DexComanda.Models
     public class PrecoDiaProduto
     {
         public string Dia { get; set; }
-        public Double Preco { get; set; }
+        public decimal Preco { get; set; }
 
     }
 }

@@ -173,7 +173,7 @@ namespace DexComanda
                         var precosDia = new PrecoDiaProduto()
                         {
                             Dia = (((System.Windows.Forms.TextBox)TEXT).Tag.ToString()),
-                            Preco = double.Parse((((System.Windows.Forms.TextBox)TEXT).Text.ToString()))
+                            Preco = decimal.Parse((((System.Windows.Forms.TextBox)TEXT).Text.ToString()))
 
                         };
 

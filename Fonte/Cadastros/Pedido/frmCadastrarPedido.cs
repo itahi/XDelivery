@@ -1870,13 +1870,14 @@ namespace DexComanda
                         List<PrecoDiaProduto> listPreco = new List<PrecoDiaProduto>();
 
                         listPreco = Utils.DeserializaObjeto(produto.Rows[0]["DiaSemana"].ToString());
-                        if (listPreco != null)
+                        if (listPreco != null && listPreco.Count>0)
                         {
                             foreach (var item in listPreco)
                             {
-                                if (item.Dia == DiaDaSema)
+                                if (item.Dia == DiaDaSema && item.Preco!=0 && item.Preco!=null)
                                 {
                                     txtPrecoUnitario.Text = item.Preco.ToString();
+                                    valorProduto = item.Preco;
                                     break;
                                 }
                                 else
@@ -1934,7 +1935,7 @@ namespace DexComanda
                     {
                         foreach (var item in listPreco)
                         {
-                            if (item.Dia == DiaDaSema)
+                            if (item.Dia == DiaDaSema && item.Preco != 0 && item.Preco != null)
                             {
                                 txtPrecoUnitario.Text = item.Preco.ToString();
                                 valorProduto = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
@@ -2077,7 +2078,7 @@ namespace DexComanda
                             {
                                 foreach (var item in listPreco)
                                 {
-                                    if (item.Dia == DiaDaSema)
+                                    if (item.Dia == DiaDaSema && item.Preco!=null && item.Preco!=0)
                                     {
                                         txtPrecoUnitario.Text = item.Preco.ToString();
                                     }
