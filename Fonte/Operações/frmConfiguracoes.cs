@@ -785,8 +785,10 @@ namespace DexComanda
             if (chkstatus.Checked)
             {
                 strConfigPedido = strConfigPedido + ",(select top 1 PS.Nome from PedidoStatusMovimento PSM join "
-                   + " PedidoStatus PS on Status = PSM.CodStatus and PSM.CodPedido=Pd.Codigo )" 
-                   +" as 'Situacao Pedido' ";
+                   + " PedidoStatus PS on Status = PSM.CodStatus"
+                   + " where PSM.CodPedido=PD.Codigo"
+                   + " order by PSM.DataAlteracao desc)"
+                   + " as 'Situacao Pedido' ";
             }
             if (chkOrigem.Checked)
             {
