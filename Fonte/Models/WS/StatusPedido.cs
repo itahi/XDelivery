@@ -8,7 +8,7 @@ namespace DexComanda.Models.WS
 {
     public class StatusPedido
     {
-        
+        public const int cPedidoAberto = 1;
         public const int cPedidoImpresso =2;
         public const int cPedidoNaCozinha=3;
         public const int cPedidoNaEntrega=4;

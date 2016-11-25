@@ -181,14 +181,17 @@ namespace DexComanda
 
                     if (endereco.Tables["base_cep"].Rows.Count > 0)
                     {
-                        // ObterCidadePadrao();
                         DataRow dRow = endereco.Tables["base_cep"].Rows[0];
-
                         this.txtEndereco.Text = dRow.ItemArray.GetValue(0).ToString();
                         this.txtBairro.Text = dRow.ItemArray.GetValue(1).ToString();
                         PreencheRegiao();
                         this.txtNumero.Focus();
                     }
+                
+                    //else if (Utils.BuscaCEPOnline(txtCEP.Text))
+                    //{
+                    //    ConsultarEnderecoPorCep(sender, e);
+                    //}
                     else
                     {
                         // ObterCidadePadrao();

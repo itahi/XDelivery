@@ -89,5 +89,7 @@
         private System.Windows.Forms.CheckBox chkSabores;
         private System.Windows.Forms.ComboBox cbxHorarioEntrega;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtPorcentagemDesconto;
+        private System.Windows.Forms.Label label12;
     }
 }

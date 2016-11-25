@@ -576,7 +576,6 @@
             this.btnEditar.TabIndex = 43;
             this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnEditar.UseVisualStyleBackColor = true;
-            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnAdicionarOpcao
             // 
@@ -597,7 +596,6 @@
             this.txtPrecoOpcao.Name = "txtPrecoOpcao";
             this.txtPrecoOpcao.Size = new System.Drawing.Size(77, 26);
             this.txtPrecoOpcao.TabIndex = 41;
-            this.txtPrecoOpcao.TextChanged += new System.EventHandler(this.txtPrecoOpcao_TextChanged);
             // 
             // cbxOpcao
             // 
@@ -608,7 +606,6 @@
             this.cbxOpcao.Size = new System.Drawing.Size(158, 21);
             this.cbxOpcao.TabIndex = 40;
             this.cbxOpcao.DropDown += new System.EventHandler(this.ListaOpcao);
-            this.cbxOpcao.SelectedIndexChanged += new System.EventHandler(this.cbxOpcao_SelectedIndexChanged);
             // 
             // label7
             // 

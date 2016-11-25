@@ -36,8 +36,8 @@
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label label5;
             System.Windows.Forms.Label label6;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarProduto));
             System.Windows.Forms.Label label17;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarProduto));
             this.dBExpertDataSet = new DexComanda.DBExpertDataSet();
             this.produtoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.produtoTableAdapter = new DexComanda.DBExpertDataSetTableAdapters.ProdutoTableAdapter();
@@ -62,6 +62,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.AdicionaisGridView = new System.Windows.Forms.DataGridView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtCodInterno = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.txtMaxAdicionais = new System.Windows.Forms.TextBox();
             this.nomeProdutoTextBox = new System.Windows.Forms.TextBox();
@@ -118,7 +119,6 @@
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.txtCodInterno = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             grupoProdutoLabel = new System.Windows.Forms.Label();
             precoProdutoLabel = new System.Windows.Forms.Label();
@@ -207,6 +207,15 @@
             label6.TabIndex = 32;
             label6.Text = "Validade Desconto";
             // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new System.Drawing.Point(243, 69);
+            label17.Name = "label17";
+            label17.Size = new System.Drawing.Size(65, 13);
+            label17.TabIndex = 40;
+            label17.Text = "Cod. Interno";
+            // 
             // dBExpertDataSet
             // 
             this.dBExpertDataSet.DataSetName = "DBExpertDataSet";
@@ -263,7 +272,7 @@
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(603, 274);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Imagem";
+            this.tabPage3.Text = "4 -Imagem";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // button1
@@ -321,7 +330,7 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(603, 274);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Adicionais/Opcionais";
+            this.tabPage2.Text = "2 -Adicionais/Opcionais";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
@@ -469,8 +478,18 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(603, 274);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Produto";
+            this.tabPage1.Text = "1 -Produto";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // txtCodInterno
+            // 
+            this.txtCodInterno.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtCodInterno.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCodInterno.Location = new System.Drawing.Point(246, 86);
+            this.txtCodInterno.Name = "txtCodInterno";
+            this.txtCodInterno.Size = new System.Drawing.Size(92, 26);
+            this.txtCodInterno.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.txtCodInterno, "Crie um Código Personalizado para esse produto");
             // 
             // button2
             // 
@@ -489,7 +508,7 @@
             this.txtMaxAdicionais.Location = new System.Drawing.Point(9, 88);
             this.txtMaxAdicionais.Name = "txtMaxAdicionais";
             this.txtMaxAdicionais.Size = new System.Drawing.Size(92, 26);
-            this.txtMaxAdicionais.TabIndex = 36;
+            this.txtMaxAdicionais.TabIndex = 1;
             // 
             // nomeProdutoTextBox
             // 
@@ -498,7 +517,7 @@
             this.nomeProdutoTextBox.Location = new System.Drawing.Point(11, 25);
             this.nomeProdutoTextBox.Name = "nomeProdutoTextBox";
             this.nomeProdutoTextBox.Size = new System.Drawing.Size(575, 26);
-            this.nomeProdutoTextBox.TabIndex = 23;
+            this.nomeProdutoTextBox.TabIndex = 0;
             // 
             // descricaoProdutoTextBox
             // 
@@ -508,7 +527,7 @@
             this.descricaoProdutoTextBox.Multiline = true;
             this.descricaoProdutoTextBox.Name = "descricaoProdutoTextBox";
             this.descricaoProdutoTextBox.Size = new System.Drawing.Size(580, 82);
-            this.descricaoProdutoTextBox.TabIndex = 27;
+            this.descricaoProdutoTextBox.TabIndex = 5;
             // 
             // precoProdutoTextBox
             // 
@@ -517,7 +536,7 @@
             this.precoProdutoTextBox.Location = new System.Drawing.Point(126, 86);
             this.precoProdutoTextBox.Name = "precoProdutoTextBox";
             this.precoProdutoTextBox.Size = new System.Drawing.Size(92, 26);
-            this.precoProdutoTextBox.TabIndex = 26;
+            this.precoProdutoTextBox.TabIndex = 2;
             // 
             // chkOnline
             // 
@@ -667,7 +686,7 @@
             this.cbxGrupoProduto.Location = new System.Drawing.Point(8, 141);
             this.cbxGrupoProduto.Name = "cbxGrupoProduto";
             this.cbxGrupoProduto.Size = new System.Drawing.Size(223, 26);
-            this.cbxGrupoProduto.TabIndex = 24;
+            this.cbxGrupoProduto.TabIndex = 4;
             this.cbxGrupoProduto.DropDown += new System.EventHandler(this.cbxGrupoProduto_DropDown);
             this.cbxGrupoProduto.Click += new System.EventHandler(this.cbxGrupoProduto_Click);
             // 
@@ -695,7 +714,7 @@
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(603, 274);
             this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Turno / Disponibilidade";
+            this.tabPage4.Text = "3 -Turno / Disponibilidade";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // grpPrecosDia
@@ -1074,25 +1093,6 @@
             this.checkBox7.TabIndex = 27;
             this.checkBox7.Text = "Segunda";
             this.checkBox7.UseVisualStyleBackColor = true;
-            // 
-            // txtCodInterno
-            // 
-            this.txtCodInterno.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
-            this.txtCodInterno.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCodInterno.Location = new System.Drawing.Point(246, 86);
-            this.txtCodInterno.Name = "txtCodInterno";
-            this.txtCodInterno.Size = new System.Drawing.Size(92, 26);
-            this.txtCodInterno.TabIndex = 39;
-            this.toolTip1.SetToolTip(this.txtCodInterno, "Crie um Código Personalizado para esse produto");
-            // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            label17.Location = new System.Drawing.Point(243, 69);
-            label17.Name = "label17";
-            label17.Size = new System.Drawing.Size(65, 13);
-            label17.TabIndex = 40;
-            label17.Text = "Cod. Interno";
             // 
             // frmCadastrarProduto
             // 

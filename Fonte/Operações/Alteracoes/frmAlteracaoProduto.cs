@@ -270,11 +270,6 @@ namespace DexComanda.Operações.Alteracoes
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void chkAtivaDesconto_CheckedChanged(object sender, EventArgs e)
         {
             grpDesconto.Enabled = chkAtivaDesconto.Checked;
@@ -329,13 +324,6 @@ namespace DexComanda.Operações.Alteracoes
             }
         }
 
-        private void btnSalvar_Click(object sender, EventArgs e)
-        {
-            
-            
-
-        }
-
         private void Excluir(object sender, MouseEventArgs e)
         {
             DataGridView dgv = sender as DataGridView;
@@ -384,16 +372,6 @@ namespace DexComanda.Operações.Alteracoes
         private void chkAlteraPreco_CheckedChanged(object sender, EventArgs e)
         {
             grpPrecos.Enabled = chkAlteraPreco.Checked;
-        }
-
-        private void cbxOpcao_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtPrecoOpcao_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void btnAdicionarOpcao_Click_1(object sender, EventArgs e)
@@ -450,11 +428,6 @@ namespace DexComanda.Operações.Alteracoes
             {
                 pnlAdicionais.Visible = false;
             }
-        }
-
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

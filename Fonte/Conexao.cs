@@ -197,26 +197,39 @@ namespace DexComanda
             adapter.Fill(ds, "PedidoStatusMovimento");
             return iReturn = ds.Tables[0].Rows.Count>0;
         }
-        public void AtualizaSitucao(int iCodPedido, int iCodUser, int iCodStatus, DataGridView grid = null)
+        public void AtualizaSituacao(int iCodPedido, int iCodUser, int iCodStatus, DataGridView grid = null)
         {
             try
             {
+                PedidoStatusMovimento ped;
+
                 if (ConsultaPedidoExiste(iCodPedido, iCodStatus))
                 {
-                    return;
+                    ped = new PedidoStatusMovimento()
+                    {
+                        CodPedido = iCodPedido,
+                        CodStatus = iCodStatus,
+                        CodUsuario = iCodUser,
+                        DataAlteracao = DateTime.Now
+                    };
+                    Update("spAlteraPedidoStatusMovimento", ped);
                 }
-                PedidoStatusMovimento ped = new PedidoStatusMovimento()
+                else
                 {
-                    CodPedido = iCodPedido,
-                    CodStatus = iCodStatus,
-                    CodUsuario = iCodUser,
-                    DataAlteracao = DateTime.Now
-                };
-                Insert("spAdicionarPedidoStatusMovimento", ped);
+                    ped = new PedidoStatusMovimento()
+                    {
+                        CodPedido = iCodPedido,
+                        CodStatus = iCodStatus,
+                        CodUsuario = iCodUser,
+                        DataAlteracao = DateTime.Now
+                    };
+                    Insert("spAdicionarPedidoStatusMovimento", ped);
+                }
+                
             }
             catch (Exception erro)
             {
-                MessageBox.Show(Bibliotecas.cException + erro.Message);
+                MessageBox.Show("Não foi possivel alterar o statuso do Pedido" + erro.Message);
             }
          
             // Utils.PopulaGrid_Novo("Pedido", grid, Sessions.SqlPedido);

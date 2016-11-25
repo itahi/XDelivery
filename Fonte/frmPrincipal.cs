@@ -41,6 +41,7 @@ namespace DexComanda
         private string iParamToken;
         private CancelarPedido cancelPedid;
         private bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
+        private DataSet itemsPedido;
         public frmPrincipal()
         {
             con = new Conexao();
@@ -84,7 +85,7 @@ namespace DexComanda
         {
             var TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, con);
 
-            frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", "0,00", "0,00", TaxaEntrega, 
+            frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", "0,00", "0,00", TaxaEntrega,
                                                                         false, DateTime.Now, 0, CodPessoa,
                                                                         "", "", "", "", null, 0.00M);
             CadPedido.ShowDialog();
@@ -241,13 +242,13 @@ namespace DexComanda
                     cancelPedid.Codigo = Codigo;
                     cancelPedid.RealizadoEm = DateTime.Now;
 
-                    string iCodMesa = dRowPedido.ItemArray.GetValue(9).ToString();
+                    int iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
 
-                    if (ControlaMesas && iCodMesa != "0")
-                    {
-                        //   string NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
-                        Utils.AtualizaMesa(1, 1);
-                    }
+                    AtualizaStatusMesa(iCodMesa, Bibliotecas.cStatuMesaLiberada);
+                    //if (ControlaMesas && iCodMesa !=0)
+                    //{
+                    //    Utils.AtualizaMesa(iCodMesa, 1);
+                    //}
                     cancelPedid.status = "Cancelado";
                     if (Sessions.returnConfig.RegistraCancelamentos)
                     {
@@ -290,6 +291,13 @@ namespace DexComanda
             else
             {
                 MessageBox.Show("Selecione um Pedido para **CANCELAR**");
+            }
+        }
+        private void AtualizaStatusMesa(int iCodMesa , int iStatus)
+        {
+            if (ControlaMesas && iCodMesa != 0)
+            {
+                Utils.AtualizaMesa(iCodMesa, iStatus);
             }
         }
         private void frmPrincipal_Load(object sender, EventArgs e)
@@ -342,7 +350,10 @@ namespace DexComanda
             relatórioToolStripMenuItem.Enabled = Sessions.retunrUsuario.AcessaRelatoriosSN;
             configuraçãoToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
             usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
-            operaçõesToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
+            // FinanceiroToolStripMenuItem.Enabled = Sessions.retunrUsuario.AbreFechaCaixaSN;
+            // alteracaoStatusToolStripMenuItem.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
+            //sincronizaçãoToolStripMenuItem.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
+            //notificaçõesToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
             lançamentoAvulsoToolStripMenuItem.Enabled = iCaixaAberto > 0;
 
         }
@@ -792,12 +803,13 @@ namespace DexComanda
                     if (ControlaMesas && iCodMesa != 0)
                     {
                         frmFinalizacaoPedido frm = new frmFinalizacaoPedido(dblTotalPedido, false, codigo);
+                        frm.StartPosition = FormStartPosition.CenterParent;
                         frm.ShowDialog();
 
                         if (frm.boolFinalizou)
                         {
                             //  NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
-                            Utils.AtualizaMesa(iCodMesa, 1);
+                            AtualizaStatusMesa(iCodMesa, Bibliotecas.cStatuMesaLiberada);
                         }
                         else
                         {
@@ -860,26 +872,47 @@ namespace DexComanda
                 ExecutaFinalizacao();
             }
         }
-        private Boolean TipoPedido(int iCodPedido)
+        private Boolean PermiteEntregador(int iCodPedido)
         {
-            return con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido)
-                .Tables[0].Rows[0].Field<string>("Tipo") == "0 - Entrega";
-                }
+            Boolean iRetur = false;
+            DataRow dROw = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).Tables[0].Rows[0];
+            if (dROw.ItemArray.GetValue(8).ToString() == "0 - Entrega")
+            {
+                iRetur = true;
+            }
+
+            return iRetur;
+        }
+
         private void SelecionaBoy(object sender, EventArgs e)
         {
-            int intCodPedido = int.Parse(pedidosGridView.Rows[rowIndex].Cells["Codigo"].Value.ToString());
-            if (!TipoPedido(intCodPedido))
-            {
-                MessageBox.Show("Este pedido não permite entregadores");
-                return;
-            }
+            int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+
+
             InformaMotoboyPedido(intCodPedido);
 
+        }
+        private Boolean VerificaSeMotoboyFoiInformado(int iCodPedido)
+        {
+            string teste = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).
+                Tables[0].Rows[0].ItemArray.GetValue(15).ToString();
+
+            return teste != "0";
         }
         private void InformaMotoboyPedido(int iCodPedido)
         {
             try
             {
+                if (!PermiteEntregador(iCodPedido))
+                {
+                    MessageBox.Show("Este pedido não permite entregadores");
+                    return;
+                }
+
+                if (VerificaSeMotoboyFoiInformado(iCodPedido))
+                {
+                    return;
+                }
                 frmInformaMotoboy frm = new frmInformaMotoboy();
                 frm.ShowDialog();
                 if (frm.DialogResult == DialogResult.OK)
@@ -1005,7 +1038,7 @@ namespace DexComanda
                     AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaCozinha, RetornaPessoa(intCodPedido));
                 }
 
-                con.AtualizaSitucao(intCodPedido, Sessions.retunrUsuario.Codigo, StatusPedido.cPedidoNaCozinha, pedidosGridView);
+                con.AtualizaSituacao(intCodPedido, Sessions.retunrUsuario.Codigo, StatusPedido.cPedidoNaCozinha, pedidosGridView);
 
             }
             catch (Exception erro)
@@ -1028,9 +1061,11 @@ namespace DexComanda
                 CodPedidoWS = VerificaPedidoOnline(intCodPedido);
                 if (CodPedidoWS > 0)
                 {
+
                     AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaEntrega, RetornaPessoa(intCodPedido));
                 }
-                con.AtualizaSitucao(intCodPedido, Sessions.retunrUsuario.Codigo, StatusPedido.cPedidoNaEntrega, pedidosGridView);
+                InformaMotoboyPedido(intCodPedido);
+                con.AtualizaSituacao(intCodPedido, Sessions.retunrUsuario.Codigo, StatusPedido.cPedidoNaEntrega, pedidosGridView);
             }
             catch (Exception erro)
             {
@@ -1470,14 +1505,20 @@ namespace DexComanda
 
         private void sistemaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmConfiguracoes frm = new frmConfiguracoes();
-            frm.ShowDialog();
+            if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AdministradorSN"))
+            {
+                frmConfiguracoes frm = new frmConfiguracoes();
+                frm.ShowDialog();
+            }
         }
 
         private void impressãoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmConfigurarImpressao frm = new frmConfigurarImpressao();
-            frm.ShowDialog();
+            if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AdministradorSN"))
+            {
+                frmConfigurarImpressao frm = new frmConfigurarImpressao();
+                frm.ShowDialog();
+            }
         }
 
         private void renovarAtivarSistemaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1488,14 +1529,21 @@ namespace DexComanda
 
         private void produtosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            frmAlteracaoProduto frm = new frmAlteracaoProduto();
-            frm.ShowDialog();
+            if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AlteraProdutosSN"))
+            {
+                frmAlteracaoProduto frm = new frmAlteracaoProduto();
+                frm.ShowDialog();
+            }
+
         }
 
         private void opçãoToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            frmAlterarOpcao frm = new frmAlterarOpcao();
-            frm.ShowDialog();
+            if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AlteraProdutosSN"))
+            {
+                frmAlterarOpcao frm = new frmAlterarOpcao();
+                frm.ShowDialog();
+            }
         }
 
         private void clientesToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1506,14 +1554,20 @@ namespace DexComanda
 
         private void lançamentoAvulsoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmLancamentoCaixa frmLan = new frmLancamentoCaixa();
-            frmLan.ShowDialog();
+            if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AbreFechaCaixaSN"))
+            {
+                frmLancamentoCaixa frmLan = new frmLancamentoCaixa();
+                frmLan.ShowDialog();
+            }
         }
 
         private void movimentoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmCaixaMovimento frm = new frmCaixaMovimento();
-            frm.ShowDialog();
+            if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AbreFechaCaixaSN"))
+            {
+                frmCaixaMovimento frm = new frmCaixaMovimento();
+                frm.ShowDialog();
+            }
         }
 
         private void cadastroCaixaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1524,20 +1578,29 @@ namespace DexComanda
 
         private void fecharCaixaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmCaixaFechamento frm = new frmCaixaFechamento();
-            frm.ShowDialog();
+            if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AbreFechaCaixaSN"))
+            {
+                frmCaixaFechamento frm = new frmCaixaFechamento();
+                frm.ShowDialog();
+            }
         }
 
         private void aberturaCaixaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAberturaCaixa frm = new frmAberturaCaixa();
-            frm.ShowDialog();
+            if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AbreFechaCaixaSN"))
+            {
+                frmAberturaCaixa frm = new frmAberturaCaixa();
+                frm.ShowDialog();
+            }
         }
 
         private void sincronizaçãoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmSincronizacao frm = new frmSincronizacao();
-            frm.ShowDialog();
+            if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AlteraProdutosSN"))
+            {
+                frmSincronizacao frm = new frmSincronizacao();
+                frm.ShowDialog();
+            }
         }
 
         private void contatoAtivaçãoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1554,7 +1617,8 @@ namespace DexComanda
         {
             try
             {
-                DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpresso", iCodPedido, "", iCodGrupo);
+                itemsPedido = Utils.ItensSelect(iCodPedido);
+                //DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpresso", iCodPedido, iNomeImpressora);
                 for (int i = 0; i < itemsPedido.Tables[0].Rows.Count; i++)
                 {
                     string lRetorno = "";
@@ -1568,7 +1632,7 @@ namespace DexComanda
                         Atualiza.ImpressoSN = true;
                         con.Update("spInformaItemImpresso", Atualiza);
                     }
-                    break;
+                    itemsPedido = Utils.ItensSelect(iCodPedido);
                 }
 
 
@@ -1658,7 +1722,7 @@ namespace DexComanda
         {
             try
             {
-               
+
                 DataSet dsPedidosAbertos = con.SelectAll("Pedido", "spObterPedido");
                 int iPedidosAberto = dsPedidosAbertos.Tables["Pedido"].Rows.Count;
 
@@ -1682,9 +1746,9 @@ namespace DexComanda
                 if (dsItemsNaoImpresso.Tables[0].Rows.Count > 0)
                 {
                     DataRow dRowPedido = dsItemsNaoImpresso.Tables[0].Rows[0];
-               
+
                     int CodPedido = int.Parse(dRowPedido.ItemArray.GetValue(1).ToString());
-                  
+
                     int CodGrupo = int.Parse(dRowPedido.ItemArray.GetValue(19).ToString());
                     string iNomeImpressora = dRowPedido.ItemArray.GetValue(20).ToString();
 

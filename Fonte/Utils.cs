@@ -109,8 +109,6 @@ namespace DexComanda
                     {
                         if (iAlterarUserLogado)
                         {
-
-
                             Sessions.retunrUsuario = new Usuario()
                             {
                                 Nome = nomeUsuario,
@@ -158,7 +156,7 @@ namespace DexComanda
             return Logado;
         }
 
-        private static DataSet ItensSelect(int iCodPedido)
+        public static DataSet ItensSelect(int iCodPedido)
         {
             DataSet dsReturn;
             string iSql = " select distinct (IT.CodProduto) ,PE.*,  " +
@@ -171,7 +169,7 @@ namespace DexComanda
                            " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo " +
                            " where  PE.Codigo=" + iCodPedido + " and ImprimeCozinhaSN = 1 ";
 
-            dsReturn  = conexao.SelectAll("ItemsPedido", "", iSql);
+            dsReturn = conexao.SelectAll("ItemsPedido", "", iSql);
             return dsReturn;
         }
         public static void ImpressaoPorCozinha(int iCodPedido)
@@ -182,7 +180,7 @@ namespace DexComanda
 
                 for (int i = 0; i < dsItemsNaoImpresso.Tables[0].Rows.Count; i++)
                 {
-                   
+
                     int CodPedido = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(1).ToString());
                     int CodGrupo = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(19).ToString());
                     string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(20).ToString();
@@ -331,9 +329,9 @@ namespace DexComanda
 
         public static List<PrecoDiaProduto> DeserializaObjeto(string iValores)
         {
-            if (iValores == "")
+            if (iValores =="")
             {
-                return null;
+                return new List<PrecoDiaProduto>();
             }
             return JsonConvert.DeserializeObject<List<PrecoDiaProduto>>(iValores);
 
@@ -373,6 +371,37 @@ namespace DexComanda
                 MessageBox.Show("Erro ao listar itens do " + icbxName + erro.Message);
             }
 
+        }
+        public static Boolean BuscaCEPOnline(string iCEP)
+        {
+            CepUtil cep = new CepUtil();
+            Boolean iReturn = false;
+            try
+            {
+                Correios.AtendeClienteClient consulta = new Correios.AtendeClienteClient("AtendeClientePort");
+
+                var resultado = consulta.consultaCEP(iCEP.Replace("-", ""));
+
+                if (resultado != null)
+                {
+                    cep.Bairro = resultado.bairro;
+                    cep.Cidade = resultado.cep;
+                    cep.Estado = resultado.uf;
+                    cep.Logradouro = resultado.end;
+                    conexao.Insert("spAdicionarCep", cep);
+                    iReturn = true;
+                }
+                else
+                {
+                    MessageBox.Show("Endereço não encontrado ou cep inválido");
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return iReturn;
         }
         public static void MontaCombox(ComboBox icbxName, string idisplayName,
            string iValueMember, string iGrupo)
@@ -881,10 +910,8 @@ namespace DexComanda
             return iReport;
         }
 
-        public static string ImpressaoCozihanova_Separado(int iCodPedido, string iNomeImpressora)
+        public  static void ImpressaoCozihanova_Separado(int iCodPedido, string iNomeImpressora)
         {
-            string iRetorno = ""; ;
-
             RelComandaMesaSeparado report;
             crtableLogoninfos = new TableLogOnInfos();
             crtableLogoninfo = new TableLogOnInfo();
@@ -892,7 +919,7 @@ namespace DexComanda
             report = new RelComandaMesaSeparado();
             try
             {
-                
+
                 Tables CrTables;
                 System.Drawing.Printing.PrinterSettings printersettings = new System.Drawing.Printing.PrinterSettings();
                 printersettings.Copies = 1;
@@ -911,28 +938,27 @@ namespace DexComanda
                     crtableLogoninfo.ConnectionInfo = crConnectionInfo;
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
-             
+
                 report.SetParameterValue("@Codigo", iCodPedido);
                 report.SetParameterValue("@NomeImpressora", iNomeImpressora);
 
                 if (iNomeImpressora != "")
                 {
                     report.PrintOptions.PrinterName = iNomeImpressora;
-                    report.PrintToPrinter(printersettings, new PageSettings(), false);
+                     report.PrintToPrinter(printersettings, new PageSettings(), false);
                 }
                 else
                 {
                     report.PrintToPrinter(1, false, 0, 0);
                 }
-                
+
             }
             finally
             {
                 report.Dispose();
             }
-            return iRetorno;
         }
-        public   static string ImpressaMesaNova(int iCodPedido, int iCodGupo, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
+        public static string ImpressaMesaNova(int iCodPedido, int iCodGupo, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
         {
             string iRetorno = "";
             RelComandaMesa report;
@@ -948,7 +974,7 @@ namespace DexComanda
                 printersettings.Collate = false;
 
                 Tables CrTables;
-           
+
 
                 report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
@@ -964,23 +990,23 @@ namespace DexComanda
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
                 report.SetParameterValue("@Codigo", iCodPedido);
-                report.SetParameterValue("@CodGrupo", iCodGupo);
+                report.SetParameterValue("@NomeImpressora", iNomeImpressora);
 
                 if (iNomeImpressora != "")
                 {
                     report.PrintOptions.PrinterName = iNomeImpressora;
                 }
-                for  (  int i = 0; i < iNumCopias; i++)
+                for (int i = 0; i < iNumCopias; i++)
                 {
                     //MessageBox.Show(report.PrintOptions.PrinterName.ToString());
-                    report.PrintToPrinter (1, false, 0, 0);
+                    report.PrintToPrinter(1, false, 0, 0);
                 }
 
             }
             catch (Exception erro)
             {
 
-                MessageBox.Show(Bibliotecas.cException +  erro.InnerException.Message);
+                MessageBox.Show(Bibliotecas.cException + erro.InnerException.Message);
             }
             return iRetorno;
         }
@@ -1501,7 +1527,7 @@ namespace DexComanda
             conexao = new Conexao();
             try
             {
-                dsCaixa = conexao.RetornaCaixaPorTurno(iNumero, iTurno, Convert.ToDateTime(iDataRegistro.ToShortDateString()));
+                dsCaixa = conexao.RetornaCaixaPorTurno(iNumero, iTurno, DateTime.Parse(iDataRegistro.ToShortDateString()));
                 if (dsCaixa.Tables[0].Rows.Count > 0)
                 {
                     dRow = dsCaixa.Tables[0].Rows[0];
@@ -1572,7 +1598,7 @@ namespace DexComanda
                 CodPedido = int.Parse(Linhas.ItemArray.GetValue(0).ToString());
                 CodPessoa = int.Parse(Linhas.ItemArray.GetValue(1).ToString());
                 FormaPagamento = Linhas.ItemArray.GetValue(3).ToString();
-                
+
                 // Retorna a Taxa de Entrega do cadastro do Cliente
                 TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, conexao);
 
@@ -2100,7 +2126,6 @@ namespace DexComanda
 
             gridView.DataSource = null;
             gridView.AutoGenerateColumns = true;
-            // gridView.TabIndex = iRowIndex;
             gridView.DataSource = Dados;
             gridView.DataMember = table;
 

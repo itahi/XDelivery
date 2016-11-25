@@ -784,7 +784,9 @@ namespace DexComanda
             }
             if (chkstatus.Checked)
             {
-                strConfigPedido = strConfigPedido + ",(select Nome from PedidoStatus PS where PS.Codigo in (select top 1 CodStatus from PedidoStatusMovimento PSM where PSM.CodPedido=Pd.Codigo)  )  as 'Situacao Pedido' ";
+                strConfigPedido = strConfigPedido + ",(select top 1 PS.Nome from PedidoStatusMovimento PSM join "
+                   + " PedidoStatus PS on Status = PSM.CodStatus and PSM.CodPedido=Pd.Codigo )" 
+                   +" as 'Situacao Pedido' ";
             }
             if (chkOrigem.Checked)
             {
@@ -793,6 +795,14 @@ namespace DexComanda
             if (chkDesconto.Checked)
             {
                 strConfigPedido = strConfigPedido + ",DescontoValor";
+            }
+            if (chkEntregador.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",(select Nome from Entregador where Codigo=PD.CodMotoboy) as 'Entregador'";
+            }
+            if (chkAtendente.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",(Select Nome from Usuario where Cod = PD.CodUsuario) as 'Atendente'";
             }
 
             Utils.SalvarConfiguracao("GridPedido", strConfigPedido);

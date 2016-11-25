@@ -241,6 +241,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.chkEntregador = new System.Windows.Forms.CheckBox();
+            this.chkAtendente = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -1877,6 +1879,8 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.chkAtendente);
+            this.groupBox6.Controls.Add(this.chkEntregador);
             this.groupBox6.Controls.Add(this.chkDesconto);
             this.groupBox6.Controls.Add(this.chkOrigem);
             this.groupBox6.Controls.Add(this.chkstatus);
@@ -2422,6 +2426,26 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // chkEntregador
+            // 
+            this.chkEntregador.AutoSize = true;
+            this.chkEntregador.Location = new System.Drawing.Point(130, 82);
+            this.chkEntregador.Name = "chkEntregador";
+            this.chkEntregador.Size = new System.Drawing.Size(78, 17);
+            this.chkEntregador.TabIndex = 47;
+            this.chkEntregador.Text = "Entregador";
+            this.chkEntregador.UseVisualStyleBackColor = true;
+            // 
+            // chkAtendente
+            // 
+            this.chkAtendente.AutoSize = true;
+            this.chkAtendente.Location = new System.Drawing.Point(130, 105);
+            this.chkAtendente.Name = "chkAtendente";
+            this.chkAtendente.Size = new System.Drawing.Size(75, 17);
+            this.chkAtendente.TabIndex = 48;
+            this.chkAtendente.Text = "Atendente";
+            this.chkAtendente.UseVisualStyleBackColor = true;
+            // 
             // frmConfiguracoes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2713,5 +2737,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label label51;
         private System.Windows.Forms.TextBox txtGoogleProjetc;
+        private System.Windows.Forms.CheckBox chkAtendente;
+        private System.Windows.Forms.CheckBox chkEntregador;
     }
 }

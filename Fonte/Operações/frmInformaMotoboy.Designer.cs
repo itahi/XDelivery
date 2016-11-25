@@ -36,6 +36,7 @@
             // 
             // cbxListaMotoboy
             // 
+            this.cbxListaMotoboy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxListaMotoboy.FormattingEnabled = true;
             this.cbxListaMotoboy.Location = new System.Drawing.Point(26, 27);
             this.cbxListaMotoboy.Name = "cbxListaMotoboy";

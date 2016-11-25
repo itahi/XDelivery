@@ -343,7 +343,7 @@ namespace DexComanda
                 SalvarAdicionais(con.getLastCodigo());
 
                 Utils.ControlaEventos("Inserir", this.Name);
-
+                nomeProdutoTextBox.Focus();
 
             }
             catch (Exception errro)
@@ -561,6 +561,19 @@ namespace DexComanda
             else if (e.KeyCode == Keys.Escape)
             {
                 this.Close();
+            }
+
+            MudaAbas(e);
+        }
+        private void MudaAbas(KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.NumPad1 && e.Alt)
+            {
+                tabControl1.SelectedTab = tabPage1;
+            }
+            else if (e.KeyCode == Keys.NumPad2 && e.Alt)
+            {
+                tabControl1.SelectedTab = tabPage2;
             }
         }
 

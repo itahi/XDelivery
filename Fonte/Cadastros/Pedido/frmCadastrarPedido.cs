@@ -520,17 +520,30 @@ namespace DexComanda
                 switch (status)
                 {
                     case 1:
+                        //Aberto
                         lblStatusPedido.Text = dsPedido.Tables[0].Rows[0].Field<string>("Nome");
                         lblStatusPedido.ForeColor = Color.Red;
                         break;
 
                     case 2:
+                        // Confirmado
                         lblStatusPedido.Text = dsPedido.Tables[0].Rows[0].Field<string>("Nome");
                         lblStatusPedido.ForeColor = Color.Green;
                         break;
                     case 3:
+                        //Na Cozinha
+                        lblStatusPedido.Text = dsPedido.Tables[0].Rows[0].Field<string>("Nome");
+                        lblStatusPedido.ForeColor = Color.Green;
+                        break;
+                    case 4:
+                        //Na Entrega
                         lblStatusPedido.Text = dsPedido.Tables[0].Rows[0].Field<string>("Nome");
                         lblStatusPedido.ForeColor = Color.Blue;
+                        break;
+                    case 5:
+                        //Concluido
+                        lblStatusPedido.Text = dsPedido.Tables[0].Rows[0].Field<string>("Nome");
+                        lblStatusPedido.ForeColor = Color.Black;
                         break;
                 }
 
@@ -1079,7 +1092,10 @@ namespace DexComanda
                                 txtCodVendedor.Focus();
                                 txtCodVendedor.BackColor = Color.Red;
                                 return;
-
+                            }
+                            else
+                            {
+                                pedido.CodUsuario = Sessions.retunrUsuario.Codigo;
                             }
                             pedido.HorarioEntrega = "";
                             if (cbxHorarioEntrega.Text != "")
@@ -1116,7 +1132,7 @@ namespace DexComanda
                             }
 
                             iCodPedido = con.getLastCodigo();
-                            con.AtualizaSitucao(iCodPedido, Sessions.retunrUsuario.Codigo, 1);
+                            con.AtualizaSituacao(iCodPedido, Sessions.retunrUsuario.Codigo, 1);
                             MessageBox.Show("Pedido gerado com sucesso.");
 
                             if (ContraMesas && cbxTipoPedido.Text != "1 - Mesa")
@@ -1607,7 +1623,7 @@ namespace DexComanda
             this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal - decimal.Parse(txtDesconto.Text) + Convert.ToDecimal(lblEntrega.Text.Replace("R$", "")));
             this.lblTroco.Text = Convert.ToString(lblTroco.Text);
         }
-        private void prepareToPrint()
+        private void  prepareToPrint()
         {
             try
             {
@@ -1700,7 +1716,7 @@ namespace DexComanda
                     {
                         iCodigo = codPedido;
                     }
-                    if (Sessions.returnEmpresa.CNPJ == "21128650000197")
+                    if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras || Sessions.returnEmpresa.CNPJ == Bibliotecas.cMassaRara)
                     {
                         Utils.ImpressaoPorCozinha(iCodigo);
                         return;
@@ -2057,17 +2073,25 @@ namespace DexComanda
                             List<PrecoDiaProduto> listPreco = new List<PrecoDiaProduto>();
                             listPreco = Utils.DeserializaObjeto(produto.Rows[0]["DiaSemana"].ToString());
 
-                            foreach (var item in listPreco)
+                            if (listPreco.Count>0 && listPreco!=null)
                             {
-                                if (item.Dia == DiaDaSema)
+                                foreach (var item in listPreco)
                                 {
-                                    txtPrecoUnitario.Text = item.Preco.ToString();
-                                }
-                                else
-                                {
-                                    txtPrecoUnitario.Text = produto.Rows[0]["PrecoProduto"].ToString();
+                                    if (item.Dia == DiaDaSema)
+                                    {
+                                        txtPrecoUnitario.Text = item.Preco.ToString();
+                                    }
+                                    else
+                                    {
+                                        txtPrecoUnitario.Text = produto.Rows[0]["PrecoProduto"].ToString();
+                                    }
                                 }
                             }
+                            else
+                            {
+                                txtPrecoUnitario.Text = produto.Rows[0]["PrecoProduto"].ToString();
+                            }
+                        
                             //if (DiaDaPromocao.IndexOf(DiaDaSema) > 0)
                             //{
                             //    txtPrecoUnitario.Text = produto.Rows[0]["PrecoDesconto"].ToString();
@@ -2235,6 +2259,8 @@ namespace DexComanda
             this.chkSabores = new System.Windows.Forms.CheckBox();
             this.cbxHorarioEntrega = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.txtPorcentagemDesconto = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -2311,7 +2337,7 @@ namespace DexComanda
             this.txtQuantidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtQuantidade.Location = new System.Drawing.Point(55, 152);
             this.txtQuantidade.Name = "txtQuantidade";
-            this.txtQuantidade.Size = new System.Drawing.Size(149, 26);
+            this.txtQuantidade.Size = new System.Drawing.Size(96, 26);
             this.txtQuantidade.TabIndex = 2;
             this.txtQuantidade.Text = "1";
             this.txtQuantidade.TextChanged += new System.EventHandler(this.txtQuantidade_TextChanged);
@@ -2329,7 +2355,7 @@ namespace DexComanda
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(231, 159);
+            this.label2.Location = new System.Drawing.Point(157, 159);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 13);
             this.label2.TabIndex = 36;
@@ -2339,9 +2365,9 @@ namespace DexComanda
             // 
             this.txtPrecoUnitario.Enabled = false;
             this.txtPrecoUnitario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecoUnitario.Location = new System.Drawing.Point(314, 152);
+            this.txtPrecoUnitario.Location = new System.Drawing.Point(240, 152);
             this.txtPrecoUnitario.Name = "txtPrecoUnitario";
-            this.txtPrecoUnitario.Size = new System.Drawing.Size(149, 26);
+            this.txtPrecoUnitario.Size = new System.Drawing.Size(72, 26);
             this.txtPrecoUnitario.TabIndex = 4;
             // 
             // label4
@@ -2357,9 +2383,9 @@ namespace DexComanda
             // 
             this.txtPrecoTotal.Enabled = false;
             this.txtPrecoTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecoTotal.Location = new System.Drawing.Point(547, 151);
+            this.txtPrecoTotal.Location = new System.Drawing.Point(548, 151);
             this.txtPrecoTotal.Name = "txtPrecoTotal";
-            this.txtPrecoTotal.Size = new System.Drawing.Size(105, 26);
+            this.txtPrecoTotal.Size = new System.Drawing.Size(104, 26);
             this.txtPrecoTotal.TabIndex = 5;
             // 
             // btnAdicionarItemNoPedido
@@ -3174,12 +3200,33 @@ namespace DexComanda
             this.label11.TabIndex = 72;
             this.label11.Text = "Horário Entrega";
             // 
+            // txtPorcentagemDesconto
+            // 
+            this.txtPorcentagemDesconto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPorcentagemDesconto.Location = new System.Drawing.Point(399, 151);
+            this.txtPorcentagemDesconto.Name = "txtPorcentagemDesconto";
+            this.txtPorcentagemDesconto.Size = new System.Drawing.Size(72, 26);
+            this.txtPorcentagemDesconto.TabIndex = 73;
+            this.txtPorcentagemDesconto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPorcentagemDesconto_KeyDown);
+            this.txtPorcentagemDesconto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorcentagemDesconto_KeyPress);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(322, 159);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(64, 13);
+            this.label12.TabIndex = 74;
+            this.label12.Text = "%Desconto:";
+            // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1051, 568);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.txtPorcentagemDesconto);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.cbxHorarioEntrega);
             this.Controls.Add(this.chkSabores);
@@ -4058,6 +4105,26 @@ namespace DexComanda
         {
             Utils.MontaCombox(cmbFPagamento, "Descricao", "Codigo", "FormaPagamento", "spObterFormaPagamentoAtivo");
         }
+
+        private void txtPorcentagemDesconto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoPermiteNumeros(e);
+        }
+
+        private void txtPorcentagemDesconto_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && txtPorcentagemDesconto.Text!="")
+            {
+                txtPrecoTotal.Text = Convert.ToString(decimal.Parse(txtPrecoUnitario.Text) * decimal.Parse(txtQuantidade.Text));
+                CalculaPorcentagemDesconto();
+            }
+        }
+        private void CalculaPorcentagemDesconto()
+        {
+            var precoDesconto = decimal.Parse(txtPrecoTotal.Text) * (decimal.Parse(txtPorcentagemDesconto.Text))/ 100;
+            txtPrecoTotal.Text = precoDesconto.ToString(); 
+        }
+    
 
         private void cbxSabor_SelectedIndexChanged(object sender, EventArgs e)
         {
