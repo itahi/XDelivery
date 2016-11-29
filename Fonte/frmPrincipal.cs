@@ -6,6 +6,7 @@ using DexComanda.Models;
 using DexComanda.Models.WS;
 using DexComanda.Operações;
 using DexComanda.Operações.Alteracoes;
+using DexComanda.Operações.Consultas;
 using DexComanda.Operações.Financeiro;
 using DexComanda.Operações.Funções;
 using DexComanda.Push;
@@ -1064,7 +1065,11 @@ namespace DexComanda
 
                     AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaEntrega, RetornaPessoa(intCodPedido));
                 }
-                InformaMotoboyPedido(intCodPedido);
+                if (Sessions.returnConfig.ControlaEntregador)
+                {
+                    InformaMotoboyPedido(intCodPedido);
+                }
+               
                 con.AtualizaSituacao(intCodPedido, Sessions.retunrUsuario.Codigo, StatusPedido.cPedidoNaEntrega, pedidosGridView);
             }
             catch (Exception erro)
@@ -1882,6 +1887,12 @@ namespace DexComanda
         {
             frmReporVendasPorCliente frm = new frmReporVendasPorCliente();
             frm.Show();
+        }
+
+        private void pedidosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaPedido frmCons = new frmConsultaPedido();
+            frmCons.Show();
         }
     }
 }

@@ -60,6 +60,7 @@
             this.ticketMédioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cancelamentosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.crediárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.melhoresClientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maisVendidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -148,7 +149,8 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.melhoresClientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pedidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -422,6 +424,13 @@
             this.crediárioToolStripMenuItem.Text = "Crediário";
             this.crediárioToolStripMenuItem.Click += new System.EventHandler(this.crediárioToolStripMenuItem_Click);
             // 
+            // melhoresClientesToolStripMenuItem
+            // 
+            this.melhoresClientesToolStripMenuItem.Name = "melhoresClientesToolStripMenuItem";
+            this.melhoresClientesToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
+            this.melhoresClientesToolStripMenuItem.Text = "Melhores Clientes";
+            this.melhoresClientesToolStripMenuItem.Click += new System.EventHandler(this.melhoresClientesToolStripMenuItem_Click);
+            // 
             // diárioToolStripMenuItem
             // 
             this.diárioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -577,7 +586,8 @@
             this.sincronizaçãoToolStripMenuItem,
             this.controleDeEstoqueToolStripMenuItem,
             this.pedidoToolStripMenuItem,
-            this.notificaçõesToolStripMenuItem});
+            this.notificaçõesToolStripMenuItem,
+            this.consultasToolStripMenuItem});
             this.operaçõesToolStripMenuItem.Name = "operaçõesToolStripMenuItem";
             this.operaçõesToolStripMenuItem.Size = new System.Drawing.Size(96, 25);
             this.operaçõesToolStripMenuItem.Text = "Operações";
@@ -1331,12 +1341,20 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // melhoresClientesToolStripMenuItem
+            // consultasToolStripMenuItem
             // 
-            this.melhoresClientesToolStripMenuItem.Name = "melhoresClientesToolStripMenuItem";
-            this.melhoresClientesToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
-            this.melhoresClientesToolStripMenuItem.Text = "Melhores Clientes";
-            this.melhoresClientesToolStripMenuItem.Click += new System.EventHandler(this.melhoresClientesToolStripMenuItem_Click);
+            this.consultasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pedidosToolStripMenuItem});
+            this.consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
+            this.consultasToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.consultasToolStripMenuItem.Text = "Consultas";
+            // 
+            // pedidosToolStripMenuItem
+            // 
+            this.pedidosToolStripMenuItem.Name = "pedidosToolStripMenuItem";
+            this.pedidosToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.pedidosToolStripMenuItem.Text = "Pedidos";
+            this.pedidosToolStripMenuItem.Click += new System.EventHandler(this.pedidosToolStripMenuItem_Click);
             // 
             // frmPrincipal
             // 
@@ -1501,5 +1519,7 @@
         private System.Windows.Forms.ToolStripMenuItem porMotoboyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem crediárioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem melhoresClientesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pedidosToolStripMenuItem;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DexComanda.Models;
+using DexComanda.Relatorios.Caixa;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -143,7 +144,12 @@ namespace DexComanda.Operações.Financeiro
                 con.Update("spFecharCaixa", caixa);
                 if (Utils.MessageBoxQuestion("Deseja imprimir o fechamento de caixa ?"))
                 {
-                    Utils.ImpressaoCaixa(int.Parse(caixa.Numero), caixa.Turno, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(dtFechamento.Text));
+                    RelFechamentoCaixaCompleto rel;
+                    rel = new RelFechamentoCaixaCompleto();
+                    Utils.GerarReportSoDatas(rel, Convert.ToDateTime(txtDtAbertura.Text));
+
+                   //Utils.GerarReportSoDatas(rel, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(txtDtAbertura.Text));
+                   // Utils.ImpressaoCaixa(int.Parse(caixa.Numero), caixa.Turno, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(dtFechamento.Text));
                 }
                 Utils.Restart();
             }

@@ -364,3 +364,4 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmDebitos
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Empresa.frmCadastraFornecedor.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.Crystal.frmReportPadrao.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmReporVendasPorCliente.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Consultas.frmConsultaPedido.resources

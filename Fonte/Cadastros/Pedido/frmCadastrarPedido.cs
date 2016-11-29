@@ -83,7 +83,8 @@ namespace DexComanda
         private decimal lPreco;
         private decimal dcTaxaEntrega;
         private int gMaximoOpcaoProduto;
-
+        private DataSet dsGrupo;
+        private int intCodPai;
         public frmCadastrarPedido()
         {
             try
@@ -177,6 +178,11 @@ namespace DexComanda
         {
             con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcoesProduto", iCodProduto);
         }
+        private int BuscaPaiGrupo(int iCodGrupo)
+        {
+            dsGrupo = con.SelectRegistroPorCodigo("Grupo", "spObterGrupoPorCodigo", iCodGrupo);
+            return int.Parse(dsGrupo.Tables[0].Rows[0].ItemArray.GetValue(6).ToString());
+        }
 
         public void frmCadastrarPedido_Load(object sender, EventArgs e)
         {
@@ -212,8 +218,7 @@ namespace DexComanda
                 cbxTipoProduto.Visible = true;
                 lblGrupo.Text = "Grupo";
                 txtCodProduto1.Visible = false;
-                // Utils.MontaCombox(cbxTipoPedido, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
-                this.cbxTipoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupoAtivo").Tables["Grupo"];
+                this.cbxTipoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupoAtivo").Tables[0];
                 this.cbxTipoProduto.DisplayMember = "NomeGrupo";
                 this.cbxTipoProduto.ValueMember = "Codigo";
             }
@@ -1818,7 +1823,16 @@ namespace DexComanda
                 else
                 {
                     this.txtCodProduto2.Visible = false;
-                    this.cbxSabor.DataSource = con.SelectRegistroPorNome("@GrupoProduto", "Produto", "spObterProdutoPorGrupo", this.cbxTipoProduto.Text).Tables["Produto"];
+                    int CodPai = BuscaPaiGrupo(int.Parse(cbxTipoProduto.SelectedValue.ToString()));
+                    if (CodPai!=0)
+                    {
+                        this.cbxSabor.DataSource = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodPai", CodPai).Tables[0];
+                    }
+                    else
+                    {
+                        this.cbxSabor.DataSource = con.SelectRegistroPorNome("@GrupoProduto", "Produto", "spObterProdutoPorGrupo", this.cbxTipoProduto.Text).Tables["Produto"];
+                    }
+                    
                     this.cbxSabor.DisplayMember = Convert.ToString("NomeProduto");
                     this.cbxSabor.ValueMember = "Codigo";
                 }

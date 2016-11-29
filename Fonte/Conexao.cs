@@ -114,6 +114,28 @@ namespace DexComanda
             return ds;
 
         }
+        public DataSet ConsultaPedido(string iCodPedido,DateTime dtInicio, DateTime dtFim)
+        {
+            string strCodPedido;
+            string iSql = "select Pd.Codigo," +
+                "(select Nome from Pessoa P where P.Codigo = Pd.CodPessoa) as 'Nome Cliente', " +
+                " Finalizado,TotalPedido,(select top 1 PS.Nome from PedidoStatusMovimento PSM " +
+                " join  PedidoStatus PS on Status = PSM.CodStatus where PSM.CodPedido=PD.Codigo " +
+                " order by PSM.DataAlteracao desc ) as 'Situacao Pedido' ,(select Nome from Entregador " +
+                " where Codigo=PD.CodMotoboy) as 'Entregador',(Select Nome from Usuario where Cod = PD.CodUsuario)" +
+                " as 'Atendente' from Pedido Pd where Pd.RealizadoEM between '" + dtInicio.ToShortDateString() +" 00:00:00"+ "'  and  '" + dtFim.ToShortDateString() +" 23:59:59"+"'";
+
+            if (iCodPedido != "")
+            {
+                iSql = iSql + " and Pd.Codigo=" + iCodPedido;
+            }
+            command = new SqlCommand(iSql, conn);
+            command.CommandType = CommandType.Text;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Pedido");
+            return ds;
+        }
         public DataSet RetornaMaioresPrecos(string iCod1, string iCod2, string iCod3, string iCod4,string iCodOpcao)
         {
             string iSqlConsulta = "select" +

@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.IO;
 using System.Management;
 using System.Net.NetworkInformation;
 using System.Net.Mail;
@@ -329,7 +328,7 @@ namespace DexComanda
 
         public static List<PrecoDiaProduto> DeserializaObjeto(string iValores)
         {
-            if (iValores =="")
+            if (iValores == "")
             {
                 return new List<PrecoDiaProduto>();
             }
@@ -901,6 +900,7 @@ namespace DexComanda
 
                 iReport.SetParameterValue("@DataInicio", datInicio);
                 iReport.SetParameterValue("@DataFim", datFim);
+
             }
             catch (Exception erro)
             {
@@ -909,8 +909,49 @@ namespace DexComanda
 
             return iReport;
         }
+        public static void GerarReportSoDatas(ReportClass iReport, DateTime dtInicio)
+        {
 
-        public  static void ImpressaoCozihanova_Separado(int iCodPedido, string iNomeImpressora)
+            try
+            {
+                var datInicio = Convert.ToDateTime(dtInicio.ToShortDateString() + " 00:00:00");
+                var datFim = Convert.ToDateTime(dtInicio.ToShortDateString() + " 23:59:59");
+
+                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                string nameReport = iReport.FileName;
+                iReport.Load(Directory.GetCurrentDirectory() + @"\" + nameReport + ".rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
+
+                CrTables = iReport.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+
+                iReport.SetParameterValue("@DataI", datInicio);
+                iReport.SetParameterValue("@DataF", datFim);
+                iReport.SetParameterValue("@DataInicio", datInicio);
+                iReport.SetParameterValue("@DataFim", datFim);
+                iReport.PrintToPrinter(1, false, 0, 0);
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException);
+            }
+
+        }
+
+        public static void ImpressaoCozihanova_Separado(int iCodPedido, string iNomeImpressora)
         {
             RelComandaMesaSeparado report;
             crtableLogoninfos = new TableLogOnInfos();
@@ -945,7 +986,7 @@ namespace DexComanda
                 if (iNomeImpressora != "")
                 {
                     report.PrintOptions.PrinterName = iNomeImpressora;
-                     report.PrintToPrinter(printersettings, new PageSettings(), false);
+                    report.PrintToPrinter(printersettings, new PageSettings(), false);
                 }
                 else
                 {
@@ -1389,8 +1430,8 @@ namespace DexComanda
                 report.Load(Directory.GetCurrentDirectory() + @"\RelBalcao.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                crConnectionInfo.UserID = "sa";
-                crConnectionInfo.Password = "1001";
+                crConnectionInfo.UserID = "dex";
+                crConnectionInfo.Password = "1234";
 
                 CrTables = report.Database.Tables;
                 foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
@@ -1583,6 +1624,97 @@ namespace DexComanda
 
             return iRetorno;
         }
+        public async static void BuscaPedido (int iCodPedido)
+        {
+            try
+            {
+                DataSet ds;
+                conexao = new Conexao();
+                ds = conexao.SelectRegistroPorCodigo("Pedido", "spObterPedidoFinalizadoPorCodigo", iCodPedido);
+                if (ds!=null)
+                {
+                    DataRow dRowPedido = ds.Tables[0].Rows[0];
+                    int CodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
+                    string FormaPagamento = dRowPedido.ItemArray.GetValue(5).ToString();
+                    string DescPedido = dRowPedido.ItemArray.GetValue(14).ToString();
+                    string NumMesa = dRowPedido.ItemArray.GetValue(9).ToString();
+                    string strTrocoPara = dRowPedido.ItemArray.GetValue(4).ToString();
+                    string strTotalPedido = dRowPedido.ItemArray.GetValue(3).ToString();
+                    string strTipoPedido = dRowPedido.ItemArray.GetValue(8).ToString();
+                    string strMesa = dRowPedido.ItemArray.GetValue(9).ToString();
+                    DateTime dtPedido = Convert.ToDateTime(dRowPedido.ItemArray.GetValue(7).ToString());
+                    string strTroco="0,00";
+           
+                    if (strTrocoPara != "0,00" && strTrocoPara != "0")
+                    {
+                        strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
+                    }
+
+                    // Retorna a Taxa de Entrega do cadastro do Cliente
+                    decimal TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, conexao);
+                    frmCadastrarPedido frm = new frmCadastrarPedido(true, DescPedido, NumMesa, strTroco, TaxaEntrega,
+                                                     false, dtPedido, iCodPedido, CodPessoa, strTrocoPara, FormaPagamento,
+                                                     strTipoPedido, strMesa, null, decimal.Parse(strTotalPedido));
+
+                   
+                    frm.Show();
+
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+        }
+        public void ClearForm(System.Windows.Forms.Control parent)
+        {
+            foreach (System.Windows.Forms.Control ctrControl in parent.Controls)
+            {
+                //Loop through all controls
+                if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.TextBox)))
+                {
+                    //Check to see if it's a textbox
+                    ((System.Windows.Forms.TextBox)ctrControl).Text = string.Empty;
+                    //If it is then set the text to String.Empty (empty textbox)
+                }
+                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.Button)))
+                {
+                    ((System.Windows.Forms.Button)ctrControl).Enabled = false;
+                }
+                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RichTextBox)))
+                {
+                    //If its a RichTextBox clear the text
+                    ((System.Windows.Forms.RichTextBox)ctrControl).Text = string.Empty;
+                }
+                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.ComboBox)))
+                {
+                    //Next check if it's a dropdown list
+                    ((System.Windows.Forms.ComboBox)ctrControl).SelectedIndex = -1;
+                    //If it is then set its SelectedIndex to 0
+                }
+                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                {
+                    //Next uncheck all checkboxes
+                    ((System.Windows.Forms.CheckBox)ctrControl).Checked = false;
+                }
+                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))
+                {
+                    //Unselect all RadioButtons
+                    ((System.Windows.Forms.RadioButton)ctrControl).Checked = false;
+                }
+                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.PictureBox)))
+                {
+                    //Unselect all RadioButtons
+                    ((System.Windows.Forms.PictureBox)ctrControl).Image = null;
+                }
+                if (ctrControl.Controls.Count > 0)
+                {
+                    //Call itself to get all other controls in other containers
+                    ClearForm(ctrControl);
+                }
+            }
+        }
         public static void RepetirUltimoPedido(int iCodCliente, Main iMain = null)
         {
             DataSet ds;
@@ -1602,7 +1734,7 @@ namespace DexComanda
                 // Retorna a Taxa de Entrega do cadastro do Cliente
                 TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, conexao);
 
-                frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", "", "", 0, false,
+                frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", "", "", TaxaEntrega, false,
                                                                             DateTime.Now, CodPedido, CodPessoa,
                                                                             "", FormaPagamento, "", "Balcao", iMain, 0.00M);
                 frmRepetePedido.ShowDialog();
