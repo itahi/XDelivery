@@ -154,6 +154,9 @@ namespace DexComanda
             config.CidadesAtendidas = Utils.SerializaObjeto(CidadesAtendidas());
             config.ExigeVendedorSN = chkVendedor.Checked;
             config.GCM = txtGoogleProjetc.Text;
+            config.ImpressoraEntrega = cbxImpressoraDelivery.Text;
+            config.ImpressoraCozinha = cbxImpressoraMesa.Text;
+            config.ImpressoraCopaBalcao = cbxImpressoraBalcao.Text;
             if (chkEnviaSms.Checked)
             {
                 Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
@@ -292,6 +295,9 @@ namespace DexComanda
             config.CidadesAtendidas = Utils.SerializaObjeto(CidadesAtendidas());
             config.ExigeVendedorSN = chkVendedor.Checked;
             config.GCM = txtGoogleProjetc.Text;
+            config.ImpressoraEntrega = cbxImpressoraDelivery.Text;
+            config.ImpressoraCozinha = cbxImpressoraMesa.Text;
+            config.ImpressoraCopaBalcao = cbxImpressoraBalcao.Text;
             //config.CidadesAtendidas = "";
             if (chkEnviaSms.Checked)
             {
@@ -346,35 +352,18 @@ namespace DexComanda
         }
 
 
-        private void LoadImpressoras()
+        private  void LoadImpressoras(ComboBox icbx)
         {
-            // LOAD do Formulário para configuração de portas e Modelos de impressoras
-            // carrega o combo com os modelos das impressoras
-            cbModeloImp.Items.Add("MP 20 CI");
-            cbModeloImp.Items.Add("MP 20 MI");
-            cbModeloImp.Items.Add("MP 20 TH");
-            cbModeloImp.Items.Add("MP 2000 CI");
-            cbModeloImp.Items.Add("MP 2000 TH");
-            cbModeloImp.Items.Add("MP 2100 TH");
-            cbModeloImp.Items.Add("MP 2500 TH");
-            cbModeloImp.Items.Add("MP 4000 TH");
-            cbModeloImp.Items.Add("MP 4200 TH");
+            icbx.Items.Clear();
+            foreach (var item in PrinterSettings.InstalledPrinters)
+            {
+                icbx.Items.Add(item);
+            }
 
-            //carrega o combo com as portas
-            cbPorta.Items.Add("USB");
-            cbPorta.Items.Add("COM1");
-            cbPorta.Items.Add("COM2");
-            cbPorta.Items.Add("COM3");
-            cbPorta.Items.Add("COM4");
-            cbPorta.Items.Add("LPT1");
-            cbPorta.Items.Add("LPT2");
-            cbPorta.Items.Add("ETHERNET");
         }
 
         private void frmConfiguracoes_Load(object sender, EventArgs e)
         {
-            LoadImpressoras();
-
             // Utils.RetornoTxt();//cbxCozinha.Text= cbxMesas.Text= cbxEntregas.Text = ListaImpressoras();
             if (Sessions.returnConfig != null)
             {
@@ -408,6 +397,10 @@ namespace DexComanda
                 chkVendedor.Checked = Sessions.returnConfig.ExigeVendedorSN;
                 PreencheCidades(Sessions.returnConfig.CidadesAtendidas);
                 txtGoogleProjetc.Text = Sessions.returnConfig.GCM;
+
+                cbxImpressoraDelivery.Text = Sessions.returnConfig.ImpressoraEntrega;
+                cbxImpressoraMesa.Text = Sessions.returnConfig.ImpressoraCozinha;
+                cbxImpressoraBalcao.Text = Sessions.returnConfig.ImpressoraCopaBalcao;
                 this.btnSalvar.Text = "Alterar";
                 this.btnSalvar.Click -= SalvaConfig;
                 this.btnSalvar.Click += AlterarConfig;
@@ -600,92 +593,92 @@ namespace DexComanda
             }
         }
 
-        private void cbModeloImp_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string modeloImp = cbModeloImp.SelectedItem.ToString(); //Pega a seleção do Combo
-            int iRetorno = 7;
-            //testes para definir o código do modelo da impressora
-            if (modeloImp == "MP 20 CI")
-            {
-                iRetorno = MP2032.ConfiguraModeloImpressora(1);
-                iNumModelo = 1;
-            }
-            else if (modeloImp == "MP 20 MI")
-            {
-                iRetorno = MP2032.ConfiguraModeloImpressora(1);
-            }
-            else if (modeloImp == "MP 20 TH")
-            {
-                iRetorno = MP2032.ConfiguraModeloImpressora(0);
-                iNumModelo = 1;
-            }
-            else if (modeloImp == "MP 2000 CI")
-            {
-                iRetorno = MP2032.ConfiguraModeloImpressora(0);
-                iNumModelo = 0;
-            }
-            else if (modeloImp == "MP 2000 TH")
-            {
-                iNumModelo = MP2032.ConfiguraModeloImpressora(0);
-                iNumModelo = 0;
-            }
-            else if (modeloImp == "MP 2100 TH")
-            {
-                iRetorno = MP2032.ConfiguraModeloImpressora(0);
-                iNumModelo = 0;
-            }
-            else if (modeloImp == "MP 2500 TH")
-            {
-                iRetorno = MP2032.ConfiguraModeloImpressora(8);
-                iNumModelo = 0;
-            }
-            else if (modeloImp == "MP 4000 TH")
-            {
-                iRetorno = MP2032.ConfiguraModeloImpressora(5);
-                iNumModelo = 5;
-            }
-            else if (modeloImp == "MP 4200 TH")
-            {
-                iRetorno = MP2032.ConfiguraModeloImpressora(7);
-                iNumModelo = 7;
-            }
+        //private void cbModeloImp_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    string modeloImp = cbModeloImp.SelectedItem.ToString(); //Pega a seleção do Combo
+        //    int iRetorno = 7;
+        //    //testes para definir o código do modelo da impressora
+        //    if (modeloImp == "MP 20 CI")
+        //    {
+        //        iRetorno = MP2032.ConfiguraModeloImpressora(1);
+        //        iNumModelo = 1;
+        //    }
+        //    else if (modeloImp == "MP 20 MI")
+        //    {
+        //        iRetorno = MP2032.ConfiguraModeloImpressora(1);
+        //    }
+        //    else if (modeloImp == "MP 20 TH")
+        //    {
+        //        iRetorno = MP2032.ConfiguraModeloImpressora(0);
+        //        iNumModelo = 1;
+        //    }
+        //    else if (modeloImp == "MP 2000 CI")
+        //    {
+        //        iRetorno = MP2032.ConfiguraModeloImpressora(0);
+        //        iNumModelo = 0;
+        //    }
+        //    else if (modeloImp == "MP 2000 TH")
+        //    {
+        //        iNumModelo = MP2032.ConfiguraModeloImpressora(0);
+        //        iNumModelo = 0;
+        //    }
+        //    else if (modeloImp == "MP 2100 TH")
+        //    {
+        //        iRetorno = MP2032.ConfiguraModeloImpressora(0);
+        //        iNumModelo = 0;
+        //    }
+        //    else if (modeloImp == "MP 2500 TH")
+        //    {
+        //        iRetorno = MP2032.ConfiguraModeloImpressora(8);
+        //        iNumModelo = 0;
+        //    }
+        //    else if (modeloImp == "MP 4000 TH")
+        //    {
+        //        iRetorno = MP2032.ConfiguraModeloImpressora(5);
+        //        iNumModelo = 5;
+        //    }
+        //    else if (modeloImp == "MP 4200 TH")
+        //    {
+        //        iRetorno = MP2032.ConfiguraModeloImpressora(7);
+        //        iNumModelo = 7;
+        //    }
 
 
-        }
+        //}
 
-        private void cbPorta_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        //private void cbPorta_SelectedIndexChanged(object sender, EventArgs e)
+        //{
 
-            txtIpImpressora.Visible = cbPorta.SelectedItem.ToString() == "ETHERNET";
-            txtIpImpressora.Focus();
+        //    txtIpImpressora.Visible = cbPorta.SelectedItem.ToString() == "ETHERNET";
+        //    txtIpImpressora.Focus();
 
-        }
+        //}
 
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
+        //private void button1_Click_1(object sender, EventArgs e)
+        //{
 
-            //MP2032.ConfiguraModeloImpressora(iNumModelo);
-            if (txtIpImpressora.Visible)
-            {
-                Porta = txtIpImpressora.Text;
-            }
-            else
-            {
-                Porta = cbPorta.SelectedItem.ToString();
-            }
+        //    //MP2032.ConfiguraModeloImpressora(iNumModelo);
+        //    if (txtIpImpressora.Visible)
+        //    {
+        //        Porta = txtIpImpressora.Text;
+        //    }
+        //    else
+        //    {
+        //        Porta = cbPorta.SelectedItem.ToString();
+        //    }
 
-            if (MP2032.IniciaPorta(Porta) <= 0)
-            {
-                MessageBox.Show("Impressora não Configurada");
-                string iArquivo = Utils.CriaArquivoTxt("ConfigImpressao", Convert.ToString(iNumModelo) + ";" + Porta);
-            }
-            else
-            {
-                string iArquivo = Utils.CriaArquivoTxt("ConfigImpressao", Convert.ToString(iNumModelo) + ";" + Porta);
-            }
+        //    if (MP2032.IniciaPorta(Porta) <= 0)
+        //    {
+        //        MessageBox.Show("Impressora não Configurada");
+        //        string iArquivo = Utils.CriaArquivoTxt("ConfigImpressao", Convert.ToString(iNumModelo) + ";" + Porta);
+        //    }
+        //    else
+        //    {
+        //        string iArquivo = Utils.CriaArquivoTxt("ConfigImpressao", Convert.ToString(iNumModelo) + ";" + Porta);
+        //    }
 
-        }
+        //}
 
         private void chkViaCozinha_CheckedChanged(object sender, EventArgs e)
         {
@@ -871,6 +864,21 @@ namespace DexComanda
         private void txtPrevisao_KeyPress(object sender, KeyPressEventArgs e)
         {
             Utils.SoPermiteNumeros(e);
+        }
+
+        private void cbxImpressoraDelivery_DropDown(object sender, EventArgs e)
+        {
+            LoadImpressoras(cbxImpressoraDelivery);
+        }
+
+        private void cbxImpressoraBalcao_DropDown(object sender, EventArgs e)
+        {
+            LoadImpressoras(cbxImpressoraBalcao);
+        }
+
+        private void cbxImpressoraMesa_DropDown(object sender, EventArgs e)
+        {
+            LoadImpressoras(cbxImpressoraMesa);
         }
     }
 }

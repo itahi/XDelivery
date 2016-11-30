@@ -124,11 +124,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.chkLoginSenha = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.grpBematech = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.txtIpImpressora = new System.Windows.Forms.TextBox();
-            this.cbPorta = new System.Windows.Forms.ComboBox();
-            this.cbModeloImp = new System.Windows.Forms.ComboBox();
+            this.grpImpressoras = new System.Windows.Forms.GroupBox();
             this.grpViasImpressao = new System.Windows.Forms.GroupBox();
             this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
@@ -187,6 +183,8 @@
             this.chkNomePessoa = new System.Windows.Forms.CheckBox();
             this.chkCodPessoa = new System.Windows.Forms.CheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.chkAtendente = new System.Windows.Forms.CheckBox();
+            this.chkEntregador = new System.Windows.Forms.CheckBox();
             this.chkDesconto = new System.Windows.Forms.CheckBox();
             this.chkOrigem = new System.Windows.Forms.CheckBox();
             this.chkstatus = new System.Windows.Forms.CheckBox();
@@ -241,8 +239,12 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.chkEntregador = new System.Windows.Forms.CheckBox();
-            this.chkAtendente = new System.Windows.Forms.CheckBox();
+            this.cbxImpressoraDelivery = new System.Windows.Forms.ComboBox();
+            this.cbxImpressoraBalcao = new System.Windows.Forms.ComboBox();
+            this.cbxImpressoraMesa = new System.Windows.Forms.ComboBox();
+            this.label52 = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.label54 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -260,7 +262,7 @@
             this.grpLoginSenha.SuspendLayout();
             this.pInfoUserDefault.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.grpBematech.SuspendLayout();
+            this.grpImpressoras.SuspendLayout();
             this.grpViasImpressao.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.grpFidelidade.SuspendLayout();
@@ -1051,7 +1053,7 @@
             this.groupBox4.Controls.Add(this.chkDataNAscimento);
             this.groupBox4.Location = new System.Drawing.Point(7, 6);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(639, 103);
+            this.groupBox4.Size = new System.Drawing.Size(639, 93);
             this.groupBox4.TabIndex = 12;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Gerais";
@@ -1156,7 +1158,7 @@
             // 
             this.grpLoginSenha.Controls.Add(this.pInfoUserDefault);
             this.grpLoginSenha.Controls.Add(this.chkLoginSenha);
-            this.grpLoginSenha.Location = new System.Drawing.Point(6, 115);
+            this.grpLoginSenha.Location = new System.Drawing.Point(6, 99);
             this.grpLoginSenha.Name = "grpLoginSenha";
             this.grpLoginSenha.Size = new System.Drawing.Size(640, 60);
             this.grpLoginSenha.TabIndex = 11;
@@ -1220,7 +1222,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.grpBematech);
+            this.groupBox2.Controls.Add(this.grpImpressoras);
             this.groupBox2.Controls.Add(this.grpViasImpressao);
             this.groupBox2.Controls.Add(this.lblporta);
             this.groupBox2.Controls.Add(this.txtPortaLPT);
@@ -1234,67 +1236,27 @@
             this.groupBox2.Controls.Add(this.chkViaCozinha);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.txtCaracterImpressora);
-            this.groupBox2.Location = new System.Drawing.Point(7, 181);
+            this.groupBox2.Location = new System.Drawing.Point(7, 165);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(640, 139);
+            this.groupBox2.Size = new System.Drawing.Size(640, 152);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Impressão";
             // 
-            // grpBematech
+            // grpImpressoras
             // 
-            this.grpBematech.Controls.Add(this.button1);
-            this.grpBematech.Controls.Add(this.txtIpImpressora);
-            this.grpBematech.Controls.Add(this.cbPorta);
-            this.grpBematech.Controls.Add(this.cbModeloImp);
-            this.grpBematech.Enabled = false;
-            this.grpBematech.Location = new System.Drawing.Point(483, 5);
-            this.grpBematech.Name = "grpBematech";
-            this.grpBematech.Size = new System.Drawing.Size(151, 127);
-            this.grpBematech.TabIndex = 28;
-            this.grpBematech.TabStop = false;
-            this.grpBematech.Text = "Bematech Config";
-            // 
-            // button1
-            // 
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(26, 90);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 24);
-            this.button1.TabIndex = 24;
-            this.button1.Text = "Salvar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
-            // txtIpImpressora
-            // 
-            this.txtIpImpressora.Location = new System.Drawing.Point(10, 66);
-            this.txtIpImpressora.Name = "txtIpImpressora";
-            this.txtIpImpressora.Size = new System.Drawing.Size(100, 20);
-            this.txtIpImpressora.TabIndex = 5;
-            this.txtIpImpressora.Text = "IP da impressora";
-            this.txtIpImpressora.Visible = false;
-            // 
-            // cbPorta
-            // 
-            this.cbPorta.FormattingEnabled = true;
-            this.cbPorta.Location = new System.Drawing.Point(9, 40);
-            this.cbPorta.Name = "cbPorta";
-            this.cbPorta.Size = new System.Drawing.Size(87, 21);
-            this.cbPorta.TabIndex = 2;
-            this.cbPorta.Text = "Porta";
-            this.cbPorta.SelectedIndexChanged += new System.EventHandler(this.cbPorta_SelectedIndexChanged);
-            // 
-            // cbModeloImp
-            // 
-            this.cbModeloImp.FormattingEnabled = true;
-            this.cbModeloImp.Location = new System.Drawing.Point(9, 14);
-            this.cbModeloImp.Name = "cbModeloImp";
-            this.cbModeloImp.Size = new System.Drawing.Size(132, 21);
-            this.cbModeloImp.TabIndex = 1;
-            this.cbModeloImp.Text = "Modelo da Impressora";
-            this.cbModeloImp.SelectedIndexChanged += new System.EventHandler(this.cbModeloImp_SelectedIndexChanged);
+            this.grpImpressoras.Controls.Add(this.label54);
+            this.grpImpressoras.Controls.Add(this.label53);
+            this.grpImpressoras.Controls.Add(this.label52);
+            this.grpImpressoras.Controls.Add(this.cbxImpressoraMesa);
+            this.grpImpressoras.Controls.Add(this.cbxImpressoraBalcao);
+            this.grpImpressoras.Controls.Add(this.cbxImpressoraDelivery);
+            this.grpImpressoras.Location = new System.Drawing.Point(448, 5);
+            this.grpImpressoras.Name = "grpImpressoras";
+            this.grpImpressoras.Size = new System.Drawing.Size(186, 141);
+            this.grpImpressoras.TabIndex = 28;
+            this.grpImpressoras.TabStop = false;
+            this.grpImpressoras.Text = "Impressoras";
             // 
             // grpViasImpressao
             // 
@@ -1304,7 +1266,7 @@
             this.grpViasImpressao.Controls.Add(this.txtViasBalcao);
             this.grpViasImpressao.Controls.Add(this.txtViasCozinha);
             this.grpViasImpressao.Controls.Add(this.txtViasEntrega);
-            this.grpViasImpressao.Location = new System.Drawing.Point(349, 15);
+            this.grpViasImpressao.Location = new System.Drawing.Point(315, 15);
             this.grpViasImpressao.Name = "grpViasImpressao";
             this.grpViasImpressao.Size = new System.Drawing.Size(121, 100);
             this.grpViasImpressao.TabIndex = 27;
@@ -1384,9 +1346,9 @@
             this.lbltempo.AutoSize = true;
             this.lbltempo.Location = new System.Drawing.Point(219, 78);
             this.lbltempo.Name = "lbltempo";
-            this.lbltempo.Size = new System.Drawing.Size(124, 13);
+            this.lbltempo.Size = new System.Drawing.Size(88, 13);
             this.lbltempo.TabIndex = 24;
-            this.lbltempo.Text = "Tempo Prev. em minutos";
+            this.lbltempo.Text = "Prev. em minutos";
             this.lbltempo.Visible = false;
             // 
             // chkImpLPT
@@ -1901,6 +1863,26 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Pedidos";
             // 
+            // chkAtendente
+            // 
+            this.chkAtendente.AutoSize = true;
+            this.chkAtendente.Location = new System.Drawing.Point(130, 105);
+            this.chkAtendente.Name = "chkAtendente";
+            this.chkAtendente.Size = new System.Drawing.Size(75, 17);
+            this.chkAtendente.TabIndex = 48;
+            this.chkAtendente.Text = "Atendente";
+            this.chkAtendente.UseVisualStyleBackColor = true;
+            // 
+            // chkEntregador
+            // 
+            this.chkEntregador.AutoSize = true;
+            this.chkEntregador.Location = new System.Drawing.Point(130, 82);
+            this.chkEntregador.Name = "chkEntregador";
+            this.chkEntregador.Size = new System.Drawing.Size(78, 17);
+            this.chkEntregador.TabIndex = 47;
+            this.chkEntregador.Text = "Entregador";
+            this.chkEntregador.UseVisualStyleBackColor = true;
+            // 
             // chkDesconto
             // 
             this.chkDesconto.AutoSize = true;
@@ -2401,7 +2383,7 @@
             this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(589, 478);
+            this.btnCancelar.Location = new System.Drawing.Point(589, 474);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 24;
@@ -2414,7 +2396,7 @@
             // 
             this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
             this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalvar.Location = new System.Drawing.Point(502, 478);
+            this.btnSalvar.Location = new System.Drawing.Point(502, 475);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(75, 23);
             this.btnSalvar.TabIndex = 23;
@@ -2426,25 +2408,59 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // chkEntregador
+            // cbxImpressoraDelivery
             // 
-            this.chkEntregador.AutoSize = true;
-            this.chkEntregador.Location = new System.Drawing.Point(130, 82);
-            this.chkEntregador.Name = "chkEntregador";
-            this.chkEntregador.Size = new System.Drawing.Size(78, 17);
-            this.chkEntregador.TabIndex = 47;
-            this.chkEntregador.Text = "Entregador";
-            this.chkEntregador.UseVisualStyleBackColor = true;
+            this.cbxImpressoraDelivery.FormattingEnabled = true;
+            this.cbxImpressoraDelivery.Location = new System.Drawing.Point(6, 29);
+            this.cbxImpressoraDelivery.Name = "cbxImpressoraDelivery";
+            this.cbxImpressoraDelivery.Size = new System.Drawing.Size(169, 21);
+            this.cbxImpressoraDelivery.TabIndex = 18;
+            this.cbxImpressoraDelivery.DropDown += new System.EventHandler(this.cbxImpressoraDelivery_DropDown);
             // 
-            // chkAtendente
+            // cbxImpressoraBalcao
             // 
-            this.chkAtendente.AutoSize = true;
-            this.chkAtendente.Location = new System.Drawing.Point(130, 105);
-            this.chkAtendente.Name = "chkAtendente";
-            this.chkAtendente.Size = new System.Drawing.Size(75, 17);
-            this.chkAtendente.TabIndex = 48;
-            this.chkAtendente.Text = "Atendente";
-            this.chkAtendente.UseVisualStyleBackColor = true;
+            this.cbxImpressoraBalcao.FormattingEnabled = true;
+            this.cbxImpressoraBalcao.Location = new System.Drawing.Point(5, 71);
+            this.cbxImpressoraBalcao.Name = "cbxImpressoraBalcao";
+            this.cbxImpressoraBalcao.Size = new System.Drawing.Size(170, 21);
+            this.cbxImpressoraBalcao.TabIndex = 19;
+            this.cbxImpressoraBalcao.DropDown += new System.EventHandler(this.cbxImpressoraBalcao_DropDown);
+            // 
+            // cbxImpressoraMesa
+            // 
+            this.cbxImpressoraMesa.FormattingEnabled = true;
+            this.cbxImpressoraMesa.Location = new System.Drawing.Point(6, 114);
+            this.cbxImpressoraMesa.Name = "cbxImpressoraMesa";
+            this.cbxImpressoraMesa.Size = new System.Drawing.Size(169, 21);
+            this.cbxImpressoraMesa.TabIndex = 20;
+            this.cbxImpressoraMesa.DropDown += new System.EventHandler(this.cbxImpressoraMesa_DropDown);
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Location = new System.Drawing.Point(6, 13);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(45, 13);
+            this.label52.TabIndex = 29;
+            this.label52.Text = "Delivery";
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Location = new System.Drawing.Point(6, 52);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(40, 13);
+            this.label53.TabIndex = 30;
+            this.label53.Text = "Balcão";
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Location = new System.Drawing.Point(6, 97);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(95, 13);
+            this.label54.TabIndex = 31;
+            this.label54.Text = "Fechamento Mesa";
             // 
             // frmConfiguracoes
             // 
@@ -2491,8 +2507,8 @@
             this.pInfoUserDefault.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.grpBematech.ResumeLayout(false);
-            this.grpBematech.PerformLayout();
+            this.grpImpressoras.ResumeLayout(false);
+            this.grpImpressoras.PerformLayout();
             this.grpViasImpressao.ResumeLayout(false);
             this.grpViasImpressao.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -2637,11 +2653,7 @@
         private System.Windows.Forms.Button btnBackup;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.GroupBox grpBematech;
-        private System.Windows.Forms.TextBox txtIpImpressora;
-        private System.Windows.Forms.ComboBox cbPorta;
-        private System.Windows.Forms.ComboBox cbModeloImp;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox grpImpressoras;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.TextBox txtURL;
         private System.Windows.Forms.CheckBox chkDtSincronismo;
@@ -2739,5 +2751,11 @@
         private System.Windows.Forms.TextBox txtGoogleProjetc;
         private System.Windows.Forms.CheckBox chkAtendente;
         private System.Windows.Forms.CheckBox chkEntregador;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.ComboBox cbxImpressoraMesa;
+        private System.Windows.Forms.ComboBox cbxImpressoraBalcao;
+        private System.Windows.Forms.ComboBox cbxImpressoraDelivery;
     }
 }

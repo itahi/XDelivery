@@ -147,6 +147,9 @@ namespace DexComanda
                                      Pushapp_id = config.ItemArray.GetValue(31).ToString(),
                                      CidadesAtendidas = config.ItemArray.GetValue(32).ToString(),
                                      GCM = config.ItemArray.GetValue(34).ToString(),
+                                     ImpressoraCozinha = config.ItemArray.GetValue(35).ToString(),
+                                     ImpressoraEntrega = config.ItemArray.GetValue(36).ToString(),
+                                     ImpressoraCopaBalcao = config.ItemArray.GetValue(37).ToString(),
 
                                 };
                                 if (config.ItemArray.GetValue(4).ToString() != "")

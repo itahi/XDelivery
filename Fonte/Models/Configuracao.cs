@@ -40,5 +40,8 @@ namespace DexComanda.Models
         public string CidadesAtendidas { get; set; }
         public bool ExigeVendedorSN { get; set; }
         public string GCM { get; set; }
+        public string ImpressoraCozinha { get; set; }
+        public string ImpressoraEntrega { get; set; }
+        public string ImpressoraCopaBalcao { get; set; }
     }
 }

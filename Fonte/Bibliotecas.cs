@@ -22,6 +22,7 @@ namespace DexComanda
         public const string cAcaiFood = "15014504000138";
         public const string cMassaRara = "21188769000155";
         public const string cEsphiras = "21128650000197";
+        public const string cAcaiVitoria = "00830689000181";
         public const string cTopsAcai = "";
 
         public const string cSkinaLanches = "24829903000148";

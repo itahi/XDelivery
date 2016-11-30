@@ -1650,7 +1650,7 @@ namespace DexComanda
                     }
                     else if (Sessions.returnConfig.QtdCaracteresImp >= 30)
                     {
-                        iRetorno = Utils.ImpressaoFechamentoNovo(iCodigo, ImprimeLPT, QtdViasBalcao);
+                        iRetorno = Utils.ImpressaoFechamentoNovo(iCodigo, ImprimeLPT, QtdViasBalcao,Sessions.returnConfig.ImpressoraCopaBalcao);
                     }
 
 
@@ -1668,7 +1668,7 @@ namespace DexComanda
                         iCodigo = codPedido;
                     }
 
-                    string iRetorno = Utils.ImpressaoBalcao(iCodigo, ImprimeLPT, QtdViasBalcao);
+                    string iRetorno = Utils.ImpressaoBalcao(iCodigo, ImprimeLPT, QtdViasBalcao,Sessions.returnConfig.ImpressoraCopaBalcao);
 
                 }
 
@@ -1700,7 +1700,8 @@ namespace DexComanda
                         }
                         else
                         {
-                            iRetorno = Utils.ImpressaoEntreganova(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), dblPRevisao, ImprimeLPT, QtViasEntrega);
+                            iRetorno = Utils.ImpressaoEntreganova(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), dblPRevisao,
+                                ImprimeLPT, QtViasEntrega,Sessions.returnConfig.ImpressoraEntrega);
                         }
 
                     }
@@ -1721,7 +1722,8 @@ namespace DexComanda
                     {
                         iCodigo = codPedido;
                     }
-                    if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras || Sessions.returnEmpresa.CNPJ == Bibliotecas.cMassaRara)
+                    if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras || Sessions.returnEmpresa.CNPJ 
+                        == Bibliotecas.cMassaRara || Sessions.returnEmpresa.CNPJ ==Bibliotecas.cAcaiVitoria)
                     {
                         Utils.ImpressaoPorCozinha(iCodigo);
                         return;
