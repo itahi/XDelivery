@@ -1729,7 +1729,6 @@ namespace DexComanda
                         return;
                     }
 
-
                     string iRetorno = Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
 
 
@@ -1739,7 +1738,7 @@ namespace DexComanda
             catch (Exception E)
             {
 
-                MessageBox.Show("Não foi possivel imprimir " + E.Message, "Avisoss Dex");
+                MessageBox.Show("Não foi possivel imprimir " + E.Message, " [xSistemas] ");
             }
 
         }
@@ -1759,7 +1758,6 @@ namespace DexComanda
             {
                 ev.Graphics.DrawString(line, printFont, Brushes.Black, 0, 0);
                 ev.HasMorePages = false;
-
             }
         }
 

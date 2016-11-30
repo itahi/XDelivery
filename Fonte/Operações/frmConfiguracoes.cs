@@ -157,6 +157,7 @@ namespace DexComanda
             config.ImpressoraEntrega = cbxImpressoraDelivery.Text;
             config.ImpressoraCozinha = cbxImpressoraMesa.Text;
             config.ImpressoraCopaBalcao = cbxImpressoraBalcao.Text;
+            config.CobrancaProporcionalSN = chkProporcional.Checked;
             if (chkEnviaSms.Checked)
             {
                 Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
@@ -298,6 +299,7 @@ namespace DexComanda
             config.ImpressoraEntrega = cbxImpressoraDelivery.Text;
             config.ImpressoraCozinha = cbxImpressoraMesa.Text;
             config.ImpressoraCopaBalcao = cbxImpressoraBalcao.Text;
+            config.CobrancaProporcionalSN = chkProporcional.Checked;
             //config.CidadesAtendidas = "";
             if (chkEnviaSms.Checked)
             {
@@ -401,6 +403,7 @@ namespace DexComanda
                 cbxImpressoraDelivery.Text = Sessions.returnConfig.ImpressoraEntrega;
                 cbxImpressoraMesa.Text = Sessions.returnConfig.ImpressoraCozinha;
                 cbxImpressoraBalcao.Text = Sessions.returnConfig.ImpressoraCopaBalcao;
+                chkProporcional.Checked = Sessions.returnConfig.CobrancaProporcionalSN;
                 this.btnSalvar.Text = "Alterar";
                 this.btnSalvar.Click -= SalvaConfig;
                 this.btnSalvar.Click += AlterarConfig;
@@ -879,6 +882,12 @@ namespace DexComanda
         private void cbxImpressoraMesa_DropDown(object sender, EventArgs e)
         {
             LoadImpressoras(cbxImpressoraMesa);
+        }
+
+        private void chk2Telefones_CheckedChanged(object sender, EventArgs e)
+        {
+
+
         }
     }
 }

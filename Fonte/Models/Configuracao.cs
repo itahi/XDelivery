@@ -43,5 +43,6 @@ namespace DexComanda.Models
         public string ImpressoraCozinha { get; set; }
         public string ImpressoraEntrega { get; set; }
         public string ImpressoraCopaBalcao { get; set; }
+        public bool CobrancaProporcionalSN { get; set; }
     }
 }

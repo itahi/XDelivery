@@ -150,6 +150,7 @@ namespace DexComanda
                                      ImpressoraCozinha = config.ItemArray.GetValue(35).ToString(),
                                      ImpressoraEntrega = config.ItemArray.GetValue(36).ToString(),
                                      ImpressoraCopaBalcao = config.ItemArray.GetValue(37).ToString(),
+                                     CobrancaProporcionalSN = bool.Parse(config.ItemArray.GetValue(38).ToString()),
 
                                 };
                                 if (config.ItemArray.GetValue(4).ToString() != "")
