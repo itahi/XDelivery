@@ -14,21 +14,23 @@ namespace DexComanda.Cadastros.Pedido
     {
         private Conexao con;
         private string strGrupo;
+        private int intCodPai;
         private string iCod1 = "0";
         private string iCod2 = "0";
         private string iCod3 = "0";
         private string iCod4 = "0";
         public string strNomeProduto, strTamanho, strPreco,strNome = "";
-
+        public Boolean boolConfirmado = false;
         private string iCodOpcao;
         public frmSabores()
         {
 
             InitializeComponent();
         }
-        public frmSabores(string iGrupo)
+        public frmSabores(string iGrupo,int iCodPai)
         {
             strGrupo = iGrupo;
+            intCodPai = iCodPai;
             InitializeComponent();
         }
 
@@ -43,28 +45,52 @@ namespace DexComanda.Cadastros.Pedido
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
-
+        
         private void ListaSabor1(object sender, EventArgs e)
         {
+            if (intCodPai!=0)
+            {
+                MOntaCombo(comboBox1, intCodPai);
+                return;
+            }
             Utils.MontaCombox(comboBox1, "NomeProduto", "Codigo", strGrupo);
-
         }
-
         private void ListaSabor2(object sender, EventArgs e)
         {
+            if (intCodPai != 0)
+            {
+                MOntaCombo(comboBox2, intCodPai);
+                return;
+            }
             Utils.MontaCombox(comboBox2, "NomeProduto", "Codigo", strGrupo);
         }
 
         private void ListaSabor3(object sender, EventArgs e)
         {
+            if (intCodPai != 0)
+            {
+                MOntaCombo(comboBox3, intCodPai);
+                return;
+            }
             Utils.MontaCombox(comboBox3, "NomeProduto", "Codigo", strGrupo);
         }
 
         private void ListaSabor4(object sender, EventArgs e)
         {
+            if (intCodPai != 0)
+            {
+                MOntaCombo(comboBox4, intCodPai);
+                return;
+            }
             Utils.MontaCombox(comboBox4, "NomeProduto", "Codigo", strGrupo);
         }
-
+        private void MOntaCombo(ComboBox icbxName,int iCodPai)
+        {
+            DataSet ds = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodPai", iCodPai);
+            icbxName.DataSource = ds.Tables[0];
+            icbxName.DisplayMember = "NomeProduto";
+            icbxName.ValueMember = "Codigo";
+        }
         private void EscondeTamanhos()
         {
             foreach (System.Windows.Forms.Control ctrControl in grpTamanhos.Controls)
@@ -113,8 +139,8 @@ namespace DexComanda.Cadastros.Pedido
                 for (int i = 0; i < dsOpcoesProduto.Tables[0].Rows.Count; i++)
                 {
                     string iCodOpcao = dsOpcoesProduto.Tables[0].Rows[i].ItemArray.GetValue(5).ToString();
-                    DataSet dsMaiorPreco = con.RetornaMaioresPrecos(iCod1, iCod2, iCod3, iCod4, iCodOpcao);
-                    string strPreco = dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString();
+                    DataSet dsMaiorPreco = con.RetornaMaioresPrecos(iCod1, iCod2, iCod3, iCod4, iCodOpcao,Sessions.returnConfig.CobrancaProporcionalSN);
+                    string strPreco =dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString();
                     strNome = dsOpcoesProduto.Tables[0].Rows[i].ItemArray.GetValue(0).ToString();
 
                     if (dsMaiorPreco.Tables[0].Rows.Count > 0)
@@ -180,6 +206,7 @@ namespace DexComanda.Cadastros.Pedido
                     }
                 }
             }
+            boolConfirmado = true;
             this.Close();
         }
     }

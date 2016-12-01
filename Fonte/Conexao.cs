@@ -136,15 +136,32 @@ namespace DexComanda
             adapter.Fill(ds, "Pedido");
             return ds;
         }
-        public DataSet RetornaMaioresPrecos(string iCod1, string iCod2, string iCod3, string iCod4,string iCodOpcao)
+        public DataSet RetornaMaioresPrecos( string iCod1, string iCod2, string iCod3,
+            string iCod4,string iCodOpcao, Boolean iPrecoMar=true)
         {
-            string iSqlConsulta = "select" +
+            string iSqlConsulta = "";
+            if (iPrecoMar)
+            {
+                iSqlConsulta = "select" +
                                     " max(PO.Preco + P.PrecoProduto) as Preco" +
                                     " from" +
                                     " Produto_Opcao PO" +
                                     " left join Produto P on P.Codigo = PO.CodProduto" +
                                     " left join Opcao O on O.Codigo = PO.CodOpcao and O.Tipo = 1" +
                                     " where CodProduto in (@Cod1,@Cod2,@Cod3,@Cod4) and CodOpcao =@CodOpcao";
+            }
+            else
+            {
+                iSqlConsulta = "select " +
+                                     " CAST(AVG(PO.Preco + P.PrecoProduto) AS NUMERIC(10, 2)) as Preco "+
+                                     " from " +
+                                     " Produto_Opcao PO" +
+                                     " left" +
+                                     " join Produto P on P.Codigo = PO.CodProduto" +
+                                     " left join Opcao O on O.Codigo = PO.CodOpcao and O.Tipo = 1" +
+                                     " where CodProduto in (@Cod1, @Cod2, @Cod3, @Cod4) and CodOpcao = @CodOpcao ";
+            }
+             
             
             command = new SqlCommand(iSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -159,6 +176,18 @@ namespace DexComanda
             return ds;
 
         }
+        public int BuscaPaiGrupo(int iCodGrupo)
+        {
+            DataSet dsGrupo;
+            int iReturn = 0;
+            dsGrupo = SelectRegistroPorCodigo("Grupo", "spObterGrupoPorCodigo", iCodGrupo);
+            if (dsGrupo.Tables[0].Rows.Count>0)
+            {
+                iReturn = int.Parse(dsGrupo.Tables[0].Rows[0].ItemArray.GetValue(6).ToString());
+            }
+            return iReturn;
+        }
+
         public int RetornaIDCategoria(string iNomeCategoria)
         {
             int iIDReturn = 1;
@@ -170,6 +199,18 @@ namespace DexComanda
             }
 
             return iIDReturn;
+        }
+        public int RetornaGrupoProduto(int iCodProduto)
+        {
+            string iSqlConsulta = "select CodGrupo from Produto where Codigo=@Codigo";
+
+            command = new SqlCommand(iSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@Codigo", iCodProduto);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto");
+            return int.Parse(ds.Tables[0].Rows[0].ItemArray.GetValue(0).ToString());
         }
 
         public DataSet RetornaCaixaPorTurno(int iCodCaixa , string iTurno , DateTime iData)

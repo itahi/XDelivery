@@ -1457,7 +1457,7 @@ namespace DexComanda
             }
             return iRetorno;
         }
-
+      
         public static string ImpressaoCaixa(int iCaixa, string iTurno, DateTime dtInicio, DateTime dtFim)
         {
             string iRetorno = ""; ;
@@ -1534,7 +1534,6 @@ namespace DexComanda
             };
             conexao.Insert("spInserirMovimentoCaixa", caixa);
         }
-
         public static void IniciaSistema()
         {
             Application.EnableVisualStyles();

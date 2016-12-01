@@ -547,18 +547,13 @@ namespace DexComanda
         {
             try
             {
-
-                //DataRow Linha = Empresa.Tables["Empresa"].Rows[0];
+                if (codigoClienteParaAlterar!=0)
+                {
+                    return;
+                }
                 txtCidade.Text = Sessions.returnEmpresa.Cidade.ToString();
                 txtEstado.Text = Sessions.returnEmpresa.UF.ToString();
 
-                //var Empresa = con.SelectAll("Empresa", "spObterEmpresa");
-                //if (Empresa != null)
-                //{
-                //    DataRow Linha = Empresa.Tables["Empresa"].Rows[0];
-                //    txtCidade.Text = Linha.ItemArray.GetValue(7).ToString();
-                //    txtEstado.Text = Linha.ItemArray.GetValue(10).ToString();
-                //}
             }
             catch (Exception Erro)
             {
