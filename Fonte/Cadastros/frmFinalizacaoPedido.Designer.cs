@@ -113,20 +113,20 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Showcard Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 9);
+            this.label2.Font = new System.Drawing.Font("Sitka Banner", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(12, 4);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(177, 20);
+            this.label2.Size = new System.Drawing.Size(127, 23);
             this.label2.TabIndex = 8;
             this.label2.Text = "Fechamento Mesa";
             // 
             // lblNumeroMesa
             // 
             this.lblNumeroMesa.AutoSize = true;
-            this.lblNumeroMesa.Font = new System.Drawing.Font("Showcard Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNumeroMesa.Location = new System.Drawing.Point(187, 9);
+            this.lblNumeroMesa.Font = new System.Drawing.Font("Sitka Banner", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNumeroMesa.Location = new System.Drawing.Point(187, 4);
             this.lblNumeroMesa.Name = "lblNumeroMesa";
-            this.lblNumeroMesa.Size = new System.Drawing.Size(44, 20);
+            this.lblNumeroMesa.Size = new System.Drawing.Size(28, 23);
             this.lblNumeroMesa.TabIndex = 9;
             this.lblNumeroMesa.Text = "txt";
             // 

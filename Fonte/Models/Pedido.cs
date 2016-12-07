@@ -23,5 +23,6 @@ namespace DexComanda.Models
         public int CodigoPedidoWS { get; set; }
         public int CodUsuario { get; set; }
         public string HorarioEntrega { get; set; }
+        public string Observacao { get; set; }
     }
 }

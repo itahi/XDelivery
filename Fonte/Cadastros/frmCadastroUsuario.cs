@@ -83,7 +83,6 @@ namespace DexComanda
 
             }
 
-            //  this_FormClosing();
         }
         private void this_FormClosing()
         {
@@ -174,8 +173,6 @@ namespace DexComanda
                 MessageBox.Show("Campos não podem ficar em branco", "Aviso");
             }
 
-
-
         }
 
         private void chkDescSN_CheckedChanged(object sender, EventArgs e)
@@ -185,6 +182,11 @@ namespace DexComanda
             {
                 txtDesconto.Text = "0";
             }
+        }
+
+        private void usuariosGridView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Editar(sender, e);
         }
     }
 }

@@ -52,6 +52,7 @@ namespace DexComanda
                 con.Insert("spAdicionarEntregador", entregador);
                 Utils.ControlaEventos("Inserir", this.Name);
                 MessageBox.Show("Registro adicionado", "Sucesso");
+                Utils.LimpaForm(this);
                 ListaEntregadores();
             }
             catch (Exception erro)
@@ -63,9 +64,9 @@ namespace DexComanda
 
         private void EditarRegistro(object sender, EventArgs e)
         {
-            codigo = int.Parse(this.EntregGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-            this.txtNome.Text = this.EntregGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
-            this.txtComissao.Text = this.EntregGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
+            codigo = int.Parse(this.EntregGridView.CurrentRow.Cells[0].Value.ToString());
+            this.txtNome.Text = this.EntregGridView.CurrentRow.Cells[1].Value.ToString();
+            this.txtComissao.Text = this.EntregGridView.CurrentRow.Cells[2].Value.ToString();
 
             this.btnAdicionar.Text = "Salvar [F12]";
             this.btnAdicionar.Click -= new System.EventHandler(this.AdicionarEntregador);

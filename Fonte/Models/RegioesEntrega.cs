@@ -16,5 +16,6 @@ namespace DexComanda.Models
         public Boolean OnlineSN { get; set; }
         public Boolean AtivoSN { get; set; }
         public Double valorMinimoFreteGratis { get; set; }
+        public string PrevisaoEntrega { get; set; }
     }
 }

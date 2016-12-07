@@ -91,5 +91,8 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtPorcentagemDesconto;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtObsPedido;
+        private System.Windows.Forms.Label label14;
     }
 }

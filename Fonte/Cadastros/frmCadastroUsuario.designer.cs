@@ -124,6 +124,7 @@
             this.usuariosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.usuariosGridView.Size = new System.Drawing.Size(399, 133);
             this.usuariosGridView.TabIndex = 7;
+            this.usuariosGridView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.usuariosGridView_MouseDoubleClick);
             // 
             // chkCancelaPedidos
             // 
@@ -216,7 +217,7 @@
             // chkAbreCliente
             // 
             this.chkAbreCliente.AutoSize = true;
-            this.chkAbreCliente.Location = new System.Drawing.Point(187, 109);
+            this.chkAbreCliente.Location = new System.Drawing.Point(187, 112);
             this.chkAbreCliente.Name = "chkAbreCliente";
             this.chkAbreCliente.Size = new System.Drawing.Size(83, 17);
             this.chkAbreCliente.TabIndex = 20;
@@ -226,7 +227,7 @@
             // chkAbreCaixa
             // 
             this.chkAbreCaixa.AutoSize = true;
-            this.chkAbreCaixa.Location = new System.Drawing.Point(285, 111);
+            this.chkAbreCaixa.Location = new System.Drawing.Point(287, 112);
             this.chkAbreCaixa.Name = "chkAbreCaixa";
             this.chkAbreCaixa.Size = new System.Drawing.Size(112, 17);
             this.chkAbreCaixa.TabIndex = 19;
@@ -236,7 +237,7 @@
             // chkEditaCliente
             // 
             this.chkEditaCliente.AutoSize = true;
-            this.chkEditaCliente.Location = new System.Drawing.Point(187, 132);
+            this.chkEditaCliente.Location = new System.Drawing.Point(187, 135);
             this.chkEditaCliente.Name = "chkEditaCliente";
             this.chkEditaCliente.Size = new System.Drawing.Size(85, 17);
             this.chkEditaCliente.TabIndex = 18;
@@ -280,6 +281,7 @@
             this.Name = "frmCadastroUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "[XDelivery] Cadastro de Usuario";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmCadastroUsuario_Load);
             ((System.ComponentModel.ISupportInitialize)(this.usuariosGridView)).EndInit();
             this.panel1.ResumeLayout(false);

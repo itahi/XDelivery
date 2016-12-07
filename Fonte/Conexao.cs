@@ -770,7 +770,8 @@ namespace DexComanda
         {
             string lSqlConsulta = " select RG.Codigo, RG.NomeRegiao,RG.TaxaServico" +
                                   "  ,RB.CEP ,Isnull(RB.OnlineSN,0) as OnlineSN , " +
-                                  "  Isnull(RG.valorMinimoFreteGratis,0) as valorMinimoFreteGratis" +
+                                  "  Isnull(RG.valorMinimoFreteGratis,0) as valorMinimoFreteGratis," +
+                                  " IsNull(RG.PrevisaoEntrega,0) as PrevisaoEntrega" +
                                   "   from RegiaoEntrega RG " +
                                   "  join RegiaoEntrega_Bairros RB on RB.CodRegiao = RG.Codigo" +
                                   "  WHERE (RG.DataAlteracao > RG.DataSincronismo or RG.DataSincronismo is null ) ";
@@ -1342,7 +1343,7 @@ namespace DexComanda
                    
                     if (p.Name.Equals("CodUsuario")|| p.Name.Equals("Codigo") || p.Name.Equals("TotalPedido")
                         || p.Name.Equals("Tipo") || p.Name.Equals("NumeroMesa") || p.Name.Equals("HorarioEntrega")
-                        || p.Name.Equals("DescontoValor"))
+                        || p.Name.Equals("DescontoValor")||p.Name.Equals("Observacao"))
                     {
                         if (p.Name.ToString() == "CodUsuario" && p.GetValue(obj).ToString() == "0")
                         {
@@ -1445,32 +1446,43 @@ namespace DexComanda
 
         public void Delete(string spName, Object obj)
         {
-
-            Type ObjectType = obj.GetType();
-            PropertyInfo[] properties = ObjectType.GetProperties();
-
-            command = new SqlCommand(spName, conn);
-            command.CommandType = CommandType.StoredProcedure;
-            //int pIndex = 0;
-            foreach (PropertyInfo p in properties)
+            try
             {
+                Type ObjectType = obj.GetType();
+                PropertyInfo[] properties = ObjectType.GetProperties();
 
-                if (spName == "spExcluirItemPedido")
+                command = new SqlCommand(spName, conn);
+                command.CommandType = CommandType.StoredProcedure;
+                //int pIndex = 0;
+                foreach (PropertyInfo p in properties)
                 {
-                    if (p.Name.Equals("CodProduto") || p.Name.Equals("CodPedido") || p.Name.Equals("Codigo"))
+
+                    if (spName == "spExcluirItemPedido")
                     {
-                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                        if (p.Name.Equals("CodProduto") || p.Name.Equals("CodPedido") || p.Name.Equals("Codigo"))
+                        {
+                            command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                        }
                     }
-                }
 
-                else if (spName == "spExcluirOpcaoProduto")
-                {
-                    if (p.Name.Equals("CodProduto") || p.Name.Equals("CodOpcao"))
+                    else if (spName == "spExcluirOpcaoProduto")
+                    {
+                        if (p.Name.Equals("CodProduto") || p.Name.Equals("CodOpcao"))
+                        {
+                            command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
+                        }
+                    }
+                    else if (spName== "spExcluirFinalizaPedido_Pedido")
                     {
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
                 }
             }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
             int n = command.ExecuteNonQuery();
         }
 

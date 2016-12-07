@@ -103,6 +103,8 @@
             this.btnConsultar = new System.Windows.Forms.Button();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
+            this.pnConsultaCEp = new System.Windows.Forms.Panel();
+            this.label26 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tbPrincipal.SuspendLayout();
             this.tbCreditoDebito.SuspendLayout();
@@ -112,6 +114,7 @@
             this.tbHistorico.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemsPedidoGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PedidosGridView)).BeginInit();
+            this.pnConsultaCEp.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -127,6 +130,7 @@
             // 
             // tbPrincipal
             // 
+            this.tbPrincipal.Controls.Add(this.pnConsultaCEp);
             this.tbPrincipal.Controls.Add(this.txtPJPF);
             this.tbPrincipal.Controls.Add(this.txtUserID);
             this.tbPrincipal.Controls.Add(this.btnAlteraRegiao);
@@ -362,7 +366,7 @@
             // 
             this.txtObservacaoCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtObservacaoCliente.Location = new System.Drawing.Point(297, 209);
-            this.txtObservacaoCliente.MaxLength = 50;
+            this.txtObservacaoCliente.MaxLength = 255;
             this.txtObservacaoCliente.Multiline = true;
             this.txtObservacaoCliente.Name = "txtObservacaoCliente";
             this.txtObservacaoCliente.Size = new System.Drawing.Size(272, 82);
@@ -391,7 +395,7 @@
             // 
             this.txtPontoReferencia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPontoReferencia.Location = new System.Drawing.Point(16, 209);
-            this.txtPontoReferencia.MaxLength = 50;
+            this.txtPontoReferencia.MaxLength = 100;
             this.txtPontoReferencia.Multiline = true;
             this.txtPontoReferencia.Name = "txtPontoReferencia";
             this.txtPontoReferencia.Size = new System.Drawing.Size(272, 82);
@@ -907,6 +911,26 @@
             this.dtInicio.Size = new System.Drawing.Size(82, 20);
             this.dtInicio.TabIndex = 0;
             // 
+            // pnConsultaCEp
+            // 
+            this.pnConsultaCEp.Controls.Add(this.label26);
+            this.pnConsultaCEp.Location = new System.Drawing.Point(120, 69);
+            this.pnConsultaCEp.Name = "pnConsultaCEp";
+            this.pnConsultaCEp.Size = new System.Drawing.Size(373, 71);
+            this.pnConsultaCEp.TabIndex = 61;
+            this.pnConsultaCEp.Visible = false;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(6, 30);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(357, 16);
+            this.label26.TabIndex = 0;
+            this.label26.Text = "Aguarde consultando CEP na Base dos correios ...";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // frmCadastroCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -935,6 +959,8 @@
             this.tbHistorico.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemsPedidoGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PedidosGridView)).EndInit();
+            this.pnConsultaCEp.ResumeLayout(false);
+            this.pnConsultaCEp.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1015,5 +1041,7 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox txtUserID;
         private System.Windows.Forms.TextBox txtPJPF;
+        private System.Windows.Forms.Panel pnConsultaCEp;
+        private System.Windows.Forms.Label label26;
     }
 }

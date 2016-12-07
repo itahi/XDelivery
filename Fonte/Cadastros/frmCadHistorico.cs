@@ -43,6 +43,7 @@ namespace DexComanda.Cadastros
                 };
 
                 con.Insert("spAdicionaMotivoCancelamento", motivoCancelamento);
+                Utils.LimpaForm(this);
                 Utils.ControlaEventos("Inserir", this.Name);
                 Utils.PopularGrid_SP("MotivoCancelamento", MotivosGridView,"spObterMotivoCancelamento");
                 
@@ -58,8 +59,8 @@ namespace DexComanda.Cadastros
         {
            
                 
-            codigo = int.Parse(this.MotivosGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-            this.txtNome.Text = this.MotivosGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
+            codigo = int.Parse(this.MotivosGridView.CurrentRow.Cells[0].Value.ToString());
+            this.txtNome.Text = this.MotivosGridView.CurrentRow.Cells[1].Value.ToString();
 
             this.btnAdicionar.Text = "Salvar [F12]";
             this.btnAdicionar.Click += new System.EventHandler(this.SalvarMotivo);
@@ -101,8 +102,9 @@ namespace DexComanda.Cadastros
                 if (txtNome.Text!="")
                 {
                     con.Update("spAlteraMotivoCancelamento", motivos);
+                    Utils.LimpaForm(this);
                     Utils.ControlaEventos("Alterar", this.Name);
-                    Utils.PopularGrid("MotivoCancalemento", MotivosGridView);  
+                    Utils.PopularGrid("MotivoCancelamento", MotivosGridView);  
                 }
                 else
                 {
@@ -116,10 +118,15 @@ namespace DexComanda.Cadastros
                 MessageBox.Show("Não foi possivel editar o Registro:"+ex.Message, "DEX Aviso");
             }
 
-        }
+            this.btnAdicionar.Text = "Adicionar [F12]";
+            this.btnAdicionar.Click += new System.EventHandler(this.Adicionar);
+            this.btnAdicionar.Click -= new System.EventHandler(this.SalvarMotivo);
 
-        private void frmCadMotivosCancelamento_Load(object sender, EventArgs e)
-        {
+            this.btnEditar.Text = "Editar [F11]";
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+
+            this.txtNome.Text = "";
 
         }
 
@@ -167,7 +174,7 @@ namespace DexComanda.Cadastros
                 if (MotivosGridView.SelectedRows.Count > 0)
                 {
                     int CodRegistro = int.Parse(this.MotivosGridView.SelectedCells[0].Value.ToString());
-                    con.DeleteAll("MotivoCancalemento", "spExcluirMotivoCancelamento", CodRegistro);
+                    con.DeleteAll("MOtivoCancelamento", "spExcluirMotivoCancelamento", CodRegistro);
                     Utils.ControlaEventos("Excluir", this.Name);
                     MessageBox.Show("Item excluído com sucesso.");
                     Utils.PopularGrid("MotivoCancalemento", MotivosGridView);
@@ -185,6 +192,11 @@ namespace DexComanda.Cadastros
                 MessageBox.Show("Não foi possivel excluir o registro - Motivo :" + erro.Message);
             }
             
+        }
+
+        private void MotivosGridView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            btnEditar_Click(sender, e);
         }
     }
 }

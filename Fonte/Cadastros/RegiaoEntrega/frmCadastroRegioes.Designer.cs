@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroRegioes));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtPrevisao = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtTaxaGratis = new System.Windows.Forms.TextBox();
             this.chkOnline = new System.Windows.Forms.CheckBox();
@@ -43,8 +45,6 @@
             this.txtRegiao = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.RegioesGridView = new System.Windows.Forms.DataGridView();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtPrevisao = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -74,6 +74,25 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cadastro ";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(278, 55);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(72, 13);
+            this.label4.TabIndex = 41;
+            this.label4.Text = "Prev. Entrega";
+            // 
+            // txtPrevisao
+            // 
+            this.txtPrevisao.Location = new System.Drawing.Point(281, 71);
+            this.txtPrevisao.MaxLength = 8;
+            this.txtPrevisao.Name = "txtPrevisao";
+            this.txtPrevisao.Size = new System.Drawing.Size(80, 20);
+            this.txtPrevisao.TabIndex = 40;
+            this.toolTip1.SetToolTip(this.txtPrevisao, "Previsão de entrega para essa determinada região em Minutos");
+            this.txtPrevisao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrevisao_KeyPress);
             // 
             // label2
             // 
@@ -195,24 +214,6 @@
             this.RegioesGridView.Size = new System.Drawing.Size(372, 173);
             this.RegioesGridView.TabIndex = 3;
             this.RegioesGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RegioesGridView_CellClick);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(278, 55);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(72, 13);
-            this.label4.TabIndex = 41;
-            this.label4.Text = "Prev. Entrega";
-            // 
-            // txtPrevisao
-            // 
-            this.txtPrevisao.Location = new System.Drawing.Point(281, 71);
-            this.txtPrevisao.MaxLength = 8;
-            this.txtPrevisao.Name = "txtPrevisao";
-            this.txtPrevisao.Size = new System.Drawing.Size(80, 20);
-            this.txtPrevisao.TabIndex = 40;
-            this.toolTip1.SetToolTip(this.txtPrevisao, "Previsão de entrega para essa determinada região");
             // 
             // frmCadastroRegioes
             // 

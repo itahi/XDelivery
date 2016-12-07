@@ -52,7 +52,7 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(149, 85);
+            this.btnEditar.Location = new System.Drawing.Point(156, 85);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(124, 48);
             this.btnEditar.TabIndex = 9;
@@ -65,7 +65,7 @@
             this.txtNome.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNome.Location = new System.Drawing.Point(2, 53);
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(260, 26);
+            this.txtNome.Size = new System.Drawing.Size(278, 26);
             this.txtNome.TabIndex = 6;
             // 
             // btnAdicionar
@@ -104,6 +104,7 @@
             this.MotivosGridView.Size = new System.Drawing.Size(278, 202);
             this.MotivosGridView.TabIndex = 2;
             this.MotivosGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Excluir);
+            this.MotivosGridView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MotivosGridView_MouseDoubleClick);
             // 
             // label2
             // 
@@ -133,7 +134,6 @@
             this.MinimizeBox = false;
             this.Name = "frmCadMotivosCancelamento";
             this.Text = "[XDelivery] Motivos Cancelamento";
-            this.Load += new System.EventHandler(this.frmCadMotivosCancelamento_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadMotivosCancelamento_KeyDown);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.MotivosGridView)).EndInit();

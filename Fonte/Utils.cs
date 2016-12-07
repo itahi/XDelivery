@@ -371,7 +371,7 @@ namespace DexComanda
             }
 
         }
-        public static Boolean BuscaCEPOnline(string iCEP)
+        public static CepUtil BuscaCEPOnline(string iCEP)
         {
             CepUtil cep = new CepUtil();
             Boolean iReturn = false;
@@ -381,8 +381,10 @@ namespace DexComanda
 
                 var resultado = consulta.consultaCEP(iCEP.Replace("-", ""));
 
+
                 if (resultado != null)
                 {
+                    cep.Cep = iCEP.Replace("-", "");
                     cep.Bairro = resultado.bairro;
                     cep.Cidade = resultado.cep;
                     cep.Estado = resultado.uf;
@@ -399,8 +401,36 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
+            //CepUtil cep = new CepUtil();
+            //Boolean iReturn = false;
+            //try
+            //{
+            //    Correios.AtendeClienteClient consulta = new Correios.AtendeClienteClient("AtendeClientePort");
 
-            return iReturn;
+            //    var resultado = await consulta.consultaCEPAsync(iCEP.Replace("-", ""));
+
+
+            //    if (resultado != null)
+            //    {
+            //        cep.Cep = iCEP.Replace("-", "");
+            //        cep.Bairro = resultado.@return.bairro;
+            //        cep.Cidade = resultado.@return.cep;
+            //        cep.Estado = resultado.@return.uf;
+            //        cep.Logradouro = resultado.@return.end;
+            //        conexao.Insert("spAdicionarCep", cep);
+            //        iReturn = true;
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Endereço não encontrado ou cep inválido");
+            //    }
+            //}
+            //catch (Exception erro)
+            //{
+            //    MessageBox.Show(Bibliotecas.cException + erro.Message);
+            //}
+
+            return cep;
         }
         public static void MontaCombox(ComboBox icbxName, string idisplayName,
            string iValueMember, string iGrupo)
@@ -617,7 +647,7 @@ namespace DexComanda
                 {
                     PrinterSettings printersettings = new PrinterSettings();
                     printersettings.PrinterName = iNomeImpressora;
-                    printersettings.Copies = short.Parse(iNumCopias.ToString());
+                    printersettings.Copies = 1;
                     printersettings.Collate = false;
                     report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
                     crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
@@ -650,7 +680,7 @@ namespace DexComanda
                     {
                         for (int i = 0; i < iNumCopias; i++)
                         {
-                            report.PrintToPrinter(iNumCopias, false, 0, 0);
+                            report.PrintToPrinter(1, false, 0, 0);
                         }
                     }
                 }

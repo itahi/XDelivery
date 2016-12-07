@@ -164,9 +164,16 @@ namespace DexComanda
 
         }
 
-        private void ConsultarEnderecoPorCep(object sender, KeyEventArgs e)
+        /// <summary>
+        /// Busca o CEP no banco de dados local caso não encontre ele busca nos correios e insere no banco local
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void ConsultarEnderecoPorCep(object sender, KeyEventArgs e)
         {
-            if (txtCEP.Text.Trim().Length == 8 && e.KeyCode !=Keys.Back)
+            CepUtil _cepCorreios;
+            if (txtCEP.Text.Trim().Length == 8 && e.KeyCode != Keys.Back)
             {
                 ObterCidadePadrao();
                 if (this.txtCEP.Text.Equals("") && e.KeyCode == Keys.Enter)
@@ -187,18 +194,39 @@ namespace DexComanda
                         PreencheRegiao();
                         this.txtNumero.Focus();
                     }
-                
-                    //else if (Utils.BuscaCEPOnline(txtCEP.Text))
-                    //{
-                    //    ConsultarEnderecoPorCep(sender, e);
-                    //}
                     else
                     {
-                        // ObterCidadePadrao();
-                        MessageBox.Show("Cep não encontrado");
-
-                        this.txtEndereco.Focus();
+                        // MessageBox.Show("Cep não encontrado");
+                        if (!con.IsConnected())
+                        {
+                            return;
+                        }
+                        pnConsultaCEp.Visible = true;
+                        _cepCorreios = Utils.BuscaCEPOnline(txtCEP.Text);
+                        if (_cepCorreios != null)
+                        {
+                            txtEndereco.Text = _cepCorreios.Logradouro;
+                            txtBairro.Text = _cepCorreios.Bairro;
+                            PreencheRegiao();
+                            this.txtNumero.Focus();
+                        }
+                        pnConsultaCEp.Visible = false;
                     }
+
+
+
+                    //{
+
+                    //    ConsultarEnderecoPorCep(sender, e);
+                    //    pnConsultaCEp.Visible = false;
+                    //}
+                    //else
+                    //{
+                    //    // ObterCidadePadrao();
+                    //    MessageBox.Show("Cep não encontrado");
+
+                    //    this.txtEndereco.Focus();
+                    //}
                 }
             }
 
@@ -211,6 +239,10 @@ namespace DexComanda
                 cbxRegiao.SelectedValue = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("Codigo"));
                 cbxRegiao.Text        = ds.Tables[0].Rows[0].Field<string>("NomeRegiao");
                 txtTaxaEntrega.Text   = Convert.ToString(ds.Tables[0].Rows[0].Field<decimal>("TaxaServico"));
+            }
+            else
+            {
+                MessageBox.Show("Bairro não pertence a nenhuma região cadastrada", "[xSistemas]");
             }
         }
 

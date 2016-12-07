@@ -54,7 +54,7 @@ namespace DexComanda
                 throw;
             }
 
-            
+
 
         }
 
@@ -63,9 +63,10 @@ namespace DexComanda
             codigo = int.Parse(this.RegioesGridView.CurrentRow.Cells["Codigo"].Value.ToString());
             txtEntrega.Text = (this.RegioesGridView.CurrentRow.Cells["TaxaServico"].Value.ToString());
             txtRegiao.Text = (this.RegioesGridView.CurrentRow.Cells["NomeRegiao"].Value.ToString());
-            chkAtivo.Checked =Convert.ToBoolean(RegioesGridView.CurrentRow.Cells["AtivoSN"].Value.ToString());
+            chkAtivo.Checked = Convert.ToBoolean(RegioesGridView.CurrentRow.Cells["AtivoSN"].Value.ToString());
             chkOnline.Checked = Convert.ToBoolean(RegioesGridView.CurrentRow.Cells["OnlineSN"].Value.ToString());
             txtTaxaGratis.Text = RegioesGridView.CurrentRow.Cells["valorMinimoFreteGratis"].Value.ToString();
+            txtPrevisao.Text = RegioesGridView.CurrentRow.Cells["PrevisaoEntrega"].Value.ToString();
 
             this.btnSalvar.Text = "Salvar [F12]";
             this.btnSalvar.Click += new System.EventHandler(this.SalvarRegiao);
@@ -91,16 +92,21 @@ namespace DexComanda
                         DataAlteracao = DateTime.Now,
                         OnlineSN = chkOnline.Checked,
                         AtivoSN = chkAtivo.Checked
-                        
+
                     };
                     if (txtTaxaGratis.Text != "")
                     {
                         valorFrete = double.Parse(txtTaxaGratis.Text);
                     }
+                    if (txtPrevisao.Text != "")
+                    {
+                        regioes.PrevisaoEntrega = txtPrevisao.Text;
+                    }
+
                     regioes.valorMinimoFreteGratis = valorFrete;
 
                     con.Update("spAlteraRegiao", regioes);
-                    
+
                     Utils.ControlaEventos("Altera", this.Name);
                     this.btnSalvar.Text = "Adicionar [F12]";
                     this.btnSalvar.Click += new System.EventHandler(this.AdicionarRegiao);
@@ -163,13 +169,14 @@ namespace DexComanda
                         DataAlteracao = DateTime.Now,
                         OnlineSN = chkOnline.Checked,
                         AtivoSN = chkAtivo.Checked,
-                      //  valorMinimoFreteGratis = valorFrete
+                        //  valorMinimoFreteGratis = valorFrete
 
                     };
-                    if (txtTaxaGratis.Text!="")
+                    if (txtTaxaGratis.Text != "")
                     {
                         valorFrete = double.Parse(txtTaxaGratis.Text);
                     }
+                    regioes.PrevisaoEntrega = txtPrevisao.Text;
                     regioes.valorMinimoFreteGratis = valorFrete;
 
                     con.Insert("spAdicionaRegiao", regioes);
@@ -204,6 +211,11 @@ namespace DexComanda
             {
                 Editar(sender, e);
             }
+        }
+
+        private void txtPrevisao_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoPermiteNumeros(e);
         }
     }
 }

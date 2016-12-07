@@ -302,6 +302,7 @@
     <Compile Include="Models\Produto\Produto_Opcao.cs" />
     <Compile Include="Models\RegiaoEntrega_Bairros.cs" />
     <Compile Include="Models\RemoveDezPorcento.cs" />
+    <Compile Include="Models\RemoveFinalizacao.cs" />
     <Compile Include="Models\ReturnPadrao.cs" />
     <Compile Include="Models\WS\CidadesAtendidas.cs" />
     <Compile Include="Models\WS\DadosApp.cs" />

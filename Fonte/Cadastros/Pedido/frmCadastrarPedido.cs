@@ -101,7 +101,7 @@ namespace DexComanda
         //private int HoraPedido = Sessions.returnPedido.RealizadoEm.Minute;
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, string iNumeMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara, string fPagamento, string TipoPedido, string MesaBalcao,
-            Main parent = null, decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0)
+            Main parent = null, decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0,string iObservacaoPedido="")
         {
             try
             {
@@ -117,7 +117,7 @@ namespace DexComanda
                 trocoPara = tPara;
                 txtTrocoPara.Text = tPara;
                 formaPagamento = fPagamento;
-
+                txtObsPedido.Text = iObservacaoPedido;
                 DataPed = DataPedido;
                 PedidoRepetio = iPedidoRepetio;
                 dTotalPedido = iTotalPedido;
@@ -877,7 +877,7 @@ namespace DexComanda
                                 }
 
                                 item.DataAtualizacao = DateTime.Now;
-
+                                pedido.Observacao = txtObsPedido.Text;
                                 pedido.TotalPedido = pedido.TotalPedido + item.PrecoTotal;
                                 pedido.Codigo = codPedido;
                                 con.Insert("spAdicionarItemAoPedido", item);
@@ -890,7 +890,7 @@ namespace DexComanda
 
                                 // Utils.PopulaGrid_Novo("Pedido", parentWindow.pedidosGridView, Sessions.SqlPedido);
                             }
-
+                            AtualizaTotalPedido();
                         }
                         else
                         {
@@ -1026,7 +1026,8 @@ namespace DexComanda
                                 Status = "Aberto",
                                 PedidoOrigem = "Balcao",
                                 CodigoPedidoWS = 0,
-                                CodUsuario = RetornaCodVendedor()
+                                CodUsuario = RetornaCodVendedor(),
+                                Observacao = txtObsPedido.Text
 
                             };
                             if (txtTrocoPara.Text != "")
@@ -1175,8 +1176,20 @@ namespace DexComanda
                 MessageBox.Show("Não foi possivel gravar o pedido " + erro.Message);
             }
         }
+
         private void AtualizaTotalPedido()
         {
+            if (codPedido>0)
+            {
+                FinalizaPedido finaliza = new FinalizaPedido()
+                {
+                    CodPedido = codPedido,
+                    CodPagamento = int.Parse(cmbFPagamento.SelectedValue.ToString()),
+                    ValorPagamento = Convert.ToDecimal(lbTotal.Text.Replace("R$", "")) + DMargemGarco
+                };
+                con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
+            }
+          
 
             pedido = new Pedido()
             {
@@ -1185,7 +1198,7 @@ namespace DexComanda
                 FormaPagamento = this.cmbFPagamento.Text,
                 RealizadoEm = DateTime.Now,
                 Tipo = cbxTipoPedido.Text,
-
+                Observacao = txtObsPedido.Text
             };
             if (DMargemGarco != 0.00M)
             {
@@ -1224,6 +1237,7 @@ namespace DexComanda
             {
                 pedido.HorarioEntrega = cbxHorarioEntrega.Text;
             }
+            pedido.Observacao = txtObsPedido.Text;
             con.Update("spAlterarTotalPedido", pedido);
             // Utils.PopularGrid("Pedido", parentWindow.pedidosGridView);
         }
@@ -1316,14 +1330,7 @@ namespace DexComanda
 
                         this.lblTroco.Text = "R$ " + TrocoPagar;
                         AtualizaTotalPedido();
-                        FinalizaPedido finaliza = new FinalizaPedido()
-                        {
-                            CodPedido = iCodPedido,
-                            CodPagamento = int.Parse(cmbFPagamento.SelectedValue.ToString()),
-                            ValorPagamento = pedido.TotalPedido
-                        };
-
-                        //  con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
+                       
 
                         con.Update("spAlterarItemPedido", itemPedido);
 
@@ -1565,7 +1572,9 @@ namespace DexComanda
                     {
                         pedido.HorarioEntrega = cbxHorarioEntrega.Text;
                     }
+                    pedido.Observacao = txtObsPedido.Text;
                     con.Delete("spExcluirItemPedido", itemPedido);
+                    AtualizaTotalPedido();
                     con.Update("spAlterarTotalPedido", pedido);
                     Utils.ControlaEventos("Excluir", this.Name);
                     AtualizaTroco();
@@ -2268,6 +2277,9 @@ namespace DexComanda
             this.label11 = new System.Windows.Forms.Label();
             this.txtPorcentagemDesconto = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtObsPedido = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -2533,7 +2545,7 @@ namespace DexComanda
             this.gridViewItemsPedido.Location = new System.Drawing.Point(12, 230);
             this.gridViewItemsPedido.Name = "gridViewItemsPedido";
             this.gridViewItemsPedido.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridViewItemsPedido.Size = new System.Drawing.Size(640, 113);
+            this.gridViewItemsPedido.Size = new System.Drawing.Size(640, 142);
             this.gridViewItemsPedido.TabIndex = 47;
             this.gridViewItemsPedido.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridViewItemsPedido_CellClick);
             this.gridViewItemsPedido.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.EditarItem);
@@ -2616,7 +2628,7 @@ namespace DexComanda
             this.panel2.Controls.Add(this.lbTotalPedido);
             this.panel2.Controls.Add(this.btnReimprimir);
             this.panel2.Controls.Add(this.btnGerarPedido);
-            this.panel2.Location = new System.Drawing.Point(10, 449);
+            this.panel2.Location = new System.Drawing.Point(12, 498);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(647, 116);
             this.panel2.TabIndex = 42;
@@ -2766,7 +2778,7 @@ namespace DexComanda
             this.panel3.Controls.Add(this.lblTrocoPara);
             this.panel3.Controls.Add(this.txtTrocoPara);
             this.panel3.Controls.Add(this.lblFormaDePagamento);
-            this.panel3.Location = new System.Drawing.Point(12, 348);
+            this.panel3.Location = new System.Drawing.Point(12, 378);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(640, 55);
             this.panel3.TabIndex = 57;
@@ -2935,7 +2947,7 @@ namespace DexComanda
             this.panel5.Controls.Add(this.chkListAdicionais);
             this.panel5.Location = new System.Drawing.Point(671, 121);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(368, 435);
+            this.panel5.Size = new System.Drawing.Size(368, 490);
             this.panel5.TabIndex = 64;
             // 
             // grpBoxTamanhos
@@ -3135,7 +3147,7 @@ namespace DexComanda
             this.chkListAdicionais.Location = new System.Drawing.Point(3, 199);
             this.chkListAdicionais.Name = "chkListAdicionais";
             this.chkListAdicionais.ScrollAlwaysVisible = true;
-            this.chkListAdicionais.Size = new System.Drawing.Size(353, 214);
+            this.chkListAdicionais.Size = new System.Drawing.Size(353, 274);
             this.chkListAdicionais.TabIndex = 0;
             this.chkListAdicionais.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkListAdicionais_ItemCheck);
             // 
@@ -3143,7 +3155,7 @@ namespace DexComanda
             // 
             this.grpVendedor.Controls.Add(this.cbxVendedor);
             this.grpVendedor.Controls.Add(this.txtCodVendedor);
-            this.grpVendedor.Location = new System.Drawing.Point(12, 404);
+            this.grpVendedor.Location = new System.Drawing.Point(12, 448);
             this.grpVendedor.Name = "grpVendedor";
             this.grpVendedor.Size = new System.Drawing.Size(218, 44);
             this.grpVendedor.TabIndex = 69;
@@ -3225,12 +3237,42 @@ namespace DexComanda
             this.label12.TabIndex = 74;
             this.label12.Text = "%Desconto:";
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(14, 210);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(27, 13);
+            this.label13.TabIndex = 75;
+            this.label13.Text = "Item";
+            // 
+            // txtObsPedido
+            // 
+            this.txtObsPedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.txtObsPedido.Location = new System.Drawing.Point(287, 439);
+            this.txtObsPedido.Multiline = true;
+            this.txtObsPedido.Name = "txtObsPedido";
+            this.txtObsPedido.Size = new System.Drawing.Size(365, 52);
+            this.txtObsPedido.TabIndex = 76;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(246, 447);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(40, 39);
+            this.label14.TabIndex = 77;
+            this.label14.Text = "Obs \r\ndo \r\nPedido";
+            // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1051, 568);
+            this.ClientSize = new System.Drawing.Size(1051, 626);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.txtObsPedido);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.txtPorcentagemDesconto);
             this.Controls.Add(this.label11);

@@ -391,6 +391,10 @@ namespace DexComanda.Operações
                     request.AddParameter("referencia_id", ds.Tables["RegiaoEntrega"].Rows[i].Field<int>("Codigo"));
                     request.AddParameter("ativo", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<Boolean>("OnlineSN")));
 
+                    if (ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("PrevisaoEntrega")!="0")
+                    {
+                        request.AddParameter("previsao_entrega", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("PrevisaoEntrega"));
+                    }
                     if (ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("valorMinimoFreteGratis") > 0)
                     {
                         request.AddParameter("valorMinimoFreteGratis", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("valorMinimoFreteGratis")));
@@ -402,7 +406,7 @@ namespace DexComanda.Operações
 
                     prgBarRegiao.Value = i + 1;
 
-                    if (response.Content.Equals(" true"))
+                    if (response.Content.Contains(" true"))
                     {
                         con.AtualizaDataSincronismo("RegiaoEntrega_Bairros", ds.Tables[0].Rows[i].Field<int>("Codigo"), "DataSincronismo", "CodRegiao");
                     }

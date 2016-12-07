@@ -58,6 +58,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Enabled = false;
             this.label2.Location = new System.Drawing.Point(207, 23);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 13);
@@ -66,6 +67,7 @@
             // 
             // txtComissao
             // 
+            this.txtComissao.Enabled = false;
             this.txtComissao.Location = new System.Drawing.Point(207, 43);
             this.txtComissao.Name = "txtComissao";
             this.txtComissao.Size = new System.Drawing.Size(75, 20);
