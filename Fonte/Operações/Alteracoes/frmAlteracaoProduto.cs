@@ -193,7 +193,7 @@ namespace DexComanda.Operações.Alteracoes
             }
             GridViewProdutos.DataSource = null;
             GridViewProdutos.DataMember = null;
-            RemoveColunas(AdicionaisGridView);
+           // RemoveColunas(AdicionaisGridView);
             
         }
         public string DiasSelecinado()

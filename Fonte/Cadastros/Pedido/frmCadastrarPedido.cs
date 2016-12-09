@@ -43,6 +43,7 @@ namespace DexComanda
         private frmCadastrarPedido parentWindowPedido;
         private int codigoItemParaAlterar;
         private int rowIndex;
+        private int iRowSelecionada;
         private Font printFont;
         private Font printFontCozinha;
         private Pessoa pCliente;
@@ -976,7 +977,7 @@ namespace DexComanda
 
                 if (!Sessions.returnConfig.ExigeVendedorSN)
                 {
-                    return 0;
+                    return Sessions.retunrUsuario.Codigo;
                 }
                 if (cbxVendedor.SelectedValue != null)
                 {
@@ -985,7 +986,7 @@ namespace DexComanda
             }
             catch (Exception erro)
             {
-                MessageBox.Show(Bibliotecas.cErroGravacao);
+                MessageBox.Show(Bibliotecas.cErroGravacao + erro.Message);
             }
 
 
@@ -994,8 +995,10 @@ namespace DexComanda
         public void btnGerarPedido_Click(object sender, EventArgs e)
         {
             int iRetur = 0;
+            btnGerarPedido.Enabled = false;
             try
             {
+               
                 if (cmbFPagamento.ValueMember == null)
                 {
                     MessageBox.Show("Formaga de Pagamento não selecionada", "[XSistemas] Aviso");
@@ -1122,7 +1125,7 @@ namespace DexComanda
                                     PrecoUnitario = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[4].Value.ToString().Replace("R$", "")),
                                     PrecoTotal = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[3].Value.ToString()) * decimal.Parse(gridViewItemsPedido.Rows[i].Cells[4].Value.ToString().Replace("R$", "")),
                                     ImpressoSN = false,
-                                    Item = items[i].Item.ToUpper()
+                                    Item = gridViewItemsPedido.Rows[i].Cells["Obs"].Value.ToString().ToUpper()
                                 };
                                 itemDoPedido.DataAtualizacao = DateTime.Now;
                                 con.Insert("spCriarPedido", itemDoPedido);
@@ -1139,7 +1142,7 @@ namespace DexComanda
 
                             iCodPedido = con.getLastCodigo();
                             con.AtualizaSituacao(iCodPedido, Sessions.retunrUsuario.Codigo, 1);
-                            MessageBox.Show("Pedido gerado com sucesso.");
+                            
 
                             if (ContraMesas && cbxTipoPedido.Text != "1 - Mesa")
                             {
@@ -1162,6 +1165,7 @@ namespace DexComanda
                             }
 
                             // Fecha o Formulario 
+                            MessageBox.Show("Pedido gerado com sucesso.");
                             this.Close();
 
 
@@ -1175,6 +1179,7 @@ namespace DexComanda
 
                 MessageBox.Show("Não foi possivel gravar o pedido " + erro.Message);
             }
+            btnGerarPedido.Enabled = true;
         }
 
         private void AtualizaTotalPedido()
@@ -1282,9 +1287,7 @@ namespace DexComanda
 
                 }
 
-                // Valida Se esta adicionando Meia Pizza
                 MeiaPizza();
-
                 if (!itemNome.Equals("") && !this.txtQuantidade.Text.Equals("")
                     && !this.txtPrecoUnitario.Text.Equals("") && !this.txtPrecoTotal.Text.Equals(""))
                 {
@@ -1309,7 +1312,15 @@ namespace DexComanda
                         };
 
                         itemPedido.DataAtualizacao = DateTime.Now;
-                        itemPedido.Codigo = int.Parse(gridViewItemsPedido.Rows[rowIndex].Cells["Codigo"].Value.ToString());
+                        if (int.Parse(gridViewItemsPedido.CurrentRow.Cells["Codigo"].Value.ToString())>0)
+                        {
+                            itemPedido.Codigo = int.Parse(gridViewItemsPedido.CurrentRow.Cells["Codigo"].Value.ToString());
+                        }
+                        else
+                        {
+                            itemPedido.Codigo = iRowSelecionada;
+                        }
+                         
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value = itemPedido.NomeProduto;
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value = itemPedido.Quantidade;
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value = "R$ " + itemPedido.PrecoUnitario.ToString();
@@ -1330,11 +1341,13 @@ namespace DexComanda
 
                         this.lblTroco.Text = "R$ " + TrocoPagar;
                         AtualizaTotalPedido();
-                       
 
-                        con.Update("spAlterarItemPedido", itemPedido);
-
-                        Utils.ControlaEventos("Alterar", this.Name);
+                        if (codPedido!=0)
+                        {
+                            con.Update("spAlterarItemPedido", itemPedido);
+                            Utils.ControlaEventos("Alterar", this.Name);
+                        }
+                
 
                         this.cbxProdutosGrid.Text = "";
                         this.txtPrecoUnitario.Text = "";
@@ -1342,11 +1355,12 @@ namespace DexComanda
                         this.txtPrecoTotal.Text = "";
                         this.txtItemDescricao.Text = "";
 
-                        if (ContraMesas && cbxListaMesas.Visible)
-                        {
-                            int CodigoMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
-                            Utils.AtualizaMesa(CodigoMesa, 2);
-                        }
+                        //Comentário Teste
+                        //if (ContraMesas && cbxListaMesas.Visible)
+                        //{
+                        //    int CodigoMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
+                        //    Utils.AtualizaMesa(CodigoMesa, 2);
+                        //}
 
                         MessageBox.Show("Item alterado com sucesso.", "[xSistemas]");
                         this.btnAdicionarItemNoPedido.Text = "Adicionar";
@@ -4027,7 +4041,6 @@ namespace DexComanda
             {
                 if (gridViewItemsPedido.SelectedRows.Count > 0)
                 {
-
                     int codItem = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells["CodProduto"].Value.ToString());
                     MontaMenuOpcoes(codItem);
                     var itemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codItem);
@@ -4055,12 +4068,13 @@ namespace DexComanda
                         this.cbxSabor.Text = "";
                         this.cbxProdutosGrid.Text = gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
                     }
+                    if (codPedido==0)
+                    {
+                        iRowSelecionada = rowIndex;
+                    }
 
                     codigoItemParaAlterar = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells["CodProduto"].Value.ToString());
-
                     txtCodProduto1.Text = codItem.ToString();
-
-                    //Utils.MontaCombox(cbxTipoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoPorCodigo", con.RetornaGrupoProduto(codItem));
                     this.txtPrecoUnitario.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value.ToString();
                     this.txtQuantidade.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value.ToString();
                     this.txtPrecoTotal.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value.ToString();

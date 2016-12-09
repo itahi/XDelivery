@@ -111,7 +111,11 @@ namespace DexComanda.Operações
                     CadastraLinkApp();
                 }
 
-                CadastraPedidoMinimo();
+                if (txtVlrMinimo.Text!="" && txtVlrMinimo.Text!="0")
+                {
+                    CadastraPedidoMinimo();
+                }
+               
 
                 if (chkHorarios.Checked)
                 {
@@ -220,7 +224,6 @@ namespace DexComanda.Operações
             request.AddParameter("valor", txtVlrMinimo.Text);
             MudaLabel("Pedido Mínimo");
             RestResponse response = (RestResponse)client.Execute(request);
-
             ReturnPadrao lRetorno = new ReturnPadrao();
             lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
             lblMinimo.Visible = true;

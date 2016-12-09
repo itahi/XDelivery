@@ -1017,18 +1017,7 @@ namespace DexComanda
 
                     if (iTable == "Pedido")
                     {
-                        //if (iSql.Contains("PS.Nome"))
-                        //{
-                        //    iSql = iSql + " PD (select Nome from PedidoStatus PS where PS.Codigo in (select top 1 CodStatus from PedidoStatusMovimento PSM where PSM.CodPedido=Pd.Codigo)  ) ";
-                        //}
-                        //else
-                        //{
                         iSql = iSql + " Pd join Pessoa P on P.Codigo=Pd.CodPessoa";
-                        //}
-
-                        //   iSql = iSql + " Pd join Pessoa P on P.Codigo=Pd.CodPessoa";
-
-
                         iSql = iSql.Replace(iSubSelect, "") + " where Finalizado = 0 and PD.status ='Aberto'" + iFiltrosAdicionais + " ORDER BY Pd.Codigo DESC";
                     }
                     else

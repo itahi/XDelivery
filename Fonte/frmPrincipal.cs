@@ -604,7 +604,7 @@ namespace DexComanda
             string strTroco = "0,00";
             decimal MargemGarcon = decimal.Parse(DvPedido.ItemArray.GetValue(16).ToString());
             int intCodVendedor = int.Parse(DvPedido.ItemArray.GetValue(17).ToString());
-            string iObservacao = DvPedido.ItemArray.GetValue(19).ToString();
+            string iObservacao = DvPedido.ItemArray.GetValue(18).ToString();
             if (strTrocoPara != "0,00" && strTrocoPara != "0")
             {
                 strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
