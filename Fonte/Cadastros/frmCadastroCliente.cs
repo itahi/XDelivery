@@ -151,7 +151,7 @@ namespace DexComanda
             else
             {
                 Conexao con = new Conexao();
-                var Regiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", iCodRegiao);
+                DataSet Regiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", iCodRegiao);
                 DataRow Lista = Regiao.Tables["RegiaoEntrega"].Rows[0];
 
                 mCodRegiao = int.Parse(Lista.ItemArray.GetValue(0).ToString());

@@ -77,7 +77,7 @@
             this.grpTipo.Size = new System.Drawing.Size(216, 67);
             this.grpTipo.TabIndex = 2;
             this.grpTipo.TabStop = false;
-            this.grpTipo.Text = "Tipo";
+            this.grpTipo.Text = "Tipo de Seleção";
             // 
             // rbTexto
             // 

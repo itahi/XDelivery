@@ -1024,17 +1024,20 @@ namespace DexComanda
         }
         public static string ImpressaMesaNova(int iCodPedido, int iCodGupo, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
         {
-            string iRetorno = "";
-            RelComandaMesa report;
-            report = new RelComandaMesa();
-            crtableLogoninfos = new TableLogOnInfos();
-            crtableLogoninfo = new TableLogOnInfo();
-            crConnectionInfo = new ConnectionInfo();
+            string iRetorno = string.Empty;
+
             try
             {
+                RelComandaMesa report;
+                report = new RelComandaMesa();
+                crtableLogoninfos = new TableLogOnInfos();
+                crtableLogoninfo = new TableLogOnInfo();
+                crConnectionInfo = new ConnectionInfo();
+
                 PrinterSettings printersettings = new PrinterSettings();
                 printersettings.PrinterName = iNomeImpressora;
-                printersettings.Copies = short.Parse(iNumCopias.ToString());
+                printersettings.PrintFileName = "RelComandaMesa_"+iCodPedido+"";
+                printersettings.Copies = 1;
                 printersettings.Collate = false;
 
                 Tables CrTables;
@@ -1054,7 +1057,7 @@ namespace DexComanda
                 report.SetParameterValue("@Codigo", iCodPedido);
                 report.SetParameterValue("@NomeImpressora", iNomeImpressora);
 
-                if (iNomeImpressora != "")
+                 if (iNomeImpressora != "")
                 {
                     for (int i = 0; i < iNumCopias; i++)
                     {

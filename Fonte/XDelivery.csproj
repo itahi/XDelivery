@@ -947,6 +947,9 @@
     <EmbeddedResource Include="Cadastros\frmFinalizacaoPedido.resx">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\Pedido\frmOpcaoNumeric.resx">
+      <DependentUpon>frmOpcaoNumeric.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Pedido\frmOpcaoRadio.resx">
       <DependentUpon>frmOpcaoRadio.cs</DependentUpon>
     </EmbeddedResource>

@@ -24,8 +24,10 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace DexComanda
@@ -42,11 +44,13 @@ namespace DexComanda
         private string iParamToken;
         private CancelarPedido cancelPedid;
         private bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
+        private DataSet dsPedidosAbertos;
         private DataSet itemsPedido;
         public frmPrincipal()
         {
             con = new Conexao();
             InitializeComponent();
+            this.Text = Text + RetornaVersao();
         }
 
         private void ConsultarCliente(object sender, EventArgs e)
@@ -307,8 +311,19 @@ namespace DexComanda
                 Utils.AtualizaMesa(iCodMesa, iStatus);
             }
         }
+
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        {
+           //
+        }
+        private string RetornaVersao()
+        {
+            string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            return Text = String.Format("xDelivery version {0}", version);
+        }
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
+
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
 
             int iNumeroCaixa = Sessions.retunrUsuario.CaixaLogado;
@@ -432,14 +447,14 @@ namespace DexComanda
                                                               Convert.ToBoolean(dRowProduto.ItemArray.GetValue(13).ToString()), dRowProduto.ItemArray.GetValue(14).ToString());
             frm.StartPosition = FormStartPosition.CenterParent;
             frm.ShowDialog();
-            //if (cbxGrupoProduto.SelectedValue.ToString() != "0")
-            //{
-            //    Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto, !chkProdutosInativos.Checked, " and CodGrupo=" + cbxGrupoProduto.SelectedValue.ToString(), rowIndex);
-            //}
-            //else
-            //{
-            //    Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto,!chkProdutosInativos.Checked,"",rowIndex);
-            //}
+            if (cbxGrupoProduto.SelectedValue.ToString() != "0")
+            {
+                Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto, !chkProdutosInativos.Checked, " and CodGrupo=" + cbxGrupoProduto.SelectedValue.ToString(), rowIndex);
+            }
+            else
+            {
+                Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto, !chkProdutosInativos.Checked, "", rowIndex);
+            }
 
         }
         private void DeletarProduto(object sender, EventArgs e)
@@ -450,7 +465,7 @@ namespace DexComanda
                 {
                     if (Utils.MessageBoxQuestion("Deseja Excluir o Produto " + produtosGridView.SelectedCells[1].Value))
                     {
-                        int Codigo = int.Parse(this.produtosGridView.SelectedCells[0].Value.ToString());
+                        int Codigo = int.Parse(this.produtosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
                         con.DeleteAll("Produto", "spExcluirProduto", Codigo);
                         MessageBox.Show("Item excluído com sucesso.");
                         Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
@@ -459,12 +474,18 @@ namespace DexComanda
                 }
                 else
                 {
+                    
                     MessageBox.Show("Selecione o produto para excluir");
                 }
             }
-            catch (Exception)
+            catch (Exception erro)
             {
-                MessageBox.Show("Não foi possivel excluir o produto , pois ele provavelmente ja foi usado em algum pedido");
+                if (erro.Message.Contains("A instrução DELETE conflitou com a restrição do REFERENCE"))
+                {
+                    MessageBox.Show(Bibliotecas.cException + "Produto já foi vendido e não pode ser excluído,você pode desativa-lo");
+                    return;
+                }
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
 
@@ -1646,7 +1667,6 @@ namespace DexComanda
             try
             {
                 itemsPedido = Utils.ItensSelect(iCodPedido);
-                //DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpresso", iCodPedido, iNomeImpressora);
                 for (int i = 0; i < itemsPedido.Tables[0].Rows.Count; i++)
                 {
                     string lRetorno = "";
@@ -1752,7 +1772,7 @@ namespace DexComanda
             {
 
                 DataSet dsPedidosAbertos = con.SelectAll("Pedido", "spObterPedido");
-                int iPedidosAberto = dsPedidosAbertos.Tables["Pedido"].Rows.Count;
+                int iPedidosAberto =  dsPedidosAbertos.Tables["Pedido"].Rows.Count;
 
                 if (iPedidosAberto != pedidosGridView.Rows.Count && cbxFiltroTipo.Text == "")
                 {
@@ -1917,8 +1937,17 @@ namespace DexComanda
 
         private void pedidosToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AdministradorSN"))
+            {
+                return;
+            }
             frmConsultaPedido frmCons = new frmConsultaPedido();
             frmCons.Show();
+        }
+
+        private void relatórioToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            relatórioToolStripMenuItem.DropDown.Enabled = Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AcessaRelatoriosSN");
         }
     }
 }

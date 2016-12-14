@@ -603,7 +603,7 @@ namespace DexComanda
         {
             if (this.cbxSabor.Enabled == true)
             {
-                itemNome = "Meia " + this.cbxProdutosGrid.Text + " / Meia " + this.cbxSabor.Text;
+                itemNome = "Meio " + this.cbxProdutosGrid.Text.Insert(cbxProdutosGrid.Text.Length,Environment.NewLine) + " Meio " + this.cbxSabor.Text;
                 return true;
             }
             else
@@ -748,9 +748,12 @@ namespace DexComanda
                         }
                         if (lTipo == 2)
                         {
+                            //  NumericUpDown newNumeric = new NumericUpDown();
+                            //newNumeric.Tag = lPreco;
+                            chkListAdicionais.Items.Add(lnome + "(+" + lPreco + ")", false);
+                          //  listView1.Items.Add(newNumeric, 0)
                             //while (lTipo==2)
                             //{
-                            chkListAdicionais.Items.Add(lnome + "(+" + lPreco + ")", false);
                             //}
 
 
@@ -948,6 +951,7 @@ namespace DexComanda
 
                 MessageBox.Show(ss.Message);
             }
+           
             LimpaTamanhosSabores();
             chkSabores.Checked = false;
         }
@@ -1100,6 +1104,8 @@ namespace DexComanda
                                 MessageBox.Show("Selecione o vendedor/atendente para continuar");
                                 txtCodVendedor.Focus();
                                 txtCodVendedor.BackColor = Color.Red;
+                                btnGerarPedido.Enabled = true;
+
                                 return;
                             }
                             else
@@ -1112,8 +1118,7 @@ namespace DexComanda
                                 pedido.HorarioEntrega = cbxHorarioEntrega.Text;
                             }
                             con.Insert("spAdicionarPedido", pedido);
-                            //  DataEntrada = DateTime.Now;
-
+                           
                             for (int i = 0; i < gridViewItemsPedido.Rows.Count; i++)
                             {
                                 var itemDoPedido = new ItemPedido()
@@ -1830,8 +1835,24 @@ namespace DexComanda
                     ((System.Windows.Forms.RadioButton)ctrControl).Checked = false;
                 }
             }
-            
-         //   SemMeiaPizza();
+            // Percorre o List para limpar as selecões
+            for (int i = 0; i < chkListAdicionais.Items.Count; i++)
+            {
+                chkListAdicionais.SetItemChecked(i, false);
+            }
+            //foreach (System.Windows.Forms.Control ctrControl in panel5.Controls)
+            //{
+            //    if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.CheckedListBox)))
+            //    {
+            //        // Unselect all Checked
+            //        if (chkListAdicionais.Items.Count>0)
+            //        {
+            //            ((System.Windows.Forms.CheckedListBox)ctrControl).SetSelected(chkListAdicionais.Items.Count, false);
+            //        }
+                   
+            //    }
+            //}
+            //   SemMeiaPizza();
         }
 
         private void cbxMeiaPizza_CheckedChanged(object sender, EventArgs e)
@@ -3208,7 +3229,6 @@ namespace DexComanda
             this.chkSabores.TabIndex = 70;
             this.chkSabores.Text = "3°/4º Sb";
             this.chkSabores.UseVisualStyleBackColor = true;
-            this.chkSabores.CheckedChanged += new System.EventHandler(this.chkSabores_CheckedChanged);
             this.chkSabores.CheckStateChanged += new System.EventHandler(this.chkSabores_CheckStateChanged);
             // 
             // cbxHorarioEntrega
@@ -3450,6 +3470,7 @@ namespace DexComanda
                 {
                     pedido.HorarioEntrega = cbxHorarioEntrega.Text;
                 }
+                pedi.Observacao = txtObsPedido.Text;
                 con.Update("spAlterarTotalPedido", pedi);
 
             }
@@ -3692,23 +3713,30 @@ namespace DexComanda
                 btnCalGarcon.Text = "Calcula 10%";
             }
 
-
         }
         private string ObterSomenteLetras(string istring)
         {
             string iReturn;
-
-            iReturn = Regex.Replace(istring, "[^a-zA-Z áéíóú]+", "");
-
-
+            var inicioPalavra = istring.IndexOf('(', istring.IndexOf('(') + 1);
+            istring = istring.Substring(inicioPalavra + 1, istring.IndexOf('(', inicioPalavra + 1));
+            iReturn = Regex.Replace(istring, "[^a-zA-Z çãõÇÁáéÉÍíÓóÚú 0-9]+", "");
             return iReturn;
         }
+        /// <summary>
+        /// Retorna o Valor do Item Selecionado , considera apenas oque está entre parentes
+        /// </summary>
+        /// <param name="iValue">
+        /// </param>
+        /// <returns></returns>
         private string ObterSomenteNumerosReais(string iValue)
         {
+            iValue += ")";
+            iValue = iValue.Substring(iValue.IndexOf("(") + 1);
             string ire;
             ire = Regex.Replace(iValue, "[^0-9 ,]+", "");
             return ire;
         }
+    
 
         private void radioButton1_Click(object sender, EventArgs e)
         {
@@ -4129,13 +4157,7 @@ namespace DexComanda
         {
             Utils.SoPermiteNumeros(e);
         }
-
-        private void chkSabores_CheckedChanged(object sender, EventArgs e)
-        {
-
-
-        }
-
+        
         private void chkSabores_CheckStateChanged(object sender, EventArgs e)
         {
             if (chkSabores.Checked)
@@ -4146,7 +4168,8 @@ namespace DexComanda
                 frm.ShowDialog();
                 if (frm.boolConfirmado)
                 {
-                    cbxProdutosGrid.Text = cbxTipoProduto.Text + " " + frm.strNomeProduto + " " + frm.strTamanho;
+                    cbxProdutosGrid.Text = cbxTipoProduto.Text +" " + frm.strTamanho;
+                    txtItemDescricao.Text = frm.strNomeProduto;
                     txtPrecoUnitario.Text = frm.strPreco;
                     CalcularTotalItem();
                 }

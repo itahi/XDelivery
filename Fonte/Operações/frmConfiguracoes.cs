@@ -70,41 +70,33 @@ namespace DexComanda
             }
             return Listcdd;
         }
-        private List<HorarioFuncionamento> HorariosFuncionamento(Control controGeral)
+        private string HorariosFuncionamento()
         {
             List<HorarioFuncionamento> listHorario = new List<HorarioFuncionamento>();
-            // var precosDia = new PrecoDiaProduto();
-            foreach (System.Windows.Forms.Control obj in controGeral.Controls)
-            {
-                //Loop through all controls 
-                if (object.ReferenceEquals(controGeral.GetType(), typeof(DateTimePicker)))
-                {
-                    if (((System.Windows.Forms.DateTimePicker)obj).Value.ToString() !="")
-                    {
-                        var listaHoras = new HorarioFuncionamento()
-                        {
-                            Dia = obj.Tag.ToString(),
-                            Inicio = "",
-                            Fim = ""
-                        };
-                        listHorario.Add(listaHoras);
-                    }
-                    //foreach (DateTimePicker item in controGeral.Controls)
-                    //{
-                    //    var listaHoras = new HorarioFuncionamento()
-                    //    {
-                    //        Dia = controGeral.Tag.ToString(),
-                    //        Inicio = item.Value.ToString(),
-                    //        Fim = item.Value.ToString()
-                    //    };
-                    //    listHorario.Add(listaHoras);
-                    //}
+            //try
+            //{
+            //    var listaHoras = new HorarioFuncionamento();
+            //    for (int i = 0; i < gridHorarios.Columns.Count; i++)
+            //    {
+            //        listaHoras.Dia = gridHorarios.Columns[i].Name.ToString();
+            //        for (int intFor = 0; intFor < gridHorarios.Rows.Count; intFor++)
+            //        {
+            //            listaHoras.Inicio = gridHorarios.Rows[intFor].Cells[0].Value.ToString();
+            //            listaHoras.Fim = gridHorarios.Rows[intFor].Cells[0].Value.ToString();
+            //        }
+            //    }
 
-                }
-            }
-              
+            //    listHorario.Add(listaHoras);
 
-            return listHorario;
+            //}
+            //catch (Exception erro)
+            //{
+            //    MessageBox.Show(erro.Message);
+            //}
+
+
+
+            return JsonConvert.SerializeObject(listHorario, Formatting.None);
 
         }
         private void SalvaConfig(object sender, EventArgs e)
@@ -130,7 +122,7 @@ namespace DexComanda
                 VersaoBanco = "1",
                 CaminhoBackup = txtCaminhoBkp.Text,
                 UrlServidor = txtURL.Text,
-                HorarioFuncionamento = HorariosFuncionamento(tabPage3).ToString()
+                HorarioFuncionamento = HorariosFuncionamento()
 
 
             };
@@ -158,6 +150,7 @@ namespace DexComanda
             config.ImpressoraCozinha = cbxImpressoraMesa.Text;
             config.ImpressoraCopaBalcao = cbxImpressoraBalcao.Text;
             config.CobrancaProporcionalSN = chkProporcional.Checked;
+            //empresa.HorarioFuncionamento = "";
             if (chkEnviaSms.Checked)
             {
                 Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
@@ -262,7 +255,7 @@ namespace DexComanda
                 VersaoBanco = "0",
                 CaminhoBackup = txtCaminhoBkp.Text,
                 UrlServidor = txtURL.Text,
-                HorarioFuncionamento = HorariosFuncionamento(tabControl1.TabPages[1]).ToString()
+                HorarioFuncionamento = HorariosFuncionamento()
             };
 
             config.cod = Sessions.returnConfig.cod;
@@ -300,7 +293,6 @@ namespace DexComanda
             config.ImpressoraCozinha = cbxImpressoraMesa.Text;
             config.ImpressoraCopaBalcao = cbxImpressoraBalcao.Text;
             config.CobrancaProporcionalSN = chkProporcional.Checked;
-            //config.CidadesAtendidas = "";
             if (chkEnviaSms.Checked)
             {
                 Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
@@ -354,7 +346,7 @@ namespace DexComanda
         }
 
 
-        private  void LoadImpressoras(ComboBox icbx)
+        private void LoadImpressoras(ComboBox icbx)
         {
             icbx.Items.Clear();
             foreach (var item in PrinterSettings.InstalledPrinters)
@@ -469,7 +461,7 @@ namespace DexComanda
             try
             {
                 List<CidadesAtendidas> cidades = new List<CidadesAtendidas>();
-                if (iListaJson == "" || iListaJson==null)
+                if (iListaJson == "" || iListaJson == null)
                 {
                     return;
                 }
@@ -497,7 +489,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erros.Message);
             }
-            
+
         }
 
         private void BuscarCep(object sender, KeyEventArgs e)
@@ -888,6 +880,18 @@ namespace DexComanda
         {
 
 
+        }
+
+        private void chkImprimeViaEntrega_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkImprimeViaEntrega.Checked)
+            {
+                txtViasEntrega.Text = "1";
+            }
+            else
+            {
+                txtViasEntrega.Text = "0";
+            }
         }
     }
 }
