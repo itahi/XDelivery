@@ -57,16 +57,24 @@ namespace DexComanda.Operações.Financeiro
                 }
                 if (Utils.EfetuarLogin(cbxFuncionario.Text, txtSenha.Text, false))
                 {
+                    if (txtValor.Text == "")
+                    {
+                        MessageBox.Show("Valor deve ser informado");
+                        txtValor.Focus();
+                        return;
+                    }
                     Caixa caixa = new Caixa()
                     {
                         Data = dtAbertura.Value,
                         Estado = false /*Caixa Aber*/,
                         Historico = "Abertura Inicial",
-                        ValorAbertura = decimal.Parse(txtValor.Text),
                         Numero = cbxCaixas.Text,
-                        Turno = cbxTurno.Text.ToString()
+                        Turno = cbxTurno.Text.ToString(),
+                        ValorAbertura = decimal.Parse(txtValor.Text)    
 
                     };
+                
+
                     if (cbxFuncionario.Text != "")
                     {
                         caixa.CodUsuario = Sessions.retunrUsuario.Codigo;

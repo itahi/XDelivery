@@ -2819,8 +2819,6 @@ namespace DexComanda
                 MessageBox.Show("Não foi possível carregar o arquivo de configuração " + erro.Message);
             }
 
-
-
         }
 
 

@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.grpSabores = new System.Windows.Forms.GroupBox();
+            this.cbxPorcentagem4 = new System.Windows.Forms.ComboBox();
+            this.cbxPorcentagem3 = new System.Windows.Forms.ComboBox();
+            this.cbxPorcentagem2 = new System.Windows.Forms.ComboBox();
+            this.cbxPorcentagem1 = new System.Windows.Forms.ComboBox();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -42,10 +46,6 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.btnConfirmar = new System.Windows.Forms.Button();
-            this.cbxPorcentagem1 = new System.Windows.Forms.ComboBox();
-            this.cbxPorcentagem2 = new System.Windows.Forms.ComboBox();
-            this.cbxPorcentagem3 = new System.Windows.Forms.ComboBox();
-            this.cbxPorcentagem4 = new System.Windows.Forms.ComboBox();
             this.grpSabores.SuspendLayout();
             this.grpTamanhos.SuspendLayout();
             this.SuspendLayout();
@@ -67,6 +67,58 @@
             this.grpSabores.TabIndex = 0;
             this.grpSabores.TabStop = false;
             this.grpSabores.Text = "Sabores";
+            // 
+            // cbxPorcentagem4
+            // 
+            this.cbxPorcentagem4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxPorcentagem4.FormattingEnabled = true;
+            this.cbxPorcentagem4.Items.AddRange(new object[] {
+            "25%",
+            "50%",
+            "75%"});
+            this.cbxPorcentagem4.Location = new System.Drawing.Point(547, 65);
+            this.cbxPorcentagem4.Name = "cbxPorcentagem4";
+            this.cbxPorcentagem4.Size = new System.Drawing.Size(49, 21);
+            this.cbxPorcentagem4.TabIndex = 8;
+            // 
+            // cbxPorcentagem3
+            // 
+            this.cbxPorcentagem3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxPorcentagem3.FormattingEnabled = true;
+            this.cbxPorcentagem3.Items.AddRange(new object[] {
+            "25%",
+            "50%",
+            "75%"});
+            this.cbxPorcentagem3.Location = new System.Drawing.Point(547, 28);
+            this.cbxPorcentagem3.Name = "cbxPorcentagem3";
+            this.cbxPorcentagem3.Size = new System.Drawing.Size(49, 21);
+            this.cbxPorcentagem3.TabIndex = 7;
+            // 
+            // cbxPorcentagem2
+            // 
+            this.cbxPorcentagem2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxPorcentagem2.FormattingEnabled = true;
+            this.cbxPorcentagem2.Items.AddRange(new object[] {
+            "25%",
+            "50%",
+            "75%"});
+            this.cbxPorcentagem2.Location = new System.Drawing.Point(241, 65);
+            this.cbxPorcentagem2.Name = "cbxPorcentagem2";
+            this.cbxPorcentagem2.Size = new System.Drawing.Size(49, 21);
+            this.cbxPorcentagem2.TabIndex = 6;
+            // 
+            // cbxPorcentagem1
+            // 
+            this.cbxPorcentagem1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxPorcentagem1.FormattingEnabled = true;
+            this.cbxPorcentagem1.Items.AddRange(new object[] {
+            "25%",
+            "50%",
+            "75%"});
+            this.cbxPorcentagem1.Location = new System.Drawing.Point(241, 28);
+            this.cbxPorcentagem1.Name = "cbxPorcentagem1";
+            this.cbxPorcentagem1.Size = new System.Drawing.Size(49, 21);
+            this.cbxPorcentagem1.TabIndex = 5;
             // 
             // comboBox4
             // 
@@ -214,54 +266,6 @@
             this.btnConfirmar.Text = "Confirmar";
             this.btnConfirmar.UseVisualStyleBackColor = true;
             this.btnConfirmar.Click += new System.EventHandler(this.ConfirmaSelecao);
-            // 
-            // cbxPorcentagem1
-            // 
-            this.cbxPorcentagem1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxPorcentagem1.FormattingEnabled = true;
-            this.cbxPorcentagem1.Items.AddRange(new object[] {
-            "25%",
-            "50%"});
-            this.cbxPorcentagem1.Location = new System.Drawing.Point(241, 28);
-            this.cbxPorcentagem1.Name = "cbxPorcentagem1";
-            this.cbxPorcentagem1.Size = new System.Drawing.Size(49, 21);
-            this.cbxPorcentagem1.TabIndex = 5;
-            // 
-            // cbxPorcentagem2
-            // 
-            this.cbxPorcentagem2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxPorcentagem2.FormattingEnabled = true;
-            this.cbxPorcentagem2.Items.AddRange(new object[] {
-            "25%",
-            "50%"});
-            this.cbxPorcentagem2.Location = new System.Drawing.Point(241, 65);
-            this.cbxPorcentagem2.Name = "cbxPorcentagem2";
-            this.cbxPorcentagem2.Size = new System.Drawing.Size(49, 21);
-            this.cbxPorcentagem2.TabIndex = 6;
-            // 
-            // cbxPorcentagem3
-            // 
-            this.cbxPorcentagem3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxPorcentagem3.FormattingEnabled = true;
-            this.cbxPorcentagem3.Items.AddRange(new object[] {
-            "25%",
-            "50%"});
-            this.cbxPorcentagem3.Location = new System.Drawing.Point(547, 28);
-            this.cbxPorcentagem3.Name = "cbxPorcentagem3";
-            this.cbxPorcentagem3.Size = new System.Drawing.Size(49, 21);
-            this.cbxPorcentagem3.TabIndex = 7;
-            // 
-            // cbxPorcentagem4
-            // 
-            this.cbxPorcentagem4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxPorcentagem4.FormattingEnabled = true;
-            this.cbxPorcentagem4.Items.AddRange(new object[] {
-            "25%",
-            "50%"});
-            this.cbxPorcentagem4.Location = new System.Drawing.Point(547, 65);
-            this.cbxPorcentagem4.Name = "cbxPorcentagem4";
-            this.cbxPorcentagem4.Size = new System.Drawing.Size(49, 21);
-            this.cbxPorcentagem4.TabIndex = 8;
             // 
             // frmSabores
             // 

@@ -603,7 +603,16 @@ namespace DexComanda
         {
             if (this.cbxSabor.Enabled == true)
             {
-                itemNome = "Meio " + this.cbxProdutosGrid.Text.Insert(cbxProdutosGrid.Text.Length,Environment.NewLine) + " Meio " + this.cbxSabor.Text;
+                if (Sessions.returnEmpresa.CNPJ== "10470600000177")
+                {
+                    cbxProdutosGrid.Text = cbxProdutosGrid.Text + " 50%";
+                    itemNome = cbxProdutosGrid.Text.Insert(cbxProdutosGrid.Text.Length, Environment.NewLine) + this.cbxSabor.Text + " 50%";
+                }
+                else
+                {
+                    itemNome = "Meio " + cbxProdutosGrid.Text.Insert(cbxProdutosGrid.Text.Length, Environment.NewLine) + " Meio " + this.cbxSabor.Text;
+                }
+                
                 return true;
             }
             else
@@ -1697,7 +1706,10 @@ namespace DexComanda
                     }
 
                     string iRetorno = Utils.ImpressaoBalcao(iCodigo, ImprimeLPT, QtdViasBalcao, Sessions.returnConfig.ImpressoraCopaBalcao);
-
+                    if (ImprimeViaCozinha)
+                    {
+                        Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
+                    }
                 }
 
                 // Imprimindo via Entrega
@@ -2836,6 +2848,7 @@ namespace DexComanda
             this.txtDesconto.Size = new System.Drawing.Size(73, 26);
             this.txtDesconto.TabIndex = 57;
             this.txtDesconto.Text = "0,00";
+            this.txtDesconto.TextChanged += new System.EventHandler(this.txtDesconto_TextChanged);
             this.txtDesconto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CalculaDesconto);
             this.txtDesconto.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtDesconto_KeyUp);
             // 
@@ -3346,9 +3359,7 @@ namespace DexComanda
             this.Name = "frmCadastrarPedido";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[XDelivery ] Cadastrar Pedido";
-            this.Activated += new System.EventHandler(this.frmCadastrarPedido_Activated);
             this.Load += new System.EventHandler(this.frmCadastrarPedido_Load);
-            this.Shown += new System.EventHandler(this.frmCadastrarPedido_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastrarPedido_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).EndInit();
@@ -3448,6 +3459,7 @@ namespace DexComanda
         {
             try
             {
+                CalculaPorcentagemDesconto();
                 NovoTotalPedido pedi = new NovoTotalPedido()
                 {
                     Codigo = codPedido,
@@ -4127,17 +4139,6 @@ namespace DexComanda
         {
             rowIndex = e.RowIndex;
         }
-
-        private void frmCadastrarPedido_Shown(object sender, EventArgs e)
-        {
-
-        }
-
-        private void frmCadastrarPedido_Activated(object sender, EventArgs e)
-        {
-
-        }
-
         private void BuscaVendedor(object sender, EventArgs e)
         {
             if (codPedido != 0 && !PedidoRepetio)
@@ -4214,6 +4215,11 @@ namespace DexComanda
             iNomeProd = cbxSabor.Text;
         }
 
+        private void txtDesconto_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void txtPorcentagemDesconto_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter && txtPorcentagemDesconto.Text != "")
@@ -4226,6 +4232,27 @@ namespace DexComanda
         {
             var precoDesconto = decimal.Parse(txtPrecoTotal.Text) * (decimal.Parse(txtPorcentagemDesconto.Text)) / 100;
             txtPrecoTotal.Text = precoDesconto.ToString();
+
+            // Validar o Desconto Máximo Por Usuario
+            if (txtDesconto.Text != "0,00" || txtDesconto.Text.Trim() != "")
+            {
+                if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "DescontoPedidoSN"))
+                {
+                    return;
+                }
+
+                if (ValidaMaximoDesconto())
+                {
+                    pedido.DescontoValor = decimal.Parse(txtDesconto.Text);
+                }
+                else
+                {
+                    MessageBox.Show("Desconto máximo superado ");
+                    pedido.DescontoValor = decimal.Parse("0,00");
+                    return;
+                }
+
+            }
         }
 
         private void cbxTipoProduto_SelectionChangeCommitted(object sender, EventArgs e)

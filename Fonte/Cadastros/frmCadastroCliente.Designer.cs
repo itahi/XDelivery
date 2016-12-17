@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroCliente));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbPrincipal = new System.Windows.Forms.TabPage();
+            this.pnConsultaCEp = new System.Windows.Forms.Panel();
+            this.label26 = new System.Windows.Forms.Label();
             this.txtPJPF = new System.Windows.Forms.TextBox();
             this.txtUserID = new System.Windows.Forms.TextBox();
             this.btnAlteraRegiao = new System.Windows.Forms.Button();
@@ -103,10 +105,9 @@
             this.btnConsultar = new System.Windows.Forms.Button();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
-            this.pnConsultaCEp = new System.Windows.Forms.Panel();
-            this.label26 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tbPrincipal.SuspendLayout();
+            this.pnConsultaCEp.SuspendLayout();
             this.tbCreditoDebito.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HistoricoGridView)).BeginInit();
@@ -114,7 +115,6 @@
             this.tbHistorico.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemsPedidoGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PedidosGridView)).BeginInit();
-            this.pnConsultaCEp.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -173,6 +173,26 @@
             this.tbPrincipal.TabIndex = 0;
             this.tbPrincipal.Text = "Dados do Cliente";
             this.tbPrincipal.UseVisualStyleBackColor = true;
+            // 
+            // pnConsultaCEp
+            // 
+            this.pnConsultaCEp.Controls.Add(this.label26);
+            this.pnConsultaCEp.Location = new System.Drawing.Point(120, 69);
+            this.pnConsultaCEp.Name = "pnConsultaCEp";
+            this.pnConsultaCEp.Size = new System.Drawing.Size(373, 71);
+            this.pnConsultaCEp.TabIndex = 61;
+            this.pnConsultaCEp.Visible = false;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(6, 30);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(357, 16);
+            this.label26.TabIndex = 0;
+            this.label26.Text = "Aguarde consultando CEP na Base dos correios ...";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtPJPF
             // 
@@ -259,6 +279,7 @@
             this.cbxRegiao.Size = new System.Drawing.Size(148, 21);
             this.cbxRegiao.TabIndex = 43;
             this.cbxRegiao.ValueMember = "Codigo";
+            this.cbxRegiao.DropDown += new System.EventHandler(this.cbxRegiao_DropDown);
             this.cbxRegiao.SelectedIndexChanged += new System.EventHandler(this.cbxRegiao_SelectedIndexChanged);
             // 
             // txtDataNascimento
@@ -911,26 +932,6 @@
             this.dtInicio.Size = new System.Drawing.Size(82, 20);
             this.dtInicio.TabIndex = 0;
             // 
-            // pnConsultaCEp
-            // 
-            this.pnConsultaCEp.Controls.Add(this.label26);
-            this.pnConsultaCEp.Location = new System.Drawing.Point(120, 69);
-            this.pnConsultaCEp.Name = "pnConsultaCEp";
-            this.pnConsultaCEp.Size = new System.Drawing.Size(373, 71);
-            this.pnConsultaCEp.TabIndex = 61;
-            this.pnConsultaCEp.Visible = false;
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(6, 30);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(357, 16);
-            this.label26.TabIndex = 0;
-            this.label26.Text = "Aguarde consultando CEP na Base dos correios ...";
-            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // frmCadastroCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -949,6 +950,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tbPrincipal.ResumeLayout(false);
             this.tbPrincipal.PerformLayout();
+            this.pnConsultaCEp.ResumeLayout(false);
+            this.pnConsultaCEp.PerformLayout();
             this.tbCreditoDebito.ResumeLayout(false);
             this.tbCreditoDebito.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -959,8 +962,6 @@
             this.tbHistorico.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemsPedidoGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PedidosGridView)).EndInit();
-            this.pnConsultaCEp.ResumeLayout(false);
-            this.pnConsultaCEp.PerformLayout();
             this.ResumeLayout(false);
 
         }

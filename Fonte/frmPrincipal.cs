@@ -94,7 +94,7 @@ namespace DexComanda
                                                                         false, DateTime.Now, 0, CodPessoa,
                                                                         "", "", "", "", null, 0.00M);
             CadPedido.ShowDialog();
-            Utils.LimpaForm(this);
+            //Utils.LimpaForm(this);
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
             TotalizaPedidos();
         }
@@ -178,7 +178,6 @@ namespace DexComanda
         {
             try
             {
-
                 if (iCaixaAberto > 0)
                 {
                     AbreTelaPedido(iTelefone);
@@ -314,12 +313,12 @@ namespace DexComanda
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-           //
+            //
         }
         private string RetornaVersao()
         {
             string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            return Text = String.Format("xDelivery version {0}", version);
+            return Text = String.Format(" versão {0}", version);
         }
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
@@ -474,7 +473,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    
+
                     MessageBox.Show("Selecione o produto para excluir");
                 }
             }
@@ -1250,7 +1249,7 @@ namespace DexComanda
         {
             try
             {
-                if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
+                if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                 {
                     return;
                 }
@@ -1772,7 +1771,7 @@ namespace DexComanda
             {
 
                 DataSet dsPedidosAbertos = con.SelectAll("Pedido", "spObterPedido");
-                int iPedidosAberto =  dsPedidosAbertos.Tables["Pedido"].Rows.Count;
+                int iPedidosAberto = dsPedidosAbertos.Tables["Pedido"].Rows.Count;
 
                 if (iPedidosAberto != pedidosGridView.Rows.Count && cbxFiltroTipo.Text == "")
                 {
@@ -1791,22 +1790,19 @@ namespace DexComanda
 
 
                 DataSet dsItemsNaoImpresso = con.SelectAll("ItemsPedido", "", iSql);
-               
+
                 if (dsItemsNaoImpresso.Tables[0].Rows.Count <= 0)
                 {
                     return;
                 }
                 DataRow dRowPedido = dsItemsNaoImpresso.Tables[0].Rows[0];
                 Boolean iMesa = dRowPedido.ItemArray.GetValue(8).ToString() == "1 - Mesa";
-                if (iMesa && chkGerenciaImpressao.Checked)
+                if (iMesa && chkGerenciaImpressao.Checked && dsItemsNaoImpresso.Tables[0].Rows.Count > 0)
                 {
-                    if (dsItemsNaoImpresso.Tables[0].Rows.Count > 0)
-                    {
-                        int CodPedido = int.Parse(dRowPedido.ItemArray.GetValue(1).ToString());
-                        int CodGrupo = int.Parse(dRowPedido.ItemArray.GetValue(20).ToString());
-                        string iNomeImpressora = dRowPedido.ItemArray.GetValue(21).ToString();
-                        ImpressaoAutomatica(CodPedido, CodGrupo, iNomeImpressora);
-                    }
+                    int CodPedido = int.Parse(dRowPedido.ItemArray.GetValue(1).ToString());
+                    int CodGrupo = int.Parse(dRowPedido.ItemArray.GetValue(20).ToString());
+                    string iNomeImpressora = dRowPedido.ItemArray.GetValue(21).ToString();
+                    ImpressaoAutomatica(CodPedido, CodGrupo, iNomeImpressora);
                 }
 
 

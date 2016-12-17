@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
     <PublishUrlHistory>D:\Data\|ftp://69.64.46.57/DexGerencial/|C:\Dex\|ftps://waws-prod-blu-005.ftp.azurewebsites.windows.net/|D:\Publish\</PublishUrlHistory>
     <InstallUrlHistory>http://69.64.46.57/DexGerencial/|http://dexcomanda.azurewebsites.net/</InstallUrlHistory>
     <SupportUrlHistory />

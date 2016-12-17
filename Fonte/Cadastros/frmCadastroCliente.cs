@@ -152,6 +152,10 @@ namespace DexComanda
             {
                 Conexao con = new Conexao();
                 DataSet Regiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", iCodRegiao);
+                if (Regiao.Tables[0].Rows.Count==0)
+                {
+                    return;
+                }
                 DataRow Lista = Regiao.Tables["RegiaoEntrega"].Rows[0];
 
                 mCodRegiao = int.Parse(Lista.ItemArray.GetValue(0).ToString());
@@ -950,6 +954,11 @@ namespace DexComanda
         private void txtCEP_KeyUp(object sender, KeyEventArgs e)
         {
             ConsultarEnderecoPorCep(sender, e);
+        }
+
+        private void cbxRegiao_DropDown(object sender, EventArgs e)
+        {
+            CarregaRegiao(0);
         }
     }
 
