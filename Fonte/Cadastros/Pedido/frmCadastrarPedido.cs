@@ -102,7 +102,7 @@ namespace DexComanda
         //private int HoraPedido = Sessions.returnPedido.RealizadoEm.Minute;
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, string iNumeMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara, string fPagamento, string TipoPedido, string MesaBalcao,
-            Main parent = null, decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0,string iObservacaoPedido="")
+            Main parent = null, decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0, string iObservacaoPedido = "")
         {
             try
             {
@@ -179,11 +179,12 @@ namespace DexComanda
         {
             con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcoesProduto", iCodProduto);
         }
-      
+
         public void frmCadastrarPedido_Load(object sender, EventArgs e)
         {
             //    lblEntrega.Text = Utils.RetornaTaxaPorCliente(codPessoa, con).ToString();
             //    AtualizaTotalPedido();
+
 
             grpVendedor.Enabled = Sessions.returnConfig.ExigeVendedorSN;
             if (gNUmeroMesa == "")
@@ -603,7 +604,7 @@ namespace DexComanda
         {
             if (this.cbxSabor.Enabled == true)
             {
-                if (Sessions.returnEmpresa.CNPJ== "10470600000177")
+                if (Sessions.returnEmpresa.CNPJ == "10470600000177")
                 {
                     cbxProdutosGrid.Text = cbxProdutosGrid.Text + " 50%";
                     itemNome = cbxProdutosGrid.Text.Insert(cbxProdutosGrid.Text.Length, Environment.NewLine) + this.cbxSabor.Text + " 50%";
@@ -612,7 +613,7 @@ namespace DexComanda
                 {
                     itemNome = "Meio " + cbxProdutosGrid.Text.Insert(cbxProdutosGrid.Text.Length, Environment.NewLine) + " Meio " + this.cbxSabor.Text;
                 }
-                
+
                 return true;
             }
             else
@@ -760,7 +761,7 @@ namespace DexComanda
                             //  NumericUpDown newNumeric = new NumericUpDown();
                             //newNumeric.Tag = lPreco;
                             chkListAdicionais.Items.Add(lnome + "(+" + lPreco + ")", false);
-                          //  listView1.Items.Add(newNumeric, 0)
+                            //  listView1.Items.Add(newNumeric, 0)
                             //while (lTipo==2)
                             //{
                             //}
@@ -960,7 +961,7 @@ namespace DexComanda
 
                 MessageBox.Show(ss.Message);
             }
-           
+
             LimpaTamanhosSabores();
             chkSabores.Checked = false;
         }
@@ -1011,7 +1012,7 @@ namespace DexComanda
             btnGerarPedido.Enabled = false;
             try
             {
-               
+
                 if (cmbFPagamento.ValueMember == null)
                 {
                     MessageBox.Show("Formaga de Pagamento não selecionada", "[XSistemas] Aviso");
@@ -1127,7 +1128,7 @@ namespace DexComanda
                                 pedido.HorarioEntrega = cbxHorarioEntrega.Text;
                             }
                             con.Insert("spAdicionarPedido", pedido);
-                           
+
                             for (int i = 0; i < gridViewItemsPedido.Rows.Count; i++)
                             {
                                 var itemDoPedido = new ItemPedido()
@@ -1156,7 +1157,7 @@ namespace DexComanda
 
                             iCodPedido = con.getLastCodigo();
                             con.AtualizaSituacao(iCodPedido, Sessions.retunrUsuario.Codigo, 1);
-                            
+
 
                             if (ContraMesas && cbxTipoPedido.Text != "1 - Mesa")
                             {
@@ -1195,20 +1196,37 @@ namespace DexComanda
             }
             btnGerarPedido.Enabled = true;
         }
+        private Decimal SomaItensPedido()
+        {
+            decimal dcTotalPedido = 0;
+            for (int i = 0; i < gridViewItemsPedido.Rows.Count; i++)
+            {
+                dcTotalPedido = dcTotalPedido + decimal.Parse(gridViewItemsPedido.Rows[i].Cells["Preço Total"].Value.ToString().Replace("R$ ",""));
+            }
+
+            return dcTotalPedido + decimal.Parse(lblEntrega.Text.Replace("R$",""));
+        }
 
         private void AtualizaTotalPedido()
         {
-            if (codPedido>0)
+            if (!ValidaMaximoDesconto())
+            {
+                MessageBox.Show("Desconto superior ao permitido no pedido");
+                return;
+            }
+            if (codPedido > 0)
             {
                 FinalizaPedido finaliza = new FinalizaPedido()
                 {
                     CodPedido = codPedido,
                     CodPagamento = int.Parse(cmbFPagamento.SelectedValue.ToString()),
-                    ValorPagamento = Convert.ToDecimal(lbTotal.Text.Replace("R$", "")) + DMargemGarco
+                    ValorPagamento = SomaItensPedido() - Convert.ToDecimal
+                    (txtDesconto.Text) + DMargemGarco
+
                 };
                 con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
             }
-          
+
 
             pedido = new Pedido()
             {
@@ -1222,11 +1240,12 @@ namespace DexComanda
             if (DMargemGarco != 0.00M)
             {
                 decimal dTotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
-                pedido.TotalPedido = dTotalPedido + DMargemGarco;
+                pedido.TotalPedido = SomaItensPedido() - decimal.Parse(txtDesconto.Text) + DMargemGarco ;
             }
             else
             {
-                pedido.TotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
+                pedido.TotalPedido = SomaItensPedido() - Convert.ToDecimal
+                    (txtDesconto.Text);
             }
 
             if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa")
@@ -1326,7 +1345,7 @@ namespace DexComanda
                         };
 
                         itemPedido.DataAtualizacao = DateTime.Now;
-                        if (int.Parse(gridViewItemsPedido.CurrentRow.Cells["Codigo"].Value.ToString())>0)
+                        if (int.Parse(gridViewItemsPedido.CurrentRow.Cells["Codigo"].Value.ToString()) > 0)
                         {
                             itemPedido.Codigo = int.Parse(gridViewItemsPedido.CurrentRow.Cells["Codigo"].Value.ToString());
                         }
@@ -1334,7 +1353,7 @@ namespace DexComanda
                         {
                             itemPedido.Codigo = iRowSelecionada;
                         }
-                         
+
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value = itemPedido.NomeProduto;
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value = itemPedido.Quantidade;
                         this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value = "R$ " + itemPedido.PrecoUnitario.ToString();
@@ -1356,12 +1375,12 @@ namespace DexComanda
                         this.lblTroco.Text = "R$ " + TrocoPagar;
                         AtualizaTotalPedido();
 
-                        if (codPedido!=0)
+                        if (codPedido != 0)
                         {
                             con.Update("spAlterarItemPedido", itemPedido);
                             Utils.ControlaEventos("Alterar", this.Name);
                         }
-                
+
 
                         this.cbxProdutosGrid.Text = "";
                         this.txtPrecoUnitario.Text = "";
@@ -1669,6 +1688,7 @@ namespace DexComanda
         {
             try
             {
+                AtualizaTotalPedido();
                 if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa")
                 {
                     int iCodigo;
@@ -1861,7 +1881,7 @@ namespace DexComanda
             //        {
             //            ((System.Windows.Forms.CheckedListBox)ctrControl).SetSelected(chkListAdicionais.Items.Count, false);
             //        }
-                   
+
             //    }
             //}
             //   SemMeiaPizza();
@@ -2495,7 +2515,7 @@ namespace DexComanda
             // btnAtlCadastro
             // 
             this.btnAtlCadastro.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnAtlCadastro.Location = new System.Drawing.Point(567, 4);
+            this.btnAtlCadastro.Location = new System.Drawing.Point(546, 4);
             this.btnAtlCadastro.Name = "btnAtlCadastro";
             this.btnAtlCadastro.Size = new System.Drawing.Size(72, 31);
             this.btnAtlCadastro.TabIndex = 66;
@@ -3748,7 +3768,7 @@ namespace DexComanda
             ire = Regex.Replace(iValue, "[^0-9 ,]+", "");
             return ire;
         }
-    
+
 
         private void radioButton1_Click(object sender, EventArgs e)
         {
@@ -4108,7 +4128,7 @@ namespace DexComanda
                         this.cbxSabor.Text = "";
                         this.cbxProdutosGrid.Text = gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
                     }
-                    if (codPedido==0)
+                    if (codPedido == 0)
                     {
                         iRowSelecionada = rowIndex;
                     }
@@ -4158,7 +4178,7 @@ namespace DexComanda
         {
             Utils.SoPermiteNumeros(e);
         }
-        
+
         private void chkSabores_CheckStateChanged(object sender, EventArgs e)
         {
             if (chkSabores.Checked)
@@ -4169,7 +4189,7 @@ namespace DexComanda
                 frm.ShowDialog();
                 if (frm.boolConfirmado)
                 {
-                    cbxProdutosGrid.Text = cbxTipoProduto.Text +" " + frm.strTamanho;
+                    cbxProdutosGrid.Text = cbxTipoProduto.Text + " " + frm.strTamanho;
                     txtItemDescricao.Text = frm.strNomeProduto;
                     txtPrecoUnitario.Text = frm.strPreco;
                     CalcularTotalItem();
@@ -4178,7 +4198,7 @@ namespace DexComanda
                 {
                     grpBoxTamanhos.Enabled = true;
                 }
-               
+
             }
 
         }

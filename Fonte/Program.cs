@@ -1,14 +1,9 @@
 ﻿using DexComanda.Models;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DexComanda;
 using System.Configuration;
 
 namespace DexComanda
@@ -66,7 +61,6 @@ namespace DexComanda
                     {
                         Utils.ServicoSQLATIVO(iText[0]);
                     }
-                    
 
                     con = new Conexao();
 

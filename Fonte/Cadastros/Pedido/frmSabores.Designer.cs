@@ -89,7 +89,7 @@
             "25%",
             "50%",
             "75%"});
-            this.cbxPorcentagem3.Location = new System.Drawing.Point(547, 28);
+            this.cbxPorcentagem3.Location = new System.Drawing.Point(241, 65);
             this.cbxPorcentagem3.Name = "cbxPorcentagem3";
             this.cbxPorcentagem3.Size = new System.Drawing.Size(49, 21);
             this.cbxPorcentagem3.TabIndex = 7;
@@ -102,7 +102,7 @@
             "25%",
             "50%",
             "75%"});
-            this.cbxPorcentagem2.Location = new System.Drawing.Point(241, 65);
+            this.cbxPorcentagem2.Location = new System.Drawing.Point(547, 28);
             this.cbxPorcentagem2.Name = "cbxPorcentagem2";
             this.cbxPorcentagem2.Size = new System.Drawing.Size(49, 21);
             this.cbxPorcentagem2.TabIndex = 6;

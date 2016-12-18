@@ -113,7 +113,7 @@ namespace DexComanda.Cadastros.Pedido
                 EscondeTamanhos();
                 if (comboBox1.SelectedIndex != -1)
                 {
-                    if (cbxPorcentagem1.SelectedIndex==-1)
+                    if (cbxPorcentagem1.Text == "")
                     {
                         MessageBox.Show("Selecione a proporção");
                         cbxPorcentagem1.Focus();
@@ -125,7 +125,7 @@ namespace DexComanda.Cadastros.Pedido
                 }
                 if (comboBox2.SelectedIndex != -1)
                 {
-                    if (cbxPorcentagem2.SelectedIndex == -1)
+                    if (cbxPorcentagem2.Text =="")
                     {
                         MessageBox.Show("Selecione a proporção");
                         cbxPorcentagem2.Focus();
@@ -135,7 +135,7 @@ namespace DexComanda.Cadastros.Pedido
                     strNomeProduto = strNomeProduto + comboBox2.Text + " " + cbxPorcentagem2.Text;
                     strNomeProduto = strNomeProduto.Insert(strNomeProduto.Length, Environment.NewLine);
                 }
-                if (comboBox3.SelectedIndex != -1)
+                if (comboBox3.Text == "")
                 {
                     if (cbxPorcentagem3.SelectedIndex == -1)
                     {
@@ -149,7 +149,7 @@ namespace DexComanda.Cadastros.Pedido
                 }
                 if (comboBox4.SelectedIndex != -1)
                 {
-                    if (cbxPorcentagem4.SelectedIndex == -1)
+                    if (cbxPorcentagem4.Text == "")
                     {
                         MessageBox.Show("Selecione a proporção");
                         cbxPorcentagem4.Focus();
