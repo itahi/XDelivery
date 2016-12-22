@@ -16,6 +16,7 @@ namespace DexComanda.Models
         public Boolean OnlineSN { get; set; }
         public Boolean AtivoSN { get; set; }
         public string SinalOpcao { get; set; }
+        public string DiasDisponivel { get; set; }
 
     }
 }

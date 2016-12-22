@@ -1,4 +1,5 @@
 ﻿using DexComanda.Models;
+using DexComanda.Models.Produto;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,13 +16,76 @@ namespace DexComanda.Cadastros.Produto
     {
         private Conexao con;
         private int codigoAlterarDeletar;
+        private List<Models.Produto.OpcaoDia> listDias;
         private int rowIndex;
         public frmCadOpcao()
         {
             con = new Conexao();
             InitializeComponent();
         }
+        private void MontaListPrecos(string ivalor)
+        {
+            try
+            {
+                List<OpcaoDia> pr = new List<OpcaoDia>();
+                if (ivalor == "")
+                {
+                    return;
+                }
+                pr = Utils.DeserializaObjeto3(ivalor);
+                if (pr.Count > 0)
+                {
+                    foreach (var item in pr)
+                    {
+                        foreach (System.Windows.Forms.Control obj in grpDiasDisponivel.Controls)
+                        {
+                            if (object.ReferenceEquals(obj.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                            {
+                                if (item.Dia == ((System.Windows.Forms.CheckBox)obj).Tag.ToString())
+                                {
+                                    ((System.Windows.Forms.CheckBox)obj).Checked = true;
+                                }
+                            }
 
+                        }
+                    }
+                }
+
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message);
+            }
+
+        }
+        private List<Models.Produto.OpcaoDia> RetornaDiasMarcados()
+        {
+            listDias = new List<Models.Produto.OpcaoDia>();
+            // var precosDia = new PrecoDiaProduto();
+            foreach (System.Windows.Forms.Control TEXT in grpDiasDisponivel.Controls)
+            {
+                //Loop through all controls 
+                if (object.ReferenceEquals(TEXT.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                {
+                    //Check to see if it's a textbox 
+                    if (((System.Windows.Forms.CheckBox)TEXT).Checked)
+                    {
+                        var precosDia = new Models.Produto.OpcaoDia()
+                        {
+                            Dia = (((System.Windows.Forms.CheckBox)TEXT).Tag.ToString()),
+                        };
+
+                        listDias.Add(precosDia);
+                    }
+
+                    //If it is then set the text to String.Empty (empty textbox) 
+                }
+
+            }
+
+            return listDias;
+        }
         private void CadastraOpcao(object sender, EventArgs e)
         {
             try
@@ -35,11 +99,13 @@ namespace DexComanda.Cadastros.Produto
                         Tipo = cbxTipo.SelectedValue.ToString(),
                         OnlineSN = chkOnlineSN.Checked,
                         AtivoSN = chkAtivoSN.Checked,
-                        SinalOpcao = txtSinalOpcao.Text
+                        SinalOpcao = "",
+                        DiasDisponivel = Utils.SerializaObjeto(RetornaDiasMarcados())
 
                     };
                     con.Insert("spAdicionarOpcao", opcao);
                     Utils.LimpaForm(this);
+                    LimpaDias();
                     ListaOpcao();
                 }
                 else
@@ -108,11 +174,22 @@ namespace DexComanda.Cadastros.Produto
         {
             Utils.MontaCombox(cbxTipo, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterProduto_OpcaoTipoPorCodigo", iTipo);
         }
-
+        private void LimpaDias()
+        {
+            foreach (System.Windows.Forms.Control ctrControl in grpDiasDisponivel.Controls)
+            {
+                if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                {
+                    //Unselect all RadioButtons
+                    ((System.Windows.Forms.CheckBox)ctrControl).Checked = false;
+                }
+            }
+        }
         private void EditarOpcao(object sender, EventArgs e)
         {
             try
             {
+               
                 codigoAlterarDeletar = int.Parse(this.OpcaoGridView.Rows[rowIndex].Cells[0].Value.ToString());
 
                 //DataSet ds = con.SelectRegistroPorCodigo("Opcao", "spObterOpcaoPorCodigo", codigoAlterarDeletar);
@@ -121,8 +198,8 @@ namespace DexComanda.Cadastros.Produto
                 txtNome.Text = this.OpcaoGridView.Rows[rowIndex].Cells["Nome"].Value.ToString();
                 chkAtivoSN.Checked = bool.Parse(OpcaoGridView.Rows[rowIndex].Cells[3].Value.ToString());
                 chkOnlineSN.Checked = bool.Parse(OpcaoGridView.Rows[rowIndex].Cells[4].Value.ToString());
-                txtSinalOpcao.Text = this.OpcaoGridView.Rows[rowIndex].Cells[5].Value.ToString();
-
+                //txtSinalOpcao.Text = this.OpcaoGridView.Rows[rowIndex].Cells[5].Value.ToString();
+                MontaListPrecos(this.OpcaoGridView.Rows[rowIndex].Cells["DiasDisponivel"].Value.ToString());
                 this.btnAdicionar.Text = "Salvar [F12]";
                 this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
                 this.btnAdicionar.Click -= new System.EventHandler(this.CadastraOpcao);
@@ -161,13 +238,15 @@ namespace DexComanda.Cadastros.Produto
                     Codigo = codigoAlterarDeletar,
                     Nome = txtNome.Text,
                     Tipo = cbxTipo.SelectedValue.ToString(),
-                    DataAlteracao= DateTime.Now,
+                    DataAlteracao = DateTime.Now,
                     OnlineSN = chkOnlineSN.Checked,
                     AtivoSN = chkAtivoSN.Checked,
-                    SinalOpcao = txtSinalOpcao.Text
+                    SinalOpcao = "",
+                    DiasDisponivel = Utils.SerializaObjeto(RetornaDiasMarcados())
                 };
                 con.Update("spAlteraOpcao", opcao);
                 // Utils.LimpaForm(this);
+                LimpaDias();
                 con.AtualizaProdutosOpcao(codigoAlterarDeletar);
                 this.btnAdicionar.Text = "Adicionar";
                 this.btnAdicionar.Click += new System.EventHandler(this.CadastraOpcao);

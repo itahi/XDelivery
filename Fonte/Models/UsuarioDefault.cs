@@ -12,5 +12,6 @@ namespace DexComanda.Models
         public string Nome { get; set; }
         public string senha { get; set; }
         public bool AdministradorSN { get; set; }
+        public bool AbreFechaCaixaSN { get; set; }
     }
 }

@@ -37,9 +37,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.chkAtivoSN = new System.Windows.Forms.CheckBox();
             this.chkOnlineSN = new System.Windows.Forms.CheckBox();
-            this.txtSinalOpcao = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.grpDiasDisponivel = new System.Windows.Forms.GroupBox();
+            this.chkDomingo = new System.Windows.Forms.CheckBox();
+            this.ChkSexta = new System.Windows.Forms.CheckBox();
+            this.chkQuinta = new System.Windows.Forms.CheckBox();
+            this.ChkSabado = new System.Windows.Forms.CheckBox();
+            this.ChkQuarta = new System.Windows.Forms.CheckBox();
+            this.chkTerca = new System.Windows.Forms.CheckBox();
+            this.chkSegunda = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.OpcaoGridView)).BeginInit();
+            this.grpDiasDisponivel.SuspendLayout();
             this.SuspendLayout();
             // 
             // OpcaoGridView
@@ -52,12 +59,12 @@
             this.OpcaoGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.OpcaoGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.OpcaoGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.OpcaoGridView.Location = new System.Drawing.Point(4, 206);
+            this.OpcaoGridView.Location = new System.Drawing.Point(4, 221);
             this.OpcaoGridView.MultiSelect = false;
             this.OpcaoGridView.Name = "OpcaoGridView";
             this.OpcaoGridView.ReadOnly = true;
             this.OpcaoGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.OpcaoGridView.Size = new System.Drawing.Size(288, 238);
+            this.OpcaoGridView.Size = new System.Drawing.Size(288, 252);
             this.OpcaoGridView.TabIndex = 2;
             this.OpcaoGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OpcaoGridView_CellClick);
             this.OpcaoGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OpcaoGridView_MouseClick);
@@ -66,15 +73,15 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(7, 18);
+            this.label1.Location = new System.Drawing.Point(7, 24);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(85, 13);
             this.label1.TabIndex = 15;
-            this.label1.Text = "Nome";
+            this.label1.Text = "Nome da Opção";
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(158, 165);
+            this.btnEditar.Location = new System.Drawing.Point(158, 179);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(130, 35);
             this.btnEditar.TabIndex = 2;
@@ -95,7 +102,7 @@
             // 
             // btnAdicionar
             // 
-            this.btnAdicionar.Location = new System.Drawing.Point(4, 167);
+            this.btnAdicionar.Location = new System.Drawing.Point(4, 181);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(114, 35);
             this.btnAdicionar.TabIndex = 1;
@@ -111,7 +118,7 @@
             "Selecao unica",
             "Multipla Selecao",
             "Texto livre"});
-            this.cbxTipo.Location = new System.Drawing.Point(4, 137);
+            this.cbxTipo.Location = new System.Drawing.Point(4, 151);
             this.cbxTipo.Name = "cbxTipo";
             this.cbxTipo.Size = new System.Drawing.Size(186, 21);
             this.cbxTipo.TabIndex = 17;
@@ -122,7 +129,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(1, 121);
+            this.label2.Location = new System.Drawing.Point(6, 135);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(28, 13);
             this.label2.TabIndex = 18;
@@ -133,7 +140,7 @@
             this.chkAtivoSN.AutoSize = true;
             this.chkAtivoSN.Checked = true;
             this.chkAtivoSN.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAtivoSN.Location = new System.Drawing.Point(48, 18);
+            this.chkAtivoSN.Location = new System.Drawing.Point(139, 18);
             this.chkAtivoSN.Name = "chkAtivoSN";
             this.chkAtivoSN.Size = new System.Drawing.Size(65, 17);
             this.chkAtivoSN.TabIndex = 67;
@@ -145,41 +152,112 @@
             this.chkOnlineSN.AutoSize = true;
             this.chkOnlineSN.Checked = true;
             this.chkOnlineSN.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkOnlineSN.Location = new System.Drawing.Point(119, 19);
+            this.chkOnlineSN.Location = new System.Drawing.Point(210, 19);
             this.chkOnlineSN.Name = "chkOnlineSN";
             this.chkOnlineSN.Size = new System.Drawing.Size(71, 17);
             this.chkOnlineSN.TabIndex = 66;
             this.chkOnlineSN.Text = "OnlineSN";
             this.chkOnlineSN.UseVisualStyleBackColor = true;
             // 
-            // txtSinalOpcao
+            // grpDiasDisponivel
             // 
-            this.txtSinalOpcao.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSinalOpcao.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSinalOpcao.Location = new System.Drawing.Point(4, 91);
-            this.txtSinalOpcao.MaxLength = 30;
-            this.txtSinalOpcao.Name = "txtSinalOpcao";
-            this.txtSinalOpcao.Size = new System.Drawing.Size(64, 26);
-            this.txtSinalOpcao.TabIndex = 68;
+            this.grpDiasDisponivel.Controls.Add(this.chkDomingo);
+            this.grpDiasDisponivel.Controls.Add(this.ChkSexta);
+            this.grpDiasDisponivel.Controls.Add(this.chkQuinta);
+            this.grpDiasDisponivel.Controls.Add(this.ChkSabado);
+            this.grpDiasDisponivel.Controls.Add(this.ChkQuarta);
+            this.grpDiasDisponivel.Controls.Add(this.chkTerca);
+            this.grpDiasDisponivel.Controls.Add(this.chkSegunda);
+            this.grpDiasDisponivel.Location = new System.Drawing.Point(4, 73);
+            this.grpDiasDisponivel.Name = "grpDiasDisponivel";
+            this.grpDiasDisponivel.Size = new System.Drawing.Size(284, 60);
+            this.grpDiasDisponivel.TabIndex = 70;
+            this.grpDiasDisponivel.TabStop = false;
+            this.grpDiasDisponivel.Text = "Disponibilidade";
             // 
-            // label3
+            // chkDomingo
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(1, 74);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 13);
-            this.label3.TabIndex = 69;
-            this.label3.Text = "Sinal Padrão";
+            this.chkDomingo.AutoSize = true;
+            this.chkDomingo.Location = new System.Drawing.Point(111, 38);
+            this.chkDomingo.Name = "chkDomingo";
+            this.chkDomingo.Size = new System.Drawing.Size(51, 17);
+            this.chkDomingo.TabIndex = 25;
+            this.chkDomingo.Tag = "Sunday";
+            this.chkDomingo.Text = "Dom.";
+            this.chkDomingo.UseVisualStyleBackColor = true;
+            // 
+            // ChkSexta
+            // 
+            this.ChkSexta.AutoSize = true;
+            this.ChkSexta.Location = new System.Drawing.Point(6, 38);
+            this.ChkSexta.Name = "ChkSexta";
+            this.ChkSexta.Size = new System.Drawing.Size(44, 17);
+            this.ChkSexta.TabIndex = 22;
+            this.ChkSexta.Tag = "Friday";
+            this.ChkSexta.Text = "Sex";
+            this.ChkSexta.UseVisualStyleBackColor = true;
+            // 
+            // chkQuinta
+            // 
+            this.chkQuinta.AutoSize = true;
+            this.chkQuinta.Location = new System.Drawing.Point(170, 13);
+            this.chkQuinta.Name = "chkQuinta";
+            this.chkQuinta.Size = new System.Drawing.Size(51, 17);
+            this.chkQuinta.TabIndex = 21;
+            this.chkQuinta.Tag = "Thursday";
+            this.chkQuinta.Text = "Quin.";
+            this.chkQuinta.UseVisualStyleBackColor = true;
+            // 
+            // ChkSabado
+            // 
+            this.ChkSabado.AutoSize = true;
+            this.ChkSabado.Location = new System.Drawing.Point(60, 38);
+            this.ChkSabado.Name = "ChkSabado";
+            this.ChkSabado.Size = new System.Drawing.Size(48, 17);
+            this.ChkSabado.TabIndex = 18;
+            this.ChkSabado.Tag = "Saturday";
+            this.ChkSabado.Text = "Sab.";
+            this.ChkSabado.UseVisualStyleBackColor = true;
+            // 
+            // ChkQuarta
+            // 
+            this.ChkQuarta.AutoSize = true;
+            this.ChkQuarta.Location = new System.Drawing.Point(111, 13);
+            this.ChkQuarta.Name = "ChkQuarta";
+            this.ChkQuarta.Size = new System.Drawing.Size(52, 17);
+            this.ChkQuarta.TabIndex = 20;
+            this.ChkQuarta.Tag = "Wednesday";
+            this.ChkQuarta.Text = "Quar.";
+            this.ChkQuarta.UseVisualStyleBackColor = true;
+            // 
+            // chkTerca
+            // 
+            this.chkTerca.AutoSize = true;
+            this.chkTerca.Location = new System.Drawing.Point(60, 13);
+            this.chkTerca.Name = "chkTerca";
+            this.chkTerca.Size = new System.Drawing.Size(45, 17);
+            this.chkTerca.TabIndex = 19;
+            this.chkTerca.Tag = "Tuesday";
+            this.chkTerca.Text = "Ter.";
+            this.chkTerca.UseVisualStyleBackColor = true;
+            // 
+            // chkSegunda
+            // 
+            this.chkSegunda.AutoSize = true;
+            this.chkSegunda.Location = new System.Drawing.Point(6, 15);
+            this.chkSegunda.Name = "chkSegunda";
+            this.chkSegunda.Size = new System.Drawing.Size(48, 17);
+            this.chkSegunda.TabIndex = 18;
+            this.chkSegunda.Tag = "Monday";
+            this.chkSegunda.Text = "Seg.";
+            this.chkSegunda.UseVisualStyleBackColor = true;
             // 
             // frmCadOpcao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(295, 449);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtSinalOpcao);
+            this.ClientSize = new System.Drawing.Size(295, 478);
+            this.Controls.Add(this.grpDiasDisponivel);
             this.Controls.Add(this.chkAtivoSN);
             this.Controls.Add(this.chkOnlineSN);
             this.Controls.Add(this.label2);
@@ -194,6 +272,8 @@
             this.Text = "[xSistemas] Cadastros de Opção";
             this.Load += new System.EventHandler(this.frmCadOpcao_Load);
             ((System.ComponentModel.ISupportInitialize)(this.OpcaoGridView)).EndInit();
+            this.grpDiasDisponivel.ResumeLayout(false);
+            this.grpDiasDisponivel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -210,7 +290,13 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox chkAtivoSN;
         private System.Windows.Forms.CheckBox chkOnlineSN;
-        private System.Windows.Forms.TextBox txtSinalOpcao;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.GroupBox grpDiasDisponivel;
+        private System.Windows.Forms.CheckBox chkDomingo;
+        private System.Windows.Forms.CheckBox ChkSexta;
+        private System.Windows.Forms.CheckBox chkQuinta;
+        private System.Windows.Forms.CheckBox ChkSabado;
+        private System.Windows.Forms.CheckBox ChkQuarta;
+        private System.Windows.Forms.CheckBox chkTerca;
+        private System.Windows.Forms.CheckBox chkSegunda;
     }
 }

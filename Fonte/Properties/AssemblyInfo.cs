@@ -9,7 +9,7 @@ using System.Resources;
 [assembly: AssemblyTitle("xDelivery Gestor")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("xSistemas")]
+[assembly: AssemblyCompany("xSistemas Soluções em Delivery")]
 [assembly: AssemblyProduct("xDelivery")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 

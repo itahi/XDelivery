@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DexComanda
 {
-  public  class AtualizarFidelidade
+  public  class AtualizarFidelidades
     {
       public int CodPessoa { get; set; }
       public int Ticket { get; set; }

@@ -29,8 +29,9 @@ namespace DexComanda
         private DataRow RowsClientes;
         private int mCodRegiao;
         private int rowIndex;
+        private int codigo=0;
 
-        public frmCadastroCliente(Main parent=null)
+        public frmCadastroCliente(Main parent = null)
         {
             InitializeComponent();
             this.parentMain = parent;
@@ -52,14 +53,14 @@ namespace DexComanda
             //ObterCidadePadrao();
             // ObterCidadePadrao();
         }
-     
+
         public frmCadastroCliente(int iCodPessoa, string iNomeCliente, string iTelefone, string iTelefone2,
                               string iCEP, string iEndereco, string inumero, string iBairro, string iCidade,
                               string iEstado, string iPontoReferencia, string iObservacao, int iCodRegiao,
-                              string iDataCadastro, string iDataNascimento,string iUserID,string iPJPF)
+                              string iDataCadastro, string iDataNascimento, string iUserID, string iPJPF)
         {
             InitializeComponent();
-            
+
             codigoClienteParaAlterar = iCodPessoa;
             txtNomeCliente.Text = iNomeCliente;
             txtTelefone.Text = iTelefone;
@@ -75,7 +76,7 @@ namespace DexComanda
             txtDataCadastro.Text = iDataCadastro;
             txtDataNascimento.Text = iDataNascimento;
             txtUserID.Text = iUserID;
-            txtPJPF.Text = iPJPF;   
+            txtPJPF.Text = iPJPF;
             CarregaRegiao(iCodRegiao);
 
             this.btnAdicionarCliente.Text = "Alterar [F12]";
@@ -85,7 +86,18 @@ namespace DexComanda
             this.StartPosition = FormStartPosition.CenterParent;
             this.Show();
         }
+        private void ListaEnderecos()
+        {
+            if (codigoClienteParaAlterar == 0)
+            {
+                return;
+            }
+            DataSet dsEnderecos = con.SelectRegistroPorCodigo("Pessoa_Endereco", "spObterEnderecoPessoa", codigoClienteParaAlterar);
+            if (dsEnderecos.Tables[0].Rows.Count > 0)
+            {
 
+            }
+        }
         private void frmCadastroCliente_Load(object sender, EventArgs e)
         {
 
@@ -94,7 +106,7 @@ namespace DexComanda
             txtNomeCliente.Focus();
             txtNomeCliente.Select();
             ObterCidadePadrao();
-
+            ListaEnderecosPessoa();
 
             if (Sessions.returnConfig != null)
             {
@@ -152,7 +164,7 @@ namespace DexComanda
             {
                 Conexao con = new Conexao();
                 DataSet Regiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", iCodRegiao);
-                if (Regiao.Tables[0].Rows.Count==0)
+                if (Regiao.Tables[0].Rows.Count == 0)
                 {
                     return;
                 }
@@ -216,33 +228,18 @@ namespace DexComanda
                         }
                         pnConsultaCEp.Visible = false;
                     }
-
-
-
-                    //{
-
-                    //    ConsultarEnderecoPorCep(sender, e);
-                    //    pnConsultaCEp.Visible = false;
-                    //}
-                    //else
-                    //{
-                    //    // ObterCidadePadrao();
-                    //    MessageBox.Show("Cep não encontrado");
-
-                    //    this.txtEndereco.Focus();
-                    //}
                 }
             }
 
         }
         private void PreencheRegiao()
         {
-           DataSet ds = con.RetornarTaxaPorBairro(txtBairro.Text);
-            if (ds.Tables[0].Rows.Count>0)
+            DataSet ds = con.RetornarTaxaPorBairro(txtBairro.Text);
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 cbxRegiao.SelectedValue = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("Codigo"));
-                cbxRegiao.Text        = ds.Tables[0].Rows[0].Field<string>("NomeRegiao");
-                txtTaxaEntrega.Text   = Convert.ToString(ds.Tables[0].Rows[0].Field<decimal>("TaxaServico"));
+                cbxRegiao.Text = ds.Tables[0].Rows[0].Field<string>("NomeRegiao");
+                txtTaxaEntrega.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<decimal>("TaxaServico"));
             }
             else
             {
@@ -280,21 +277,21 @@ namespace DexComanda
                     TicketFidelidade = 0,
                     user_id = "",
                     DataCadastro = DateTime.Now,
-                    Sexo ="1",
-                    DDD ="",
-                    PFPJ ='F'
+                    Sexo = "1",
+                    DDD = "",
+                    PFPJ = 'F'
 
                 };
-                if (cbxRegiao.SelectedValue.ToString()!="")
-	             {
-                     pessoa.CodRegiao = int.Parse(this.cbxRegiao.SelectedValue.ToString());
-               	}
+                if (cbxRegiao.SelectedValue.ToString() != "")
+                {
+                    pessoa.CodRegiao = int.Parse(this.cbxRegiao.SelectedValue.ToString());
+                }
                 else
-	            {
-                    MessageBox.Show("Região de entrega não selecionada, favor vericicar","[XSistemas]");
+                {
+                    MessageBox.Show("Região de entrega não selecionada, favor vericicar", "[XSistemas]");
                     return;
-	            }
-               
+                }
+
                 if (txtDataNascimento.Visible && txtDataNascimento.Text == "  /  /")
                 {
                     //pessoa.DataNascimento = Convert.ToDateTime(txtDataNascimento.Text);
@@ -316,9 +313,9 @@ namespace DexComanda
                     Utils.ControlaEventos("Inserir", this.Name);
                     MessageBox.Show("Cliente cadastrado com sucesso.", "[xSistemas] Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
                     this.Close();
-                    
-                  //  this_FormClosing();
-                    if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado,Sessions.retunrUsuario.Turno))
+
+                    //  this_FormClosing();
+                    if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                     {
                         RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
                     }
@@ -342,8 +339,8 @@ namespace DexComanda
         {
             try
             {
-                this.Close(); 
-             //   DialogResult resultado = MessageBox.Show("Deseja realizar um Pedido para pessoa cadastrada?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                this.Close();
+                //   DialogResult resultado = MessageBox.Show("Deseja realizar um Pedido para pessoa cadastrada?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (Utils.MessageBoxQuestion("Deseja realizar um Pedido para pessoa cadastrada?"))
                 {
                     DBExpertDataSet dbExpert = new DBExpertDataSet();
@@ -443,7 +440,7 @@ namespace DexComanda
                 con.Update("spAlterarPessoa", pessoa);
                 Utils.ControlaEventos("Altera", this.Name);
                 MessageBox.Show("Cliente alterado com sucesso.");
-               
+
                 this.Close();
             }
             catch (Exception ex)
@@ -535,16 +532,16 @@ namespace DexComanda
 
         private void txtTelefone_KeyDown(object sender, KeyEventArgs e)
         {
-           
-                if (txtTelefone.Text != "" && txtTelefone2.Visible)
-                {
-                    txtTelefone2.Focus();
-                }
-                else
-                {
-                    txtCEP.Focus();
-                }
-           
+
+            if (txtTelefone.Text != "" && txtTelefone2.Visible)
+            {
+                txtTelefone2.Focus();
+            }
+            else
+            {
+                txtCEP.Focus();
+            }
+
         }
 
         private void txtEndereco_KeyDown(object sender, KeyEventArgs e)
@@ -583,7 +580,7 @@ namespace DexComanda
         {
             try
             {
-                if (codigoClienteParaAlterar!=0)
+                if (codigoClienteParaAlterar != 0)
                 {
                     return;
                 }
@@ -796,15 +793,15 @@ namespace DexComanda
 
         private void LancarHistorico(object sender, EventArgs e)
         {
-            if (dtLancamento.Value< Convert.ToDateTime(DateTime.Now.ToShortDateString()))
+            if (dtLancamento.Value < Convert.ToDateTime(DateTime.Now.ToShortDateString()))
             {
                 if (!Utils.MessageBoxQuestion("Data do lançamento é menor que data atual, tem certeza que deseja continuar?"))
                 {
                     return;
                 }
-                
+
             }
-            if (txtValor.Text.Trim()=="" || txtHistorico.Text.Trim()=="")
+            if (txtValor.Text.Trim() == "" || txtHistorico.Text.Trim() == "")
             {
                 MessageBox.Show("Campos obrigatórios não podem ser vazios");
                 return;
@@ -842,7 +839,7 @@ namespace DexComanda
             for (int i = 0; i < HistoricoGridView.Rows.Count; i++)
             {
 
-                dblTotalDebito = decimal.Parse(HistoricoGridView.Rows[i].Cells["Valor"].Value.ToString())+ dblTotalDebito;
+                dblTotalDebito = decimal.Parse(HistoricoGridView.Rows[i].Cells["Valor"].Value.ToString()) + dblTotalDebito;
             }
             lblTotal.Text = dblTotalDebito.ToString();
             txtValor.Text = txtHistorico.Text = "";
@@ -890,7 +887,7 @@ namespace DexComanda
 
         private void MenuAuxiliar(object sender, DataGridViewCellEventArgs e)
         {
-        
+
         }
 
         private void AuxiliarMenu(object sender, MouseEventArgs e)
@@ -914,7 +911,7 @@ namespace DexComanda
             int codPedido = int.Parse(this.PedidosGridView.CurrentRow.Cells[0].Value.ToString());
             DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoFinalizadoPorCodigo", codPedido);
 
-            if (dsPedido.Tables[0].Rows.Count>0)
+            if (dsPedido.Tables[0].Rows.Count > 0)
             {
                 DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
                 DateTime dtPedido = Convert.ToDateTime(dRowPedido.ItemArray.GetValue(7).ToString());
@@ -929,9 +926,9 @@ namespace DexComanda
                     iValue = iTrocoPara - iTotalPedido;
                 }
 
-                Utils.ImpressaoEntreganova(codPedido, iValue, dtPedido.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString(),false,1);
+                Utils.ImpressaoEntreganova(codPedido, iValue, dtPedido.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString(), false, 1);
             }
-            
+
         }
 
         private void PedidosGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -959,6 +956,155 @@ namespace DexComanda
         private void cbxRegiao_DropDown(object sender, EventArgs e)
         {
             CarregaRegiao(0);
+        }
+
+        private void AdicionarEndereco(object sender, EventArgs e)
+        {
+            try
+            {
+
+                if (codigoClienteParaAlterar == 0)
+                {
+                    return;
+                }
+                if (cbxRegiaoEnd.SelectedValue.ToString() == "")
+                {
+                    MessageBox.Show("Selecione a Região");
+                    cbxRegiaoEnd.Focus();
+                    return;
+                }
+                Pessoa_Endereco pessEnd = new Pessoa_Endereco()
+                {
+                    Codigo = codigo,
+                    CodPessoa = codigoClienteParaAlterar,
+                    Bairro = txtBairroEnd.Text,
+                    Cep = txtCEPEnd.Text,
+                    Cidade = txtCidadeEnd.Text,
+                    Endereco = txtLogradouro.Text,
+                    CodRegiao = int.Parse(cbxRegiaoEnd.SelectedValue.ToString()),
+                    NomeEndereco = txtNomeEnd.Text,
+                    Numero = txtNumEnd.Text,
+                    Complemento = txtComplementoEnd.Text,
+                    PontoReferencia = txtPontoREnd.Text,
+                    UF = "ES"
+                };
+                if (codigo==0)
+                {
+                    con.Insert("spAdicionarEndereco", pessEnd);
+                }
+                else
+                {
+                    con.Update("spAlterarEndereco", pessEnd);
+                }
+                codigo = 0;
+                Utils.LimpaForm(groupBox2);
+                ListaEnderecosPessoa();
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+
+            }
+
+        }
+        private void ListaEnderecosPessoa()
+        {
+            DataSet dsEnderecos = con.SelectRegistroPorCodigo("Pessoa_Endereco", "spObterEnderecoPessoa", codigoClienteParaAlterar);
+            if (dsEnderecos.Tables[0].Rows.Count > 0)
+            {
+                gridViewEndereco.DataSource = null;
+                gridViewEndereco.AutoGenerateColumns = true;
+                gridViewEndereco.DataSource = dsEnderecos;
+                gridViewEndereco.DataMember = "Pessoa_Endereco";
+
+
+            }
+        }
+
+        private void cbxRegiaoEnd_DropDown(object sender, EventArgs e)
+        {
+            Utils.MontaCombox(cbxRegiaoEnd, "NomeRegiao", "Codigo", "Regiao_Entrega", "spObterRegioes");
+        }
+
+        private void txtCEPEnd_KeyDown(object sender, KeyEventArgs e)
+        {
+            CepUtil _cepCorreios;
+            if (txtCEPEnd.Text.Trim().Length == 8 && e.KeyCode != Keys.Back)
+            {
+                ObterCidadePadrao();
+                if (this.txtCEPEnd.Text.Equals("") && e.KeyCode == Keys.Enter)
+                {
+                    MessageBox.Show("Informe o Cep.");
+                    return;
+                }
+                else
+                {
+                    int cep = int.Parse(this.txtCEPEnd.Text);
+                    endereco = con.SelectEnderecoPorCep("base_cep", "spObterEnderecoPorCep", cep);
+
+                    if (endereco.Tables["base_cep"].Rows.Count > 0)
+                    {
+                        DataRow dRow = endereco.Tables["base_cep"].Rows[0];
+                        this.txtLogradouro.Text = dRow.ItemArray.GetValue(0).ToString();
+                        this.txtBairroEnd.Text = dRow.ItemArray.GetValue(1).ToString();
+                        PreencheRegiao();
+                        this.txtNumEnd.Focus();
+                    }
+                    else
+                    {
+                        // MessageBox.Show("Cep não encontrado");
+                        if (!con.IsConnected())
+                        {
+                            return;
+                        }
+                        // pnConsultaCEp.Visible = true;
+                        _cepCorreios = Utils.BuscaCEPOnline(txtCEPEnd.Text);
+                        if (_cepCorreios != null)
+                        {
+                            txtLogradouro.Text = _cepCorreios.Logradouro;
+                            txtBairroEnd.Text = _cepCorreios.Bairro;
+                            PreencheRegiao();
+                            this.txtNumEnd.Focus();
+                        }
+                        // pnConsultaCEp.Visible = false;
+                    }
+                }
+            }
+
+        }
+
+        private void txtCEPEnd_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoPermiteNumeros(e);
+        }
+
+        private void txtNumEnd_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoPermiteNumeros(e);
+        }
+
+        private void txtCEPEnd_KeyUp(object sender, KeyEventArgs e)
+        {
+            txtCEPEnd_KeyDown(sender, e);
+        }
+
+        private void SelecionaRegistro(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (gridViewEndereco.CurrentRow.Cells["CodPessoa"].Value.ToString() != "")
+            {
+                codigo = int.Parse(gridViewEndereco.CurrentRow.Cells["Codigo"].Value.ToString());
+                txtCEPEnd.Text = gridViewEndereco.CurrentRow.Cells["CEP"].Value.ToString();
+                txtBairroEnd.Text = gridViewEndereco.CurrentRow.Cells["Bairro"].Value.ToString();
+                txtNumEnd.Text = gridViewEndereco.CurrentRow.Cells["Numero"].Value.ToString();
+                txtCidadeEnd.Text = gridViewEndereco.CurrentRow.Cells["Cidade"].Value.ToString();
+                txtNomeEnd.Text = gridViewEndereco.CurrentRow.Cells["NomeEndereco"].Value.ToString();
+                txtPontoREnd.Text = gridViewEndereco.CurrentRow.Cells["PontoReferencia"].Value.ToString();
+                txtComplementoEnd.Text = gridViewEndereco.CurrentRow.Cells["Complemento"].Value.ToString();
+                txtLogradouro.Text = gridViewEndereco.CurrentRow.Cells["Endereco"].Value.ToString();
+
+                int intCodRegiao = int.Parse(gridViewEndereco.CurrentRow.Cells["CodRegiao"].Value.ToString());
+                Utils.MontaCombox(cbxRegiaoEnd, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioesPorCodigo", intCodRegiao);
+            }
         }
     }
 

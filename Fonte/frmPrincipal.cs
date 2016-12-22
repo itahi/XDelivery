@@ -1,5 +1,6 @@
 ﻿using DexComanda.Cadastros;
 using DexComanda.Cadastros.Empresa;
+using DexComanda.Cadastros.Pessoa;
 using DexComanda.Cadastros.Produto;
 using DexComanda.Integração;
 using DexComanda.Models;
@@ -46,6 +47,7 @@ namespace DexComanda
         private bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
         private DataSet dsPedidosAbertos;
         private DataSet itemsPedido;
+        private int intCodEndereco;
         public frmPrincipal()
         {
             con = new Conexao();
@@ -105,8 +107,6 @@ namespace DexComanda
             if (iTelefone != "")
             {
                 var telefone = iTelefone;
-                //  DBExpertDataSet dbExpert = new DBExpertDataSet();
-
                 DataSet pessoaTelefone = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", telefone);
 
                 if ((pessoaTelefone.Tables["Pessoa"].Rows.Count == 0))
@@ -123,10 +123,19 @@ namespace DexComanda
                 {
                     if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                     {
+
                         DataSet Pessoa = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", telefone);
                         DataRow dRow = Pessoa.Tables["Pessoa"].Rows[0];
-
+                        
+                       
                         int CodigoPessoa = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+                        if (con.SelectRegistroPorCodigo("Pessoa_Endereco", "spObterEnderecoPessoa",
+                           CodigoPessoa).Tables[0].Rows.Count > 0)
+                        {
+                            frmSelecionaEndereco frm = new frmSelecionaEndereco(CodigoPessoa);
+                            frm.ShowDialog();
+                            intCodEndereco = frm.intCodEndereco;
+                        }
                         this.txtNome.Text = dRow.ItemArray.GetValue(1).ToString();
                         this.txtEndereco.Text = dRow.ItemArray.GetValue(2).ToString();
                         this.txtBairro.Text = dRow.ItemArray.GetValue(3).ToString();
@@ -145,7 +154,6 @@ namespace DexComanda
                         if (RepeteUltimoPedido)
                         {
                             ExecutaRepeticaoPedido(CodigoPessoa);
-
                         }
                         else
                         {
@@ -1249,7 +1257,7 @@ namespace DexComanda
         {
             try
             {
-                if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
+                if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                 {
                     return;
                 }

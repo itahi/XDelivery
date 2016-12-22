@@ -652,7 +652,7 @@ namespace DexComanda.Operações
 
                     RestResponse response = (RestResponse)client.Execute(request);
 
-                    if (response.Content.Contains("true"))
+                    if (response.Content.Contains(" true"))
                     {
                         con.AtualizaDataSincronismo("Produto", int.Parse(dRow.ItemArray.GetValue(0).ToString()));
                         CadastrarOpcaoProduto(int.Parse(dRow.ItemArray.GetValue(0).ToString()));

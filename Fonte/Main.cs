@@ -42,7 +42,7 @@ namespace DexComanda
         private int rowIndex;
         private string cUrlWs = "";
         private string iParamToken;
-        private List<Produto> Produtos;
+       // private List<Produto> Produtos;
         private int CodPedidoWS = 0;
         private Main parentWindow;
         private Main parentMain;

@@ -205,7 +205,8 @@ namespace DexComanda
                     Nome = this.txtUsuarioPadrao.Text.ToString(),
                     Senha = _senha,
                     FinalizaPedidoSN = true,
-                    AdministradorSN = true
+                    AdministradorSN = true,
+                    AbreFechaCaixaSN = true
                 };
                 con.Insert("spAdicionarUsuario", usuario);
             }
@@ -316,6 +317,7 @@ namespace DexComanda
                     Nome = this.txtUsuarioPadrao.Text.ToString(),
                     senha = _senha,
                     AdministradorSN = true
+                    ,AbreFechaCaixaSN = true
                 };
                 con.Insert("spAdicionarUsuarioDefault", usuario);
             }

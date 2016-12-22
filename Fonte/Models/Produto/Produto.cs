@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DexComanda.Models
 {
-    public class Produto
+    public class Produtos
     {
         public int Codigo { get; set; }
         public string Nome { get; set; }

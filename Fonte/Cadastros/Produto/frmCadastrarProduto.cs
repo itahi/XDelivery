@@ -22,7 +22,7 @@ namespace DexComanda
         int codTipo;
         private string strNomeProd = "";
         private string intCodGrupo;
-        private Produto produto;
+        private Produtos produto;
         private int codigoProdutoParaAlterar;
         private bool DescontoPordia = Sessions.returnConfig.DescontoDiaSemana;
         private List<string> DiasSelecionados;
@@ -40,7 +40,7 @@ namespace DexComanda
         }
         public frmCadastrarProduto(int CodProduto, string iNomeProduto, string iCodGrupo, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
                                    decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo,
-                                   DateTime idtFimPromo, bool iAtivoSN,string iCodInterno)
+                                   DateTime idtFimPromo, bool iAtivoSN, string iCodInterno)
         {
             try
             {
@@ -104,12 +104,12 @@ namespace DexComanda
             catch (Exception erro)
             {
 
-                throw;
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
         }
 
-        public frmCadastrarProduto(Produto prod, Main parent)
+        public frmCadastrarProduto(Produtos prod, Main parent)
         {
             InitializeComponent();
             this.parentMain = parent;
@@ -197,7 +197,7 @@ namespace DexComanda
                     return;
                 }
                 pr = Utils.DeserializaObjeto(ivalor);
-                if (pr.Count > 1)
+                if (pr.Count > 0)
                 {
                     foreach (var item in pr)
                     {
@@ -221,7 +221,6 @@ namespace DexComanda
 
                 MessageBox.Show(erro.Message);
             }
-
 
         }
 
@@ -253,11 +252,11 @@ namespace DexComanda
             }
 
         }
-        private bool ValidaCodigoPersonalizado(int iCodigo,string iCodProduto)
+        private bool ValidaCodigoPersonalizado(int iCodigo, string iCodProduto)
         {
             Boolean retur = false;
             DataSet dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoCodigoInterno", iCodigo, iCodProduto);
-            if (dsProduto.Tables[0].Rows.Count>0)
+            if (dsProduto.Tables[0].Rows.Count > 0)
             {
                 retur = true;
                 strNomeProd = dsProduto.Tables[0].Rows[0].Field<string>("NomeProduto");
@@ -270,21 +269,21 @@ namespace DexComanda
         {
             try
             {
-                if (txtCodInterno.Text!="0" && txtCodInterno.Text!="")
+                if (txtCodInterno.Text != "0" && txtCodInterno.Text != "")
                 {
-                    if (ValidaCodigoPersonalizado(int.Parse(txtCodInterno.Text),"0"))
+                    if (ValidaCodigoPersonalizado(int.Parse(txtCodInterno.Text), "0"))
                     {
                         MessageBox.Show("Código já esta sendo usado no produto " + strNomeProd);
                         return;
                     }
                 }
-                
+
                 if (nomeProdutoTextBox.Text.Trim() == "" || precoProdutoTextBox.Text.Trim() == "" || cbxGrupoProduto.Text.Trim() == "")
                 {
                     MessageBox.Show("Campos obrigátórios não preenchidos");
                     return;
                 }
-                Produto produto = new Produto()
+                Produtos produto = new Produtos()
                 {
                     Codigo = 0,
                     Nome = this.nomeProdutoTextBox.Text,
@@ -297,16 +296,17 @@ namespace DexComanda
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                     DataAlteracao = DateTime.Now,
+                    //PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text)
 
                 };
                 produto.UrlImagem = "";
-                if (txtCodInterno.Text!="0")
+                if (txtCodInterno.Text != "0")
                 {
                     produto.CodigoPersonalizado = txtCodInterno.Text;
                 }
                 else
                 {
-                    produto.CodigoPersonalizado ="0";
+                    produto.CodigoPersonalizado = "0";
                 }
                 if (txtcaminhoImage.Text.Trim() != "")
                 {
@@ -325,7 +325,7 @@ namespace DexComanda
                     produto.DiaSemana = Utils.SerializaObjeto(RetornaDiasMarcados());
                     if (txtPrecoDesconto.Text != "")
                     {
-                        produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text.Replace(".", ","));
+                        produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text);
                     }
 
                     con.Insert("spAdicionarProduto", produto);
@@ -412,7 +412,7 @@ namespace DexComanda
         {
             try
             {
-                
+
                 if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AlteraProdutosSN"))
                 {
                     return;
@@ -430,7 +430,7 @@ namespace DexComanda
                     MessageBox.Show("Campos obrigátórios não preenchidos");
                     return;
                 }
-                Produto produto = new Produto()
+                Produtos produto = new Produtos()
                 {
                     Codigo = codigoProdutoParaAlterar,
                     Nome = nomeProdutoTextBox.Text,
@@ -444,7 +444,7 @@ namespace DexComanda
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                 };
                 produto.CodigoPersonalizado = "0";
-                if (txtCodInterno.Text!=""&& txtCodInterno.Text!="0")
+                if (txtCodInterno.Text != "" && txtCodInterno.Text != "0")
                 {
                     produto.CodigoPersonalizado = txtCodInterno.Text;
                 }
@@ -921,7 +921,7 @@ namespace DexComanda
                 DataSet dsProduto = con.SelectAll("Produto", "", "select * from Produto");
                 for (int i = 0; i < dsProduto.Tables[0].Rows.Count; i++)
                 {
-                    Produto prod = new Produto()
+                    Produtos prod = new Produtos()
                     {
                         Codigo = dsProduto.Tables[0].Rows[i].Field<int>("Codigo"),
                         AtivoSN = dsProduto.Tables[0].Rows[i].Field<Boolean>("AtivoSN"),

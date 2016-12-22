@@ -48,6 +48,7 @@ using DexComanda.Relatorios.Clientes.Crystal;
 using CrystalDecisions.Windows.Forms;
 using DexComanda.Relatorios.Caixa;
 using System.Drawing.Printing;
+using DexComanda.Models.Produto;
 
 namespace DexComanda
 {
@@ -313,6 +314,10 @@ namespace DexComanda
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
         }
+        public static string SerializaObjeto(List<Models.Produto.OpcaoDia> iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
         public static string SerializaObjeto(List<CidadesAtendidas> iValores)
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
@@ -333,6 +338,15 @@ namespace DexComanda
                 return new List<PrecoDiaProduto>();
             }
             return JsonConvert.DeserializeObject<List<PrecoDiaProduto>>(iValores);
+
+        }
+        public static List<OpcaoDia> DeserializaObjeto3(string iValores)
+        {
+            if (iValores == "")
+            {
+                return new List<OpcaoDia>();
+            }
+            return JsonConvert.DeserializeObject<List<OpcaoDia>>(iValores);
 
         }
         public static List<CidadesAtendidas> DeserializaObjeto2(string iValores)
@@ -374,7 +388,6 @@ namespace DexComanda
         public static CepUtil BuscaCEPOnline(string iCEP)
         {
             CepUtil cep = new CepUtil();
-            Boolean iReturn = false;
             try
             {
                 Correios.AtendeClienteClient consulta = new Correios.AtendeClienteClient("AtendeClientePort");
@@ -390,7 +403,6 @@ namespace DexComanda
                     cep.Estado = resultado.uf;
                     cep.Logradouro = resultado.end;
                     conexao.Insert("spAdicionarCep", cep);
-                    iReturn = true;
                 }
                 else
                 {
@@ -927,7 +939,7 @@ namespace DexComanda
             }
             catch (Exception erro)
             {
-                MessageBox.Show(Bibliotecas.cException);
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
             return iReport;
@@ -1085,7 +1097,6 @@ namespace DexComanda
         }
         public static void ImprimirCaixa(ReportClass iReport, string iValor, string iSolicitante)
         {
-            string iRetorno = "";
             crtableLogoninfos = new TableLogOnInfos();
             crtableLogoninfo = new TableLogOnInfo();
             crConnectionInfo = new ConnectionInfo();
@@ -1604,7 +1615,7 @@ namespace DexComanda
                             }
                             else
                             {
-                                iRetorno = true;
+                                iRetorno = false;
                             }
                         }
                     }
@@ -1889,9 +1900,9 @@ namespace DexComanda
                 }
             }
         }
-        public static void LimpaForm(System.Windows.Forms.Control parent)
+        public static void LimpaForm(Control parent)
         {
-            foreach (System.Windows.Forms.Control ctrControl in parent.Controls)
+            foreach (Control ctrControl in parent.Controls)
             {
                 //Loop through all controls 
                 if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.TextBox)))
@@ -2104,7 +2115,7 @@ namespace DexComanda
 
                 Integração.EnviaSMS_LOCASMS EnviarSMS = new EnviaSMS_LOCASMS();
 
-                string strQuantidadeEnvio, iText;
+                string iText;
 
                 iText = EnviarSMS.EnviaSMSLista(Telefone, iUser, iSenha, iMessagem, iNomeCampanha);
 
@@ -2532,7 +2543,7 @@ namespace DexComanda
         }
         public static bool LeArquivoRegistro()
         {
-            string iRetorno, iRegistroCritografado, strDataLimiteRegistro, strDataLimiteAtual;
+            string iRetorno, iRegistroCritografado, strDataLimiteRegistro;
             bool OK = false;
             try
             {
@@ -2603,7 +2614,7 @@ namespace DexComanda
             catch (Exception er)
             {
 
-                throw;
+                MessageBox.Show(Bibliotecas.cException + er.Message);
             }
             return iContraSenha;
         }

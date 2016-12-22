@@ -1217,8 +1217,8 @@
         private System.Windows.Forms.CheckBox chkSeg;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ComboBox cbxTipoOpcao;
-        private System.Windows.Forms.GroupBox grpPrecosDia;
         private System.Windows.Forms.TextBox txtCodInterno;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.GroupBox grpPrecosDia;
     }
 }

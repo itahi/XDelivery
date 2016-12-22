@@ -13,7 +13,7 @@ namespace DexComanda
       //  public static Usuario retunrUsuario;
         public static Empresa returnEmpresa;
         public static Pessoa returnPessoa;
-        public static Produto returnProduto;
+        public static Produtos returnProduto;
         public static Pedido returnPedido;
         public static Usuario retunrUsuario;
         public static string SqlProduto;
