@@ -72,6 +72,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnConfirma);
             this.Name = "frmSelecionaEndereco";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[xSistemas] Selecione o Endereço";
             this.Load += new System.EventHandler(this.frmSelecionaEndereco_Load);
             this.ResumeLayout(false);

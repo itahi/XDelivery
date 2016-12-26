@@ -200,7 +200,7 @@ namespace DexComanda
             decimal TaxaServico = 0;
             if (iTipo == "0 - Entrega"||iTipo=="Entrega")
             {
-                TaxaServico = Utils.RetornaTaxaPorCliente(int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), con);
+                TaxaServico = Utils.RetornaTaxaPorCliente(int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), 0);
             }
 
 
@@ -477,7 +477,7 @@ namespace DexComanda
 
         private void IniciaPedido(int CodPessoa)
         {
-            var TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, con);
+            var TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
 
             frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", "", "0.00", TaxaEntrega, false, DateTime.Now, 0, CodPessoa,
                                                                     "0.00", "", "", "", this, 0.00M);
@@ -1199,7 +1199,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, con);
+                    decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
                     frmCadastrarPedido frm = new frmCadastrarPedido(false, "", "", "0,00", TaxaServico, false, DateTime.Now, 0, CodPessoa,
                                                                         "", "", "", "", this, 0.00M);
                     frm.ShowDialog();

@@ -24,5 +24,6 @@ namespace DexComanda.Models
         public int CodUsuario { get; set; }
         public string HorarioEntrega { get; set; }
         public string Observacao { get; set; }
+        public int CodEndereco { get; set; }
     }
 }

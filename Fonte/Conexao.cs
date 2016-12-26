@@ -1332,7 +1332,7 @@ namespace DexComanda
                    
                     if (p.Name.Equals("CodUsuario")|| p.Name.Equals("Codigo") || p.Name.Equals("TotalPedido")
                         || p.Name.Equals("Tipo") || p.Name.Equals("NumeroMesa") || p.Name.Equals("HorarioEntrega")
-                        || p.Name.Equals("DescontoValor")||p.Name.Equals("Observacao"))
+                        || p.Name.Equals("DescontoValor")||p.Name.Equals("Observacao") || p.Name.Equals("CodEndereco"))
                     {
                         if (p.Name.ToString() == "CodUsuario" && p.GetValue(obj).ToString() == "0")
                         {

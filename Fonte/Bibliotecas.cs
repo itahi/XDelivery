@@ -24,7 +24,7 @@ namespace DexComanda
         public const string cEsphiras = "21128650000197";
         public const string cAcaiVitoria = "00830689000181";
         public const string cTopsAcai = "";
-
+        public const string cBuris = "21207218000191";
         public const string cSkinaLanches = "24829903000148";
         public const string cElShaday = "22695578000142";
         public const string cCasteloPlus = "123456789";

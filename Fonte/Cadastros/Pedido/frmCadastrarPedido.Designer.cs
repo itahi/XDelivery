@@ -94,5 +94,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtObsPedido;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button button1;
     }
 }

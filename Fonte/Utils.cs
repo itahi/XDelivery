@@ -49,6 +49,7 @@ using CrystalDecisions.Windows.Forms;
 using DexComanda.Relatorios.Caixa;
 using System.Drawing.Printing;
 using DexComanda.Models.Produto;
+using DexComanda.Cadastros.Pessoa;
 
 namespace DexComanda
 {
@@ -154,6 +155,52 @@ namespace DexComanda
 
 
             return Logado;
+        }
+        public static void AtualizaPessoa(int iCodPessoa,string iNome,string iCEP,string iEndereco,
+            string iNumero,string iBairro,string iCidade,string iUF,string iPRerefencia,string iObservacao,
+            string iTelefone,string iTelefone2,DateTime iDtNas,DateTime iDtCad,int iTickFid,int iCodRegiao,
+            string iUserID,string iDDD,string iSexo)
+        {
+            Pessoa pess = new Pessoa()
+            {
+                Codigo = iCodPessoa,
+                Bairro = iBairro,
+                Cep = iCEP,
+                Cidade = iCidade,
+                CodRegiao = iCodRegiao,
+                DataCadastro = iDtCad,
+                DataNascimento = iDtNas,
+                DDD = iDDD,
+                Endereco = iEndereco,
+                Nome = iNome,
+                Numero = iNumero,
+                Observacao = iObservacao,
+                PFPJ = 'F',
+                PontoReferencia = iPRerefencia,
+                Sexo = iSexo,
+                Telefone = iTelefone,
+                Telefone2 = iTelefone2,
+                TicketFidelidade = iTickFid,
+                UF = iUF,
+                user_id = iUserID
+            };
+            conexao.Update("spAlterarPessoa", pess);
+        }
+        public static int MaisEnderecos(int iDPesso)
+        {
+            int iReturn = 0;
+            if (conexao.SelectRegistroPorCodigo("Pessoa_Endereco", "spObterEnderecoPessoa",
+                        iDPesso).Tables[0].Rows.Count > 0)
+            {
+                frmSelecionaEndereco frm = new frmSelecionaEndereco(iDPesso);
+                frm.ShowDialog();
+                iReturn=  frm.intCodEndereco;
+            }
+            else
+            {
+                MessageBox.Show("Cliente possuí apenas 1 endereço cadastrado, caso deseje adicionar novos endereços clique em 'Atualizar Cliente' , vá na aba Endereços e adicione novos");
+            }
+            return iReturn;
         }
 
         public static DataSet ItensSelect(int iCodPedido)
@@ -1678,7 +1725,7 @@ namespace DexComanda
                     }
 
                     // Retorna a Taxa de Entrega do cadastro do Cliente
-                    decimal TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, conexao);
+                    decimal TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
                     frmCadastrarPedido frm = new frmCadastrarPedido(true, DescPedido, NumMesa, strTroco, TaxaEntrega,
                                                      false, dtPedido, iCodPedido, CodPessoa, strTrocoPara, FormaPagamento,
                                                      strTipoPedido, strMesa, null, decimal.Parse(strTotalPedido));
@@ -1759,7 +1806,7 @@ namespace DexComanda
                 FormaPagamento = Linhas.ItemArray.GetValue(3).ToString();
 
                 // Retorna a Taxa de Entrega do cadastro do Cliente
-                TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, conexao);
+                TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
 
                 frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", "", "", TaxaEntrega, false,
                                                                             DateTime.Now, CodPedido, CodPessoa,
@@ -2767,15 +2814,23 @@ namespace DexComanda
             return mRetornoWS;
 
         }
-        public static decimal RetornaTaxaPorCliente(int iCodPessoa, Conexao con)
+        public static decimal RetornaTaxaPorCliente(int iCodPessoa,int iCodEndereco)
         {
             decimal iRetorno = 0.00M;
-            var Regiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterTaxaPorCliente", iCodPessoa).Tables["RegiaoEntrega"];
+            DataTable Regiao;
+            if (iCodEndereco==0)
+            {
+                Regiao = conexao.SelectRegistroPorCodigo("RegiaoEntrega", "spObterTaxaPorCliente", iCodPessoa).Tables["RegiaoEntrega"];
+            }
+            else
+            {
+                Regiao = conexao.SelectRegistroPorCodigo("RegiaoEntrega", "spObterTaxaPorClienteEndereco", iCodEndereco).Tables["RegiaoEntrega"];
+            }
+            
             if (Regiao.Rows.Count > 0)
             {
                 iRetorno = decimal.Parse(Regiao.Rows[0]["TaxaServico"].ToString());
             }
-
 
             return iRetorno;
         }

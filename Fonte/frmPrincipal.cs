@@ -60,7 +60,7 @@ namespace DexComanda
             BuscarCliente(txbTelefoneCliente.Text);
 
         }
-        private void ExecutaRepeticaoPedido(int iCodPessoa)
+        private void ExecutaRepeticaoPedido(int iCodPessoa,int codEnde)
         {
             DataRow LinhasPedido;
             int QuantidadePedidos = 0;
@@ -79,22 +79,22 @@ namespace DexComanda
                 }
                 else
                 {
-                    IniciaPedido(iCodPessoa);
+                    IniciaPedido(iCodPessoa, codEnde);
                 }
 
             }
             else
             {
-                IniciaPedido(iCodPessoa);
+                IniciaPedido(iCodPessoa, codEnde);
             }
         }
-        private void IniciaPedido(int CodPessoa)
+        private void IniciaPedido(int CodPessoa, int iCodEndeco=0)
         {
-            var TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, con);
+            var TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, iCodEndeco);
 
             frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", "0,00", "0,00", TaxaEntrega,
                                                                         false, DateTime.Now, 0, CodPessoa,
-                                                                        "", "", "", "", null, 0.00M);
+                                                                        "", "", "", "", null, 0.00M,0.00M,0,"",iCodEndeco);
             CadPedido.ShowDialog();
             //Utils.LimpaForm(this);
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
@@ -129,13 +129,7 @@ namespace DexComanda
                         
                        
                         int CodigoPessoa = int.Parse(dRow.ItemArray.GetValue(0).ToString());
-                        if (con.SelectRegistroPorCodigo("Pessoa_Endereco", "spObterEnderecoPessoa",
-                           CodigoPessoa).Tables[0].Rows.Count > 0)
-                        {
-                            frmSelecionaEndereco frm = new frmSelecionaEndereco(CodigoPessoa);
-                            frm.ShowDialog();
-                            intCodEndereco = frm.intCodEndereco;
-                        }
+                        intCodEndereco =  Utils.MaisEnderecos(CodigoPessoa);
                         this.txtNome.Text = dRow.ItemArray.GetValue(1).ToString();
                         this.txtEndereco.Text = dRow.ItemArray.GetValue(2).ToString();
                         this.txtBairro.Text = dRow.ItemArray.GetValue(3).ToString();
@@ -153,11 +147,11 @@ namespace DexComanda
 
                         if (RepeteUltimoPedido)
                         {
-                            ExecutaRepeticaoPedido(CodigoPessoa);
+                            ExecutaRepeticaoPedido(CodigoPessoa, intCodEndereco);
                         }
                         else
                         {
-                            IniciaPedido(CodigoPessoa);
+                            IniciaPedido(CodigoPessoa, intCodEndereco);
                         }
                     }
                     else
@@ -556,6 +550,10 @@ namespace DexComanda
         }
         private void TotalizaPedidos()
         {
+            if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cBuris)
+            {
+                return;
+            }
             double dblTotalPedidos = 0;
             for (int i = 0; i < pedidosGridView.Rows.Count; i++)
             {
@@ -622,7 +620,7 @@ namespace DexComanda
             decimal TaxaServico = 0;
             if (iTipo == "0 - Entrega" || iTipo == "Entrega")
             {
-                TaxaServico = Utils.RetornaTaxaPorCliente(int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), con);
+                TaxaServico = Utils.RetornaTaxaPorCliente(int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), 0);
             }
 
 
@@ -656,7 +654,6 @@ namespace DexComanda
                 decimal TaxaEntrega = 0.00M;
                 string TrocoTotal = "0.00";
                 string fPagamento = null;
-                string MesaBalcao, tipoPedido, NumMesa, PedidoOrigem = "";
                 DateTime DataPedido;
 
                 /* Code here */
@@ -1169,17 +1166,17 @@ namespace DexComanda
 
 
         }
-        private void AbrirPedido(int CodPessoa)
+        private void AbrirPedido(int CodPessoa,int CodEnde=0)
         {
             try
             {
                 if (Sessions.returnConfig.RepeteUltimoPedido)
                 {
-                    ExecutaRepeticaoPedido(CodPessoa);
+                    ExecutaRepeticaoPedido(CodPessoa,CodEnde);
                 }
                 else
                 {
-                    decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, con);
+                    decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, CodEnde);
                     frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", "0,00", "0,00",
                                                                     TaxaServico, false, DateTime.Now, 0,
                                                                     CodPessoa,
