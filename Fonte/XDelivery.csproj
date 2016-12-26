@@ -501,6 +501,12 @@
       <DependentUpon>RelFechamentoCaixaCompleto.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Gerenciais\frmReporVendasPorVendedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\frmReporVendasPorVendedor.Designer.cs">
+      <DependentUpon>frmReporVendasPorVendedor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\Push\OneSignal.cs" />
     <Compile Include="Relatorios\Caixa\RelSangria.cs">
       <AutoGen>True</AutoGen>
@@ -896,10 +902,10 @@
       <DependentUpon>RelVendasPorVendedor.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Relatorios\Gerenciais\Cristal\RelVendasPorVendedor.cs">
+    <Compile Include="Relatorios\Gerenciais\Cristal\RelVendasPorVendedores.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RelVendasPorVendedor.rpt</DependentUpon>
+      <DependentUpon>RelVendasPorVendedores.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Gerenciais\frmEntregasPorRegiao.cs">
@@ -1267,9 +1273,9 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelVendasPorVendedor.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelVendasPorVendedor.rpt">
+    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelVendasPorVendedores.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelVendasPorVendedor.cs</LastGenOutput>
+      <LastGenOutput>RelVendasPorVendedores.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\frmEntregasPorRegiao.resx">
       <DependentUpon>frmEntregasPorRegiao.cs</DependentUpon>
@@ -1279,6 +1285,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\frmReportTickeMedio.resx">
       <DependentUpon>frmReportTickeMedio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\frmReporVendasPorVendedor.resx">
+      <DependentUpon>frmReporVendasPorVendedor.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="DBExpertDataSet.xsc">

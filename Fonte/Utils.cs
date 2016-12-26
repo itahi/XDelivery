@@ -186,6 +186,14 @@ namespace DexComanda
             };
             conexao.Update("spAlterarPessoa", pess);
         }
+        /// <summary>
+        /// Função para buscar os endereços do cliente caso ele tenha mais de 1
+        /// </summary>
+        /// <param name="iDPesso">
+        /// Insere o Código da Pessoa 
+        /// </param>
+        /// <returns>
+        /// Retorna o IdDoEndereço</returns>
         public static int MaisEnderecos(int iDPesso)
         {
             int iReturn = 0;

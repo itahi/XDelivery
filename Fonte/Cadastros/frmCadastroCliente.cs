@@ -84,7 +84,7 @@ namespace DexComanda
             this.btnAdicionarCliente.Click += AlterarCliente;
 
             this.StartPosition = FormStartPosition.CenterParent;
-            this.Show();
+            this.ShowDialog();
         }
         private void ListaEnderecos()
         {

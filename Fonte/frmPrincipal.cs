@@ -370,7 +370,7 @@ namespace DexComanda
 
             this.txtUsuarioLogado.Text = Sessions.retunrUsuario.Nome;
             //usuáriosToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
-            relatórioToolStripMenuItem.Enabled = Sessions.retunrUsuario.AcessaRelatoriosSN;
+            //relatórioToolStripMenuItem.Enabled = Sessions.retunrUsuario.AcessaRelatoriosSN;
             configuraçãoToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
             usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
             // FinanceiroToolStripMenuItem.Enabled = Sessions.retunrUsuario.AbreFechaCaixaSN;
@@ -1949,6 +1949,12 @@ namespace DexComanda
         private void relatórioToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             relatórioToolStripMenuItem.DropDown.Enabled = Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AcessaRelatoriosSN");
+        }
+
+        private void vendasPorAtendenteVendedorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReporVendasPorVendedor frmVe = new frmReporVendasPorVendedor();
+            frmVe.Show();
         }
     }
 }

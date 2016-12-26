@@ -151,6 +151,7 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
+            this.vendasPorAtendenteVendedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -377,7 +378,8 @@
             this.ticketMédioToolStripMenuItem,
             this.cancelamentosToolStripMenuItem,
             this.crediárioToolStripMenuItem,
-            this.melhoresClientesToolStripMenuItem});
+            this.melhoresClientesToolStripMenuItem,
+            this.vendasPorAtendenteVendedorToolStripMenuItem});
             this.porPessoaToolStripMenuItem.Name = "porPessoaToolStripMenuItem";
             this.porPessoaToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.porPessoaToolStripMenuItem.Text = "Vendas";
@@ -1357,6 +1359,13 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
+            // vendasPorAtendenteVendedorToolStripMenuItem
+            // 
+            this.vendasPorAtendenteVendedorToolStripMenuItem.Name = "vendasPorAtendenteVendedorToolStripMenuItem";
+            this.vendasPorAtendenteVendedorToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
+            this.vendasPorAtendenteVendedorToolStripMenuItem.Text = "Vendas por Atendente/Vendedor";
+            this.vendasPorAtendenteVendedorToolStripMenuItem.Click += new System.EventHandler(this.vendasPorAtendenteVendedorToolStripMenuItem_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1522,5 +1531,6 @@
         private System.Windows.Forms.ToolStripMenuItem melhoresClientesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pedidosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem vendasPorAtendenteVendedorToolStripMenuItem;
     }
 }

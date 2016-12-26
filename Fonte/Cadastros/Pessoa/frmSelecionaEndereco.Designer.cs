@@ -49,9 +49,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(95, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(236, 13);
+            this.label1.Size = new System.Drawing.Size(207, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Selecione qual endereço deseja receber";
+            this.label1.Text = "Endereço que o cliente está agora!";
             // 
             // cbxEnderecos
             // 
@@ -71,6 +71,8 @@
             this.Controls.Add(this.cbxEnderecos);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnConfirma);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "frmSelecionaEndereco";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[xSistemas] Selecione o Endereço";

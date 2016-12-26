@@ -247,6 +247,7 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmFinalizacaoPedido
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pedido.frmOpcaoNumeric.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pedido.frmOpcaoRadio.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pedido.frmSabores.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pessoa.frmSelecionaEndereco.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Produto.frmFamilia.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Produto.frmTipoOpcao.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmBairrosRegiao.resources
@@ -308,12 +309,11 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmEntre
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmPedidosCancelados.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmReportTickeMedio.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\XDelivery.csproj.GenerateResource.Cache
-D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.exe.config
-D:\#Projetos\xDelivery\Fonte\obj\Debug\XDelivery.csprojResolveAssemblyReference.cache
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.rpt
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\RelCaixaHistorico.rpt
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.cs
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\RelCaixaHistorico.cs
+D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.exe.config
 D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.exe.manifest
 D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.application
 D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.exe
@@ -366,4 +366,4 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.exe.manifest
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.application
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.exe
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.pdb
-D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pessoa.frmSelecionaEndereco.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmReporVendasPorVendedor.resources

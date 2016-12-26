@@ -275,7 +275,7 @@ namespace DexComanda
                 {
                     lbTotal.Text = Convert.ToString(decimal.Parse(lbTotal.Text.Replace("R$", "")) + DMargemGarco);
                 }
-                AtualizaClienteTela(this);
+             //   AtualizaClienteTela(this);
             }
             else
             {
@@ -312,6 +312,7 @@ namespace DexComanda
                         dsPessoa.Tables[0].Rows[0].Field<string>("Numero")
                         + "-" + dsPessoa.Tables[0].Rows[0].Field<string>("Bairro") + " " +
                         dsPessoa.Tables[0].Rows[0].Field<string>("Cidade");
+                    lblEntrega.Text = Convert.ToString(Utils.RetornaTaxaPorCliente(codPessoa,0));
                 }
                 else
                 {
@@ -321,18 +322,19 @@ namespace DexComanda
                         + "-" + dsPessoa.Tables[0].Rows[0].Field<string>("Bairro") + " " +
                         dsPessoa.Tables[0].Rows[0].Field<string>("Cidade");
 
-                    Utils.AtualizaPessoa(codPessoa, dsPessoa.Tables[0].Rows[0].Field<string>("Nome"), dsPessoa.Tables[0].Rows[0].Field<string>("Cep"),
+                    lblEntrega.Text = Convert.ToString(Utils.RetornaTaxaPorCliente(codPessoa, dsPessoa.Tables[0].Rows[0].Field<int>("Codigo")));
+                }
+                Utils.AtualizaPessoa(codPessoa, dsPessoa.Tables[0].Rows[0].Field<string>("Nome"), dsPessoa.Tables[0].Rows[0].Field<string>("Cep"),
                     dsPessoa.Tables[0].Rows[0].Field<string>("Endereco"), dsPessoa.Tables[0].Rows[0].Field<string>("Numero"),
                     dsPessoa.Tables[0].Rows[0].Field<string>("Bairro"), dsPessoa.Tables[0].Rows[0].Field<string>("Cidade"),
                     dsPessoa.Tables[0].Rows[0].Field<string>("UF"), dsPessoa.Tables[0].Rows[0].Field<string>("PontoReferencia"),
-                    dsPessoa.Tables[0].Rows[0].Field<string>("Complemento"), dsPessoa.Tables[0].Rows[0].Field<string>("Telefone"),
+                    dsPessoa.Tables[0].Rows[0].Field<string>("Observacao"), dsPessoa.Tables[0].Rows[0].Field<string>("Telefone"),
                     dsPessoa.Tables[0].Rows[0].Field<string>("Telefone2"), dsPessoa.Tables[0].Rows[0].Field<DateTime>("DataNascimento"),
                     dsPessoa.Tables[0].Rows[0].Field<DateTime>("DataCadastro"), dsPessoa.Tables[0].Rows[0].Field<int>("TicketFidelidade"),
                    dsPessoa.Tables[0].Rows[0].Field<int>("CodRegiao"), "", dsPessoa.Tables[0].Rows[0].Field<string>("DDD"), dsPessoa.Tables[0].Rows[0].Field<string>("Sexo"));
 
-                    lblEntrega.Text =Convert.ToString(Utils.RetornaTaxaPorCliente( codPessoa,dsPessoa.Tables[0].Rows[0].Field<int>("Codigo")));
-                    AtualizaTotalPedido();
-                }
+                
+                AtualizaTotalPedido();
 
             }
             catch (Exception erros)
@@ -4076,11 +4078,13 @@ namespace DexComanda
                     DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
                     DataRow dRowPessoa = dsPessoa.Tables["Pessoa"].Rows[0];
 
-                    frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
+                    frmCadastroCliente frm =  new  frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
                                                                       dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
-                                                                  , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(), dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString());
+                                                                  , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(),
+                                                                      dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString());
 
+                    AtualizaClienteTela(this);
                 }
             }
             catch (Exception erro)
