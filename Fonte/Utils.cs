@@ -696,7 +696,7 @@ namespace DexComanda
             return iRetorno;
         }
         public static string ImpressaoEntreganova(int iCodPedido, decimal iValorPago, string iPrevisaoEntrega,
-            Boolean iExport = false, int iNumCopias = 0,string iNomeImpressora="")
+            Boolean iExport = false, int iNumCopias = 0,string iNomeImpressora="",Boolean iClienteNovo=false)
         {
             string iRetorno = ""; ;
 
@@ -733,7 +733,7 @@ namespace DexComanda
                     report.SetParameterValue("@Codigo", iCodPedido);
                     report.SetParameterValue("ValorPago", iValorPago);
                     report.SetParameterValue("PrevEntrega", iPrevisaoEntrega);
-
+                    report.SetParameterValue("ClienteNovo", iClienteNovo);
                     if (iNomeImpressora != "")
                     {
                         for (int i = 0; i < iNumCopias; i++)

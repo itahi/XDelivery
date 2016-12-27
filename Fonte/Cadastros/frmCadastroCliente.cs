@@ -312,9 +312,8 @@ namespace DexComanda
                     con.Insert("spAdicionarClienteDelivery", pessoa);
                     Utils.ControlaEventos("Inserir", this.Name);
                     MessageBox.Show("Cliente cadastrado com sucesso.", "[xSistemas] Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
-                    this.Close();
 
-                    //  this_FormClosing();
+                    this.Close();
                     if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                     {
                         RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
@@ -363,7 +362,7 @@ namespace DexComanda
 
                         var TaxaEntrega = Utils.RetornaTaxaPorCliente(iCodPessoa,0);
                         frmCadastrarPedido frmCadastrarPedido = new frmCadastrarPedido(false, "0,00", "", "", TaxaEntrega, false, DateTime.Now, 0, int.Parse(dRow.ItemArray.GetValue(0).ToString()),
-                                                                                       "", "", "", "");
+                                                                                       "", "", "", "",null,0,0,0,"",0,true);
                         frmCadastrarPedido.ShowDialog();
                     }
                 }

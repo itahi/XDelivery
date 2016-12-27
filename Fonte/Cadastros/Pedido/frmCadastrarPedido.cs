@@ -88,6 +88,7 @@ namespace DexComanda
         private DataSet dsGrupo;
         private int intCodPai;
         private int intCodEndecoSelecionado = 0;
+        private Boolean boolClienteNovo;
         public frmCadastrarPedido()
         {
             try
@@ -104,8 +105,8 @@ namespace DexComanda
         //private int HoraPedido = Sessions.returnPedido.RealizadoEm.Minute;
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, string iNumeMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara, string fPagamento, string TipoPedido, string MesaBalcao,
-            Main parent = null, decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0, 
-            string iObservacaoPedido = "", int iIntEnderecoSelecionado=0)
+            Main parent = null, decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0,
+            string iObservacaoPedido = "", int iIntEnderecoSelecionado = 0, Boolean iClienteNovo = false)
         {
             try
             {
@@ -116,6 +117,7 @@ namespace DexComanda
                 cbxTipoPedido.Visible = ContraMesas;
                 txtDesconto.Text = iDescontoPedido;
                 intCodEndecoSelecionado = iIntEnderecoSelecionado;
+                boolClienteNovo = iClienteNovo;
                 parentWindow = parent;
                 codPessoa = CodPessoa;
                 codPedido = CodigoPedido;
@@ -193,13 +195,14 @@ namespace DexComanda
             }
 
             cbxTipoPedido.Visible = ContraMesas;
+            DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
+            DataRow dRow = pessoa.Tables["Pessoa"].Rows[0];
             if (ControlaFidelidade)
             {
-                DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
-                DataRow dRow = pessoa.Tables["Pessoa"].Rows[0];
                 NumeroPedidos = int.Parse(dRow.ItemArray.GetValue(13).ToString());
                 if (NumeroPedidos == PedidosParaFidelidade)
                 {
+                    lblFidelidade.Focus();
                     lblFidelidade.Visible = true;
                 }
             }
@@ -234,8 +237,8 @@ namespace DexComanda
                     this.btnGerarPedido.Click += btnAtualizar_Click;
                     this.btnReimprimir.Visible = true;
                 }
-                DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
-                DataRow dRow = pessoa.Tables["Pessoa"].Rows[0];
+               // DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
+              //  DataRow dRow = pessoa.Tables["Pessoa"].Rows[0];
                 pCliente = new Pessoa()
                 {
                     Nome = dRow["Nome"].ToString(),
@@ -275,12 +278,12 @@ namespace DexComanda
                 {
                     lbTotal.Text = Convert.ToString(decimal.Parse(lbTotal.Text.Replace("R$", "")) + DMargemGarco);
                 }
-             //   AtualizaClienteTela(this);
+                //   AtualizaClienteTela(this);
             }
             else
             {
-                DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
-                DataRow dRow = pessoa.Tables["Pessoa"].Rows[0];
+               // DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
+                //DataRow dRow = pessoa.Tables["Pessoa"].Rows[0];
 
                 pCliente = new Pessoa()
                 {
@@ -295,11 +298,11 @@ namespace DexComanda
                     Telefone2 = dRow["Telefone2"].ToString()
                 };
 
-                AtualizaClienteTela(this, intCodEndecoSelecionado);
             }
+            AtualizaClienteTela(intCodEndecoSelecionado);
             this.gridViewItemsPedido.CurrentCell = null;
         }
-        public void AtualizaClienteTela(frmCadastrarPedido frm, int iCodEndereco=0)
+        public void AtualizaClienteTela(int iCodEndereco = 0)
         {
             DataSet dsPessoa;
             try
@@ -312,7 +315,7 @@ namespace DexComanda
                         dsPessoa.Tables[0].Rows[0].Field<string>("Numero")
                         + "-" + dsPessoa.Tables[0].Rows[0].Field<string>("Bairro") + " " +
                         dsPessoa.Tables[0].Rows[0].Field<string>("Cidade");
-                    lblEntrega.Text = Convert.ToString(Utils.RetornaTaxaPorCliente(codPessoa,0));
+                    lblEntrega.Text = Convert.ToString(Utils.RetornaTaxaPorCliente(codPessoa, 0));
                 }
                 else
                 {
@@ -333,19 +336,17 @@ namespace DexComanda
                     dsPessoa.Tables[0].Rows[0].Field<DateTime>("DataCadastro"), dsPessoa.Tables[0].Rows[0].Field<int>("TicketFidelidade"),
                    dsPessoa.Tables[0].Rows[0].Field<int>("CodRegiao"), "", dsPessoa.Tables[0].Rows[0].Field<string>("DDD"), dsPessoa.Tables[0].Rows[0].Field<string>("Sexo"));
 
-                
                 AtualizaTotalPedido();
 
             }
             catch (Exception erros)
             {
-
-                throw;
+                MessageBox.Show(Bibliotecas.cException + erros.Message);
             }
-           
-           
+
+
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -983,10 +984,13 @@ namespace DexComanda
         private Boolean ValidaMaximoDesconto()
         {
             Boolean iReturn = false;
-            // bool PermiteDesconto = Sessions.retunrUsuario.DescontoPedidoSN;
-            double DescMAxPermitido = Sessions.retunrUsuario.DescontoMax;
-            //MessageBox.Show(lbTotal.Text + "- "+ lbTotalPedido.ToString() + " 2 "+ lbTotal.ToString());
             double TotalPedido = double.Parse(lbTotal.Text.Replace("R$", ""));
+            if (TotalPedido == 0)
+            {
+                return true;
+            }
+            double DescMAxPermitido = Sessions.retunrUsuario.DescontoMax;
+
 
             double Cal = 100;
             double DescCalculado = Double.Parse(txtDesconto.Text) * Cal / TotalPedido;
@@ -1055,7 +1059,7 @@ namespace DexComanda
                                 CodigoPedidoWS = 0,
                                 CodUsuario = RetornaCodVendedor(),
                                 Observacao = txtObsPedido.Text,
-                                CodEndereco = intCodEndecoSelecionado 
+                                CodEndereco = intCodEndecoSelecionado
 
                             };
                             if (txtTrocoPara.Text != "")
@@ -1230,7 +1234,7 @@ namespace DexComanda
                     ValorPagamento = SomaItensPedido() - Convert.ToDecimal
                     (txtDesconto.Text) + DMargemGarco + decimal.Parse(lblEntrega.Text.Replace("R$", ""))
 
-            };
+                };
                 con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
             }
 
@@ -1631,7 +1635,7 @@ namespace DexComanda
                     }
                     pedido.Observacao = txtObsPedido.Text;
                     pedido.CodEndereco = intCodEndecoSelecionado;
-                    
+
                     con.Delete("spExcluirItemPedido", itemPedido);
                     AtualizaTotalPedido();
                     con.Update("spAlterarTotalPedido", pedido);
@@ -1773,9 +1777,8 @@ namespace DexComanda
                         else
                         {
                             iRetorno = Utils.ImpressaoEntreganova(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), dblPRevisao,
-                                ImprimeLPT, QtViasEntrega, Sessions.returnConfig.ImpressoraEntrega);
+                                ImprimeLPT, QtViasEntrega, Sessions.returnConfig.ImpressoraEntrega, boolClienteNovo);
                         }
-
                     }
                     else if (ImprimeLPT)
                     {
@@ -1800,11 +1803,7 @@ namespace DexComanda
                         Utils.ImpressaoPorCozinha(iCodigo);
                         return;
                     }
-
                     string iRetorno = Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
-
-
-
                 }
             }
             catch (Exception E)
@@ -2550,7 +2549,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(799, 3);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -3221,8 +3220,8 @@ namespace DexComanda
             // 
             // chkListAdicionais
             // 
-            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chkListAdicionais.CheckOnClick = true;
             this.chkListAdicionais.FormattingEnabled = true;
@@ -4078,13 +4077,13 @@ namespace DexComanda
                     DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
                     DataRow dRowPessoa = dsPessoa.Tables["Pessoa"].Rows[0];
 
-                    frmCadastroCliente frm =  new  frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
+                    frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
                                                                       dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
                                                                   , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(),
                                                                       dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString());
 
-                    AtualizaClienteTela(this);
+                    AtualizaClienteTela();
                 }
             }
             catch (Exception erro)
@@ -4276,13 +4275,13 @@ namespace DexComanda
         private void button1_Click(object sender, EventArgs e)
         {
             intCodEndecoSelecionado = Utils.MaisEnderecos(codPessoa);
-            if (intCodEndecoSelecionado==0)
+            if (intCodEndecoSelecionado == 0)
             {
                 btnAtlCadastro.Focus();
             }
             else
             {
-                AtualizaClienteTela(this, intCodEndecoSelecionado);
+                AtualizaClienteTela(intCodEndecoSelecionado);
             }
         }
 

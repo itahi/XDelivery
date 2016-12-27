@@ -1,5 +1,6 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
+using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Relatorios.Gerenciais.Cristal;
 using System;
 using System.Collections.Generic;
@@ -26,32 +27,19 @@ namespace DexComanda.Relatorios.Gerenciais
             try
             {
                 RelEntregasPorRegiao report;
+                RelEntregasMotoboyAgrupado report2;
                 try
                 {
-                    report = new RelEntregasPorRegiao();
-
-                    TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
-                    TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
-                    ConnectionInfo crConnectionInfo = new ConnectionInfo();
-                    Tables CrTables;
-
-                    report.Load(Directory.GetCurrentDirectory() + @"\RelEntregasPorRegiao.rpt");
-                    crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
-                    crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                    crConnectionInfo.UserID = "dex";
-                    crConnectionInfo.Password = "1234";
-
-                    CrTables = report.Database.Tables;
-                    foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                    if (rbRegiao.Checked)
                     {
-                        crtableLogoninfo = CrTable.LogOnInfo;
-                        crtableLogoninfo.ConnectionInfo = crConnectionInfo;
-                        CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                        report = new RelEntregasPorRegiao();
+                        crystalReportViewer1.ReportSource = Utils.GerarReportSoDatas(report, dtInicio.Value, dtFim.Value);
                     }
-
-                    report.SetParameterValue("@DataI", dateTimePicker1.Value);
-                    report.SetParameterValue("@DataF", dateTimePicker2.Value);
-                    crystalReportViewer1.ReportSource = report;
+                    else
+                    {
+                        report2 = new RelEntregasMotoboyAgrupado();
+                        crystalReportViewer1.ReportSource = Utils.GerarReportSoDatas(report2, dtInicio.Value, dtFim.Value);
+                    }
                     crystalReportViewer1.Refresh();
 
 

@@ -364,7 +364,6 @@ namespace DexComanda
             envioDeSMSToolStripMenuItem.Enabled = Sessions.returnConfig.EnviaSMS;
             alterarSenhaToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
             usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
-            entregasPorMotoboyToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
             // entregadorToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
 
 

@@ -35,8 +35,8 @@
             this.rbDetalhado = new System.Windows.Forms.RadioButton();
             this.btnFiltro = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.dtFim = new System.Windows.Forms.DateTimePicker();
-            this.dtinicio = new System.Windows.Forms.DateTimePicker();
+            this.DtFim = new System.Windows.Forms.DateTimePicker();
+            this.DtInicio = new System.Windows.Forms.DateTimePicker();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -80,8 +80,8 @@
             this.groupBox1.Controls.Add(this.rbDetalhado);
             this.groupBox1.Controls.Add(this.btnFiltro);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.dtFim);
-            this.groupBox1.Controls.Add(this.dtinicio);
+            this.groupBox1.Controls.Add(this.DtFim);
+            this.groupBox1.Controls.Add(this.DtInicio);
             this.groupBox1.Location = new System.Drawing.Point(5, 11);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(449, 69);
@@ -131,21 +131,21 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Periodo ";
             // 
-            // dtFim
+            // DtFim
             // 
-            this.dtFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtFim.Location = new System.Drawing.Point(246, 34);
-            this.dtFim.Name = "dtFim";
-            this.dtFim.Size = new System.Drawing.Size(78, 20);
-            this.dtFim.TabIndex = 7;
+            this.DtFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.DtFim.Location = new System.Drawing.Point(246, 34);
+            this.DtFim.Name = "DtFim";
+            this.DtFim.Size = new System.Drawing.Size(78, 20);
+            this.DtFim.TabIndex = 7;
             // 
-            // dtinicio
+            // DtInicio
             // 
-            this.dtinicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtinicio.Location = new System.Drawing.Point(144, 34);
-            this.dtinicio.Name = "dtinicio";
-            this.dtinicio.Size = new System.Drawing.Size(78, 20);
-            this.dtinicio.TabIndex = 6;
+            this.DtInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.DtInicio.Location = new System.Drawing.Point(144, 34);
+            this.DtInicio.Name = "DtInicio";
+            this.DtInicio.Size = new System.Drawing.Size(78, 20);
+            this.DtInicio.TabIndex = 6;
             // 
             // frmReportEntregasMotoboy
             // 
@@ -172,7 +172,7 @@
         private System.Windows.Forms.RadioButton rbDetalhado;
         private System.Windows.Forms.Button btnFiltro;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dtFim;
-        private System.Windows.Forms.DateTimePicker dtinicio;
+        private System.Windows.Forms.DateTimePicker DtFim;
+        private System.Windows.Forms.DateTimePicker DtInicio;
     }
 }

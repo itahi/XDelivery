@@ -501,6 +501,12 @@
       <DependentUpon>RelFechamentoCaixaCompleto.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboyAgrupado.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelEntregasMotoboyAgrupado.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Gerenciais\frmReporVendasPorVendedor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1094,6 +1100,10 @@
     <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesaSeparado.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelComandaMesaSeparado.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboyAgrupado.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelEntregasMotoboyAgrupado.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\frmReportPadrao.resx">
       <DependentUpon>frmReportPadrao.cs</DependentUpon>

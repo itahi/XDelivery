@@ -106,7 +106,7 @@ namespace DexComanda.Relatorios.Gerenciais.Cristal {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_DataI {
+        public CrystalDecisions.Shared.IParameterField Parameter_DataInicio {
             get {
                 return this.DataDefinition.ParameterFields[0];
             }
@@ -114,7 +114,7 @@ namespace DexComanda.Relatorios.Gerenciais.Cristal {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_DataF {
+        public CrystalDecisions.Shared.IParameterField Parameter_DataFim {
             get {
                 return this.DataDefinition.ParameterFields[1];
             }

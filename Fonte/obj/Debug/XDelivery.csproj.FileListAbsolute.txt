@@ -367,3 +367,4 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.application
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.exe
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.pdb
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmReporVendasPorVendedor.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\XDelivery.csprojResolveAssemblyReference.cache

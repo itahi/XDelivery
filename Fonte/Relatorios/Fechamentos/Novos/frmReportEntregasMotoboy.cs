@@ -23,40 +23,22 @@ namespace DexComanda.Relatorios.Fechamentos.Novos
         private void Filtrar(object sender, EventArgs e)
         {
             RelEntregasMotoboy report;
+            RelEntregasResumido repor2;
+
             try
             {
-                report = new RelEntregasMotoboy();
-
-                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
-                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
-                ConnectionInfo crConnectionInfo = new ConnectionInfo();
-                Tables CrTables;
-
-                report.Load(Directory.GetCurrentDirectory() + @"\RelEntregasMotoboy.rpt");
-                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
-                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                crConnectionInfo.UserID = "dex";
-                crConnectionInfo.Password = "1234";
-
-                CrTables = report.Database.Tables;
-                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                if (rbDetalhado.Checked)
                 {
-                    crtableLogoninfo = CrTable.LogOnInfo;
-                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
-                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                    report = new RelEntregasMotoboy();
+                    crystalReportViewer1.ReportSource = Utils.GerarReportSoDatas(report, DtInicio.Value, DtFim.Value);
                 }
-                var dtInicio = Convert.ToDateTime(dtinicio.Value.ToShortDateString() + " 00:00:00");
-                var datFim = Convert.ToDateTime(dtFim.Value.ToShortDateString() + " 23:59:59");
-
-                report.SetParameterValue("@DataI", dtInicio);
-                report.SetParameterValue("@DataF", datFim);
-                if (report.Rows.Count == 0)
+                else
                 {
-                    MessageBox.Show("Não há resultados com o filtro selecionado");
-                    return;
+                    repor2 = new RelEntregasResumido();
+                    crystalReportViewer1.ReportSource = Utils.GerarReportSoDatas(repor2, DtInicio.Value, DtFim.Value);
                 }
-                crystalReportViewer1.ReportSource = report;
                 crystalReportViewer1.Refresh();
+                
             }
             catch (Exception erro)
             {

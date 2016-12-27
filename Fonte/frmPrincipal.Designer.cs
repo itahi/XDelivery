@@ -55,12 +55,12 @@
             this.relatórioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.porPessoaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.entregasPorMotoboyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resumidoFormaDePagamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ticketMédioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cancelamentosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.crediárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.melhoresClientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vendasPorAtendenteVendedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maisVendidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -151,7 +151,6 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.vendasPorAtendenteVendedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -373,7 +372,6 @@
             // 
             this.porPessoaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.geralToolStripMenuItem2,
-            this.entregasPorMotoboyToolStripMenuItem,
             this.resumidoFormaDePagamentoToolStripMenuItem,
             this.ticketMédioToolStripMenuItem,
             this.cancelamentosToolStripMenuItem,
@@ -391,13 +389,6 @@
             this.geralToolStripMenuItem2.Size = new System.Drawing.Size(312, 26);
             this.geralToolStripMenuItem2.Text = "Geral";
             this.geralToolStripMenuItem2.Click += new System.EventHandler(this.geralToolStripMenuItem2_Click);
-            // 
-            // entregasPorMotoboyToolStripMenuItem
-            // 
-            this.entregasPorMotoboyToolStripMenuItem.Name = "entregasPorMotoboyToolStripMenuItem";
-            this.entregasPorMotoboyToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
-            this.entregasPorMotoboyToolStripMenuItem.Text = "Entregas por Motoboy";
-            this.entregasPorMotoboyToolStripMenuItem.Click += new System.EventHandler(this.entregasPorMotoboyToolStripMenuItem_Click);
             // 
             // resumidoFormaDePagamentoToolStripMenuItem
             // 
@@ -433,6 +424,13 @@
             this.melhoresClientesToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
             this.melhoresClientesToolStripMenuItem.Text = "Melhores Clientes";
             this.melhoresClientesToolStripMenuItem.Click += new System.EventHandler(this.melhoresClientesToolStripMenuItem_Click);
+            // 
+            // vendasPorAtendenteVendedorToolStripMenuItem
+            // 
+            this.vendasPorAtendenteVendedorToolStripMenuItem.Name = "vendasPorAtendenteVendedorToolStripMenuItem";
+            this.vendasPorAtendenteVendedorToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
+            this.vendasPorAtendenteVendedorToolStripMenuItem.Text = "Vendas por Atendente/Vendedor";
+            this.vendasPorAtendenteVendedorToolStripMenuItem.Click += new System.EventHandler(this.vendasPorAtendenteVendedorToolStripMenuItem_Click);
             // 
             // diárioToolStripMenuItem
             // 
@@ -529,14 +527,14 @@
             // porRegiãoComTaxaToolStripMenuItem
             // 
             this.porRegiãoComTaxaToolStripMenuItem.Name = "porRegiãoComTaxaToolStripMenuItem";
-            this.porRegiãoComTaxaToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
-            this.porRegiãoComTaxaToolStripMenuItem.Text = "Por Região com Taxa";
+            this.porRegiãoComTaxaToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
+            this.porRegiãoComTaxaToolStripMenuItem.Text = "Por Região";
             this.porRegiãoComTaxaToolStripMenuItem.Click += new System.EventHandler(this.porRegiãoComTaxaToolStripMenuItem_Click);
             // 
             // porMotoboyToolStripMenuItem
             // 
             this.porMotoboyToolStripMenuItem.Name = "porMotoboyToolStripMenuItem";
-            this.porMotoboyToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
+            this.porMotoboyToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
             this.porMotoboyToolStripMenuItem.Text = "Por Motoboy";
             this.porMotoboyToolStripMenuItem.Click += new System.EventHandler(this.porMotoboyToolStripMenuItem_Click);
             // 
@@ -1359,13 +1357,6 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // vendasPorAtendenteVendedorToolStripMenuItem
-            // 
-            this.vendasPorAtendenteVendedorToolStripMenuItem.Name = "vendasPorAtendenteVendedorToolStripMenuItem";
-            this.vendasPorAtendenteVendedorToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
-            this.vendasPorAtendenteVendedorToolStripMenuItem.Text = "Vendas por Atendente/Vendedor";
-            this.vendasPorAtendenteVendedorToolStripMenuItem.Click += new System.EventHandler(this.vendasPorAtendenteVendedorToolStripMenuItem_Click);
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1432,7 +1423,6 @@
         private System.Windows.Forms.ToolStripMenuItem relatórioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem porPessoaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem geralToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem entregasPorMotoboyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resumidoFormaDePagamentoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ticketMédioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem diárioToolStripMenuItem;
