@@ -1264,7 +1264,6 @@ namespace DexComanda
             }
             else if (spName == "spAdicionarClienteDelivery")
             {
-
                 CodPessoa = new SqlParameter("@Codigo", SqlDbType.Int);
                 CodPessoa.Direction = ParameterDirection.Output;
                 command.Parameters.Add(CodPessoa);

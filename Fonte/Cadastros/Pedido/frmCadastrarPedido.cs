@@ -237,8 +237,8 @@ namespace DexComanda
                     this.btnGerarPedido.Click += btnAtualizar_Click;
                     this.btnReimprimir.Visible = true;
                 }
-               // DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
-              //  DataRow dRow = pessoa.Tables["Pessoa"].Rows[0];
+                // DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
+                //  DataRow dRow = pessoa.Tables["Pessoa"].Rows[0];
                 pCliente = new Pessoa()
                 {
                     Nome = dRow["Nome"].ToString(),
@@ -282,7 +282,7 @@ namespace DexComanda
             }
             else
             {
-               // DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
+                // DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
                 //DataRow dRow = pessoa.Tables["Pessoa"].Rows[0];
 
                 pCliente = new Pessoa()
@@ -325,17 +325,17 @@ namespace DexComanda
                         + "-" + dsPessoa.Tables[0].Rows[0].Field<string>("Bairro") + " " +
                         dsPessoa.Tables[0].Rows[0].Field<string>("Cidade");
 
-                    lblEntrega.Text = Convert.ToString(Utils.RetornaTaxaPorCliente(codPessoa, dsPessoa.Tables[0].Rows[0].Field<int>("Codigo")));
+                    Utils.AtualizaPessoa(codPessoa, dsPessoa.Tables[0].Rows[0].Field<string>("Nome"), dsPessoa.Tables[0].Rows[0].Field<string>("Cep"),
+                      dsPessoa.Tables[0].Rows[0].Field<string>("Endereco"), dsPessoa.Tables[0].Rows[0].Field<string>("Numero"),
+                      dsPessoa.Tables[0].Rows[0].Field<string>("Bairro"), dsPessoa.Tables[0].Rows[0].Field<string>("Cidade"),
+                      dsPessoa.Tables[0].Rows[0].Field<string>("UF"), dsPessoa.Tables[0].Rows[0].Field<string>("PontoReferencia"),
+                      dsPessoa.Tables[0].Rows[0].Field<string>("Observacao"), dsPessoa.Tables[0].Rows[0].Field<string>("Telefone"),
+                      dsPessoa.Tables[0].Rows[0].Field<string>("Telefone2"), dsPessoa.Tables[0].Rows[0].Field<DateTime>("DataNascimento"),
+                      dsPessoa.Tables[0].Rows[0].Field<DateTime>("DataCadastro"), dsPessoa.Tables[0].Rows[0].Field<int>("TicketFidelidade"),
+                     dsPessoa.Tables[0].Rows[0].Field<int>("CodRegiao"), "", dsPessoa.Tables[0].Rows[0].Field<string>("DDD"), dsPessoa.Tables[0].Rows[0].Field<string>("Sexo"));
                 }
-                Utils.AtualizaPessoa(codPessoa, dsPessoa.Tables[0].Rows[0].Field<string>("Nome"), dsPessoa.Tables[0].Rows[0].Field<string>("Cep"),
-                    dsPessoa.Tables[0].Rows[0].Field<string>("Endereco"), dsPessoa.Tables[0].Rows[0].Field<string>("Numero"),
-                    dsPessoa.Tables[0].Rows[0].Field<string>("Bairro"), dsPessoa.Tables[0].Rows[0].Field<string>("Cidade"),
-                    dsPessoa.Tables[0].Rows[0].Field<string>("UF"), dsPessoa.Tables[0].Rows[0].Field<string>("PontoReferencia"),
-                    dsPessoa.Tables[0].Rows[0].Field<string>("Observacao"), dsPessoa.Tables[0].Rows[0].Field<string>("Telefone"),
-                    dsPessoa.Tables[0].Rows[0].Field<string>("Telefone2"), dsPessoa.Tables[0].Rows[0].Field<DateTime>("DataNascimento"),
-                    dsPessoa.Tables[0].Rows[0].Field<DateTime>("DataCadastro"), dsPessoa.Tables[0].Rows[0].Field<int>("TicketFidelidade"),
-                   dsPessoa.Tables[0].Rows[0].Field<int>("CodRegiao"), "", dsPessoa.Tables[0].Rows[0].Field<string>("DDD"), dsPessoa.Tables[0].Rows[0].Field<string>("Sexo"));
 
+                lblEntrega.Text = Convert.ToString(Utils.RetornaTaxaPorCliente(codPessoa, dsPessoa.Tables[0].Rows[0].Field<int>("Codigo")));
                 AtualizaTotalPedido();
 
             }
@@ -2328,6 +2328,7 @@ namespace DexComanda
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.cbxListaMesas = new System.Windows.Forms.ComboBox();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.lblEndereco = new System.Windows.Forms.Label();
             this.lblNomeCliente = new System.Windows.Forms.Label();
@@ -2358,7 +2359,6 @@ namespace DexComanda
             this.label13 = new System.Windows.Forms.Label();
             this.txtObsPedido = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -2514,6 +2514,7 @@ namespace DexComanda
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.btnAtlCadastro);
             this.panel1.Controls.Add(this.lblTempo);
             this.panel1.Controls.Add(this.lblFidelidade);
@@ -2549,7 +2550,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(799, 3);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -2980,7 +2981,6 @@ namespace DexComanda
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel4.Controls.Add(this.button1);
             this.panel4.Controls.Add(this.label6);
             this.panel4.Controls.Add(this.lblEndereco);
             this.panel4.Controls.Add(this.lblNomeCliente);
@@ -2989,6 +2989,17 @@ namespace DexComanda
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1051, 43);
             this.panel4.TabIndex = 63;
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button1.Location = new System.Drawing.Point(558, 4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(72, 31);
+            this.button1.TabIndex = 67;
+            this.button1.Text = "Trocar Endereço";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label6
             // 
@@ -3220,8 +3231,8 @@ namespace DexComanda
             // 
             // chkListAdicionais
             // 
-            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chkListAdicionais.CheckOnClick = true;
             this.chkListAdicionais.FormattingEnabled = true;
@@ -3345,17 +3356,6 @@ namespace DexComanda
             this.label14.TabIndex = 77;
             this.label14.Text = "Obs \r\ndo \r\nPedido";
             // 
-            // button1
-            // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Location = new System.Drawing.Point(636, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(72, 31);
-            this.button1.TabIndex = 67;
-            this.button1.Text = "Trocar Endereço";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3472,7 +3472,7 @@ namespace DexComanda
 
             if (cbxTipoPedido.Text == "1 - Mesa")
             {
-                //  CarregaMesas();
+                CarregaMesas();
                 cbxListaMesas.Visible = true;
                 cbxListaMesas.Focus();
             }
@@ -3504,7 +3504,7 @@ namespace DexComanda
         {
             try
             {
-                CalculaPorcentagemDesconto();
+               // CalculaPorcentagemDesconto();
                 NovoTotalPedido pedi = new NovoTotalPedido()
                 {
                     Codigo = codPedido,

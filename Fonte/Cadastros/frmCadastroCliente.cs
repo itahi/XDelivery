@@ -29,7 +29,7 @@ namespace DexComanda
         private DataRow RowsClientes;
         private int mCodRegiao;
         private int rowIndex;
-        private int codigo=0;
+        private int codigo = 0;
 
         public frmCadastroCliente(Main parent = null)
         {
@@ -207,7 +207,7 @@ namespace DexComanda
                         DataRow dRow = endereco.Tables["base_cep"].Rows[0];
                         this.txtEndereco.Text = dRow.ItemArray.GetValue(0).ToString();
                         this.txtBairro.Text = dRow.ItemArray.GetValue(1).ToString();
-                        PreencheRegiao();
+                        PreencheRegiao(txtBairro.Text);
                         this.txtNumero.Focus();
                     }
                     else
@@ -223,7 +223,7 @@ namespace DexComanda
                         {
                             txtEndereco.Text = _cepCorreios.Logradouro;
                             txtBairro.Text = _cepCorreios.Bairro;
-                            PreencheRegiao();
+                            PreencheRegiao(txtBairro.Text);
                             this.txtNumero.Focus();
                         }
                         pnConsultaCEp.Visible = false;
@@ -232,9 +232,9 @@ namespace DexComanda
             }
 
         }
-        private void PreencheRegiao()
+        private void PreencheRegiao(string iBairro)
         {
-            DataSet ds = con.RetornarTaxaPorBairro(txtBairro.Text);
+            DataSet ds = con.RetornarTaxaPorBairro(iBairro);
             if (ds.Tables[0].Rows.Count > 0)
             {
                 cbxRegiao.SelectedValue = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("Codigo"));
@@ -310,10 +310,26 @@ namespace DexComanda
                 {
                     pessoa.Numero = txtNumero.Text;
                     con.Insert("spAdicionarClienteDelivery", pessoa);
+                    Pessoa_Endereco pessEnd = new Pessoa_Endereco()
+                    {
+                        Codigo = codigo,
+                        CodPessoa = con.getLastCodigo(),
+                        Bairro = txtBairro.Text,
+                        Cep = txtCEP.Text,
+                        Cidade = txtCidade.Text,
+                        Endereco = txtLogradouro.Text,
+                        CodRegiao = int.Parse(cbxRegiao.SelectedValue.ToString()),
+                        NomeEndereco = "Principal",
+                        Numero = txtNumero.Text,
+                        Complemento = txtObservacaoCliente.Text,
+                        PontoReferencia = txtPontoReferencia.Text,
+                        UF = "ES"
+                    };
                     Utils.ControlaEventos("Inserir", this.Name);
                     MessageBox.Show("Cliente cadastrado com sucesso.", "[xSistemas] Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
-
                     this.Close();
+                    con.Insert("spAdicionarEndereco", pessEnd);
+                 
                     if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                     {
                         RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
@@ -332,6 +348,7 @@ namespace DexComanda
                 MessageBox.Show("Registro não foi gravado , favor verificar os campos digitados " + err.Message);
             }
 
+            
         }
 
         private void RealizarPedidoAgora(string telefone)
@@ -360,9 +377,9 @@ namespace DexComanda
                         //this.parentMain.txtCidade.Text = dRow.ItemArray.GetValue(4).ToString();
                         //this.parentMain.txtPontoReferencia.Text = dRow.ItemArray.GetValue(5).ToString();
 
-                        var TaxaEntrega = Utils.RetornaTaxaPorCliente(iCodPessoa,0);
+                        var TaxaEntrega = Utils.RetornaTaxaPorCliente(iCodPessoa, 0);
                         frmCadastrarPedido frmCadastrarPedido = new frmCadastrarPedido(false, "0,00", "", "", TaxaEntrega, false, DateTime.Now, 0, int.Parse(dRow.ItemArray.GetValue(0).ToString()),
-                                                                                       "", "", "", "",null,0,0,0,"",0,true);
+                                                                                       "", "", "", "", null, 0, 0, 0, "", 0, true);
                         frmCadastrarPedido.ShowDialog();
                     }
                 }
@@ -987,7 +1004,7 @@ namespace DexComanda
                     PontoReferencia = txtPontoREnd.Text,
                     UF = "ES"
                 };
-                if (codigo==0)
+                if (codigo == 0)
                 {
                     con.Insert("spAdicionarEndereco", pessEnd);
                 }
@@ -1030,7 +1047,7 @@ namespace DexComanda
             CepUtil _cepCorreios;
             if (txtCEPEnd.Text.Trim().Length == 8 && e.KeyCode != Keys.Back)
             {
-                ObterCidadePadrao();
+                // ObterCidadePadrao();
                 if (this.txtCEPEnd.Text.Equals("") && e.KeyCode == Keys.Enter)
                 {
                     MessageBox.Show("Informe o Cep.");
@@ -1046,7 +1063,8 @@ namespace DexComanda
                         DataRow dRow = endereco.Tables["base_cep"].Rows[0];
                         this.txtLogradouro.Text = dRow.ItemArray.GetValue(0).ToString();
                         this.txtBairroEnd.Text = dRow.ItemArray.GetValue(1).ToString();
-                        PreencheRegiao();
+                        txtCidadeEnd.Text = dRow.ItemArray.GetValue(1).ToString();
+                        PreencheRegiao(txtBairroEnd.Text);
                         this.txtNumEnd.Focus();
                     }
                     else
@@ -1062,7 +1080,8 @@ namespace DexComanda
                         {
                             txtLogradouro.Text = _cepCorreios.Logradouro;
                             txtBairroEnd.Text = _cepCorreios.Bairro;
-                            PreencheRegiao();
+                            txtCidadeEnd.Text = _cepCorreios.Cidade;
+                            PreencheRegiao(txtBairroEnd.Text);
                             this.txtNumEnd.Focus();
                         }
                         // pnConsultaCEp.Visible = false;

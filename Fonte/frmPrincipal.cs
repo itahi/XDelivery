@@ -833,7 +833,7 @@ namespace DexComanda
                     // Caso o pedido for mesa ele altera o Status da Mesa
                     if (ControlaMesas && iCodMesa != 0)
                     {
-                        frmFinalizacaoPedido frm = new frmFinalizacaoPedido(dblTotalPedido, false, codigo);
+                        frmFinalizacaoPedido frm = new frmFinalizacaoPedido(dblTotalPedido, false, codigo,iCodMesa);
                         frm.StartPosition = FormStartPosition.CenterParent;
                         frm.ShowDialog();
 

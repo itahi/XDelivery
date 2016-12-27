@@ -101,11 +101,11 @@
             this.gridFormasPagamento.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridFormasPagamento.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.gridFormasPagamento.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridFormasPagamento.Location = new System.Drawing.Point(1, 32);
+            this.gridFormasPagamento.Location = new System.Drawing.Point(1, 52);
             this.gridFormasPagamento.MultiSelect = false;
             this.gridFormasPagamento.Name = "gridFormasPagamento";
             this.gridFormasPagamento.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridFormasPagamento.Size = new System.Drawing.Size(372, 243);
+            this.gridFormasPagamento.Size = new System.Drawing.Size(372, 223);
             this.gridFormasPagamento.TabIndex = 7;
             this.gridFormasPagamento.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridFormasPagamento_CellValueChanged);
             this.gridFormasPagamento.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.Valida);
@@ -114,7 +114,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Sitka Banner", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 4);
+            this.label2.Location = new System.Drawing.Point(50, 21);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(127, 23);
             this.label2.TabIndex = 8;
@@ -123,10 +123,10 @@
             // lblNumeroMesa
             // 
             this.lblNumeroMesa.AutoSize = true;
-            this.lblNumeroMesa.Font = new System.Drawing.Font("Sitka Banner", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNumeroMesa.Location = new System.Drawing.Point(187, 4);
+            this.lblNumeroMesa.Font = new System.Drawing.Font("Sitka Banner", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNumeroMesa.Location = new System.Drawing.Point(183, 2);
             this.lblNumeroMesa.Name = "lblNumeroMesa";
-            this.lblNumeroMesa.Size = new System.Drawing.Size(28, 23);
+            this.lblNumeroMesa.Size = new System.Drawing.Size(55, 47);
             this.lblNumeroMesa.TabIndex = 9;
             this.lblNumeroMesa.Text = "txt";
             // 

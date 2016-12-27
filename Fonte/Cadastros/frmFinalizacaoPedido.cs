@@ -30,17 +30,16 @@ namespace DexComanda.Cadastros
         {
 
         }
-        public frmFinalizacaoPedido(decimal iTotalPedido,Boolean iInserir,int iCodPedido=0)
+        public frmFinalizacaoPedido(decimal iTotalPedido,Boolean iInserir,int iCodPedido=0,int iCodMesa=0)
         {
             try
             {
                 InitializeComponent();
                 bInserir = iInserir;
                 intCodPedido = iCodPedido;
-              //  iFrm = frm;
+                lblNumeroMesa.Text = iCodMesa.ToString();
                 lblTotalPedido.Text = iTotalPedido.ToString();
                 lblFalta.Text = iTotalPedido.ToString();
-              //  intCodPedido = iCodPedido;
                 con = new Conexao();
                 DataSet dsFPagamento = con.SelectFormasPagamento();
 
@@ -147,16 +146,15 @@ namespace DexComanda.Cadastros
                                     ValorPagamento = decimal.Parse(gridFormasPagamento.Rows[intFor].Cells["Valor"].Value.ToString())
                                 };
                                 con.Update("spAlteraFinalizaPedido_Pedido", finalizaPed);
+                                
                             }
 
                         }
-
-
                     }
                     boolFinalizou = true;
+                    con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", intCodPedido);
                     if (Utils.MessageBoxQuestion("Deseja imprimir a conferencia desta dessa mesa?"))
                     {
-                       
                         Utils.ImpressaoFechamentoNovo(intCodPedid, false, 1);
                     }
                     this.Close();
