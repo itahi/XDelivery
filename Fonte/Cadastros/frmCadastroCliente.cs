@@ -308,7 +308,7 @@ namespace DexComanda
                         Bairro = txtBairro.Text,
                         Cep = txtCEP.Text,
                         Cidade = txtCidade.Text,
-                        Endereco = txtLogradouro.Text,
+                        Endereco = txtEndereco.Text,
                         CodRegiao = int.Parse(cbxRegiao.SelectedValue.ToString()),
                         NomeEndereco = "Principal",
                         Numero = txtNumero.Text,
@@ -362,6 +362,7 @@ namespace DexComanda
                         DataRow dRow = Pessoa.Tables["Pessoa"].Rows[0];
 
                         int iCodPessoa = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+                        int iCodEndereco = int.Parse(dRow.ItemArray.GetValue(16).ToString());
                         //this.parentMain.txtNome.Text = dRow.ItemArray.GetValue(1).ToString();
                         //this.parentMain.txtEndereco.Text = dRow.ItemArray.GetValue(2).ToString();
                         //this.parentMain.txtBairro.Text = dRow.ItemArray.GetValue(3).ToString();
@@ -370,7 +371,7 @@ namespace DexComanda
 
                         var TaxaEntrega = Utils.RetornaTaxaPorCliente(iCodPessoa, 0);
                         frmCadastrarPedido frmCadastrarPedido = new frmCadastrarPedido(false, "0,00", "", "", TaxaEntrega, false, DateTime.Now, 0, int.Parse(dRow.ItemArray.GetValue(0).ToString()),
-                                                                                       "", "", "", "", null, 0, 0, 0, "", 0, true);
+                                                                                       "", "", "", "", null, 0, 0, 0, "", iCodEndereco, true);
                         frmCadastrarPedido.ShowDialog();
                     }
                 }

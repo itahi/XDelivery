@@ -156,10 +156,31 @@ namespace DexComanda
 
             return Logado;
         }
-        public static void AtualizaPessoa(int iCodPessoa,string iNome,string iCEP,string iEndereco,
-            string iNumero,string iBairro,string iCidade,string iUF,string iPRerefencia,string iObservacao,
-            string iTelefone,string iTelefone2,DateTime iDtNas,DateTime iDtCad,int iTickFid,int iCodRegiao,
-            string iUserID,string iDDD,string iSexo)
+        /// <summary>
+        /// Função para validar se o tipo de pedido é "Mesa"
+        /// </summary>
+        /// <param name="iCodPedido">
+        /// Código do pedido clicado na grid</param>
+        /// <returns>
+        /// Verdadeiro/Falso</returns>
+        public static bool VerificaSeEmesa(int iCodPedido)
+        {
+            string iReturn = conexao.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).Tables[0].Rows[0]
+.ItemArray.GetValue(9).ToString();
+
+            if (iReturn != "0" && iReturn != "")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public static void AtualizaPessoa(int iCodPessoa, string iNome, string iCEP, string iEndereco,
+            string iNumero, string iBairro, string iCidade, string iUF, string iPRerefencia, string iObservacao,
+            string iTelefone, string iTelefone2, DateTime iDtNas, DateTime iDtCad, int iTickFid, int iCodRegiao,
+            string iUserID, string iDDD, string iSexo)
         {
             Pessoa pess = new Pessoa()
             {
@@ -202,7 +223,7 @@ namespace DexComanda
             {
                 frmSelecionaEndereco frm = new frmSelecionaEndereco(iDPesso);
                 frm.ShowDialog();
-                iReturn=  frm.intCodEndereco;
+                iReturn = frm.intCodEndereco;
             }
             else
             {
@@ -237,8 +258,8 @@ namespace DexComanda
                 {
 
                     int CodPedido = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(1).ToString());
-                    int CodGrupo = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(19).ToString());
-                    string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(20).ToString();
+                    int CodGrupo = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(23).ToString());
+                    string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(24).ToString();
 
                     DataSet itemsPedido = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", CodPedido, "", CodGrupo);
                     Utils.ImpressaoCozihanova_Separado(CodPedido, iNomeImpressora);
@@ -253,10 +274,6 @@ namespace DexComanda
                     dsItemsNaoImpresso = ItensSelect(iCodPedido);
 
                 }
-
-
-
-
 
             }
             catch (Exception erro)
@@ -453,10 +470,10 @@ namespace DexComanda
                 if (resultado != null)
                 {
                     cep.Cep = iCEP.Replace("-", "");
-                    cep.Bairro = resultado.bairro;
-                    cep.Cidade = resultado.cep;
-                    cep.Estado = resultado.uf;
-                    cep.Logradouro = resultado.end;
+                    cep.Bairro = resultado.bairro.ToUpper();
+                    cep.Cidade = resultado.cep.ToUpper();
+                    cep.Estado = resultado.uf.ToUpper();
+                    cep.Logradouro = resultado.end.ToUpper();
                     conexao.Insert("spAdicionarCep", cep);
                 }
                 else
@@ -696,8 +713,8 @@ namespace DexComanda
             return iRetorno;
         }
         public static string ImpressaoEntreganova(int iCodPedido, decimal iValorPago, string iPrevisaoEntrega,
-            Boolean iExport = false, int iNumCopias = 0,string iNomeImpressora="",
-            Boolean iClienteNovo=false,int CodEndereco=0)
+            Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "",
+            Boolean iClienteNovo = false, int CodEndereco = 0)
         {
             string iRetorno = ""; ;
 
@@ -1105,7 +1122,7 @@ namespace DexComanda
 
                 PrinterSettings printersettings = new PrinterSettings();
                 printersettings.PrinterName = iNomeImpressora;
-                printersettings.PrintFileName = "RelComandaMesa_"+iCodPedido+"";
+                printersettings.PrintFileName = "RelComandaMesa_" + iCodPedido + "";
                 printersettings.Copies = 1;
                 printersettings.Collate = false;
 
@@ -1126,14 +1143,14 @@ namespace DexComanda
                 report.SetParameterValue("@Codigo", iCodPedido);
                 report.SetParameterValue("@NomeImpressora", iNomeImpressora);
 
-                 if (iNomeImpressora != "")
+                if (iNomeImpressora != "")
                 {
                     for (int i = 0; i < iNumCopias; i++)
                     {
                         report.PrintOptions.PrinterName = iNomeImpressora;
                         report.PrintToPrinter(printersettings, new PageSettings(), false);
                     }
-                    
+
                 }
                 else
                 {
@@ -1142,7 +1159,7 @@ namespace DexComanda
                         report.PrintToPrinter(iNumCopias, false, 0, 0);
                     }
                 }
-                
+
 
             }
             catch (Exception erro)
@@ -1413,7 +1430,7 @@ namespace DexComanda
                         CrTable.ApplyLogOnInfo(crtableLogoninfo);
                     }
                     report.SetParameterValue("@Codigo", iCodPedido);
-
+                    report.SetParameterValue("@CodEndereco", 0);
                     if (iNomeImpressora != "")
                     {
                         report.PrintOptions.PrinterName = iNomeImpressora;
@@ -1507,7 +1524,7 @@ namespace DexComanda
             return iRetorno;
         }
         public static string ImpressaoBalcao(int iCodPedido, Boolean iExport = false,
-            int iNumCopias = 0,string iNomeImpressora="")
+            int iNumCopias = 0, string iNomeImpressora = "")
         {
             string iRetorno = ""; ;
             RelBalcao report;
@@ -1558,7 +1575,7 @@ namespace DexComanda
             }
             return iRetorno;
         }
-      
+
         public static string ImpressaoCaixa(int iCaixa, string iTurno, DateTime dtInicio, DateTime dtFim)
         {
             string iRetorno = ""; ;
@@ -1820,7 +1837,7 @@ namespace DexComanda
 
                 frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", "", "", TaxaEntrega, false,
                                                                             DateTime.Now, CodPedido, CodPessoa,
-                                                                            "", FormaPagamento, "", "Balcao",null, 0.00M,0,0,"", iCodEndereco);
+                                                                            "", FormaPagamento, "", "Balcao", null, 0.00M, 0, 0, "", iCodEndereco);
                 frmRepetePedido.ShowDialog();
 
 
@@ -2824,11 +2841,11 @@ namespace DexComanda
             return mRetornoWS;
 
         }
-        public static decimal RetornaTaxaPorCliente(int iCodPessoa,int iCodEndereco)
+        public static decimal RetornaTaxaPorCliente(int iCodPessoa, int iCodEndereco)
         {
             decimal iRetorno = 0.00M;
             DataTable Regiao;
-            if (iCodEndereco==0)
+            if (iCodEndereco == 0)
             {
                 Regiao = conexao.SelectRegistroPorCodigo("RegiaoEntrega", "spObterTaxaPorCliente", iCodPessoa).Tables["RegiaoEntrega"];
             }
@@ -2836,7 +2853,7 @@ namespace DexComanda
             {
                 Regiao = conexao.SelectRegistroPorCodigo("RegiaoEntrega", "spObterTaxaPorClienteEndereco", iCodEndereco).Tables["RegiaoEntrega"];
             }
-            
+
             if (Regiao.Rows.Count > 0)
             {
                 iRetorno = decimal.Parse(Regiao.Rows[0]["TaxaServico"].ToString());

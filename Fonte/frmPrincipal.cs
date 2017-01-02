@@ -1,5 +1,6 @@
 ﻿using DexComanda.Cadastros;
 using DexComanda.Cadastros.Empresa;
+using DexComanda.Cadastros.Pedido;
 using DexComanda.Cadastros.Pessoa;
 using DexComanda.Cadastros.Produto;
 using DexComanda.Integração;
@@ -60,7 +61,7 @@ namespace DexComanda
             BuscarCliente(txbTelefoneCliente.Text);
 
         }
-        private void ExecutaRepeticaoPedido(int iCodPessoa,int codEnde)
+        private void ExecutaRepeticaoPedido(int iCodPessoa, int codEnde)
         {
             DataRow LinhasPedido;
             int QuantidadePedidos = 0;
@@ -88,13 +89,13 @@ namespace DexComanda
                 IniciaPedido(iCodPessoa, codEnde);
             }
         }
-        private void IniciaPedido(int CodPessoa, int iCodEndeco=0)
+        private void IniciaPedido(int CodPessoa, int iCodEndeco = 0)
         {
             var TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, iCodEndeco);
 
             frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", "0,00", "0,00", TaxaEntrega,
                                                                         false, DateTime.Now, 0, CodPessoa,
-                                                                        "", "", "", "", null, 0.00M,0.00M,0,"",iCodEndeco);
+                                                                        "", "", "", "", null, 0.00M, 0.00M, 0, "", iCodEndeco);
             CadPedido.ShowDialog();
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
             TotalizaPedidos();
@@ -126,9 +127,9 @@ namespace DexComanda
                         DataSet Pessoa = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", telefone);
                         DataRow dRow = Pessoa.Tables["Pessoa"].Rows[0];
 
-                       
+
                         int CodigoPessoa = int.Parse(dRow.ItemArray.GetValue(0).ToString());
-                       // intCodEndereco =  Utils.MaisEnderecos(CodigoPessoa);
+                        // intCodEndereco =  Utils.MaisEnderecos(CodigoPessoa);
                         intCodEndereco = int.Parse(dRow.ItemArray.GetValue(16).ToString());
                         this.txtNome.Text = dRow.ItemArray.GetValue(1).ToString();
                         this.txtEndereco.Text = dRow.ItemArray.GetValue(2).ToString();
@@ -633,7 +634,7 @@ namespace DexComanda
                                       strTroco, TaxaServico, true, Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString()),
                                       int.Parse(DvPedido.ItemArray.GetValue(1).ToString()), int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), DvPedido.ItemArray.GetValue(4).ToString(),
                                       DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(), null,
-                                      decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao,intCodEndereco);
+                                      decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao, intCodEndereco);
             frm.ShowDialog();
         }
         private void EditarPedido(object sender, DataGridViewCellEventArgs e)
@@ -680,15 +681,13 @@ namespace DexComanda
                 MenuItem StatusConcluido = new MenuItem(" 4 - Concluído/Entregue");
                 MenuItem ImprimeConferenciaMesa = new MenuItem(" Imprimir Conferencia desta Mesa");
                 MenuItem PedidoONline = new MenuItem(" X - Status Pedido");
-
+                MenuItem TransMesa = new MenuItem("5 - Transferir Mesa");
 
                 if (pedidosGridView.Rows.Count > 0)
                 {
                     PedidoONline = new MenuItem(" X - Status Pedido");
 
                     DataSet dsStatus = con.SelectAll("PedidoStatus", "", "select * from PedidoStatus");
-                    //for (int i = 0; i < dsStatus.Tables[0].Rows.Count; i++)
-
                     MenuItem StatusNaCozinha = new MenuItem(" 0 - Pedido na Cozinha");
                     MenuItem StatusNaEntrega = new MenuItem(" 1 - Saiu pra entrega");
                     MenuItem StatusCancelado = new MenuItem(" 2 - Cancelado");
@@ -700,9 +699,6 @@ namespace DexComanda
                     StatusCancelado.Enabled = Sessions.retunrUsuario.CancelaPedidosSN;
                     StatusNaCozinha.Click += PedidoNaCozinha;
                     StatusNaEntrega.Click += PedidoNaEntrega;
-                    //}
-
-
                 }
 
 
@@ -711,11 +707,19 @@ namespace DexComanda
                 FinalizaSelecionados.Click += FinalizaTodos;
                 InformaEntregador.Click += SelecionaBoy;
                 StatusConcluido.Click += PEdidoConcluido;
+                
+
                 m.MenuItems.Add(CancPedido);
                 m.MenuItems.Add(FinalizarPed);
                 m.MenuItems.Add(FinalizaSelecionados);
                 m.MenuItems.Add(InformaEntregador);
                 m.MenuItems.Add(StatusConcluido);
+
+                if (Utils.VerificaSeEmesa(int.Parse(pedidosGridView.CurrentRow.Cells[0].Value.ToString())))
+                {
+                    m.MenuItems.Add(TransMesa);
+                    TransMesa.Click += TransfereMesa;
+                }
                 m.MenuItems.Add(PedidoONline);
                 int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
                 m.Show(dgv, new Point(e.X, e.Y));
@@ -773,7 +777,7 @@ namespace DexComanda
                                 Utils.AtualizaMesa(iCodMesa, 1);
                             }
                             Utils.ControlaEventos("BaixaPed", this.Name);
-                            con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo,1);
+                            con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo, 1);
 
                         }
 
@@ -825,15 +829,16 @@ namespace DexComanda
                     }
 
                     // Caso o pedido for mesa ele altera o Status da Mesa
+                    Boolean bFinalizouViaMesa = false;
                     if (ControlaMesas && iCodMesa != 0)
                     {
-                        frmFinalizacaoPedido frm = new frmFinalizacaoPedido(dblTotalPedido, false, codigo,iCodMesa);
+                        frmFinalizacaoPedido frm = new frmFinalizacaoPedido(dblTotalPedido, false, codigo, iCodMesa);
                         frm.StartPosition = FormStartPosition.CenterParent;
                         frm.ShowDialog();
 
                         if (frm.boolFinalizou)
                         {
-                            //  NumeroMesa = Convert.ToString(Utils.RetornaNumeroMesa(iCodMesa));
+                            bFinalizouViaMesa = true;
                             AtualizaStatusMesa(iCodMesa, Bibliotecas.cStatuMesaLiberada);
                         }
                         else
@@ -855,9 +860,12 @@ namespace DexComanda
 
                     // Enfim finaliza o Pedido
                     Utils.ControlaEventos("BaixaPed", this.Name);
-                    con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo,1);
+                    if (!bFinalizouViaMesa)
+                    {
+                        con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo, 1);
+                    }
 
-                    //  Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
+                    //Atualiza Grid
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
                 }
                 else
@@ -872,7 +880,11 @@ namespace DexComanda
             }
 
         }
-
+        private void TransfereMesa(object sender, EventArgs e)
+        {
+            frmTransfereMesa frmMe = new frmTransfereMesa();
+            frmMe.ShowDialog();
+        }
 
         private void PEdidoConcluido(object sender, EventArgs e)
         {
@@ -1159,11 +1171,11 @@ namespace DexComanda
 
 
         }
-        private void AbrirPedido(int CodPessoa,int CodEnde=0)
+        private void AbrirPedido(int CodPessoa, int CodEnde = 0)
         {
             try
             {
-                int intCodEndereco = int.Parse(con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo",CodPessoa).Tables[0].Rows[0].ItemArray.GetValue(20).ToString());
+                int intCodEndereco = int.Parse(con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", CodPessoa).Tables[0].Rows[0].ItemArray.GetValue(20).ToString());
                 if (Sessions.returnConfig.RepeteUltimoPedido)
                 {
                     ExecutaRepeticaoPedido(CodPessoa, intCodEndereco);
@@ -1174,7 +1186,7 @@ namespace DexComanda
                     frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", "0,00", "0,00",
                                                                     TaxaServico, false, DateTime.Now, 0,
                                                                     CodPessoa,
-                                                                        "0,00", "", "", "", null, 0.00M,0,0,"", intCodEndereco);
+                                                                        "0,00", "", "", "", null, 0.00M, 0, 0, "", intCodEndereco);
                     frm.ShowDialog();
                 }
 

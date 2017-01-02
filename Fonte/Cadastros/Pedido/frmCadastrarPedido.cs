@@ -168,7 +168,8 @@ namespace DexComanda
         }
         private void CarregaMesas()
         {
-            cbxListaMesas.DataSource = con.SelectAll("Mesas", "spObterMesasAbertas").Tables["Mesas"];
+            DataSet ds = con.SelectAll("Mesas", "spObterMesasAbertas");/*.Tables["Mesas"];*/
+            cbxListaMesas.DataSource = ds.Tables["Mesas"];
             cbxListaMesas.DisplayMember = "NumeroMesa";
             cbxListaMesas.ValueMember = "Codigo";
 
@@ -1798,7 +1799,7 @@ namespace DexComanda
                         iCodigo = codPedido;
                     }
                     if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras || Sessions.returnEmpresa.CNPJ
-                        == Bibliotecas.cMassaRara || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria)
+                        == Bibliotecas.cMassaRara || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria || Sessions.returnEmpresa.CNPJ== "11291880000119")
                     {
                         Utils.ImpressaoPorCozinha(iCodigo);
                         return;
@@ -3467,7 +3468,7 @@ namespace DexComanda
         {
             btnCalGarcon.Enabled = cbxTipoPedido.Text == "1 - Mesa";
 
-            if (cbxTipoPedido.Text == "1 - Mesa" && gNUmeroMesa == "")
+            if (cbxTipoPedido.Text == "1 - Mesa")
             {
                 CarregaMesas();
                 cbxListaMesas.Visible = true;
