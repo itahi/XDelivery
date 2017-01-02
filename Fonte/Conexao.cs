@@ -1865,12 +1865,12 @@ namespace DexComanda
             return ds;
         }
 
-        public DataSet SinalizarPedidoConcluido(string table, string spName, int codigo)
+        public DataSet SinalizarPedidoConcluido(string table, string spName, int codigo,int iNumeroPessoas)
         {
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Codigo", codigo);
-            //   command.Parameters.AddWithValue("@status", "Fechado");
+            command.Parameters.AddWithValue("@NumeroPessoas", iNumeroPessoas);
             adapter = new SqlDataAdapter(command);
             adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 

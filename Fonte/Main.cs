@@ -443,15 +443,15 @@ namespace DexComanda
 
             if (QuantidadePedidos > 0)
             {
-                DialogResult resultado = MessageBox.Show("Deseja Repetir o Ultimo Pedido ?", "Dex Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if (resultado == DialogResult.Yes)
-                {
-                    Utils.RepetirUltimoPedido(iCodPessoa, this);
-                }
-                else
-                {
-                    IniciaPedido(iCodPessoa);
-                }
+                //DialogResult resultado = MessageBox.Show("Deseja Repetir o Ultimo Pedido ?", "Dex Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                //if (resultado == DialogResult.Yes)
+                //{
+                //    Utils.RepetirUltimoPedido(iCodPessoa, this);
+                //}
+                //else
+                //{
+                //    IniciaPedido(iCodPessoa);
+                //}
 
             }
             else
@@ -894,7 +894,7 @@ namespace DexComanda
                             {
                                 Utils.AtualizaMesa(1, 1);
                             }
-                            con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
+                            con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo,1);
 
                         }
 
@@ -1035,7 +1035,7 @@ namespace DexComanda
                     AtualizarFidelidade(intCodPessoa);
 
                     // Enfim finaliza o Pedido
-                    con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
+                    con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo,1);
 
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
 

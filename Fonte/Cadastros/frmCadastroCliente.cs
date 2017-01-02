@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 using DexComanda.Models;
-using DexComanda.Integração;
-using DexComanda.Relatorios.Clientes;
 using DexComanda.Relatorios.Delivery;
-using CrystalDecisions.Shared;
-using DexComanda.Push;
 
 namespace DexComanda
 {
@@ -35,7 +25,7 @@ namespace DexComanda
         {
             InitializeComponent();
             this.parentMain = parent;
-            CarregaRegiao(0);
+            CarregaRegiao(0,cbxRegiao,txtTaxaEntrega);
 
             // ObterCidadePadrao();
             //ObterCidadePadrao();
@@ -77,7 +67,7 @@ namespace DexComanda
             txtDataNascimento.Text = iDataNascimento;
             txtUserID.Text = iUserID;
             txtPJPF.Text = iPJPF;
-            CarregaRegiao(iCodRegiao);
+            CarregaRegiao(iCodRegiao,cbxRegiao,txtTaxaEntrega);
 
             this.btnAdicionarCliente.Text = "Alterar [F12]";
             this.btnAdicionarCliente.Click -= AdicionarCliente;
@@ -144,13 +134,13 @@ namespace DexComanda
                         txtTelefone2.Text = RowsClientes.ItemArray.GetValue(11).ToString();
                     }
                     //Carrega as Regioes de Entrega previamente cadastradas // 
-                    CarregaRegiao(int.Parse(RowsClientes.ItemArray.GetValue(0).ToString()));
+                    CarregaRegiao(int.Parse(RowsClientes.ItemArray.GetValue(0).ToString()),cbxRegiao,txtTaxaEntrega);
                 }
 
             }
         }
 
-        private void CarregaRegiao(int iCodRegiao)
+        private void CarregaRegiao(int iCodRegiao,ComboBox iCbx,TextBox itext)
         {
             if (iCodRegiao == 0)
             {
@@ -207,7 +197,7 @@ namespace DexComanda
                         DataRow dRow = endereco.Tables["base_cep"].Rows[0];
                         this.txtEndereco.Text = dRow.ItemArray.GetValue(0).ToString();
                         this.txtBairro.Text = dRow.ItemArray.GetValue(1).ToString();
-                        PreencheRegiao(txtBairro.Text);
+                        PreencheRegiao(txtBairro.Text,cbxRegiao,txtTaxaEntrega);
                         this.txtNumero.Focus();
                     }
                     else
@@ -223,7 +213,7 @@ namespace DexComanda
                         {
                             txtEndereco.Text = _cepCorreios.Logradouro;
                             txtBairro.Text = _cepCorreios.Bairro;
-                            PreencheRegiao(txtBairro.Text);
+                            PreencheRegiao(txtBairro.Text,cbxRegiao,txtTaxaEntrega);
                             this.txtNumero.Focus();
                         }
                         pnConsultaCEp.Visible = false;
@@ -232,14 +222,15 @@ namespace DexComanda
             }
 
         }
-        private void PreencheRegiao(string iBairro)
+        private void PreencheRegiao(string iBairro,ComboBox iCbxName,TextBox iTextBox)
         {
             DataSet ds = con.RetornarTaxaPorBairro(iBairro);
             if (ds.Tables[0].Rows.Count > 0)
             {
-                cbxRegiao.SelectedValue = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("Codigo"));
-                cbxRegiao.Text = ds.Tables[0].Rows[0].Field<string>("NomeRegiao");
-                txtTaxaEntrega.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<decimal>("TaxaServico"));
+                mCodRegiao = ds.Tables[0].Rows[0].Field<int>("Codigo");
+                iCbxName.SelectedValue = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("Codigo"));
+                iCbxName.Text = ds.Tables[0].Rows[0].Field<string>("NomeRegiao");
+                iTextBox.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<decimal>("TaxaServico"));
             }
             else
             {
@@ -441,7 +432,6 @@ namespace DexComanda
                 }
                 if (txtDataNascimento.Visible && txtDataNascimento.Text == "  /  /")
                 {
-                    //pessoa.DataNascimento = Convert.ToDateTime(txtDataNascimento.Text);
                     pessoa.DataNascimento = Convert.ToDateTime("01/01/1950" + " " + "23:58:00");
                 }
                 else if (txtDataNascimento.Visible && txtDataNascimento.Text != "  /  /")
@@ -469,26 +459,25 @@ namespace DexComanda
         {
             parentMain = new Main();
             Utils.PopulaGrid_Novo("Pessoa", parentMain.produtosGridView, Sessions.SqlPessoa);
-
         }
-        private void CadastraCEP()
-        {
-            DataSet Cep = con.SelectAll("base_cep", "spObterMaiorCEP");
-            DataRow dRwo = Cep.Tables[0].Rows[0];
-            int NovoCep = int.Parse(dRwo.ItemArray.GetValue(0).ToString()) + 1;
+        //private void CadastraCEP()
+        //{
+        //    DataSet Cep = con.SelectAll("base_cep", "spObterMaiorCEP");
+        //    DataRow dRwo = Cep.Tables[0].Rows[0];
+        //    int NovoCep = int.Parse(dRwo.ItemArray.GetValue(0).ToString()) + 1;
 
-            baseCEP baseCep = new baseCEP()
-            {
-                Id = NovoCep,
-                Cep = int.Parse(txtCEP.Text),
-                Logradouro = this.txtEndereco.Text,
-                Bairro = txtBairro.Text,
-                Cidade = txtBairro.Text,
-                Estado = txtBairro.Text
-            };
+        //    baseCEP baseCep = new baseCEP()
+        //    {
+        //        Id = NovoCep,
+        //        Cep = int.Parse(txtCEP.Text),
+        //        Logradouro = this.txtEndereco.Text,
+        //        Bairro = txtBairro.Text,
+        //        Cidade = txtBairro.Text,
+        //        Estado = txtBairro.Text
+        //    };
 
-            con.Insert("spAdicionarCep", baseCep);
-        }
+        //    con.Insert("spAdicionarCep", baseCep);
+        //}
         private static void ClearForm(System.Windows.Forms.Control parent)
         {
             foreach (System.Windows.Forms.Control ctrControl in parent.Controls)
@@ -781,7 +770,7 @@ namespace DexComanda
             {
                 return;
             }
-            CarregaRegiao(0);
+            CarregaRegiao(0,cbxRegiao,txtTaxaEntrega);
         }
 
         private void MostraItems(object sender, DataGridViewCellMouseEventArgs e)
@@ -971,7 +960,7 @@ namespace DexComanda
 
         private void cbxRegiao_DropDown(object sender, EventArgs e)
         {
-            CarregaRegiao(0);
+            CarregaRegiao(0,cbxRegiao,txtTaxaEntrega);
         }
 
         private void AdicionarEndereco(object sender, EventArgs e)
@@ -1063,25 +1052,24 @@ namespace DexComanda
                         DataRow dRow = endereco.Tables["base_cep"].Rows[0];
                         this.txtLogradouro.Text = dRow.ItemArray.GetValue(0).ToString();
                         this.txtBairroEnd.Text = dRow.ItemArray.GetValue(1).ToString();
-                        txtCidadeEnd.Text = dRow.ItemArray.GetValue(1).ToString();
-                        PreencheRegiao(txtBairroEnd.Text);
+                        txtCidadeEnd.Text = dRow.ItemArray.GetValue(2).ToString();
+                        PreencheRegiao(txtBairroEnd.Text,cbxRegiaoEnd,txtTaxaEntregaEnd);
                         this.txtNumEnd.Focus();
+                        //CarregaRegiao(0, cbxRegiaoEnd, txtTaxaEntregaEnd);
                     }
                     else
                     {
-                        // MessageBox.Show("Cep não encontrado");
                         if (!con.IsConnected())
                         {
                             return;
                         }
-                        // pnConsultaCEp.Visible = true;
                         _cepCorreios = Utils.BuscaCEPOnline(txtCEPEnd.Text);
                         if (_cepCorreios != null)
                         {
                             txtLogradouro.Text = _cepCorreios.Logradouro;
                             txtBairroEnd.Text = _cepCorreios.Bairro;
                             txtCidadeEnd.Text = _cepCorreios.Cidade;
-                            PreencheRegiao(txtBairroEnd.Text);
+                            PreencheRegiao(txtBairroEnd.Text,cbxRegiaoEnd,txtTaxaEntregaEnd);
                             this.txtNumEnd.Focus();
                         }
                         // pnConsultaCEp.Visible = false;
@@ -1123,6 +1111,11 @@ namespace DexComanda
                 int intCodRegiao = int.Parse(gridViewEndereco.CurrentRow.Cells["CodRegiao"].Value.ToString());
                 Utils.MontaCombox(cbxRegiaoEnd, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioesPorCodigo", intCodRegiao);
             }
+        }
+
+        private void cbxRegiaoEnd_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CarregaRegiao(0, cbxRegiaoEnd, txtTaxaEntregaEnd);
         }
     }
 

@@ -26,8 +26,6 @@ namespace DexComanda.Cadastros.Pessoa
                 InitializeComponent();
                 con = new Conexao();
                 intCodPessoa = iCodPessoa;
-                DataSet dsEndecos = con.SelectRegistroPorCodigo("Pessoa_Endereco", "spObterEnderecoCompletoPessoa", intCodPessoa);
-
                 Utils.MontaCombox(cbxEnderecos, "EnderecoCompleto", "Codigo", "Pessoa_Endereco", "spObterEnderecoCompletoPessoa", iCodPessoa);
             }
             catch (Exception erro)

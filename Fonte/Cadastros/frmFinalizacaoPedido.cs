@@ -152,7 +152,7 @@ namespace DexComanda.Cadastros
                         }
                     }
                     boolFinalizou = true;
-                    con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", intCodPedido);
+                    con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", intCodPedido,int.Parse(txtNumero.Text));
                     if (Utils.MessageBoxQuestion("Deseja imprimir a conferencia desta dessa mesa?"))
                     {
                         Utils.ImpressaoFechamentoNovo(intCodPedid, false, 1);
@@ -212,6 +212,11 @@ namespace DexComanda.Cadastros
                 Finaliza(sender, e);
             }
            
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

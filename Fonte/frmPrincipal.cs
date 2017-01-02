@@ -75,7 +75,7 @@ namespace DexComanda
             {
                 if (Utils.MessageBoxQuestion("Deseja Repetir o Ultimo Pedido ?"))
                 {
-                    Utils.RepetirUltimoPedido(iCodPessoa);
+                    Utils.RepetirUltimoPedido(iCodPessoa, codEnde);
                 }
                 else
                 {
@@ -96,7 +96,6 @@ namespace DexComanda
                                                                         false, DateTime.Now, 0, CodPessoa,
                                                                         "", "", "", "", null, 0.00M,0.00M,0,"",iCodEndeco);
             CadPedido.ShowDialog();
-            //Utils.LimpaForm(this);
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
             TotalizaPedidos();
         }
@@ -126,10 +125,11 @@ namespace DexComanda
 
                         DataSet Pessoa = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", telefone);
                         DataRow dRow = Pessoa.Tables["Pessoa"].Rows[0];
-                        
+
                        
                         int CodigoPessoa = int.Parse(dRow.ItemArray.GetValue(0).ToString());
-                        intCodEndereco =  Utils.MaisEnderecos(CodigoPessoa);
+                       // intCodEndereco =  Utils.MaisEnderecos(CodigoPessoa);
+                        intCodEndereco = int.Parse(dRow.ItemArray.GetValue(16).ToString());
                         this.txtNome.Text = dRow.ItemArray.GetValue(1).ToString();
                         this.txtEndereco.Text = dRow.ItemArray.GetValue(2).ToString();
                         this.txtBairro.Text = dRow.ItemArray.GetValue(3).ToString();
@@ -326,7 +326,6 @@ namespace DexComanda
         {
 
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
-
             int iNumeroCaixa = Sessions.retunrUsuario.CaixaLogado;
             DataSet dsCaixa = con.RetornaCaixaPorTurno(iNumeroCaixa, Sessions.retunrUsuario.Turno, DateTime.Now);
             iCaixaAberto = dsCaixa.Tables[0].Rows.Count;
@@ -337,9 +336,7 @@ namespace DexComanda
                 lblCaixa.ForeColor = Color.Green;
             }
 
-
             this.txbTelefoneCliente.Focus();
-
             Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
             Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
@@ -364,8 +361,6 @@ namespace DexComanda
             envioDeSMSToolStripMenuItem.Enabled = Sessions.returnConfig.EnviaSMS;
             alterarSenhaToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
             usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
-            // entregadorToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
-
 
             this.txtUsuarioLogado.Text = Sessions.retunrUsuario.Nome;
             //usuáriosToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
@@ -622,7 +617,6 @@ namespace DexComanda
                 TaxaServico = Utils.RetornaTaxaPorCliente(int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), 0);
             }
 
-
             string strTrocoPara = DvPedido.ItemArray.GetValue(4).ToString();
             string strTotalPedido = DvPedido.ItemArray.GetValue(3).ToString();
             string strDescPedido = DvPedido.ItemArray.GetValue(14).ToString();
@@ -634,12 +628,12 @@ namespace DexComanda
             {
                 strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
             }
-
+            int intCodEndereco = int.Parse(DvPedido.ItemArray.GetValue(20).ToString());
             frmCadastrarPedido frm = new frmCadastrarPedido(false, strDescPedido, DvPedido.ItemArray.GetValue(9).ToString(),
                                       strTroco, TaxaServico, true, Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString()),
                                       int.Parse(DvPedido.ItemArray.GetValue(1).ToString()), int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), DvPedido.ItemArray.GetValue(4).ToString(),
                                       DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(), null,
-                                      decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao);
+                                      decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao,intCodEndereco);
             frm.ShowDialog();
         }
         private void EditarPedido(object sender, DataGridViewCellEventArgs e)
@@ -779,7 +773,7 @@ namespace DexComanda
                                 Utils.AtualizaMesa(iCodMesa, 1);
                             }
                             Utils.ControlaEventos("BaixaPed", this.Name);
-                            con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
+                            con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo,1);
 
                         }
 
@@ -861,7 +855,7 @@ namespace DexComanda
 
                     // Enfim finaliza o Pedido
                     Utils.ControlaEventos("BaixaPed", this.Name);
-                    con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo);
+                    con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo,1);
 
                     //  Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
@@ -1169,17 +1163,18 @@ namespace DexComanda
         {
             try
             {
+                int intCodEndereco = int.Parse(con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo",CodPessoa).Tables[0].Rows[0].ItemArray.GetValue(20).ToString());
                 if (Sessions.returnConfig.RepeteUltimoPedido)
                 {
-                    ExecutaRepeticaoPedido(CodPessoa,CodEnde);
+                    ExecutaRepeticaoPedido(CodPessoa, intCodEndereco);
                 }
                 else
                 {
-                    decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, CodEnde);
+                    decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, intCodEndereco);
                     frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", "0,00", "0,00",
                                                                     TaxaServico, false, DateTime.Now, 0,
                                                                     CodPessoa,
-                                                                        "0,00", "", "", "", null, 0.00M);
+                                                                        "0,00", "", "", "", null, 0.00M,0,0,"", intCodEndereco);
                     frm.ShowDialog();
                 }
 

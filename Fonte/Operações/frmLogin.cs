@@ -60,7 +60,11 @@ namespace DexComanda
                     }
                     else
                     {
-                        MessageBox.Show(Bibliotecas.cCaixaFechado);
+                        frmPrincipal frmPrincipal = new frmPrincipal();
+                        this.Hide();
+                        frmPrincipal.ShowDialog();
+                        //Utils.IniciaSistema();
+                        //MessageBox.Show(Bibliotecas.cCaixaFechado);
                     }
                 }
             }

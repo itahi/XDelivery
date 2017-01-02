@@ -997,6 +997,7 @@
             this.chkSEmFotos.TabIndex = 26;
             this.chkSEmFotos.Text = "Somente sem fotos";
             this.chkSEmFotos.UseVisualStyleBackColor = true;
+            this.chkSEmFotos.Visible = false;
             this.chkSEmFotos.CheckedChanged += new System.EventHandler(this.chkSEmFotos_CheckedChanged);
             // 
             // label11

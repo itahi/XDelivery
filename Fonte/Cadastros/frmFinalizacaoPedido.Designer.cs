@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblTotalPedido = new System.Windows.Forms.Label();
@@ -36,56 +37,61 @@
             this.gridFormasPagamento = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.lblNumeroMesa = new System.Windows.Forms.Label();
+            this.txtNumero = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.gridFormasPagamento)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Showcard Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 278);
+            this.label1.Font = new System.Drawing.Font("Showcard Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(6, 291);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(107, 20);
+            this.label1.Size = new System.Drawing.Size(97, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "Pedido R$:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Showcard Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(12, 310);
+            this.label3.Font = new System.Drawing.Font("Showcard Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(6, 323);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(91, 20);
+            this.label3.Size = new System.Drawing.Size(82, 20);
             this.label3.TabIndex = 3;
             this.label3.Text = "Falta R$:";
             // 
             // lblTotalPedido
             // 
             this.lblTotalPedido.AutoSize = true;
-            this.lblTotalPedido.BackColor = System.Drawing.Color.Red;
+            this.lblTotalPedido.BackColor = System.Drawing.Color.White;
             this.lblTotalPedido.Font = new System.Drawing.Font("Showcard Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalPedido.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblTotalPedido.Location = new System.Drawing.Point(125, 278);
+            this.lblTotalPedido.Location = new System.Drawing.Point(119, 291);
             this.lblTotalPedido.Name = "lblTotalPedido";
             this.lblTotalPedido.Size = new System.Drawing.Size(52, 23);
             this.lblTotalPedido.TabIndex = 4;
             this.lblTotalPedido.Text = "0,00";
+            this.toolTip1.SetToolTip(this.lblTotalPedido, "Valor total da Mesa");
             // 
             // lblFalta
             // 
             this.lblFalta.AutoSize = true;
-            this.lblFalta.BackColor = System.Drawing.Color.Red;
+            this.lblFalta.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.lblFalta.Font = new System.Drawing.Font("Showcard Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFalta.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblFalta.Location = new System.Drawing.Point(125, 310);
+            this.lblFalta.Location = new System.Drawing.Point(119, 323);
             this.lblFalta.Name = "lblFalta";
             this.lblFalta.Size = new System.Drawing.Size(52, 23);
             this.lblFalta.TabIndex = 5;
             this.lblFalta.Text = "0,00";
+            this.toolTip1.SetToolTip(this.lblFalta, "Valor que falta para fechar a conta");
             // 
             // btnFinalizar
             // 
-            this.btnFinalizar.Location = new System.Drawing.Point(255, 293);
+            this.btnFinalizar.Location = new System.Drawing.Point(322, 309);
             this.btnFinalizar.Name = "btnFinalizar";
             this.btnFinalizar.Size = new System.Drawing.Size(85, 37);
             this.btnFinalizar.TabIndex = 6;
@@ -105,8 +111,9 @@
             this.gridFormasPagamento.MultiSelect = false;
             this.gridFormasPagamento.Name = "gridFormasPagamento";
             this.gridFormasPagamento.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridFormasPagamento.Size = new System.Drawing.Size(372, 223);
+            this.gridFormasPagamento.Size = new System.Drawing.Size(406, 223);
             this.gridFormasPagamento.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.gridFormasPagamento, "Preencha a coluna valor , com o total pago em cada forma de pagamento");
             this.gridFormasPagamento.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridFormasPagamento_CellValueChanged);
             this.gridFormasPagamento.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.Valida);
             // 
@@ -130,11 +137,33 @@
             this.lblNumeroMesa.TabIndex = 9;
             this.lblNumeroMesa.Text = "txt";
             // 
+            // txtNumero
+            // 
+            this.txtNumero.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNumero.Location = new System.Drawing.Point(245, 317);
+            this.txtNumero.Name = "txtNumero";
+            this.txtNumero.Size = new System.Drawing.Size(71, 29);
+            this.txtNumero.TabIndex = 35;
+            this.txtNumero.Text = "1";
+            this.toolTip1.SetToolTip(this.txtNumero, "Numero de pessoas na mesa para dividir a conta");
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Showcard Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(219, 291);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(98, 20);
+            this.label4.TabIndex = 36;
+            this.label4.Text = "Nº Pessoas";
+            // 
             // frmFinalizacaoPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(375, 339);
+            this.ClientSize = new System.Drawing.Size(410, 354);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.txtNumero);
             this.Controls.Add(this.lblNumeroMesa);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.gridFormasPagamento);
@@ -166,5 +195,8 @@
         private System.Windows.Forms.DataGridView gridFormasPagamento;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblNumeroMesa;
+        private System.Windows.Forms.TextBox txtNumero;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label label4;
     }
 }

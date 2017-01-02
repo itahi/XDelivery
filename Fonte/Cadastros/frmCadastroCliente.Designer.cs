@@ -109,6 +109,8 @@
             this.grpListaEndereços = new System.Windows.Forms.GroupBox();
             this.gridViewEndereco = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.txtTaxaEntregaEnd = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
             this.txtPontoREnd = new System.Windows.Forms.TextBox();
             this.btnSalvar = new System.Windows.Forms.Button();
@@ -998,6 +1000,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label36);
+            this.groupBox2.Controls.Add(this.txtTaxaEntregaEnd);
             this.groupBox2.Controls.Add(this.label35);
             this.groupBox2.Controls.Add(this.txtPontoREnd);
             this.groupBox2.Controls.Add(this.btnSalvar);
@@ -1023,6 +1027,23 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Lista de Endereço";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(472, 19);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(71, 13);
+            this.label36.TabIndex = 23;
+            this.label36.Text = "Valor Entrega";
+            // 
+            // txtTaxaEntregaEnd
+            // 
+            this.txtTaxaEntregaEnd.Enabled = false;
+            this.txtTaxaEntregaEnd.Location = new System.Drawing.Point(475, 34);
+            this.txtTaxaEntregaEnd.Name = "txtTaxaEntregaEnd";
+            this.txtTaxaEntregaEnd.Size = new System.Drawing.Size(57, 20);
+            this.txtTaxaEntregaEnd.TabIndex = 22;
             // 
             // label35
             // 
@@ -1068,6 +1089,7 @@
             this.cbxRegiaoEnd.Size = new System.Drawing.Size(143, 21);
             this.cbxRegiaoEnd.TabIndex = 17;
             this.cbxRegiaoEnd.DropDown += new System.EventHandler(this.cbxRegiaoEnd_DropDown);
+            this.cbxRegiaoEnd.SelectedIndexChanged += new System.EventHandler(this.cbxRegiaoEnd_SelectedIndexChanged);
             // 
             // label28
             // 
@@ -1325,5 +1347,7 @@
         private System.Windows.Forms.DataGridView gridViewEndereco;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.TextBox txtPontoREnd;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.TextBox txtTaxaEntregaEnd;
     }
 }

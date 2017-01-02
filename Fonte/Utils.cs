@@ -696,7 +696,8 @@ namespace DexComanda
             return iRetorno;
         }
         public static string ImpressaoEntreganova(int iCodPedido, decimal iValorPago, string iPrevisaoEntrega,
-            Boolean iExport = false, int iNumCopias = 0,string iNomeImpressora="",Boolean iClienteNovo=false)
+            Boolean iExport = false, int iNumCopias = 0,string iNomeImpressora="",
+            Boolean iClienteNovo=false,int CodEndereco=0)
         {
             string iRetorno = ""; ;
 
@@ -731,6 +732,7 @@ namespace DexComanda
                     }
 
                     report.SetParameterValue("@Codigo", iCodPedido);
+                    report.SetParameterValue("@CodEndereco", CodEndereco);
                     report.SetParameterValue("ValorPago", iValorPago);
                     report.SetParameterValue("PrevEntrega", iPrevisaoEntrega);
                     report.SetParameterValue("ClienteNovo", iClienteNovo);
@@ -1797,7 +1799,7 @@ namespace DexComanda
                 }
             }
         }
-        public static void RepetirUltimoPedido(int iCodCliente, Main iMain = null)
+        public static void RepetirUltimoPedido(int iCodCliente, int CodEndereco)
         {
             DataSet ds;
             int CodPessoa, CodPedido;
@@ -1812,13 +1814,13 @@ namespace DexComanda
                 CodPedido = int.Parse(Linhas.ItemArray.GetValue(0).ToString());
                 CodPessoa = int.Parse(Linhas.ItemArray.GetValue(1).ToString());
                 FormaPagamento = Linhas.ItemArray.GetValue(3).ToString();
-
+                int iCodEndereco = int.Parse(Linhas.ItemArray.GetValue(5).ToString());
                 // Retorna a Taxa de Entrega do cadastro do Cliente
                 TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
 
                 frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", "", "", TaxaEntrega, false,
                                                                             DateTime.Now, CodPedido, CodPessoa,
-                                                                            "", FormaPagamento, "", "Balcao", iMain, 0.00M);
+                                                                            "", FormaPagamento, "", "Balcao",null, 0.00M,0,0,"", iCodEndereco);
                 frmRepetePedido.ShowDialog();
 
 
@@ -2816,7 +2818,7 @@ namespace DexComanda
             catch (Exception erro)
             {
 
-                MessageBox.Show(erro.Message);
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
             return mRetornoWS;
