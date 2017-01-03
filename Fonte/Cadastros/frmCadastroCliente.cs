@@ -20,6 +20,7 @@ namespace DexComanda
         private int mCodRegiao;
         private int rowIndex;
         private int codigo = 0;
+        private int prvCodEndereco;
 
         public frmCadastroCliente(Main parent = null)
         {
@@ -47,11 +48,11 @@ namespace DexComanda
         public frmCadastroCliente(int iCodPessoa, string iNomeCliente, string iTelefone, string iTelefone2,
                               string iCEP, string iEndereco, string inumero, string iBairro, string iCidade,
                               string iEstado, string iPontoReferencia, string iObservacao, int iCodRegiao,
-                              string iDataCadastro, string iDataNascimento, string iUserID, string iPJPF)
+                              string iDataCadastro, string iDataNascimento, string iUserID, string iPJPF,int intCodEndereco)
         {
             InitializeComponent();
-
             codigoClienteParaAlterar = iCodPessoa;
+            prvCodEndereco = intCodEndereco;
             txtNomeCliente.Text = iNomeCliente;
             txtTelefone.Text = iTelefone;
             txtTelefone2.Text = iTelefone2;
@@ -75,6 +76,25 @@ namespace DexComanda
 
             this.StartPosition = FormStartPosition.CenterParent;
             this.ShowDialog();
+        }
+        private void AtualizaEndereco()
+        {
+            Pessoa_Endereco pessEnd = new Pessoa_Endereco()
+            {
+                Codigo = prvCodEndereco,
+                Bairro = txtBairro.Text,
+                Cep = txtCEP.Text,
+                Cidade = txtCidade.Text,
+                CodPessoa = codigoClienteParaAlterar,
+                CodRegiao = mCodRegiao,
+                Complemento = txtObservacaoCliente.Text,
+                Endereco = txtEndereco.Text,
+                NomeEndereco = "Principal",
+                Numero = txtNumero.Text,
+                PontoReferencia = txtPontoReferencia.Text,
+                UF = txtEstado.Text
+            };
+            con.Update("spAlterarEndereco", pessEnd);
         }
         private void ListaEnderecos()
         {
@@ -370,7 +390,7 @@ namespace DexComanda
                         //this.parentMain.txtPontoReferencia.Text = dRow.ItemArray.GetValue(5).ToString();
 
                         var TaxaEntrega = Utils.RetornaTaxaPorCliente(iCodPessoa, 0);
-                        frmCadastrarPedido frmCadastrarPedido = new frmCadastrarPedido(false, "0,00", "", "", TaxaEntrega, false, DateTime.Now, 0, int.Parse(dRow.ItemArray.GetValue(0).ToString()),
+                        frmCadastrarPedido frmCadastrarPedido = new frmCadastrarPedido(false, "0,00", 0, "", TaxaEntrega, false, DateTime.Now, 0, int.Parse(dRow.ItemArray.GetValue(0).ToString()),
                                                                                        "", "", "", "", null, 0, 0, 0, "", iCodEndereco, true);
                         frmCadastrarPedido.ShowDialog();
                     }
@@ -445,6 +465,7 @@ namespace DexComanda
                 }
 
                 con.Update("spAlterarPessoa", pessoa);
+                AtualizaEndereco();
                 Utils.ControlaEventos("Altera", this.Name);
                 MessageBox.Show("Cliente alterado com sucesso.");
 

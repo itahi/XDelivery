@@ -93,7 +93,7 @@ namespace DexComanda
         {
             var TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, iCodEndeco);
 
-            frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", "0,00", "0,00", TaxaEntrega,
+            frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", 0, "0,00", TaxaEntrega,
                                                                         false, DateTime.Now, 0, CodPessoa,
                                                                         "", "", "", "", null, 0.00M, 0.00M, 0, "", iCodEndeco);
             CadPedido.ShowDialog();
@@ -625,12 +625,13 @@ namespace DexComanda
             decimal MargemGarcon = decimal.Parse(DvPedido.ItemArray.GetValue(16).ToString());
             int intCodVendedor = int.Parse(DvPedido.ItemArray.GetValue(17).ToString());
             string iObservacao = DvPedido.ItemArray.GetValue(18).ToString();
+            int iNumMesa = int.Parse(DvPedido.ItemArray.GetValue(12).ToString());
             if (strTrocoPara != "0,00" && strTrocoPara != "0")
             {
                 strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
             }
             int intCodEndereco = int.Parse(DvPedido.ItemArray.GetValue(20).ToString());
-            frmCadastrarPedido frm = new frmCadastrarPedido(false, strDescPedido, DvPedido.ItemArray.GetValue(9).ToString(),
+            frmCadastrarPedido frm = new frmCadastrarPedido(false, strDescPedido, iNumMesa,
                                       strTroco, TaxaServico, true, Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString()),
                                       int.Parse(DvPedido.ItemArray.GetValue(1).ToString()), int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), DvPedido.ItemArray.GetValue(4).ToString(),
                                       DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(), null,
@@ -1183,7 +1184,7 @@ namespace DexComanda
                 else
                 {
                     decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, intCodEndereco);
-                    frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", "0,00", "0,00",
+                    frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", 0, "0,00",
                                                                     TaxaServico, false, DateTime.Now, 0,
                                                                     CodPessoa,
                                                                         "0,00", "", "", "", null, 0.00M, 0, 0, "", intCodEndereco);
@@ -1287,12 +1288,13 @@ namespace DexComanda
                 {
                     DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", int.Parse(clientesGridView.SelectedCells[0].Value.ToString()));
                     DataRow dRowPessoa = dsPessoa.Tables["Pessoa"].Rows[0];
-
+                    int CodEndereco = dsPessoa.Tables["Pessoa"].Rows[0].Field<int>("CodEndereco");
                     frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
                                                                       dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(),
-                                                                      dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString());
+                                                                      dRowPessoa.ItemArray.GetValue(16).ToString(), 
+                                                                      dRowPessoa.ItemArray.GetValue(19).ToString(),CodEndereco);
 
 
                     Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
@@ -1811,8 +1813,8 @@ namespace DexComanda
                 if (iMesa && chkGerenciaImpressao.Checked && dsItemsNaoImpresso.Tables[0].Rows.Count > 0)
                 {
                     int CodPedido = int.Parse(dRowPedido.ItemArray.GetValue(1).ToString());
-                    int CodGrupo = int.Parse(dRowPedido.ItemArray.GetValue(20).ToString());
-                    string iNomeImpressora = dRowPedido.ItemArray.GetValue(21).ToString();
+                    int CodGrupo = int.Parse(dRowPedido.ItemArray.GetValue(23).ToString());
+                    string iNomeImpressora = dRowPedido.ItemArray.GetValue(24).ToString();
                     ImpressaoAutomatica(CodPedido, CodGrupo, iNomeImpressora);
                 }
 

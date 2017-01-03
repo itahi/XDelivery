@@ -944,6 +944,7 @@ namespace DexComanda
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
                 report.SetParameterValue("@Codigo", iCodPedido);
+                report.SetParameterValue("@CodEndereco", 0);
                 if (iExport)
                 {
                     CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
@@ -1556,7 +1557,7 @@ namespace DexComanda
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
                 report.SetParameterValue("@Codigo", iCodPedido);
-
+                report.SetParameterValue("@CodEndereco", 0);
                 if (iNomeImpressora != "")
                 {
                     report.PrintOptions.PrinterName = iNomeImpressora;
@@ -1738,7 +1739,7 @@ namespace DexComanda
                     int CodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
                     string FormaPagamento = dRowPedido.ItemArray.GetValue(5).ToString();
                     string DescPedido = dRowPedido.ItemArray.GetValue(14).ToString();
-                    string NumMesa = dRowPedido.ItemArray.GetValue(9).ToString();
+                    int NumMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
                     string strTrocoPara = dRowPedido.ItemArray.GetValue(4).ToString();
                     string strTotalPedido = dRowPedido.ItemArray.GetValue(3).ToString();
                     string strTipoPedido = dRowPedido.ItemArray.GetValue(8).ToString();
@@ -1835,7 +1836,7 @@ namespace DexComanda
                 // Retorna a Taxa de Entrega do cadastro do Cliente
                 TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
 
-                frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", "", "", TaxaEntrega, false,
+                frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", 0, "", TaxaEntrega, false,
                                                                             DateTime.Now, CodPedido, CodPessoa,
                                                                             "", FormaPagamento, "", "Balcao", null, 0.00M, 0, 0, "", iCodEndereco);
                 frmRepetePedido.ShowDialog();

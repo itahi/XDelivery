@@ -96,7 +96,7 @@ namespace DexComanda
             }
         }
         //private int HoraPedido = Sessions.returnPedido.RealizadoEm.Minute;
-        public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, string iNumeMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
+        public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, int iCodMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara, string fPagamento, string TipoPedido, string MesaBalcao,
             Main parent = null, decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0,
             string iObservacaoPedido = "", int iIntEnderecoSelecionado = 0, Boolean iClienteNovo = false)
@@ -146,10 +146,10 @@ namespace DexComanda
                     TrocoPagar = "0,00";
                 }
 
-                cbxListaMesas.Text = iNumeMesa;
-                gNUmeroMesa = iNumeMesa;
+                CarregaMesas(iCodMesa);
+               gNUmeroMesa = Convert.ToString(iCodMesa);
                 cbxTipoPedido.Text = TipoPedido;
-                cbxListaMesas.Items.Add(MesaBalcao);
+               // cbxListaMesas.Items.Add(MesaBalcao);
                 Utils.MontaCombox(cbxVendedor, "Nome", "Codigo", "Usuario", "spObterUsuarioPorCodigo", iCodVendedor);
             }
             catch (Exception mx)
@@ -166,13 +166,30 @@ namespace DexComanda
             this.itemsPedidoBindingSource.EndEdit();
             this.tableAdapterManager.UpdateAll(this.dBExpertDataSet);
         }
-        private void CarregaMesas()
+        private void CarregaMesas(int iCodMesa=0)
         {
-            DataSet ds = con.SelectAll("Mesas", "spObterMesasAbertas");/*.Tables["Mesas"];*/
-            cbxListaMesas.DataSource = ds.Tables["Mesas"];
-            cbxListaMesas.DisplayMember = "NumeroMesa";
-            cbxListaMesas.ValueMember = "Codigo";
+            try
+            {
+                if (iCodMesa==0)
+                {
+                    cbxListaMesas.DataSource = con.SelectAll("Mesas", "spObterMesasAbertas").Tables["Mesas"];
+                    cbxListaMesas.DisplayMember = "NumeroMesa";
+                    cbxListaMesas.ValueMember = "Codigo";
+                }
+                else
+                {
+                    cbxListaMesas.DataSource = con.SelectRegistroPorCodigo("Mesas", "spObterMesasPorCodigo", iCodMesa).Tables[0];
+                    cbxListaMesas.DisplayMember = "NumeroMesa";
+                    cbxListaMesas.ValueMember = "Codigo";
+                }
+               
 
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }  
+           
         }
         private void CarregaOpcoesProduto(int iCodProduto)
         {
@@ -182,10 +199,10 @@ namespace DexComanda
         public void frmCadastrarPedido_Load(object sender, EventArgs e)
         {
             grpVendedor.Enabled = Sessions.returnConfig.ExigeVendedorSN;
-            if (gNUmeroMesa == "")
-            {
-                CarregaMesas();
-            }
+            //if (gNUmeroMesa == "")
+            //{
+            //    CarregaMesas();
+            //}
 
             cbxTipoPedido.Visible = ContraMesas;
             DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
@@ -220,7 +237,6 @@ namespace DexComanda
 
             if (codPedido != 0 || PedidoRepetio)
             {
-
                 ConsultaStatusPedido(codPedido);
                 if (!PedidoRepetio)
                 {
@@ -294,12 +310,14 @@ namespace DexComanda
             }
             AtualizaClienteTela(prvCodEndecoSelecionado);
             this.gridViewItemsPedido.CurrentCell = null;
+            CalculaTaxaEntrega(cbxTipoPedido.Text == "0 - Entrega");
         }
         public void AtualizaClienteTela(int iCodEndereco = 0)
         {
             DataSet dsPessoa;
             try
             {
+                
                 if (iCodEndereco == 0)
                 {
                     dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
@@ -974,7 +992,8 @@ namespace DexComanda
         {
             Boolean iReturn = false;
             double TotalPedido = double.Parse(lbTotal.Text.Replace("R$", ""));
-            if (TotalPedido == 0)
+            double DescontoSolicitado = double.Parse(txtDesconto.Text.Replace("R$", ""));
+            if (TotalPedido == 0|| DescontoSolicitado==0)
             {
                 return true;
             }
@@ -2290,6 +2309,7 @@ namespace DexComanda
             this.btnAdicionarItemNoPedido = new System.Windows.Forms.Button();
             this.btnCancelarPedido = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnAtlCadastro = new System.Windows.Forms.Button();
             this.lblTempo = new System.Windows.Forms.Label();
             this.lblFidelidade = new System.Windows.Forms.Label();
@@ -2329,7 +2349,6 @@ namespace DexComanda
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.cbxListaMesas = new System.Windows.Forms.ComboBox();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.lblEndereco = new System.Windows.Forms.Label();
             this.lblNomeCliente = new System.Windows.Forms.Label();
@@ -2525,6 +2544,17 @@ namespace DexComanda
             this.panel1.Size = new System.Drawing.Size(1051, 43);
             this.panel1.TabIndex = 41;
             // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button1.Location = new System.Drawing.Point(558, 4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(72, 31);
+            this.button1.TabIndex = 67;
+            this.button1.Text = "Trocar Endereço";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // btnAtlCadastro
             // 
             this.btnAtlCadastro.FlatStyle = System.Windows.Forms.FlatStyle.System;
@@ -2550,7 +2580,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(799, 3);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -2775,6 +2805,7 @@ namespace DexComanda
             this.lblEntrega.Size = new System.Drawing.Size(71, 31);
             this.lblEntrega.TabIndex = 58;
             this.lblEntrega.Text = "0,00";
+            this.lblEntrega.TextChanged += new System.EventHandler(this.lblEntrega_TextChanged);
             // 
             // label8
             // 
@@ -2956,6 +2987,7 @@ namespace DexComanda
             this.cbxTipoPedido.TabIndex = 61;
             this.cbxTipoPedido.Text = "0 - Entrega";
             this.cbxTipoPedido.SelectedIndexChanged += new System.EventHandler(this.cbxTipoPedido_SelectedIndexChanged);
+            this.cbxTipoPedido.SelectionChangeCommitted += new System.EventHandler(this.cbxTipoPedido_SelectionChangeCommitted);
             // 
             // timer1
             // 
@@ -2987,17 +3019,6 @@ namespace DexComanda
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1051, 43);
             this.panel4.TabIndex = 63;
-            // 
-            // button1
-            // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Location = new System.Drawing.Point(558, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(72, 31);
-            this.button1.TabIndex = 67;
-            this.button1.Text = "Trocar Endereço";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label6
             // 
@@ -3229,8 +3250,8 @@ namespace DexComanda
             // 
             // chkListAdicionais
             // 
-            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chkListAdicionais.CheckOnClick = true;
             this.chkListAdicionais.FormattingEnabled = true;
@@ -3470,7 +3491,7 @@ namespace DexComanda
 
             if (cbxTipoPedido.Text == "1 - Mesa")
             {
-                CarregaMesas();
+               // CarregaMesas();
                 cbxListaMesas.Visible = true;
                 cbxListaMesas.Focus();
             }
@@ -3485,16 +3506,14 @@ namespace DexComanda
         {
             if (!iCalcula)
             {
-                // decimal iValorSemTaxa = decimal.Parse(lbTotal.Text) - lblEntrega.Text);
                 this.lbTotal.Text = "R$ " + Convert.ToString(decimal.Parse(lbTotal.Text.Replace("R$", "")) - decimal.Parse(lblEntrega.Text.Replace("R$", "")));
                 lblEntrega.Text = "R$ 0,00 ";
             }
             else
             {
-                this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + dcTaxaEntrega);
-                lblEntrega.Text = "R$ " + dcTaxaEntrega;
+                this.lbTotal.Text = "R$ " + Convert.ToString(SomaItensPedido() + decimal.Parse(lblEntrega.Text.Replace("R$", "")) - decimal.Parse(txtDesconto.Text.Replace("R$", "")));
+                lblEntrega.Text = "R$ " + Utils.RetornaTaxaPorCliente(codPessoa, prvCodEndecoSelecionado).ToString() ;
             }
-
             AlteraTotalPedido(gNUmeroMesa, dTotalPedido);
         }
 
@@ -3512,7 +3531,7 @@ namespace DexComanda
                 {
                     Codigo = codPedido,
                     NumeroMesa = gNUmeroMesa,
-                    TotalPedido = dTotalPedido,
+                    TotalPedido = SomaItensPedido() + decimal.Parse(lblEntrega.Text.Replace("R$","")) - decimal.Parse(txtDesconto.Text.Replace("R$", "")),
                     Tipo = cbxTipoPedido.Text,
                     CodEndereco = prvCodEndecoSelecionado
                 };
@@ -3532,7 +3551,6 @@ namespace DexComanda
                 }
                 pedi.Observacao = txtObsPedido.Text;
                 con.Update("spAlterarTotalPedido", pedi);
-
             }
             catch (Exception erro)
             {
@@ -4079,12 +4097,12 @@ namespace DexComanda
                 {
                     DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
                     DataRow dRowPessoa = dsPessoa.Tables["Pessoa"].Rows[0];
-
+                    int iCodEnd = int.Parse(dRowPessoa.ItemArray.GetValue(20).ToString());
                     frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
                                                                       dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
                                                                   , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(),
-                                                                      dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString());
+                                                                      dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString(),iCodEnd);
 
                     AtualizaClienteTela();
                 }
@@ -4247,7 +4265,7 @@ namespace DexComanda
 
         private void cbxListaMesas_DropDown(object sender, EventArgs e)
         {
-            CarregaMesas();
+           // CarregaMesas();
         }
 
         private void ListaFormasPagamento(object sender, EventArgs e)
@@ -4264,6 +4282,33 @@ namespace DexComanda
         {
             iNomeProd = cbxSabor.Text;
         }
+
+        private void cbxTipoPedido_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            //btnCalGarcon.Enabled = cbxTipoPedido.Text == "1 - Mesa";
+
+            //if (cbxTipoPedido.Text == "1 - Mesa")
+            //{
+            //    CarregaMesas();
+            //    cbxListaMesas.Visible = true;
+            //    cbxListaMesas.Focus();
+            //}
+            //else
+            //{
+            //    cbxListaMesas.Visible = false;
+            //}
+            //CalculaTaxaEntrega(cbxTipoPedido.Text == "0 - Entrega");
+        }
+
+        private void lblEntrega_TextChanged(object sender, EventArgs e)
+        {
+            if (cbxTipoPedido.Text!= "0 - Entrega")
+            {
+                lblEntrega.Text = "0,00";
+            }
+            //CalculaTaxaEntrega(cbxTipoPedido.Text == "0 - Entrega");
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             prvCodEndecoSelecionado = Utils.MaisEnderecos(codPessoa);

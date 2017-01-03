@@ -214,11 +214,11 @@ namespace DexComanda
                 strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
             }
 
-            frmCadastrarPedido frm = new frmCadastrarPedido(false, strDescPedido, DvPedido.ItemArray.GetValue(9).ToString(),
-                                      strTroco, TaxaServico, true, Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString()),
-                                      int.Parse(DvPedido.ItemArray.GetValue(1).ToString()), int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), DvPedido.ItemArray.GetValue(4).ToString(),
-                                      DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(), this, decimal.Parse(strTotalPedido), MargemGarcon);
-            frm.ShowDialog();
+            //frmCadastrarPedido frm = new frmCadastrarPedido(false, strDescPedido, DvPedido.ItemArray.GetValue(9).ToString(),
+            //                          strTroco, TaxaServico, true, Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString()),
+            //                          int.Parse(DvPedido.ItemArray.GetValue(1).ToString()), int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), DvPedido.ItemArray.GetValue(4).ToString(),
+            //                          DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(), this, decimal.Parse(strTotalPedido), MargemGarcon);
+            //frm.ShowDialog();
         }
         private void cadastrarToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -479,7 +479,7 @@ namespace DexComanda
         {
             var TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
 
-            frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", "", "0.00", TaxaEntrega, false, DateTime.Now, 0, CodPessoa,
+            frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", 0, "0.00", TaxaEntrega, false, DateTime.Now, 0, CodPessoa,
                                                                     "0.00", "", "", "", this, 0.00M);
             CadPedido.ShowDialog();
             LimpaCampos();
@@ -573,11 +573,16 @@ namespace DexComanda
 
                 DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", int.Parse(clientesGridView.SelectedCells[0].Value.ToString()));
                 DataRow dRowPessoa = dsPessoa.Tables["Pessoa"].Rows[0];
-
+                int iCodEnd = int.Parse(dRowPessoa.ItemArray.GetValue(20).ToString());
                 frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
                                                                   dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                                   , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
-                                                                  , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(), dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString());
+                                                                  , dRowPessoa.ItemArray.GetValue(8).ToString(),
+                                                                  int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()),
+                                                                  dRowPessoa.ItemArray.GetValue(15).ToString(), 
+                                                                  dRowPessoa.ItemArray.GetValue(12).ToString(), 
+                                                                  dRowPessoa.ItemArray.GetValue(16).ToString(), 
+                                                                  dRowPessoa.ItemArray.GetValue(19).ToString(),iCodEnd);
 
 
 
@@ -1200,7 +1205,7 @@ namespace DexComanda
                 else
                 {
                     decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
-                    frmCadastrarPedido frm = new frmCadastrarPedido(false, "", "", "0,00", TaxaServico, false, DateTime.Now, 0, CodPessoa,
+                    frmCadastrarPedido frm = new frmCadastrarPedido(false, "", 0, "0,00", TaxaServico, false, DateTime.Now, 0, CodPessoa,
                                                                         "", "", "", "", this, 0.00M);
                     frm.ShowDialog();
                 }
