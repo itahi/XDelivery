@@ -151,6 +151,7 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
+            this.vendasOnlineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -377,7 +378,8 @@
             this.cancelamentosToolStripMenuItem,
             this.crediárioToolStripMenuItem,
             this.melhoresClientesToolStripMenuItem,
-            this.vendasPorAtendenteVendedorToolStripMenuItem});
+            this.vendasPorAtendenteVendedorToolStripMenuItem,
+            this.vendasOnlineToolStripMenuItem});
             this.porPessoaToolStripMenuItem.Name = "porPessoaToolStripMenuItem";
             this.porPessoaToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.porPessoaToolStripMenuItem.Text = "Vendas";
@@ -1358,6 +1360,13 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
+            // vendasOnlineToolStripMenuItem
+            // 
+            this.vendasOnlineToolStripMenuItem.Name = "vendasOnlineToolStripMenuItem";
+            this.vendasOnlineToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
+            this.vendasOnlineToolStripMenuItem.Text = "Vendas Online";
+            this.vendasOnlineToolStripMenuItem.Click += new System.EventHandler(this.vendasOnlineToolStripMenuItem_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1523,5 +1532,6 @@
         private System.Windows.Forms.ToolStripMenuItem consultasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pedidosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vendasPorAtendenteVendedorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem vendasOnlineToolStripMenuItem;
     }
 }

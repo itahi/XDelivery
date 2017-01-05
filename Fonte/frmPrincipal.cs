@@ -14,6 +14,7 @@ using DexComanda.Operações.Funções;
 using DexComanda.Push;
 using DexComanda.Relatorios;
 using DexComanda.Relatorios.Clientes;
+using DexComanda.Relatorios.Delivery.Forms;
 using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Relatorios.Fechamentos.Novos.Impressao_Termica;
 using DexComanda.Relatorios.Gerenciais;
@@ -47,7 +48,7 @@ namespace DexComanda
         private CancelarPedido cancelPedid;
         private bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
         private DataSet dsPedidosAbertos;
-        private DataSet itemsPedido;
+        private DataSet itemsPedidoNaoImpresso;
         private int intCodEndereco;
         public frmPrincipal()
         {
@@ -1678,11 +1679,12 @@ namespace DexComanda
         {
             try
             {
-                itemsPedido = Utils.ItensSelect(iCodPedido);
-                for (int i = 0; i < itemsPedido.Tables[0].Rows.Count; i++)
+                itemsPedidoNaoImpresso = Utils.ItensSelect(iCodPedido);
+                for (int i = 0; i < itemsPedidoNaoImpresso.Tables[0].Rows.Count; i++)
                 {
                     string lRetorno = "";
                     Boolean imprimirAgora = false;
+                    DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", iCodPedido, "", iCodGrupo);
                     lRetorno = Utils.ImpressaMesaNova(iCodPedido, iCodGrupo, false, 1, iNomeImpressora, imprimirAgora);
                     for (int intFor = 0; intFor < itemsPedido.Tables[0].Rows.Count; intFor++)
                     {
@@ -1692,7 +1694,7 @@ namespace DexComanda
                         Atualiza.ImpressoSN = true;
                         con.Update("spInformaItemImpresso", Atualiza);
                     }
-                    itemsPedido = Utils.ItensSelect(iCodPedido);
+                    itemsPedidoNaoImpresso = Utils.ItensSelect(iCodPedido);
                 }
 
 
@@ -1963,6 +1965,12 @@ namespace DexComanda
         {
             frmReporVendasPorVendedor frmVe = new frmReporVendasPorVendedor();
             frmVe.Show();
+        }
+
+        private void vendasOnlineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReporVendaOnline frmVenOn = new frmReporVendaOnline();
+            frmVenOn.Show();
         }
     }
 }

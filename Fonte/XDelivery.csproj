@@ -507,6 +507,18 @@
       <DependentUpon>RelFechamentoCaixaCompleto.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Delivery\Forms\frmReporVendaOnline.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\Forms\frmReporVendaOnline.Designer.cs">
+      <DependentUpon>frmReporVendaOnline.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelVendasOnline.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelVendasOnline.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboyAgrupado.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1112,9 +1124,16 @@
     <EmbeddedResource Include="Relatorios\Clientes\frmReporVendasPorCliente.resx">
       <DependentUpon>frmReporVendasPorCliente.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\Forms\frmReporVendaOnline.resx">
+      <DependentUpon>frmReporVendaOnline.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesaSeparado.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelComandaMesaSeparado.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelVendasOnline.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelVendasOnline.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboyAgrupado.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

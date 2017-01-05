@@ -988,6 +988,7 @@ namespace DexComanda
             this.Close();
             //EXCLUIR ITEMS DO PEDIDO E DEPOIS REMOVER PEDIDO
         }
+
         private Boolean ValidaMaximoDesconto()
         {
             Boolean iReturn = false;
@@ -998,8 +999,6 @@ namespace DexComanda
                 return true;
             }
             double DescMAxPermitido = Sessions.retunrUsuario.DescontoMax;
-
-
             double Cal = 100;
             double DescCalculado = Double.Parse(txtDesconto.Text) * Cal / TotalPedido;
 
@@ -3005,7 +3004,6 @@ namespace DexComanda
             this.cbxListaMesas.Size = new System.Drawing.Size(106, 26);
             this.cbxListaMesas.TabIndex = 62;
             this.cbxListaMesas.Visible = false;
-            this.cbxListaMesas.DropDown += new System.EventHandler(this.cbxListaMesas_DropDown);
             // 
             // panel4
             // 
@@ -3336,8 +3334,11 @@ namespace DexComanda
             this.txtPorcentagemDesconto.Name = "txtPorcentagemDesconto";
             this.txtPorcentagemDesconto.Size = new System.Drawing.Size(72, 26);
             this.txtPorcentagemDesconto.TabIndex = 73;
+            this.txtPorcentagemDesconto.Text = "0";
             this.txtPorcentagemDesconto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPorcentagemDesconto_KeyDown);
             this.txtPorcentagemDesconto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorcentagemDesconto_KeyPress);
+            this.txtPorcentagemDesconto.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPorcentagemDesconto_KeyUp);
+            this.txtPorcentagemDesconto.Leave += new System.EventHandler(this.txtPorcentagemDesconto_Leave);
             // 
             // label12
             // 
@@ -3461,11 +3462,12 @@ namespace DexComanda
         {
             if (txtQuantidade.Text != "" && txtPrecoUnitario.Text != "" || cbxProdutosGrid.SelectedItem != null)
             {
+                
                 var precoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.ToString().Replace("R$ ", ""));
                 var quantidade = decimal.Parse(this.txtQuantidade.Text);
                 var total = Math.Round(precoUnitario * quantidade, 2);
                 this.txtPrecoTotal.Text = total.ToString();
-                // this.btnAdicionarItemNoPedido.Focus();
+                CalculaPorcentagemDesconto();
             }
         }
         private void CalculaTempPedido()
@@ -4262,12 +4264,6 @@ namespace DexComanda
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
-
-        private void cbxListaMesas_DropDown(object sender, EventArgs e)
-        {
-           // CarregaMesas();
-        }
-
         private void ListaFormasPagamento(object sender, EventArgs e)
         {
             Utils.MontaCombox(cmbFPagamento, "Descricao", "Codigo", "FormaPagamento", "spObterFormaPagamentoAtivo");
@@ -4309,6 +4305,17 @@ namespace DexComanda
             //CalculaTaxaEntrega(cbxTipoPedido.Text == "0 - Entrega");
         }
 
+        private void txtPorcentagemDesconto_KeyUp(object sender, KeyEventArgs e)
+        {
+            //CalculaPorcentagemDesconto();
+        }
+
+        private void txtPorcentagemDesconto_Leave(object sender, EventArgs e)
+        {
+            CalculaPorcentagemDesconto();
+            //Passei aqui
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             prvCodEndecoSelecionado = Utils.MaisEnderecos(codPessoa);
@@ -4324,16 +4331,26 @@ namespace DexComanda
 
         private void txtPorcentagemDesconto_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && txtPorcentagemDesconto.Text != "")
-            {
-                txtPrecoTotal.Text = Convert.ToString(decimal.Parse(txtPrecoUnitario.Text) * decimal.Parse(txtQuantidade.Text));
-                CalculaPorcentagemDesconto();
-            }
+            //if (e.KeyCode == Keys.Enter && txtPorcentagemDesconto.Text != "")
+            //{
+            //    txtPrecoTotal.Text = Convert.ToString(decimal.Parse(txtPrecoUnitario.Text) * decimal.Parse(txtQuantidade.Text));
+            //    CalculaPorcentagemDesconto();
+            //}
         }
         private void CalculaPorcentagemDesconto()
         {
-            var precoDesconto = decimal.Parse(txtPrecoTotal.Text) * (decimal.Parse(txtPorcentagemDesconto.Text)) / 100;
-            txtPrecoTotal.Text = precoDesconto.ToString();
+            if (txtPorcentagemDesconto.Text=="")
+            {
+                MessageBox.Show("Preencha o campo porcentagem de desconto");
+                txtPorcentagemDesconto.Focus();
+                return;
+            }
+            decimal qtdProduto = decimal.Parse(txtQuantidade.Text); 
+            decimal prUnitario = Convert.ToDecimal(txtPrecoUnitario.Text);
+            decimal vlrDesconto = prUnitario * qtdProduto * (decimal.Parse(txtPorcentagemDesconto.Text)) / 100;
+            //txtPrecoUnitario.Text = Convert.ToString(prUnitario - vlrDesconto);
+            var Calc = prUnitario * qtdProduto - vlrDesconto;
+            txtPrecoTotal.Text = Calc.ToString();
 
             // Validar o Desconto Máximo Por Usuario
             if (txtDesconto.Text != "0,00" || txtDesconto.Text.Trim() != "")
@@ -4343,16 +4360,16 @@ namespace DexComanda
                     return;
                 }
 
-                if (ValidaMaximoDesconto())
-                {
-                    pedido.DescontoValor = decimal.Parse(txtDesconto.Text);
-                }
-                else
-                {
-                    MessageBox.Show("Desconto máximo superado ");
-                    pedido.DescontoValor = decimal.Parse("0,00");
-                    return;
-                }
+                //if (ValidaMaximoDesconto())
+                //{
+                //    pedido.DescontoValor = decimal.Parse(txtDesconto.Text);
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Desconto máximo superado ");
+                //    pedido.DescontoValor = decimal.Parse("0,00");
+                //    return;
+                //}
 
             }
         }

@@ -1128,7 +1128,7 @@ namespace DexComanda
                 printersettings.Collate = false;
 
                 Tables CrTables;
-                report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
+                report.Load (Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
                 crConnectionInfo.UserID = "sa";
