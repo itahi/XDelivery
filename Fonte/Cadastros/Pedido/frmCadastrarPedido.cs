@@ -4331,11 +4331,11 @@ namespace DexComanda
 
         private void txtPorcentagemDesconto_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.KeyCode == Keys.Enter && txtPorcentagemDesconto.Text != "")
-            //{
-            //    txtPrecoTotal.Text = Convert.ToString(decimal.Parse(txtPrecoUnitario.Text) * decimal.Parse(txtQuantidade.Text));
-            //    CalculaPorcentagemDesconto();
-            //}
+            if (e.KeyCode == Keys.Enter && txtPorcentagemDesconto.Text != "")
+            {
+                txtPrecoTotal.Text = Convert.ToString(decimal.Parse(txtPrecoUnitario.Text) * decimal.Parse(txtQuantidade.Text));
+                CalculaPorcentagemDesconto();
+            }
         }
         private void CalculaPorcentagemDesconto()
         {
@@ -4345,10 +4345,10 @@ namespace DexComanda
                 txtPorcentagemDesconto.Focus();
                 return;
             }
+
             decimal qtdProduto = decimal.Parse(txtQuantidade.Text); 
             decimal prUnitario = Convert.ToDecimal(txtPrecoUnitario.Text);
             decimal vlrDesconto = prUnitario * qtdProduto * (decimal.Parse(txtPorcentagemDesconto.Text)) / 100;
-            //txtPrecoUnitario.Text = Convert.ToString(prUnitario - vlrDesconto);
             var Calc = prUnitario * qtdProduto - vlrDesconto;
             txtPrecoTotal.Text = Calc.ToString();
 
@@ -4360,16 +4360,16 @@ namespace DexComanda
                     return;
                 }
 
-                //if (ValidaMaximoDesconto())
-                //{
-                //    pedido.DescontoValor = decimal.Parse(txtDesconto.Text);
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Desconto máximo superado ");
-                //    pedido.DescontoValor = decimal.Parse("0,00");
-                //    return;
-                //}
+                if (ValidaMaximoDesconto())
+                {
+                    pedido.DescontoValor = pedido.DescontoValor + vlrDesconto;
+                }
+                else
+                {
+                    MessageBox.Show("Desconto máximo superado ");
+                    pedido.DescontoValor = decimal.Parse("0,00");
+                    return;
+                }
 
             }
         }
