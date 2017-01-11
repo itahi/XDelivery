@@ -32,6 +32,7 @@ namespace DexComanda
         public string strSqlExecutado;
         private int lastCodigo;
         public static string connectionString = null;
+        private object iNumeroPessoas;
 
         public Conexao()
         {
@@ -114,7 +115,7 @@ namespace DexComanda
             return ds;
 
         }
-        public DataSet ConsultaPedido(string iCodPedido,DateTime dtInicio, DateTime dtFim)
+        public DataSet ConsultaPedido(string iCodPedido, DateTime dtInicio, DateTime dtFim)
         {
             string strCodPedido;
             string iSql = "select Pd.Codigo," +
@@ -123,7 +124,7 @@ namespace DexComanda
                 " join  PedidoStatus PS on Status = PSM.CodStatus where PSM.CodPedido=PD.Codigo " +
                 " order by PSM.DataAlteracao desc ) as 'Situacao Pedido' ,(select Nome from Entregador " +
                 " where Codigo=PD.CodMotoboy) as 'Entregador',(Select Nome from Usuario where Cod = PD.CodUsuario)" +
-                " as 'Atendente' from Pedido Pd where Pd.RealizadoEM between '" + dtInicio.ToShortDateString() +" 00:00:00"+ "'  and  '" + dtFim.ToShortDateString() +" 23:59:59"+"'";
+                " as 'Atendente' from Pedido Pd where Pd.RealizadoEM between '" + dtInicio.ToShortDateString() + " 00:00:00" + "'  and  '" + dtFim.ToShortDateString() + " 23:59:59" + "'";
 
             if (iCodPedido != "")
             {
@@ -136,8 +137,8 @@ namespace DexComanda
             adapter.Fill(ds, "Pedido");
             return ds;
         }
-        public DataSet RetornaMaioresPrecos( string iCod1, string iCod2, string iCod3,
-            string iCod4,string iCodOpcao, Boolean iPrecoMar=true)
+        public DataSet RetornaMaioresPrecos(string iCod1, string iCod2, string iCod3,
+            string iCod4, string iCodOpcao, Boolean iPrecoMar = true)
         {
             string iSqlConsulta = "";
             if (iPrecoMar)
@@ -153,7 +154,7 @@ namespace DexComanda
             else
             {
                 iSqlConsulta = "select " +
-                                     " CAST(AVG(PO.Preco + P.PrecoProduto) AS NUMERIC(10, 2)) as Preco "+
+                                     " CAST(AVG(PO.Preco + P.PrecoProduto) AS NUMERIC(10, 2)) as Preco " +
                                      " from " +
                                      " Produto_Opcao PO" +
                                      " left" +
@@ -161,8 +162,8 @@ namespace DexComanda
                                      " left join Opcao O on O.Codigo = PO.CodOpcao and O.Tipo = 1" +
                                      " where CodProduto in (@Cod1, @Cod2, @Cod3, @Cod4) and CodOpcao = @CodOpcao ";
             }
-             
-            
+
+
             command = new SqlCommand(iSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@Cod1", iCod1);
@@ -181,7 +182,7 @@ namespace DexComanda
             DataSet dsGrupo;
             int iReturn = 0;
             dsGrupo = SelectRegistroPorCodigo("Grupo", "spObterGrupoPorCodigo", iCodGrupo);
-            if (dsGrupo.Tables[0].Rows.Count>0)
+            if (dsGrupo.Tables[0].Rows.Count > 0)
             {
                 iReturn = int.Parse(dsGrupo.Tables[0].Rows[0].ItemArray.GetValue(6).ToString());
             }
@@ -213,7 +214,7 @@ namespace DexComanda
             return int.Parse(ds.Tables[0].Rows[0].ItemArray.GetValue(0).ToString());
         }
 
-        public DataSet RetornaCaixaPorTurno(int iCodCaixa , string iTurno , DateTime iData)
+        public DataSet RetornaCaixaPorTurno(int iCodCaixa, string iTurno, DateTime iData)
         {
             string iSqlConsulta = "select * from Caixa " +
                                    " where Numero=@Numero and " +
@@ -246,7 +247,7 @@ namespace DexComanda
 
         }
 
-        protected bool ConsultaPedidoExiste(int iCodPedido,int iCodStatus)
+        protected bool ConsultaPedidoExiste(int iCodPedido, int iCodStatus)
         {
             Boolean iReturn = false;
             string lSqlConsulta = "select * from PedidoStatusMovimento " +
@@ -258,7 +259,7 @@ namespace DexComanda
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, "PedidoStatusMovimento");
-            return iReturn = ds.Tables[0].Rows.Count>0;
+            return iReturn = ds.Tables[0].Rows.Count > 0;
         }
         public void AtualizaSituacao(int iCodPedido, int iCodUser, int iCodStatus, DataGridView grid = null)
         {
@@ -288,13 +289,13 @@ namespace DexComanda
                     };
                     Insert("spAdicionarPedidoStatusMovimento", ped);
                 }
-                
+
             }
             catch (Exception erro)
             {
                 MessageBox.Show("Não foi possivel alterar o statuso do Pedido" + erro.Message);
             }
-         
+
             // Utils.PopulaGrid_Novo("Pedido", grid, Sessions.SqlPedido);
         }
         public decimal RetornaPrecoComEmbalagem(string iGrupoProduto, int iCodProduto)
@@ -391,7 +392,7 @@ namespace DexComanda
             // conn.Close();
         }
 
-        public void SalvarAdicionais(int iCodProduto, int iCodOpcao, decimal iPreco,int iCodTipo)
+        public void SalvarAdicionais(int iCodProduto, int iCodOpcao, decimal iPreco, int iCodTipo)
         {
             Produto_Opcao prod = new Produto_Opcao()
             {
@@ -888,7 +889,7 @@ namespace DexComanda
             adapter.Fill(ds, table);
             return ds;
         }
-        public DataSet SelectCaixaMovimetoFiltro(string iDataI, string iDataF, string iTipo, string iCdFormaPagt, string table = "CaixaMovimento", string iNumCaixa = "1",string iTurno="Dia")
+        public DataSet SelectCaixaMovimetoFiltro(string iDataI, string iDataF, string iTipo, string iCdFormaPagt, string table = "CaixaMovimento", string iNumCaixa = "1", string iTurno = "Dia")
         {
             string lSqlConsulta = " select " +
                                     " CX.Numero as 'Numero Caixa'," +
@@ -905,12 +906,12 @@ namespace DexComanda
                                     " 'Tipo Movimento' " +
                                     " from CaixaMovimento  CXM " +
                                     " LEFT JOIN FormaPagamento FP ON FP.Codigo = CXM.CodFormaPagamento " +
-                                    " LEFT JOIN Caixa          CX ON CX.Codigo = CXM.CodCaixa"+
-                                    
+                                    " LEFT JOIN Caixa          CX ON CX.Codigo = CXM.CodCaixa" +
+
                                 " where " +
                                 " CXM.Turno ='" + iTurno + "'" +
                                 " and CXM.Data BETWEEN  '" + iDataI.ToString() + "' AND '" + iDataF.ToString() + "'";
-                               
+
 
             if (iNumCaixa != "")
             {
@@ -1108,7 +1109,7 @@ namespace DexComanda
                 spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
                 spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" || spName == "spAdicionarPedidoStatus" ||
                 spName == "spAdicionarEmpresa" || spName == "spAdicionarFamilia" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento"
-                ||spName == "spAdicionarEndereco" || spName == "spAdicionarOpcaProduto" || spName == "spAdicionarProduto_OpcaoTipo" || spName == "spAdicionarEmpresa_HorarioEntrega")
+                || spName == "spAdicionarOpcaProduto" || spName == "spAdicionarProduto_OpcaoTipo" || spName == "spAdicionarEmpresa_HorarioEntrega")
             {
 
                 if (spName == "spAdicionarProduto")
@@ -1123,7 +1124,7 @@ namespace DexComanda
                     {
                         if (!propriedade.Name.Equals("cod"))
                         {
-                            if ( (propriedade.Name.ToString()== "CodigoPersonalizado" || propriedade.Name.ToString() == "CodFamilia" )&& propriedade.GetValue(obj).ToString() == "0")
+                            if ((propriedade.Name.ToString() == "CodigoPersonalizado" || propriedade.Name.ToString() == "CodFamilia") && propriedade.GetValue(obj).ToString() == "0")
                             {
                                 command.Parameters.AddWithValue("@" + propriedade.Name, DBNull.Value);
                             }
@@ -1212,32 +1213,13 @@ namespace DexComanda
                             Console.WriteLine(propriedade.Name);
                             command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
                         }
-                        
+
                     }
                 }
 
             }
-            //else if (spName == "spAdicionarOpcao")
-            //{
-            //    CodOpcao = new SqlParameter("@Codigo", SqlDbType.Int);
-            //    CodOpcao.Direction = ParameterDirection.Output;
-            //    command.Parameters.Add(CodOpcao);
-
-            //    foreach (PropertyInfo propriedade in properties)
-            //    {
-            //        if (!propriedade.Name.Equals("Codigo") && !propriedade.Name.Equals("DataSincronismo"))
-            //        {
-            //            Console.WriteLine(propriedade.Name);
-            //            command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
-            //        }
-            //    }
-
-            //}
             else if (spName == "spCriarPedido" || spName == "spAdicionaHistoricoCancelamento")
             {
-
-                //  Console.WriteLine("spCriarPedido");
-
                 foreach (PropertyInfo propriedade in properties)
                 {
                     if (!propriedade.Name.Equals("Codigo"))
@@ -1248,6 +1230,7 @@ namespace DexComanda
                 }
 
             }
+
             else if (spName == "spAlteraFidelidade" || spName == "spZerarFidelidade")
             {
 
@@ -1276,6 +1259,27 @@ namespace DexComanda
                     }
                 }
 
+            }
+            else if (spName == "spAdicionarEndereco")
+            {
+                foreach (PropertyInfo propriedade in properties)
+                {
+                    Console.WriteLine(propriedade.Name);
+                    command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj));
+                }
+                //CodEndereco = new SqlParameter("@Codigo", SqlDbType.Int);
+                //CodEndereco.Direction = ParameterDirection.Output;
+                //command.Parameters.Add(CodEndereco);
+
+                //foreach (PropertyInfo propriedade in properties)
+                //{
+                //    if (!propriedade.Name.Equals("Codigo"))
+                //    {
+                //        Console.WriteLine(propriedade.Name);
+                //        command.Parameters.AddWithValue("@" + propriedade.Name, propriedade.GetValue(obj, null));
+                //    }
+
+                //}
             }
             else
             {
@@ -1328,10 +1332,10 @@ namespace DexComanda
 
                 if (spName == "spAlterarTotalPedido")
                 {
-                   
-                    if (p.Name.Equals("CodUsuario")|| p.Name.Equals("Codigo") || p.Name.Equals("TotalPedido")
+
+                    if (p.Name.Equals("CodUsuario") || p.Name.Equals("Codigo") || p.Name.Equals("TotalPedido")
                         || p.Name.Equals("Tipo") || p.Name.Equals("NumeroMesa") || p.Name.Equals("HorarioEntrega")
-                        || p.Name.Equals("DescontoValor")||p.Name.Equals("Observacao") || p.Name.Equals("CodEndereco"))
+                        || p.Name.Equals("DescontoValor") || p.Name.Equals("Observacao") || p.Name.Equals("CodEndereco"))
                     {
                         if (p.Name.ToString() == "CodUsuario" && p.GetValue(obj).ToString() == "0")
                         {
@@ -1341,7 +1345,7 @@ namespace DexComanda
                         {
                             command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                         }
-                       
+
                     }
                 }
                 else if (spName == "spAlterarGrupo")
@@ -1394,7 +1398,7 @@ namespace DexComanda
                 else if (spName == "spAlterarUsuario")
                 {
 
-                    if (!p.Name.Equals("CaixaLogado")&& !p.Name.Equals("Turno"))
+                    if (!p.Name.Equals("CaixaLogado") && !p.Name.Equals("Turno"))
                     {
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
@@ -1460,7 +1464,7 @@ namespace DexComanda
                             command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                         }
                     }
-                    else if (spName== "spExcluirFinalizaPedido_Pedido")
+                    else if (spName == "spExcluirFinalizaPedido_Pedido")
                     {
                         command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
@@ -1798,7 +1802,7 @@ namespace DexComanda
                 command.Parameters.AddWithValue("@Codigo", codigo);
                 command.Parameters.AddWithValue("@NomeImpressora", iCodString);
             }
-            else if (spName== "spObterProdutoCodigoInterno")
+            else if (spName == "spObterProdutoCodigoInterno")
             {
                 command.Parameters.AddWithValue("@Codigo", codigo);
                 command.Parameters.AddWithValue("@CodProduto", iCodString);
@@ -1808,7 +1812,7 @@ namespace DexComanda
                 command.Parameters.AddWithValue("@Codigo", codigo);
                 command.Parameters.AddWithValue("@CodGrupo", iCodigo2);
             }
-          
+
             else
             {
                 command.Parameters.AddWithValue("@Codigo", codigo);
@@ -1865,7 +1869,7 @@ namespace DexComanda
             return ds;
         }
 
-        public DataSet SinalizarPedidoConcluido(string table, string spName, int codigo,int iNumeroPessoas)
+        public DataSet SinalizarPedidoConcluido(string table, string spName, int codigo, int iNumeroPessoas)
         {
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
@@ -1878,6 +1882,35 @@ namespace DexComanda
             adapter.Fill(ds, table);
 
             return ds;
+        }
+        public int TransfereMesa(int intCodPedidoOrigem,string iNumMesaOrigem,int iCodUser
+            ,decimal iTotalPedido
+            ,int iCodMesaOrigem,int iCodPessoa , int iNewMesa)
+        {
+            int iReturn = 0;
+            try
+            {
+                command = new SqlCommand("spTransfeMesa", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Codigo", intCodPedidoOrigem);
+                command.Parameters.AddWithValue("@NumeroMesa", iNumMesaOrigem);
+                command.Parameters.AddWithValue("@CodUsuario", iCodUser);
+                command.Parameters.AddWithValue("@TotalPedido", iTotalPedido);
+                command.Parameters.AddWithValue("@CodigoMesa", iCodMesaOrigem);
+                command.Parameters.AddWithValue("@CodPessoa", iCodPessoa);
+                command.Parameters.AddWithValue("@NewMesa", iNewMesa);
+                command.Parameters.AddWithValue("@Data", DateTime.Now);
+                adapter = new SqlDataAdapter(command);
+                adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+                iReturn = command.ExecuteNonQuery();
+                
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException);
+            }
+            return iReturn;
         }
 
         public DataSet SelectItemsExtrasPorPedido(string table, string spName, int codigo)

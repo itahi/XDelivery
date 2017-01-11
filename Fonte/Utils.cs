@@ -3,37 +3,26 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Security;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.Management;
 using System.Net.NetworkInformation;
-using System.Net.Mail;
 using HumanAPIClient.Service;
 using HumanAPIClient.Model;
 using Microsoft.Win32;
-using DexComanda.Models;
 using System.ServiceProcess;
 using DexComanda.Integração;
-using Microsoft.SqlServer.Server;
-using System.Linq;
 using MySql.Data.MySqlClient;
 using System.IO.Ports;
 using System.Threading;
 using System.IO;
-using Microsoft.SqlServer.Management.Smo;
-using Microsoft.SqlServer.Management.Common;
-using System.Runtime.InteropServices;
 using System.Collections;
 using DexComanda.Relatorios.Delivery;
 using CrystalDecisions.Shared;
 using CrystalDecisions.CrystalReports.Engine;
 using System.Diagnostics;
 using System.Configuration;
-using DexComanda.Relatorios.Clientes;
 using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Operações.Financeiro;
 using DexComanda.Operações;
@@ -42,11 +31,8 @@ using DexComanda.Models.WS;
 using Newtonsoft.Json;
 using DexComanda.Operações.Funções;
 using DexComanda.Relatorios.Fechamentos.Novos.Impressao_Termica;
-using System.Data.Common;
 using DexComanda.Relatorios.Gerenciais.Cristal;
 using DexComanda.Relatorios.Clientes.Crystal;
-using CrystalDecisions.Windows.Forms;
-using DexComanda.Relatorios.Caixa;
 using System.Drawing.Printing;
 using DexComanda.Models.Produto;
 using DexComanda.Cadastros.Pessoa;
@@ -256,7 +242,6 @@ namespace DexComanda
 
                 for (int i = 0; i < dsItemsNaoImpresso.Tables[0].Rows.Count; i++)
                 {
-
                     int CodPedido = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(1).ToString());
                     int CodGrupo = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(23).ToString());
                     string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(24).ToString();
@@ -737,8 +722,8 @@ namespace DexComanda
                     report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
                     crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                     crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                    crConnectionInfo.UserID = "dex";
-                    crConnectionInfo.Password = "1234";
+                    crConnectionInfo.UserID = "sa";
+                    crConnectionInfo.Password = "1001";
 
                     CrTables = report.Database.Tables;
                     foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
@@ -1109,26 +1094,26 @@ namespace DexComanda
                 report.Dispose();
             }
         }
-        public static string ImpressaMesaNova(int iCodPedido, int iCodGupo, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
+        public static async void ImpressaMesaNova(int iCodPedido, int iCodGupo, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
         {
             string iRetorno = string.Empty;
 
+            RelComandaMesa report;
+            report = new RelComandaMesa();
+            crtableLogoninfos = new TableLogOnInfos();
+            crtableLogoninfo = new TableLogOnInfo();
+            crConnectionInfo = new ConnectionInfo();
+
+            PrinterSettings printersettings = new PrinterSettings();
+            printersettings.PrinterName = iNomeImpressora;
+            //  printersettings.PrintFileName = "RelComandaMesa_" + iCodPedido + "";
+            printersettings.Copies = 1;
+            printersettings.Collate = false;
             try
             {
-                RelComandaMesa report;
-                report = new RelComandaMesa();
-                crtableLogoninfos = new TableLogOnInfos();
-                crtableLogoninfo = new TableLogOnInfo();
-                crConnectionInfo = new ConnectionInfo();
-
-                PrinterSettings printersettings = new PrinterSettings();
-                printersettings.PrinterName = iNomeImpressora;
-                printersettings.PrintFileName = "RelComandaMesa_" + iCodPedido + "";
-                printersettings.Copies = 1;
-                printersettings.Collate = false;
 
                 Tables CrTables;
-                report.Load (Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt");
+                report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesa.rpt", OpenReportMethod.OpenReportByTempCopy);
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
                 crConnectionInfo.UserID = "sa";
@@ -1157,18 +1142,28 @@ namespace DexComanda
                 {
                     for (int i = 0; i < iNumCopias; i++)
                     {
-                        report.PrintToPrinter(iNumCopias, false, 0, 0);
+                       // frmPrincipal frm = new frmPrincipal(false);
+                        // await Task.Factory.StartNew(() => Thread.Sleep(1));
+                        report.PrintToPrinter(1, true, 0, 0);
+
+                      //  frm = new frmPrincipal(true);
+
                     }
                 }
 
 
             }
+
             catch (Exception erro)
             {
 
                 MessageBox.Show(Bibliotecas.cException + erro.InnerException.Message);
             }
-            return iRetorno;
+            //finally
+            //{
+            //    report.Dispose();
+            //}
+            // return iRetorno;
         }
         public static void ImprimirCaixa(ReportClass iReport, string iValor, string iSolicitante)
         {
@@ -1832,10 +1827,10 @@ namespace DexComanda
                 CodPedido = int.Parse(Linhas.ItemArray.GetValue(0).ToString());
                 CodPessoa = int.Parse(Linhas.ItemArray.GetValue(1).ToString());
                 FormaPagamento = Linhas.ItemArray.GetValue(3).ToString();
-                int iCodEndereco = int.Parse(Linhas.ItemArray.GetValue(5).ToString());
+                int iCodEndereco = ds.Tables[0].Rows[0].Field<int>("CodEndereco");
+                
                 // Retorna a Taxa de Entrega do cadastro do Cliente
                 TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
-
                 frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", 0, "", TaxaEntrega, false,
                                                                             DateTime.Now, CodPedido, CodPessoa,
                                                                             "", FormaPagamento, "", "Balcao", null, 0.00M, 0, 0, "", iCodEndereco);
@@ -1858,7 +1853,7 @@ namespace DexComanda
                     //NumeroMesa = iNumeroMesa,
                     StatusMesa = iStatus
                 };
-                conexao.Update("spAlteraStatusMesa", mesas);
+               // conexao.Update("spAlteraStatusMesa", mesas);
             }
             catch (Exception erro)
             {
@@ -2842,6 +2837,14 @@ namespace DexComanda
             return mRetornoWS;
 
         }
+        /// <summary>
+        ///  Retorna a taxa de entrega do cliente
+        /// </summary>
+        /// <param name="iCodPessoa">
+        /// Código do cliente</param>
+        /// <param name="iCodEndereco">
+        /// Codigo do Endereco</param>
+        /// <returns></returns>
         public static decimal RetornaTaxaPorCliente(int iCodPessoa, int iCodEndereco)
         {
             decimal iRetorno = 0.00M;

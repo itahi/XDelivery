@@ -41,6 +41,7 @@ namespace DexComanda.Cadastros
         
         private void Adicionar(object sender, EventArgs e)
         {
+           
             if (cbxRegiao.SelectedIndex != -1 && txtCEP.Text != "")
             {
                 try
@@ -90,20 +91,7 @@ namespace DexComanda.Cadastros
 
         private void txtCEP_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                DataSet dsCEp = con.RetornaCEPporBairro(txtCEP.Text.Replace("-",""), false);
-                if (dsCEp.Tables[0].Rows.Count > 0)
-                {
-                    txtBairro.Text = con.RetornaCEPporBairro(txtCEP.Text.Replace("-",""), false).Tables[0].Rows[0].ItemArray.GetValue(1).ToString();
-                    btnAdicionar.Focus();
-                }
-                else
-                {
-                    MessageBox.Show("Registro não encontrado", "[xSistemas]");
-                }
-
-            }
+         
 
         }
 
@@ -167,6 +155,11 @@ namespace DexComanda.Cadastros
             string iCodSelecionado = cbxRegiao.SelectedValue.ToString();
             try
             {
+                if (cbxRegiao.Text=="" || txtCEP.Text=="" || txtBairro.Text=="")
+                {
+                    MessageBox.Show("Campos obrigatórios não preenchidos");
+                    return;
+                }
               
                 RegiaoEntrega_Bairros reg = new RegiaoEntrega_Bairros()
                 {
@@ -283,6 +276,25 @@ namespace DexComanda.Cadastros
         private void RegioesGridView_DoubleClick(object sender, EventArgs e)
         {
             Editar(sender, e);
+        }
+
+        private void txtCEP_TextChanged(object sender, EventArgs e)
+        {
+
+            if (txtCEP.Text.Length >= 8)
+            {
+                DataSet dsCEp = con.RetornaCEPporBairro(txtCEP.Text.Replace("-", ""), false);
+                if (dsCEp.Tables[0].Rows.Count > 0)
+                {
+                    txtBairro.Text = con.RetornaCEPporBairro(txtCEP.Text.Replace("-", ""), false).Tables[0].Rows[0].ItemArray.GetValue(1).ToString();
+                    btnAdicionar.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("Registro não encontrado", "[xSistemas]");
+                }
+
+            }
         }
     }
 }

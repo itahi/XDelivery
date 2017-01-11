@@ -71,6 +71,7 @@
             this.txtCEP.Name = "txtCEP";
             this.txtCEP.Size = new System.Drawing.Size(80, 20);
             this.txtCEP.TabIndex = 2;
+            this.txtCEP.TextChanged += new System.EventHandler(this.txtCEP_TextChanged);
             this.txtCEP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCEP_KeyDown);
             // 
             // label2

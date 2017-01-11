@@ -590,7 +590,8 @@ namespace DexComanda
 
         private void ListaOpcao(object sender, EventArgs e)
         {
-            if (cbxTipoOpcao.SelectedValue.ToString() != "")
+
+            if (cbxTipoOpcao.SelectedIndex>=0)
             {
                 Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcaoPorTipo", int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
             }

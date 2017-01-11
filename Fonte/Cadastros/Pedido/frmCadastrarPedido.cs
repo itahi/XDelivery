@@ -914,13 +914,13 @@ namespace DexComanda
                                 pedido.CodEndereco = prvCodEndecoSelecionado;
                                 con.Insert("spAdicionarItemAoPedido", item);
 
-                                con.Update("spAlterarTotalPedido", pedido);
+                                AlteraTotalPedido();
+                              //  con.Update("spAlterarTotalPedido", pedido);
                                 items.Add(item);
                                 atualizarGrid(item);
                                 SemMeiaPizza();
                                 iNomeProd = "";
-
-                                // Utils.PopulaGrid_Novo("Pedido", parentWindow.pedidosGridView, Sessions.SqlPedido);
+                                txtPorcentagemDesconto.Text = "0";
                             }
                             AtualizaTotalPedido();
                         }
@@ -979,7 +979,7 @@ namespace DexComanda
 
                 MessageBox.Show(ss.Message);
             }
-
+            txtPorcentagemDesconto.Text = "0";
             LimpaTamanhosSabores();
             chkSabores.Checked = false;
         }
@@ -1156,7 +1156,7 @@ namespace DexComanda
                                     NomeProduto = gridViewItemsPedido.Rows[i].Cells[2].Value.ToString(),
                                     Quantidade = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[3].Value.ToString()),
                                     PrecoUnitario = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[4].Value.ToString().Replace("R$", "")),
-                                    PrecoTotal = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[3].Value.ToString()) * decimal.Parse(gridViewItemsPedido.Rows[i].Cells[4].Value.ToString().Replace("R$", "")),
+                                    PrecoTotal = decimal.Parse(gridViewItemsPedido.Rows[i].Cells[5].Value.ToString().Replace("R$", "")),
                                     ImpressoSN = false,
                                     Item = gridViewItemsPedido.Rows[i].Cells["Obs"].Value.ToString().ToUpper()
                                 };
@@ -1166,12 +1166,14 @@ namespace DexComanda
 
                             }
 
-                            if (ContraMesas && cbxListaMesas.Visible && pedido.NumeroMesa != "0")
-                            {
-                                int CodigoMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
+                            // Transferido rotina para spAdicionarPedido
+                            //if (ContraMesas && cbxListaMesas.Visible && pedido.NumeroMesa != "0")
+                            //{
+                            //    int CodigoMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
 
-                                Utils.AtualizaMesa(CodigoMesa, 2);
-                            }
+                            //    Utils.AtualizaMesa(CodigoMesa, 2);
+                            //}
+                            /// --------------------
 
                             iCodPedido = con.getLastCodigo();
                             con.AtualizaSituacao(iCodPedido, Sessions.retunrUsuario.Codigo, 1);
@@ -1302,133 +1304,142 @@ namespace DexComanda
         }
         private void AlterarItem(object sender, EventArgs e)
         {
-            if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "EditaPedidoSN"))
+            try
             {
-                return;
-            }
-
-            if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
-            {
-                MessageBox.Show(Bibliotecas.cCaixaFechado);
-                return;
-            }
-            ValorTotal = 0;
-            ValorTroco = 0;
-            if (radioButton1.Visible && !radioButton1.Checked && !radioButton2.Checked && !radioButton3.Checked
-                     && !radioButton4.Checked && !radioButton5.Checked && !radioButton6.Checked)
-            {
-                MessageBox.Show("É obrigatório selecionar o tamanho ", "[xSistemas]", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-
-            if (!this.txtQuantidade.Text.Equals("")
-                    && !this.txtPrecoUnitario.Text.Equals("") && !this.txtPrecoTotal.Text.Equals(""))
-            {
-                foreach (ItemPedido item in items)
+                if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "EditaPedidoSN"))
                 {
-                    if (item.CodProduto == codigoItemParaAlterar)
-                    {
-                        item.PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", ""));
-                        item.Item = this.txtItemDescricao.Text.ToString();
-                    }
+                    return;
                 }
 
-                foreach (ItemPedido item in items)
+                if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                 {
-                    ValorTotal = ValorTotal + item.PrecoTotal;
-                    if (txtTrocoPara.Text.ToString() != "")
-                    {
-                        ValorTroco = decimal.Parse(txtTrocoPara.Text.Replace("R$ ", "")) - ValorTotal;
-                    }
-                    else
-                    {
-                        ValorTroco = 0.00M;
-                    }
-
+                    MessageBox.Show(Bibliotecas.cCaixaFechado);
+                    return;
+                }
+                ValorTotal = 0;
+                ValorTroco = 0;
+                if (radioButton1.Visible && !radioButton1.Checked && !radioButton2.Checked && !radioButton3.Checked
+                         && !radioButton4.Checked && !radioButton5.Checked && !radioButton6.Checked)
+                {
+                    MessageBox.Show("É obrigatório selecionar o tamanho ", "[xSistemas]", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
                 }
 
-                MeiaPizza();
-                if (!itemNome.Equals("") && !this.txtQuantidade.Text.Equals("")
-                    && !this.txtPrecoUnitario.Text.Equals("") && !this.txtPrecoTotal.Text.Equals(""))
+                if (!this.txtQuantidade.Text.Equals("")
+                        && !this.txtPrecoUnitario.Text.Equals("") && !this.txtPrecoTotal.Text.Equals(""))
                 {
-                    int totalDeItems = this.gridViewItemsPedido.RowCount;
-                    if (totalDeItems == 0)
+                    foreach (ItemPedido item in items)
                     {
-                        MessageBox.Show("O Pedido deve contem no mínimo um item.");
-                        return;
+                        if (item.CodProduto == codigoItemParaAlterar)
+                        {
+                            item.PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", ""));
+                            item.Item = this.txtItemDescricao.Text.ToString();
+                        }
                     }
-                    else
+
+                    foreach (ItemPedido item in items)
                     {
-                        var itemPedido = new ItemPedido()
+                        ValorTotal = ValorTotal + item.PrecoTotal;
+                        if (txtTrocoPara.Text.ToString() != "")
                         {
-                            CodProduto = codigoItemParaAlterar,
-                            CodPedido = codPedido,
-                            NomeProduto = itemNome,
-                            Quantidade = decimal.Parse(this.txtQuantidade.Text),
-                            PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$ ", "")),
-                            PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", "")),
-                            Item = this.txtItemDescricao.Text.ToString()
-
-                        };
-
-                        itemPedido.DataAtualizacao = DateTime.Now;
-                        if (int.Parse(gridViewItemsPedido.CurrentRow.Cells["Codigo"].Value.ToString()) > 0)
-                        {
-                            itemPedido.Codigo = int.Parse(gridViewItemsPedido.CurrentRow.Cells["Codigo"].Value.ToString());
+                            ValorTroco = decimal.Parse(txtTrocoPara.Text.Replace("R$ ", "")) - ValorTotal;
                         }
                         else
                         {
-                            itemPedido.Codigo = iRowSelecionada;
+                            ValorTroco = 0.00M;
                         }
 
-                        this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value = itemPedido.NomeProduto;
-                        this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value = itemPedido.Quantidade;
-                        this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value = "R$ " + itemPedido.PrecoUnitario.ToString();
-                        this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value = "R$ " + itemPedido.PrecoTotal.ToString();
-                        this.gridViewItemsPedido.Rows[rowIndex].Cells[6].Value = itemPedido.Item.ToString();
+                    }
 
-                        var ValorPedidoTotal = ValorTotal + decimal.Parse(lblEntrega.Text.Replace("R$ ", ""));
-
-                        if (DMargemGarco != 0.00M)
+                    MeiaPizza();
+                    if (!itemNome.Equals("") && !this.txtQuantidade.Text.Equals("")
+                        && !this.txtPrecoUnitario.Text.Equals("") && !this.txtPrecoTotal.Text.Equals(""))
+                    {
+                        int totalDeItems = this.gridViewItemsPedido.RowCount;
+                        if (totalDeItems == 0)
                         {
-                            decimal TotalMesaGeral = DMargemGarco + ValorPedidoTotal;
-                            this.lbTotal.Text = "R$ " + TotalMesaGeral.ToString();
+                            MessageBox.Show("O Pedido deve contem no mínimo um item.");
+                            return;
                         }
                         else
                         {
-                            this.lbTotal.Text = "R$ " + ValorPedidoTotal;
+                            var itemPedido = new ItemPedido()
+                            {
+                                CodProduto = codigoItemParaAlterar,
+                                CodPedido = codPedido,
+                                NomeProduto = itemNome,
+                                Quantidade = decimal.Parse(this.txtQuantidade.Text),
+                                PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$ ", "")),
+                                PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", "")),
+                                Item = this.txtItemDescricao.Text.ToString()
+
+                            };
+
+                            itemPedido.DataAtualizacao = DateTime.Now;
+                            if (int.Parse(gridViewItemsPedido.CurrentRow.Cells["Codigo"].Value.ToString()) > 0)
+                            {
+                                itemPedido.Codigo = int.Parse(gridViewItemsPedido.CurrentRow.Cells["Codigo"].Value.ToString());
+                            }
+                            else
+                            {
+                                itemPedido.Codigo = iRowSelecionada;
+                            }
+
+                            this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value = itemPedido.NomeProduto;
+                            this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value = itemPedido.Quantidade;
+                            this.gridViewItemsPedido.Rows[rowIndex].Cells[4].Value = "R$ " + itemPedido.PrecoUnitario.ToString();
+                            this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value = "R$ " + itemPedido.PrecoTotal.ToString();
+                            this.gridViewItemsPedido.Rows[rowIndex].Cells[6].Value = itemPedido.Item.ToString();
+
+                            var ValorPedidoTotal = ValorTotal + decimal.Parse(lblEntrega.Text.Replace("R$ ", ""));
+
+                            if (DMargemGarco != 0.00M)
+                            {
+                                decimal TotalMesaGeral = DMargemGarco + ValorPedidoTotal;
+                                this.lbTotal.Text = "R$ " + TotalMesaGeral.ToString();
+                            }
+                            else
+                            {
+                                this.lbTotal.Text = "R$ " + ValorPedidoTotal;
+                            }
+
+                            this.lblTroco.Text = "R$ " + TrocoPagar;
+                            AtualizaTotalPedido();
+
+                            if (codPedido != 0)
+                            {
+                                con.Update("spAlterarItemPedido", itemPedido);
+                                Utils.ControlaEventos("Alterar", this.Name);
+                            }
+
+
+                            this.cbxProdutosGrid.Text = "";
+                            this.txtPrecoUnitario.Text = "";
+                            this.txtQuantidade.Text = "";
+                            this.txtPrecoTotal.Text = "";
+                            this.txtItemDescricao.Text = "";
+
+                            //Comentário Teste
+                            //if (ContraMesas && cbxListaMesas.Visible)
+                            //{
+                            //    int CodigoMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
+                            //    Utils.AtualizaMesa(CodigoMesa, 2);
+                            //}
+
+                            MessageBox.Show("Item alterado com sucesso.", "[xSistemas]");
+                            txtPorcentagemDesconto.Text = "0";
+                            this.btnAdicionarItemNoPedido.Text = "Adicionar";
+                            this.btnAdicionarItemNoPedido.Click += new System.EventHandler(this.btnAdicionarItemNoPedido_Click);
+                            this.btnAdicionarItemNoPedido.Click -= new System.EventHandler(this.AlterarItem);
                         }
-
-                        this.lblTroco.Text = "R$ " + TrocoPagar;
-                        AtualizaTotalPedido();
-
-                        if (codPedido != 0)
-                        {
-                            con.Update("spAlterarItemPedido", itemPedido);
-                            Utils.ControlaEventos("Alterar", this.Name);
-                        }
-
-
-                        this.cbxProdutosGrid.Text = "";
-                        this.txtPrecoUnitario.Text = "";
-                        this.txtQuantidade.Text = "";
-                        this.txtPrecoTotal.Text = "";
-                        this.txtItemDescricao.Text = "";
-
-                        //Comentário Teste
-                        //if (ContraMesas && cbxListaMesas.Visible)
-                        //{
-                        //    int CodigoMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
-                        //    Utils.AtualizaMesa(CodigoMesa, 2);
-                        //}
-
-                        MessageBox.Show("Item alterado com sucesso.", "[xSistemas]");
-                        this.btnAdicionarItemNoPedido.Text = "Adicionar";
-                        this.btnAdicionarItemNoPedido.Click += new System.EventHandler(this.btnAdicionarItemNoPedido_Click);
-                        this.btnAdicionarItemNoPedido.Click -= new System.EventHandler(this.AlterarItem);
                     }
                 }
             }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            
         }
         private void gridViewItemsPedido_MouseClick(object sender, MouseEventArgs e)
         {
@@ -3516,10 +3527,10 @@ namespace DexComanda
                 this.lbTotal.Text = "R$ " + Convert.ToString(SomaItensPedido() + decimal.Parse(lblEntrega.Text.Replace("R$", "")) - decimal.Parse(txtDesconto.Text.Replace("R$", "")));
                 lblEntrega.Text = "R$ " + Utils.RetornaTaxaPorCliente(codPessoa, prvCodEndecoSelecionado).ToString() ;
             }
-            AlteraTotalPedido(gNUmeroMesa, dTotalPedido);
+            AlteraTotalPedido();
         }
 
-        private void AlteraTotalPedido(string iNumMesa, decimal iTotalPedido)
+        private void AlteraTotalPedido()
         {
             try
             {
@@ -4333,7 +4344,6 @@ namespace DexComanda
         {
             if (e.KeyCode == Keys.Enter && txtPorcentagemDesconto.Text != "")
             {
-                txtPrecoTotal.Text = Convert.ToString(decimal.Parse(txtPrecoUnitario.Text) * decimal.Parse(txtQuantidade.Text));
                 CalculaPorcentagemDesconto();
             }
         }
@@ -4347,31 +4357,21 @@ namespace DexComanda
             }
 
             decimal qtdProduto = decimal.Parse(txtQuantidade.Text); 
-            decimal prUnitario = Convert.ToDecimal(txtPrecoUnitario.Text);
+            decimal prUnitario = Convert.ToDecimal(txtPrecoUnitario.Text.Replace("R$ ",""));
             decimal vlrDesconto = prUnitario * qtdProduto * (decimal.Parse(txtPorcentagemDesconto.Text)) / 100;
             var Calc = prUnitario * qtdProduto - vlrDesconto;
             txtPrecoTotal.Text = Calc.ToString();
 
             // Validar o Desconto Máximo Por Usuario
-            if (txtDesconto.Text != "0,00" || txtDesconto.Text.Trim() != "")
-            {
-                if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "DescontoPedidoSN"))
-                {
-                    return;
-                }
+            //if (txtDesconto.Text != "0,00" || txtDesconto.Text.Trim() != "")
+            //{
+            //    if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "DescontoPedidoSN"))
+            //    {
+            //        return;
+            //    }
 
-                if (ValidaMaximoDesconto())
-                {
-                    pedido.DescontoValor = pedido.DescontoValor + vlrDesconto;
-                }
-                else
-                {
-                    MessageBox.Show("Desconto máximo superado ");
-                    pedido.DescontoValor = decimal.Parse("0,00");
-                    return;
-                }
-
-            }
+            //}
+            //txtPorcentagemDesconto.Text = "0";
         }
     }
 }

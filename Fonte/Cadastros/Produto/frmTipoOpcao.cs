@@ -103,7 +103,8 @@ namespace DexComanda.Cadastros.Produto
                     }
                     con.Insert("spAdicionarProduto_OpcaoTipo", prodOp);
                     ListaTipoOpcao();
-                    Utils.LimpaForm(this);                }
+                    Utils.LimpaForm(this);
+                }
             }
             catch (Exception erro)
             {
