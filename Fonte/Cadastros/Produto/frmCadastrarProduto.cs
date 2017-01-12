@@ -252,10 +252,10 @@ namespace DexComanda
             }
 
         }
-        private bool ValidaCodigoPersonalizado(int iCodigo, string iCodProduto)
+        private bool ValidaCodigoPersonalizado(int iCodigoPersonalizado, string iCodProduto)
         {
             Boolean retur = false;
-            DataSet dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoCodigoInterno", iCodigo, iCodProduto);
+            DataSet dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoCodigoInterno", iCodigoPersonalizado, iCodProduto);
             if (dsProduto.Tables[0].Rows.Count > 0)
             {
                 retur = true;

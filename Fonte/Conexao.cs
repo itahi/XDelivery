@@ -447,9 +447,31 @@ namespace DexComanda
                                   " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
                                   "  where Prod.CodProduto = @CodProduto" +
                                   " order by PoT.OrdenExibicao,Op.Nome";
+            //" order by PoT.OrdenExibicao,Op.Nome";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@CodProduto", iDProduto);
+
+
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto_Opcao");
+            return ds;
+        }
+        public DataSet RetornaOpcoesCodPersonalizado(int iDProduto)
+        {
+            string lSqlConsulta = " select " +
+                                  " Op.Nome,  PoT.Tipo," +
+                                  " Prod.Preco, " +
+                                 " ISNULL((select MaximoAdicionais from Produto P where P.Codigo = Prod.CodProduto  ),0) as MaximoAdicionais," +
+                                 " PoT.Nome as NomeTipo,  Prod.CodOpcao" +
+                                 "  from Produto_Opcao Prod join Opcao Op on Op.Codigo = Prod.CodOpcao" +
+                                 "  join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
+                                  " join Produto P on P.Codigo = Prod.CodProduto" +
+                                 " where P.CodigoPersonalizado = @Codigo order by PoT.OrdenExibicao,Op.Nome";
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@Codigo", iDProduto);
 
 
             adapter = new SqlDataAdapter(command);
@@ -1642,7 +1664,8 @@ namespace DexComanda
 
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
-            if (spName.Equals("spObterProdutoCompleto") || spName.Equals("spObterProdutoPorCodigo"))
+            if (spName.Equals("spObterProdutoCompleto") || spName.Equals("spObterProdutoPorCodigo")
+                || spName.Equals("spObterProdutoCompletoPorCodPersonalizado"))
             {
                 command.Parameters.AddWithValue("@Codigo", codigo);
                 command.Parameters.AddWithValue("@AtivoSN", true);
@@ -1883,9 +1906,9 @@ namespace DexComanda
 
             return ds;
         }
-        public int TransfereMesa(int intCodPedidoOrigem,string iNumMesaOrigem,int iCodUser
-            ,decimal iTotalPedido
-            ,int iCodMesaOrigem,int iCodPessoa , int iNewMesa)
+        public int TransfereMesa(int intCodPedidoOrigem, string iNumMesaOrigem, int iCodUser
+            , decimal iTotalPedido
+            , int iCodMesaOrigem, int iCodPessoa, int iNewMesa)
         {
             int iReturn = 0;
             try
@@ -1904,7 +1927,7 @@ namespace DexComanda
                 adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
                 iReturn = command.ExecuteNonQuery();
-                
+
             }
             catch (Exception erro)
             {

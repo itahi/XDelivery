@@ -1,245 +1,3 @@
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\bin\Debug\DexComanda.exe.config
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.exe
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.pdb
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\bin\Debug\DexComanda.exe.manifest
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\bin\Debug\DexComanda.application
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\bin\Debug\DexComanda.exe
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\bin\Debug\DexComanda.pdb
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\bin\Debug\EntityFramework.dll
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\bin\Debug\HumanAPIClient.dll
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\bin\Debug\Microsoft.QualityTools.Testing.Fakes.dll
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\bin\Debug\MySql.Data.dll
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\bin\Debug\EntityFramework.xml
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\XDelivery.csprojResolveAssemblyReference.cache
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Cadastros.frmAdicionarMesa.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Cadastros.frmCadMotivosCancelamento.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Cadastros.frmLancamentoCaixa.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmAlteraSenha.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmCadastroUsuario.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.frmCaixaMovimento.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.frmExibeCancelamentos.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.frmHistoricoCancelamento.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.frmInformaMotoboy.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmCadastrarEmpresas.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmCadastrarEntregador.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmCadastrarFormaPagamento.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmCadastrarPedido.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmAdicionarGrupo.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmCadastrarProduto.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmCadastroCliente.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmCadastroEmailSMS.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmCadastroRegioes.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmConfiguracoes.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmClieForn.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmConfigurarImpressao.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmExportacao.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmLicencaOFFLINE.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Relatorios.frmEnvioEmail.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmEnvioSms.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmLogin.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmReceita.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.frmContato.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Relatorios.frmReportPessoas.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Relatorios.frmReportProdutos.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Relatorios.frmReportPedidosPorPeriodo.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Main.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Properties.Resources.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Relatorios.frmReportVendasPorProduto.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Splashcreen.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\XDelivery.csproj.GenerateResource.Cache
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\RdlCompile.cache
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\RdlCompile.compiled
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.exe.manifest
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.application
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmAberturaCaixa.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmCaixaFechamento.resources
-H:\# Lazaro\Projetos\XSistemas\xcommanda\Fonte\obj\Debug\DexComanda.Cadastros.frmCadCaixa.resources
-F:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.config
-F:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.exe
-F:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.pdb
-G:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.config
-G:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.exe
-G:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.pdb
-E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.config
-E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe.manifest
-E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.application
-E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.exe
-E:\#Projetos\XDelivery\Fonte\bin\Debug\DexComanda.pdb
-E:\#Projetos\XDelivery\Fonte\bin\Debug\EntityFramework.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\HumanAPIClient.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\MySql.Data.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\RestSharp.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\EntityFramework.xml
-E:\#Projetos\XDelivery\Fonte\bin\Debug\RestSharp.xml
-E:\#Projetos\XDelivery\Fonte\obj\Debug\XDelivery.csprojResolveAssemblyReference.cache
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmAdicionarMesa.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmBairrosRegiao.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmCadCaixa.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmCadMotivosCancelamento.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Produto.frmCadOpcao.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmAberturaCaixa.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmCaixaFechamento.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmLancamentoCaixa.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmAlteraSenha.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmCadastroUsuario.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmCaixaMovimento.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmExibeCancelamentos.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmHistoricoCancelamento.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmInformaMotoboy.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmSincronizacao.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Fechamentos.frmReportEntregasPorMotoboy.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmCadastrarEntregador.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmCadastrarFormaPagamento.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmCadastrarPedido.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmAdicionarGrupo.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmCadastrarProduto.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmCadastroCliente.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmCadastroEmailSMS.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmCadastroRegioes.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmConfiguracoes.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmClieForn.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmConfigurarImpressao.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmExportacao.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmLicencaOFFLINE.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.frmEnvioEmail.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmEnvioSms.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmLogin.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmReceita.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.frmContato.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.frmReportPessoas.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.frmReportProdutos.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.frmReportPedidosPorPeriodo.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Main.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Properties.Resources.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Relatorios.frmReportVendasPorProduto.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Splashcreen.resources
-E:\#Projetos\XDelivery\Fonte\obj\Debug\XDelivery.csproj.GenerateResource.Cache
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.exe.manifest
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.application
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.exe
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.pdb
-E:\#Projetos\XDelivery\Fonte\obj\Debug\DexComanda.Operações.frmLancaEstoque.resources
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.ReportViewer.Common.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.reportviewer.winforms.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.SqlServer.ConnectionInfo.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Management.Collector.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Management.Sdk.Sfc.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Management.Utility.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Management.UtilityEnum.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Smo.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.SqlServer.SmoExtended.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Types.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Dmf.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.SqlServer.SString.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.SqlServer.SqlEnum.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.SqlServer.ServiceBrokerEnum.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\Microsoft.SqlServer.RegSvrEnum.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\stdole.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.Management.Sdk.Sfc.resources.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.Management.Utility.resources.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.Dmf.resources.dll
-E:\#Projetos\XDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.RegSvrEnum.resources.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\DexComanda.exe.config
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.exe
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.pdb
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\DexComanda.exe.manifest
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\DexComanda.application
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\DexComanda.exe
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\DexComanda.pdb
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.CrystalReports.Engine.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.ReportSource.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.Shared.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.Windows.Forms.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\EntityFramework.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\FlashControlV71.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\HumanAPIClient.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.ReportViewer.Common.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.reportviewer.winforms.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.SqlServer.ConnectionInfo.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.SqlServer.Management.Collector.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.SqlServer.Management.Sdk.Sfc.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.SqlServer.Management.Utility.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.SqlServer.Management.UtilityEnum.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.SqlServer.Smo.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.SqlServer.SmoExtended.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\MySql.Data.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\RestSharp.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.DataDefModel.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.ClientDoc.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.ReportDefModel.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.Controllers.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.CommLayer.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.DataSetConversion.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.Prompting.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.XmlSerialize.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.CubeDefModel.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.CommonObjectModel.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.ObjectFactory.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\ShockwaveFlashObjects.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.SqlServer.Types.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.SqlServer.Dmf.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.SqlServer.SString.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.SqlServer.SqlEnum.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.SqlServer.ServiceBrokerEnum.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\Microsoft.SqlServer.RegSvrEnum.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.CommonControls.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\stdole.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\EntityFramework.xml
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\RestSharp.xml
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\pt\Microsoft.SqlServer.Management.Sdk.Sfc.resources.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\pt\Microsoft.SqlServer.Management.Utility.resources.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\pt\Microsoft.SqlServer.Dmf.resources.dll
-D:\#Projetos\xDelivery2\Fonte\bin\Debug\pt\Microsoft.SqlServer.RegSvrEnum.resources.dll
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\XDelivery.csprojResolveAssemblyReference.cache
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Cadastros.frmAdicionarMesa.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Cadastros.frmBairrosRegiao.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Cadastros.frmCadCaixa.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Cadastros.frmCadMotivosCancelamento.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Cadastros.Produto.frmCadOpcao.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmAberturaCaixa.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmCaixaFechamento.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Cadastros.frmLancamentoCaixa.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmAlteraSenha.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmCadastroUsuario.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Operações.frmCaixaMovimento.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Operações.frmExibeCancelamentos.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Operações.frmHistoricoCancelamento.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Operações.frmInformaMotoboy.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Operações.frmLancaEstoque.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Operações.frmSincronizacao.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Relatorios.Fechamentos.frmReportEntregasPorMotoboy.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmCadastrarEntregador.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmCadastrarFormaPagamento.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmCadastrarPedido.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmAdicionarGrupo.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmCadastrarProduto.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmCadastroCliente.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmCadastroEmailSMS.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmCadastroRegioes.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmConfiguracoes.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmClieForn.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmConfigurarImpressao.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmExportacao.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmLicencaOFFLINE.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Relatorios.frmEnvioEmail.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmEnvioSms.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmLogin.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmReceita.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.frmContato.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Relatorios.frmReportPessoas.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Relatorios.frmReportProdutos.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Relatorios.frmReportPedidosPorPeriodo.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Main.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Properties.Resources.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Relatorios.frmReportVendasPorProduto.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.Splashcreen.resources
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\XDelivery.csproj.GenerateResource.Cache
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.exe.manifest
-D:\#Projetos\xDelivery2\Fonte\obj\Debug\DexComanda.application
-D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.exe
-D:\#Projetos\xDelivery\Fonte\bin\Debug\MySql.Data.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.rpt
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\RelCaixaHistorico.rpt
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.cs
@@ -247,6 +5,8 @@ D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\RelCaixaHist
 D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.exe.config
 D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.exe.manifest
 D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.application
+D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.exe
+D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.pdb
 D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.CrystalReports.Engine.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.ReportSource.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.Shared.dll
@@ -264,6 +24,7 @@ D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Management.Utility.dl
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Management.UtilityEnum.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Smo.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.SmoExtended.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\MySql.Data.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Newtonsoft.Json.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\RestSharp.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.DataDefModel.dll
@@ -290,6 +51,7 @@ D:\#Projetos\xDelivery\Fonte\bin\Debug\stdole.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\EntityFramework.xml
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Newtonsoft.Json.xml
 D:\#Projetos\xDelivery\Fonte\bin\Debug\RestSharp.xml
+D:\#Projetos\xDelivery\Fonte\obj\Debug\XDelivery.csprojResolveAssemblyReference.cache
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Empresa.frmCadastraFornecedor.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Empresa.frmHorariosEntrega.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Financeiro.frmCadTurno.resources
@@ -310,6 +72,7 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Produto.frmCadOpcao.
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.frmPrincipal.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Alteracoes.frmAlteracaoProduto.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Alteracoes.frmAlterarOpcao.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Ações.frmEnvioPush.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Consultas.frmConsultaPedido.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmAberturaCaixa.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Financeiro.frmCaixaFechamento.resources
@@ -328,6 +91,7 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Pedido.frmAlterarS
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Pedido.frmCadastrarStatus.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmDebitosPessoa.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmReporVendasPorCliente.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Delivery.Forms.frmReporVendaOnline.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.Crystal.frmReportPadrao.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Fechamentos.Novos.frmOpcoesProdutoVendidos.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Fechamentos.Novos.frmReportEntregasMotoboy.resources
@@ -362,12 +126,8 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmEntre
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmPedidosCancelados.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmReportTickeMedio.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmReporVendasPorVendedor.resources
-D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Push.frmEnvioPush.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\XDelivery.csproj.GenerateResource.Cache
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.exe.manifest
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.application
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.exe
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.pdb
-D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.pdb
-D:\#Projetos\xDelivery\Fonte\obj\Debug\XDelivery.csprojResolveAssemblyReference.cache
-D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Delivery.Forms.frmReporVendaOnline.resources

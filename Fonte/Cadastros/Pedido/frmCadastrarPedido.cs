@@ -222,6 +222,8 @@ namespace DexComanda
                 cbxTipoProduto.Visible = false;
                 lblGrupo.Text = "Código:";
                 txtCodProduto1.Visible = true;
+                chkCodPersonalizado.Visible = true;
+
             }
             else
             {
@@ -659,10 +661,22 @@ namespace DexComanda
         {
             try
             {
-                DataSet dsOpcoes = con.RetornaOpcoesProduto(iCodProduto);
+                DataSet dsOpcoes;
                 DataRow dRowOpcoes;
                 DataRow dRoOpcoes2;
-                DataSet dsOpcoes2 = con.RetornaOpcoesProduto(iCodProduto2);
+                DataSet dsOpcoes2;
+
+                if (chkCodPersonalizado.Checked)
+                {
+                    dsOpcoes = con.RetornaOpcoesCodPersonalizado(iCodProduto);
+                    dsOpcoes2 = con.RetornaOpcoesCodPersonalizado(iCodProduto2);
+                }
+                else
+                {
+                    dsOpcoes = con.RetornaOpcoesProduto(iCodProduto);
+                    dsOpcoes2 = con.RetornaOpcoesProduto(iCodProduto2);
+                }
+               
                 EscondeTamanhos();
                 chkListAdicionais.Items.Clear();
                 if (dsOpcoes.Tables[0].Rows.Count > 0)
@@ -2187,11 +2201,21 @@ namespace DexComanda
 
         private void BuscaProduto1(object sender, KeyEventArgs e)
         {
+            int intCodInterno=0;
+            DataTable produto;
             if (e.KeyCode == Keys.Enter)
             {
                 if (txtCodProduto1.Text != "")
                 {
-                    var produto = con.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
+                    if (chkCodPersonalizado.Checked)
+                    {
+                        intCodInterno = int.Parse(txtCodProduto1.Text);
+                        produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompletoPorCodPersonalizado", intCodInterno).Tables["Produto"];
+                    }
+                    else
+                    {
+                        produto = con.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
+                    }
 
                     if (produto.Rows.Count > 0)
                     {
@@ -2303,10 +2327,7 @@ namespace DexComanda
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarPedido));
-            this.dBExpertDataSet = new DexComanda.DBExpertDataSet();
             this.itemsPedidoBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.itemsPedidoTableAdapter = new DexComanda.DBExpertDataSetTableAdapters.ItemsPedidoTableAdapter();
-            this.tableAdapterManager = new DexComanda.DBExpertDataSetTableAdapters.TableAdapterManager();
             this.label3 = new System.Windows.Forms.Label();
             this.cbxTipoProduto = new System.Windows.Forms.ComboBox();
             this.lblGrupo = new System.Windows.Forms.Label();
@@ -2389,7 +2410,8 @@ namespace DexComanda
             this.label13 = new System.Windows.Forms.Label();
             this.txtObsPedido = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
+            this.chkCodPersonalizado = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewItemsPedido)).BeginInit();
@@ -2401,30 +2423,9 @@ namespace DexComanda
             this.grpVendedor.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dBExpertDataSet
-            // 
-            this.dBExpertDataSet.DataSetName = "DBExpertDataSet";
-            this.dBExpertDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // itemsPedidoBindingSource
             // 
             this.itemsPedidoBindingSource.DataMember = "ItemsPedido";
-            this.itemsPedidoBindingSource.DataSource = this.dBExpertDataSet;
-            // 
-            // itemsPedidoTableAdapter
-            // 
-            this.itemsPedidoTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.base_cepTableAdapter = null;
-            this.tableAdapterManager.GrupoTableAdapter = null;
-            this.tableAdapterManager.ItemsPedidoTableAdapter = this.itemsPedidoTableAdapter;
-            this.tableAdapterManager.PedidoTableAdapter = null;
-            this.tableAdapterManager.PessoaTableAdapter = null;
-            this.tableAdapterManager.ProdutoTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = DexComanda.DBExpertDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
             // 
             // label3
             // 
@@ -3387,12 +3388,27 @@ namespace DexComanda
             this.label14.TabIndex = 77;
             this.label14.Text = "Obs \r\ndo \r\nPedido";
             // 
+            // chkCodPersonalizado
+            // 
+            this.chkCodPersonalizado.AutoSize = true;
+            this.chkCodPersonalizado.Checked = true;
+            this.chkCodPersonalizado.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkCodPersonalizado.Location = new System.Drawing.Point(154, 93);
+            this.chkCodPersonalizado.Name = "chkCodPersonalizado";
+            this.chkCodPersonalizado.Size = new System.Drawing.Size(127, 17);
+            this.chkCodPersonalizado.TabIndex = 78;
+            this.chkCodPersonalizado.Text = "Código personalizado";
+            this.toolTip1.SetToolTip(this.chkCodPersonalizado, "Busca produto usando código personalizado na loja");
+            this.chkCodPersonalizado.UseVisualStyleBackColor = true;
+            this.chkCodPersonalizado.Visible = false;
+            // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1051, 626);
+            this.Controls.Add(this.chkCodPersonalizado);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.txtObsPedido);
             this.Controls.Add(this.label13);
@@ -3437,7 +3453,6 @@ namespace DexComanda
             this.Text = "[XDelivery ] Cadastrar Pedido";
             this.Load += new System.EventHandler(this.frmCadastrarPedido_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastrarPedido_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

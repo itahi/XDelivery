@@ -28,65 +28,65 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.grpPeriodo = new System.Windows.Forms.GroupBox();
-            this.dtInicio = new System.Windows.Forms.DateTimePicker();
-            this.dtFim = new System.Windows.Forms.DateTimePicker();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.rbAniversario = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.grpGrid = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.grpPeriodo = new System.Windows.Forms.GroupBox();
+            this.dtFim = new System.Windows.Forms.DateTimePicker();
+            this.dtInicio = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
-            this.grpPeriodo.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grpGrid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.grpPeriodo.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.grpPeriodo);
             this.groupBox1.Controls.Add(this.panel2);
             this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Controls.Add(this.radioButton6);
             this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Controls.Add(this.rbAniversario);
             this.groupBox1.Location = new System.Drawing.Point(12, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(574, 112);
+            this.groupBox1.Size = new System.Drawing.Size(574, 152);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tipo Filtros";
             // 
-            // radioButton1
+            // panel2
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(11, 22);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(97, 17);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.Text = "Aniversáriantes";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.panel2.Controls.Add(this.comboBox2);
+            this.panel2.Controls.Add(this.radioButton5);
+            this.panel2.Location = new System.Drawing.Point(143, 78);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(144, 64);
+            this.panel2.TabIndex = 7;
             // 
-            // radioButton2
+            // comboBox2
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(180, 22);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(93, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "Cliente sumido";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(3, 29);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 8;
             // 
             // radioButton5
             // 
@@ -96,44 +96,68 @@
             this.radioButton5.Size = new System.Drawing.Size(107, 17);
             this.radioButton5.TabIndex = 4;
             this.radioButton5.Text = "Comprou Produto";
+            this.toolTip1.SetToolTip(this.radioButton5, "Filtra clientes que compra o produto selecionado no periodo informado");
             this.radioButton5.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.comboBox1);
+            this.panel1.Controls.Add(this.radioButton3);
+            this.panel1.Location = new System.Drawing.Point(143, 7);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(144, 65);
+            this.panel1.TabIndex = 6;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(11, 30);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 7;
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(13, 5);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(119, 17);
+            this.radioButton3.TabIndex = 6;
+            this.radioButton3.Text = "Região selecionada";
+            this.toolTip1.SetToolTip(this.radioButton3, "Clientes da região selecionada");
+            this.radioButton3.UseVisualStyleBackColor = true;
             // 
             // radioButton6
             // 
             this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(11, 70);
+            this.radioButton6.Location = new System.Drawing.Point(11, 110);
             this.radioButton6.Name = "radioButton6";
             this.radioButton6.Size = new System.Drawing.Size(85, 17);
             this.radioButton6.TabIndex = 3;
             this.radioButton6.Text = "Pedido Valor";
             this.radioButton6.UseVisualStyleBackColor = true;
             // 
-            // grpPeriodo
+            // radioButton2
             // 
-            this.grpPeriodo.Controls.Add(this.dtFim);
-            this.grpPeriodo.Controls.Add(this.dtInicio);
-            this.grpPeriodo.Location = new System.Drawing.Point(12, 123);
-            this.grpPeriodo.Name = "grpPeriodo";
-            this.grpPeriodo.Size = new System.Drawing.Size(221, 60);
-            this.grpPeriodo.TabIndex = 1;
-            this.grpPeriodo.TabStop = false;
-            this.grpPeriodo.Text = "Periodo Filtro";
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(11, 67);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(93, 17);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.Text = "Cliente sumido";
+            this.toolTip1.SetToolTip(this.radioButton2, "Filtra clientes que não compraram no periodo informado");
+            this.radioButton2.UseVisualStyleBackColor = true;
             // 
-            // dtInicio
+            // rbAniversario
             // 
-            this.dtInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtInicio.Location = new System.Drawing.Point(11, 26);
-            this.dtInicio.Name = "dtInicio";
-            this.dtInicio.Size = new System.Drawing.Size(78, 20);
-            this.dtInicio.TabIndex = 0;
-            // 
-            // dtFim
-            // 
-            this.dtFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtFim.Location = new System.Drawing.Point(109, 26);
-            this.dtFim.Name = "dtFim";
-            this.dtFim.Size = new System.Drawing.Size(78, 20);
-            this.dtFim.TabIndex = 1;
+            this.rbAniversario.AutoSize = true;
+            this.rbAniversario.Location = new System.Drawing.Point(11, 22);
+            this.rbAniversario.Name = "rbAniversario";
+            this.rbAniversario.Size = new System.Drawing.Size(97, 17);
+            this.rbAniversario.TabIndex = 0;
+            this.rbAniversario.Text = "Aniversáriantes";
+            this.toolTip1.SetToolTip(this.rbAniversario, "Filtra aniversáriantes no periodo informado");
+            this.rbAniversario.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -177,71 +201,53 @@
             this.dataGridView1.Size = new System.Drawing.Size(251, 231);
             this.dataGridView1.TabIndex = 0;
             // 
-            // panel1
+            // grpPeriodo
             // 
-            this.panel1.Controls.Add(this.comboBox1);
-            this.panel1.Controls.Add(this.radioButton3);
-            this.panel1.Location = new System.Drawing.Point(424, 8);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(144, 65);
-            this.panel1.TabIndex = 6;
+            this.grpPeriodo.Controls.Add(this.dtFim);
+            this.grpPeriodo.Controls.Add(this.dtInicio);
+            this.grpPeriodo.Location = new System.Drawing.Point(305, 39);
+            this.grpPeriodo.Name = "grpPeriodo";
+            this.grpPeriodo.Size = new System.Drawing.Size(221, 60);
+            this.grpPeriodo.TabIndex = 8;
+            this.grpPeriodo.TabStop = false;
+            this.grpPeriodo.Text = "Periodo Filtro";
             // 
-            // comboBox1
+            // dtFim
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(14, 33);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 7;
+            this.dtFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtFim.Location = new System.Drawing.Point(109, 26);
+            this.dtFim.Name = "dtFim";
+            this.dtFim.Size = new System.Drawing.Size(78, 20);
+            this.dtFim.TabIndex = 1;
             // 
-            // radioButton3
+            // dtInicio
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(14, 10);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(119, 17);
-            this.radioButton3.TabIndex = 6;
-            this.radioButton3.Text = "Região selecionada";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.comboBox2);
-            this.panel2.Controls.Add(this.radioButton5);
-            this.panel2.Location = new System.Drawing.Point(279, 9);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(133, 64);
-            this.panel2.TabIndex = 7;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(3, 29);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 8;
+            this.dtInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtInicio.Location = new System.Drawing.Point(11, 26);
+            this.dtInicio.Name = "dtInicio";
+            this.dtInicio.Size = new System.Drawing.Size(78, 20);
+            this.dtInicio.TabIndex = 0;
             // 
             // frmEnvioPush
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(598, 466);
+            this.ClientSize = new System.Drawing.Size(598, 506);
             this.Controls.Add(this.grpGrid);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.grpPeriodo);
             this.Controls.Add(this.groupBox1);
             this.Name = "frmEnvioPush";
             this.Text = "[xSistemas] Envio de Notificações Push";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.grpPeriodo.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.grpGrid.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.grpPeriodo.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -252,10 +258,7 @@
         private System.Windows.Forms.RadioButton radioButton5;
         private System.Windows.Forms.RadioButton radioButton6;
         private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.GroupBox grpPeriodo;
-        private System.Windows.Forms.DateTimePicker dtFim;
-        private System.Windows.Forms.DateTimePicker dtInicio;
+        private System.Windows.Forms.RadioButton rbAniversario;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.GroupBox grpGrid;
@@ -265,5 +268,9 @@
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.GroupBox grpPeriodo;
+        private System.Windows.Forms.DateTimePicker dtFim;
+        private System.Windows.Forms.DateTimePicker dtInicio;
     }
 }

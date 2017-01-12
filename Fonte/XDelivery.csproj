@@ -537,12 +537,6 @@
     <Compile Include="Relatorios\Gerenciais\frmReporVendasPorVendedor.Designer.cs">
       <DependentUpon>frmReporVendasPorVendedor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Relatorios\Push\frmEnvioPush.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Relatorios\Push\frmEnvioPush.Designer.cs">
-      <DependentUpon>frmEnvioPush.cs</DependentUpon>
-    </Compile>
     <Compile Include="Relatorios\Push\OneSignal.cs" />
     <Compile Include="Relatorios\Caixa\RelSangria.cs">
       <AutoGen>True</AutoGen>
@@ -1341,9 +1335,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\frmReporVendasPorVendedor.resx">
       <DependentUpon>frmReporVendasPorVendedor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Push\frmEnvioPush.resx">
-      <DependentUpon>frmEnvioPush.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="DBExpertDataSet.xsc">
