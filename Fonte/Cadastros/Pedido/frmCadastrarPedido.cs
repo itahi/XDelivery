@@ -666,7 +666,7 @@ namespace DexComanda
                 DataRow dRoOpcoes2;
                 DataSet dsOpcoes2;
 
-                if (chkCodPersonalizado.Checked)
+                if (chkCodPersonalizado.Checked && chkCodPersonalizado.Visible)
                 {
                     dsOpcoes = con.RetornaOpcoesCodPersonalizado(iCodProduto);
                     dsOpcoes2 = con.RetornaOpcoesCodPersonalizado(iCodProduto2);
@@ -1842,7 +1842,8 @@ namespace DexComanda
                         iCodigo = codPedido;
                     }
                     if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras || Sessions.returnEmpresa.CNPJ
-                        == Bibliotecas.cMassaRara || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria || Sessions.returnEmpresa.CNPJ== "11291880000119")
+                        == Bibliotecas.cMassaRara || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria 
+                        || Sessions.returnEmpresa.CNPJ== "11291880000119")
                     {
                         Utils.ImpressaoPorCozinha(iCodigo);
                         return;

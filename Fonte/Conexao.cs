@@ -218,12 +218,15 @@ namespace DexComanda
         {
             string iSqlConsulta = "select * from Caixa " +
                                    " where Numero=@Numero and " +
-                                   " Turno=@Turno and Data=@Data";
+                                   " Turno=@Turno and Data=@Data and "+
+                                   " HorarioFechamento>@HorarioFechamento";
             command = new SqlCommand(iSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@Numero", iCodCaixa);
             command.Parameters.AddWithValue("@Turno", iTurno);
             command.Parameters.AddWithValue("@Data", iData.ToShortDateString());
+            command.Parameters.AddWithValue("@HorarioFechamento",DateTime.Now.TimeOfDay);
+
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, "Caixa");
@@ -237,9 +240,9 @@ namespace DexComanda
                                   " from RegiaoEntrega R " +
                                   " left join RegiaoEntrega_Bairros RG on RG.CodRegiao = R.Codigo " +
                                   "  where RG.Nome like '%" + iNOmeBairro + "%'";
+
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
-            //    command.Parameters.AddWithValue("@NomeBairro", iNOmeBairro);
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, "RegiaoEntrega");
@@ -1807,7 +1810,27 @@ namespace DexComanda
             adapter.Fill(ds, "Pedido_Finalizacao");
             return ds;
         }
+        public DataSet SelectItensPorImpressora(int intCodPedido ,string strNomeimpressora)
+        {
+            try
+            {
+                command = new SqlCommand("spObterItemsNaoImpressoPorImpressora", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Codigo", intCodPedido);
+                command.Parameters.AddWithValue("@NomeImpressora", strNomeimpressora);
+                adapter = new SqlDataAdapter(command);
+                adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
+                ds = new DataSet();
+                adapter.Fill(ds, "ItemsPedido");
+               
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return ds;
+        }
         public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo, string iCodString = "0", int iCodigo2 = 0)
         {
             command = new SqlCommand(spName, conn);

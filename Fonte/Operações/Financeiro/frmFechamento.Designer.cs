@@ -32,6 +32,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.FechamentosGrid = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbxTurno = new System.Windows.Forms.ComboBox();
             this.dtFechamento = new System.Windows.Forms.DateTimePicker();
             this.label11 = new System.Windows.Forms.Label();
             this.txtVlrFechamento = new System.Windows.Forms.TextBox();
@@ -47,8 +49,6 @@
             this.cbxCaixas = new System.Windows.Forms.ComboBox();
             this.btnExecutar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.cbxTurno = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FechamentosGrid)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -100,6 +100,27 @@
             this.groupBox3.TabIndex = 12;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Filtro Caixa";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 51);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 25;
+            this.label1.Text = "Turno";
+            // 
+            // cbxTurno
+            // 
+            this.cbxTurno.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTurno.FormattingEnabled = true;
+            this.cbxTurno.Items.AddRange(new object[] {
+            "Dia",
+            "Noite"});
+            this.cbxTurno.Location = new System.Drawing.Point(10, 67);
+            this.cbxTurno.Name = "cbxTurno";
+            this.cbxTurno.Size = new System.Drawing.Size(66, 21);
+            this.cbxTurno.TabIndex = 24;
             // 
             // dtFechamento
             // 
@@ -217,6 +238,7 @@
             // 
             // btnExecutar
             // 
+            this.btnExecutar.Enabled = false;
             this.btnExecutar.Image = ((System.Drawing.Image)(resources.GetObject("btnExecutar.Image")));
             this.btnExecutar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnExecutar.Location = new System.Drawing.Point(94, 274);
@@ -238,27 +260,6 @@
             this.btnCancelar.TabIndex = 14;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
-            // 
-            // cbxTurno
-            // 
-            this.cbxTurno.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxTurno.FormattingEnabled = true;
-            this.cbxTurno.Items.AddRange(new object[] {
-            "Dia",
-            "Noite"});
-            this.cbxTurno.Location = new System.Drawing.Point(10, 67);
-            this.cbxTurno.Name = "cbxTurno";
-            this.cbxTurno.Size = new System.Drawing.Size(66, 21);
-            this.cbxTurno.TabIndex = 24;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 51);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 25;
-            this.label1.Text = "Turno";
             // 
             // frmCaixaFechamento
             // 

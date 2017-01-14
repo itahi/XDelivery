@@ -519,6 +519,12 @@
     <Compile Include="Relatorios\Delivery\Forms\frmReporVendaOnline.Designer.cs">
       <DependentUpon>frmReporVendaOnline.cs</DependentUpon>
     </Compile>
+    <Compile Include="Relatorios\Delivery\RelComandaMesaPorGrupo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelComandaMesaPorGrupo.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Delivery\RelVendasOnline.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1129,6 +1135,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\Forms\frmReporVendaOnline.resx">
       <DependentUpon>frmReporVendaOnline.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesaPorGrupo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelComandaMesaPorGrupo.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesaSeparado.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

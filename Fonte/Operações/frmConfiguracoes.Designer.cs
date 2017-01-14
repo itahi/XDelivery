@@ -32,6 +32,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfiguracoes));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.gridHorarios = new System.Windows.Forms.DataGridView();
+            this.Segunda = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Terça = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Quarta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Quinta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sexta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sábado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Domingo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.txtTelefone2 = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -212,17 +221,12 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.gridHorarios = new System.Windows.Forms.DataGridView();
-            this.Segunda = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Terça = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Quarta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Quinta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sexta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sábado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Domingo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label37 = new System.Windows.Forms.Label();
+            this.cbxTipoImpressao = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridHorarios)).BeginInit();
             this.panel3.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -246,8 +250,6 @@
             this.tabPage5.SuspendLayout();
             this.grpCidades.SuspendLayout();
             this.groupBox8.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridHorarios)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -277,6 +279,70 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Dados Empresa";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.gridHorarios);
+            this.groupBox9.Location = new System.Drawing.Point(6, 355);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(640, 96);
+            this.groupBox9.TabIndex = 27;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Horario de Funcionamento";
+            // 
+            // gridHorarios
+            // 
+            this.gridHorarios.AllowUserToDeleteRows = false;
+            this.gridHorarios.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
+            this.gridHorarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridHorarios.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Segunda,
+            this.Terça,
+            this.Quarta,
+            this.Quinta,
+            this.Sexta,
+            this.Sábado,
+            this.Domingo});
+            this.gridHorarios.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridHorarios.Location = new System.Drawing.Point(3, 16);
+            this.gridHorarios.Name = "gridHorarios";
+            this.gridHorarios.Size = new System.Drawing.Size(634, 77);
+            this.gridHorarios.TabIndex = 0;
+            // 
+            // Segunda
+            // 
+            this.Segunda.HeaderText = "Segunda";
+            this.Segunda.Name = "Segunda";
+            // 
+            // Terça
+            // 
+            this.Terça.HeaderText = "Terça";
+            this.Terça.Name = "Terça";
+            // 
+            // Quarta
+            // 
+            this.Quarta.HeaderText = "Quarta";
+            this.Quarta.Name = "Quarta";
+            // 
+            // Quinta
+            // 
+            this.Quinta.HeaderText = "Quinta";
+            this.Quinta.Name = "Quinta";
+            // 
+            // Sexta
+            // 
+            this.Sexta.HeaderText = "Sexta";
+            this.Sexta.Name = "Sexta";
+            // 
+            // Sábado
+            // 
+            this.Sábado.HeaderText = "Sábado";
+            this.Sábado.Name = "Sábado";
+            // 
+            // Domingo
+            // 
+            this.Domingo.HeaderText = "Domingo";
+            this.Domingo.Name = "Domingo";
             // 
             // panel3
             // 
@@ -792,6 +858,7 @@
             this.pInfoUserDefault.Name = "pInfoUserDefault";
             this.pInfoUserDefault.Size = new System.Drawing.Size(455, 45);
             this.pInfoUserDefault.TabIndex = 10;
+            this.pInfoUserDefault.Paint += new System.Windows.Forms.PaintEventHandler(this.pInfoUserDefault_Paint);
             // 
             // txtSenhaPadrao
             // 
@@ -839,6 +906,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label37);
+            this.groupBox2.Controls.Add(this.cbxTipoImpressao);
             this.groupBox2.Controls.Add(this.grpImpressoras);
             this.groupBox2.Controls.Add(this.grpViasImpressao);
             this.groupBox2.Controls.Add(this.lblporta);
@@ -855,7 +924,7 @@
             this.groupBox2.Controls.Add(this.txtCaracterImpressora);
             this.groupBox2.Location = new System.Drawing.Point(7, 165);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(640, 152);
+            this.groupBox2.Size = new System.Drawing.Size(640, 174);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Impressão";
@@ -928,6 +997,7 @@
             this.cbxImpressoraDelivery.Size = new System.Drawing.Size(169, 21);
             this.cbxImpressoraDelivery.TabIndex = 18;
             this.cbxImpressoraDelivery.DropDown += new System.EventHandler(this.cbxImpressoraDelivery_DropDown);
+            this.cbxImpressoraDelivery.SelectedIndexChanged += new System.EventHandler(this.cbxImpressoraDelivery_SelectedIndexChanged);
             // 
             // grpViasImpressao
             // 
@@ -1120,7 +1190,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(652, 439);
+            this.tabPage2.Size = new System.Drawing.Size(652, 457);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Promoções";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1251,7 +1321,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(652, 439);
+            this.tabPage4.Size = new System.Drawing.Size(652, 457);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Licença";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1339,7 +1409,7 @@
             this.tbExibicao.Location = new System.Drawing.Point(4, 22);
             this.tbExibicao.Name = "tbExibicao";
             this.tbExibicao.Padding = new System.Windows.Forms.Padding(3);
-            this.tbExibicao.Size = new System.Drawing.Size(652, 439);
+            this.tbExibicao.Size = new System.Drawing.Size(652, 457);
             this.tbExibicao.TabIndex = 4;
             this.tbExibicao.Text = "Sistema  [Exibição]";
             this.tbExibicao.UseVisualStyleBackColor = true;
@@ -1828,7 +1898,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(652, 439);
+            this.tabPage5.Size = new System.Drawing.Size(652, 457);
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "App / Push";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -2090,69 +2160,27 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // groupBox9
+            // label37
             // 
-            this.groupBox9.Controls.Add(this.gridHorarios);
-            this.groupBox9.Location = new System.Drawing.Point(6, 355);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(640, 96);
-            this.groupBox9.TabIndex = 27;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Horario de Funcionamento";
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(18, 122);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(107, 13);
+            this.label37.TabIndex = 31;
+            this.label37.Text = "Tipo impressão Mesa";
             // 
-            // gridHorarios
+            // cbxTipoImpressao
             // 
-            this.gridHorarios.AllowUserToDeleteRows = false;
-            this.gridHorarios.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
-            this.gridHorarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridHorarios.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Segunda,
-            this.Terça,
-            this.Quarta,
-            this.Quinta,
-            this.Sexta,
-            this.Sábado,
-            this.Domingo});
-            this.gridHorarios.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridHorarios.Location = new System.Drawing.Point(3, 16);
-            this.gridHorarios.Name = "gridHorarios";
-            this.gridHorarios.Size = new System.Drawing.Size(634, 77);
-            this.gridHorarios.TabIndex = 0;
-            // 
-            // Segunda
-            // 
-            this.Segunda.HeaderText = "Segunda";
-            this.Segunda.Name = "Segunda";
-            // 
-            // Terça
-            // 
-            this.Terça.HeaderText = "Terça";
-            this.Terça.Name = "Terça";
-            // 
-            // Quarta
-            // 
-            this.Quarta.HeaderText = "Quarta";
-            this.Quarta.Name = "Quarta";
-            // 
-            // Quinta
-            // 
-            this.Quinta.HeaderText = "Quinta";
-            this.Quinta.Name = "Quinta";
-            // 
-            // Sexta
-            // 
-            this.Sexta.HeaderText = "Sexta";
-            this.Sexta.Name = "Sexta";
-            // 
-            // Sábado
-            // 
-            this.Sábado.HeaderText = "Sábado";
-            this.Sábado.Name = "Sábado";
-            // 
-            // Domingo
-            // 
-            this.Domingo.HeaderText = "Domingo";
-            this.Domingo.Name = "Domingo";
+            this.cbxTipoImpressao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTipoImpressao.FormattingEnabled = true;
+            this.cbxTipoImpressao.Items.AddRange(new object[] {
+            "Por Cozinha/Grupo",
+            "Por Impressora"});
+            this.cbxTipoImpressao.Location = new System.Drawing.Point(21, 138);
+            this.cbxTipoImpressao.Name = "cbxTipoImpressao";
+            this.cbxTipoImpressao.Size = new System.Drawing.Size(129, 21);
+            this.cbxTipoImpressao.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.cbxTipoImpressao, "Selecione o tipo de agrupamento da impressão:");
             // 
             // frmConfiguracoes
             // 
@@ -2170,6 +2198,8 @@
             this.Load += new System.EventHandler(this.frmConfiguracoes_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridHorarios)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -2214,8 +2244,6 @@
             this.grpCidades.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
-            this.groupBox9.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridHorarios)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2413,5 +2441,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Sexta;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sábado;
         private System.Windows.Forms.DataGridViewTextBoxColumn Domingo;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.ComboBox cbxTipoImpressao;
     }
 }

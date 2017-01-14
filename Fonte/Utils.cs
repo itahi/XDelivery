@@ -218,9 +218,23 @@ namespace DexComanda
             return iReturn;
         }
 
-        public static DataSet ItensSelect(int iCodPedido)
+        public static DataSet ItensSelect(int iCodPedido,int intCodgrupo=0,
+            string iNomeImpressora="", string iTipoAgrupamento="")
         {
             DataSet dsReturn;
+            string iSqlWhere;
+            if (iTipoAgrupamento == "Por Impressora")
+            {
+                iSqlWhere = " where  PE.Codigo=" + iCodPedido + " and ImprimeCozinhaSN = 1 and G.NomeImpressora='"+ iNomeImpressora + "'";
+            }
+            else if (iTipoAgrupamento == "Por Cozinha/Grupo")
+            {
+                iSqlWhere = " where  PE.Codigo=" + iCodPedido + " and ImprimeCozinhaSN = 1 and P.CodGrupo=" + intCodgrupo + "";
+            }
+            else
+            {
+                iSqlWhere = " where  PE.Codigo=" + iCodPedido + " and ImprimeCozinhaSN = 1 ";
+            }
             string iSql = " select distinct (IT.CodProduto) ,PE.*,  " +
                            " CodGrupo, " +
                            " NomeImpressora, " +
@@ -228,8 +242,9 @@ namespace DexComanda
                            " from Pedido PE " +
                            " join ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0 " +
                            " left join Produto P on P.Codigo = It.CodProduto " +
-                           " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo " +
-                           " where  PE.Codigo=" + iCodPedido + " and ImprimeCozinhaSN = 1 ";
+                           " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo ";
+
+            iSql = iSql + iSqlWhere;
 
             dsReturn = conexao.SelectAll("ItemsPedido", "", iSql);
             return dsReturn;
@@ -256,7 +271,7 @@ namespace DexComanda
                         Atualiza.ImpressoSN = true;
                         conexao.Update("spInformaItemImpresso", Atualiza);
                     }
-                    dsItemsNaoImpresso = ItensSelect(iCodPedido);
+                    dsItemsNaoImpresso = ItensSelect(iCodPedido,0);
 
                 }
 
@@ -1094,6 +1109,72 @@ namespace DexComanda
                 report.Dispose();
             }
         }
+        public static void ImpressaoMesaPorImpressora(int iCodPedido, int iCodGupo,  int iNumCopias,
+            string strNomeImpressora)
+        {
+            string iRetorno = string.Empty;
+
+            RelComandaMesaPorGrupo report;
+            report = new RelComandaMesaPorGrupo();
+            crtableLogoninfos = new TableLogOnInfos();
+            crtableLogoninfo = new TableLogOnInfo();
+            crConnectionInfo = new ConnectionInfo();
+
+            PrinterSettings printersettings = new PrinterSettings();
+            printersettings.PrinterName = strNomeImpressora;
+            printersettings.Copies = 1;
+            printersettings.Collate = false;
+            try
+            {
+
+                Tables CrTables;
+                report.Load(Directory.GetCurrentDirectory() + @"\RelComandaMesaPorGrupo.rpt", OpenReportMethod.OpenReportByTempCopy);
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+                report.SetParameterValue("@Codigo", iCodPedido);
+                report.SetParameterValue("@NomeImpressora", strNomeImpressora);
+
+                if (strNomeImpressora != "")
+                {
+                    for (int i = 0; i < iNumCopias; i++)
+                    {
+                        report.PrintOptions.PrinterName = strNomeImpressora;
+                        report.PrintToPrinter(printersettings, new PageSettings(), false);
+                    }
+
+                }
+                else
+                {
+                    for (int i = 0; i < iNumCopias; i++)
+                    {
+                        report.PrintToPrinter(1, true, 0, 0);
+                    }
+                }
+
+
+            }
+
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(Bibliotecas.cException + erro.InnerException.Message);
+            }
+            //finally
+            //{
+            //    report.Dispose();
+            //}
+            // return iRetorno;
+        }
         public static async void ImpressaMesaNova(int iCodPedido, int iCodGupo, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "", Boolean iImprimirAgora = false)
         {
             string iRetorno = string.Empty;
@@ -1127,7 +1208,7 @@ namespace DexComanda
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
                 report.SetParameterValue("@Codigo", iCodPedido);
-                report.SetParameterValue("@NomeImpressora", iNomeImpressora);
+                report.SetParameterValue("@CodGrupo", iCodGupo);
 
                 if (iNomeImpressora != "")
                 {

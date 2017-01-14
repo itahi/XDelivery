@@ -35,6 +35,7 @@ namespace DexComanda.Operações.Financeiro
                 //SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixaPorCodigo", Convert.ToDateTime(iDataFiltro), int.Parse(cbxCaixas.Text));
             if (dsCaixa.Tables[0].Rows.Count > 0)
             {
+                btnExecutar.Enabled = true;
                 DataRow dRow = dsCaixa.Tables[0].Rows[0];
 
                 txtDtAbertura.Text = dRow.ItemArray.GetValue(1).ToString();
@@ -44,6 +45,7 @@ namespace DexComanda.Operações.Financeiro
                 txtUFechamento.Text = Sessions.retunrUsuario.Nome;
                 // txtVlrAbertura.Text  
                 ConsultaMovimentoCaixa();
+
             }
         }
         private void ConsultaMovimentoCaixa()
@@ -55,7 +57,6 @@ namespace DexComanda.Operações.Financeiro
            
             if (dsMovimento.Tables[0].Rows.Count > 0)
             {
-
                 FechamentosGrid.DataSource = null;
                 FechamentosGrid.AutoGenerateColumns = true;
                 FechamentosGrid.DataSource = dsMovimento;
@@ -91,8 +92,11 @@ namespace DexComanda.Operações.Financeiro
         }
         private void btnExecutar_Click(object sender, EventArgs e)
         {
-
-
+            if (FechamentosGrid.Rows.Count==0)
+            {
+                MessageBox.Show("Filtre o caixa que deseja fechar");
+                return;
+            }
             for (int i = 0; i < FechamentosGrid.Rows.Count; i++)
             {
                 vlrValorSomado = decimal.Parse(FechamentosGrid.Rows[i].Cells["Total Somado"].Value.ToString());

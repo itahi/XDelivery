@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbxListaMesasO = new System.Windows.Forms.ComboBox();
             this.gridOrigem = new System.Windows.Forms.DataGridView();
@@ -35,6 +36,7 @@
             this.cbxListaMesasD = new System.Windows.Forms.ComboBox();
             this.gridDestino = new System.Windows.Forms.DataGridView();
             this.btnTransferir = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridOrigem)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -47,7 +49,7 @@
             this.groupBox1.Controls.Add(this.gridOrigem);
             this.groupBox1.Location = new System.Drawing.Point(3, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(645, 211);
+            this.groupBox1.Size = new System.Drawing.Size(510, 211);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Origem";
@@ -67,16 +69,17 @@
             this.gridOrigem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrigem.Location = new System.Drawing.Point(6, 64);
             this.gridOrigem.Name = "gridOrigem";
-            this.gridOrigem.Size = new System.Drawing.Size(632, 138);
+            this.gridOrigem.Size = new System.Drawing.Size(504, 147);
             this.gridOrigem.TabIndex = 1;
+            this.gridOrigem.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxiliar);
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.cbxListaMesasD);
             this.groupBox2.Controls.Add(this.gridDestino);
-            this.groupBox2.Location = new System.Drawing.Point(3, 225);
+            this.groupBox2.Location = new System.Drawing.Point(3, 265);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(645, 211);
+            this.groupBox2.Size = new System.Drawing.Size(510, 205);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Destino";
@@ -96,16 +99,17 @@
             this.gridDestino.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridDestino.Location = new System.Drawing.Point(6, 64);
             this.gridDestino.Name = "gridDestino";
-            this.gridDestino.Size = new System.Drawing.Size(632, 138);
+            this.gridDestino.Size = new System.Drawing.Size(504, 141);
             this.gridDestino.TabIndex = 1;
             // 
             // btnTransferir
             // 
-            this.btnTransferir.Location = new System.Drawing.Point(240, 442);
+            this.btnTransferir.Location = new System.Drawing.Point(519, 198);
             this.btnTransferir.Name = "btnTransferir";
-            this.btnTransferir.Size = new System.Drawing.Size(90, 31);
+            this.btnTransferir.Size = new System.Drawing.Size(90, 97);
             this.btnTransferir.TabIndex = 4;
-            this.btnTransferir.Text = "Transferir Itens";
+            this.btnTransferir.Text = "Transferir Mesa Completa";
+            this.toolTip1.SetToolTip(this.btnTransferir, "Transfere todos itens da mesa Origem para mesa destino");
             this.btnTransferir.UseVisualStyleBackColor = true;
             this.btnTransferir.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -113,7 +117,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(653, 482);
+            this.ClientSize = new System.Drawing.Size(615, 475);
             this.Controls.Add(this.btnTransferir);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -139,5 +143,6 @@
         private System.Windows.Forms.ComboBox cbxListaMesasD;
         private System.Windows.Forms.DataGridView gridDestino;
         private System.Windows.Forms.Button btnTransferir;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

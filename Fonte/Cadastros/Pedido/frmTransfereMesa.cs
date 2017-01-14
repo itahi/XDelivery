@@ -124,5 +124,30 @@ namespace DexComanda.Cadastros.Pedido
         {
             PopulaGrid(int.Parse(cbxListaMesasD.SelectedValue.ToString()), gridDestino);
         }
+
+        private void MenuAuxiliar(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                // Se grid não tiver nada selecionado ele vaza
+                //if (gridOrigem.CurrentRow.Cells[0].Value==null)
+                //{
+                //    return;
+                //}
+                //DataGridView dgv = sender as DataGridView;
+                //if (e.Button == MouseButtons.Right)
+                //{
+                //    ContextMenu menuPrincipal = new ContextMenu();
+                //    MenuItem TransfereItens = new MenuItem(" Transferir este item");
+                //    menuPrincipal.MenuItems.Add(TransfereItens);
+                //}
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+        }
     }
 }

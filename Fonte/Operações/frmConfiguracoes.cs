@@ -150,6 +150,7 @@ namespace DexComanda
             config.ImpressoraCozinha = cbxImpressoraMesa.Text;
             config.ImpressoraCopaBalcao = cbxImpressoraBalcao.Text;
             config.CobrancaProporcionalSN = chkProporcional.Checked;
+            config.TipoImpressao = cbxTipoImpressao.Text;
             //empresa.HorarioFuncionamento = "";
             if (chkEnviaSms.Checked)
             {
@@ -294,6 +295,7 @@ namespace DexComanda
             config.ImpressoraCozinha = cbxImpressoraMesa.Text;
             config.ImpressoraCopaBalcao = cbxImpressoraBalcao.Text;
             config.CobrancaProporcionalSN = chkProporcional.Checked;
+            config.TipoImpressao = cbxTipoImpressao.Text;
             if (chkEnviaSms.Checked)
             {
                 Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
@@ -393,7 +395,7 @@ namespace DexComanda
                 chkVendedor.Checked = Sessions.returnConfig.ExigeVendedorSN;
                 PreencheCidades(Sessions.returnConfig.CidadesAtendidas);
                 txtGoogleProjetc.Text = Sessions.returnConfig.GCM;
-
+                cbxTipoImpressao.Text = Sessions.returnConfig.TipoImpressao;
                 cbxImpressoraDelivery.Text = Sessions.returnConfig.ImpressoraEntrega;
                 cbxImpressoraMesa.Text = Sessions.returnConfig.ImpressoraCozinha;
                 cbxImpressoraBalcao.Text = Sessions.returnConfig.ImpressoraCopaBalcao;
@@ -401,6 +403,7 @@ namespace DexComanda
                 this.btnSalvar.Text = "Alterar";
                 this.btnSalvar.Click -= SalvaConfig;
                 this.btnSalvar.Click += AlterarConfig;
+
             }
             //  Exibir DataLiberação Sistema
             var servidorLocal = con.SelectAll("Empresa", "spObterEmpresa");
@@ -894,6 +897,16 @@ namespace DexComanda
             {
                 txtViasEntrega.Text = "0";
             }
+        }
+
+        private void cbxImpressoraDelivery_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pInfoUserDefault_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

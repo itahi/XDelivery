@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarFormaPagamento));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.chkAtivoSN = new System.Windows.Forms.CheckBox();
             this.chkOnline = new System.Windows.Forms.CheckBox();
             this.chkFinanceiro = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.chkDesconto2 = new System.Windows.Forms.CheckBox();
             this.txtNomeFP = new System.Windows.Forms.TextBox();
             this.btnEditarFP = new System.Windows.Forms.Button();
@@ -45,6 +45,8 @@
             this.btnImg = new System.Windows.Forms.Button();
             this.txtcaminhoImage = new System.Windows.Forms.TextBox();
             this.img = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FPGridView)).BeginInit();
@@ -62,7 +64,7 @@
             this.tabControl1.Location = new System.Drawing.Point(2, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(276, 367);
+            this.tabControl1.Size = new System.Drawing.Size(276, 389);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -79,7 +81,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(268, 341);
+            this.tabPage1.Size = new System.Drawing.Size(268, 363);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Cadastro";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -87,7 +89,7 @@
             // chkAtivoSN
             // 
             this.chkAtivoSN.AutoSize = true;
-            this.chkAtivoSN.Location = new System.Drawing.Point(128, 49);
+            this.chkAtivoSN.Location = new System.Drawing.Point(128, 41);
             this.chkAtivoSN.Name = "chkAtivoSN";
             this.chkAtivoSN.Size = new System.Drawing.Size(71, 17);
             this.chkAtivoSN.TabIndex = 19;
@@ -97,7 +99,7 @@
             // chkOnline
             // 
             this.chkOnline.AutoSize = true;
-            this.chkOnline.Location = new System.Drawing.Point(8, 49);
+            this.chkOnline.Location = new System.Drawing.Point(8, 41);
             this.chkOnline.Name = "chkOnline";
             this.chkOnline.Size = new System.Drawing.Size(62, 17);
             this.chkOnline.TabIndex = 18;
@@ -107,27 +109,19 @@
             // chkFinanceiro
             // 
             this.chkFinanceiro.AutoSize = true;
-            this.chkFinanceiro.Location = new System.Drawing.Point(128, 24);
+            this.chkFinanceiro.Location = new System.Drawing.Point(128, 7);
             this.chkFinanceiro.Name = "chkFinanceiro";
             this.chkFinanceiro.Size = new System.Drawing.Size(107, 17);
             this.chkFinanceiro.TabIndex = 17;
             this.chkFinanceiro.Text = "Gera Financeiro?";
+            this.toolTip1.SetToolTip(this.chkFinanceiro, "Marcando essa opção , vendas feitas nessa forma de pagamento geram débitos para o" +
+        " cliente");
             this.chkFinanceiro.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(5, 5);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(165, 16);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "Formas de Pagamento";
             // 
             // chkDesconto2
             // 
             this.chkDesconto2.AutoSize = true;
-            this.chkDesconto2.Location = new System.Drawing.Point(8, 24);
+            this.chkDesconto2.Location = new System.Drawing.Point(8, 7);
             this.chkDesconto2.Name = "chkDesconto2";
             this.chkDesconto2.Size = new System.Drawing.Size(116, 17);
             this.chkDesconto2.TabIndex = 15;
@@ -139,14 +133,14 @@
             this.txtNomeFP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNomeFP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNomeFP.Location = new System.Drawing.Point(8, 72);
+            this.txtNomeFP.Location = new System.Drawing.Point(6, 92);
             this.txtNomeFP.Name = "txtNomeFP";
             this.txtNomeFP.Size = new System.Drawing.Size(252, 26);
             this.txtNomeFP.TabIndex = 14;
             // 
             // btnEditarFP
             // 
-            this.btnEditarFP.Location = new System.Drawing.Point(136, 106);
+            this.btnEditarFP.Location = new System.Drawing.Point(136, 124);
             this.btnEditarFP.Name = "btnEditarFP";
             this.btnEditarFP.Size = new System.Drawing.Size(124, 48);
             this.btnEditarFP.TabIndex = 13;
@@ -156,7 +150,7 @@
             // 
             // btnAdicionar
             // 
-            this.btnAdicionar.Location = new System.Drawing.Point(3, 106);
+            this.btnAdicionar.Location = new System.Drawing.Point(3, 124);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(108, 48);
             this.btnAdicionar.TabIndex = 12;
@@ -174,12 +168,12 @@
             this.FPGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.FPGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.FPGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.FPGridView.Location = new System.Drawing.Point(5, 160);
+            this.FPGridView.Location = new System.Drawing.Point(5, 176);
             this.FPGridView.MultiSelect = false;
             this.FPGridView.Name = "FPGridView";
             this.FPGridView.ReadOnly = true;
             this.FPGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.FPGridView.Size = new System.Drawing.Size(257, 173);
+            this.FPGridView.Size = new System.Drawing.Size(257, 181);
             this.FPGridView.TabIndex = 11;
             this.FPGridView.DoubleClick += new System.EventHandler(this.btnEditarFP_Click);
             // 
@@ -238,9 +232,19 @@
             this.img.TabIndex = 0;
             this.img.TabStop = false;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(6, 69);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 16);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Nome:";
+            // 
             // frmCadastrarFormaPagamento
             // 
-            this.ClientSize = new System.Drawing.Size(283, 378);
+            this.ClientSize = new System.Drawing.Size(283, 400);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -273,7 +277,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.CheckBox chkOnline;
         private System.Windows.Forms.CheckBox chkFinanceiro;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkDesconto2;
         private System.Windows.Forms.TextBox txtNomeFP;
         private System.Windows.Forms.Button btnEditarFP;
@@ -285,5 +288,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnImg;
         private System.Windows.Forms.CheckBox chkAtivoSN;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label label3;
     }
 }

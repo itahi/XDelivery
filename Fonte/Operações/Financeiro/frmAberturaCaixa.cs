@@ -40,6 +40,11 @@ namespace DexComanda.Operações.Financeiro
         {
             try
             {
+                if (horafechamento.Value.TimeOfDay<=DateTime.Now.TimeOfDay)
+                {
+                    MessageBox.Show("Horário Fechamento não pode ser igual ou menor a horario atual");
+                    return;
+                }
                 if (cbxTurno.Text=="")
                 {
                     MessageBox.Show("Selecione o turno que deseja abrir");
@@ -70,11 +75,10 @@ namespace DexComanda.Operações.Financeiro
                         Historico = "Abertura Inicial",
                         Numero = cbxCaixas.Text,
                         Turno = cbxTurno.Text.ToString(),
-                        ValorAbertura = decimal.Parse(txtValor.Text)    
-
+                        ValorAbertura = decimal.Parse(txtValor.Text),
+                        HorarioFechamento = horafechamento.Value.TimeOfDay    
                     };
                 
-
                     if (cbxFuncionario.Text != "")
                     {
                         caixa.CodUsuario = Sessions.retunrUsuario.Codigo;
@@ -132,6 +136,11 @@ namespace DexComanda.Operações.Financeiro
         private void txtValor_KeyPress(object sender, KeyPressEventArgs e)
         {
             Utils.SoDecimais(e);
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
