@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 using System.Management;
 using System.Net;
 using XIntegrador.Classe.Local;
+using Microsoft.Win32;
 
 namespace DexComanda
 {
@@ -33,25 +34,68 @@ namespace DexComanda
         private int lastCodigo;
         public static string connectionString = null;
         private object iNumeroPessoas;
-
+        public ConnectionState statusConexao ;
         public Conexao()
         {
             try
             {
+                ////if (!SqlServerInstalado())
+                ////{
+                ////    return;
+                ////}
+                
                 if (connectionString != null)
                 {
                     conn = new SqlConnection(connectionString);
                     conn.Open();
+                    statusConexao = conn.State;
                 }
             }
             catch (Exception msg)
             {
                 MessageBox.Show(msg.Message, "Erro conexao com o SQLSERVER");
             }
+            
+        }
+
+        /// <summary>
+        /// Verifica se há uma versão do SQLServer Instalado
+        /// </summary>
+        /// <returns>
+        /// Verdadeiro para sim , False para não</returns>
+        public bool SqlServerInstalado()
+        {
+            bool iReturn = false;
+            try
+            {
+                RegistryKey key = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Microsoft SQL Server Local DB\\Installed Versions");
+                if (key != null && key.GetSubKeyNames().Count() > 0)
+                {
+                    iReturn = true;
+                }
+                else
+                {
+                    MessageBox.Show("Não há uma versão do SQLSERVER instalado nessa estacação");
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return iReturn;
         }
 
 
-        // Rotina para efetuar Backup Automátizado do Banco de dados ao Encerrar o Programa
+
+        /// <summary>
+        /// Rotina para efetuar Backup Automátizado do Banco de dados ao Encerrar o Programa
+        /// </summary>
+        /// <param name="iNomeServidor">
+        /// Nome do Servidor de Banco de Dados</param>
+        /// <param name="iNomeBanco">
+        /// Nome do Banco de Dados </param>
+        /// <param name="iLocalBackup">
+        /// Local onde será gravado o Backup</param>
         public void BackupBanco(string iNomeServidor, string iNomeBanco, string iLocalBackup)
         {
             string BackupFileName = iNomeBanco + DateTime.Now.ToShortDateString().Replace("/", "") + ".bak";

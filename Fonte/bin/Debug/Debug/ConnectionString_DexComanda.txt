@@ -1,1 +1,0 @@
-Data Source=.\;Initial Catalog=DbExpert_TropicalExpress; User ID=dex; Password=1234; Trusted_Connection=False; 

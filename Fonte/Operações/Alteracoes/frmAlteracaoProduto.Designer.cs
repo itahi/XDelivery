@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label label6;
             System.Windows.Forms.Label label5;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAlteracaoProduto));
@@ -81,6 +82,7 @@
             this.Valor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CodTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             this.grpFiltros.SuspendLayout();
@@ -129,7 +131,7 @@
             // chkTodos
             // 
             this.chkTodos.AutoSize = true;
-            this.chkTodos.Location = new System.Drawing.Point(237, 40);
+            this.chkTodos.Location = new System.Drawing.Point(301, 41);
             this.chkTodos.Name = "chkTodos";
             this.chkTodos.Size = new System.Drawing.Size(101, 17);
             this.chkTodos.TabIndex = 27;
@@ -139,11 +141,11 @@
             // 
             // btnFiltrar
             // 
-            this.btnFiltrar.Location = new System.Drawing.Point(358, 34);
+            this.btnFiltrar.Location = new System.Drawing.Point(231, 35);
             this.btnFiltrar.Name = "btnFiltrar";
             this.btnFiltrar.Size = new System.Drawing.Size(64, 26);
             this.btnFiltrar.TabIndex = 26;
-            this.btnFiltrar.Text = "Filtros";
+            this.btnFiltrar.Text = "Buscar";
             this.btnFiltrar.UseVisualStyleBackColor = true;
             this.btnFiltrar.Click += new System.EventHandler(this.Filtro);
             // 
@@ -491,6 +493,7 @@
             this.btnOpcao.TabIndex = 30;
             this.btnOpcao.Text = "Vincular Opção";
             this.btnOpcao.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.btnOpcao, "Selecione as opções que serão vinculadas aos produtos do filtro");
             this.btnOpcao.UseVisualStyleBackColor = true;
             this.btnOpcao.Click += new System.EventHandler(this.btnOpcao_Click);
             // 
@@ -751,5 +754,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Valor;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nome;
         private System.Windows.Forms.DataGridViewTextBoxColumn CodTipo;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

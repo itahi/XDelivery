@@ -333,6 +333,7 @@ namespace DexComanda
         }
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
+            //chkGerenciaImpressao.Checked = Utils.RetornaNomePc() == Sessions.returnEmpresa.Servidor;
 
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
             int iNumeroCaixa = Sessions.retunrUsuario.CaixaLogado;
@@ -344,14 +345,13 @@ namespace DexComanda
                 lblCaixa.Text = "Caixa Aberto";
                 lblCaixa.ForeColor = Color.Green;
             }
-
+            
             this.txbTelefoneCliente.Focus();
             Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
             Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
             MontaMenu();
             TotalizaPedidos();
-
         }
         private void MontaMenu() // Monta o menu de opções
         {
@@ -1823,7 +1823,7 @@ namespace DexComanda
         {
             try
             {
-
+               
                 DataSet dsPedidosAbertos = con.SelectAll("Pedido", "spObterPedido");
                 int iPedidosAberto = dsPedidosAbertos.Tables["Pedido"].Rows.Count;
 
@@ -1834,11 +1834,11 @@ namespace DexComanda
 
                 }
                 string iSql = " select distinct (IT.CodProduto) ,PE.*,  " +
-                              " CodGrupo, " +
+                              " G.Codigo as CodGrupo, " +
                               " NomeImpressora " +
                               " from Pedido PE " +
                               " join ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0 " +
-                              " left join Produto P on P.Codigo = It.CodProduto " +
+                              " left join Produto P on P.Codigo = It.CodProduto  or P.CodigoPersonalizado = It.CodProduto" +
                               " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo " +
                               " where PE.CodigoMesa > 0 and Finalizado = 0 ";
 
@@ -1853,9 +1853,9 @@ namespace DexComanda
                 Boolean iMesa = dRowPedido.ItemArray.GetValue(8).ToString() == "1 - Mesa";
                 if (iMesa && chkGerenciaImpressao.Checked && dsItemsNaoImpresso.Tables[0].Rows.Count > 0)
                 {
-                    int CodPedido = int.Parse(dRowPedido.ItemArray.GetValue(1).ToString());
-                    int CodGrupo = int.Parse(dRowPedido.ItemArray.GetValue(23).ToString());
-                    string iNomeImpressora = dRowPedido.ItemArray.GetValue(24).ToString();
+                    int CodPedido = dsItemsNaoImpresso.Tables[0].Rows[0].Field<int>("Codigo");
+                    int CodGrupo = dsItemsNaoImpresso.Tables[0].Rows[0].Field<int>("CodGrupo") ;
+                    string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[0].Field<string>("NomeImpressora");
                     AtualizaGrid.Enabled = false;
                     ImpressaoAutomatica(CodPedido, CodGrupo, iNomeImpressora);
                     AtualizaGrid.Enabled = true;

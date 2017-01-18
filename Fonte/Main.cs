@@ -122,7 +122,7 @@ namespace DexComanda
         // private string Mo
         private void Main_Load(object sender, EventArgs e)
         {
-            chkGerenciaImpressao.Checked = Utils.RetornaNomePc() == Sessions.returnEmpresa.Servidor;
+            
 
             if (Sessions.retunrUsuario != null)
             {

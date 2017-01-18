@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpPeriodo = new System.Windows.Forms.GroupBox();
+            this.dtFim = new System.Windows.Forms.DateTimePicker();
+            this.dtInicio = new System.Windows.Forms.DateTimePicker();
             this.panel2 = new System.Windows.Forms.Panel();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
@@ -44,20 +47,19 @@
             this.grpGrid = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.grpPeriodo = new System.Windows.Forms.GroupBox();
-            this.dtFim = new System.Windows.Forms.DateTimePicker();
-            this.dtInicio = new System.Windows.Forms.DateTimePicker();
+            this.btnBuscar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            this.grpPeriodo.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grpGrid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.grpPeriodo.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnBuscar);
             this.groupBox1.Controls.Add(this.grpPeriodo);
             this.groupBox1.Controls.Add(this.panel2);
             this.groupBox1.Controls.Add(this.panel1);
@@ -71,6 +73,33 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tipo Filtros";
             // 
+            // grpPeriodo
+            // 
+            this.grpPeriodo.Controls.Add(this.dtFim);
+            this.grpPeriodo.Controls.Add(this.dtInicio);
+            this.grpPeriodo.Location = new System.Drawing.Point(305, 39);
+            this.grpPeriodo.Name = "grpPeriodo";
+            this.grpPeriodo.Size = new System.Drawing.Size(221, 60);
+            this.grpPeriodo.TabIndex = 8;
+            this.grpPeriodo.TabStop = false;
+            this.grpPeriodo.Text = "Periodo Filtro";
+            // 
+            // dtFim
+            // 
+            this.dtFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtFim.Location = new System.Drawing.Point(109, 26);
+            this.dtFim.Name = "dtFim";
+            this.dtFim.Size = new System.Drawing.Size(78, 20);
+            this.dtFim.TabIndex = 1;
+            // 
+            // dtInicio
+            // 
+            this.dtInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtInicio.Location = new System.Drawing.Point(11, 26);
+            this.dtInicio.Name = "dtInicio";
+            this.dtInicio.Size = new System.Drawing.Size(78, 20);
+            this.dtInicio.TabIndex = 0;
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.comboBox2);
@@ -83,7 +112,7 @@
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(3, 29);
+            this.comboBox2.Location = new System.Drawing.Point(11, 29);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(121, 21);
             this.comboBox2.TabIndex = 8;
@@ -91,7 +120,7 @@
             // radioButton5
             // 
             this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(3, 4);
+            this.radioButton5.Location = new System.Drawing.Point(13, 6);
             this.radioButton5.Name = "radioButton5";
             this.radioButton5.Size = new System.Drawing.Size(107, 17);
             this.radioButton5.TabIndex = 4;
@@ -162,7 +191,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.richTextBox1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 189);
+            this.groupBox2.Location = new System.Drawing.Point(12, 165);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(290, 247);
             this.groupBox2.TabIndex = 2;
@@ -181,7 +210,7 @@
             // grpGrid
             // 
             this.grpGrid.Controls.Add(this.dataGridView1);
-            this.grpGrid.Location = new System.Drawing.Point(314, 189);
+            this.grpGrid.Location = new System.Drawing.Point(314, 165);
             this.grpGrid.Name = "grpGrid";
             this.grpGrid.Size = new System.Drawing.Size(257, 250);
             this.grpGrid.TabIndex = 3;
@@ -201,32 +230,14 @@
             this.dataGridView1.Size = new System.Drawing.Size(251, 231);
             this.dataGridView1.TabIndex = 0;
             // 
-            // grpPeriodo
+            // btnBuscar
             // 
-            this.grpPeriodo.Controls.Add(this.dtFim);
-            this.grpPeriodo.Controls.Add(this.dtInicio);
-            this.grpPeriodo.Location = new System.Drawing.Point(305, 39);
-            this.grpPeriodo.Name = "grpPeriodo";
-            this.grpPeriodo.Size = new System.Drawing.Size(221, 60);
-            this.grpPeriodo.TabIndex = 8;
-            this.grpPeriodo.TabStop = false;
-            this.grpPeriodo.Text = "Periodo Filtro";
-            // 
-            // dtFim
-            // 
-            this.dtFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtFim.Location = new System.Drawing.Point(109, 26);
-            this.dtFim.Name = "dtFim";
-            this.dtFim.Size = new System.Drawing.Size(78, 20);
-            this.dtFim.TabIndex = 1;
-            // 
-            // dtInicio
-            // 
-            this.dtInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtInicio.Location = new System.Drawing.Point(11, 26);
-            this.dtInicio.Name = "dtInicio";
-            this.dtInicio.Size = new System.Drawing.Size(78, 20);
-            this.dtInicio.TabIndex = 0;
+            this.btnBuscar.Location = new System.Drawing.Point(305, 119);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(75, 23);
+            this.btnBuscar.TabIndex = 9;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = true;
             // 
             // frmEnvioPush
             // 
@@ -240,6 +251,7 @@
             this.Text = "[xSistemas] Envio de Notificações Push";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.grpPeriodo.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -247,7 +259,6 @@
             this.groupBox2.ResumeLayout(false);
             this.grpGrid.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.grpPeriodo.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -272,5 +283,6 @@
         private System.Windows.Forms.GroupBox grpPeriodo;
         private System.Windows.Forms.DateTimePicker dtFim;
         private System.Windows.Forms.DateTimePicker dtInicio;
+        private System.Windows.Forms.Button btnBuscar;
     }
 }

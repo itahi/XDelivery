@@ -4,7 +4,7 @@
   <description asmv2:iconFile="xD-grey-inverse.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="DexComanda" version="2.0.0.33176" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="DexComanda" version="2.0.0.899" language="neutral" processorArchitecture="msil" />
     <commandLine file="DexComanda.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -345,14 +345,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DexComanda.exe" size="5982208">
-      <assemblyIdentity name="DexComanda" version="2.0.0.33176" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DexComanda.exe" size="5983232">
+      <assemblyIdentity name="DexComanda" version="2.0.0.899" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>fdFBy2Qn9V5yqLUuZcI2gpWnWQALLF9Acp8n+d5bYt8=</dsig:DigestValue>
+        <dsig:DigestValue>oQ3j3+wzw4iEvsQkLlBPY8iKfu78sRzBJUcUPMiS8bs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
