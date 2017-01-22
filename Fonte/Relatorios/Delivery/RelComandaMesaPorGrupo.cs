@@ -106,7 +106,7 @@ namespace DexComanda.Relatorios.Delivery {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_NomeImpressora {
+        public CrystalDecisions.Shared.IParameterField Parameter_CodGrupo {
             get {
                 return this.DataDefinition.ParameterFields[1];
             }

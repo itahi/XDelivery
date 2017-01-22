@@ -147,9 +147,9 @@ namespace DexComanda
                 }
 
                 CarregaMesas(iCodMesa);
-               gNUmeroMesa = Convert.ToString(iCodMesa);
+                gNUmeroMesa = Convert.ToString(iCodMesa);
                 cbxTipoPedido.Text = TipoPedido;
-               // cbxListaMesas.Items.Add(MesaBalcao);
+                // cbxListaMesas.Items.Add(MesaBalcao);
                 Utils.MontaCombox(cbxVendedor, "Nome", "Codigo", "Usuario", "spObterUsuarioPorCodigo", iCodVendedor);
             }
             catch (Exception mx)
@@ -166,11 +166,11 @@ namespace DexComanda
             this.itemsPedidoBindingSource.EndEdit();
             this.tableAdapterManager.UpdateAll(this.dBExpertDataSet);
         }
-        private void CarregaMesas(int iCodMesa=0)
+        private void CarregaMesas(int iCodMesa = 0)
         {
             try
             {
-                if (iCodMesa==0)
+                if (iCodMesa == 0)
                 {
                     cbxListaMesas.DataSource = con.SelectAll("Mesas", "spObterMesasAbertas").Tables["Mesas"];
                     cbxListaMesas.DisplayMember = "NumeroMesa";
@@ -182,14 +182,14 @@ namespace DexComanda
                     cbxListaMesas.DisplayMember = "NumeroMesa";
                     cbxListaMesas.ValueMember = "Codigo";
                 }
-               
+
 
             }
             catch (Exception erro)
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
-            }  
-           
+            }
+
         }
         private void CarregaOpcoesProduto(int iCodProduto)
         {
@@ -319,7 +319,7 @@ namespace DexComanda
             DataSet dsPessoa;
             try
             {
-                
+
                 if (iCodEndereco == 0)
                 {
                     dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
@@ -676,7 +676,7 @@ namespace DexComanda
                     dsOpcoes = con.RetornaOpcoesProduto(iCodProduto);
                     dsOpcoes2 = con.RetornaOpcoesProduto(iCodProduto2);
                 }
-               
+
                 EscondeTamanhos();
                 chkListAdicionais.Items.Clear();
                 if (dsOpcoes.Tables[0].Rows.Count > 0)
@@ -929,7 +929,7 @@ namespace DexComanda
                                 con.Insert("spAdicionarItemAoPedido", item);
 
                                 AlteraTotalPedido();
-                              //  con.Update("spAlterarTotalPedido", pedido);
+                                //  con.Update("spAlterarTotalPedido", pedido);
                                 items.Add(item);
                                 atualizarGrid(item);
                                 SemMeiaPizza();
@@ -1008,7 +1008,7 @@ namespace DexComanda
             Boolean iReturn = false;
             double TotalPedido = double.Parse(lbTotal.Text.Replace("R$", ""));
             double DescontoSolicitado = double.Parse(txtDesconto.Text.Replace("R$", ""));
-            if (TotalPedido == 0|| DescontoSolicitado==0)
+            if (TotalPedido == 0 || DescontoSolicitado == 0)
             {
                 return true;
             }
@@ -1453,7 +1453,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-            
+
         }
         private void gridViewItemsPedido_MouseClick(object sender, MouseEventArgs e)
         {
@@ -1842,8 +1842,8 @@ namespace DexComanda
                         iCodigo = codPedido;
                     }
                     if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras || Sessions.returnEmpresa.CNPJ
-                        == Bibliotecas.cMassaRara || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria 
-                        || Sessions.returnEmpresa.CNPJ== "11291880000119")
+                        == Bibliotecas.cMassaRara || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria
+                        || Sessions.returnEmpresa.CNPJ == "11291880000119")
                     {
                         Utils.ImpressaoPorCozinha(iCodigo);
                         return;
@@ -2202,7 +2202,7 @@ namespace DexComanda
 
         private void BuscaProduto1(object sender, KeyEventArgs e)
         {
-            int intCodInterno=0;
+            int intCodInterno = 0;
             DataTable produto;
             if (e.KeyCode == Keys.Enter)
             {
@@ -2592,7 +2592,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(799, 3);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -3261,8 +3261,8 @@ namespace DexComanda
             // 
             // chkListAdicionais
             // 
-            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chkListAdicionais.CheckOnClick = true;
             this.chkListAdicionais.FormattingEnabled = true;
@@ -3392,8 +3392,6 @@ namespace DexComanda
             // chkCodPersonalizado
             // 
             this.chkCodPersonalizado.AutoSize = true;
-            this.chkCodPersonalizado.Checked = true;
-            this.chkCodPersonalizado.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkCodPersonalizado.Location = new System.Drawing.Point(154, 93);
             this.chkCodPersonalizado.Name = "chkCodPersonalizado";
             this.chkCodPersonalizado.Size = new System.Drawing.Size(127, 17);
@@ -3489,7 +3487,7 @@ namespace DexComanda
         {
             if (txtQuantidade.Text != "" && txtPrecoUnitario.Text != "" || cbxProdutosGrid.SelectedItem != null)
             {
-                
+
                 var precoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.ToString().Replace("R$ ", ""));
                 var quantidade = decimal.Parse(this.txtQuantidade.Text);
                 var total = Math.Round(precoUnitario * quantidade, 2);
@@ -3520,7 +3518,7 @@ namespace DexComanda
 
             if (cbxTipoPedido.Text == "1 - Mesa")
             {
-               // CarregaMesas();
+                // CarregaMesas();
                 cbxListaMesas.Visible = true;
                 cbxListaMesas.Focus();
             }
@@ -3541,7 +3539,7 @@ namespace DexComanda
             else
             {
                 this.lbTotal.Text = "R$ " + Convert.ToString(SomaItensPedido() + decimal.Parse(lblEntrega.Text.Replace("R$", "")) - decimal.Parse(txtDesconto.Text.Replace("R$", "")));
-                lblEntrega.Text = "R$ " + Utils.RetornaTaxaPorCliente(codPessoa, prvCodEndecoSelecionado).ToString() ;
+                lblEntrega.Text = "R$ " + Utils.RetornaTaxaPorCliente(codPessoa, prvCodEndecoSelecionado).ToString();
             }
             AlteraTotalPedido();
         }
@@ -3550,7 +3548,7 @@ namespace DexComanda
         {
             try
             {
-                if (!Utils.CaixaAberto(DateTime.Now,Sessions.retunrUsuario.CaixaLogado,Sessions.retunrUsuario.Turno))
+                if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                 {
                     MessageBox.Show(Bibliotecas.cCaixaFechado);
                     return;
@@ -3560,7 +3558,7 @@ namespace DexComanda
                 {
                     Codigo = codPedido,
                     NumeroMesa = gNUmeroMesa,
-                    TotalPedido = SomaItensPedido() + decimal.Parse(lblEntrega.Text.Replace("R$","")) - decimal.Parse(txtDesconto.Text.Replace("R$", "")),
+                    TotalPedido = SomaItensPedido() + decimal.Parse(lblEntrega.Text.Replace("R$", "")) - decimal.Parse(txtDesconto.Text.Replace("R$", "")),
                     Tipo = cbxTipoPedido.Text,
                     CodEndereco = prvCodEndecoSelecionado
                 };
@@ -3964,20 +3962,20 @@ namespace DexComanda
         {
             if (chkListAdicionais.CheckedItems.Count + 1 > gMaximoOpcaoProduto)
             {
-                // chkListAdicionais.SetItemCheckState(chkListAdicionais.SelectedIndex, CheckState.Unchecked);
                 MessageBox.Show("O Produto " + cbxProdutosGrid.Text + " só permite " + gMaximoOpcaoProduto + " Adicionais");
                 return;
             }
 
-
+            string iTextoNovo = "";
+           // iTextoNovo.Insert(iTextoNovo.Length, Environment.NewLine);
             if (e.CurrentValue == CheckState.Unchecked)
             {
-                txtItemDescricao.Text = txtItemDescricao.Text + " + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString());
+                iTextoNovo = iTextoNovo +  txtItemDescricao.Text + " + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString());
+                txtItemDescricao.Text = iTextoNovo.Insert(iTextoNovo.Length, Environment.NewLine);
                 decimal iValorItem = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
                 decimal iValorAdicional = decimal.Parse(ObterSomenteNumerosReais(chkListAdicionais.SelectedItem.ToString()));
                 decimal iValor = iValorItem + iValorAdicional;
                 txtPrecoUnitario.Text = Convert.ToString(iValor);
-
                 CalcularTotalItem();
             }
             else
@@ -4131,7 +4129,7 @@ namespace DexComanda
                                                                       dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
                                                                   , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(),
-                                                                      dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString(),iCodEnd);
+                                                                      dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString(), iCodEnd);
 
                     AtualizaClienteTela();
                 }
@@ -4325,7 +4323,7 @@ namespace DexComanda
 
         private void lblEntrega_TextChanged(object sender, EventArgs e)
         {
-            if (cbxTipoPedido.Text!= "0 - Entrega")
+            if (cbxTipoPedido.Text != "0 - Entrega")
             {
                 lblEntrega.Text = "0,00";
             }
@@ -4365,15 +4363,15 @@ namespace DexComanda
         }
         private void CalculaPorcentagemDesconto()
         {
-            if (txtPorcentagemDesconto.Text=="")
+            if (txtPorcentagemDesconto.Text == "")
             {
                 MessageBox.Show("Preencha o campo porcentagem de desconto");
                 txtPorcentagemDesconto.Focus();
                 return;
             }
 
-            decimal qtdProduto = decimal.Parse(txtQuantidade.Text); 
-            decimal prUnitario = Convert.ToDecimal(txtPrecoUnitario.Text.Replace("R$ ",""));
+            decimal qtdProduto = decimal.Parse(txtQuantidade.Text);
+            decimal prUnitario = Convert.ToDecimal(txtPrecoUnitario.Text.Replace("R$ ", ""));
             decimal vlrDesconto = prUnitario * qtdProduto * (decimal.Parse(txtPorcentagemDesconto.Text)) / 100;
             var Calc = prUnitario * qtdProduto - vlrDesconto;
             txtPrecoTotal.Text = Calc.ToString();

@@ -1364,7 +1364,7 @@
             // AtualizaGrid
             // 
             this.AtualizaGrid.Enabled = true;
-            this.AtualizaGrid.Interval = 5000;
+            this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
             // frmPrincipal

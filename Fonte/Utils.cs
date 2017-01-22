@@ -1142,7 +1142,7 @@ namespace DexComanda
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
                 report.SetParameterValue("@Codigo", iCodPedido);
-                report.SetParameterValue("@NomeImpressora", strNomeImpressora);
+                report.SetParameterValue("@CodGrupo", iCodGupo);
 
                 if (strNomeImpressora != "")
                 {
@@ -2299,7 +2299,7 @@ namespace DexComanda
             DataInicial = Convert.ToDateTime(iDataInicial + "/" + DateTime.Now.Year + " 00:00:00");
             DataFinal = Convert.ToDateTime(iDataFinal + "/" + DateTime.Now.Year + " 23:59:59");
 
-            DataSet ListaClientes = conexao.SelectObterClientesSemPedido("Pedido", "spObterClientesSemPedido", DataInicial, DataFinal);
+            DataSet ListaClientes = conexao.SelectObterClientesSemPedido("spObterClientesSemPedido", DataInicial, DataFinal);
             TotalSelecionado = ListaClientes.Tables["Pessoa"].Rows.Count;
             DialogResult resultado = MessageBox.Show("O Sistema enviará SMS para " + TotalSelecionado + " Clientes , deseja continuar?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (resultado == DialogResult.Yes)

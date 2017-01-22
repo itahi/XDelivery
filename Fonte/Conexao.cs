@@ -181,6 +181,16 @@ namespace DexComanda
             adapter.Fill(ds, "Pedido");
             return ds;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="iCod1"></param>
+        /// <param name="iCod2"></param>
+        /// <param name="iCod3"></param>
+        /// <param name="iCod4"></param>
+        /// <param name="iCodOpcao"></param>
+        /// <param name="iPrecoMar"></param>
+        /// <returns></returns>
         public DataSet RetornaMaioresPrecos(string iCod1, string iCod2, string iCod3,
             string iCod4, string iCodOpcao, Boolean iPrecoMar = true)
         {
@@ -269,7 +279,7 @@ namespace DexComanda
             command.Parameters.AddWithValue("@Numero", iCodCaixa);
             command.Parameters.AddWithValue("@Turno", iTurno);
             command.Parameters.AddWithValue("@Data", iData.ToShortDateString());
-            command.Parameters.AddWithValue("@HorarioFechamento",DateTime.Now.TimeOfDay);
+            command.Parameters.AddWithValue("@HorarioFechamento",DateTime.Now);
 
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
@@ -747,6 +757,12 @@ namespace DexComanda
             {
                 command.Parameters.AddWithValue("@Numero", iCodPessoa);
                 command.Parameters.AddWithValue("@Data", iDataI);
+            }
+            else if (spName== "spObterProdutoPorClientePush")
+            {
+                command.Parameters.AddWithValue("@DataInicio", iDataI);
+                command.Parameters.AddWithValue("@DataFim", iDataF);
+                command.Parameters.AddWithValue("@CodGrupo", iCodPessoa);
             }
             else
             {
@@ -1661,7 +1677,7 @@ namespace DexComanda
 
             return ds;
         }
-        public DataSet SelectObterAniversariantes(string table, string spName, DateTime DataInicial, DateTime DataFinal)
+        public DataSet SelectObterAniversariantes(string spName,DateTime DataInicial, DateTime DataFinal)
         {
 
             command = new SqlCommand(spName, conn);
@@ -1672,11 +1688,11 @@ namespace DexComanda
             adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
             ds = new DataSet();
-            adapter.Fill(ds, table);
+            adapter.Fill(ds, "Pessoa");
 
             return ds;
         }
-        public DataSet SelectObterClientesSemPedido(string table, string spName, DateTime DataInicial, DateTime DataFinal)
+        public DataSet SelectObterClientesSemPedido(string spName ,DateTime DataInicial, DateTime DataFinal)
         {
 
             command = new SqlCommand(spName, conn);
@@ -1687,7 +1703,7 @@ namespace DexComanda
             adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
             ds = new DataSet();
-            adapter.Fill(ds, table);
+            adapter.Fill(ds, "Pedido");
 
             return ds;
         }

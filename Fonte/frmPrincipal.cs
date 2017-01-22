@@ -7,6 +7,7 @@ using DexComanda.Integração;
 using DexComanda.Models;
 using DexComanda.Models.WS;
 using DexComanda.Operações;
+using DexComanda.Operações.Ações;
 using DexComanda.Operações.Alteracoes;
 using DexComanda.Operações.Consultas;
 using DexComanda.Operações.Financeiro;
@@ -333,7 +334,7 @@ namespace DexComanda
         }
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
-            //chkGerenciaImpressao.Checked = Utils.RetornaNomePc() == Sessions.returnEmpresa.Servidor;
+            chkGerenciaImpressao.Checked = Utils.RetornaNomePc() == Sessions.returnEmpresa.Servidor;
 
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
             int iNumeroCaixa = Sessions.retunrUsuario.CaixaLogado;
@@ -553,6 +554,7 @@ namespace DexComanda
         }
         private void TotalizaPedidos()
         {
+            // Não exibir totais para o BurisBurguer
             if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cBuris)
             {
                 return;
@@ -752,52 +754,29 @@ namespace DexComanda
 
                 if (Utils.MessageBoxQuestion("Deseja ** FINALIZAR ** Todos Pedidos Selecionado?"))
                 {
-
-                    for (int i = 0; i < pedidosGridView.Rows.Count; i++)
+                    if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo,"FinalizaPedidoSN"))
                     {
-                        Marcado = Convert.ToBoolean(this.pedidosGridView.Rows[i].Cells["Finalizado"].Value.ToString());
-                        decimal dblTotalPedido;
-                        if (Marcado)
+                        if (Utils.MessageBoxQuestion(Bibliotecas.cSolicitarPermissao))
                         {
-                            codigo = int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString());
-                            //int.Parse(pedidosGridView.CurrentRow[i].Cells["Codigo"].Value.ToString());
-
-                            DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
-                            DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
-                            int iCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
-                            CodPedidoWS = VerificaPedidoOnline(codigo);
-                            if (CodPedidoWS > 0)
+                            frmLiberação frm = new frmLiberação("FinalizaPedidoSN");
+                            if (frm.Autorizacao)
                             {
-                                AlteraStatusPedido(CodPedidoWS, 5, iCodPessoa);
-                                // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
+                                ExecutaFinalizacaoMultipla();
+                                frm.Close();
                             }
-                            int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
-                            dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
-
-                            // Atualiza Ticket Fidelidade
-                            AtualizarFidelidade(intCodPessoa);
-
-                            // Grava Débito caso o Tipo de Pagamento gerar financeiro 
-                            string strFormaPagamento = dRowPedido.ItemArray.GetValue(5).ToString();
-                            Utils.GeraHistorico(DateTime.Now, int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()), dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D', strFormaPagamento);
-
-                            // Grava Movimento De Caixa
-                            GravaMOvimentoCaixa(strFormaPagamento, dblTotalPedido, codigo);
-
-                            iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
-                            if (ControlaMesas && iCodMesa != 0)
+                            else
                             {
-                                Utils.AtualizaMesa(iCodMesa, 1);
+                                MessageBox.Show(Bibliotecas.cUsuarioSemPermissao);
                             }
-                            Utils.ControlaEventos("BaixaPed", this.Name);
-                            con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo, 1);
-
                         }
-
                     }
+                    else
+                    {
+                        ExecutaFinalizacaoMultipla();
+                    }
+                   
 
 
-                    Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
                 }
 
 
@@ -807,6 +786,51 @@ namespace DexComanda
                 MessageBox.Show("Não foi possivel selecionar o Pedido" + erro.Message);
             }
 
+        }
+        private void ExecutaFinalizacaoMultipla()
+        {
+            for (int i = 0; i < pedidosGridView.Rows.Count; i++)
+            {
+
+                Boolean Marcado = Convert.ToBoolean(this.pedidosGridView.Rows[i].Cells["Finalizado"].Value.ToString());
+                decimal dblTotalPedido;
+                int codigo;
+                if (Marcado)
+                {
+                    codigo = int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString());
+                    //int.Parse(pedidosGridView.CurrentRow[i].Cells["Codigo"].Value.ToString());
+
+                    DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
+                    DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
+                    int iCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
+                    CodPedidoWS = VerificaPedidoOnline(codigo);
+                    if (CodPedidoWS > 0)
+                    {
+                        AlteraStatusPedido(CodPedidoWS, 5, iCodPessoa);
+                        // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
+                    }
+                    int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
+                    dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
+
+                    // Atualiza Ticket Fidelidade
+                    AtualizarFidelidade(intCodPessoa);
+
+                    // Grava Débito caso o Tipo de Pagamento gerar financeiro 
+                    string strFormaPagamento = dRowPedido.ItemArray.GetValue(5).ToString();
+                    Utils.GeraHistorico(DateTime.Now, int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()), dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D', strFormaPagamento);
+
+                    // Grava Movimento De Caixa
+                    GravaMOvimentoCaixa(strFormaPagamento, dblTotalPedido, codigo);
+
+                    Utils.ControlaEventos("BaixaPed", this.Name);
+                    con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo, 1);
+
+                }
+
+            }
+
+
+            Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
         }
         private void ExecutaFinalizacao()
         {
@@ -1706,7 +1730,7 @@ namespace DexComanda
             try
             {
                 DataSet itemsPedido;
-                itemsPedidoNaoImpresso = Utils.ItensSelect(iCodPedido, iCodGrupo, "", Sessions.returnConfig.TipoImpressao);
+                itemsPedidoNaoImpresso = Utils.ItensSelect(iCodPedido, iCodGrupo, iNomeImpressora, Sessions.returnConfig.TipoImpressao);
                 for (int i = 0; i < itemsPedidoNaoImpresso.Tables[0].Rows.Count; i++)
                 {
                     int intCodGrupo = itemsPedidoNaoImpresso.Tables[0].Rows[i].Field<int>("CodGrupo");
@@ -1714,16 +1738,15 @@ namespace DexComanda
                    
                     if (Sessions.returnConfig.TipoImpressao== "Por Cozinha/Grupo")
                     {
-                        itemsPedido = con.SelectItensPorImpressora(iCodPedido, strNomeImpressora);
+                        //  itemsPedido = con.SelectItensPorImpressora(iCodPedido, strNomeImpressora);
+                        itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", iCodPedido, "", intCodGrupo);
                         Utils.ImpressaoMesaPorImpressora(iCodPedido, intCodGrupo, 1, strNomeImpressora);
                     }
                     else
                     {
-                        itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", iCodPedido, "", intCodGrupo);
+                        itemsPedido = con.SelectItensPorImpressora(iCodPedido, strNomeImpressora);
                         Utils.ImpressaMesaNova(iCodPedido, intCodGrupo, false, 1, strNomeImpressora);
                     }
-
-                    
                     for (int intFor = 0; intFor < itemsPedido.Tables[0].Rows.Count; intFor++)
                     {
                         AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
@@ -1838,10 +1861,9 @@ namespace DexComanda
                               " NomeImpressora " +
                               " from Pedido PE " +
                               " join ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0 " +
-                              " left join Produto P on P.Codigo = It.CodProduto  or P.CodigoPersonalizado = It.CodProduto" +
+                              " left join Produto P on P.Codigo = It.CodProduto  or (P.CodigoPersonalizado = It.CodProduto)" +
                               " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo " +
-                              " where PE.CodigoMesa > 0 and Finalizado = 0 ";
-
+                              " where PE.CodigoMesa > 0 and Finalizado = 0 and G.ImprimeCozinhaSN=1 ";
 
                 DataSet dsItemsNaoImpresso = con.SelectAll("ItemsPedido", "", iSql);
 
@@ -1908,8 +1930,10 @@ namespace DexComanda
 
         private void notificaçõesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmNotificacao frm = new frmNotificacao();
+            frmEnvioPush frm = new frmEnvioPush();
             frm.Show();
+            //frmNotificacao frm = new frmNotificacao();
+            //frm.Show();
         }
 
         private void alterarSenhaToolStripMenuItem_Click(object sender, EventArgs e)

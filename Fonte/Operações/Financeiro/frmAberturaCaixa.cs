@@ -23,6 +23,7 @@ namespace DexComanda.Operações.Financeiro
 
         private void frmAberturaCaixa_Load(object sender, EventArgs e)
         {
+            //horafechamento.Value = DateTime.Now;
             dtAbertura.Value = DateTime.Now;
             DataSet dsUsuario = con.SelectAll("Usuario", "spObterUsuario");
             cbxFuncionario.DataSource = dsUsuario.Tables[0];
@@ -40,11 +41,17 @@ namespace DexComanda.Operações.Financeiro
         {
             try
             {
-                if (horafechamento.Value.TimeOfDay<=DateTime.Now.TimeOfDay)
+                DateTime dtFechamento = horafechamento.Value;
+                if (horafechamento.Value.TimeOfDay >= TimeSpan.Parse("00:00:00"))
                 {
-                    MessageBox.Show("Horário Fechamento não pode ser igual ou menor a horario atual");
-                    return;
+                    horafechamento.Value.AddDays(1);
+                    dtFechamento = horafechamento.Value.AddDays(1);
                 }
+                //if (horafechamento.Value.TimeOfDay<=DateTime.Now.TimeOfDay)
+                //{
+                //    MessageBox.Show("Horário Fechamento não pode ser igual ou menor a horario atual");
+                //    return;
+                //}
                 if (cbxTurno.Text=="")
                 {
                     MessageBox.Show("Selecione o turno que deseja abrir");
@@ -76,7 +83,7 @@ namespace DexComanda.Operações.Financeiro
                         Numero = cbxCaixas.Text,
                         Turno = cbxTurno.Text.ToString(),
                         ValorAbertura = decimal.Parse(txtValor.Text),
-                        HorarioFechamento = horafechamento.Value.TimeOfDay    
+                        HorarioFechamento = dtFechamento
                     };
                 
                     if (cbxFuncionario.Text != "")

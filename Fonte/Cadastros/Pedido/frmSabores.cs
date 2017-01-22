@@ -113,48 +113,48 @@ namespace DexComanda.Cadastros.Pedido
                 EscondeTamanhos();
                 if (comboBox1.SelectedIndex != -1)
                 {
-                    if (cbxPorcentagem1.Text == "")
-                    {
-                        MessageBox.Show("Selecione a proporção");
-                        cbxPorcentagem1.Focus();
-                        return;
-                    }
+                    //if (cbxPorcentagem1.Text == "")
+                    //{
+                    //    MessageBox.Show("Selecione a proporção");
+                    //    cbxPorcentagem1.Focus();
+                    //    return;
+                    //}
                     iCod1 = comboBox1.SelectedValue.ToString();
                     strNomeProduto = strNomeProduto + comboBox1.Text +" " +cbxPorcentagem1.Text;
                     strNomeProduto = strNomeProduto.Insert(strNomeProduto.Length, Environment.NewLine);
                 }
                 if (comboBox2.SelectedIndex != -1)
                 {
-                    if (cbxPorcentagem2.Text =="")
-                    {
-                        MessageBox.Show("Selecione a proporção");
-                        cbxPorcentagem2.Focus();
-                        return;
-                    }
+                    //if (cbxPorcentagem2.Text =="")
+                    //{
+                    //    MessageBox.Show("Selecione a proporção");
+                    //    cbxPorcentagem2.Focus();
+                    //    return;
+                    //}
                     iCod2 = comboBox2.SelectedValue.ToString();
                     strNomeProduto = strNomeProduto + comboBox2.Text + " " + cbxPorcentagem2.Text;
                     strNomeProduto = strNomeProduto.Insert(strNomeProduto.Length, Environment.NewLine);
                 }
-                if (comboBox3.Text == "")
+                if (comboBox3.SelectedIndex != -1)
                 {
-                    if (cbxPorcentagem3.SelectedIndex == -1)
-                    {
-                        MessageBox.Show("Selecione a proporção");
-                        cbxPorcentagem3.Focus();
-                        return;
-                    }
+                    //if (cbxPorcentagem3.SelectedIndex == -1)
+                    //{
+                    //    MessageBox.Show("Selecione a proporção");
+                    //    cbxPorcentagem3.Focus();
+                    //    return;
+                    //}
                     iCod3 = comboBox3.SelectedValue.ToString();
                     strNomeProduto = strNomeProduto + comboBox3.Text + " " + cbxPorcentagem3.Text;
                     strNomeProduto = strNomeProduto.Insert(strNomeProduto.Length, Environment.NewLine);
                 }
                 if (comboBox4.SelectedIndex != -1)
                 {
-                    if (cbxPorcentagem4.Text == "")
-                    {
-                        MessageBox.Show("Selecione a proporção");
-                        cbxPorcentagem4.Focus();
-                        return;
-                    }
+                    //if (cbxPorcentagem4.Text == "")
+                    //{
+                    //    MessageBox.Show("Selecione a proporção");
+                    //    cbxPorcentagem4.Focus();
+                    //    return;
+                    //}
                     iCod4 = comboBox4.SelectedValue.ToString();
                     strNomeProduto = strNomeProduto + comboBox4.Text + " " + cbxPorcentagem4.Text;
                     strNomeProduto = strNomeProduto.Insert(strNomeProduto.Length, Environment.NewLine);
@@ -164,7 +164,7 @@ namespace DexComanda.Cadastros.Pedido
                 for (int i = 0; i < dsOpcoesProduto.Tables[0].Rows.Count; i++)
                 {
                     string iCodOpcao = dsOpcoesProduto.Tables[0].Rows[i].ItemArray.GetValue(5).ToString();
-                    DataSet dsMaiorPreco = con.RetornaMaioresPrecos(iCod1, iCod2, iCod3, iCod4, iCodOpcao,Sessions.returnConfig.CobrancaProporcionalSN);
+                    DataSet dsMaiorPreco = con.RetornaMaioresPrecos(iCod1, iCod2, iCod3, iCod4, iCodOpcao,!Sessions.returnConfig.CobrancaProporcionalSN);
                     string strPreco =dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString();
                     strNome = dsOpcoesProduto.Tables[0].Rows[i].ItemArray.GetValue(0).ToString();
 
@@ -225,7 +225,6 @@ namespace DexComanda.Cadastros.Pedido
                 {
                     if (((System.Windows.Forms.RadioButton)ctrControl).Checked)
                     {
-                        // strNomeProduto = strNomeProduto + ((System.Windows.Forms.RadioButton)ctrControl).Text;
                         strPreco = ((System.Windows.Forms.RadioButton)ctrControl).Tag.ToString();
                         strTamanho = ((System.Windows.Forms.RadioButton)ctrControl).Text.ToString().Replace(strPreco,""); 
                     }

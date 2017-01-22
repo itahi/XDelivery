@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAberturaCaixa));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.horafechamento = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
             this.cbxTurno = new System.Windows.Forms.ComboBox();
             this.cbxCaixas = new System.Windows.Forms.ComboBox();
@@ -48,8 +50,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.horafechamento = new System.Windows.Forms.DateTimePicker();
-            this.label7 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -71,6 +71,27 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(283, 104);
             this.panel1.TabIndex = 0;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(7, 81);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(75, 20);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Fecham.";
+            // 
+            // horafechamento
+            // 
+            this.horafechamento.CustomFormat = "00/00/0000 00:00:00";
+            this.horafechamento.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.horafechamento.Location = new System.Drawing.Point(94, 79);
+            this.horafechamento.Name = "horafechamento";
+            this.horafechamento.Size = new System.Drawing.Size(89, 20);
+            this.horafechamento.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.horafechamento, "Informe a hora que o caixa deve fechar");
             // 
             // label6
             // 
@@ -250,26 +271,6 @@
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancelar.UseVisualStyleBackColor = true;
-            // 
-            // horafechamento
-            // 
-            this.horafechamento.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.horafechamento.Location = new System.Drawing.Point(94, 79);
-            this.horafechamento.Name = "horafechamento";
-            this.horafechamento.Size = new System.Drawing.Size(75, 20);
-            this.horafechamento.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.horafechamento, "Informe a hora que o caixa deve fechar");
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(7, 81);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(75, 20);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Fecham.";
             // 
             // frmAberturaCaixa
             // 
