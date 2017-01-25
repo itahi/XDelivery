@@ -1682,8 +1682,8 @@ namespace DexComanda
 
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@DataInicial", DataInicial);
-            command.Parameters.AddWithValue("@DataFinal", DataFinal);
+            command.Parameters.AddWithValue("@DataInicial", DataInicial.ToShortDateString());
+            command.Parameters.AddWithValue("@DataFinal", DataFinal.ToShortDateString());
             adapter = new SqlDataAdapter(command);
             adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
@@ -1703,7 +1703,7 @@ namespace DexComanda
             adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
             ds = new DataSet();
-            adapter.Fill(ds, "Pedido");
+            adapter.Fill(ds, "Pessoa");
 
             return ds;
         }

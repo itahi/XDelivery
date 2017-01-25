@@ -334,7 +334,7 @@ namespace DexComanda
         }
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
-            chkGerenciaImpressao.Checked = Utils.RetornaNomePc() == Sessions.returnEmpresa.Servidor;
+            //chkGerenciaImpressao.Checked = Utils.RetornaNomePc() == Sessions.returnEmpresa.Servidor;
 
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
             int iNumeroCaixa = Sessions.retunrUsuario.CaixaLogado;
@@ -554,11 +554,11 @@ namespace DexComanda
         }
         private void TotalizaPedidos()
         {
-            // Não exibir totais para o BurisBurguer
-            if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cBuris)
-            {
-                return;
-            }
+            //// Não exibir totais para o BurisBurguer
+            //if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cBuris)
+            //{
+            //    return;
+            //}
             double dblTotalPedidos = 0;
             for (int i = 0; i < pedidosGridView.Rows.Count; i++)
             {

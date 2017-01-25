@@ -1685,7 +1685,7 @@ namespace DexComanda
                     con.Update("spAlterarTotalPedido", pedido);
                     Utils.ControlaEventos("Excluir", this.Name);
                     AtualizaTroco();
-                    MessageBox.Show("Item excluído com sucesso.", "xSistemas");
+                  //  MessageBox.Show("Item excluído com sucesso.", "xSistemas");
                 }
                 else
                 {
@@ -1843,7 +1843,7 @@ namespace DexComanda
                     }
                     if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras || Sessions.returnEmpresa.CNPJ
                         == Bibliotecas.cMassaRara || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria
-                        || Sessions.returnEmpresa.CNPJ == "11291880000119")
+                        || Sessions.returnEmpresa.CNPJ == "11291880000119" || Sessions.returnEmpresa.CNPJ==Bibliotecas.cGallegao)
                     {
                         Utils.ImpressaoPorCozinha(iCodigo);
                         return;

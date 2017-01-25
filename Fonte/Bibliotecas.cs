@@ -12,7 +12,7 @@ namespace DexComanda
         public const string cGravacaoOK = "Registro gravado com sucesso";
         public const string cEdicaoOK = "Registro editado com sucesso";
         public const string cDeleteOK = "Registro deletado com sucesso";
-        public const string cMsgEnviadaOK = "Mensagens enviadas com sucesso";
+        public const string cMsgEnviadaOK = "Mensagens enviadas com sucesso para ";
         public const string cErroGravacao = "Registro nao pode ser gravado";
         public const string cRegistroNaoEncontrado = "Sem registros com o filtro informado";
         public const string cNUTRIFOOD = "13004606798";
@@ -23,6 +23,7 @@ namespace DexComanda
         public const string cMassaRara = "21188769000155";
         public const string cEsphiras = "21128650000197";
         public const string cAcaiVitoria = "00830689000181";
+        public const string cGallegao = "19642556000100";
         public const string cTopsAcai = "";
         public const string cBuris = "21207218000191";
         public const string cSkinaLanches = "24829903000148";
@@ -38,7 +39,7 @@ namespace DexComanda
         public const string cFiltroRetornaVazio = "Não há registros com filtro escolhido";
         public const string cSelecioneRegistro = "Selecione corretamente a linha pra editar";
         public const string cCamposObrigatório = "Campos obrigatórios não preenchidos corretamente";
-        // public const string cCaixaSomenteConsulta = ""
+        public const string cTextoConferido = "Essa mensagem será enviada diretamente aos clientes do Site/App tem certeza que o texto foi revisado?";
     }
 
 

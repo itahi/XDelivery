@@ -30,10 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnBuscar = new System.Windows.Forms.Button();
+            this.btnEnviar = new System.Windows.Forms.Button();
             this.grpPeriodo = new System.Windows.Forms.GroupBox();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
+            this.btnBuscar = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.cbxGrupo = new System.Windows.Forms.ComboBox();
             this.rbProduto = new System.Windows.Forms.RadioButton();
@@ -42,24 +43,26 @@
             this.rbRegiao = new System.Windows.Forms.RadioButton();
             this.rbSumido = new System.Windows.Forms.RadioButton();
             this.rbAniversario = new System.Windows.Forms.RadioButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.grpGrid = new System.Windows.Forms.GroupBox();
             this.gridResultado = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtTextoMsg = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.grpPeriodo.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.grpGrid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridResultado)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnBuscar);
+            this.groupBox1.Controls.Add(this.btnEnviar);
             this.groupBox1.Controls.Add(this.grpPeriodo);
+            this.groupBox1.Controls.Add(this.btnBuscar);
             this.groupBox1.Controls.Add(this.panel2);
             this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Controls.Add(this.rbSumido);
@@ -71,24 +74,24 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tipo Filtros";
             // 
-            // btnBuscar
+            // btnEnviar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(305, 119);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(75, 23);
-            this.btnBuscar.TabIndex = 9;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.BuscarFiltro);
+            this.btnEnviar.Location = new System.Drawing.Point(263, 116);
+            this.btnEnviar.Name = "btnEnviar";
+            this.btnEnviar.Size = new System.Drawing.Size(75, 23);
+            this.btnEnviar.TabIndex = 11;
+            this.btnEnviar.Text = "Enviar ";
+            this.btnEnviar.UseVisualStyleBackColor = true;
+            this.btnEnviar.Click += new System.EventHandler(this.EnviarPush);
             // 
             // grpPeriodo
             // 
             this.grpPeriodo.Controls.Add(this.dtFim);
             this.grpPeriodo.Controls.Add(this.dtInicio);
-            this.grpPeriodo.Location = new System.Drawing.Point(305, 39);
+            this.grpPeriodo.Location = new System.Drawing.Point(110, 37);
             this.grpPeriodo.Name = "grpPeriodo";
             this.grpPeriodo.Size = new System.Drawing.Size(221, 60);
-            this.grpPeriodo.TabIndex = 8;
+            this.grpPeriodo.TabIndex = 10;
             this.grpPeriodo.TabStop = false;
             this.grpPeriodo.Text = "Periodo Filtro";
             // 
@@ -108,17 +111,28 @@
             this.dtInicio.Size = new System.Drawing.Size(78, 20);
             this.dtInicio.TabIndex = 0;
             // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Location = new System.Drawing.Point(11, 123);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(75, 23);
+            this.btnBuscar.TabIndex = 9;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.BuscarFiltro);
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.cbxGrupo);
             this.panel2.Controls.Add(this.rbProduto);
-            this.panel2.Location = new System.Drawing.Point(143, 78);
+            this.panel2.Location = new System.Drawing.Point(363, 89);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(144, 64);
+            this.panel2.Size = new System.Drawing.Size(144, 57);
             this.panel2.TabIndex = 7;
             // 
             // cbxGrupo
             // 
+            this.cbxGrupo.Enabled = false;
             this.cbxGrupo.FormattingEnabled = true;
             this.cbxGrupo.Location = new System.Drawing.Point(11, 29);
             this.cbxGrupo.Name = "cbxGrupo";
@@ -128,6 +142,7 @@
             // rbProduto
             // 
             this.rbProduto.AutoSize = true;
+            this.rbProduto.Enabled = false;
             this.rbProduto.Location = new System.Drawing.Point(13, 6);
             this.rbProduto.Name = "rbProduto";
             this.rbProduto.Size = new System.Drawing.Size(107, 17);
@@ -141,9 +156,10 @@
             // 
             this.panel1.Controls.Add(this.cbxRegiao);
             this.panel1.Controls.Add(this.rbRegiao);
-            this.panel1.Location = new System.Drawing.Point(143, 7);
+            this.panel1.Enabled = false;
+            this.panel1.Location = new System.Drawing.Point(363, 18);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(144, 65);
+            this.panel1.Size = new System.Drawing.Size(144, 128);
             this.panel1.TabIndex = 6;
             // 
             // cbxRegiao
@@ -188,29 +204,10 @@
             this.toolTip1.SetToolTip(this.rbAniversario, "Filtra aniversáriantes no periodo informado");
             this.rbAniversario.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.richTextBox1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 165);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(290, 247);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Texto Mensagem";
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(3, 16);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(284, 228);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
-            // 
             // grpGrid
             // 
             this.grpGrid.Controls.Add(this.gridResultado);
-            this.grpGrid.Location = new System.Drawing.Point(314, 165);
+            this.grpGrid.Location = new System.Drawing.Point(12, 163);
             this.grpGrid.Name = "grpGrid";
             this.grpGrid.Size = new System.Drawing.Size(257, 250);
             this.grpGrid.TabIndex = 3;
@@ -230,16 +227,48 @@
             this.gridResultado.Size = new System.Drawing.Size(251, 231);
             this.gridResultado.TabIndex = 0;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.txtTextoMsg);
+            this.groupBox2.Location = new System.Drawing.Point(275, 166);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(311, 247);
+            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Texto Mensagem";
+            // 
+            // txtTextoMsg
+            // 
+            this.txtTextoMsg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtTextoMsg.Location = new System.Drawing.Point(3, 16);
+            this.txtTextoMsg.Name = "txtTextoMsg";
+            this.txtTextoMsg.Size = new System.Drawing.Size(305, 228);
+            this.txtTextoMsg.TabIndex = 0;
+            this.txtTextoMsg.Text = "";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(9, 430);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(512, 32);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Envio de mensagens \"Push\" para clientes que efetuaram Pedidos online \r\nem sua pla" +
+    "taforma seja Site ou APP.";
+            // 
             // frmEnvioPush
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(598, 506);
-            this.Controls.Add(this.grpGrid);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.grpGrid);
             this.Controls.Add(this.groupBox1);
             this.Name = "frmEnvioPush";
             this.Text = "[xSistemas] Envio de Notificações Push";
+            this.Load += new System.EventHandler(this.frmEnvioPush_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.grpPeriodo.ResumeLayout(false);
@@ -247,10 +276,11 @@
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
             this.grpGrid.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridResultado)).EndInit();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -260,8 +290,6 @@
         private System.Windows.Forms.RadioButton rbProduto;
         private System.Windows.Forms.RadioButton rbSumido;
         private System.Windows.Forms.RadioButton rbAniversario;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.GroupBox grpGrid;
         private System.Windows.Forms.DataGridView gridResultado;
         private System.Windows.Forms.Panel panel1;
@@ -270,9 +298,13 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ComboBox cbxGrupo;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.GroupBox grpPeriodo;
         private System.Windows.Forms.DateTimePicker dtFim;
         private System.Windows.Forms.DateTimePicker dtInicio;
-        private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RichTextBox txtTextoMsg;
+        private System.Windows.Forms.Button btnEnviar;
+        private System.Windows.Forms.Label label1;
     }
 }

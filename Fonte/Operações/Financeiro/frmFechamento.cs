@@ -30,9 +30,8 @@ namespace DexComanda.Operações.Financeiro
 
         private void FiltraCaixa(object sender, EventArgs e)
         {
-            iDataFiltro = DateTime.Now.ToShortDateString();//Convert.ToDateTime(txtDtAbertura.Text + " 23:59:59");
+            iDataFiltro = DateTime.Now.ToShortDateString();
             DataSet dsCaixa = con.RetornaCaixaPorTurno(int.Parse(cbxCaixas.Text), cbxTurno.Text, Convert.ToDateTime(iDataFiltro));
-                //SelectRegistroPorDataCodigo("Caixa", "spObterDadosCaixaPorCodigo", Convert.ToDateTime(iDataFiltro), int.Parse(cbxCaixas.Text));
             if (dsCaixa.Tables[0].Rows.Count > 0)
             {
                 btnExecutar.Enabled = true;

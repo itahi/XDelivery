@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DexComanda.Push
 {
@@ -51,7 +52,7 @@ namespace DexComanda.Push
             OneSignal one = new OneSignal();
             one.EnviaNotificacao(iNomeCliente, iTexto, iUserId);
         }
-        public void EnviaNotificacao(string iTituloMsg,string iTexto,string iUserID)
+        public void EnviaNotificacao(string iTituloMsg,string iTexto, string iUserID)
         {
             try
             {
@@ -63,14 +64,17 @@ namespace DexComanda.Push
                 request.ContentType = "application/json";
                 string irul = Sessions.returnEmpresa.UrlServidor;
                 request.Headers.Add("authorization", "Basic " + Sessions.returnConfig.Pushauthorization);
-
-
-
+                //string byteArray2 = "{"
+                //                                        + "\"app_id\": \"" + Sessions.returnConfig.Pushapp_id + "\","
+                //                                        + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
+                //                                        + "\"contents\": {\"en\": \"" + iTexto + "\"},"
+                //                                        + "\"include_player_ids\": [\"" + iUserID + "\"]}";
+                
                 byte[] byteArray = Encoding.UTF8.GetBytes("{"
                                                         + "\"app_id\": \"" + Sessions.returnConfig.Pushapp_id + "\","
                                                         + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
-                                                        + "\"contents\": {\"en\": \"" +iTexto + "\"},"
-                                                        + "\"include_player_ids\": [\""+iUserID+ "\"]}");
+                                                        + "\"contents\": {\"en\": \"" + iTexto + "\"},"
+                                                        + "\"include_player_ids\": [\"" + iUserID + "\"]}");
 
 
 
@@ -97,8 +101,66 @@ namespace DexComanda.Push
 
                         }
                     }
+                   
+                }
+                catch (WebException ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
 
-                    // MessageBox.Show(response.)
+                }
+
+                System.Diagnostics.Debug.WriteLine(responseContent);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+        }
+        public void EnviaNotificacao(string iTituloMsg, string iTexto, List<string> iUserID)
+        {
+            try
+            {
+                var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
+                request.KeepAlive = true;
+                request.Method = "POST";
+                request.ContentType = "application/json";
+                string irul = Sessions.returnEmpresa.UrlServidor;
+                request.Headers.Add("authorization", "Basic " + Sessions.returnConfig.Pushauthorization);
+
+                string result = String.Join(",",iUserID.ToArray());
+                byte[] byteArray = Encoding.UTF8.GetBytes("{"
+                                         + "\"app_id\": \""+ Sessions.returnConfig.Pushapp_id+ "\","
+                                         + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
+                                         + "\"contents\": {\"en\": \"" + iTexto + "\"},"
+                                         + "\"include_player_ids\":["+ result + "]}");
+
+                string responseContent = null;
+
+                try
+                {
+                    using (var writer = request.GetRequestStream())
+                    {
+                        writer.Write(byteArray, 0, byteArray.Length);
+                    }
+
+                    using (var response = request.GetResponse() as HttpWebResponse)
+                    {
+                        using (var reader = new StreamReader(response.GetResponseStream()))
+                        {
+                            responseContent = reader.ReadToEnd();
+                        }
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            Notificacao notify = new Notificacao();
+
+                            notify = JsonConvert.DeserializeObject<Notificacao>(responseContent);
+                            MessageBox.Show(Bibliotecas.cMsgEnviadaOK + notify.recipients.ToString() + "usuários");
+                        }
+                    }
+
+                  
                 }
                 catch (WebException ex)
                 {
@@ -112,7 +174,7 @@ namespace DexComanda.Push
             }
             catch (Exception erro)
             {
-                //MessageBox.Show(Bibliotecas.cException + erro.Message);
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
         }
