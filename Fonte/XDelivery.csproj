@@ -201,6 +201,12 @@
     <Compile Include="Cadastros\Pedido\frmFinalizacaoPedido.Designer.cs">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cadastros\Pedido\frmFinalizaDelivery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Pedido\frmFinalizaDelivery.Designer.cs">
+      <DependentUpon>frmFinalizaDelivery.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cadastros\Pedido\frmOpcaoNumeric.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -325,6 +331,7 @@
     <Compile Include="Models\WS\CidadesAtendidas.cs" />
     <Compile Include="Models\WS\DadosApp.cs" />
     <Compile Include="Models\WS\HorariosEntregaJson.cs" />
+    <Compile Include="Models\WS\MultiSabores.cs" />
     <Compile Include="Models\WS\RetornoWS.cs" />
     <Compile Include="Models\WS\StatusPedido.cs" />
     <Compile Include="Operações\Alteracoes\frmAlteracaoCliente.cs">
@@ -529,6 +536,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelVendasOnline.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Fechamentos\Novos\RelCaixaHistorico2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelCaixaHistorico2.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboyAgrupado.cs">
@@ -998,6 +1011,9 @@
     <EmbeddedResource Include="Cadastros\Pedido\frmFinalizacaoPedido.resx">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\Pedido\frmFinalizaDelivery.resx">
+      <DependentUpon>frmFinalizaDelivery.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Pedido\frmOpcaoNumeric.resx">
       <DependentUpon>frmOpcaoNumeric.cs</DependentUpon>
     </EmbeddedResource>
@@ -1147,6 +1163,10 @@
     <EmbeddedResource Include="Relatorios\Delivery\RelVendasOnline.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelVendasOnline.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelCaixaHistorico2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelCaixaHistorico2.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboyAgrupado.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

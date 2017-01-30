@@ -52,13 +52,85 @@ namespace DexComanda.Push
             OneSignal one = new OneSignal();
             one.EnviaNotificacao(iNomeCliente, iTexto, iUserId);
         }
-        public void EnviaNotificacao(string iTituloMsg,string iTexto, string iUserID)
+        /// <summary>
+        /// Envia push para todos usuarios
+        /// </summary>
+        /// <param name="iTituloMsg">
+        /// Titulo para msg</param>
+        /// <param name="iTexto">
+        /// Texto para ser exibido</param>
+        public void EnviaNotificacao(string iTituloMsg, string iTexto,string iModoEntrega)
         {
             try
             {
-               
                 var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
+                request.KeepAlive = true;
+                request.Method = "POST";
+                request.ContentType = "application/json";
+                string irul = Sessions.returnEmpresa.UrlServidor;
+                request.Headers.Add("authorization", "Basic " + Sessions.returnConfig.Pushauthorization);
 
+                byte[] byteArray = Encoding.UTF8.GetBytes("{"
+                                                        + "\"app_id\": \"" + Sessions.returnConfig.Pushapp_id + "\","
+                                                        + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
+                                                        + "\"contents\": {\"en\": \"" + iTexto + "\"},"
+                                                        + iModoEntrega
+                                                        + "\"included_segments\": [\"All\"]}");
+
+
+
+                string responseContent = null;
+
+                try
+                {
+                    using (var writer = request.GetRequestStream())
+                    {
+                        writer.Write(byteArray, 0, byteArray.Length);
+                    }
+
+                    using (var response = request.GetResponse() as HttpWebResponse)
+                    {
+                        using (var reader = new StreamReader(response.GetResponseStream()))
+                        {
+                            responseContent = reader.ReadToEnd();
+                        }
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            Notificacao notify = new Notificacao();
+
+                            notify = JsonConvert.DeserializeObject<Notificacao>(responseContent);
+
+                        }
+                    }
+
+                }
+                catch (WebException ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
+
+                }
+
+                System.Diagnostics.Debug.WriteLine(responseContent);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+        }
+        /// <summary>
+        /// Envia o push para um usuário especifico
+        /// </summary>
+        /// <param name="iTituloMsg"></param>
+        /// <param name="iTexto"></param>
+        /// <param name="iUserID">
+        /// Id do usuario </param>
+        public void EnviaNotificacao(string iTituloMsg,string iTexto, string iUserID, string iModoEntrega)
+        {
+            try
+            {
+                var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
                 request.KeepAlive = true;
                 request.Method = "POST";
                 request.ContentType = "application/json";
@@ -74,6 +146,7 @@ namespace DexComanda.Push
                                                         + "\"app_id\": \"" + Sessions.returnConfig.Pushapp_id + "\","
                                                         + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
                                                         + "\"contents\": {\"en\": \"" + iTexto + "\"},"
+                                                        + iModoEntrega
                                                         + "\"include_player_ids\": [\"" + iUserID + "\"]}");
 
 
@@ -118,7 +191,14 @@ namespace DexComanda.Push
             }
 
         }
-        public void EnviaNotificacao(string iTituloMsg, string iTexto, List<string> iUserID)
+        /// <summary>
+        /// Envia push para uma lista de usuarios filtrados
+        /// </summary>
+        /// <param name="iTituloMsg"></param>
+        /// <param name="iTexto"></param>
+        /// <param name="iUserID">
+        /// Lista de usuarios separados por ,(virgula)</param>
+        public void EnviaNotificacao(string iTituloMsg, string iTexto, List<string> iUserID,string iModoEntrega)
         {
             try
             {
@@ -134,6 +214,7 @@ namespace DexComanda.Push
                                          + "\"app_id\": \""+ Sessions.returnConfig.Pushapp_id+ "\","
                                          + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
                                          + "\"contents\": {\"en\": \"" + iTexto + "\"},"
+                                         + iModoEntrega
                                          + "\"include_player_ids\":["+ result + "]}");
 
                 string responseContent = null;

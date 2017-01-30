@@ -872,18 +872,11 @@ namespace DexComanda
                         frmFinalizacaoPedido frm = new frmFinalizacaoPedido(dblTotalPedido, false, codigo, iCodMesa);
                         frm.StartPosition = FormStartPosition.CenterParent;
                         frm.ShowDialog();
-
-                        //Transferido Rotina para spSinalizaPedidoConcluido
-                        //if (frm.boolFinalizou)
-                        //{
-                        //    bFinalizouViaMesa = true;
-                        //    AtualizaStatusMesa(iCodMesa, Bibliotecas.cStatuMesaLiberada);
-                        //}
-                        //else
-                        //{
-                        //    return;
-                        //}
-
+                        bFinalizouViaMesa = frm.boolFinalizou;
+                        if (!bFinalizouViaMesa)
+                        {
+                            return;
+                        }
                     }
 
                     // Grava Débito caso o Tipo de Pagamento gerar financeiro 
@@ -1081,7 +1074,6 @@ namespace DexComanda
                     Valor = iValor,
                     CodUser = Sessions.retunrUsuario.Codigo,
                     Turno = Sessions.retunrUsuario.Turno
-
                 };
                 con.Insert("spInserirMovimentoCaixa", caixa);
 

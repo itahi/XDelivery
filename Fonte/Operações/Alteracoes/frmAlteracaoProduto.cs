@@ -57,7 +57,7 @@ namespace DexComanda.Operações.Alteracoes
             else if (chkTodos.Checked)
             {
                 DataSet dsProd;
-                dsProd = con.SelectAll("Produto", "spObterProduto");
+                dsProd = con.SelectAll("Produto", "spObterProdutoAlteracao");
                 GridViewProdutos.DataSource = null;
                 GridViewProdutos.DataSource = dsProd;
                 GridViewProdutos.AutoGenerateColumns = true;

@@ -30,7 +30,7 @@ namespace DexComanda.Cadastros
         {
 
         }
-        public frmFinalizacaoPedido(decimal iTotalPedido,Boolean iInserir,int iCodPedido=0,int iCodMesa=0)
+        public frmFinalizacaoPedido(decimal iTotalPedido, Boolean iInserir, int iCodPedido = 0, int iCodMesa = 0)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace DexComanda.Cadastros
                         {
                             gridFormasPagamento.Columns["Codigo"].Visible = false;
                         }
-                        if (gridFormasPagamento.Columns["Descricao"].HeaderText== "Descricao")
+                        if (gridFormasPagamento.Columns["Descricao"].HeaderText == "Descricao")
                         {
                             gridFormasPagamento.Columns["Descricao"].ReadOnly = true;
                         }
@@ -65,19 +65,17 @@ namespace DexComanda.Cadastros
                     if (!gridFormasPagamento.Columns.Contains("Valor"))
                     {
                         gridFormasPagamento.Columns.Add("Valor", "Valor R$");
-                       // gridFormasPagamento.Columns.
-                            gridFormasPagamento.Refresh();
+                        gridFormasPagamento.Refresh();
                     }
                     gridFormasPagamento.Refresh();
-                    
+
                 }
 
             }
 
             catch (Exception erro)
-            {
-
-                throw;
+             {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
         }
@@ -88,14 +86,12 @@ namespace DexComanda.Cadastros
             if (!char.IsNumber(e.KeyChar) && !char.IsPunctuation(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
 
                 e.Handled = true;
-
         }
 
         private void Finaliza(object sender, EventArgs e)
         {
             try
             {
-               
                 for (int i = 0; i < gridFormasPagamento.Rows.Count; i++)
                 {
                     if (gridFormasPagamento.Rows[i].Cells["Valor"].Value != null)
@@ -109,7 +105,7 @@ namespace DexComanda.Cadastros
                     MessageBox.Show("Valor devido é maior que o valor informado");
                     return;
                 }
-                else if (iTotalSomado> decimal.Parse(lblTotalPedido.Text))
+                else if (iTotalSomado > decimal.Parse(lblTotalPedido.Text))
                 {
                     MessageBox.Show("Os Valores somados são maiores que o valor do Pedido");
                     return;
@@ -146,13 +142,13 @@ namespace DexComanda.Cadastros
                                     ValorPagamento = decimal.Parse(gridFormasPagamento.Rows[intFor].Cells["Valor"].Value.ToString())
                                 };
                                 con.Update("spAlteraFinalizaPedido_Pedido", finalizaPed);
-                                
+
                             }
 
                         }
                     }
                     boolFinalizou = true;
-                    con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", intCodPedido,int.Parse(txtNumero.Text));
+                    con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", intCodPedido, int.Parse(txtNumero.Text));
                     if (Utils.MessageBoxQuestion("Deseja imprimir a conferencia desta dessa mesa?"))
                     {
                         Utils.ImpressaoFechamentoNovo(intCodPedid, false, 1);
@@ -165,7 +161,7 @@ namespace DexComanda.Cadastros
 
                 throw;
             }
-           
+
 
         }
 
@@ -176,14 +172,14 @@ namespace DexComanda.Cadastros
             {
                 for (int i = 0; i < gridFormasPagamento.Rows.Count; i++)
                 {
-                    if (gridFormasPagamento.Rows[i].Cells["Valor"].Value!=null)
+                    if (gridFormasPagamento.Rows[i].Cells["Valor"].Value != null)
                     {
                         e.Control.KeyPress += new KeyPressEventHandler(TeclaPressionada);
-                     //   CalculaRestante(decimal.Parse(gridFormasPagamento.Rows[i].Cells["Valor"].Value.ToString()));
+                        //   CalculaRestante(decimal.Parse(gridFormasPagamento.Rows[i].Cells["Valor"].Value.ToString()));
                     }
-                    
+
                 }
-               
+
             }
         }
         void CalculaRestante(decimal iValorDigitado)
@@ -193,16 +189,16 @@ namespace DexComanda.Cadastros
 
         private void gridFormasPagamento_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            decimal iValue=0;
+            decimal iValue = 0;
             for (int i = 0; i < gridFormasPagamento.Rows.Count; i++)
             {
-                if (gridFormasPagamento.Rows[i].Cells["Valor"].Value!=null)
+                if (gridFormasPagamento.Rows[i].Cells["Valor"].Value != null)
                 {
                     iValue = iValue + decimal.Parse(gridFormasPagamento.Rows[i].Cells["Valor"].Value.ToString());
                     CalculaRestante(iValue);
                 }
             }
-           
+
         }
 
         private void frmFinalizacaoPedido_KeyDown(object sender, KeyEventArgs e)
@@ -211,7 +207,7 @@ namespace DexComanda.Cadastros
             {
                 Finaliza(sender, e);
             }
-           
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

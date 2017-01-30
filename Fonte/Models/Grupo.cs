@@ -14,9 +14,8 @@ namespace DexComanda.Models
         public Boolean AtivoSN { get; set; }
         public DateTime DataAlteracao { get; set; }
         public string NomeImpressora { get; set; }
+        public Boolean MultiploSabores { get; set; }
         public int CodFamilia { get; set; }
-       // public Boolean PaiSN { get; set; }
-
 
     }
 }

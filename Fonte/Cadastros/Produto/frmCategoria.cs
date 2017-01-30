@@ -1,4 +1,5 @@
 ﻿using DexComanda.Models;
+using DexComanda.Models.WS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,10 +30,25 @@ namespace DexComanda
 
         private void Main_Load(object sender, EventArgs e)
         {
+            grpMultiplo.Enabled = chkMultiSabores.Checked;
             Utils.MontaCombox(cbxFamilia, "NomeGrupo", "Codigo", "Grupo", "spObterFamilia");
             pnlImpressora.Enabled = chkImprimeCozinha.Checked;
         }
 
+        private string MultiploSabores()
+        {
+            string iRetur="";
+            if (chkMultiSabores.Checked)
+            {
+                MultiSabores mult = new MultiSabores()
+                {
+                    Permite = true,
+                    QuantidadePermitida = cbxNumeroSabores.Text.ToString()
+                };
+                iRetur = Utils.SerializaObjeto(mult);
+            }
+            return iRetur;
+        }
         private void AdicionarGrupo(object sender, EventArgs e)
         {
             try
@@ -43,7 +59,8 @@ namespace DexComanda
                     ImprimeCozinhaSN = chkImprimeCozinha.Checked,
                     AtivoSN = chkAtivo.Checked,
                     OnlineSN = chkOnline.Checked,
-                    DataAlteracao = DateTime.Now
+                    DataAlteracao = DateTime.Now,
+                    MultiploSabores = chkMultiSabores.Checked
                 };
                 if (chkImprimeCozinha.Checked)
                 {
@@ -80,7 +97,7 @@ namespace DexComanda
                 MessageBox.Show("Ocorreu um erro na gravaçao do registro " + erro.Message, "xSistemas Aviso");
             }
         }
-
+        
         private void EditarGrupo(object sender, EventArgs e)
         {
 
@@ -90,6 +107,14 @@ namespace DexComanda
             cbxNomeImpressora.Text = this.gruposGridView.Rows[rowIndex].Cells["NomeImpressora"].Value.ToString();
             chkOnline.Checked = Convert.ToBoolean(this.gruposGridView.Rows[rowIndex].Cells[3].Value.ToString());
             chkAtivo.Checked = Convert.ToBoolean(this.gruposGridView.Rows[rowIndex].Cells[4].Value.ToString());
+            chkMultiSabores.Checked = Convert.ToBoolean(this.gruposGridView.Rows[rowIndex].Cells["MultiploSabores"].Value.ToString());
+            //MultiSabores multi = new MultiSabores();
+            //multi = Utils.DeserializaObjeto4(gruposGridView.Rows[rowIndex].Cells["MultiploSabores"].Value.ToString());
+            //if (multi!=null)
+            //{
+            //    chkMultiSabores.Checked = multi.Permite;
+            //    cbxNumeroSabores.Text = multi.QuantidadePermitida;
+            //}
 
             if (gruposGridView.Rows[rowIndex].Cells["CodFamilia"].Value.ToString() !="0")
             {
@@ -138,7 +163,8 @@ namespace DexComanda
                 ImprimeCozinhaSN = chkImprimeCozinha.Checked,
                 OnlineSN = chkOnline.Checked,
                 AtivoSN = chkAtivo.Checked,
-                DataAlteracao = DateTime.Now
+                DataAlteracao = DateTime.Now,
+                MultiploSabores = chkMultiSabores.Checked
 
             };
             if (chkImprimeCozinha.Checked)
@@ -304,10 +330,16 @@ namespace DexComanda
 
         private void ListaImpressoras(object sender, EventArgs e)
         {
+            cbxNomeImpressora.Items.Clear();
             foreach (var item in PrinterSettings.InstalledPrinters)
             {
                 cbxNomeImpressora.Items.Add(item);
             }
+        }
+
+        private void chkMultiSabores_CheckedChanged(object sender, EventArgs e)
+        {
+            grpMultiplo.Enabled = chkMultiSabores.Checked;
         }
     }
 }

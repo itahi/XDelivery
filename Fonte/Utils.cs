@@ -386,6 +386,11 @@ namespace DexComanda
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
         }
+        
+        public static string SerializaObjeto(MultiSabores iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
         public static string SerializaObjeto(List<Models.Produto.OpcaoDia> iValores)
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
@@ -410,6 +415,15 @@ namespace DexComanda
                 return new List<PrecoDiaProduto>();
             }
             return JsonConvert.DeserializeObject<List<PrecoDiaProduto>>(iValores);
+
+        }
+        public static MultiSabores DeserializaObjeto4(string iValores)
+        {
+            if (iValores ==""|| iValores ==null)
+            {
+                return new MultiSabores();
+            }
+            return JsonConvert.DeserializeObject<MultiSabores>(iValores);
 
         }
         public static List<OpcaoDia> DeserializaObjeto3(string iValores)

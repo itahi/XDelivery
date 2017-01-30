@@ -131,7 +131,7 @@
             // 
             this.lblNumeroMesa.AutoSize = true;
             this.lblNumeroMesa.Font = new System.Drawing.Font("Sitka Banner", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNumeroMesa.Location = new System.Drawing.Point(183, 2);
+            this.lblNumeroMesa.Location = new System.Drawing.Point(203, 2);
             this.lblNumeroMesa.Name = "lblNumeroMesa";
             this.lblNumeroMesa.Size = new System.Drawing.Size(55, 47);
             this.lblNumeroMesa.TabIndex = 9;

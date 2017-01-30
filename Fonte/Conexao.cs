@@ -270,10 +270,11 @@ namespace DexComanda
 
         public DataSet RetornaCaixaPorTurno(int iCodCaixa, string iTurno, DateTime iData)
         {
-            string iSqlConsulta = "select * from Caixa " +
+            string iSqlConsulta = "select top 1 * from Caixa " +
                                    " where Numero=@Numero and " +
-                                   " Turno=@Turno and Data=@Data and "+
-                                   " HorarioFechamento>@HorarioFechamento";
+                                   " Turno=@Turno and /*Data=@Data and*/ " +
+                                   " HorarioFechamento>@HorarioFechamento" +
+                                   " order by Codigo desc";
             command = new SqlCommand(iSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@Numero", iCodCaixa);
@@ -655,7 +656,7 @@ namespace DexComanda
         }
         public DataSet SelectFormasPagamento()
         {
-            string lSqlConsulta = " select Codigo,Descricao from FormaPagamento";
+            string lSqlConsulta = " select Codigo,Descricao from FormaPagamento where AtivoSn=1";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
 

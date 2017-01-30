@@ -131,3 +131,4 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.exe.manifest
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.application
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.exe
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.pdb
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pedido.frmFinalizaDelivery.resources

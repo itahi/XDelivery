@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAdicionarGrupo));
             this.gruposGridView = new System.Windows.Forms.DataGridView();
             this.btnAdicionarGrupo = new System.Windows.Forms.Button();
@@ -37,14 +38,19 @@
             this.chkOnline = new System.Windows.Forms.CheckBox();
             this.chkAtivo = new System.Windows.Forms.CheckBox();
             this.pnlImpressora = new System.Windows.Forms.Panel();
-            this.cbxNomeImpressora = new System.Windows.Forms.ComboBox();
             this.chkImprimeCozinha = new System.Windows.Forms.CheckBox();
             this.cbxFamilia = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnEditarFamilia = new System.Windows.Forms.Button();
             this.txtCodFamilia = new System.Windows.Forms.TextBox();
+            this.grpMultiplo = new System.Windows.Forms.GroupBox();
+            this.chkMultiSabores = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.cbxNomeImpressora = new System.Windows.Forms.ComboBox();
+            this.cbxNumeroSabores = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.gruposGridView)).BeginInit();
             this.pnlImpressora.SuspendLayout();
+            this.grpMultiplo.SuspendLayout();
             this.SuspendLayout();
             // 
             // gruposGridView
@@ -133,19 +139,10 @@
             this.pnlImpressora.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlImpressora.Controls.Add(this.cbxNomeImpressora);
-            this.pnlImpressora.Location = new System.Drawing.Point(4, 36);
+            this.pnlImpressora.Location = new System.Drawing.Point(4, 40);
             this.pnlImpressora.Name = "pnlImpressora";
-            this.pnlImpressora.Size = new System.Drawing.Size(299, 48);
+            this.pnlImpressora.Size = new System.Drawing.Size(202, 48);
             this.pnlImpressora.TabIndex = 15;
-            // 
-            // cbxNomeImpressora
-            // 
-            this.cbxNomeImpressora.FormattingEnabled = true;
-            this.cbxNomeImpressora.Location = new System.Drawing.Point(3, 13);
-            this.cbxNomeImpressora.Name = "cbxNomeImpressora";
-            this.cbxNomeImpressora.Size = new System.Drawing.Size(293, 21);
-            this.cbxNomeImpressora.TabIndex = 16;
-            this.cbxNomeImpressora.DropDown += new System.EventHandler(this.ListaImpressoras);
             // 
             // chkImprimeCozinha
             // 
@@ -200,11 +197,57 @@
             this.txtCodFamilia.TabIndex = 19;
             this.txtCodFamilia.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.BuscaFamilia);
             // 
+            // grpMultiplo
+            // 
+            this.grpMultiplo.Controls.Add(this.cbxNumeroSabores);
+            this.grpMultiplo.Location = new System.Drawing.Point(212, 34);
+            this.grpMultiplo.Name = "grpMultiplo";
+            this.grpMultiplo.Size = new System.Drawing.Size(91, 56);
+            this.grpMultiplo.TabIndex = 20;
+            this.grpMultiplo.TabStop = false;
+            this.grpMultiplo.Text = "Mult. Sabores";
+            // 
+            // chkMultiSabores
+            // 
+            this.chkMultiSabores.AutoSize = true;
+            this.chkMultiSabores.Location = new System.Drawing.Point(212, 13);
+            this.chkMultiSabores.Name = "chkMultiSabores";
+            this.chkMultiSabores.Size = new System.Drawing.Size(99, 17);
+            this.chkMultiSabores.TabIndex = 21;
+            this.chkMultiSabores.Text = "Multi Sabores ?";
+            this.toolTip1.SetToolTip(this.chkMultiSabores, "Marque essa opção para produtos que permite multi sabores EX: Pizzas e informe o " +
+        "limite da divisão");
+            this.chkMultiSabores.UseVisualStyleBackColor = true;
+            this.chkMultiSabores.CheckedChanged += new System.EventHandler(this.chkMultiSabores_CheckedChanged);
+            // 
+            // cbxNomeImpressora
+            // 
+            this.cbxNomeImpressora.FormattingEnabled = true;
+            this.cbxNomeImpressora.Location = new System.Drawing.Point(3, 13);
+            this.cbxNomeImpressora.Name = "cbxNomeImpressora";
+            this.cbxNomeImpressora.Size = new System.Drawing.Size(184, 21);
+            this.cbxNomeImpressora.TabIndex = 16;
+            this.cbxNomeImpressora.DropDown += new System.EventHandler(this.ListaImpressoras);
+            // 
+            // cbxNumeroSabores
+            // 
+            this.cbxNumeroSabores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxNumeroSabores.FormattingEnabled = true;
+            this.cbxNumeroSabores.Items.AddRange(new object[] {
+            "2",
+            "4"});
+            this.cbxNumeroSabores.Location = new System.Drawing.Point(23, 19);
+            this.cbxNumeroSabores.Name = "cbxNumeroSabores";
+            this.cbxNumeroSabores.Size = new System.Drawing.Size(43, 21);
+            this.cbxNumeroSabores.TabIndex = 17;
+            // 
             // frmAdicionarGrupo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(315, 493);
+            this.Controls.Add(this.chkMultiSabores);
+            this.Controls.Add(this.grpMultiplo);
             this.Controls.Add(this.txtCodFamilia);
             this.Controls.Add(this.btnEditarFamilia);
             this.Controls.Add(this.label2);
@@ -229,6 +272,7 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmAdicionarGrupo_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.gruposGridView)).EndInit();
             this.pnlImpressora.ResumeLayout(false);
+            this.grpMultiplo.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,11 +288,15 @@
         private System.Windows.Forms.CheckBox chkOnline;
         private System.Windows.Forms.CheckBox chkAtivo;
         private System.Windows.Forms.Panel pnlImpressora;
-        private System.Windows.Forms.ComboBox cbxNomeImpressora;
         private System.Windows.Forms.CheckBox chkImprimeCozinha;
         private System.Windows.Forms.ComboBox cbxFamilia;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnEditarFamilia;
         private System.Windows.Forms.TextBox txtCodFamilia;
+        private System.Windows.Forms.GroupBox grpMultiplo;
+        private System.Windows.Forms.CheckBox chkMultiSabores;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ComboBox cbxNomeImpressora;
+        private System.Windows.Forms.ComboBox cbxNumeroSabores;
     }
 }

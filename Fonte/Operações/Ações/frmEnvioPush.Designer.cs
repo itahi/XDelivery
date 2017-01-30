@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rbTodos = new System.Windows.Forms.RadioButton();
             this.btnEnviar = new System.Windows.Forms.Button();
             this.grpPeriodo = new System.Windows.Forms.GroupBox();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
@@ -49,6 +50,11 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtTextoMsg = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.grpTipoEnvio = new System.Windows.Forms.GroupBox();
+            this.rbControlado = new System.Windows.Forms.RadioButton();
+            this.rbAgora = new System.Windows.Forms.RadioButton();
+            this.txtTitulo = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.grpPeriodo.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -56,10 +62,13 @@
             this.grpGrid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridResultado)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.grpTipoEnvio.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.grpTipoEnvio);
+            this.groupBox1.Controls.Add(this.rbTodos);
             this.groupBox1.Controls.Add(this.btnEnviar);
             this.groupBox1.Controls.Add(this.grpPeriodo);
             this.groupBox1.Controls.Add(this.btnBuscar);
@@ -74,9 +83,23 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tipo Filtros";
             // 
+            // rbTodos
+            // 
+            this.rbTodos.AutoSize = true;
+            this.rbTodos.Checked = true;
+            this.rbTodos.Location = new System.Drawing.Point(11, 22);
+            this.rbTodos.Name = "rbTodos";
+            this.rbTodos.Size = new System.Drawing.Size(99, 17);
+            this.rbTodos.TabIndex = 12;
+            this.rbTodos.TabStop = true;
+            this.rbTodos.Text = "Todos Usuários";
+            this.toolTip1.SetToolTip(this.rbTodos, "Envia o push para todos usuarios que tem o app ou acessaram o site");
+            this.rbTodos.UseVisualStyleBackColor = true;
+            this.rbTodos.CheckedChanged += new System.EventHandler(this.rbTodos_CheckedChanged);
+            // 
             // btnEnviar
             // 
-            this.btnEnviar.Location = new System.Drawing.Point(263, 116);
+            this.btnEnviar.Location = new System.Drawing.Point(260, 123);
             this.btnEnviar.Name = "btnEnviar";
             this.btnEnviar.Size = new System.Drawing.Size(75, 23);
             this.btnEnviar.TabIndex = 11;
@@ -88,7 +111,7 @@
             // 
             this.grpPeriodo.Controls.Add(this.dtFim);
             this.grpPeriodo.Controls.Add(this.dtInicio);
-            this.grpPeriodo.Location = new System.Drawing.Point(110, 37);
+            this.grpPeriodo.Location = new System.Drawing.Point(114, 59);
             this.grpPeriodo.Name = "grpPeriodo";
             this.grpPeriodo.Size = new System.Drawing.Size(221, 60);
             this.grpPeriodo.TabIndex = 10;
@@ -196,7 +219,7 @@
             // rbAniversario
             // 
             this.rbAniversario.AutoSize = true;
-            this.rbAniversario.Location = new System.Drawing.Point(11, 37);
+            this.rbAniversario.Location = new System.Drawing.Point(11, 52);
             this.rbAniversario.Name = "rbAniversario";
             this.rbAniversario.Size = new System.Drawing.Size(97, 17);
             this.rbAniversario.TabIndex = 0;
@@ -229,21 +252,22 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.txtTitulo);
             this.groupBox2.Controls.Add(this.txtTextoMsg);
-            this.groupBox2.Location = new System.Drawing.Point(275, 166);
+            this.groupBox2.Location = new System.Drawing.Point(275, 163);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(311, 247);
+            this.groupBox2.Size = new System.Drawing.Size(311, 250);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Texto Mensagem";
+            this.groupBox2.Text = "Mensagem a ser enviada";
             // 
             // txtTextoMsg
             // 
-            this.txtTextoMsg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtTextoMsg.Location = new System.Drawing.Point(3, 16);
+            this.txtTextoMsg.Location = new System.Drawing.Point(3, 62);
             this.txtTextoMsg.Name = "txtTextoMsg";
-            this.txtTextoMsg.Size = new System.Drawing.Size(305, 228);
-            this.txtTextoMsg.TabIndex = 0;
+            this.txtTextoMsg.Size = new System.Drawing.Size(305, 182);
+            this.txtTextoMsg.TabIndex = 2;
             this.txtTextoMsg.Text = "";
             // 
             // label1
@@ -256,6 +280,60 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "Envio de mensagens \"Push\" para clientes que efetuaram Pedidos online \r\nem sua pla" +
     "taforma seja Site ou APP.";
+            // 
+            // grpTipoEnvio
+            // 
+            this.grpTipoEnvio.Controls.Add(this.rbAgora);
+            this.grpTipoEnvio.Controls.Add(this.rbControlado);
+            this.grpTipoEnvio.Location = new System.Drawing.Point(114, 7);
+            this.grpTipoEnvio.Name = "grpTipoEnvio";
+            this.grpTipoEnvio.Size = new System.Drawing.Size(221, 50);
+            this.grpTipoEnvio.TabIndex = 13;
+            this.grpTipoEnvio.TabStop = false;
+            this.grpTipoEnvio.Text = "Tipo Envio";
+            // 
+            // rbControlado
+            // 
+            this.rbControlado.AutoSize = true;
+            this.rbControlado.Checked = true;
+            this.rbControlado.Location = new System.Drawing.Point(11, 19);
+            this.rbControlado.Name = "rbControlado";
+            this.rbControlado.Size = new System.Drawing.Size(76, 17);
+            this.rbControlado.TabIndex = 13;
+            this.rbControlado.TabStop = true;
+            this.rbControlado.Text = "Controlado";
+            this.toolTip1.SetToolTip(this.rbControlado, "Baseia-se no horário que o cliente usa o App para enviar ");
+            this.rbControlado.UseVisualStyleBackColor = true;
+            // 
+            // rbAgora
+            // 
+            this.rbAgora.AutoSize = true;
+            this.rbAgora.Location = new System.Drawing.Point(109, 19);
+            this.rbAgora.Name = "rbAgora";
+            this.rbAgora.Size = new System.Drawing.Size(81, 17);
+            this.rbAgora.TabIndex = 14;
+            this.rbAgora.Text = "Instantanêo";
+            this.toolTip1.SetToolTip(this.rbAgora, "Envia exatamente nesse momento para todos,\r\nporém quem estiver sem internet não r" +
+        "eceberá!");
+            this.rbAgora.UseVisualStyleBackColor = true;
+            // 
+            // txtTitulo
+            // 
+            this.txtTitulo.Location = new System.Drawing.Point(3, 37);
+            this.txtTitulo.MaxLength = 30;
+            this.txtTitulo.Name = "txtTitulo";
+            this.txtTitulo.Size = new System.Drawing.Size(302, 20);
+            this.txtTitulo.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.txtTitulo, "Preencha o titulo da mensagem, seja breve e chamativo");
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 20);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(33, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Titulo";
             // 
             // frmEnvioPush
             // 
@@ -279,6 +357,9 @@
             this.grpGrid.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridResultado)).EndInit();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.grpTipoEnvio.ResumeLayout(false);
+            this.grpTipoEnvio.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -306,5 +387,11 @@
         private System.Windows.Forms.RichTextBox txtTextoMsg;
         private System.Windows.Forms.Button btnEnviar;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RadioButton rbTodos;
+        private System.Windows.Forms.GroupBox grpTipoEnvio;
+        private System.Windows.Forms.RadioButton rbAgora;
+        private System.Windows.Forms.RadioButton rbControlado;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtTitulo;
     }
 }

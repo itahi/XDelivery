@@ -26,6 +26,10 @@ namespace DexComanda.Operações.Ações
             DataSet dsResultado = null;
             try
             {
+                if (true)
+                {
+
+                }
                 if (rbAniversario.Checked)
                 {
                     dsResultado = con.SelectObterAniversariantes("spObterAnivesariantesPush",
@@ -89,22 +93,40 @@ namespace DexComanda.Operações.Ações
         {
             Utils.MontaCombox(cbxGrupo, "Nome", "Codigo", "Grupo", "spObterGrupoAtivo");
         }
+        private string ModoEntrega()
+        {
+            string strModoEntrega = "";
+            if (rbControlado.Checked)
+            {
+                strModoEntrega = "last-active";
+            }
+            else
+            {
+                return "";
+            }
 
+            return "\"delayed_option\": \"" + strModoEntrega + "\" ,";
+        }
         private void EnviarPush(object sender, EventArgs e)
         {
             try
             {
-                if (gridResultado.Rows.Count==0)
-                {
-                    MessageBox.Show("Primeiro selecione os clientes a enviar");
-                    return;
-                }
                 if (txtTextoMsg.Text == string.Empty)
                 {
                     MessageBox.Show("Preencha o texto que deseja enviar na mensagem");
                     return;
                 }
-
+                if (rbTodos.Checked)
+                {
+                    OneSignal on = new OneSignal();
+                    on.EnviaNotificacao(txtTitulo.Text, txtTextoMsg.Text,ModoEntrega());
+                    return;
+                }
+                if (gridResultado.Rows.Count==0)
+                {
+                    MessageBox.Show("Primeiro selecione os clientes a enviar");
+                    return;
+                }
                 if (Utils.MessageBoxQuestion(Bibliotecas.cTextoConferido))
                 {
                     OneSignal on = new OneSignal();
@@ -112,9 +134,8 @@ namespace DexComanda.Operações.Ações
                     for (int i = 0; i < gridResultado.Rows.Count; i++)
                     {
                         listaId.Add("\""+gridResultado.Rows[i].Cells["user_id"].Value.ToString()+"\"");
-                       //listaId.SetValue(gridResultado.Rows[i].Cells["user_id"].Value.ToString(), i);
                     }
-                    on.EnviaNotificacao("Olá" ,txtTextoMsg.Text, listaId);
+                    on.EnviaNotificacao(txtTitulo.Text ,txtTextoMsg.Text, listaId, ModoEntrega());
                 }
             }
             catch (Exception erros)
@@ -127,6 +148,11 @@ namespace DexComanda.Operações.Ações
         private void frmEnvioPush_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void rbTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            grpPeriodo.Enabled = !rbTodos.Checked;
         }
     }
 }

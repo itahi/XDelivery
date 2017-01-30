@@ -685,10 +685,10 @@ namespace DexComanda
                     {
                         DataSet dsMaiorPreco = con.RetornaMaioresPrecos(iCodProduto.ToString(), iCodProduto2.ToString(), "", "", dsOpcoes.Tables[0].Rows[0].ItemArray.GetValue(5).ToString());
                         lTipo = int.Parse(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo"));
-                        if (dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString() != "")
-                        {
-                            lPreco = Convert.ToDecimal(dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString());
-                        }
+                        //if (dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString() != "")
+                        //{
+                        //    lPreco = Convert.ToDecimal(dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString());
+                        //}
 
                         if (iCodProduto2 != 0 && lTipo == 1)
                         {
@@ -711,7 +711,6 @@ namespace DexComanda
                                 radioButton1.Tag = lPreco;
                                 radioButton1.Visible = true;
 
-                                // grpBoxTamanhos.Controls.Add(rb);
                             }
                             else if (!radioButton2.Visible)
                             {
@@ -1685,7 +1684,7 @@ namespace DexComanda
                     con.Update("spAlterarTotalPedido", pedido);
                     Utils.ControlaEventos("Excluir", this.Name);
                     AtualizaTroco();
-                  //  MessageBox.Show("Item excluído com sucesso.", "xSistemas");
+                    //  MessageBox.Show("Item excluído com sucesso.", "xSistemas");
                 }
                 else
                 {
@@ -1843,7 +1842,7 @@ namespace DexComanda
                     }
                     if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras || Sessions.returnEmpresa.CNPJ
                         == Bibliotecas.cMassaRara || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria
-                        || Sessions.returnEmpresa.CNPJ == "11291880000119" || Sessions.returnEmpresa.CNPJ==Bibliotecas.cGallegao)
+                        || Sessions.returnEmpresa.CNPJ == "11291880000119" || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGallegao)
                     {
                         Utils.ImpressaoPorCozinha(iCodigo);
                         return;
@@ -1995,20 +1994,16 @@ namespace DexComanda
                     if (txtCodProduto1.Text != "")
                     {
                         produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
-                        // MontaMenuOpcoes(int.Parse(txtCodProduto1.Text));
                     }
                     else
                     {
                         produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxProdutosGrid.SelectedValue.ToString())).Tables["Produto"];
-                        //  MontaMenuOpcoes(int.Parse(this.cbxProdutosGrid.SelectedValue.ToString()));
                     }
 
                     if (txtCodProduto2.Text != "")
                     {
                         sabor = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(txtCodProduto2.Text)).Tables["Produto"];
-                        // MontaMenuOpcoes(int.Parse(txtCodProduto2.Text));
                     }
-
 
                     if (PromocaoDiasSemana)
                     {
@@ -2775,7 +2770,8 @@ namespace DexComanda
             this.btnMultiploPagamento.Name = "btnMultiploPagamento";
             this.btnMultiploPagamento.Size = new System.Drawing.Size(178, 31);
             this.btnMultiploPagamento.TabIndex = 61;
-            this.btnMultiploPagamento.Text = "+ F. Pagamento [F10]";
+            this.btnMultiploPagamento.Text = "Multiplos Pagamentos";
+            this.toolTip1.SetToolTip(this.btnMultiploPagamento, "Caso o pedido tenha multilpas formas de pagamento use esse fechamento");
             this.btnMultiploPagamento.UseVisualStyleBackColor = true;
             this.btnMultiploPagamento.Click += new System.EventHandler(this.MultiplaFormasPagamento);
             // 
@@ -3596,7 +3592,7 @@ namespace DexComanda
         {
             LimpaTamanhosSabores();
             MontaMenuOpcoes(int.Parse(cbxProdutosGrid.SelectedValue.ToString()), int.Parse(cbxSabor.SelectedValue.ToString()));
-            ComparaValores();
+            // ComparaValores();
         }
 
         private void frmCadastrarPedido_KeyDown(object sender, KeyEventArgs e)
@@ -3849,7 +3845,6 @@ namespace DexComanda
             {
                 decimal lPreco = decimal.Parse(radioButton1.Tag.ToString());
                 txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
-
                 if (cbxMeiaPizza.Checked)
                 {
                     cbxSabor.Text = iNomeProd + " " + radioButton1.Text;
@@ -3967,10 +3962,10 @@ namespace DexComanda
             }
 
             string iTextoNovo = "";
-           // iTextoNovo.Insert(iTextoNovo.Length, Environment.NewLine);
+            // iTextoNovo.Insert(iTextoNovo.Length, Environment.NewLine);
             if (e.CurrentValue == CheckState.Unchecked)
             {
-                iTextoNovo = iTextoNovo +  txtItemDescricao.Text + " + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString());
+                iTextoNovo = iTextoNovo + txtItemDescricao.Text + " + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString());
                 txtItemDescricao.Text = iTextoNovo.Insert(iTextoNovo.Length, Environment.NewLine);
                 decimal iValorItem = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
                 decimal iValorAdicional = decimal.Parse(ObterSomenteNumerosReais(chkListAdicionais.SelectedItem.ToString()));
@@ -3994,19 +3989,17 @@ namespace DexComanda
 
         private void MultiplaFormasPagamento(object sender, EventArgs e)
         {
-            if (ValidaTroco())
+            try
             {
                 Boolean iInsereAtualiza = this.btnGerarPedido.Text != "Alterar";
                 frmFinalizacaoPedido frm = new frmFinalizacaoPedido(decimal.Parse(lbTotal.Text.Replace("R$", "")), iInsereAtualiza, codPedido);
                 frm.ShowDialog();
             }
-            else
+            catch (Exception erro)
             {
-                MessageBox.Show(" Troco é menor que total do Pedido");
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-
-
-
+           
         }
 
         private void rb7_Click(object sender, EventArgs e)

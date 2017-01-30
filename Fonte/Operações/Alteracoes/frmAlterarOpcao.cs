@@ -66,13 +66,12 @@ namespace DexComanda.Operações.Alteracoes
                     decimal dblNovoPreco;
                     Boolean boolAtivoSN = false;
                     Boolean boolOnlineSN = false;
+                    dblNovoPreco = decimal.Parse(txtNovoPreco.Text);
+                    boolAtivoSN = rbAtivo.Checked;
+                    boolOnlineSN = rbOnline.Checked;
 
                     for (int i = 0; i < GridView.Rows.Count; i++)
                     {
-                        dblNovoPreco = decimal.Parse(txtNovoPreco.Text);
-                        boolAtivoSN = rbAtivo.Checked;
-                        boolOnlineSN = rbOnline.Checked;
-
                         //Opcao opcao = new Opcao()
                         //{
                         //    Codigo = int.Parse(GridView.Rows[i].Cells["Codigo"].Value.ToString()),
@@ -84,7 +83,7 @@ namespace DexComanda.Operações.Alteracoes
                         //};
                         AlteracaoMultiplaOpcao multiOpcao = new AlteracaoMultiplaOpcao()
                         {
-                            CodOpcao = int.Parse(GridView.Rows[i].Cells["CodOpcao"].Value.ToString()),
+                            CodOpcao = int.Parse(GridView.Rows[i].Cells["Codigo"].Value.ToString()),
                             OnlineSN = boolOnlineSN,
                             Preco = dblNovoPreco
                         };
@@ -103,6 +102,16 @@ namespace DexComanda.Operações.Alteracoes
         }
 
         private void BuscaOpcao(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void cbxOpcao_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void cbxOpcao_DropDown(object sender, EventArgs e)
         {
             Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcaoPorTipo", int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
         }

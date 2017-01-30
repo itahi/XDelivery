@@ -58,6 +58,7 @@ namespace DexComanda.Cadastros
             try
             {
                 int intNumCaixa = 1;
+                string strTipoMovimento = "";
                 if (txtDescricao.Text == "" || txtSolicitante.Text == "" || txtValor.Text == "")
                 {
                     MessageBox.Show(Bibliotecas.cCamposObrigatório);
@@ -80,10 +81,9 @@ namespace DexComanda.Cadastros
                     {
                         CodCaixa = intNumCaixa,
                         CodFormaPagamento = int.Parse(cbxFormaPagamento.SelectedValue.ToString()),
-                        Data = Convert.ToDateTime(dtMovimento.Value.ToShortDateString()),
+                        Data = dtMovimento.Value,
                         CodUser = Sessions.retunrUsuario.Codigo,
                         Historico = txtDescricao.Text,
-                        Valor = decimal.Parse(txtValor.Text),
                         NumeroDocumento = txtDocumento.Text,
                         Turno = cbxTurno.Text
 
@@ -96,19 +96,32 @@ namespace DexComanda.Cadastros
                     if (rbEntrada.Checked)
                     {
                         cxMovimento.Tipo = 'E';
+                        strTipoMovimento = "de entrada";
                     }
                     else if (rbSaida.Checked)
                     {
+                        strTipoMovimento = "de saida";
                         cxMovimento.Tipo = 'S';
+                        cxMovimento.Valor = -decimal.Parse(txtValor.Text);
                     }
                     else
                     {
-                        MessageBox.Show("Selecione o tipo de movimento", "[XSistemas] Segurança");
+                        MessageBox.Show("Selecione o tipo de movimento", "[xSistemas] Segurança");
                         return;
                     }
 
+                    if (!Utils.MessageBoxQuestion("Deseja lançar um movimento "+strTipoMovimento + " no caixa do turno "+
+                        cbxTurno.Text +" ?"))
+                    {
+                        return;
+                    }
                     con.Insert("spInserirMovimentoCaixa", cxMovimento);
-                    MessageBox.Show("Movimento lançado", "[Xsistemas] Aviso");
+                    MessageBox.Show("Movimento lançado", "[xSistemas] Aviso");
+
+                    if (!Utils.MessageBoxQuestion("Deseja imprimir o comprovante do lançamento?"))
+                    {
+                        return;
+                    }
                     if (cxMovimento.Tipo == 'E')
                     {
                         RelSuprimento repor;

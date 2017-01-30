@@ -103,7 +103,7 @@ namespace DexComanda.Cadastros.Pedido
                     MessageBox.Show("A mesa " + cbxListaMesasD.Text + "já possuí itens");
                     return;
                 }
-                int iRetunr=  con.TransfereMesa(intCodPedido, cbxListaMesasO.Text.ToString(), Sessions.retunrUsuario.Codigo, decTotalPedido,
+                int iRetunr=  con.TransfereMesa(intCodPedido, cbxListaMesasD.Text.ToString(), Sessions.retunrUsuario.Codigo, decTotalPedido,
                 int.Parse(cbxListaMesasO.SelectedValue.ToString()), intCodPessoa, int.Parse(cbxListaMesasD.SelectedValue.ToString()));
                 if (iRetunr!=0)
                 {

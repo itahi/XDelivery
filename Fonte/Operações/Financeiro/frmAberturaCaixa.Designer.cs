@@ -85,7 +85,7 @@
             // 
             // horafechamento
             // 
-            this.horafechamento.CustomFormat = "00/00/0000 00:00:00";
+            this.horafechamento.CustomFormat = "";
             this.horafechamento.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.horafechamento.Location = new System.Drawing.Point(94, 79);
             this.horafechamento.Name = "horafechamento";
