@@ -34,7 +34,7 @@ namespace DexComanda
         private int lastCodigo;
         public static string connectionString = null;
         private object iNumeroPessoas;
-        public ConnectionState statusConexao ;
+        public ConnectionState statusConexao;
         public Conexao()
         {
             try
@@ -43,7 +43,7 @@ namespace DexComanda
                 ////{
                 ////    return;
                 ////}
-                
+
                 if (connectionString != null)
                 {
                     conn = new SqlConnection(connectionString);
@@ -55,7 +55,7 @@ namespace DexComanda
             {
                 MessageBox.Show(msg.Message, "Erro conexao com o SQLSERVER");
             }
-            
+
         }
 
         /// <summary>
@@ -84,9 +84,6 @@ namespace DexComanda
             }
             return iReturn;
         }
-
-
-
         /// <summary>
         /// Rotina para efetuar Backup Automátizado do Banco de dados ao Encerrar o Programa
         /// </summary>
@@ -243,6 +240,71 @@ namespace DexComanda
             return iReturn;
         }
 
+        /// <summary>
+        /// Executa insert básico no banco de dados ( Regiãoo de entrega,Forma Pagamento,Caixa,StatusPedido)
+        /// </summary>
+        public void ExecutaInsertBasico()
+        {
+            try
+            {
+                if (!Utils.MessageBoxQuestion("O Banco de dados está vazio , deseja executar a inicialização básica para iniciar as operações"))
+                {
+                    return;
+                }
+
+                // ---- Região Entrega padrão "Balcão" ----
+                RegioesEntrega regioes = new RegioesEntrega()
+                {
+                    NomeRegiao = "Balcão/Retirada",
+                    TaxaServico = 0,
+                    DataAlteracao = DateTime.Now,
+                    OnlineSN = false,
+                    AtivoSN = true,
+                    valorMinimoFreteGratis = 0,
+                    PrevisaoEntrega = "",
+                };
+                Insert("spAdicionaRegiao", regioes);
+
+                //-----Forma de pagamento padrão Dinheiro ---
+                FormasPagamento fp = new FormasPagamento()
+                {
+                    Codigo = 0,
+                    Descricao = "Dinheiro",
+                    DescontoSN = false,
+                    GeraFinanceiro = false,
+                    OnlineSN = false,
+                    AtivoSN = true,
+                    DataAlteracao = DateTime.Now,
+                    CaminhoImagem = ""
+                };
+                Insert("spAdicionarFormaPagamento", fp);
+
+                //-----Caixa padrão 1 ----
+                CaixaCadastros cx = new CaixaCadastros()
+                {
+                    DataCadastro = DateTime.Now,
+                    Nome = "Caixa",
+                    Numero = "1"
+                };
+                Insert("spAdicionarCaixa", cx);
+
+                //----Status Pedido Padrão ----
+                PedidoStatus pedS = new PedidoStatus()
+                {
+                    Nome = "Aberto",
+                    AlertarSN = false,
+                    Status = 1,
+                    EnviarSN = true,
+                    // DataAlteracao = DateTime.Now
+                };
+                Insert("spAdicionarPedidoStatus", pedS);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            
+        }
         public int RetornaIDCategoria(string iNomeCategoria)
         {
             int iIDReturn = 1;
@@ -280,7 +342,7 @@ namespace DexComanda
             command.Parameters.AddWithValue("@Numero", iCodCaixa);
             command.Parameters.AddWithValue("@Turno", iTurno);
             command.Parameters.AddWithValue("@Data", iData.ToShortDateString());
-            command.Parameters.AddWithValue("@HorarioFechamento",DateTime.Now);
+            command.Parameters.AddWithValue("@HorarioFechamento", DateTime.Now);
 
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
@@ -759,7 +821,7 @@ namespace DexComanda
                 command.Parameters.AddWithValue("@Numero", iCodPessoa);
                 command.Parameters.AddWithValue("@Data", iDataI);
             }
-            else if (spName== "spObterProdutoPorClientePush")
+            else if (spName == "spObterProdutoPorClientePush")
             {
                 command.Parameters.AddWithValue("@DataInicio", iDataI);
                 command.Parameters.AddWithValue("@DataFim", iDataF);
@@ -1678,7 +1740,7 @@ namespace DexComanda
 
             return ds;
         }
-        public DataSet SelectObterAniversariantes(string spName,DateTime DataInicial, DateTime DataFinal)
+        public DataSet SelectObterAniversariantes(string spName, DateTime DataInicial, DateTime DataFinal)
         {
 
             command = new SqlCommand(spName, conn);
@@ -1693,7 +1755,7 @@ namespace DexComanda
 
             return ds;
         }
-        public DataSet SelectObterClientesSemPedido(string spName ,DateTime DataInicial, DateTime DataFinal)
+        public DataSet SelectObterClientesSemPedido(string spName, DateTime DataInicial, DateTime DataFinal)
         {
 
             command = new SqlCommand(spName, conn);
@@ -1871,7 +1933,7 @@ namespace DexComanda
             adapter.Fill(ds, "Pedido_Finalizacao");
             return ds;
         }
-        public DataSet SelectItensPorImpressora(int intCodPedido ,string strNomeimpressora)
+        public DataSet SelectItensPorImpressora(int intCodPedido, string strNomeimpressora)
         {
             try
             {
@@ -1884,7 +1946,7 @@ namespace DexComanda
 
                 ds = new DataSet();
                 adapter.Fill(ds, "ItemsPedido");
-               
+
             }
             catch (Exception erro)
             {

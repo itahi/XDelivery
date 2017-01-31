@@ -237,7 +237,7 @@ namespace DexComanda
                                         {
                                             Utils.ExcluiRegistro();
                                             MessageBox.Show("Não foi possivel validar a licença , favor entrar em contato com suporte" +
-                                                             "(27) 9 81667827 / lazaro.shev@gmail.com ", "DEX Licença Expirada");
+                                                             "(27) 9 81667827 / lazaro.shev@gmail.com ", "[xSistemas] Licença Expirada");
                                         }
 
                                     }
@@ -292,7 +292,7 @@ namespace DexComanda
                     }
                     else
                     {
-                        MessageBox.Show("Aviso Dex", "Preencha os dados de sua empresas para validação da licença");
+                        MessageBox.Show("[xSistemas] aviso", "Preencha os dados de sua empresas para validação da licença");
                         frmConfiguracoes frm = new frmConfiguracoes();
                         frm.ShowDialog();
                     }

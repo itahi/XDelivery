@@ -1213,7 +1213,7 @@ namespace DexComanda
                             }
 
                             // Fecha o Formulario 
-                            MessageBox.Show("Pedido gerado com sucesso.");
+                           // MessageBox.Show("Pedido gerado com sucesso.");
                             this.Close();
 
 
@@ -1239,7 +1239,27 @@ namespace DexComanda
 
             return dcTotalPedido; //+ decimal.Parse(lblEntrega.Text.Replace("R$", ""));
         }
+        /// <summary>
+        ///  Metodo para agrupar itens quando quando forem exatamente iguais
+        /// </summary>
+        /// <param name="intCodProduto">
+        /// Codigo do Produto</param>
+        /// <param name="iDescricao">
+        /// Descrição adicional do produto ( Observação, adicional) </param>
+        /// <returns></returns>
+        private Boolean AgrupaItens(int intCodProduto , string iDescricao)
+        {
+            try
+            {
 
+               
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return true;
+        }
         private void AtualizaTotalPedido()
         {
             if (!ValidaMaximoDesconto())
@@ -1259,7 +1279,6 @@ namespace DexComanda
                 };
                 con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
             }
-
 
             pedido = new Pedido()
             {

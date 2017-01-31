@@ -34,13 +34,14 @@ namespace DexComanda
             }
             else
             {
-                MessageBox.Show("Não há caixas cadastrados , favor efetuar o cadastro para continuar");
-                frmCadCaixa frm = new frmCadCaixa();
-                frm.ShowDialog();
-                if (frm.DialogResult == DialogResult.OK)
-                {
-                    Utils.Restart();
-                }
+                con.ExecutaInsertBasico();
+                ////MessageBox.Show("Não há caixas cadastrados , favor efetuar o cadastro para continuar");
+                ////frmCadCaixa frm = new frmCadCaixa();
+                ////frm.ShowDialog();
+                //if (frm.DialogResult == DialogResult.OK)
+                //{
+                //    Utils.Restart();
+                //}
             }
 
         }

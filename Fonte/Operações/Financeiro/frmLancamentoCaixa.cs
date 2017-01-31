@@ -28,8 +28,8 @@ namespace DexComanda.Cadastros
             cbxCaixas.DataSource = dsCaixas.Tables["Caixa"];
             cbxCaixas.DisplayMember = "Numero";
             cbxCaixas.ValueMember = "Codigo";
-            
-            
+
+
             cbxFormaPagamento.DataSource = con.SelectAll("FormaPagamento", "spObterFormaPagamento").Tables["FormaPagamento"];
             cbxFormaPagamento.DisplayMember = "Descricao";
             cbxFormaPagamento.ValueMember = "Codigo";
@@ -37,7 +37,7 @@ namespace DexComanda.Cadastros
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void frmLancamentoCaixa_KeyDown(object sender, KeyEventArgs e)
@@ -46,7 +46,7 @@ namespace DexComanda.Cadastros
             {
                 Salvar(sender, e);
             }
-            
+
             else if (e.KeyCode == Keys.Escape)
             {
                 this.Close();
@@ -86,7 +86,6 @@ namespace DexComanda.Cadastros
                         Historico = txtDescricao.Text,
                         NumeroDocumento = txtDocumento.Text,
                         Turno = cbxTurno.Text
-
                     };
                     if (intNumCaixa.ToString() == "" || txtValor.Text == "")
                     {
@@ -110,8 +109,8 @@ namespace DexComanda.Cadastros
                         return;
                     }
 
-                    if (!Utils.MessageBoxQuestion("Deseja lançar um movimento "+strTipoMovimento + " no caixa do turno "+
-                        cbxTurno.Text +" ?"))
+                    if (!Utils.MessageBoxQuestion("Deseja lançar um movimento " + strTipoMovimento + " no caixa do turno " +
+                        cbxTurno.Text + " ?"))
                     {
                         return;
                     }
@@ -148,8 +147,8 @@ namespace DexComanda.Cadastros
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-           
-           
+
+
         }
 
         private void rbSaida_CheckedChanged(object sender, EventArgs e)

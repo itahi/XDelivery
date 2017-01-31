@@ -107,7 +107,8 @@ namespace DexComanda
             cbxNomeImpressora.Text = this.gruposGridView.Rows[rowIndex].Cells["NomeImpressora"].Value.ToString();
             chkOnline.Checked = Convert.ToBoolean(this.gruposGridView.Rows[rowIndex].Cells[3].Value.ToString());
             chkAtivo.Checked = Convert.ToBoolean(this.gruposGridView.Rows[rowIndex].Cells[4].Value.ToString());
-            chkMultiSabores.Checked = Convert.ToBoolean(this.gruposGridView.Rows[rowIndex].Cells["MultiploSabores"].Value.ToString());
+
+            chkMultiSabores.Checked = gruposGridView.Rows[rowIndex].Cells["MultiploSabores"].Value.ToString() == "1";
             //MultiSabores multi = new MultiSabores();
             //multi = Utils.DeserializaObjeto4(gruposGridView.Rows[rowIndex].Cells["MultiploSabores"].Value.ToString());
             //if (multi!=null)
@@ -135,7 +136,6 @@ namespace DexComanda
             this.btnEditarGrupo.Click -= new System.EventHandler(this.EditarGrupo);
 
         }
-
         private void Cancelar(object sender, EventArgs e)
         {
 

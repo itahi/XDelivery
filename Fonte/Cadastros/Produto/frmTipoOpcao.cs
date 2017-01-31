@@ -43,7 +43,7 @@ namespace DexComanda.Cadastros.Produto
                     {
                         iReturn = int.Parse(((System.Windows.Forms.RadioButton)ctrControl).Tag.ToString());
                     }
-                    
+
                 }
             }
             return iReturn;
@@ -67,7 +67,7 @@ namespace DexComanda.Cadastros.Produto
         {
             try
             {
-                if (!rbMultipla.Checked && !rbTexto.Checked && !rbUnica.Checked && (cbxOrdem.SelectedIndex<0))
+                if (!TipoSelecionado())
                 {
                     MessageBox.Show("Marque uma opção para continuar");
                     grpMaxMin.Focus();
@@ -88,7 +88,7 @@ namespace DexComanda.Cadastros.Produto
                     };
                     if (grpTipo.Enabled && rbMultipla.Checked)
                     {
-                        if (txtMax.Text=="" && txtMinimo.Text=="")
+                        if (txtMax.Text == "" && txtMinimo.Text == "")
                         {
                             MessageBox.Show("Campos obrigatórios não preenchidos");
                             txtMax.Focus();
@@ -99,7 +99,7 @@ namespace DexComanda.Cadastros.Produto
                             prodOp.MaximoOpcionais = int.Parse(txtMax.Text);
                             prodOp.MinimoOpcionais = int.Parse(txtMinimo.Text);
                         }
-                        
+
                     }
                     con.Insert("spAdicionarProduto_OpcaoTipo", prodOp);
                     ListaTipoOpcao();
@@ -133,7 +133,7 @@ namespace DexComanda.Cadastros.Produto
                         txtMax.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("MaximoOpcionais"));
                         txtMinimo.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("MinimoOpcionais"));
                     }
-               
+
                 }
 
                 this.btnAdicionar.Text = "Salvar [F12]";
@@ -146,12 +146,8 @@ namespace DexComanda.Cadastros.Produto
             }
             catch (Exception erro)
             {
-
-                throw;
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-           
-
-
         }
         private void Cancelar(object sender, EventArgs e)
         {
@@ -170,9 +166,26 @@ namespace DexComanda.Cadastros.Produto
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
         }
+        private Boolean TipoSelecionado()
+        {
+            Boolean iReturn = false;
+            //Percorre o controle groupbox
+            foreach (Control control in grpTipo.Controls)
+            {
+                //Busca pelo controle radiobutton
+                if (object.ReferenceEquals(control.GetType(), typeof(System.Windows.Forms.RadioButton)))
+                {
+                    if( (((System.Windows.Forms.RadioButton)control).Checked))
+                    {
+                        iReturn=true;
+                    }
+                }
+            }
+            return iReturn;
+        }
         private void SalvarRegistro(object sender, EventArgs e)
         {
-            if (!rbMultipla.Checked && !rbTexto.Checked && !rbUnica.Checked)
+            if (!TipoSelecionado())
             {
                 MessageBox.Show("Marque uma opção para continuar");
                 grpMaxMin.Focus();
@@ -206,16 +219,14 @@ namespace DexComanda.Cadastros.Produto
 
             }
             con.Update("spAlterarProduto_OpcaoTipo", prodOp);
-            
+            Utils.ControlaEventos("Alterar", this.Name);
+            this.btnAdicionar.Text = "Adicionar [F12]";
+            this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
+            this.btnAdicionar.Click -= new System.EventHandler(this.SalvarRegistro);
 
-                Utils.ControlaEventos("Alterar", this.Name);
-                this.btnAdicionar.Text = "Adicionar [F12]";
-                this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
-                this.btnAdicionar.Click -= new System.EventHandler(this.SalvarRegistro);
-
-                this.btnEditar.Text = "Editar [F11]";
-                this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
-             //   this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+            this.btnEditar.Text = "Editar [F11]";
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            //   this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
             Utils.LimpaForm(this);
             ListaTipoOpcao();
 
@@ -228,7 +239,7 @@ namespace DexComanda.Cadastros.Produto
             {
                 if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))
                 {
-                    if (int.Parse(((System.Windows.Forms.RadioButton)ctrControl).Tag.ToString())== iTipo)
+                    if (int.Parse(((System.Windows.Forms.RadioButton)ctrControl).Tag.ToString()) == iTipo)
                     {
                         (((System.Windows.Forms.RadioButton)ctrControl).Checked) = true;
                         return;
