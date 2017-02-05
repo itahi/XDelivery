@@ -532,6 +532,12 @@
       <DependentUpon>RelComandaMesaPorGrupo.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Delivery\RelDeliveryCozinhaPorImpressora.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelDeliveryCozinhaPorImpressora.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Delivery\RelVendasOnline.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -581,8 +587,8 @@
     <Compile Include="Relatorios\Clientes\frmReporVendasPorCliente.Designer.cs">
       <DependentUpon>frmReporVendasPorCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="Relatorios\Delivery\RelComandaMesaSeparado.cs">
-      <DependentUpon>RelComandaMesaSeparado.rpt</DependentUpon>
+    <Compile Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinha.cs">
+      <DependentUpon>RelDeliveryCozinhaGrupoCozinha.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
@@ -1156,9 +1162,13 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelComandaMesaPorGrupo.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesaSeparado.rpt">
+    <EmbeddedResource Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinha.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelComandaMesaSeparado.cs</LastGenOutput>
+      <LastGenOutput>RelDeliveryCozinhaGrupoCozinha.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelDeliveryCozinhaPorImpressora.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDeliveryCozinhaPorImpressora.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelVendasOnline.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

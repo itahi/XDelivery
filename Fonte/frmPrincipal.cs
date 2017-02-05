@@ -747,10 +747,6 @@ namespace DexComanda
             try
             {
                 bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
-                int codigo;
-                bool Marcado;
-                string NumeroMesa;
-                int iCodMesa;
 
                 if (Utils.MessageBoxQuestion("Deseja ** FINALIZAR ** Todos Pedidos Selecionado?"))
                 {
@@ -789,9 +785,9 @@ namespace DexComanda
         }
         private void ExecutaFinalizacaoMultipla()
         {
+           
             for (int i = 0; i < pedidosGridView.Rows.Count; i++)
             {
-
                 Boolean Marcado = Convert.ToBoolean(this.pedidosGridView.Rows[i].Cells["Finalizado"].Value.ToString());
                 decimal dblTotalPedido;
                 int codigo;
@@ -799,8 +795,15 @@ namespace DexComanda
                 {
                     codigo = int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString());
                     //int.Parse(pedidosGridView.CurrentRow[i].Cells["Codigo"].Value.ToString());
-
+                   
                     DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
+                    if (dsPedido.Tables[0].Rows[0].Field<int>("CodigoMesa") != 0)
+                    {
+                        MessageBox.Show("Esse modo de finalização não pode ser para 'Mesas' ");
+                        return;
+
+                    }
+
                     DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
                     int iCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
                     CodPedidoWS = VerificaPedidoOnline(codigo);

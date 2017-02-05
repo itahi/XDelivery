@@ -1946,19 +1946,6 @@ namespace DexComanda
             {
                 chkListAdicionais.SetItemChecked(i, false);
             }
-            //foreach (System.Windows.Forms.Control ctrControl in panel5.Controls)
-            //{
-            //    if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.CheckedListBox)))
-            //    {
-            //        // Unselect all Checked
-            //        if (chkListAdicionais.Items.Count>0)
-            //        {
-            //            ((System.Windows.Forms.CheckedListBox)ctrControl).SetSelected(chkListAdicionais.Items.Count, false);
-            //        }
-
-            //    }
-            //}
-            //   SemMeiaPizza();
         }
 
         private void cbxMeiaPizza_CheckedChanged(object sender, EventArgs e)
@@ -3995,13 +3982,11 @@ namespace DexComanda
             else
             {
                 txtItemDescricao.Text = txtItemDescricao.Text.Replace(" + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString()), string.Empty);
-                // txtItemDescricao.Text = txtItemDescricao.Text.Replace("+", string.Empty);
+               // txtItemDescricao.Text.Remove()
                 decimal iValorItem = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
                 decimal iValorAdicional = decimal.Parse(ObterSomenteNumerosReais(chkListAdicionais.SelectedItem.ToString()));
                 decimal iValor = iValorItem - iValorAdicional;
-
                 txtPrecoUnitario.Text = Convert.ToString(iValor);
-
                 CalcularTotalItem();
             }
         }

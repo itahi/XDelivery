@@ -334,14 +334,14 @@ namespace DexComanda
         {
             string iSqlConsulta = "select top 1 * from Caixa " +
                                    " where Numero=@Numero and " +
-                                   " Turno=@Turno and /*Data=@Data and*/ " +
+                                   " Turno=@Turno and Data<@Data and " +
                                    " HorarioFechamento>@HorarioFechamento" +
                                    " order by Codigo desc";
             command = new SqlCommand(iSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@Numero", iCodCaixa);
             command.Parameters.AddWithValue("@Turno", iTurno);
-            command.Parameters.AddWithValue("@Data", iData.ToShortDateString());
+            command.Parameters.AddWithValue("@Data", DateTime.Now);
             command.Parameters.AddWithValue("@HorarioFechamento", DateTime.Now);
 
             adapter = new SqlDataAdapter(command);
@@ -1977,6 +1977,11 @@ namespace DexComanda
                 command.Parameters.AddWithValue("@CodProduto", iCodString);
             }
             else if (spName == "spObterItemsNaoImpressoPorCodigo")
+            {
+                command.Parameters.AddWithValue("@Codigo", codigo);
+                command.Parameters.AddWithValue("@CodGrupo", iCodigo2);
+            }
+            else if (spName == "spObterItemsNaoImpressoPorGrupo")
             {
                 command.Parameters.AddWithValue("@Codigo", codigo);
                 command.Parameters.AddWithValue("@CodGrupo", iCodigo2);

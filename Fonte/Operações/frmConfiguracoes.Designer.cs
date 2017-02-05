@@ -99,6 +99,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.chkLoginSenha = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label37 = new System.Windows.Forms.Label();
+            this.cbxTipoImpressao = new System.Windows.Forms.ComboBox();
             this.grpImpressoras = new System.Windows.Forms.GroupBox();
             this.label54 = new System.Windows.Forms.Label();
             this.label53 = new System.Windows.Forms.Label();
@@ -221,8 +223,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label37 = new System.Windows.Forms.Label();
-            this.cbxTipoImpressao = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -928,6 +928,29 @@
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Impressão";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(18, 122);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(135, 13);
+            this.label37.TabIndex = 31;
+            this.label37.Text = "Agrupamento da impressão";
+            // 
+            // cbxTipoImpressao
+            // 
+            this.cbxTipoImpressao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTipoImpressao.FormattingEnabled = true;
+            this.cbxTipoImpressao.Items.AddRange(new object[] {
+            "Por Cozinha/Grupo",
+            "Por Impressora",
+            "Sem Agrupamento"});
+            this.cbxTipoImpressao.Location = new System.Drawing.Point(21, 138);
+            this.cbxTipoImpressao.Name = "cbxTipoImpressao";
+            this.cbxTipoImpressao.Size = new System.Drawing.Size(129, 21);
+            this.cbxTipoImpressao.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.cbxTipoImpressao, "Selecione o tipo de agrupamento para impressão do pedido da cozinha");
             // 
             // grpImpressoras
             // 
@@ -2159,28 +2182,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(18, 122);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(107, 13);
-            this.label37.TabIndex = 31;
-            this.label37.Text = "Tipo impressão Mesa";
-            // 
-            // cbxTipoImpressao
-            // 
-            this.cbxTipoImpressao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxTipoImpressao.FormattingEnabled = true;
-            this.cbxTipoImpressao.Items.AddRange(new object[] {
-            "Por Cozinha/Grupo",
-            "Por Impressora"});
-            this.cbxTipoImpressao.Location = new System.Drawing.Point(21, 138);
-            this.cbxTipoImpressao.Name = "cbxTipoImpressao";
-            this.cbxTipoImpressao.Size = new System.Drawing.Size(129, 21);
-            this.cbxTipoImpressao.TabIndex = 30;
-            this.toolTip1.SetToolTip(this.cbxTipoImpressao, "Selecione o tipo de agrupamento da impressão:");
             // 
             // frmConfiguracoes
             // 

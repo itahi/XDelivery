@@ -121,29 +121,31 @@ namespace DexComanda.Cadastros
                     int intCodPedid = intCodPedido;
                     for (int intFor = 0; intFor < gridFormasPagamento.Rows.Count; intFor++)
                     {
-                        if (gridFormasPagamento.Rows[intFor].Cells["Valor"].Value != null)
+                        if (gridFormasPagamento.Rows[intFor].Cells["Valor"].Value != null
+                            && gridFormasPagamento.Rows[intFor].Cells["Valor"].Value.ToString()!="")
                         {
-                            if (bInserir)
-                            {
+                            //if (bInserir)
+                            //{
+                            int teste = intCodPedid;
                                 FinalizaPedido finalizaPed = new FinalizaPedido()
                                 {
-                                    CodPedido = iFrm.iCodPedido,
+                                    CodPedido = intCodPedid,
                                     CodPagamento = int.Parse(gridFormasPagamento.Rows[intFor].Cells["Codigo"].Value.ToString()),
                                     ValorPagamento = decimal.Parse(gridFormasPagamento.Rows[intFor].Cells["Valor"].Value.ToString())
                                 };
                                 con.Insert("spAdicionarFinalizaPedido_Pedido", finalizaPed);
-                            }
-                            else
-                            {
-                                FinalizaPedido finalizaPed = new FinalizaPedido()
-                                {
-                                    CodPedido = intCodPedido,
-                                    CodPagamento = int.Parse(gridFormasPagamento.Rows[intFor].Cells["Codigo"].Value.ToString()),
-                                    ValorPagamento = decimal.Parse(gridFormasPagamento.Rows[intFor].Cells["Valor"].Value.ToString())
-                                };
-                                con.Update("spAlteraFinalizaPedido_Pedido", finalizaPed);
+                            //}
+                            //else
+                            //{
+                            //    FinalizaPedido finalizaPed = new FinalizaPedido()
+                            //    {
+                            //        CodPedido = intCodPedido,
+                            //        CodPagamento = int.Parse(gridFormasPagamento.Rows[intFor].Cells["Codigo"].Value.ToString()),
+                            //        ValorPagamento = decimal.Parse(gridFormasPagamento.Rows[intFor].Cells["Valor"].Value.ToString())
+                            //    };
+                            //    con.Update("spAlteraFinalizaPedido_Pedido", finalizaPed);
 
-                            }
+                            //}
 
                         }
                     }
