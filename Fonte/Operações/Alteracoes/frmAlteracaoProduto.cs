@@ -37,7 +37,7 @@ namespace DexComanda.Operações.Alteracoes
             {
                 DataSet dsProd;
                 dsProd = con.SelectRegistroPorNome("@GrupoProduto", "Produto", "spObterProdutoPorGrupo", this.cbxGrupo.Text);
-                if (dsProd.Tables[0].Rows.Count>0)
+                if (dsProd.Tables[0].Rows.Count > 0)
                 {
                     GridViewProdutos.DataSource = null;
                     GridViewProdutos.DataSource = dsProd;
@@ -77,8 +77,8 @@ namespace DexComanda.Operações.Alteracoes
         private void rbValor_Click(object sender, EventArgs e)
         {
             richTextGrande.Text = "";
-            richTextGrande.Text = "Escolhendo essa opção os produtos da 'Grid' abaixo "+
-                                   " terão o seu valor atual somado ao valor preenchido no campo 'Novo Valor' "+
+            richTextGrande.Text = "Escolhendo essa opção os produtos da 'Grid' abaixo " +
+                                   " terão o seu valor atual somado ao valor preenchido no campo 'Novo Valor' " +
                                    " Ex. Refrigerante R$10,00 + 1,50  = Novo valor R$11,50 ";
         }
 
@@ -86,14 +86,14 @@ namespace DexComanda.Operações.Alteracoes
         {
             richTextGrande.Text = "";
             richTextGrande.Text = "Escolhendo essa opção os produtos da 'Grid' abaixo " +
-                                   " terão o seu valor atual somado a porcentagem preenchida no campo 'Novo Valor' "+
+                                   " terão o seu valor atual somado a porcentagem preenchida no campo 'Novo Valor' " +
                                    " Ex. Refrigerante R$10,00 + 10%  = Novo valor R$11,00 ";
         }
 
         private void ExecutarAlteracoes(object sender, EventArgs e)
         {
 
-            if (txtnewValue.Text=="" && chkAlteraPreco.Checked)
+            if (txtnewValue.Text == "" && chkAlteraPreco.Checked)
             {
                 MessageBox.Show("Preencha o campo com o valor desejado");
                 txtnewValue.Focus();
@@ -127,7 +127,7 @@ namespace DexComanda.Operações.Alteracoes
                             Preco = dcNewPreco,//decimal.Parse(GridViewProdutos.Rows[i].Cells["Preco"].Value.ToString()),
                             DataAlteracao = DateTime.Now
                         };
-                       
+
                         if (chkAtivaDesconto.Checked)
                         {
                             var datInicio = Convert.ToDateTime(dtInicio.Value.ToShortDateString() + " 00:00:00");
@@ -165,18 +165,18 @@ namespace DexComanda.Operações.Alteracoes
                                     DataAlteracao = DateTime.Now,
                                     Preco = dsOpcoes.Tables[0].Rows[intFor].Field<decimal>("Preco"),
                                     PrecoProcomocao = dsOpcoes.Tables[0].Rows[intFor].Field<decimal>("Preco") - dsOpcoes.Tables[0].Rows[intFor].Field<decimal>("Preco") * iPorcentagemDesc / 100
-                                    
+
                                 };
                                 con.Update("spAlterarOpcaoProduto", prodOp);
                             }
-                            
+
                         }
 
                         if (AdicionaisGridView.Rows.Count > 0)
                         {
                             for (int intFor = 0; intFor < AdicionaisGridView.Rows.Count; intFor++)
                             {
-                                con.SalvarAdicionais(prod.Codigo, 
+                                con.SalvarAdicionais(prod.Codigo,
                                     int.Parse(AdicionaisGridView.Rows[intFor].Cells["CodOpcao"].Value.ToString()),
                                     decimal.Parse(AdicionaisGridView.Rows[intFor].Cells["Valor"].Value.ToString()),
                                     int.Parse(AdicionaisGridView.Rows[intFor].Cells["CodTipo"].Value.ToString()));
@@ -189,12 +189,12 @@ namespace DexComanda.Operações.Alteracoes
 
                     MessageBox.Show(erro.Message);
                 }
-                
+
             }
             GridViewProdutos.DataSource = null;
             GridViewProdutos.DataMember = null;
-           // RemoveColunas(AdicionaisGridView);
-            
+            // RemoveColunas(AdicionaisGridView);
+
         }
         public string DiasSelecinado()
         {
@@ -230,33 +230,39 @@ namespace DexComanda.Operações.Alteracoes
 
             return Marcados;
         }
-        private void MenuAuxiliar(object sender, MouseEventArgs e)
+
+
+        private void ExcluirOpcao(object sender, EventArgs e)
         {
-            DataGridView dgv = sender as DataGridView;
-            if (e.Button == MouseButtons.Right)
+            try
             {
-                ContextMenu m = new ContextMenu();
-                MenuItem Excluir = new MenuItem(" 0 - Remover Produto da Lista de Alterações ");
-                //  MenuItem Excluir2 = new MenuItem("  ");
-                Excluir.Click += DeletarRegistro;
-                m.MenuItems.Add(Excluir);
-                ///   m.MenuItems.Add(Excluir2);
+                if (AdicionaisGridView.SelectedRows.Count > 0)
+                {
+                    AdicionaisGridView.Rows.RemoveAt(AdicionaisGridView.CurrentRow.Index);
+                }
 
-                int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
-                m.Show(dgv, new Point(e.X, e.Y));
-
+                else
+                {
+                    MessageBox.Show("Selecione o registro para excluir");
+                }
             }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message);
+            }
+
         }
         private void DeletarRegistro(object sender, EventArgs e)
         {
             try
             {
 
-                if (GridViewProdutos.SelectedRows.Count>0)
+                if (GridViewProdutos.SelectedRows.Count > 0)
                 {
                     GridViewProdutos.Rows.RemoveAt(GridViewProdutos.CurrentRow.Index);
                 }
-                
+
                 else
                 {
                     MessageBox.Show("Selecione o registro para excluir");
@@ -281,7 +287,7 @@ namespace DexComanda.Operações.Alteracoes
             {
                 dv.Rows.Clear();
             }
-           
+
         }
         private void btnOpcao_Click(object sender, EventArgs e)
         {
@@ -295,7 +301,7 @@ namespace DexComanda.Operações.Alteracoes
                 //AdicionaisGridView.Columns.Add("Nome", "Nome");
                 //AdicionaisGridView.Columns.Add("CodTipo", "CodTipo");
             }
-            
+
         }
 
         private void btnAdicionarOpcao_Click(object sender, EventArgs e)
@@ -403,18 +409,18 @@ namespace DexComanda.Operações.Alteracoes
 
         private void ListaTipos(object sender, EventArgs e)
         {
-            Utils.MontaCombox(cbxTipoOpcao, "Nome", "Codigo", "Produto_OpcaoTipo","spObterTipoOpcao");
+            Utils.MontaCombox(cbxTipoOpcao, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
         }
 
         private void ListaOpcao(object sender, EventArgs e)
         {
-            if (cbxTipoOpcao.SelectedIndex<=-1)
+            if (cbxTipoOpcao.SelectedIndex <= -1)
             {
                 Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcao");
             }
             else
             {
-                Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcaoPorTipo",int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
+                Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcaoPorTipo", int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
             }
         }
 
@@ -434,6 +440,37 @@ namespace DexComanda.Operações.Alteracoes
         {
             pnlAdicionais.Visible = false;
             RemoveColunas(AdicionaisGridView);
+        }
+        private void MenuAuxilarOpcoes(object sender, MouseEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu m = new ContextMenu();
+                MenuItem Excluir = new MenuItem(" 0 - Excluir ");
+                Excluir.Click += ExcluirOpcao;
+                m.MenuItems.Add(Excluir);
+                int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
+                m.Show(dgv, new Point(e.X, e.Y));
+
+            }
+        }
+
+        private void MenuAuxiliar(object sender, MouseEventArgs e)
+        {
+
+            DataGridView dgv = sender as DataGridView;
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu m = new ContextMenu();
+                MenuItem Excluir = new MenuItem(" 0 - Remover da lista de alterações ");
+                Excluir.Click += DeletarRegistro;
+                m.MenuItems.Add(Excluir);
+                int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
+                m.Show(dgv, new Point(e.X, e.Y));
+
+            }
+
         }
     }
 }

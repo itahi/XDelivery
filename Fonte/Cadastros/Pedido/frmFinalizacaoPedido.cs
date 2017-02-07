@@ -74,7 +74,7 @@ namespace DexComanda.Cadastros
             }
 
             catch (Exception erro)
-             {
+            {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
@@ -112,41 +112,19 @@ namespace DexComanda.Cadastros
                 }
                 else
                 {
-                    if (bInserir)
-                    {
-                        Utils.bMult = true;
-                        iFrm.btnGerarPedido_Click(sender, e);
-                    }
-
                     int intCodPedid = intCodPedido;
                     for (int intFor = 0; intFor < gridFormasPagamento.Rows.Count; intFor++)
                     {
                         if (gridFormasPagamento.Rows[intFor].Cells["Valor"].Value != null
-                            && gridFormasPagamento.Rows[intFor].Cells["Valor"].Value.ToString()!="")
+                            && gridFormasPagamento.Rows[intFor].Cells["Valor"].Value.ToString() != "")
                         {
-                            //if (bInserir)
-                            //{
-                            int teste = intCodPedid;
-                                FinalizaPedido finalizaPed = new FinalizaPedido()
-                                {
-                                    CodPedido = intCodPedid,
-                                    CodPagamento = int.Parse(gridFormasPagamento.Rows[intFor].Cells["Codigo"].Value.ToString()),
-                                    ValorPagamento = decimal.Parse(gridFormasPagamento.Rows[intFor].Cells["Valor"].Value.ToString())
-                                };
-                                con.Insert("spAdicionarFinalizaPedido_Pedido", finalizaPed);
-                            //}
-                            //else
-                            //{
-                            //    FinalizaPedido finalizaPed = new FinalizaPedido()
-                            //    {
-                            //        CodPedido = intCodPedido,
-                            //        CodPagamento = int.Parse(gridFormasPagamento.Rows[intFor].Cells["Codigo"].Value.ToString()),
-                            //        ValorPagamento = decimal.Parse(gridFormasPagamento.Rows[intFor].Cells["Valor"].Value.ToString())
-                            //    };
-                            //    con.Update("spAlteraFinalizaPedido_Pedido", finalizaPed);
-
-                            //}
-
+                            FinalizaPedido finalizaPed = new FinalizaPedido()
+                            {
+                                CodPedido = intCodPedid,
+                                CodPagamento = int.Parse(gridFormasPagamento.Rows[intFor].Cells["Codigo"].Value.ToString()),
+                                ValorPagamento = decimal.Parse(gridFormasPagamento.Rows[intFor].Cells["Valor"].Value.ToString())
+                            };
+                            con.Insert("spAdicionarFinalizaPedido_Pedido", finalizaPed);
                         }
                     }
                     boolFinalizou = true;
@@ -160,8 +138,7 @@ namespace DexComanda.Cadastros
             }
             catch (Exception erro)
             {
-
-                throw;
+                MessageBox.Show(Bibliotecas.cErroGravacao + erro.Message);
             }
 
 

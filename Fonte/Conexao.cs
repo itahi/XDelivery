@@ -165,7 +165,7 @@ namespace DexComanda
                 " join  PedidoStatus PS on Status = PSM.CodStatus where PSM.CodPedido=PD.Codigo " +
                 " order by PSM.DataAlteracao desc ) as 'Situacao Pedido' ,(select Nome from Entregador " +
                 " where Codigo=PD.CodMotoboy) as 'Entregador',(Select Nome from Usuario where Cod = PD.CodUsuario)" +
-                " as 'Atendente' from Pedido Pd where Pd.RealizadoEM between '" + dtInicio.ToShortDateString() + " 00:00:00" + "'  and  '" + dtFim.ToShortDateString() + " 23:59:59" + "'";
+                " as 'Atendente' from Pedido Pd where Pd.Finalizado=1  and Pd.RealizadoEM between '" + dtInicio.ToShortDateString() + " 00:00:00" + "'  and  '" + dtFim.ToShortDateString() + " 23:59:59" + "'";
 
             if (iCodPedido != "")
             {
@@ -303,7 +303,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-            
+
         }
         public int RetornaIDCategoria(string iNomeCategoria)
         {
@@ -872,8 +872,18 @@ namespace DexComanda
 
         public DataSet SelectRegistroONline(string iNomeTable)
         {
-            string lSqlConsulta = "";
-            lSqlConsulta = " select * from " + iNomeTable + " where DataAlteracao>DataSincronismo or DataSincronismo is null ";
+
+            string lSqlConsulta;
+            if (iNomeTable == "Produto")
+            {
+                lSqlConsulta = " select P.*, G.MultiploSabores from Produto P join Grupo G on G.Codigo=P.CodGrupo where P.OnlineSN=1 and P.AtivoSN=1 ";
+
+            }
+            else
+            {
+                lSqlConsulta = " select * from " + iNomeTable + " where DataAlteracao>DataSincronismo or DataSincronismo is null ";
+            }
+           
 
             if (iNomeTable == "Grupo")
             {
@@ -901,10 +911,15 @@ namespace DexComanda
             return ds;
 
         }
+        /// <summary>
+        /// Busca produtos marcaddos como online
+        /// </summary>
+        /// <param name="iNomeTable"></param>
+        /// <returns></returns>
         public DataSet SelectRegistroONlineSemData(string iNomeTable)
         {
-            string lSqlConsulta = " select * from " + iNomeTable + " where OnlineSN=1 and AtivoSN=1";
-
+            
+            string  lSqlConsulta = " select * from " + iNomeTable + " where OnlineSN=1 and AtivoSN=1";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
 
@@ -1096,6 +1111,28 @@ namespace DexComanda
 
             return ds;
         }
+        /// <summary>
+        /// Reabri o pedido mudando seu status para aberto
+        /// </summary>
+        /// <param name="intCodPedido"> Código do Pedido que deseja reabrir</param>
+        public void ReabrirPedido(int intCodPedido)
+        {
+            try
+            {
+                command = new SqlCommand("spReabrirPedido", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@CodPedido", intCodPedido);
+                if (command.ExecuteNonQuery() > 0)
+                    MessageBox.Show("Pedido "+intCodPedido.ToString() +" reaberto com sucesso ");
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+           
+        }
+
         public DataSet Delete(string table, string spName, int CodProduto, int CodOpcao)
         {
             command = new SqlCommand(spName, conn);

@@ -196,7 +196,6 @@
             this.GridViewProdutos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.GridViewProdutos.Size = new System.Drawing.Size(784, 170);
             this.GridViewProdutos.TabIndex = 2;
-            this.GridViewProdutos.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxiliar);
             // 
             // btnExecutar
             // 
@@ -252,9 +251,10 @@
             this.chkAtivaDesconto.AutoSize = true;
             this.chkAtivaDesconto.Location = new System.Drawing.Point(389, 11);
             this.chkAtivaDesconto.Name = "chkAtivaDesconto";
-            this.chkAtivaDesconto.Size = new System.Drawing.Size(105, 17);
+            this.chkAtivaDesconto.Size = new System.Drawing.Size(104, 17);
             this.chkAtivaDesconto.TabIndex = 35;
-            this.chkAtivaDesconto.Text = "Ativa Desconto?";
+            this.chkAtivaDesconto.Text = "Ativar Promoção";
+            this.toolTip1.SetToolTip(this.chkAtivaDesconto, "Ativa o desconto em porcetagem no filtro de produtos ");
             this.chkAtivaDesconto.UseVisualStyleBackColor = true;
             this.chkAtivaDesconto.CheckedChanged += new System.EventHandler(this.chkAtivaDesconto_CheckedChanged);
             // 
@@ -327,6 +327,7 @@
             this.txtPorcentagem.Name = "txtPorcentagem";
             this.txtPorcentagem.Size = new System.Drawing.Size(75, 26);
             this.txtPorcentagem.TabIndex = 23;
+            this.toolTip1.SetToolTip(this.txtPorcentagem, "Preencha a pocentagem de desconto que deseja dar nos produtos.");
             // 
             // ChkSexta
             // 
@@ -539,7 +540,7 @@
             // 
             this.cbxTipoOpcao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxTipoOpcao.FormattingEnabled = true;
-            this.cbxTipoOpcao.Location = new System.Drawing.Point(47, 4);
+            this.cbxTipoOpcao.Location = new System.Drawing.Point(46, 5);
             this.cbxTipoOpcao.Name = "cbxTipoOpcao";
             this.cbxTipoOpcao.Size = new System.Drawing.Size(130, 21);
             this.cbxTipoOpcao.TabIndex = 46;
@@ -639,6 +640,7 @@
             this.AdicionaisGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.AdicionaisGridView.Size = new System.Drawing.Size(370, 103);
             this.AdicionaisGridView.TabIndex = 38;
+            this.AdicionaisGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxilarOpcoes);
             // 
             // CodOpcao
             // 

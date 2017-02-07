@@ -218,14 +218,14 @@ namespace DexComanda
             return iReturn;
         }
 
-        public static DataSet ItensSelect(int iCodPedido,int intCodgrupo=0,
-            string iNomeImpressora="", string iTipoAgrupamento="")
+        public static DataSet ItensSelect(int iCodPedido, int intCodgrupo = 0,
+            string iNomeImpressora = "", string iTipoAgrupamento = "")
         {
             DataSet dsReturn;
             string iSqlWhere;
             if (iTipoAgrupamento == "Por Impressora")
             {
-                iSqlWhere = " where  PE.Codigo=" + iCodPedido + " and ImprimeCozinhaSN = 1 and G.NomeImpressora='"+ iNomeImpressora + "'";
+                iSqlWhere = " where  PE.Codigo=" + iCodPedido + " and ImprimeCozinhaSN = 1 and G.NomeImpressora='" + iNomeImpressora + "'";
             }
             else if (iTipoAgrupamento == "Por Cozinha/Grupo")
             {
@@ -283,7 +283,7 @@ namespace DexComanda
 
                     ImpressaoPorCozinha(iCodPedido);
                 }
-               
+
 
             }
             catch (Exception erro)
@@ -396,7 +396,7 @@ namespace DexComanda
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
         }
-        
+
         public static string SerializaObjeto(MultiSabores iValores)
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
@@ -429,7 +429,7 @@ namespace DexComanda
         }
         public static MultiSabores DeserializaObjeto4(string iValores)
         {
-            if (iValores ==""|| iValores ==null)
+            if (iValores == "" || iValores == null)
             {
                 return new MultiSabores();
             }
@@ -1131,7 +1131,7 @@ namespace DexComanda
                 report.Dispose();
             }
         }
-        public static void ImpressaoCozihanova_SeparadoPorCozinhaGrupo(int iCodPedido, string iNomeImpressora,int iCodGrupo)
+        public static void ImpressaoCozihanova_SeparadoPorCozinhaGrupo(int iCodPedido, string iNomeImpressora, int iCodGrupo)
         {
             RelDeliveryCozinhaGrupoCozinha report;
             crtableLogoninfos = new TableLogOnInfos();
@@ -1178,7 +1178,7 @@ namespace DexComanda
                 report.Dispose();
             }
         }
-        public static void ImpressaoMesaPorImpressora(int iCodPedido, int iCodGupo,  int iNumCopias,
+        public static void ImpressaoMesaPorImpressora(int iCodPedido, int iCodGupo, int iNumCopias,
             string strNomeImpressora)
         {
             string iRetorno = string.Empty;
@@ -1292,11 +1292,11 @@ namespace DexComanda
                 {
                     for (int i = 0; i < iNumCopias; i++)
                     {
-                       // frmPrincipal frm = new frmPrincipal(false);
+                        // frmPrincipal frm = new frmPrincipal(false);
                         // await Task.Factory.StartNew(() => Thread.Sleep(1));
                         report.PrintToPrinter(1, true, 0, 0);
 
-                      //  frm = new frmPrincipal(true);
+                        //  frm = new frmPrincipal(true);
 
                     }
                 }
@@ -1903,14 +1903,29 @@ namespace DexComanda
                                                      false, dtPedido, iCodPedido, CodPessoa, strTrocoPara, FormaPagamento,
                                                      strTipoPedido, strMesa, null, decimal.Parse(strTotalPedido));
 
-
+                   
                     frm.Show();
-
+                    DesabilitaControls(frm);
                 }
             }
             catch (Exception erro)
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+        }
+        //Desativa todos controles da tela 
+        private static void DesabilitaControls(Control frm)
+        {
+            foreach (Control ctrControl in frm.Controls)
+            {
+                foreach (Control ctl in frm.Controls)
+                    if (ctl.Controls.Count > 0)
+                        DesabilitaControls(ctl);
+                    else
+                    {
+                      ctl.Enabled = false;
+                    }
             }
 
         }
@@ -1978,7 +1993,7 @@ namespace DexComanda
                 CodPessoa = int.Parse(Linhas.ItemArray.GetValue(1).ToString());
                 FormaPagamento = Linhas.ItemArray.GetValue(3).ToString();
                 int iCodEndereco = ds.Tables[0].Rows[0].Field<int>("CodEndereco");
-                
+
                 // Retorna a Taxa de Entrega do cadastro do Cliente
                 TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
                 frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", 0, "", TaxaEntrega, false,
@@ -2003,7 +2018,7 @@ namespace DexComanda
                     //NumeroMesa = iNumeroMesa,
                     StatusMesa = iStatus
                 };
-               // conexao.Update("spAlteraStatusMesa", mesas);
+                // conexao.Update("spAlteraStatusMesa", mesas);
             }
             catch (Exception erro)
             {

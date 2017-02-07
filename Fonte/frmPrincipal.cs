@@ -822,9 +822,9 @@ namespace DexComanda
                     string strFormaPagamento = dRowPedido.ItemArray.GetValue(5).ToString();
                     Utils.GeraHistorico(DateTime.Now, int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()), dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D', strFormaPagamento);
 
-                    // Grava Movimento De Caixa
-                    GravaMOvimentoCaixa(strFormaPagamento, dblTotalPedido, codigo);
-
+                    int icodFormaPagamento = RetornaCodFormaPagamento(strFormaPagamento);
+                    GravaMOvimentoCaixa(icodFormaPagamento, dblTotalPedido, codigo);
+                    InsereFormasPagamento(codigo, icodFormaPagamento, dblTotalPedido);
                     Utils.ControlaEventos("BaixaPed", this.Name);
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo, 1);
 
@@ -835,6 +835,17 @@ namespace DexComanda
 
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
         }
+        private int RetornaCodFormaPagamento(string strFormaPagamento)
+        {
+            int iIFormaPagamento = 1;
+            DataSet dsPedido = con.SelectObterFormaPagamentoPorNOme(strFormaPagamento, "FormaPagamento");
+            if (dsPedido.Tables[0].Rows.Count > 0)
+            {
+                DataRow dRow = dsPedido.Tables[0].Rows[0];
+                iIFormaPagamento=  int.Parse(dRow.ItemArray.GetValue(0).ToString());
+            }
+            return iIFormaPagamento;
+        } 
         private void ExecutaFinalizacao()
         {
             try
@@ -887,7 +898,10 @@ namespace DexComanda
                     Utils.GeraHistorico(DateTime.Now, int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()), dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D', strFormaPagamento);
 
                     // Grava Movimento De Caixa
-                    GravaMOvimentoCaixa(strFormaPagamento, dblTotalPedido, codigo);
+                    int icodFormaPagamento = RetornaCodFormaPagamento(strFormaPagamento);
+                    GravaMOvimentoCaixa(icodFormaPagamento, dblTotalPedido, codigo);
+
+                    InsereFormasPagamento(codigo, icodFormaPagamento, dblTotalPedido);
 
                     // Atualiza Ticket Fidelidade
                     AtualizarFidelidade(intCodPessoa);
@@ -913,6 +927,35 @@ namespace DexComanda
                 MessageBox.Show("Não foi possivel selecionar o Pedido" + erro.Message);
             }
 
+        }
+        private void InsereFormasPagamento(int iCodPedido,int iCodPagamento,decimal dTotalPedido)
+        {
+            try
+            {
+                DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPOrCodigo", iCodPedido);
+
+                if (dsPedido.Tables[0].Rows.Count==0)
+                {
+                    return;
+                }
+                
+                if (con.SelectRegistroPorCodigo("Pedido","spObterPedidoPOrCodigo",iCodPedido).Tables[0].Rows
+                    [0].Field<string>("Tipo") == "1 - Mesa")
+                {
+                    return;
+                }
+                FinalizaPedido finalizaPed = new FinalizaPedido()
+                {
+                    CodPedido = iCodPedido,
+                    CodPagamento = iCodPagamento,
+                    ValorPagamento = dTotalPedido
+                };
+                con.Insert("spAdicionarFinalizaPedido_Pedido", finalizaPed);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
         }
         private void TransfereMesa(object sender, EventArgs e)
         {
@@ -1054,22 +1097,16 @@ namespace DexComanda
                 con.Update("spAlteraFidelidade", atlFideli);
             }
         }
-        private void GravaMOvimentoCaixa(string iFPagamento, decimal iValor, int iCodPedido)
+        private void GravaMOvimentoCaixa(int iFPagamento, decimal iValor, int iCodPedido)
         {
             // Retornando o IDFpagamento
             try
             {
-                int iIFormaPagamento = 1;
-                DataSet dsPedido = con.SelectObterFormaPagamentoPorNOme(iFPagamento, "FormaPagamento");
-                if (dsPedido.Tables[0].Rows.Count > 0)
-                {
-                    DataRow dRow = dsPedido.Tables[0].Rows[0];
-                    iIFormaPagamento = int.Parse(dRow.ItemArray.GetValue(0).ToString());
-                }
+             
                 CaixaMovimento caixa = new CaixaMovimento()
                 {
                     CodCaixa = Sessions.retunrUsuario.CaixaLogado,
-                    CodFormaPagamento = iIFormaPagamento,
+                    CodFormaPagamento = iFPagamento,
                     Data = DateTime.Now,
                     Historico = "Pedido " + iCodPedido,
                     NumeroDocumento = iCodPedido.ToString(),
@@ -1088,18 +1125,6 @@ namespace DexComanda
             }
 
         }
-        //private void CancelarPedidos(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-
-
-        //    }
-        //    catch (Exception ER)
-        //    {
-        //        MessageBox.Show("Não foi possivel **CANCELAR O PEDIDO**" + ER.Message);
-        //    }
-        //}
         private void CancelarPedidos(object sender, EventArgs e)
         {
             try
@@ -1230,8 +1255,7 @@ namespace DexComanda
                     decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, intCodEndereco);
                     frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", 0, "0,00",
                                                                     TaxaServico, false, DateTime.Now, 0,
-                                                                    CodPessoa,
-                                                                        "0,00", "", "", "", null, 0.00M, 0, 0, "", intCodEndereco);
+                                                                    CodPessoa,"0,00", "Dinheiro", "", "", null, 0.00M, 0, 0, "", intCodEndereco);
                     frm.ShowDialog();
                 }
 
@@ -1320,7 +1344,7 @@ namespace DexComanda
             catch (Exception xx)
             {
 
-                MessageBox.Show(xx.Message);
+                MessageBox.Show(Bibliotecas.cException +  xx.Message);
             }
         }
 

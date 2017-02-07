@@ -88,7 +88,6 @@ namespace DexComanda.Operações
                     // Sincronizar Opcao
                     CadastrarOpcao(ObterDados("Opcao"));
                     // Sincronizar Produtos
-
                     CadastrarProduto(ObterDados("Produto"));
                 }
                 if (chkRegiaoEntrega.Checked)
@@ -578,7 +577,6 @@ namespace DexComanda.Operações
             {
                 MudaLabel("Produto");
                 decimal iPrecoProduto = 0;
-                // ManipulaProgressBar(ds.Tables[0].Rows.Count);
                 DataRow dRow;
                 prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
@@ -611,6 +609,14 @@ namespace DexComanda.Operações
                     request.AddParameter("token", iParamToken);
                     request.AddParameter("idReferencia", dRow.ItemArray.GetValue(0).ToString());
                     request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
+
+                    //Caso o grupo esteja marcado como multi sabores ele enviará esse parametro
+                    if (dRow.ItemArray.GetValue(19).ToString()=="1")
+                    {
+                        request.AddParameter("multi_product_id", dRow.ItemArray.GetValue(15).ToString());
+                        request.AddParameter("multi_product_max", "2");
+                    }
+                   
 
                     if (Sessions.returnEmpresa.CNPJ == "09395874000160")
                     {

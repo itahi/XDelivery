@@ -75,5 +75,40 @@ namespace DexComanda.Operações.Consultas
                 Utils.BuscaPedido(int.Parse(dataGridView1.CurrentRow.Cells["Codigo"].Value.ToString()));
             }
         }
+
+        private void MenuAuxiliar(object sender, MouseEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu m = new ContextMenu();
+                MenuItem reabrirPedido = new MenuItem("0 - Reabrir pedido");
+                reabrirPedido.Click += ReabrirPedido;
+                m.MenuItems.Add(reabrirPedido);
+
+                int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
+
+                m.Show(dgv, new Point(e.X, e.Y));
+
+            }
+        }
+        private void ReabrirPedido(object sender, EventArgs e)
+        {
+            try
+            {
+                int iCodPedido = int.Parse(dataGridView1.CurrentRow.Cells["Codigo"].Value.ToString());
+                if (!Utils.MessageBoxQuestion("Deseja reabrir o pedido "+ iCodPedido .ToString()+ " ?"))
+                {
+                    return;
+                }
+                con.ReabrirPedido(iCodPedido);
+                BuscaPedidos(sender, e);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

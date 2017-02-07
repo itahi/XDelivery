@@ -1049,18 +1049,14 @@ namespace DexComanda
 
                 if (cmbFPagamento.ValueMember == null)
                 {
-                    MessageBox.Show("Formaga de Pagamento não selecionada", "[XSistemas] Aviso");
+                    MessageBox.Show("Formaga de Pagamento não selecionada", "[xSistemas] Aviso");
                     cmbFPagamento.Focus();
                     return;
                 }
                 else
                 {
-                    //ds System.Windows.Forms.KeyEventArgs = new Windows.Forms.KeyEventArgs();
-
-                    //   Boolean ivalida = object.ReferenceEquals(e,System.Windows.Forms.KeyEventArgs.Equals(Keys.F5));
                     if (AtualizaTroco(false))
                     {
-                        // DBExpertDataSet dbExpert = new DBExpertDataSet();
                         int totalDeItems = this.gridViewItemsPedido.RowCount;
                         if (totalDeItems == 0)
                         {
@@ -1201,16 +1197,16 @@ namespace DexComanda
                                 prepareToPrint();
                             }
 
-                            if (!Utils.bMult && cbxTipoPedido.Text != "1 - Mesa")
-                            {
-                                FinalizaPedido finaliza = new FinalizaPedido()
-                                {
-                                    CodPedido = iCodPedido,
-                                    CodPagamento = int.Parse(cmbFPagamento.SelectedValue.ToString()),
-                                    ValorPagamento = pedido.TotalPedido
-                                };
-                                con.Insert("spAdicionarFinalizaPedido_Pedido", finaliza);
-                            }
+                            //if (!Utils.bMult && cbxTipoPedido.Text != "1 - Mesa")
+                            //{
+                            //    FinalizaPedido finaliza = new FinalizaPedido()
+                            //    {
+                            //        CodPedido = iCodPedido,
+                            //        CodPagamento = int.Parse(cmbFPagamento.SelectedValue.ToString()),
+                            //        ValorPagamento = pedido.TotalPedido
+                            //    };
+                            //    con.Insert("spAdicionarFinalizaPedido_Pedido", finaliza);
+                            //}
 
                             // Fecha o Formulario 
                            // MessageBox.Show("Pedido gerado com sucesso.");
@@ -1267,18 +1263,18 @@ namespace DexComanda
                 MessageBox.Show("Desconto superior ao permitido no pedido");
                 return;
             }
-            if (codPedido > 0)
-            {
-                FinalizaPedido finaliza = new FinalizaPedido()
-                {
-                    CodPedido = codPedido,
-                    CodPagamento = int.Parse(cmbFPagamento.SelectedValue.ToString()),
-                    ValorPagamento = SomaItensPedido() - Convert.ToDecimal
-                    (txtDesconto.Text) + DMargemGarco + decimal.Parse(lblEntrega.Text.Replace("R$", ""))
+            //if (codPedido > 0)
+            //{
+            //    FinalizaPedido finaliza = new FinalizaPedido()
+            //    {
+            //        CodPedido = codPedido,
+            //        CodPagamento = int.Parse(cmbFPagamento.SelectedValue.ToString()),
+            //        ValorPagamento = SomaItensPedido() - Convert.ToDecimal
+            //        (txtDesconto.Text) + DMargemGarco + decimal.Parse(lblEntrega.Text.Replace("R$", ""))
 
-                };
-                con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
-            }
+            //    };
+            //    con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
+            //}
 
             pedido = new Pedido()
             {
@@ -1475,7 +1471,11 @@ namespace DexComanda
         }
         private void gridViewItemsPedido_MouseClick(object sender, MouseEventArgs e)
         {
-
+            if (!btnGerarPedido.Enabled || !btnReimprimir.Enabled)
+            {
+               // MessageBox.Show("Não é possivel executar essa ação para esse pedido");
+                return;
+            }
             DataGridView dgv = sender as DataGridView;
             if (e.Button == MouseButtons.Right)
             {
@@ -2191,9 +2191,10 @@ namespace DexComanda
         {
             if (cbxTrocoParaOK.Checked == true)
             {
+                
+                txtTrocoPara.Text = "0,00";
+                lblTroco.Text = "R$ 0,00";
                 return true;
-                this.txtTrocoPara.Text = "0,00";
-                this.lblTroco.Text = "R$ 0,00";
             }
             else
             {
@@ -2593,7 +2594,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(799, 3);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -3263,8 +3264,8 @@ namespace DexComanda
             // 
             // chkListAdicionais
             // 
-            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chkListAdicionais.CheckOnClick = true;
             this.chkListAdicionais.FormattingEnabled = true;
@@ -3603,6 +3604,11 @@ namespace DexComanda
 
         private void frmCadastrarPedido_KeyDown(object sender, KeyEventArgs e)
         {
+            if (!btnGerarPedido.Enabled || !btnReimprimir.Enabled)
+            {
+                MessageBox.Show("Não é possivel executar essa ação para esse pedido");
+                return;
+            }
             if (e.KeyCode == Keys.F12 || e.KeyCode == Keys.F5 && btnGerarPedido.Text == "Gerar [F12]")
             {
                 btnGerarPedido_Click(sender, e);
@@ -3995,8 +4001,11 @@ namespace DexComanda
         {
             try
             {
-                Boolean iInsereAtualiza = this.btnGerarPedido.Text != "Alterar";
-                frmFinalizacaoPedido frm = new frmFinalizacaoPedido(decimal.Parse(lbTotal.Text.Replace("R$", "")), iInsereAtualiza, codPedido);
+                if (!Utils.MessageBoxQuestion("Deseja incluir multiplas formas de pagamento nesse pedido? "))
+                {
+                    return;
+                }
+                frmFinalizaDelivery frm = new frmFinalizaDelivery(codPedido);
                 frm.ShowDialog();
             }
             catch (Exception erro)

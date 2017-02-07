@@ -16,5 +16,9 @@ namespace DexComanda.Cadastros.Pedido
         {
             InitializeComponent();
         }
+        public frmFinalizaDelivery(int intCodPedido)
+        {
+            InitializeComponent();
+        }
     }
 }
