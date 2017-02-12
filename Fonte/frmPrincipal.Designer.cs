@@ -68,7 +68,6 @@
             this.promoçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vendidosNoPeriodoAgrupadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mensalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.envioDeSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.exportarDadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.impressãoTermicaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,7 +100,6 @@
             this.pedidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastroStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alteracaoStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.notificaçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pedidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -152,6 +150,10 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
+            this.açõesDePublicidadeEMarketingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.envioDeSmsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.envioDePushNotificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.envioDeEmailMarketingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -483,23 +485,15 @@
             // mensalToolStripMenuItem
             // 
             this.mensalToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.envioDeSMSToolStripMenuItem,
             this.geralToolStripMenuItem1});
             this.mensalToolStripMenuItem.Name = "mensalToolStripMenuItem";
             this.mensalToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.mensalToolStripMenuItem.Text = "Clientes";
             // 
-            // envioDeSMSToolStripMenuItem
-            // 
-            this.envioDeSMSToolStripMenuItem.Name = "envioDeSMSToolStripMenuItem";
-            this.envioDeSMSToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
-            this.envioDeSMSToolStripMenuItem.Text = "Envio de SMS ";
-            this.envioDeSMSToolStripMenuItem.Click += new System.EventHandler(this.envioDeSMSToolStripMenuItem_Click);
-            // 
             // geralToolStripMenuItem1
             // 
             this.geralToolStripMenuItem1.Name = "geralToolStripMenuItem1";
-            this.geralToolStripMenuItem1.Size = new System.Drawing.Size(179, 26);
+            this.geralToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
             this.geralToolStripMenuItem1.Text = "Geral";
             // 
             // exportarDadosToolStripMenuItem
@@ -596,8 +590,8 @@
             this.sincronizaçãoToolStripMenuItem,
             this.controleDeEstoqueToolStripMenuItem,
             this.pedidoToolStripMenuItem,
-            this.notificaçõesToolStripMenuItem,
-            this.consultasToolStripMenuItem});
+            this.consultasToolStripMenuItem,
+            this.açõesDePublicidadeEMarketingToolStripMenuItem});
             this.operaçõesToolStripMenuItem.Name = "operaçõesToolStripMenuItem";
             this.operaçõesToolStripMenuItem.Size = new System.Drawing.Size(96, 25);
             this.operaçõesToolStripMenuItem.Text = "Operações";
@@ -609,7 +603,7 @@
             this.clientesToolStripMenuItem1,
             this.taxasDeEntregaToolStripMenuItem});
             this.alteraçõesMultiplasToolStripMenuItem.Name = "alteraçõesMultiplasToolStripMenuItem";
-            this.alteraçõesMultiplasToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.alteraçõesMultiplasToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.alteraçõesMultiplasToolStripMenuItem.Text = "Alterações Multiplas";
             // 
             // produtosToolStripMenuItem1
@@ -644,7 +638,7 @@
             // alterarSenhaToolStripMenuItem
             // 
             this.alterarSenhaToolStripMenuItem.Name = "alterarSenhaToolStripMenuItem";
-            this.alterarSenhaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.alterarSenhaToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.alterarSenhaToolStripMenuItem.Text = "Alterar Senha";
             this.alterarSenhaToolStripMenuItem.Click += new System.EventHandler(this.alterarSenhaToolStripMenuItem_Click);
             // 
@@ -656,7 +650,7 @@
             this.cadastroCaixaToolStripMenuItem,
             this.fecharCaixaToolStripMenuItem});
             this.FinanceiroToolStripMenuItem.Name = "FinanceiroToolStripMenuItem";
-            this.FinanceiroToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.FinanceiroToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.FinanceiroToolStripMenuItem.Text = "Financeiro";
             // 
             // lançamentoAvulsoToolStripMenuItem
@@ -691,14 +685,14 @@
             // 
             this.aberturaCaixaToolStripMenuItem.Enabled = false;
             this.aberturaCaixaToolStripMenuItem.Name = "aberturaCaixaToolStripMenuItem";
-            this.aberturaCaixaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.aberturaCaixaToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.aberturaCaixaToolStripMenuItem.Text = "Abertura Caixa";
             this.aberturaCaixaToolStripMenuItem.Click += new System.EventHandler(this.aberturaCaixaToolStripMenuItem_Click);
             // 
             // sincronizaçãoToolStripMenuItem
             // 
             this.sincronizaçãoToolStripMenuItem.Name = "sincronizaçãoToolStripMenuItem";
-            this.sincronizaçãoToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.sincronizaçãoToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.sincronizaçãoToolStripMenuItem.Text = "Sincronização";
             this.sincronizaçãoToolStripMenuItem.Click += new System.EventHandler(this.sincronizaçãoToolStripMenuItem_Click);
             // 
@@ -708,7 +702,7 @@
             this.lançarMovimentoToolStripMenuItem,
             this.consultaMovimentoToolStripMenuItem});
             this.controleDeEstoqueToolStripMenuItem.Name = "controleDeEstoqueToolStripMenuItem";
-            this.controleDeEstoqueToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.controleDeEstoqueToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.controleDeEstoqueToolStripMenuItem.Text = "Controle de Estoque";
             // 
             // lançarMovimentoToolStripMenuItem
@@ -730,7 +724,7 @@
             this.alteracaoStatusToolStripMenuItem});
             this.pedidoToolStripMenuItem.Enabled = false;
             this.pedidoToolStripMenuItem.Name = "pedidoToolStripMenuItem";
-            this.pedidoToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.pedidoToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.pedidoToolStripMenuItem.Text = "Pedido";
             // 
             // cadastroStatusToolStripMenuItem
@@ -745,25 +739,18 @@
             this.alteracaoStatusToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.alteracaoStatusToolStripMenuItem.Text = "Alteracao Status";
             // 
-            // notificaçõesToolStripMenuItem
-            // 
-            this.notificaçõesToolStripMenuItem.Name = "notificaçõesToolStripMenuItem";
-            this.notificaçõesToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
-            this.notificaçõesToolStripMenuItem.Text = "Notificações";
-            this.notificaçõesToolStripMenuItem.Click += new System.EventHandler(this.notificaçõesToolStripMenuItem_Click);
-            // 
             // consultasToolStripMenuItem
             // 
             this.consultasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pedidosToolStripMenuItem});
             this.consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
-            this.consultasToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.consultasToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.consultasToolStripMenuItem.Text = "Consultas";
             // 
             // pedidosToolStripMenuItem
             // 
             this.pedidosToolStripMenuItem.Name = "pedidosToolStripMenuItem";
-            this.pedidosToolStripMenuItem.Size = new System.Drawing.Size(134, 26);
+            this.pedidosToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
             this.pedidosToolStripMenuItem.Text = "Pedidos";
             this.pedidosToolStripMenuItem.Click += new System.EventHandler(this.pedidosToolStripMenuItem_Click);
             // 
@@ -1367,6 +1354,36 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
+            // açõesDePublicidadeEMarketingToolStripMenuItem
+            // 
+            this.açõesDePublicidadeEMarketingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.envioDeSmsToolStripMenuItem1,
+            this.envioDePushNotificationToolStripMenuItem,
+            this.envioDeEmailMarketingToolStripMenuItem});
+            this.açõesDePublicidadeEMarketingToolStripMenuItem.Name = "açõesDePublicidadeEMarketingToolStripMenuItem";
+            this.açõesDePublicidadeEMarketingToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
+            this.açõesDePublicidadeEMarketingToolStripMenuItem.Text = "Publicidade e Marketing";
+            // 
+            // envioDeSmsToolStripMenuItem1
+            // 
+            this.envioDeSmsToolStripMenuItem1.Name = "envioDeSmsToolStripMenuItem1";
+            this.envioDeSmsToolStripMenuItem1.Size = new System.Drawing.Size(262, 26);
+            this.envioDeSmsToolStripMenuItem1.Text = "Envio de Sms";
+            this.envioDeSmsToolStripMenuItem1.Click += new System.EventHandler(this.envioDeSmsToolStripMenuItem1_Click);
+            // 
+            // envioDePushNotificationToolStripMenuItem
+            // 
+            this.envioDePushNotificationToolStripMenuItem.Name = "envioDePushNotificationToolStripMenuItem";
+            this.envioDePushNotificationToolStripMenuItem.Size = new System.Drawing.Size(262, 26);
+            this.envioDePushNotificationToolStripMenuItem.Text = "Envio de Push Notification";
+            this.envioDePushNotificationToolStripMenuItem.Click += new System.EventHandler(this.envioDePushNotificationToolStripMenuItem_Click);
+            // 
+            // envioDeEmailMarketingToolStripMenuItem
+            // 
+            this.envioDeEmailMarketingToolStripMenuItem.Name = "envioDeEmailMarketingToolStripMenuItem";
+            this.envioDeEmailMarketingToolStripMenuItem.Size = new System.Drawing.Size(262, 26);
+            this.envioDeEmailMarketingToolStripMenuItem.Text = "Envio de Email Marketing";
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1441,7 +1458,6 @@
         private System.Windows.Forms.ToolStripMenuItem promoçõesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vendidosNoPeriodoAgrupadoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mensalToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem envioDeSMSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem geralToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exportarDadosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configuraçãoToolStripMenuItem;
@@ -1519,7 +1535,6 @@
         private System.Windows.Forms.ToolStripMenuItem familiaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grupoToolStripMenuItem;
         private System.Windows.Forms.CheckBox chkSEmFotos;
-        private System.Windows.Forms.ToolStripMenuItem notificaçõesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem impressãoTermicaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vendasPorVendedorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cancelamentosToolStripMenuItem;
@@ -1533,5 +1548,9 @@
         private System.Windows.Forms.ToolStripMenuItem pedidosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vendasPorAtendenteVendedorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vendasOnlineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem açõesDePublicidadeEMarketingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem envioDeSmsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem envioDePushNotificationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem envioDeEmailMarketingToolStripMenuItem;
     }
 }

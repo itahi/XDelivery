@@ -1903,7 +1903,7 @@ namespace DexComanda
                                                      false, dtPedido, iCodPedido, CodPessoa, strTrocoPara, FormaPagamento,
                                                      strTipoPedido, strMesa, null, decimal.Parse(strTotalPedido));
 
-                   
+
                     frm.Show();
                     DesabilitaControls(frm);
                 }
@@ -1924,7 +1924,7 @@ namespace DexComanda
                         DesabilitaControls(ctl);
                     else
                     {
-                      ctl.Enabled = false;
+                        ctl.Enabled = false;
                     }
             }
 
@@ -2327,42 +2327,29 @@ namespace DexComanda
 
             if (Utils.MessageBoxQuestion("O Sistema enviará SMS para " + ds.Tables[0].Rows.Count + " Clientes , deseja continuar?"))
             {
-                System.String[] Telefone = new System.String[ds.Tables[0].Rows.Count];
-                System.String[] Nome = new System.String[ds.Tables[0].Rows.Count];
-
+                List<ListaSms> newListaSMS = new List<ListaSms>();
+                ListaSms listaTransformada;
                 for (int i = 0; i < ds.Tables["Pessoa"].Rows.Count; i++)
                 {
                     DataRow dRow = ds.Tables["Pessoa"].Rows[i];
                     string iNumero = dRow.ItemArray.GetValue(0).ToString();
                     NomeCliente = dRow.ItemArray.GetValue(1).ToString();
 
+                    listaTransformada = new ListaSms();
                     if (iNumero.Length == 8)
                     {
-                        Telefone[i] = "279" + iNumero;
-
+                        listaTransformada.Numero = "279" + iNumero;
                     }
                     else
                     {
-                        Telefone[i] = "27" + iNumero;
+                        listaTransformada.Numero = "27" + iNumero;
                     }
-                    Nome[i] = NomeCliente;
+                    listaTransformada.Nome = NomeCliente;
+                    newListaSMS.Add(listaTransformada);
                 }
-
-                Integração.EnviaSMS_LOCASMS EnviarSMS = new EnviaSMS_LOCASMS();
-
-                string iText;
-
-                iText = EnviarSMS.EnviaSMSLista(Telefone, iUser, iSenha, iMessagem, iNomeCampanha);
-
-                string[] IRetorno = iText.Split(',');
-
-                for (int i = 0; i < IRetorno.Length; i++)
-                {
-                    strRetorno = IRetorno[i].ToString();
-                }
-                //  MessageBox.Show("Resultado"IRetorno[0].ToStr);
+                EnviaSMS_LOCASMS EnviarSMS = new EnviaSMS_LOCASMS();
+                EnviarSMS.EnviaSMSLista(newListaSMS, iUser, iSenha, iMessagem, iNomeCampanha);
             }
-
             return strRetorno;
         }
 
@@ -2413,7 +2400,6 @@ namespace DexComanda
             {
                 iMensagem = iMensagem.Replace("@Cliente", NomeCliente);
             }
-
             return iMensagem;
         }
 

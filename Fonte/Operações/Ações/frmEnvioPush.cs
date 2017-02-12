@@ -140,8 +140,7 @@ namespace DexComanda.Operações.Ações
             }
             catch (Exception erros)
             {
-
-                throw;
+                MessageBox.Show(Bibliotecas.cException + erros.Message);
             }
         }
 

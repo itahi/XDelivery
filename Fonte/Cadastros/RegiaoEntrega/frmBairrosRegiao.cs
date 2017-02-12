@@ -170,11 +170,11 @@ namespace DexComanda.Cadastros
                     AtivoSN = chkAtivo.Checked,
                     OnlineSN = chkOnlineSN.Checked
                 };
-                if (con.SelectCEPRegiao(txtBairro.Text).Tables[0].Rows.Count > 0 && iCodSelecionado != reg.CodRegiao.ToString())
-                {
-                    MessageBox.Show("Esse cep já está vinculado a outra região");
-                    return;
-                }
+                //if (con.SelectCEPRegiao(txtBairro.Text).Tables[0].Rows.Count > 0 && iCodSelecionado != reg.CodRegiao.ToString())
+                //{
+                //    MessageBox.Show("Esse cep já está vinculado a outra região");
+                //    return;
+                //}
 
                 con.Update("spAlterarBairrosRegiao", reg);
                 con.AtualizaDataSincronismo("RegiaoEntrega_Bairros", reg.CodRegiao, "DataCadastro","CodRegiao");
@@ -184,6 +184,15 @@ namespace DexComanda.Cadastros
                 txtCEP.Enabled = true;
                 txtBairro.Enabled = true;
                 ListaBairrosPorRegiao(reg.CodRegiao);
+
+                this.btnAdicionar.Text = "Adicionar";
+                this.btnAdicionar.Click += new System.EventHandler(this.Adicionar);
+                this.btnAdicionar.Click -= new System.EventHandler(this.Salvar);
+
+                this.btnEditar.Text = "Editar";
+                this.btnEditar.Click += new System.EventHandler(this.Editar);
+                this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+
             }
             catch (Exception erro)
             {

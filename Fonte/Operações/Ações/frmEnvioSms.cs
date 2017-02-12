@@ -18,6 +18,9 @@ using DexComanda.Models;
 using DexComanda;
 using DexComanda.Integração;
 using System.Configuration;
+using DexComanda.Models.Zenvia;
+using Newtonsoft.Json;
+
 namespace DexComanda
 {
     public partial class frmEnvioSms : Form
@@ -47,7 +50,7 @@ namespace DexComanda
         {
             try
             {
-                if (ConfigurationManager.AppSettings["ConfigSMS"]!=null)
+                if (ConfigurationManager.AppSettings["ConfigSMS"] != null)
                 {
                     string Itext = ConfigurationManager.AppSettings["ConfigSMS"].ToString();
 
@@ -78,6 +81,47 @@ namespace DexComanda
             lblRestante.Text = Convert.ToString(150 - NomeEmpresa.ToString().Length);
 
         }
+        /// <summary>
+        /// Envia Sms usando plataforma zenvia
+        /// </summary>
+        /// <param name="ds">
+        /// DataSet com dados vindo do filtros</param>
+        /// <param name="itextMSG">
+        /// Texto do Envio</param>
+        private void EnviaSMSZenvia(DataSet ds,string itextMSG)
+        {
+            Zenvia newzen = new Zenvia();
+            sendSmsMultiRequest sms = new sendSmsMultiRequest();
+            List<sendSmsMultiRequest> newList = new List<sendSmsMultiRequest>();
+            Random newRandon = new Random();
+            string strtelefoneFormatado = "";
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                sms = new sendSmsMultiRequest()
+                {
+                    callbackOption = "NONE",
+                    from = Sessions.returnEmpresa.Nome,
+                    id = newRandon.Next().ToString(),
+                    msg = itextMSG
+                };
+
+                if (ds.Tables[0].Rows[i].Field<string>("Telefone").Length==8)
+                {
+                    strtelefoneFormatado = "55279" + ds.Tables[0].Rows[i].Field<string>("Telefone");
+                }
+                else if (ds.Tables[0].Rows[i].Field<string>("Telefone").Length == 9)
+                {
+                    strtelefoneFormatado = "5527" + ds.Tables[0].Rows[i].Field<string>("Telefone");
+                }
+                else
+                {
+                    strtelefoneFormatado = "55" + ds.Tables[0].Rows[i].Field<string>("Telefone");
+                }
+                sms.to = strtelefoneFormatado;
+                newList.Add(sms);
+            }
+            newzen.EnviaSMSLista(JsonConvert.SerializeObject(newList));
+        }
 
         private void EnviarSMS(object sender, EventArgs e)
         {
@@ -85,52 +129,40 @@ namespace DexComanda
             this.Cursor = Cursors.WaitCursor;
             DataSet dsLista;
             dsLista = new DataSet();
-            if (!rbAniversariantes.Checked && !rbSemPedidos.Checked && txtMensagem.Text != "" && !chkTodosClientes.Checked)
+            if (!rbAniversariantes.Checked && !rbSemPedidos.Checked && txtMensagem.Text != "")
             {
-                MessageBox.Show("Selecione primeiro para que grupo enviará as mensagems", "Aviso XCommanda");
+                MessageBox.Show("Selecione primeiro para que grupo enviará as mensagems", "[xSistemas] Aviso");
                 return;
             }
             else
             {
                 if (rbAniversariantes.Checked)
                 {
-                    if (txtDataFinal.Text.Replace("  /", "") != "" || txtDataFinal.Text.Replace("  /", "") != "")
-                    {
-                        dsLista = con.RetornaListaPessoasSMS(Convert.ToDateTime(txtDataInicial.Text), Convert.ToDateTime(txtDataFinal.Text), true, false, false);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Preencha o periodo para enviar", "Aviso XCommada");
-                    }
+                    dsLista = con.RetornaListaPessoasSMS(dtInicio.Value, dtFim.Value, true, false, false);
 
                 }
                 else if (rbSemPedidos.Checked)
                 {
-                    if (txtDataInicial2.Text.Replace("  /", "") != "" || txtDataFinal2.Text.Replace("  /", "") != "")
-                    {
-                        dsLista = con.RetornaListaPessoasSMS(Convert.ToDateTime(txtDataInicial2.Text), Convert.ToDateTime(txtDataFinal2.Text), false, true, false);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Preencha o periodo para enviar", "Aviso XCommada");
-                    }
+
+                    dsLista = con.RetornaListaPessoasSMS(dtInicio.Value, dtFim.Value, false, true, false);
+
                 }
-                if (chkTodosClientes.Checked)
-                {
-                     dsLista = con.RetornaListaPessoasSMS(DateTime.Now, DateTime.Now, false, false, true);
-                }
+                //if (chkTodosClientes.Checked)
+                //{
+                //    dsLista = con.RetornaListaPessoasSMS(DateTime.Now, DateTime.Now, false, false, true);
+                //}
 
             }
-            if (dsLista.Tables[0].Rows.Count > 0)
+            if (dsLista.Tables[0].Rows.Count == 0)
             {
-
-                Utils.EnviaSMS_LOCASMS(dsLista, txtMensagem.Text, "Teste", "27981667827", "546936");
-                lbl.Text = Convert.ToString(TotalSelecionado);
-                this.Cursor = Cursors.Default;
+                MessageBox.Show(Bibliotecas.cFiltroRetornaVazio);
             }
             else
             {
-                MessageBox.Show("Seu filtro não retornou nenhum dado");
+                Utils.EnviaSMS_LOCASMS(dsLista, txtMensagem.Text, "Teste", "27981667827", "546936");
+                lbl.Text = Convert.ToString(TotalSelecionado);
+                this.Cursor = Cursors.Default;
+
             }
         }
 
@@ -153,30 +185,6 @@ namespace DexComanda
             }
 
             return iMensagem;
-        }
-
-        private void chkTodosClientes_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            DataSet dsOpcao = con.SelectAdicionalLanche();
-
-            DataSet dsLanches = con.SelectLanches();
-            for (int i = 0; i < dsLanches.Tables[0].Rows.Count; i++)
-            {
-                Produto_Opcao prodOP = new Produto_Opcao()
-                {
-                    CodOpcao = dsOpcao.Tables["Opcao"].Rows[i].Field<int>("Codigo"),
-                    CodProduto = dsLanches.Tables["Produto"].Rows[i].Field<int>("Codigo"),
-                    DataAlteracao = DateTime.Now,
-                    Preco = 0
-                };
-                con.Insert("spAdicionarOpcaProduto", prodOP);
-
-            }
         }
     }
 }

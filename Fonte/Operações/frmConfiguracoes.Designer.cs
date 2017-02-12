@@ -132,11 +132,6 @@
             this.label23 = new System.Windows.Forms.Label();
             this.txtNumeroPedidos = new System.Windows.Forms.TextBox();
             this.grpSms = new System.Windows.Forms.GroupBox();
-            this.btnSalvarSMS = new System.Windows.Forms.Button();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtSenha = new System.Windows.Forms.TextBox();
-            this.txtLogin = new System.Windows.Forms.TextBox();
             this.chkEnviaSms = new System.Windows.Forms.CheckBox();
             this.chkFidelidade = new System.Windows.Forms.CheckBox();
             this.chkDescontoDiasemana = new System.Windows.Forms.CheckBox();
@@ -223,6 +218,15 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.btnSalvarSMS = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtSenha = new System.Windows.Forms.TextBox();
+            this.txtLogin = new System.Windows.Forms.TextBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.textBox9 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -250,6 +254,8 @@
             this.tabPage5.SuspendLayout();
             this.grpCidades.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.groupBox11.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -1223,7 +1229,7 @@
             this.grpFidelidade.Controls.Add(this.label23);
             this.grpFidelidade.Controls.Add(this.txtNumeroPedidos);
             this.grpFidelidade.Enabled = false;
-            this.grpFidelidade.Location = new System.Drawing.Point(16, 29);
+            this.grpFidelidade.Location = new System.Drawing.Point(6, 29);
             this.grpFidelidade.Name = "grpFidelidade";
             this.grpFidelidade.Size = new System.Drawing.Size(238, 72);
             this.grpFidelidade.TabIndex = 4;
@@ -1248,62 +1254,14 @@
             // 
             // grpSms
             // 
-            this.grpSms.Controls.Add(this.btnSalvarSMS);
-            this.grpSms.Controls.Add(this.label21);
-            this.grpSms.Controls.Add(this.label6);
-            this.grpSms.Controls.Add(this.txtSenha);
-            this.grpSms.Controls.Add(this.txtLogin);
-            this.grpSms.Location = new System.Drawing.Point(16, 130);
+            this.grpSms.Controls.Add(this.groupBox11);
+            this.grpSms.Controls.Add(this.groupBox10);
+            this.grpSms.Location = new System.Drawing.Point(6, 130);
             this.grpSms.Name = "grpSms";
-            this.grpSms.Size = new System.Drawing.Size(238, 100);
+            this.grpSms.Size = new System.Drawing.Size(238, 194);
             this.grpSms.TabIndex = 3;
             this.grpSms.TabStop = false;
             this.grpSms.Text = "Dados Envio Sms";
-            // 
-            // btnSalvarSMS
-            // 
-            this.btnSalvarSMS.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvarSMS.Image")));
-            this.btnSalvarSMS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalvarSMS.Location = new System.Drawing.Point(98, 71);
-            this.btnSalvarSMS.Name = "btnSalvarSMS";
-            this.btnSalvarSMS.Size = new System.Drawing.Size(75, 23);
-            this.btnSalvarSMS.TabIndex = 24;
-            this.btnSalvarSMS.Text = "Salvar";
-            this.btnSalvarSMS.UseVisualStyleBackColor = true;
-            this.btnSalvarSMS.Click += new System.EventHandler(this.btnSalvarSMS_Click);
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(6, 51);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(41, 13);
-            this.label21.TabIndex = 3;
-            this.label21.Text = "Senha:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 23);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(33, 13);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Login";
-            // 
-            // txtSenha
-            // 
-            this.txtSenha.Location = new System.Drawing.Point(58, 48);
-            this.txtSenha.Name = "txtSenha";
-            this.txtSenha.PasswordChar = 'X';
-            this.txtSenha.Size = new System.Drawing.Size(150, 20);
-            this.txtSenha.TabIndex = 1;
-            // 
-            // txtLogin
-            // 
-            this.txtLogin.Location = new System.Drawing.Point(58, 22);
-            this.txtLogin.Name = "txtLogin";
-            this.txtLogin.Size = new System.Drawing.Size(150, 20);
-            this.txtLogin.TabIndex = 0;
             // 
             // chkEnviaSms
             // 
@@ -2183,6 +2141,91 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.btnSalvarSMS);
+            this.groupBox10.Controls.Add(this.label21);
+            this.groupBox10.Controls.Add(this.label6);
+            this.groupBox10.Controls.Add(this.txtSenha);
+            this.groupBox10.Controls.Add(this.txtLogin);
+            this.groupBox10.Location = new System.Drawing.Point(6, 19);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(226, 97);
+            this.groupBox10.TabIndex = 25;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "LocaSMS";
+            // 
+            // btnSalvarSMS
+            // 
+            this.btnSalvarSMS.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvarSMS.Image")));
+            this.btnSalvarSMS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSalvarSMS.Location = new System.Drawing.Point(91, 63);
+            this.btnSalvarSMS.Name = "btnSalvarSMS";
+            this.btnSalvarSMS.Size = new System.Drawing.Size(75, 23);
+            this.btnSalvarSMS.TabIndex = 29;
+            this.btnSalvarSMS.Text = "Salvar";
+            this.btnSalvarSMS.UseVisualStyleBackColor = true;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(6, 43);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(41, 13);
+            this.label21.TabIndex = 28;
+            this.label21.Text = "Senha:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 17);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(33, 13);
+            this.label6.TabIndex = 27;
+            this.label6.Text = "Login";
+            // 
+            // txtSenha
+            // 
+            this.txtSenha.Location = new System.Drawing.Point(51, 40);
+            this.txtSenha.Name = "txtSenha";
+            this.txtSenha.PasswordChar = 'X';
+            this.txtSenha.Size = new System.Drawing.Size(150, 20);
+            this.txtSenha.TabIndex = 26;
+            // 
+            // txtLogin
+            // 
+            this.txtLogin.Location = new System.Drawing.Point(51, 14);
+            this.txtLogin.Name = "txtLogin";
+            this.txtLogin.Size = new System.Drawing.Size(150, 20);
+            this.txtLogin.TabIndex = 25;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.label39);
+            this.groupBox11.Controls.Add(this.textBox9);
+            this.groupBox11.Location = new System.Drawing.Point(6, 122);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(226, 66);
+            this.groupBox11.TabIndex = 30;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "LocaSMS";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(6, 17);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(33, 13);
+            this.label39.TabIndex = 27;
+            this.label39.Text = "Login";
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(51, 14);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.Size = new System.Drawing.Size(150, 20);
+            this.textBox9.TabIndex = 25;
+            // 
             // frmConfiguracoes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2225,7 +2268,6 @@
             this.grpFidelidade.ResumeLayout(false);
             this.grpFidelidade.PerformLayout();
             this.grpSms.ResumeLayout(false);
-            this.grpSms.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -2245,6 +2287,10 @@
             this.grpCidades.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2319,11 +2365,7 @@
         private System.Windows.Forms.CheckBox chkImprimeViaEntrega;
         private System.Windows.Forms.CheckBox chkFidelidade;
         private System.Windows.Forms.GroupBox grpSms;
-        private System.Windows.Forms.TextBox txtSenha;
-        private System.Windows.Forms.TextBox txtLogin;
         private System.Windows.Forms.CheckBox chkEnviaSms;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox grpFidelidade;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox txtNumeroPedidos;
@@ -2395,7 +2437,6 @@
         private System.Windows.Forms.CheckBox chkTelefone2;
         private System.Windows.Forms.CheckBox chkTelefone;
         private System.Windows.Forms.CheckBox chkCep;
-        private System.Windows.Forms.Button btnSalvarSMS;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label32;
@@ -2444,5 +2485,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Domingo;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.ComboBox cbxTipoImpressao;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.Button btnSalvarSMS;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtSenha;
+        private System.Windows.Forms.TextBox txtLogin;
     }
 }

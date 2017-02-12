@@ -368,7 +368,7 @@ namespace DexComanda
             // Menu Visivel
             //relatórioToolStripMenuItem.Enabled = Sessions.retunrUsuario.AcessaRelatoriosSN;
             entregadorToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
-            envioDeSMSToolStripMenuItem.Enabled = Sessions.returnConfig.EnviaSMS;
+            //envioDeSMSToolStripMenuItem.Enabled = Sessions.returnConfig.EnviaSMS;
             alterarSenhaToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
             usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
 
@@ -2055,6 +2055,18 @@ namespace DexComanda
         {
             frmReporVendaOnline frmVenOn = new frmReporVendaOnline();
             frmVenOn.Show();
+        }
+
+        private void envioDeSmsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmEnvioSms frmEnv = new frmEnvioSms();
+            frmEnv.Show();
+        }
+
+        private void envioDePushNotificationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmEnvioPush frmPus = new frmEnvioPush();
+            frmPus.Show();
         }
     }
 }

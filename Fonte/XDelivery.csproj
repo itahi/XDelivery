@@ -148,6 +148,16 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -285,6 +295,7 @@
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Integração\MP2032.cs" />
+    <Compile Include="Integração\Zenvia.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -305,6 +316,7 @@
     <Compile Include="Models\FinalizaPedido.cs" />
     <Compile Include="Models\HistoricoPessoa.cs" />
     <Compile Include="Models\HorarioEntrega.cs" />
+    <Compile Include="Models\ListaSms.cs" />
     <Compile Include="Models\Operacoes\HorarioFuncionamento.cs" />
     <Compile Include="Models\Operacoes\Notificacao.cs" />
     <Compile Include="Models\Pessoa_Endereco.cs" />
@@ -334,6 +346,9 @@
     <Compile Include="Models\WS\MultiSabores.cs" />
     <Compile Include="Models\WS\RetornoWS.cs" />
     <Compile Include="Models\WS\StatusPedido.cs" />
+    <Compile Include="Models\Zenvia\DadosEnvio.cs" />
+    <Compile Include="Models\Zenvia\SendSmsResponse.cs" />
+    <Compile Include="Models\Zenvia\sendSmsMultiRequest.cs" />
     <Compile Include="Operações\Alteracoes\frmAlteracaoCliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -756,10 +771,10 @@
     <Compile Include="Operações\frmEnvioEmail.Designer.cs">
       <DependentUpon>frmEnvioEmail.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operações\frmEnvioSms.cs">
+    <Compile Include="Operações\Ações\frmEnvioSms.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Operações\frmEnvioSms.Designer.cs">
+    <Compile Include="Operações\Ações\frmEnvioSms.Designer.cs">
       <DependentUpon>frmEnvioSms.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\frmLogin.cs">
@@ -1306,7 +1321,7 @@
     <EmbeddedResource Include="Operações\frmEnvioEmail.resx">
       <DependentUpon>frmEnvioEmail.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Operações\frmEnvioSms.resx">
+    <EmbeddedResource Include="Operações\Ações\frmEnvioSms.resx">
       <DependentUpon>frmEnvioSms.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmLogin.resx">
@@ -1900,6 +1915,11 @@
     <Folder Include="bin\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

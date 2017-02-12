@@ -880,7 +880,7 @@ namespace DexComanda.Operações
                 strPrevisaoEntrega = Sessions.returnConfig.PrevisaoEntrega;
             }
 
-            chkPrevisao.Text = chkPrevisao.Text + " " + strPrevisaoEntrega + "min.";
+            chkPrevisao.Text = chkPrevisao.Text + " " + strPrevisaoEntrega + " min.";
         }
 
         private void chkRemover_CheckedChanged(object sender, EventArgs e)
