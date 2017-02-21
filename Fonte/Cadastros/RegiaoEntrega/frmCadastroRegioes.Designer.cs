@@ -183,7 +183,6 @@
             this.txtRegiao.Name = "txtRegiao";
             this.txtRegiao.Size = new System.Drawing.Size(164, 20);
             this.txtRegiao.TabIndex = 0;
-            this.txtRegiao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ConsultarCEP);
             // 
             // groupBox2
             // 

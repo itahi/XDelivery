@@ -138,6 +138,7 @@ namespace DexComanda.Operações
             request.AddParameter("store_id","0");
             request.AddParameter("nome_cliente", Sessions.returnEmpresa.Nome);
             request.AddParameter("gcm_sender_id",Sessions.returnConfig.GCM);
+            request.AddParameter("onesignal_api_key", Sessions.returnConfig.Pushauthorization);
             MudaLabel("Códigos OneSignal");
             response = (RestResponse)client.Execute(request);
             ReturnPadrao lRetorno = new ReturnPadrao();

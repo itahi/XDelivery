@@ -1859,14 +1859,18 @@ namespace DexComanda
                     {
                         iCodigo = codPedido;
                     }
-                    if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras || Sessions.returnEmpresa.CNPJ
-                        == Bibliotecas.cMassaRara || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria
+                    if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras  || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria
                         || Sessions.returnEmpresa.CNPJ == "11291880000119" || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGallegao)
                     {
-                        Utils.ImpressaoPorCozinha(iCodigo);
-                        return;
+                        //2
+                        ImpressaoPorCozinha(iCodigo);
+                        //return;
                     }
-                    string iRetorno = Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
+                    else
+                    {
+                        Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
+                    }
+                    
                 }
             }
             catch (Exception E)
@@ -1875,6 +1879,68 @@ namespace DexComanda
                 MessageBox.Show("Não foi possivel imprimir " + E.Message, " [xSistemas] ");
             }
 
+        }
+        private void ImpressaoPorCozinha(int iCodPedido)
+        {
+            try
+            {
+                DataSet itemsPedido, dsItemsNaoImpresso;
+                dsItemsNaoImpresso = Utils.CarregaItens(iCodPedido);
+                for (int i = 0; i < dsItemsNaoImpresso.Tables[0].Rows.Count; i++)
+                {
+                    int CodPedido = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(1).ToString());
+                    int CodGrupo = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(23).ToString());
+                    string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(24).ToString();
+                    if (Sessions.returnConfig.TipoImpressao == "Por Cozinha/Grupo")
+                    {
+                        itemsPedido =  con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorGrupo", CodPedido, "", CodGrupo);
+                        if (itemsPedido.Tables[0].Rows.Count == 0)
+                        {
+                            return;
+                        }
+                        Utils.ImpressaoDelivery_CozinhaPorGrupo(CodPedido, iNomeImpressora, CodGrupo);
+                    }
+                    else
+                    {
+                        itemsPedido = con.SelectItensPorImpressora(iCodPedido, iNomeImpressora);
+                        if (itemsPedido.Tables[0].Rows.Count==0)
+                        {
+                            return;
+                        }
+                        Utils.ImpressaoDeliveryCoziha_SeparadoPorImpressora(iCodPedido, iNomeImpressora);
+                    }
+
+                    for (int intfor = 0; intfor < itemsPedido.Tables[0].Rows.Count; intfor++)
+                    {
+                        AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
+                        Atualiza.CodPedido = iCodPedido;
+                        Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[intfor].Field<int>("CodProduto");
+                        Atualiza.ImpressoSN = true;
+                        con.Update("spInformaItemImpresso", Atualiza);
+                    }
+                    if (con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", iCodPedido).Tables[0].Rows.Count > 0)
+                    {
+                        ImpressaoPorCozinha(iCodPedido);
+
+                    }
+                    else
+                    {
+                         return;
+                    }
+
+                    // break;
+
+                    //1
+                   // ImpressaoPorCozinha(iCodPedido);
+
+                }
+
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Não foi possivel imprimir o Item da Mesa verificar a impressora" + erro.Message);
+            }
         }
         public void ImprimirPedidoMesa(object sender, PrintPageEventArgs ev)
         {

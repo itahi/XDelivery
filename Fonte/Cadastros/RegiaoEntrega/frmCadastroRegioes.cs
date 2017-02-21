@@ -37,14 +37,10 @@ namespace DexComanda
             {
                 rowIndex = e.RowIndex;
             }
-            catch (Exception)
+            catch (Exception erro)
             {
-
-                throw;
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-
-
-
         }
 
         private void Editar(object sender, EventArgs e)

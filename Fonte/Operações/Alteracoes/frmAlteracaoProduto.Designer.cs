@@ -196,6 +196,7 @@
             this.GridViewProdutos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.GridViewProdutos.Size = new System.Drawing.Size(784, 170);
             this.GridViewProdutos.TabIndex = 2;
+            this.GridViewProdutos.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GridViewProdutos_MouseClick);
             // 
             // btnExecutar
             // 

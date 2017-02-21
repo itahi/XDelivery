@@ -122,7 +122,8 @@ namespace DexComanda
                 VersaoBanco = "1",
                 CaminhoBackup = txtCaminhoBkp.Text,
                 UrlServidor = txtURL.Text,
-                HorarioFuncionamento = HorariosFuncionamento()
+                HorarioFuncionamento = HorariosFuncionamento(),
+                ConfiguracaoSMS="",
 
 
             };
@@ -257,7 +258,8 @@ namespace DexComanda
                 VersaoBanco = "0",
                 CaminhoBackup = txtCaminhoBkp.Text,
                 UrlServidor = txtURL.Text,
-                HorarioFuncionamento = HorariosFuncionamento()
+                HorarioFuncionamento = HorariosFuncionamento(),
+                ConfiguracaoSMS=""
             };
 
             config.cod = Sessions.returnConfig.cod;
@@ -880,13 +882,6 @@ namespace DexComanda
         {
             LoadImpressoras(cbxImpressoraMesa);
         }
-
-        private void chk2Telefones_CheckedChanged(object sender, EventArgs e)
-        {
-
-
-        }
-
         private void chkImprimeViaEntrega_CheckedChanged(object sender, EventArgs e)
         {
             if (chkImprimeViaEntrega.Checked)
@@ -899,14 +894,17 @@ namespace DexComanda
             }
         }
 
-        private void cbxImpressoraDelivery_SelectedIndexChanged(object sender, EventArgs e)
+        private void SalvaLocaSMS(object sender, EventArgs e)
         {
+            try
+            {
 
-        }
+            }
+            catch (Exception)
+            {
 
-        private void pInfoUserDefault_Paint(object sender, PaintEventArgs e)
-        {
-
+                throw;
+            }
         }
     }
 }

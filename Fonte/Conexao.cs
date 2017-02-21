@@ -1955,47 +1955,55 @@ namespace DexComanda
         }
         public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo, string iCodString = "0", int iCodigo2 = 0)
         {
-            command = new SqlCommand(spName, conn);
-            command.CommandType = CommandType.StoredProcedure;
-            if (spName == "spObterCodigoMesa")
+            try
             {
-                command.Parameters.AddWithValue("@NumeroMesa", iCodString);
-            }
-            else if (spName == "spObterHistoricoPorPessoa")
-            {
-                command.Parameters.AddWithValue("@CodPessoa", codigo);
-            }
-            else if (spName == "spObterItemsNaoImpresso")
-            {
-                command.Parameters.AddWithValue("@Codigo", codigo);
-                command.Parameters.AddWithValue("@NomeImpressora", iCodString);
-            }
-            else if (spName == "spObterProdutoCodigoInterno")
-            {
-                command.Parameters.AddWithValue("@Codigo", codigo);
-                command.Parameters.AddWithValue("@CodProduto", iCodString);
-            }
-            else if (spName == "spObterItemsNaoImpressoPorCodigo")
-            {
-                command.Parameters.AddWithValue("@Codigo", codigo);
-                command.Parameters.AddWithValue("@CodGrupo", iCodigo2);
-            }
-            else if (spName == "spObterItemsNaoImpressoPorGrupo")
-            {
-                command.Parameters.AddWithValue("@Codigo", codigo);
-                command.Parameters.AddWithValue("@CodGrupo", iCodigo2);
-            }
+                command = new SqlCommand(spName, conn);
+                command.CommandType = CommandType.StoredProcedure;
+                if (spName == "spObterCodigoMesa")
+                {
+                    command.Parameters.AddWithValue("@NumeroMesa", iCodString);
+                }
+                else if (spName == "spObterHistoricoPorPessoa")
+                {
+                    command.Parameters.AddWithValue("@CodPessoa", codigo);
+                }
+                else if (spName == "spObterItemsNaoImpresso")
+                {
+                    command.Parameters.AddWithValue("@Codigo", codigo);
+                    command.Parameters.AddWithValue("@NomeImpressora", iCodString);
+                }
+                else if (spName == "spObterProdutoCodigoInterno")
+                {
+                    command.Parameters.AddWithValue("@Codigo", codigo);
+                    command.Parameters.AddWithValue("@CodProduto", iCodString);
+                }
+                else if (spName == "spObterItemsNaoImpressoPorCodigo")
+                {
+                    command.Parameters.AddWithValue("@Codigo", codigo);
+                    //command.Parameters.AddWithValue("@CodGrupo", iCodigo2);
+                }
+                else if (spName == "spObterItemsNaoImpressoPorGrupo")
+                {
+                    command.Parameters.AddWithValue("@Codigo", codigo);
+                    command.Parameters.AddWithValue("@CodGrupo", iCodigo2);
+                }
 
-            else
-            {
-                command.Parameters.AddWithValue("@Codigo", codigo);
+                else
+                {
+                    command.Parameters.AddWithValue("@Codigo", codigo);
+                }
+
+                adapter = new SqlDataAdapter(command);
+               // adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+                ds = new DataSet();
+                adapter.Fill(ds, table);
             }
-
-            adapter = new SqlDataAdapter(command);
-            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-            ds = new DataSet();
-            adapter.Fill(ds, table);
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            
 
             return ds;
         }

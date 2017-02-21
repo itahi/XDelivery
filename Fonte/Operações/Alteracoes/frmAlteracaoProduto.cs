@@ -472,5 +472,10 @@ namespace DexComanda.Operações.Alteracoes
             }
 
         }
+
+        private void GridViewProdutos_MouseClick(object sender, MouseEventArgs e)
+        {
+            MenuAuxiliar(sender, e);
+        }
     }
 }

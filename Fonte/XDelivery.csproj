@@ -547,6 +547,18 @@
       <DependentUpon>RelComandaMesaPorGrupo.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Delivery\RelComandaMesa_PorImpressora.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelComandaMesa_PorImpressora.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelCozinhaPorCozinhaGrupo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelCozinhaPorCozinhaGrupo.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Delivery\RelDeliveryCozinhaPorImpressora.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1176,6 +1188,14 @@
     <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesaPorGrupo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelComandaMesaPorGrupo.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesa_PorImpressora.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelComandaMesa_PorImpressora.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelCozinhaPorCozinhaGrupo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelCozinhaPorCozinhaGrupo.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinha.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

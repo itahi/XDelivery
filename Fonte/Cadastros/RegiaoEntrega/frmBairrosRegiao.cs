@@ -170,12 +170,11 @@ namespace DexComanda.Cadastros
                     AtivoSN = chkAtivo.Checked,
                     OnlineSN = chkOnlineSN.Checked
                 };
-                //if (con.SelectCEPRegiao(txtBairro.Text).Tables[0].Rows.Count > 0 && iCodSelecionado != reg.CodRegiao.ToString())
-                //{
-                //    MessageBox.Show("Esse cep já está vinculado a outra região");
-                //    return;
-                //}
-
+                if (con.SelectCEPRegiao(txtBairro.Text).Tables[0].Rows.Count > 0 && iCodSelecionado != reg.CodRegiao.ToString())
+                {
+                    MessageBox.Show("Esse cep já está vinculado a outra região");
+                    return;
+                }
                 con.Update("spAlterarBairrosRegiao", reg);
                 con.AtualizaDataSincronismo("RegiaoEntrega_Bairros", reg.CodRegiao, "DataCadastro","CodRegiao");
                 Utils.ControlaEventos("Alterar", this.Name);

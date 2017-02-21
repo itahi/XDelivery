@@ -15,6 +15,13 @@ namespace DexComanda.Push
    public class OneSignal
     {
         private Conexao con;
+        /// <summary>
+        /// Busca o idOneSignal do cliente no banco e envia o push para ele 
+        /// </summary>
+        /// <param name="iDCliente">
+        /// Código do cliente no banco</param>
+        /// <param name="iDMsg">
+        /// Mensagem a ser enviada </param>
         public void BuscaCliente(int iDCliente, int iDMsg = 1)
         {
             con = new Conexao();
@@ -27,7 +34,7 @@ namespace DexComanda.Push
             switch (iDMsg)
             {
                 case 1:
-                    iTexto = "Seu pedido chegará em aproximadamente" + Sessions.returnConfig.PrevisaoEntrega + " minutos.";
+                    iTexto = "Seu pedido chegará em aproximadamente " + Sessions.returnConfig.PrevisaoEntrega + " minutos.";
                     break;
                 case 2:
                     iTexto = "Opa seu pedido acaba de ser confirmado e impresso!";
@@ -50,16 +57,16 @@ namespace DexComanda.Push
             iUserId = dRowCliente.ItemArray.GetValue(16).ToString();
 
             OneSignal one = new OneSignal();
-            one.EnviaNotificacao(iNomeCliente, iTexto, iUserId);
+            one.EnviaNotificacao(iNomeCliente, iTexto, "");
         }
         /// <summary>
-        /// Envia push para todos usuarios
+        /// Envia push para um espeficico
         /// </summary>
         /// <param name="iTituloMsg">
         /// Titulo para msg</param>
         /// <param name="iTexto">
         /// Texto para ser exibido</param>
-        public void EnviaNotificacao(string iTituloMsg, string iTexto,string iModoEntrega)
+        public void EnviaNotificacao(string iTituloMsg, string iTexto,string iUserID)
         {
             try
             {
@@ -74,8 +81,7 @@ namespace DexComanda.Push
                                                         + "\"app_id\": \"" + Sessions.returnConfig.Pushapp_id + "\","
                                                         + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
                                                         + "\"contents\": {\"en\": \"" + iTexto + "\"},"
-                                                        + iModoEntrega
-                                                        + "\"included_segments\": [\"All\"]}");
+                                                         + "\"include_player_ids\": [\"" + iUserID + "\"]}");
 
 
 
@@ -120,13 +126,13 @@ namespace DexComanda.Push
 
         }
         /// <summary>
-        /// Envia o push para um usuário especifico
+        /// Envia o push para todos 
         /// </summary>
         /// <param name="iTituloMsg"></param>
         /// <param name="iTexto"></param>
         /// <param name="iUserID">
         /// Id do usuario </param>
-        public void EnviaNotificacao(string iTituloMsg,string iTexto, string iUserID, string iModoEntrega)
+        public void EnviaNotificacao(string iTituloMsg,string iTexto)
         {
             try
             {
@@ -136,18 +142,11 @@ namespace DexComanda.Push
                 request.ContentType = "application/json";
                 string irul = Sessions.returnEmpresa.UrlServidor;
                 request.Headers.Add("authorization", "Basic " + Sessions.returnConfig.Pushauthorization);
-                //string byteArray2 = "{"
-                //                                        + "\"app_id\": \"" + Sessions.returnConfig.Pushapp_id + "\","
-                //                                        + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
-                //                                        + "\"contents\": {\"en\": \"" + iTexto + "\"},"
-                //                                        + "\"include_player_ids\": [\"" + iUserID + "\"]}";
-                
                 byte[] byteArray = Encoding.UTF8.GetBytes("{"
                                                         + "\"app_id\": \"" + Sessions.returnConfig.Pushapp_id + "\","
                                                         + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
                                                         + "\"contents\": {\"en\": \"" + iTexto + "\"},"
-                                                        + iModoEntrega
-                                                        + "\"include_player_ids\": [\"" + iUserID + "\"]}");
+                                                        + "\"included_segments\": [\"All\"]}");
 
 
 
@@ -209,7 +208,9 @@ namespace DexComanda.Push
                 string irul = Sessions.returnEmpresa.UrlServidor;
                 request.Headers.Add("authorization", "Basic " + Sessions.returnConfig.Pushauthorization);
 
+                //Transforma os em uma lista separados por virgula
                 string result = String.Join(",",iUserID.ToArray());
+
                 byte[] byteArray = Encoding.UTF8.GetBytes("{"
                                          + "\"app_id\": \""+ Sessions.returnConfig.Pushapp_id+ "\","
                                          + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
