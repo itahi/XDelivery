@@ -27,5 +27,6 @@ namespace DexComanda.Models
         public string DDD { get; set; }
         public string Sexo { get; set; }
         public char PFPJ { get; set; }
+        public int CodOrigemCadastro { get; set; }
     }
 }

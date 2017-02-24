@@ -130,6 +130,8 @@
             this.txtNomeEnd = new System.Windows.Forms.TextBox();
             this.label34 = new System.Windows.Forms.Label();
             this.txtCEPEnd = new System.Windows.Forms.TextBox();
+            this.cbxOrigemCadastro = new System.Windows.Forms.ComboBox();
+            this.label37 = new System.Windows.Forms.Label();
             this.tbEndereco.SuspendLayout();
             this.tbPrincipal.SuspendLayout();
             this.pnConsultaCEp.SuspendLayout();
@@ -160,6 +162,8 @@
             // 
             // tbPrincipal
             // 
+            this.tbPrincipal.Controls.Add(this.label37);
+            this.tbPrincipal.Controls.Add(this.cbxOrigemCadastro);
             this.tbPrincipal.Controls.Add(this.pnConsultaCEp);
             this.tbPrincipal.Controls.Add(this.txtPJPF);
             this.tbPrincipal.Controls.Add(this.txtUserID);
@@ -227,22 +231,24 @@
             // txtPJPF
             // 
             this.txtPJPF.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPJPF.Location = new System.Drawing.Point(272, 344);
+            this.txtPJPF.Location = new System.Drawing.Point(163, 337);
             this.txtPJPF.MaxLength = 8;
             this.txtPJPF.Name = "txtPJPF";
             this.txtPJPF.Size = new System.Drawing.Size(60, 29);
             this.txtPJPF.TabIndex = 60;
             this.txtPJPF.Visible = false;
+            this.txtPJPF.TextChanged += new System.EventHandler(this.txtPJPF_TextChanged);
             // 
             // txtUserID
             // 
             this.txtUserID.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUserID.Location = new System.Drawing.Point(120, 344);
+            this.txtUserID.Location = new System.Drawing.Point(15, 337);
             this.txtUserID.MaxLength = 8;
             this.txtUserID.Name = "txtUserID";
             this.txtUserID.Size = new System.Drawing.Size(133, 29);
             this.txtUserID.TabIndex = 59;
             this.txtUserID.Visible = false;
+            this.txtUserID.TextChanged += new System.EventHandler(this.txtUserID_TextChanged);
             // 
             // btnAlteraRegiao
             // 
@@ -1207,6 +1213,26 @@
             this.txtCEPEnd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCEPEnd_KeyPress);
             this.txtCEPEnd.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCEPEnd_KeyUp);
             // 
+            // cbxOrigemCadastro
+            // 
+            this.cbxOrigemCadastro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxOrigemCadastro.FormattingEnabled = true;
+            this.cbxOrigemCadastro.Location = new System.Drawing.Point(398, 343);
+            this.cbxOrigemCadastro.Name = "cbxOrigemCadastro";
+            this.cbxOrigemCadastro.Size = new System.Drawing.Size(171, 21);
+            this.cbxOrigemCadastro.TabIndex = 62;
+            this.cbxOrigemCadastro.DropDown += new System.EventHandler(this.ListaOrigens);
+            this.cbxOrigemCadastro.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(280, 346);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(111, 13);
+            this.label37.TabIndex = 63;
+            this.label37.Text = "Como nos conheceu?";
+            // 
             // frmCadastroCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1349,5 +1375,7 @@
         private System.Windows.Forms.TextBox txtPontoREnd;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.TextBox txtTaxaEntregaEnd;
+        private System.Windows.Forms.ComboBox cbxOrigemCadastro;
+        private System.Windows.Forms.Label label37;
     }
 }

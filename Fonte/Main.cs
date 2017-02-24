@@ -582,7 +582,7 @@ namespace DexComanda
                                                                   dRowPessoa.ItemArray.GetValue(15).ToString(), 
                                                                   dRowPessoa.ItemArray.GetValue(12).ToString(), 
                                                                   dRowPessoa.ItemArray.GetValue(16).ToString(), 
-                                                                  dRowPessoa.ItemArray.GetValue(19).ToString(),iCodEnd);
+                                                                  dRowPessoa.ItemArray.GetValue(19).ToString(),iCodEnd, int.Parse(dRowPessoa.ItemArray.GetValue(21).ToString()));
 
 
 

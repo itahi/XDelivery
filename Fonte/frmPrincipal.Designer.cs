@@ -52,6 +52,7 @@
             this.mesasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.motivosCancelamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusPedidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.origemDoClienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.relatórioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.porPessoaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -102,6 +103,10 @@
             this.alteracaoStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pedidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.açõesDePublicidadeEMarketingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.envioDeSmsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.envioDePushNotificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.envioDeEmailMarketingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoAtivaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlPrincipal = new System.Windows.Forms.Panel();
@@ -150,10 +155,6 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.açõesDePublicidadeEMarketingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.envioDeSmsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.envioDePushNotificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.envioDeEmailMarketingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -196,7 +197,8 @@
             this.regiõesDeEntregaToolStripMenuItem,
             this.mesasToolStripMenuItem,
             this.motivosCancelamentoToolStripMenuItem,
-            this.statusPedidoToolStripMenuItem});
+            this.statusPedidoToolStripMenuItem,
+            this.origemDoClienteToolStripMenuItem});
             this.cadastrosToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.cadastrosToolStripMenuItem.Name = "cadastrosToolStripMenuItem";
             this.cadastrosToolStripMenuItem.Size = new System.Drawing.Size(91, 25);
@@ -354,6 +356,13 @@
             this.statusPedidoToolStripMenuItem.Text = "Status Pedido";
             this.statusPedidoToolStripMenuItem.Click += new System.EventHandler(this.statusPedidoToolStripMenuItem_Click);
             // 
+            // origemDoClienteToolStripMenuItem
+            // 
+            this.origemDoClienteToolStripMenuItem.Name = "origemDoClienteToolStripMenuItem";
+            this.origemDoClienteToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
+            this.origemDoClienteToolStripMenuItem.Text = "Origem do Cliente";
+            this.origemDoClienteToolStripMenuItem.Click += new System.EventHandler(this.origemDoClienteToolStripMenuItem_Click);
+            // 
             // relatórioToolStripMenuItem
             // 
             this.relatórioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -493,7 +502,7 @@
             // geralToolStripMenuItem1
             // 
             this.geralToolStripMenuItem1.Name = "geralToolStripMenuItem1";
-            this.geralToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
+            this.geralToolStripMenuItem1.Size = new System.Drawing.Size(117, 26);
             this.geralToolStripMenuItem1.Text = "Geral";
             // 
             // exportarDadosToolStripMenuItem
@@ -750,9 +759,39 @@
             // pedidosToolStripMenuItem
             // 
             this.pedidosToolStripMenuItem.Name = "pedidosToolStripMenuItem";
-            this.pedidosToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.pedidosToolStripMenuItem.Size = new System.Drawing.Size(134, 26);
             this.pedidosToolStripMenuItem.Text = "Pedidos";
             this.pedidosToolStripMenuItem.Click += new System.EventHandler(this.pedidosToolStripMenuItem_Click);
+            // 
+            // açõesDePublicidadeEMarketingToolStripMenuItem
+            // 
+            this.açõesDePublicidadeEMarketingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.envioDeSmsToolStripMenuItem1,
+            this.envioDePushNotificationToolStripMenuItem,
+            this.envioDeEmailMarketingToolStripMenuItem});
+            this.açõesDePublicidadeEMarketingToolStripMenuItem.Name = "açõesDePublicidadeEMarketingToolStripMenuItem";
+            this.açõesDePublicidadeEMarketingToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
+            this.açõesDePublicidadeEMarketingToolStripMenuItem.Text = "Publicidade e Marketing";
+            // 
+            // envioDeSmsToolStripMenuItem1
+            // 
+            this.envioDeSmsToolStripMenuItem1.Name = "envioDeSmsToolStripMenuItem1";
+            this.envioDeSmsToolStripMenuItem1.Size = new System.Drawing.Size(262, 26);
+            this.envioDeSmsToolStripMenuItem1.Text = "Envio de Sms";
+            this.envioDeSmsToolStripMenuItem1.Click += new System.EventHandler(this.envioDeSmsToolStripMenuItem1_Click);
+            // 
+            // envioDePushNotificationToolStripMenuItem
+            // 
+            this.envioDePushNotificationToolStripMenuItem.Name = "envioDePushNotificationToolStripMenuItem";
+            this.envioDePushNotificationToolStripMenuItem.Size = new System.Drawing.Size(262, 26);
+            this.envioDePushNotificationToolStripMenuItem.Text = "Envio de Push Notification";
+            this.envioDePushNotificationToolStripMenuItem.Click += new System.EventHandler(this.envioDePushNotificationToolStripMenuItem_Click);
+            // 
+            // envioDeEmailMarketingToolStripMenuItem
+            // 
+            this.envioDeEmailMarketingToolStripMenuItem.Name = "envioDeEmailMarketingToolStripMenuItem";
+            this.envioDeEmailMarketingToolStripMenuItem.Size = new System.Drawing.Size(262, 26);
+            this.envioDeEmailMarketingToolStripMenuItem.Text = "Envio de Email Marketing";
             // 
             // contatoToolStripMenuItem
             // 
@@ -1354,36 +1393,6 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // açõesDePublicidadeEMarketingToolStripMenuItem
-            // 
-            this.açõesDePublicidadeEMarketingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.envioDeSmsToolStripMenuItem1,
-            this.envioDePushNotificationToolStripMenuItem,
-            this.envioDeEmailMarketingToolStripMenuItem});
-            this.açõesDePublicidadeEMarketingToolStripMenuItem.Name = "açõesDePublicidadeEMarketingToolStripMenuItem";
-            this.açõesDePublicidadeEMarketingToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
-            this.açõesDePublicidadeEMarketingToolStripMenuItem.Text = "Publicidade e Marketing";
-            // 
-            // envioDeSmsToolStripMenuItem1
-            // 
-            this.envioDeSmsToolStripMenuItem1.Name = "envioDeSmsToolStripMenuItem1";
-            this.envioDeSmsToolStripMenuItem1.Size = new System.Drawing.Size(262, 26);
-            this.envioDeSmsToolStripMenuItem1.Text = "Envio de Sms";
-            this.envioDeSmsToolStripMenuItem1.Click += new System.EventHandler(this.envioDeSmsToolStripMenuItem1_Click);
-            // 
-            // envioDePushNotificationToolStripMenuItem
-            // 
-            this.envioDePushNotificationToolStripMenuItem.Name = "envioDePushNotificationToolStripMenuItem";
-            this.envioDePushNotificationToolStripMenuItem.Size = new System.Drawing.Size(262, 26);
-            this.envioDePushNotificationToolStripMenuItem.Text = "Envio de Push Notification";
-            this.envioDePushNotificationToolStripMenuItem.Click += new System.EventHandler(this.envioDePushNotificationToolStripMenuItem_Click);
-            // 
-            // envioDeEmailMarketingToolStripMenuItem
-            // 
-            this.envioDeEmailMarketingToolStripMenuItem.Name = "envioDeEmailMarketingToolStripMenuItem";
-            this.envioDeEmailMarketingToolStripMenuItem.Size = new System.Drawing.Size(262, 26);
-            this.envioDeEmailMarketingToolStripMenuItem.Text = "Envio de Email Marketing";
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1552,5 +1561,6 @@
         private System.Windows.Forms.ToolStripMenuItem envioDeSmsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem envioDePushNotificationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem envioDeEmailMarketingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem origemDoClienteToolStripMenuItem;
     }
 }

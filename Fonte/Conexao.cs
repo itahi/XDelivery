@@ -1269,7 +1269,7 @@ namespace DexComanda
                 spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
                 spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" || spName == "spAdicionarPedidoStatus" ||
                 spName == "spAdicionarEmpresa" || spName == "spAdicionarFamilia" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento"
-                || spName == "spAdicionarOpcaProduto" || spName == "spAdicionarProduto_OpcaoTipo" || spName == "spAdicionarEmpresa_HorarioEntrega")
+                || spName == "spAdicionarOpcaProduto" || spName == "spAdicionarProduto_OpcaoTipo" || spName == "spAdicionarEmpresa_HorarioEntrega" || spName == " spAdicionarPessoa_OrigemCadastro" )
             {
 
                 if (spName == "spAdicionarProduto")

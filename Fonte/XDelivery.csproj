@@ -241,6 +241,12 @@
     <Compile Include="Cadastros\Pedido\frmTransfereMesa.Designer.cs">
       <DependentUpon>frmTransfereMesa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cadastros\Pessoa\frmCadastroOrigem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Pessoa\frmCadastroOrigem.Designer.cs">
+      <DependentUpon>frmCadastroOrigem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cadastros\Pessoa\frmSelecionaEndereco.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -319,6 +325,7 @@
     <Compile Include="Models\ListaSms.cs" />
     <Compile Include="Models\Operacoes\HorarioFuncionamento.cs" />
     <Compile Include="Models\Operacoes\Notificacao.cs" />
+    <Compile Include="Models\Pessoa_OrigemCadastro.cs" />
     <Compile Include="Models\Pessoa_Endereco.cs" />
     <Compile Include="Models\Produto\Opcao.cs" />
     <Compile Include="Models\Produto\OpcaoDia.cs" />
@@ -1058,6 +1065,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Pedido\frmTransfereMesa.resx">
       <DependentUpon>frmTransfereMesa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\Pessoa\frmCadastroOrigem.resx">
+      <DependentUpon>frmCadastroOrigem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Pessoa\frmSelecionaEndereco.resx">
       <DependentUpon>frmSelecionaEndereco.cs</DependentUpon>

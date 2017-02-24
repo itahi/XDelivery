@@ -1860,7 +1860,7 @@ namespace DexComanda
                         iCodigo = codPedido;
                     }
                     if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras  || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria
-                        || Sessions.returnEmpresa.CNPJ == "11291880000119" || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGallegao)
+                        || /*Sessions.returnEmpresa.CNPJ == "11291880000119" ||*/ Sessions.returnEmpresa.CNPJ == Bibliotecas.cGallegao)
                     {
                         //2
                         ImpressaoPorCozinha(iCodigo);
@@ -3079,6 +3079,7 @@ namespace DexComanda
             // 
             this.cbxListaMesas.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbxListaMesas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbxListaMesas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxListaMesas.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxListaMesas.FormattingEnabled = true;
             this.cbxListaMesas.Location = new System.Drawing.Point(546, 88);
@@ -4201,7 +4202,7 @@ namespace DexComanda
                                                                       dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
                                                                   , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(),
-                                                                      dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString(), iCodEnd);
+                                                                      dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString(), iCodEnd, int.Parse(dRowPessoa.ItemArray.GetValue(21).ToString()));
 
                     AtualizaClienteTela();
                 }

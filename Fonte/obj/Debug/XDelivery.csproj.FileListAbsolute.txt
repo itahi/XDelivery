@@ -137,3 +137,4 @@ D:\#Projetos\xDelivery\Fonte\bin\Debug\System.Net.Http.Primitives.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\System.Net.Http.Extensions.xml
 D:\#Projetos\xDelivery\Fonte\bin\Debug\System.Net.Http.Primitives.xml
 D:\#Projetos\xDelivery\Fonte\obj\Debug\XDelivery.csproj.App.config
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pessoa.frmCadastroOrigem.resources

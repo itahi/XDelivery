@@ -26,7 +26,7 @@ namespace DexComanda
         {
             InitializeComponent();
             this.parentMain = parent;
-            CarregaRegiao(0,cbxRegiao,txtTaxaEntrega);
+            CarregaRegiao(0, cbxRegiao, txtTaxaEntrega);
 
             // ObterCidadePadrao();
             //ObterCidadePadrao();
@@ -48,7 +48,7 @@ namespace DexComanda
         public frmCadastroCliente(int iCodPessoa, string iNomeCliente, string iTelefone, string iTelefone2,
                               string iCEP, string iEndereco, string inumero, string iBairro, string iCidade,
                               string iEstado, string iPontoReferencia, string iObservacao, int iCodRegiao,
-                              string iDataCadastro, string iDataNascimento, string iUserID, string iPJPF,int intCodEndereco)
+                              string iDataCadastro, string iDataNascimento, string iUserID, string iPJPF, int intCodEndereco,int intCodOrigem)
         {
             InitializeComponent();
             codigoClienteParaAlterar = iCodPessoa;
@@ -68,8 +68,8 @@ namespace DexComanda
             txtDataNascimento.Text = iDataNascimento;
             txtUserID.Text = iUserID;
             txtPJPF.Text = iPJPF;
-            CarregaRegiao(iCodRegiao,cbxRegiao,txtTaxaEntrega);
-
+            CarregaRegiao(iCodRegiao, cbxRegiao, txtTaxaEntrega);
+            CarregaOrigem(intCodOrigem);
             this.btnAdicionarCliente.Text = "Alterar [F12]";
             this.btnAdicionarCliente.Click -= AdicionarCliente;
             this.btnAdicionarCliente.Click += AlterarCliente;
@@ -102,7 +102,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-           
+
         }
         private void ListaEnderecos()
         {
@@ -156,19 +156,38 @@ namespace DexComanda
                     this.txtNumero.Text = RowsClientes.ItemArray.GetValue(9).ToString();
                     this.txtTelefone.Text = Convert.ToString(RowsClientes.ItemArray.GetValue(10).ToString());
                     this.cbxRegiao.Text = RowsClientes.ItemArray.GetValue(14).ToString();
-
+                    int intCodOrigem = int.Parse(RowsClientes.ItemArray.GetValue(21).ToString());
                     if (txtTelefone2.Visible == true)
                     {
                         txtTelefone2.Text = RowsClientes.ItemArray.GetValue(11).ToString();
                     }
+
                     //Carrega as Regioes de Entrega previamente cadastradas // 
-                    CarregaRegiao(int.Parse(RowsClientes.ItemArray.GetValue(0).ToString()),cbxRegiao,txtTaxaEntrega);
+                    CarregaRegiao(int.Parse(RowsClientes.ItemArray.GetValue(0).ToString()), cbxRegiao, txtTaxaEntrega);
+                    CarregaOrigem(intCodOrigem);
+
                 }
 
             }
         }
 
-        private void CarregaRegiao(int iCodRegiao,ComboBox iCbx,TextBox itext)
+
+        // Utils.MontaCombox(cbxOrigemCadastro, "Nome", "Codigo", "Pessoa_OrigemCadastro", "spObterPessoa_OrigemCadastro");
+
+        private void CarregaOrigem(int iCodOrigem = 0)
+        {
+            if (iCodOrigem == 0)
+            {
+                Utils.MontaCombox(cbxOrigemCadastro, "Nome", "Codigo", "Pessoa_OrigemCadastro", "spObterPessoa_OrigemCadastro");
+                // cbxOrigemCadastro.DataSource = con.SelectAll("Pessoa_OrigemCadastro", "spObterPessoa_OrigemCadastro").Tables["Pessoa_OrigemCadastro"];
+            }
+            else
+            {
+                Utils.MontaCombox(cbxOrigemCadastro, "Nome", "Codigo", "Pessoa_OrigemCadastro", "spObterPessoa_OrigemCadastroPorCodigo", iCodOrigem);
+            }
+          
+        }
+        private void CarregaRegiao(int iCodRegiao, ComboBox iCbx, TextBox itext)
         {
             if (iCodRegiao == 0)
             {
@@ -192,10 +211,6 @@ namespace DexComanda
                 txtTaxaEntrega.Text = Lista.ItemArray.GetValue(1).ToString();
                 cbxRegiao.Text = Lista.ItemArray.GetValue(2).ToString();
             }
-
-
-
-
         }
 
         /// <summary>
@@ -225,7 +240,7 @@ namespace DexComanda
                         DataRow dRow = endereco.Tables["base_cep"].Rows[0];
                         this.txtEndereco.Text = dRow.ItemArray.GetValue(0).ToString();
                         this.txtBairro.Text = dRow.ItemArray.GetValue(1).ToString();
-                        PreencheRegiao(txtBairro.Text,cbxRegiao,txtTaxaEntrega);
+                        PreencheRegiao(txtBairro.Text, cbxRegiao, txtTaxaEntrega);
                         this.txtNumero.Focus();
                     }
                     else
@@ -241,7 +256,7 @@ namespace DexComanda
                         {
                             txtEndereco.Text = _cepCorreios.Logradouro;
                             txtBairro.Text = _cepCorreios.Bairro;
-                            PreencheRegiao(txtBairro.Text,cbxRegiao,txtTaxaEntrega);
+                            PreencheRegiao(txtBairro.Text, cbxRegiao, txtTaxaEntrega);
                             this.txtNumero.Focus();
                         }
                         pnConsultaCEp.Visible = false;
@@ -250,7 +265,7 @@ namespace DexComanda
             }
 
         }
-        private void PreencheRegiao(string iBairro,ComboBox iCbxName,TextBox iTextBox)
+        private void PreencheRegiao(string iBairro, ComboBox iCbxName, TextBox iTextBox)
         {
             DataSet ds = con.RetornarTaxaPorBairro(iBairro);
             if (ds.Tables[0].Rows.Count > 0)
@@ -298,8 +313,9 @@ namespace DexComanda
                     DataCadastro = DateTime.Now,
                     Sexo = "1",
                     DDD = "",
-                    PFPJ = 'F'
-
+                    PFPJ = 'F',
+                    CodOrigemCadastro = int.Parse(cbxOrigemCadastro.SelectedValue.ToString())
+                    
                 };
                 if (cbxRegiao.SelectedValue.ToString() != "")
                 {
@@ -348,7 +364,7 @@ namespace DexComanda
                     MessageBox.Show("Cliente cadastrado com sucesso.", "[xSistemas] Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
                     this.Close();
                     con.Insert("spAdicionarEndereco", pessEnd);
-                 
+
                     if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                     {
                         RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
@@ -367,7 +383,7 @@ namespace DexComanda
                 MessageBox.Show("Registro não foi gravado , favor verificar os campos digitados " + err.Message);
             }
 
-            
+
         }
 
         private void RealizarPedidoAgora(string telefone)
@@ -449,7 +465,8 @@ namespace DexComanda
                     user_id = txtUserID.Text,
                     PFPJ = char.Parse(txtPJPF.Text),
                     Sexo = "1",
-                    DDD = ""
+                    DDD = "",
+                    CodOrigemCadastro = int.Parse(cbxOrigemCadastro.SelectedValue.ToString())
                 };
                 if (txtTelefone2.Visible == true)
                 {
@@ -800,7 +817,7 @@ namespace DexComanda
             {
                 return;
             }
-            CarregaRegiao(0,cbxRegiao,txtTaxaEntrega);
+            CarregaRegiao(0, cbxRegiao, txtTaxaEntrega);
         }
 
         private void MostraItems(object sender, DataGridViewCellMouseEventArgs e)
@@ -990,7 +1007,7 @@ namespace DexComanda
 
         private void cbxRegiao_DropDown(object sender, EventArgs e)
         {
-            CarregaRegiao(0,cbxRegiao,txtTaxaEntrega);
+            CarregaRegiao(0, cbxRegiao, txtTaxaEntrega);
         }
 
         private void AdicionarEndereco(object sender, EventArgs e)
@@ -1083,7 +1100,7 @@ namespace DexComanda
                         this.txtLogradouro.Text = dRow.ItemArray.GetValue(0).ToString();
                         this.txtBairroEnd.Text = dRow.ItemArray.GetValue(1).ToString();
                         txtCidadeEnd.Text = dRow.ItemArray.GetValue(2).ToString();
-                        PreencheRegiao(txtBairroEnd.Text,cbxRegiaoEnd,txtTaxaEntregaEnd);
+                        PreencheRegiao(txtBairroEnd.Text, cbxRegiaoEnd, txtTaxaEntregaEnd);
                         this.txtNumEnd.Focus();
                         //CarregaRegiao(0, cbxRegiaoEnd, txtTaxaEntregaEnd);
                     }
@@ -1099,7 +1116,7 @@ namespace DexComanda
                             txtLogradouro.Text = _cepCorreios.Logradouro;
                             txtBairroEnd.Text = _cepCorreios.Bairro;
                             txtCidadeEnd.Text = _cepCorreios.Cidade;
-                            PreencheRegiao(txtBairroEnd.Text,cbxRegiaoEnd,txtTaxaEntregaEnd);
+                            PreencheRegiao(txtBairroEnd.Text, cbxRegiaoEnd, txtTaxaEntregaEnd);
                             this.txtNumEnd.Focus();
                         }
                         // pnConsultaCEp.Visible = false;
@@ -1146,6 +1163,26 @@ namespace DexComanda
         private void cbxRegiaoEnd_SelectedIndexChanged(object sender, EventArgs e)
         {
             CarregaRegiao(0, cbxRegiaoEnd, txtTaxaEntregaEnd);
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtUserID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPJPF_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ListaOrigens(object sender, EventArgs e)
+        {
+            CarregaOrigem(0);
         }
     }
 

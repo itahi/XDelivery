@@ -1362,7 +1362,7 @@ namespace DexComanda
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(),
                                                                       dRowPessoa.ItemArray.GetValue(16).ToString(),
-                                                                      dRowPessoa.ItemArray.GetValue(19).ToString(), CodEndereco);
+                                                                      dRowPessoa.ItemArray.GetValue(19).ToString(), CodEndereco,int.Parse(dRowPessoa.ItemArray.GetValue(21).ToString()));
 
 
                     Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
@@ -1778,7 +1778,6 @@ namespace DexComanda
                             return;
                         }
                         Utils.ImpressaoCozihanova_SeparadoPorImpressora(iCodPedido, strNomeImpressora);
-                        //Utils.ImpressaMesaNova(iCodPedido, intCodGrupo, false, 1, strNomeImpressora);
                     }
 
                     //Atualiza o item informando que foi impresso
@@ -1790,7 +1789,15 @@ namespace DexComanda
                         Atualiza.ImpressoSN = true;
                         con.Update("spInformaItemImpresso", Atualiza);
                     }
-                    break;
+
+                    if (con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", iCodPedido).Tables[0].Rows.Count > 0)
+                    {
+                        ImpressaoAutomatica(iCodPedido, intCodGrupo, strNomeImpressora);
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
 
             }
@@ -1898,10 +1905,10 @@ namespace DexComanda
                               " G.Codigo as CodGrupo, " +
                               " NomeImpressora " +
                               " from Pedido PE " +
-                              " join ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0 " +
-                              " left join Produto P on P.Codigo = It.CodProduto  or (P.CodigoPersonalizado = It.CodProduto)" +
+                              " join ItemsPedido IT ON PE.Codigo = IT.CodPedido " +
+                              " left join Produto P on P.Codigo = It.CodProduto " +
                               " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo " +
-                              " where PE.CodigoMesa > 0 and Finalizado = 0 and G.ImprimeCozinhaSN=1 ";
+                              " where PE.CodigoMesa > 0 and Finalizado = 0 and G.ImprimeCozinhaSN=1  and IT.IMPRESSOSN = 0 ";
 
                 DataSet dsItemsNaoImpresso = con.SelectAll("ItemsPedido", "", iSql);
 
@@ -1922,6 +1929,7 @@ namespace DexComanda
                         AtualizaGrid.Enabled = false;
                         ImpressaoAutomatica(CodPedido, CodGrupo, iNomeImpressora);
                         AtualizaGrid.Enabled = true;
+                        break;
                     }
                 }
 
@@ -2091,6 +2099,12 @@ namespace DexComanda
         {
             frmEnvioPush frmPus = new frmEnvioPush();
             frmPus.Show();
+        }
+
+        private void origemDoClienteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadastroOrigem frmCad = new frmCadastroOrigem();
+            frmCad.Show();
         }
     }
 }
