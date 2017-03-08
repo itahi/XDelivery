@@ -313,10 +313,16 @@ namespace DexComanda
                     DataCadastro = DateTime.Now,
                     Sexo = "1",
                     DDD = "",
-                    PFPJ = 'F',
-                    CodOrigemCadastro = int.Parse(cbxOrigemCadastro.SelectedValue.ToString())
-                    
+                    PFPJ = 'F'
                 };
+                if (cbxOrigemCadastro.SelectedIndex>0)
+                {
+                    pessoa.CodOrigemCadastro = int.Parse(cbxOrigemCadastro.SelectedValue.ToString());
+                }
+                else
+                {
+                    pessoa.CodOrigemCadastro = 1;
+                }
                 if (cbxRegiao.SelectedValue.ToString() != "")
                 {
                     pessoa.CodRegiao = int.Parse(this.cbxRegiao.SelectedValue.ToString());

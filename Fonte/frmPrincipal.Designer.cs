@@ -155,6 +155,7 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
+            this.classificadoPorOrigemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -494,7 +495,8 @@
             // mensalToolStripMenuItem
             // 
             this.mensalToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.geralToolStripMenuItem1});
+            this.geralToolStripMenuItem1,
+            this.classificadoPorOrigemToolStripMenuItem});
             this.mensalToolStripMenuItem.Name = "mensalToolStripMenuItem";
             this.mensalToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.mensalToolStripMenuItem.Text = "Clientes";
@@ -502,7 +504,7 @@
             // geralToolStripMenuItem1
             // 
             this.geralToolStripMenuItem1.Name = "geralToolStripMenuItem1";
-            this.geralToolStripMenuItem1.Size = new System.Drawing.Size(117, 26);
+            this.geralToolStripMenuItem1.Size = new System.Drawing.Size(247, 26);
             this.geralToolStripMenuItem1.Text = "Geral";
             // 
             // exportarDadosToolStripMenuItem
@@ -1393,6 +1395,13 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
+            // classificadoPorOrigemToolStripMenuItem
+            // 
+            this.classificadoPorOrigemToolStripMenuItem.Name = "classificadoPorOrigemToolStripMenuItem";
+            this.classificadoPorOrigemToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
+            this.classificadoPorOrigemToolStripMenuItem.Text = "Classificado por Origem";
+            this.classificadoPorOrigemToolStripMenuItem.Click += new System.EventHandler(this.classificadoPorOrigemToolStripMenuItem_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1562,5 +1571,6 @@
         private System.Windows.Forms.ToolStripMenuItem envioDePushNotificationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem envioDeEmailMarketingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem origemDoClienteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem classificadoPorOrigemToolStripMenuItem;
     }
 }

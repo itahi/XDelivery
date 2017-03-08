@@ -99,6 +99,38 @@ namespace DexComanda
             return JsonConvert.SerializeObject(listHorario, Formatting.None);
 
         }
+        private string ConfiguracaoSMS()
+        {
+            string strReturn = "";
+            try
+            {
+                if (rbLocaSMS.Checked)
+                {
+                    DadosEnvioLocaSMS locaSms = new DadosEnvioLocaSMS()
+                    {
+                        api = "locasms",
+                        login = txtLogin.Text,
+                        senha = txtSenha.Text
+                    };
+                    strReturn = JsonConvert.SerializeObject(locaSms, Formatting.None);
+                }
+                else if (rbZenvia.Checked)
+                {
+                    DadosEnvioZenvia zenviaSMS = new DadosEnvioZenvia()
+                    {
+                        api = "zenvia",
+                        id = txtIDZenvia.Text,
+                        agrupador = txtAgrZenvia.Text
+                    };
+                    strReturn = JsonConvert.SerializeObject(zenviaSMS, Formatting.None);
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return strReturn;
+        }
         private void SalvaConfig(object sender, EventArgs e)
         {
             //con = new Conexao(); 
@@ -123,9 +155,7 @@ namespace DexComanda
                 CaminhoBackup = txtCaminhoBkp.Text,
                 UrlServidor = txtURL.Text,
                 HorarioFuncionamento = HorariosFuncionamento(),
-                ConfiguracaoSMS="",
-
-
+                ConfiguracaoSMS = ConfiguracaoSMS()
             };
             // Grava as configurações
             config.ImpViaCozinha = chkViaCozinha.Checked;
@@ -153,10 +183,10 @@ namespace DexComanda
             config.CobrancaProporcionalSN = chkProporcional.Checked;
             config.TipoImpressao = cbxTipoImpressao.Text;
             //empresa.HorarioFuncionamento = "";
-            if (chkEnviaSms.Checked)
-            {
-                Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
-            }
+            //if (chkEnviaSms.Checked)
+            //{
+            //    Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
+            //}
             if (chkFidelidade.Checked)
             {
 
@@ -259,7 +289,7 @@ namespace DexComanda
                 CaminhoBackup = txtCaminhoBkp.Text,
                 UrlServidor = txtURL.Text,
                 HorarioFuncionamento = HorariosFuncionamento(),
-                ConfiguracaoSMS=""
+                ConfiguracaoSMS = ConfiguracaoSMS()
             };
 
             config.cod = Sessions.returnConfig.cod;
@@ -321,7 +351,8 @@ namespace DexComanda
                     Nome = this.txtUsuarioPadrao.Text.ToString(),
                     senha = _senha,
                     AdministradorSN = true
-                    ,AbreFechaCaixaSN = true
+                    ,
+                    AbreFechaCaixaSN = true
                 };
                 con.Insert("spAdicionarUsuarioDefault", usuario);
             }
@@ -361,9 +392,33 @@ namespace DexComanda
             }
 
         }
+        private void CarregaConfigSMS(string iValores)
+        {
+            if (!Sessions.returnConfig.EnviaSMS)
+            {
+                return;
+            }
 
+            chkEnviaSms.Checked = true;
+            if (iValores.Contains("zenvia"))
+            {
+                DadosEnvioZenvia zenvia = Utils.DeserializaObjetoZenvia(iValores);
+                txtAgrZenvia.Text = zenvia.agrupador;
+                txtIDZenvia.Text = zenvia.id;
+                rbZenvia.Checked = true;
+            }
+            else
+            {
+                DadosEnvioLocaSMS locasms = Utils.DeserializaObjetoLocaSMS(iValores);
+                txtLogin.Text = locasms.login;
+                txtSenha.Text = locasms.senha;
+                rbLocaSMS.Checked = true;
+            }
+
+        }
         private void frmConfiguracoes_Load(object sender, EventArgs e)
         {
+
             // Utils.RetornoTxt();//cbxCozinha.Text= cbxMesas.Text= cbxEntregas.Text = ListaImpressoras();
             if (Sessions.returnConfig != null)
             {
@@ -402,6 +457,7 @@ namespace DexComanda
                 cbxImpressoraMesa.Text = Sessions.returnConfig.ImpressoraCozinha;
                 cbxImpressoraBalcao.Text = Sessions.returnConfig.ImpressoraCopaBalcao;
                 chkProporcional.Checked = Sessions.returnConfig.CobrancaProporcionalSN;
+                grpSms.Enabled = Sessions.returnConfig.EnviaSMS;
                 this.btnSalvar.Text = "Alterar";
                 this.btnSalvar.Click -= SalvaConfig;
                 this.btnSalvar.Click += AlterarConfig;
@@ -429,7 +485,7 @@ namespace DexComanda
                 txtCaminhoBkp.Text = Linha.ItemArray.GetValue(16).ToString();
                 txtURL.Text = Sessions.returnEmpresa.UrlServidor;
 
-
+                CarregaConfigSMS(Sessions.returnEmpresa.ConfiguracaoSMS);
                 if (con.IsConnected())
                 {
                     var Dados = Utils.DadosLicenca(txtCNPJ.Text, Utils.EnderecoMAC(), Utils.RetornaNomePc());
@@ -501,33 +557,21 @@ namespace DexComanda
 
         private void BuscarCep(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (txtCEP.Text.Trim().Length == 8 && e.KeyCode != Keys.Back)
             {
-                if (txtCEP.Text.Length == 8)
+                DataSet endereco = con.SelectEnderecoPorCep("base_cep", "spObterEnderecoPorCep", int.Parse(txtCEP.Text));
+                if (endereco.Tables["base_cep"].Rows.Count > 0)
                 {
-                    DataSet endereco = con.SelectEnderecoPorCep("base_cep", "spObterEnderecoPorCep", int.Parse(txtCEP.Text));
-
-                    if (endereco.Tables["base_cep"].Rows.Count > 0)
-                    {
-
-                        DataRow dRow = endereco.Tables["base_cep"].Rows[0];
-
-                        this.txtLogradouro.Text = dRow.ItemArray.GetValue(0).ToString();
-                        this.txtBairro.Text = dRow.ItemArray.GetValue(1).ToString();
-                        this.txtCidade.Text = dRow.ItemArray.GetValue(2).ToString();
-                        this.txtUF.Text = dRow.ItemArray.GetValue(3).ToString();
-                    }
-                    else
-                    {
-                        MessageBox.Show("CEP não encontrado");
-                    }
+                    DataRow dRow = endereco.Tables["base_cep"].Rows[0];
+                    this.txtLogradouro.Text = dRow.ItemArray.GetValue(0).ToString();
+                    this.txtBairro.Text = dRow.ItemArray.GetValue(1).ToString();
+                    this.txtCidade.Text = dRow.ItemArray.GetValue(2).ToString();
+                    this.txtUF.Text = dRow.ItemArray.GetValue(3).ToString();
                 }
                 else
                 {
-                    MessageBox.Show("CEP menor que 8 caracteres , favor verificar");
-                    txtCEP.Focus();
+                    MessageBox.Show("CEP não encontrado");
                 }
-
             }
         }
 
@@ -905,6 +949,21 @@ namespace DexComanda
 
                 throw;
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbZenvia_CheckedChanged(object sender, EventArgs e)
+        {
+            grpZenvia.Enabled = rbZenvia.Checked;
+        }
+
+        private void rbLocaSMS_CheckedChanged(object sender, EventArgs e)
+        {
+            grpLocaSMS.Enabled = rbLocaSMS.Checked;
         }
     }
 }

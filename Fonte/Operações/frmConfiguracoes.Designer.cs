@@ -49,7 +49,6 @@
             this.txtContato = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label27 = new System.Windows.Forms.Label();
             this.txtPontoReferencia = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.txtUF = new System.Windows.Forms.TextBox();
@@ -133,8 +132,10 @@
             this.txtNumeroPedidos = new System.Windows.Forms.TextBox();
             this.grpSms = new System.Windows.Forms.GroupBox();
             this.grpZenvia = new System.Windows.Forms.GroupBox();
+            this.label38 = new System.Windows.Forms.Label();
+            this.txtAgrZenvia = new System.Windows.Forms.TextBox();
             this.label39 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.txtIDZenvia = new System.Windows.Forms.TextBox();
             this.grpLocaSMS = new System.Windows.Forms.GroupBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -226,8 +227,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label38 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.rbZenvia = new System.Windows.Forms.RadioButton();
+            this.rbLocaSMS = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -419,7 +420,6 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.label27);
             this.groupBox5.Controls.Add(this.txtPontoReferencia);
             this.groupBox5.Controls.Add(this.label17);
             this.groupBox5.Controls.Add(this.txtUF);
@@ -440,15 +440,6 @@
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Endereço";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(103, 39);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(140, 13);
-            this.label27.TabIndex = 16;
-            this.label27.Text = "Pressione Enter para buscar";
             // 
             // txtPontoReferencia
             // 
@@ -1253,11 +1244,13 @@
             // 
             // grpSms
             // 
+            this.grpSms.Controls.Add(this.rbLocaSMS);
+            this.grpSms.Controls.Add(this.rbZenvia);
             this.grpSms.Controls.Add(this.grpZenvia);
             this.grpSms.Controls.Add(this.grpLocaSMS);
             this.grpSms.Location = new System.Drawing.Point(6, 130);
             this.grpSms.Name = "grpSms";
-            this.grpSms.Size = new System.Drawing.Size(238, 177);
+            this.grpSms.Size = new System.Drawing.Size(238, 203);
             this.grpSms.TabIndex = 3;
             this.grpSms.TabStop = false;
             this.grpSms.Text = "Dados Envio Sms";
@@ -1265,17 +1258,34 @@
             // grpZenvia
             // 
             this.grpZenvia.Controls.Add(this.label38);
-            this.grpZenvia.Controls.Add(this.textBox8);
+            this.grpZenvia.Controls.Add(this.txtAgrZenvia);
             this.grpZenvia.Controls.Add(this.label39);
-            this.grpZenvia.Controls.Add(this.textBox9);
-            this.grpZenvia.Location = new System.Drawing.Point(7, 98);
+            this.grpZenvia.Controls.Add(this.txtIDZenvia);
+            this.grpZenvia.Location = new System.Drawing.Point(6, 125);
             this.grpZenvia.Name = "grpZenvia";
-            this.grpZenvia.Size = new System.Drawing.Size(226, 66);
+            this.grpZenvia.Size = new System.Drawing.Size(226, 72);
             this.grpZenvia.TabIndex = 30;
             this.grpZenvia.TabStop = false;
             this.grpZenvia.Tag = "ZENVIA";
             this.grpZenvia.Text = "ZENVIA";
             this.toolTip1.SetToolTip(this.grpZenvia, "Dados de acesso da plataforma Zenvia");
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(6, 43);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(29, 13);
+            this.label38.TabIndex = 29;
+            this.label38.Text = "Agr.:";
+            // 
+            // txtAgrZenvia
+            // 
+            this.txtAgrZenvia.Location = new System.Drawing.Point(50, 40);
+            this.txtAgrZenvia.Name = "txtAgrZenvia";
+            this.txtAgrZenvia.Size = new System.Drawing.Size(150, 20);
+            this.txtAgrZenvia.TabIndex = 28;
+            this.txtAgrZenvia.UseSystemPasswordChar = true;
             // 
             // label39
             // 
@@ -1286,12 +1296,12 @@
             this.label39.TabIndex = 27;
             this.label39.Text = "ID:";
             // 
-            // textBox9
+            // txtIDZenvia
             // 
-            this.textBox9.Location = new System.Drawing.Point(50, 10);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(138, 20);
-            this.textBox9.TabIndex = 25;
+            this.txtIDZenvia.Location = new System.Drawing.Point(50, 10);
+            this.txtIDZenvia.Name = "txtIDZenvia";
+            this.txtIDZenvia.Size = new System.Drawing.Size(150, 20);
+            this.txtIDZenvia.TabIndex = 25;
             // 
             // grpLocaSMS
             // 
@@ -1299,9 +1309,9 @@
             this.grpLocaSMS.Controls.Add(this.label6);
             this.grpLocaSMS.Controls.Add(this.txtSenha);
             this.grpLocaSMS.Controls.Add(this.txtLogin);
-            this.grpLocaSMS.Location = new System.Drawing.Point(6, 19);
+            this.grpLocaSMS.Location = new System.Drawing.Point(6, 46);
             this.grpLocaSMS.Name = "grpLocaSMS";
-            this.grpLocaSMS.Size = new System.Drawing.Size(226, 76);
+            this.grpLocaSMS.Size = new System.Drawing.Size(226, 73);
             this.grpLocaSMS.TabIndex = 25;
             this.grpLocaSMS.TabStop = false;
             this.grpLocaSMS.Tag = "LocaSMS";
@@ -1311,7 +1321,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(6, 43);
+            this.label21.Location = new System.Drawing.Point(6, 47);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(41, 13);
             this.label21.TabIndex = 28;
@@ -1320,7 +1330,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 17);
+            this.label6.Location = new System.Drawing.Point(6, 21);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(33, 13);
             this.label6.TabIndex = 27;
@@ -1328,15 +1338,16 @@
             // 
             // txtSenha
             // 
-            this.txtSenha.Location = new System.Drawing.Point(51, 40);
+            this.txtSenha.Location = new System.Drawing.Point(51, 44);
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = 'X';
             this.txtSenha.Size = new System.Drawing.Size(150, 20);
             this.txtSenha.TabIndex = 26;
+            this.txtSenha.UseSystemPasswordChar = true;
             // 
             // txtLogin
             // 
-            this.txtLogin.Location = new System.Drawing.Point(51, 14);
+            this.txtLogin.Location = new System.Drawing.Point(51, 18);
             this.txtLogin.Name = "txtLogin";
             this.txtLogin.Size = new System.Drawing.Size(150, 20);
             this.txtLogin.TabIndex = 25;
@@ -1349,6 +1360,7 @@
             this.chkEnviaSms.Size = new System.Drawing.Size(152, 17);
             this.chkEnviaSms.TabIndex = 2;
             this.chkEnviaSms.Text = "Envia SMS com promoção";
+            this.toolTip1.SetToolTip(this.chkEnviaSms, "Configuração para envio de sms para clientes cadastrados em seu sistema");
             this.chkEnviaSms.UseVisualStyleBackColor = true;
             this.chkEnviaSms.CheckedChanged += new System.EventHandler(this.chkEnviaSms_CheckedChanged);
             // 
@@ -1360,6 +1372,7 @@
             this.chkFidelidade.Size = new System.Drawing.Size(104, 17);
             this.chkFidelidade.TabIndex = 1;
             this.chkFidelidade.Text = "Plano Fidelidade";
+            this.toolTip1.SetToolTip(this.chkFidelidade, "Ativa o programa de fidelidade");
             this.chkFidelidade.UseVisualStyleBackColor = true;
             this.chkFidelidade.CheckedChanged += new System.EventHandler(this.chkFidelidade_CheckedChanged);
             // 
@@ -2220,21 +2233,30 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // label38
+            // rbZenvia
             // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(6, 43);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(29, 13);
-            this.label38.TabIndex = 29;
-            this.label38.Text = "Agr.:";
+            this.rbZenvia.AutoSize = true;
+            this.rbZenvia.Location = new System.Drawing.Point(21, 25);
+            this.rbZenvia.Name = "rbZenvia";
+            this.rbZenvia.Size = new System.Drawing.Size(58, 17);
+            this.rbZenvia.TabIndex = 31;
+            this.rbZenvia.TabStop = true;
+            this.rbZenvia.Text = "Zenvia";
+            this.rbZenvia.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.rbZenvia.UseVisualStyleBackColor = true;
+            this.rbZenvia.CheckedChanged += new System.EventHandler(this.rbZenvia_CheckedChanged);
             // 
-            // textBox8
+            // rbLocaSMS
             // 
-            this.textBox8.Location = new System.Drawing.Point(50, 40);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(138, 20);
-            this.textBox8.TabIndex = 28;
+            this.rbLocaSMS.AutoSize = true;
+            this.rbLocaSMS.Location = new System.Drawing.Point(147, 23);
+            this.rbLocaSMS.Name = "rbLocaSMS";
+            this.rbLocaSMS.Size = new System.Drawing.Size(72, 17);
+            this.rbLocaSMS.TabIndex = 32;
+            this.rbLocaSMS.TabStop = true;
+            this.rbLocaSMS.Text = "LocaSMS";
+            this.rbLocaSMS.UseVisualStyleBackColor = true;
+            this.rbLocaSMS.CheckedChanged += new System.EventHandler(this.rbLocaSMS_CheckedChanged);
             // 
             // frmConfiguracoes
             // 
@@ -2278,6 +2300,7 @@
             this.grpFidelidade.ResumeLayout(false);
             this.grpFidelidade.PerformLayout();
             this.grpSms.ResumeLayout(false);
+            this.grpSms.PerformLayout();
             this.grpZenvia.ResumeLayout(false);
             this.grpZenvia.PerformLayout();
             this.grpLocaSMS.ResumeLayout(false);
@@ -2407,7 +2430,6 @@
         private System.Windows.Forms.CheckBox chkDescricao;
         private System.Windows.Forms.CheckBox chkNomeProd;
         private System.Windows.Forms.CheckBox chkCodigo;
-        private System.Windows.Forms.Label label27;
         private System.Windows.Forms.CheckBox chkRegCancelamentos;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TextBox txtCaminhoBkp;
@@ -2497,13 +2519,15 @@
         private System.Windows.Forms.ComboBox cbxTipoImpressao;
         private System.Windows.Forms.GroupBox grpZenvia;
         private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox txtIDZenvia;
         private System.Windows.Forms.GroupBox grpLocaSMS;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtSenha;
         private System.Windows.Forms.TextBox txtLogin;
         private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox txtAgrZenvia;
+        private System.Windows.Forms.RadioButton rbLocaSMS;
+        private System.Windows.Forms.RadioButton rbZenvia;
     }
 }

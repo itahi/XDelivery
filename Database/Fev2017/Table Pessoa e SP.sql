@@ -1,5 +1,6 @@
 alter table Pessoa add CodOrigemCadastro int;
 alter table Pessoa add Constraint FK01_PessoaOrigemCadastro foreign key(CodOrigemCadastro) references Pessoa_OrigemCadastro(Codigo);
+
 GO
 ALTER procedure [dbo].[spAdicionarClienteDelivery]
 @Codigo int output,
@@ -95,7 +96,8 @@ as
   SELECT Codigo,Nome,Cep,Endereco,Bairro,Cidade,UF,isnull(PontoReferencia,'') PontoReferencia,
   isnull(Observacao,'')Observacao ,Numero,Telefone,Telefone2,DataNascimento,isnull(TicketFidelidade,0) TicketFidelidade,
   CodRegiao,DataCadastro,isnull([user_id],'') as[user_id] ,isnull(DDD,'') as DDD , isnull(Sexo,'') as Sexo ,PFPJ,
-  (select top 1 Codigo from Pessoa_Endereco where CodPessoa = Pessoa.Codigo order by Codigo asc) as CodEndereco,CodOrigemCadastro
+  (select top 1 Codigo from Pessoa_Endereco where CodPessoa = Pessoa.Codigo order by Codigo asc) as CodEndereco,
+  isnull(CodOrigemCadastro,0) as CodOrigemCadastro
   FROM Pessoa WHERE Codigo =@Codigo
  END
  GO
@@ -105,7 +107,8 @@ as
  BEGIN
   SELECT Codigo,Nome,Endereco,Bairro,Cidade,PontoReferencia,Observacao,
   Numero,DataNascimento,CodRegiao,TicketFidelidade,Telefone2,[user_id],DDD,Sexo,PFPJ,
-  (Select top 1 Codigo from Pessoa_Endereco where CodPessoa = Pessoa.Codigo order by Codigo asc) as CodEndereco,CodOrigemCadastro
+  (Select top 1 Codigo from Pessoa_Endereco where CodPessoa = Pessoa.Codigo order by Codigo asc) as CodEndereco,
+  isnull(CodOrigemCadastro,0) as CodOrigemCadastro
   FROM Pessoa 
   WHERE 
   Telefone = @Telefone or Telefone2 =@Telefone
@@ -115,6 +118,11 @@ as
 ALTER PROCEDURE [dbo].[spObterPessoas]
 as
  BEGIN
-  SELECT Codigo,Nome,Cep,Endereco,Bairro,Cidade,UF,PontoReferencia,Observacao,Numero,Telefone,DataNascimento,CodRegiao,DataCadastro,PFPJ,CodOrigemCadastro
+  SELECT Codigo,Nome,Cep,Endereco,Bairro,Cidade,UF,PontoReferencia,Observacao,Numero,Telefone,DataNascimento,CodRegiao,DataCadastro,PFPJ,
+  isnull(CodOrigemCadastro,0) as CodOrigemCadastro
   FROM Pessoa 
  END
+ go
+ insert into Pessoa_OrigemCadastro (Nome,AtivoSN) values ('Padrão',1);
+ go
+ update Pessoa set CodOrigemCadastro=1;

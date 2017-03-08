@@ -298,6 +298,14 @@ namespace DexComanda
                     // DataAlteracao = DateTime.Now
                 };
                 Insert("spAdicionarPedidoStatus", pedS);
+
+                // ---- Origem Cadastro " ----
+                Pessoa_OrigemCadastro pess = new Pessoa_OrigemCadastro()
+                {
+                    AtivoSN = true,
+                    Nome = "Padrão"
+                };
+                Insert("spAdicionarPessoa_OrigemCadastro", pess);
             }
             catch (Exception erro)
             {
@@ -1756,16 +1764,22 @@ namespace DexComanda
         }
         public DataSet SelectObterClientesSemPedido(string spName, DateTime DataInicial, DateTime DataFinal)
         {
+            try
+            {
+                command = new SqlCommand(spName, conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@DataInicial", DataInicial);
+                command.Parameters.AddWithValue("@DataFinal", DataFinal);
+                adapter = new SqlDataAdapter(command);
 
-            command = new SqlCommand(spName, conn);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@DataInicial", DataInicial);
-            command.Parameters.AddWithValue("@DataFinal", DataFinal);
-            adapter = new SqlDataAdapter(command);
-            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-            ds = new DataSet();
-            adapter.Fill(ds, "Pessoa");
+                ds = new DataSet();
+                adapter.Fill(ds, "Pessoa");
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            
 
             return ds;
         }

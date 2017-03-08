@@ -294,7 +294,7 @@ namespace DexComanda
         /// </summary>
         /// <param name="iCodPedido">
         /// Codigo do Pedido</param>
-        
+
 
         public static Usuario RetornaDadosUsuario(string iNome, string iSenha)
         {
@@ -429,7 +429,22 @@ namespace DexComanda
                 return new List<PrecoDiaProduto>();
             }
             return JsonConvert.DeserializeObject<List<PrecoDiaProduto>>(iValores);
-
+        }
+        public static DadosEnvioZenvia DeserializaObjetoZenvia(string iValores)
+        {
+            if (iValores == "")
+            {
+                return new DadosEnvioZenvia();
+            }
+            return JsonConvert.DeserializeObject<DadosEnvioZenvia>(iValores);
+        }
+        public static DadosEnvioLocaSMS DeserializaObjetoLocaSMS(string iValores)
+        {
+            if (iValores == "")
+            {
+                return new DadosEnvioLocaSMS();
+            }
+            return JsonConvert.DeserializeObject<DadosEnvioLocaSMS>(iValores);
         }
         public static MultiSabores DeserializaObjeto4(string iValores)
         {
@@ -1004,6 +1019,39 @@ namespace DexComanda
                 MessageBox.Show(erro.InnerException.Message);
             }
             return iRetorno;
+        }
+        public static ReportClass GerarReport(ReportClass iReport)
+        {
+            try
+            {
+                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                string nameReport = iReport.FileName;
+                iReport.Load(Directory.GetCurrentDirectory() + @"\" + nameReport + ".rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
+
+                CrTables = iReport.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return iReport;
         }
         public static ReportClass GerarReportSoDatas(ReportClass iReport, DateTime dtInicio, DateTime dtFim)
         {

@@ -31,29 +31,30 @@
             this.components = new System.ComponentModel.Container();
             this.tbSelecao = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.btnEnviar = new System.Windows.Forms.Button();
+            this.grpGrid = new System.Windows.Forms.GroupBox();
+            this.gridResultado = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.lblRestante = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnEnviarSms = new System.Windows.Forms.Button();
             this.txtMensagem = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.grpTotalSelect = new System.Windows.Forms.GroupBox();
-            this.lbl = new System.Windows.Forms.Label();
-            this.rbSemPedidos = new System.Windows.Forms.RadioButton();
-            this.rbAniversariantes = new System.Windows.Forms.RadioButton();
+            this.rbOndeConheceu = new System.Windows.Forms.RadioButton();
+            this.cbxOndeConheceu = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
+            this.btnEnviarSms = new System.Windows.Forms.Button();
+            this.rbSemPedidos = new System.Windows.Forms.RadioButton();
+            this.rbAniversariantes = new System.Windows.Forms.RadioButton();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lblRestante = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tbSelecao.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.grpGrid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridResultado)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.grpTotalSelect.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,61 +64,57 @@
             this.tbSelecao.Location = new System.Drawing.Point(0, 1);
             this.tbSelecao.Name = "tbSelecao";
             this.tbSelecao.SelectedIndex = 0;
-            this.tbSelecao.Size = new System.Drawing.Size(451, 395);
+            this.tbSelecao.Size = new System.Drawing.Size(578, 359);
             this.tbSelecao.TabIndex = 0;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.label8);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.label6);
+            this.tabPage1.Controls.Add(this.btnEnviar);
+            this.tabPage1.Controls.Add(this.grpGrid);
             this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.lblRestante);
-            this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.btnEnviarSms);
             this.tabPage1.Controls.Add(this.txtMensagem);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(443, 369);
+            this.tabPage1.Size = new System.Drawing.Size(570, 333);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Seleção";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // label8
+            // btnEnviar
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.Red;
-            this.label8.Location = new System.Drawing.Point(289, 197);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(70, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "\"@Cliente\"";
-            this.label8.Visible = false;
+            this.btnEnviar.Location = new System.Drawing.Point(458, 290);
+            this.btnEnviar.Name = "btnEnviar";
+            this.btnEnviar.Size = new System.Drawing.Size(96, 28);
+            this.btnEnviar.TabIndex = 19;
+            this.btnEnviar.Text = "Enviar";
+            this.btnEnviar.UseVisualStyleBackColor = true;
+            this.btnEnviar.Click += new System.EventHandler(this.DisparaSMS);
             // 
-            // label7
+            // grpGrid
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(289, 171);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(146, 13);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "na mensagem inclua a chave";
-            this.label7.Visible = false;
+            this.grpGrid.Controls.Add(this.gridResultado);
+            this.grpGrid.Location = new System.Drawing.Point(8, 133);
+            this.grpGrid.Name = "grpGrid";
+            this.grpGrid.Size = new System.Drawing.Size(220, 198);
+            this.grpGrid.TabIndex = 14;
+            this.grpGrid.TabStop = false;
+            this.grpGrid.Text = "Resultado Filtro";
             // 
-            // label6
+            // gridResultado
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(289, 155);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(149, 13);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "Para incluir o nome do cliente ";
-            this.label6.Visible = false;
+            this.gridResultado.AllowUserToAddRows = false;
+            this.gridResultado.AllowUserToDeleteRows = false;
+            this.gridResultado.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.gridResultado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridResultado.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridResultado.Location = new System.Drawing.Point(3, 16);
+            this.gridResultado.Name = "gridResultado";
+            this.gridResultado.ReadOnly = true;
+            this.gridResultado.Size = new System.Drawing.Size(214, 179);
+            this.gridResultado.TabIndex = 0;
             // 
             // label4
             // 
@@ -127,130 +124,69 @@
             this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 13;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(115, 328);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(57, 13);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "caracteres";
-            // 
-            // lblRestante
-            // 
-            this.lblRestante.AutoSize = true;
-            this.lblRestante.Location = new System.Drawing.Point(84, 328);
-            this.lblRestante.Name = "lblRestante";
-            this.lblRestante.Size = new System.Drawing.Size(25, 13);
-            this.lblRestante.TabIndex = 11;
-            this.lblRestante.Text = "155";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 328);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 13);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Ainda restam:";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 130);
+            this.label1.Location = new System.Drawing.Point(245, 130);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(109, 13);
             this.label1.TabIndex = 7;
             this.label1.Text = "Mensagem ao Cliente";
             // 
-            // btnEnviarSms
-            // 
-            this.btnEnviarSms.Location = new System.Drawing.Point(295, 213);
-            this.btnEnviarSms.Name = "btnEnviarSms";
-            this.btnEnviarSms.Size = new System.Drawing.Size(122, 46);
-            this.btnEnviarSms.TabIndex = 2;
-            this.btnEnviarSms.Text = "Selecionar / Enviar";
-            this.btnEnviarSms.UseVisualStyleBackColor = true;
-            this.btnEnviarSms.Click += new System.EventHandler(this.EnviarSMS);
-            // 
             // txtMensagem
             // 
-            this.txtMensagem.Location = new System.Drawing.Point(1, 152);
+            this.txtMensagem.Location = new System.Drawing.Point(238, 146);
             this.txtMensagem.MaxLength = 145;
             this.txtMensagem.Name = "txtMensagem";
-            this.txtMensagem.Size = new System.Drawing.Size(288, 173);
+            this.txtMensagem.Size = new System.Drawing.Size(200, 182);
             this.txtMensagem.TabIndex = 1;
             this.txtMensagem.Text = "";
             this.txtMensagem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtMensagem_KeyDown);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.rbOndeConheceu);
+            this.groupBox1.Controls.Add(this.cbxOndeConheceu);
             this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Controls.Add(this.grpTotalSelect);
+            this.groupBox1.Controls.Add(this.btnEnviarSms);
             this.groupBox1.Controls.Add(this.rbSemPedidos);
             this.groupBox1.Controls.Add(this.rbAniversariantes);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(432, 121);
+            this.groupBox1.Size = new System.Drawing.Size(557, 121);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
             // 
-            // grpTotalSelect
+            // rbOndeConheceu
             // 
-            this.grpTotalSelect.Controls.Add(this.lbl);
-            this.grpTotalSelect.Location = new System.Drawing.Point(307, 16);
-            this.grpTotalSelect.Name = "grpTotalSelect";
-            this.grpTotalSelect.Size = new System.Drawing.Size(119, 82);
-            this.grpTotalSelect.TabIndex = 10;
-            this.grpTotalSelect.TabStop = false;
-            this.grpTotalSelect.Text = "Total Selecionados";
+            this.rbOndeConheceu.AutoSize = true;
+            this.rbOndeConheceu.Location = new System.Drawing.Point(388, 16);
+            this.rbOndeConheceu.Name = "rbOndeConheceu";
+            this.rbOndeConheceu.Size = new System.Drawing.Size(108, 17);
+            this.rbOndeConheceu.TabIndex = 18;
+            this.rbOndeConheceu.TabStop = true;
+            this.rbOndeConheceu.Text = "Onde conheceu?";
+            this.toolTip1.SetToolTip(this.rbOndeConheceu, "Clientes por origem de onde conheceram ");
+            this.rbOndeConheceu.UseVisualStyleBackColor = true;
+            this.rbOndeConheceu.CheckedChanged += new System.EventHandler(this.rbOndeConheceu_CheckedChanged);
             // 
-            // lbl
+            // cbxOndeConheceu
             // 
-            this.lbl.AutoSize = true;
-            this.lbl.BackColor = System.Drawing.SystemColors.ControlText;
-            this.lbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lbl.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.3F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl.ForeColor = System.Drawing.Color.Crimson;
-            this.lbl.Location = new System.Drawing.Point(39, 37);
-            this.lbl.Name = "lbl";
-            this.lbl.Size = new System.Drawing.Size(34, 19);
-            this.lbl.TabIndex = 10;
-            this.lbl.Text = "000";
-            // 
-            // rbSemPedidos
-            // 
-            this.rbSemPedidos.AutoSize = true;
-            this.rbSemPedidos.Location = new System.Drawing.Point(155, 19);
-            this.rbSemPedidos.Name = "rbSemPedidos";
-            this.rbSemPedidos.Size = new System.Drawing.Size(139, 17);
-            this.rbSemPedidos.TabIndex = 3;
-            this.rbSemPedidos.TabStop = true;
-            this.rbSemPedidos.Text = "Sem pedidos no periodo";
-            this.toolTip1.SetToolTip(this.rbSemPedidos, "Clientes que não fizeram pedido no periodo");
-            this.rbSemPedidos.UseVisualStyleBackColor = true;
-            // 
-            // rbAniversariantes
-            // 
-            this.rbAniversariantes.AutoSize = true;
-            this.rbAniversariantes.Location = new System.Drawing.Point(7, 16);
-            this.rbAniversariantes.Name = "rbAniversariantes";
-            this.rbAniversariantes.Size = new System.Drawing.Size(102, 17);
-            this.rbAniversariantes.TabIndex = 0;
-            this.rbAniversariantes.TabStop = true;
-            this.rbAniversariantes.Text = "Aniv. no periodo";
-            this.toolTip1.SetToolTip(this.rbAniversariantes, "Busca clientes que fazem ainversário no periodo, considera apenas dia e mês");
-            this.rbAniversariantes.UseVisualStyleBackColor = true;
+            this.cbxOndeConheceu.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxOndeConheceu.FormattingEnabled = true;
+            this.cbxOndeConheceu.Location = new System.Drawing.Point(388, 42);
+            this.cbxOndeConheceu.Name = "cbxOndeConheceu";
+            this.cbxOndeConheceu.Size = new System.Drawing.Size(160, 21);
+            this.cbxOndeConheceu.TabIndex = 17;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dtFim);
             this.groupBox2.Controls.Add(this.dtInicio);
-            this.groupBox2.Location = new System.Drawing.Point(48, 42);
+            this.groupBox2.Location = new System.Drawing.Point(11, 43);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(187, 56);
+            this.groupBox2.Size = new System.Drawing.Size(184, 55);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Periodo";
@@ -271,25 +207,90 @@
             this.dtInicio.Size = new System.Drawing.Size(79, 20);
             this.dtInicio.TabIndex = 16;
             // 
+            // btnEnviarSms
+            // 
+            this.btnEnviarSms.Location = new System.Drawing.Point(452, 69);
+            this.btnEnviarSms.Name = "btnEnviarSms";
+            this.btnEnviarSms.Size = new System.Drawing.Size(96, 28);
+            this.btnEnviarSms.TabIndex = 2;
+            this.btnEnviarSms.Text = "Selecionar";
+            this.btnEnviarSms.UseVisualStyleBackColor = true;
+            this.btnEnviarSms.Click += new System.EventHandler(this.EnviarSMS);
+            // 
+            // rbSemPedidos
+            // 
+            this.rbSemPedidos.AutoSize = true;
+            this.rbSemPedidos.Location = new System.Drawing.Point(199, 19);
+            this.rbSemPedidos.Name = "rbSemPedidos";
+            this.rbSemPedidos.Size = new System.Drawing.Size(139, 17);
+            this.rbSemPedidos.TabIndex = 3;
+            this.rbSemPedidos.TabStop = true;
+            this.rbSemPedidos.Text = "Sem pedidos no periodo";
+            this.toolTip1.SetToolTip(this.rbSemPedidos, "Clientes que não fizeram pedido no periodo");
+            this.rbSemPedidos.UseVisualStyleBackColor = true;
+            // 
+            // rbAniversariantes
+            // 
+            this.rbAniversariantes.AutoSize = true;
+            this.rbAniversariantes.Location = new System.Drawing.Point(7, 16);
+            this.rbAniversariantes.Name = "rbAniversariantes";
+            this.rbAniversariantes.Size = new System.Drawing.Size(150, 17);
+            this.rbAniversariantes.TabIndex = 0;
+            this.rbAniversariantes.TabStop = true;
+            this.rbAniversariantes.Text = "Aniversáriantes no periodo";
+            this.toolTip1.SetToolTip(this.rbAniversariantes, "Busca clientes que fazem ainversário no periodo, considera apenas dia e mês");
+            this.rbAniversariantes.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(380, 364);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(57, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "caracteres";
+            // 
+            // lblRestante
+            // 
+            this.lblRestante.AutoSize = true;
+            this.lblRestante.Location = new System.Drawing.Point(349, 364);
+            this.lblRestante.Name = "lblRestante";
+            this.lblRestante.Size = new System.Drawing.Size(25, 13);
+            this.lblRestante.TabIndex = 11;
+            this.lblRestante.Text = "155";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(272, 364);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Ainda restam:";
+            // 
             // frmEnvioSms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(454, 397);
+            this.ClientSize = new System.Drawing.Size(580, 382);
             this.Controls.Add(this.tbSelecao);
+            this.Controls.Add(this.lblRestante);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmEnvioSms";
-            this.Text = "[XSistemas] Envio de SMS ao Cliente";
+            this.Text = "[xSistemas] Envio de SMS ao Cliente";
             this.Load += new System.EventHandler(this.frmEnvioSms_Load);
             this.tbSelecao.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.grpGrid.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridResultado)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.grpTotalSelect.ResumeLayout(false);
-            this.grpTotalSelect.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -303,18 +304,18 @@
         private System.Windows.Forms.Button btnEnviarSms;
         private System.Windows.Forms.RichTextBox txtMensagem;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox grpTotalSelect;
-        private System.Windows.Forms.Label lbl;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblRestante;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DateTimePicker dtFim;
         private System.Windows.Forms.DateTimePicker dtInicio;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.GroupBox grpGrid;
+        private System.Windows.Forms.DataGridView gridResultado;
+        private System.Windows.Forms.ComboBox cbxOndeConheceu;
+        private System.Windows.Forms.RadioButton rbOndeConheceu;
+        private System.Windows.Forms.Button btnEnviar;
     }
 }

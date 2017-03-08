@@ -45,3 +45,4 @@ as
 begin
  select * from Pessoa_OrigemCadastro where Codigo=@Codigo
 end
+

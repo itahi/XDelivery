@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
+using System.Windows.Forms;
 
 namespace DexComanda.Operações.Funções
 {
@@ -44,10 +45,9 @@ namespace DexComanda.Operações.Funções
 
             }
 
-            catch (Exception)
+            catch (Exception erro)
             {
-
-                throw;
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
         }

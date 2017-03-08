@@ -317,6 +317,7 @@
     <Compile Include="Models\CaixaCadastros.cs" />
     <Compile Include="Models\CaixaDiferenca.cs" />
     <Compile Include="Models\CaixaMovimento.cs" />
+    <Compile Include="Models\DadosEnvioLocaSMS.cs" />
     <Compile Include="Models\DescontoPedido.cs" />
     <Compile Include="Models\Familia.cs" />
     <Compile Include="Models\FinalizaPedido.cs" />
@@ -353,7 +354,7 @@
     <Compile Include="Models\WS\MultiSabores.cs" />
     <Compile Include="Models\WS\RetornoWS.cs" />
     <Compile Include="Models\WS\StatusPedido.cs" />
-    <Compile Include="Models\Zenvia\DadosEnvio.cs" />
+    <Compile Include="Models\DadosEnvioZenvia.cs" />
     <Compile Include="Models\Zenvia\SendSmsResponse.cs" />
     <Compile Include="Models\Zenvia\sendSmsMultiRequest.cs" />
     <Compile Include="Operações\Alteracoes\frmAlteracaoCliente.cs">
@@ -541,6 +542,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RelFechamentoCaixaCompleto.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\Crystal\RelClientesPorOrigem.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelClientesPorOrigem.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\frmReportClientePorOrigem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\frmReportClientePorOrigem.Designer.cs">
+      <DependentUpon>frmReportClientePorOrigem.cs</DependentUpon>
     </Compile>
     <Compile Include="Relatorios\Delivery\Forms\frmReporVendaOnline.cs">
       <SubType>Form</SubType>
@@ -1162,6 +1175,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelSuprimento.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelClientesPorOrigem.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelClientesPorOrigem.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelDebitosGeral.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDebitosGeral.cs</LastGenOutput>
@@ -1188,6 +1205,9 @@
     <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelHistoricoCliente.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelHistoricoCliente.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Clientes\frmReportClientePorOrigem.resx">
+      <DependentUpon>frmReportClientePorOrigem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\frmReporVendasPorCliente.resx">
       <DependentUpon>frmReporVendasPorCliente.cs</DependentUpon>

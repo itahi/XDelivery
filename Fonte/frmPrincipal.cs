@@ -2106,5 +2106,11 @@ namespace DexComanda
             frmCadastroOrigem frmCad = new frmCadastroOrigem();
             frmCad.Show();
         }
+
+        private void classificadoPorOrigemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReportClientePorOrigem frmCl = new frmReportClientePorOrigem();
+            frmCl.Show();
+        }
     }
 }

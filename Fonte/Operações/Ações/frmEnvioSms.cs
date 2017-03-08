@@ -36,7 +36,7 @@ namespace DexComanda
         private int TotalSelecionado;
         private string pLogin;
         private string pSenha;
-
+        private DataSet dsResultado;
         public frmEnvioSms()
         {
 
@@ -50,24 +50,25 @@ namespace DexComanda
         {
             try
             {
-                if (ConfigurationManager.AppSettings["ConfigSMS"] != null)
-                {
-                    string Itext = ConfigurationManager.AppSettings["ConfigSMS"].ToString();
+                Utils.MontaCombox(cbxOndeConheceu, "Nome", "Codigo", "Pessoa_OrigemCadastro", "spObterPessoa_OrigemCadastro");
+                //if (ConfigurationManager.AppSettings["ConfigSMS"] != null)
+                //{
+                //    string Itext = ConfigurationManager.AppSettings["ConfigSMS"].ToString();
 
-                    string[] words = Itext.Split(',');
-                    for (int i = 0; i < words.Length - 1; i++)
-                    {
-                        pLogin = words[0];
-                        pSenha = words[1];
-                        return;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Arquivo de configuração para envio de SMS não está na pasta , favor ir até Configurações > Promoção preencher os campos e salvar");
-                    frmConfiguracoes frm = new frmConfiguracoes();
-                    frm.Show();
-                }
+                //    string[] words = Itext.Split(',');
+                //    for (int i = 0; i < words.Length - 1; i++)
+                //    {
+                //        pLogin = words[0];
+                //        pSenha = words[1];
+                //        return;
+                //    }
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Arquivo de configuração para envio de SMS não está na pasta , favor ir até Configurações > Promoção preencher os campos e salvar");
+                //    frmConfiguracoes frm = new frmConfiguracoes();
+                //    frm.Show();
+                //}
 
 
             }
@@ -123,47 +124,70 @@ namespace DexComanda
             newzen.EnviaSMSLista(JsonConvert.SerializeObject(newList));
         }
 
-        private void EnviarSMS(object sender, EventArgs e)
+        private DataSet PreencheFiltro()
         {
-
-            this.Cursor = Cursors.WaitCursor;
-            DataSet dsLista;
-            dsLista = new DataSet();
-            if (!rbAniversariantes.Checked && !rbSemPedidos.Checked && txtMensagem.Text != "")
-            {
-                MessageBox.Show("Selecione primeiro para que grupo enviará as mensagems", "[xSistemas] Aviso");
-                return;
-            }
-            else
+             dsResultado = null;
+            try
             {
                 if (rbAniversariantes.Checked)
                 {
-                    dsLista = con.RetornaListaPessoasSMS(dtInicio.Value, dtFim.Value, true, false, false);
-
+                    dsResultado = con.SelectObterAniversariantes("spObterAnivesariantes",
+                       dtInicio.Value,
+                       dtFim.Value);
                 }
                 else if (rbSemPedidos.Checked)
                 {
-
-                    dsLista = con.RetornaListaPessoasSMS(dtInicio.Value, dtFim.Value, false, true, false);
-
+                    dsResultado = con.SelectObterClientesSemPedido("spObterClientesSemPedido",
+                        dtInicio.Value,
+                        dtFim.Value);
                 }
-                //if (chkTodosClientes.Checked)
-                //{
-                //    dsLista = con.RetornaListaPessoasSMS(DateTime.Now, DateTime.Now, false, false, true);
-                //}
+                else if (rbOndeConheceu.Checked)
+                {
+                    dsResultado = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodOrigemCadastro", int.Parse(cbxOndeConheceu.SelectedValue.ToString()));
+                }
+
+                PopulaGrid(dsResultado, "Pessoa");
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return dsResultado;
+        }
+        private void PopulaGrid(DataSet ds, string table)
+        {
+            try
+            {
+                if (ds.Tables[0].Rows.Count==0)
+                {
+                    MessageBox.Show(Bibliotecas.cFiltroRetornaVazio);
+                    return;
+                }
+                gridResultado.DataSource = null;
+                gridResultado.AutoGenerateColumns = true;
+                gridResultado.DataSource = ds;
+                gridResultado.DataMember = table;
+
+                for (int i = 0; i < gridResultado.Columns.Count; i++)
+                {
+                    if (gridResultado.Columns[i].HeaderText != "Nome")
+                    {
+                        gridResultado.Columns[i].Visible = false;
+                    }
+                }
 
             }
-            if (dsLista.Tables[0].Rows.Count == 0)
+            catch (Exception erro)
             {
-                MessageBox.Show(Bibliotecas.cFiltroRetornaVazio);
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-            else
-            {
-                Utils.EnviaSMS_LOCASMS(dsLista, txtMensagem.Text, "Teste", "27981667827", "546936");
-                lbl.Text = Convert.ToString(TotalSelecionado);
-                this.Cursor = Cursors.Default;
 
-            }
+        }
+        private void EnviarSMS(object sender, EventArgs e)
+        {
+            PreencheFiltro();
+            
         }
 
         private void txtMensagem_KeyDown(object sender, KeyEventArgs e)
@@ -185,6 +209,29 @@ namespace DexComanda
             }
 
             return iMensagem;
+        }
+
+
+        private void rbOndeConheceu_CheckedChanged(object sender, EventArgs e)
+        {
+            cbxOndeConheceu.Enabled = rbOndeConheceu.Checked;
+        }
+
+        private void DisparaSMS(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.WaitCursor;
+
+            if (gridResultado.Rows.Count == 0)
+            {
+                MessageBox.Show(Bibliotecas.cFiltroRetornaVazio);
+            }
+            else
+            {
+                Utils.EnviaSMS_LOCASMS(dsResultado, txtMensagem.Text, "Teste", "27981667827", "546936");
+                //lbl.Text = Convert.ToString(TotalSelecionado);
+                this.Cursor = Cursors.Default;
+
+            }
         }
     }
 }
