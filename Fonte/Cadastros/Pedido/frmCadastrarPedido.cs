@@ -1860,11 +1860,9 @@ namespace DexComanda
                         iCodigo = codPedido;
                     }
                     if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras  || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria
-                        || /*Sessions.returnEmpresa.CNPJ == "11291880000119" ||*/ Sessions.returnEmpresa.CNPJ == Bibliotecas.cGallegao)
+                        || Sessions.returnEmpresa.CNPJ == Bibliotecas.cTheBest || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGallegao)
                     {
-                        //2
                         ImpressaoPorCozinha(iCodigo);
-                        //return;
                     }
                     else
                     {
@@ -1880,6 +1878,11 @@ namespace DexComanda
             }
 
         }
+        /// <summary>
+        /// Impressão separada do ticket de cozinha de acordo com o tipo de agrupamento
+        /// </summary>
+        /// <param name="iCodPedido"> Código do pedido a ser impresso
+        /// </param>
         private void ImpressaoPorCozinha(int iCodPedido)
         {
             try

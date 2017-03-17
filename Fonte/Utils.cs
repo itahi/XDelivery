@@ -780,8 +780,8 @@ namespace DexComanda
                     report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
                     crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                     crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                    crConnectionInfo.UserID = "sa";
-                    crConnectionInfo.Password = "1001";
+                    crConnectionInfo.UserID = "dex";
+                    crConnectionInfo.Password = "1234";
 
                     CrTables = report.Database.Tables;
                     foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)

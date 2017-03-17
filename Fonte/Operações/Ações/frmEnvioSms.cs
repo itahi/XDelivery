@@ -50,27 +50,7 @@ namespace DexComanda
         {
             try
             {
-                Utils.MontaCombox(cbxOndeConheceu, "Nome", "Codigo", "Pessoa_OrigemCadastro", "spObterPessoa_OrigemCadastro");
-                //if (ConfigurationManager.AppSettings["ConfigSMS"] != null)
-                //{
-                //    string Itext = ConfigurationManager.AppSettings["ConfigSMS"].ToString();
-
-                //    string[] words = Itext.Split(',');
-                //    for (int i = 0; i < words.Length - 1; i++)
-                //    {
-                //        pLogin = words[0];
-                //        pSenha = words[1];
-                //        return;
-                //    }
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Arquivo de configuração para envio de SMS não está na pasta , favor ir até Configurações > Promoção preencher os campos e salvar");
-                //    frmConfiguracoes frm = new frmConfiguracoes();
-                //    frm.Show();
-                //}
-
-
+                Utils.MontaCombox(cbxOrigemCadastro, "Nome", "Codigo", "Pessoa_OrigemCadastro", "spObterPessoa_OrigemCadastro");
             }
             catch (Exception erro)
             {
@@ -141,9 +121,18 @@ namespace DexComanda
                         dtInicio.Value,
                         dtFim.Value);
                 }
-                else if (rbOndeConheceu.Checked)
+                else if (rbOrigemCadastro.Checked)
                 {
-                    dsResultado = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodOrigemCadastro", int.Parse(cbxOndeConheceu.SelectedValue.ToString()));
+                    dsResultado = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodOrigemCadastro", int.Parse(cbxOrigemCadastro.SelectedValue.ToString()));
+                }
+                else if (rbProduto.Checked)
+                {
+                    dsResultado = con.SelectRegistroPorCodigoPeriodo("Pessoa", "spObterProdutoPorCliente",
+                     cbxGrupo.SelectedValue.ToString(), dtInicio.Value, dtFim.Value);
+                }
+                else if (rbRegiao.Checked)
+                {
+                    dsResultado = con.SelectRegistroPorCodigo("Pessoa", "spObterClientesPorRegiao", int.Parse(cbxRegiao.SelectedValue.ToString()));
                 }
 
                 PopulaGrid(dsResultado, "Pessoa");
@@ -214,7 +203,7 @@ namespace DexComanda
 
         private void rbOndeConheceu_CheckedChanged(object sender, EventArgs e)
         {
-            cbxOndeConheceu.Enabled = rbOndeConheceu.Checked;
+            cbxOrigemCadastro.Enabled = rbOrigemCadastro.Checked;
         }
 
         private void DisparaSMS(object sender, EventArgs e)
@@ -232,6 +221,12 @@ namespace DexComanda
                 this.Cursor = Cursors.Default;
 
             }
+        }
+
+        private void rbRegiao_CheckedChanged(object sender, EventArgs e)
+        {
+            grpPeriodo.Enabled = !rbRegiao.Checked;
+            Utils.MontaCombox(cbxRegiao, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioes");
         }
     }
 }

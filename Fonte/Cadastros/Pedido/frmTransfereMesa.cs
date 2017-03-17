@@ -129,25 +129,38 @@ namespace DexComanda.Cadastros.Pedido
         {
             try
             {
-                // Se grid não tiver nada selecionado ele vaza
-                //if (gridOrigem.CurrentRow.Cells[0].Value==null)
-                //{
-                //    return;
-                //}
-                //DataGridView dgv = sender as DataGridView;
-                //if (e.Button == MouseButtons.Right)
-                //{
-                //    ContextMenu menuPrincipal = new ContextMenu();
-                //    MenuItem TransfereItens = new MenuItem(" Transferir este item");
-                //    menuPrincipal.MenuItems.Add(TransfereItens);
-                //}
+                //Se grid não tiver nada selecionado ele vaza
+                if (gridOrigem.CurrentRow.Cells[0].Value == null)
+                {
+                    return;
+                }
+                DataGridView dgv = sender as DataGridView;
+                if (e.Button == MouseButtons.Right)
+                {
+                    ContextMenu menuPrincipal = new ContextMenu();
+                    MenuItem TransfereItens = new MenuItem(" Transferir este item?");
+                    TransfereItens.Click += TransferirItemMesa;
+                    menuPrincipal.MenuItems.Add(TransfereItens);
+
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            
+        }
+        private void TransferirItemMesa(object sender, EventArgs e)
+        {
+            try
+            {
+
             }
             catch (Exception)
             {
 
                 throw;
             }
-            
         }
-    }
+        }
 }

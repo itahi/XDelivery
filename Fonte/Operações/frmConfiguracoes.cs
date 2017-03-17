@@ -398,7 +398,6 @@ namespace DexComanda
             {
                 return;
             }
-
             chkEnviaSms.Checked = true;
             if (iValores.Contains("zenvia"))
             {
