@@ -859,7 +859,7 @@ namespace DexComanda
             string lSqlConsulta;
             if (iNomeTable == "Produto")
             {
-                lSqlConsulta = " select P.*, G.MultiploSabores from Produto P join Grupo G on G.Codigo=P.CodGrupo where P.OnlineSN=1 and P.AtivoSN=1 ";
+                lSqlConsulta = " select P.*, G.MultiploSabores from Produto P join Grupo G on G.Codigo=P.CodGrupo where P.DataAlteracao>P.DataSincronismo or P.DataSincronismo is null";
 
             }
             else

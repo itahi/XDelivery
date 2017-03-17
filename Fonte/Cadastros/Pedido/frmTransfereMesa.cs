@@ -154,12 +154,13 @@ namespace DexComanda.Cadastros.Pedido
         {
             try
             {
+                int intCodItem = int.Parse(gridOrigem.CurrentRow.Cells["Codigo"].Value.ToString());
+                int intCodPedido = int.Parse(gridOrigem.CurrentRow.Cells["CodPedido"].Value.ToString());
 
             }
-            catch (Exception)
+            catch (Exception erro)
             {
-
-                throw;
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
         }
