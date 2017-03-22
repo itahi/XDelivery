@@ -2078,6 +2078,34 @@ namespace DexComanda
 
             return ds;
         }
+        /// <summary>
+        /// Transfere determinado item de uma mesa para outra
+        /// </summary>
+        /// <param name="intCodItem"> Código do item na tabela ItemPedido.Codigo</param>
+        /// <param name="intCodigoMesaDestino"> Código da mesa destino que receberá o item Mesas.Codigo</param>
+        /// <returns></returns>
+        public int TransfereItemMesa(int intCodItem,int intCodigoMesaDestino)
+        {
+            int iReturn = 0;
+            try
+            {
+                command = new SqlCommand("spTransfereItemMesa", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Codigo", intCodItem);
+                command.Parameters.AddWithValue("@CodigoMesaDestino", intCodigoMesaDestino);
+
+                adapter = new SqlDataAdapter(command);
+                adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+                iReturn = command.ExecuteNonQuery();
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException);
+            }
+            return iReturn;
+        }
         public int TransfereMesa(int intCodPedidoOrigem, string iNumMesaOrigem, int iCodUser
             , decimal iTotalPedido
             , int iCodMesaOrigem, int iCodPessoa, int iNewMesa)

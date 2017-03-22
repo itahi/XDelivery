@@ -70,6 +70,7 @@
             this.vendidosNoPeriodoAgrupadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mensalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.classificadoPorOrigemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportarDadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.impressãoTermicaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vendasPorVendedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -155,7 +156,7 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.classificadoPorOrigemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insumosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -210,7 +211,8 @@
             this.produtosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gruposCategoriasToolStripMenuItem,
             this.opçãoToolStripMenuItem,
-            this.produtoToolStripMenuItem});
+            this.produtoToolStripMenuItem,
+            this.insumosToolStripMenuItem});
             this.produtosToolStripMenuItem.Name = "produtosToolStripMenuItem";
             this.produtosToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
             this.produtosToolStripMenuItem.Text = "Items / Cardápio";
@@ -506,6 +508,13 @@
             this.geralToolStripMenuItem1.Name = "geralToolStripMenuItem1";
             this.geralToolStripMenuItem1.Size = new System.Drawing.Size(247, 26);
             this.geralToolStripMenuItem1.Text = "Geral";
+            // 
+            // classificadoPorOrigemToolStripMenuItem
+            // 
+            this.classificadoPorOrigemToolStripMenuItem.Name = "classificadoPorOrigemToolStripMenuItem";
+            this.classificadoPorOrigemToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
+            this.classificadoPorOrigemToolStripMenuItem.Text = "Classificado por Origem";
+            this.classificadoPorOrigemToolStripMenuItem.Click += new System.EventHandler(this.classificadoPorOrigemToolStripMenuItem_Click);
             // 
             // exportarDadosToolStripMenuItem
             // 
@@ -1395,12 +1404,12 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // classificadoPorOrigemToolStripMenuItem
+            // insumosToolStripMenuItem
             // 
-            this.classificadoPorOrigemToolStripMenuItem.Name = "classificadoPorOrigemToolStripMenuItem";
-            this.classificadoPorOrigemToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
-            this.classificadoPorOrigemToolStripMenuItem.Text = "Classificado por Origem";
-            this.classificadoPorOrigemToolStripMenuItem.Click += new System.EventHandler(this.classificadoPorOrigemToolStripMenuItem_Click);
+            this.insumosToolStripMenuItem.Name = "insumosToolStripMenuItem";
+            this.insumosToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+            this.insumosToolStripMenuItem.Text = "Insumos";
+            this.insumosToolStripMenuItem.Click += new System.EventHandler(this.insumosToolStripMenuItem_Click);
             // 
             // frmPrincipal
             // 
@@ -1572,5 +1581,6 @@
         private System.Windows.Forms.ToolStripMenuItem envioDeEmailMarketingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem origemDoClienteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem classificadoPorOrigemToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem insumosToolStripMenuItem;
     }
 }

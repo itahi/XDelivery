@@ -35,7 +35,7 @@
             this.txtTrocoPara = new System.Windows.Forms.TextBox();
             this.btnFinalizar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.lblNumeroMesa = new System.Windows.Forms.Label();
+            this.lblNumeroPedido = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gridFormasPagamento)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,6 +53,7 @@
             this.gridFormasPagamento.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridFormasPagamento.Size = new System.Drawing.Size(406, 223);
             this.gridFormasPagamento.TabIndex = 10;
+            this.gridFormasPagamento.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.ValidaTexto);
             // 
             // lblTotalPedido
             // 
@@ -97,12 +98,13 @@
             // 
             // btnFinalizar
             // 
-            this.btnFinalizar.Location = new System.Drawing.Point(315, 286);
+            this.btnFinalizar.Location = new System.Drawing.Point(287, 283);
             this.btnFinalizar.Name = "btnFinalizar";
-            this.btnFinalizar.Size = new System.Drawing.Size(84, 48);
+            this.btnFinalizar.Size = new System.Drawing.Size(121, 48);
             this.btnFinalizar.TabIndex = 13;
             this.btnFinalizar.Text = "Finalizar";
             this.btnFinalizar.UseVisualStyleBackColor = true;
+            this.btnFinalizar.Click += new System.EventHandler(this.FinalizarPedido);
             // 
             // label3
             // 
@@ -114,23 +116,23 @@
             this.label3.TabIndex = 14;
             this.label3.Text = "Finalizar Pedido";
             // 
-            // lblNumeroMesa
+            // lblNumeroPedido
             // 
-            this.lblNumeroMesa.AutoSize = true;
-            this.lblNumeroMesa.Font = new System.Drawing.Font("Sitka Display", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNumeroMesa.Location = new System.Drawing.Point(232, 4);
-            this.lblNumeroMesa.Name = "lblNumeroMesa";
-            this.lblNumeroMesa.Size = new System.Drawing.Size(48, 39);
-            this.lblNumeroMesa.TabIndex = 15;
-            this.lblNumeroMesa.Text = "txt";
-            this.lblNumeroMesa.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblNumeroPedido.AutoSize = true;
+            this.lblNumeroPedido.Font = new System.Drawing.Font("Sitka Display", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNumeroPedido.Location = new System.Drawing.Point(232, 4);
+            this.lblNumeroPedido.Name = "lblNumeroPedido";
+            this.lblNumeroPedido.Size = new System.Drawing.Size(48, 39);
+            this.lblNumeroPedido.TabIndex = 15;
+            this.lblNumeroPedido.Text = "txt";
+            this.lblNumeroPedido.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // frmFinalizaDelivery
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(411, 351);
-            this.Controls.Add(this.lblNumeroMesa);
+            this.Controls.Add(this.lblNumeroPedido);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnFinalizar);
             this.Controls.Add(this.txtTrocoPara);
@@ -140,6 +142,7 @@
             this.Controls.Add(this.label1);
             this.Name = "frmFinalizaDelivery";
             this.Text = "[xSistemas] Finalizar Pedido";
+            this.Load += new System.EventHandler(this.frmFinalizaDelivery_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridFormasPagamento)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -155,6 +158,6 @@
         private System.Windows.Forms.TextBox txtTrocoPara;
         private System.Windows.Forms.Button btnFinalizar;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label lblNumeroMesa;
+        private System.Windows.Forms.Label lblNumeroPedido;
     }
 }

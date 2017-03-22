@@ -2112,5 +2112,11 @@ namespace DexComanda
             frmReportClientePorOrigem frmCl = new frmReportClientePorOrigem();
             frmCl.Show();
         }
+
+        private void insumosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadastroInsumo frmIns = new frmCadastroInsumo();
+            frmIns.Show();
+        }
     }
 }

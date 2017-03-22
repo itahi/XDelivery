@@ -2234,6 +2234,11 @@ namespace DexComanda
             return iRetorno;
 
         }
+        /// <summary>
+        /// Função para permitir a digitação apenas de Valores numericos no Evento KeypRess
+        /// </summary>
+        /// <param name="Evento"> Evento da tecla</param>
+        /// <returns></returns>
         public static bool SoDecimais(KeyPressEventArgs Evento)
         {
             bool iRetorno = true;

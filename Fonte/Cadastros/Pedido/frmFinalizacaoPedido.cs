@@ -87,7 +87,7 @@ namespace DexComanda.Cadastros
 
                 e.Handled = true;
         }
-
+       
         private void Finaliza(object sender, EventArgs e)
         {
             try

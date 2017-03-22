@@ -141,7 +141,7 @@ namespace DexComanda.Cadastros.Pedido
                     MenuItem TransfereItens = new MenuItem(" Transferir este item?");
                     TransfereItens.Click += TransferirItemMesa;
                     menuPrincipal.MenuItems.Add(TransfereItens);
-
+                    menuPrincipal.Show(dgv, new Point(e.X, e.Y));
                 }
             }
             catch (Exception erro)
@@ -154,9 +154,16 @@ namespace DexComanda.Cadastros.Pedido
         {
             try
             {
+                if (gridOrigem.Rows.Count<=2)
+                {
+                    MessageBox.Show("Use a rotina de transfêrencia completa");
+                    return;
+                }
                 int intCodItem = int.Parse(gridOrigem.CurrentRow.Cells["Codigo"].Value.ToString());
                 int intCodPedido = int.Parse(gridOrigem.CurrentRow.Cells["CodPedido"].Value.ToString());
 
+                con.TransfereItemMesa(intCodItem, int.Parse(cbxListaMesasD.SelectedValue.ToString()));
+                PopulaGrid(int.Parse(cbxListaMesasD.SelectedValue.ToString()), gridDestino);
             }
             catch (Exception erro)
             {
