@@ -38,6 +38,9 @@
             System.Windows.Forms.Label label6;
             System.Windows.Forms.Label label17;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarProduto));
+            System.Windows.Forms.Label label19;
+            System.Windows.Forms.Label label21;
+            System.Windows.Forms.Label label22;
             this.dBExpertDataSet = new DexComanda.DBExpertDataSet();
             this.produtoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.produtoTableAdapter = new DexComanda.DBExpertDataSetTableAdapters.ProdutoTableAdapter();
@@ -119,7 +122,19 @@
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.tbInsumo = new System.Windows.Forms.TabPage();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txtQtd = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.gridInsumo = new System.Windows.Forms.DataGridView();
+            this.btnEditarIns = new System.Windows.Forms.Button();
+            this.btnAdicionar = new System.Windows.Forms.Button();
+            this.cbxInsumo = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.txtPrecoCusto = new System.Windows.Forms.TextBox();
+            this.txtMarkup = new System.Windows.Forms.TextBox();
+            this.txtPrecoSugerido = new System.Windows.Forms.TextBox();
             grupoProdutoLabel = new System.Windows.Forms.Label();
             precoProdutoLabel = new System.Windows.Forms.Label();
             descricaoProdutoLabel = new System.Windows.Forms.Label();
@@ -128,6 +143,9 @@
             label5 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             label17 = new System.Windows.Forms.Label();
+            label19 = new System.Windows.Forms.Label();
+            label21 = new System.Windows.Forms.Label();
+            label22 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -142,6 +160,9 @@
             this.grpPrecosDia.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tbInsumo.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridInsumo)).BeginInit();
             this.SuspendLayout();
             // 
             // grupoProdutoLabel
@@ -156,11 +177,11 @@
             // precoProdutoLabel
             // 
             precoProdutoLabel.AutoSize = true;
-            precoProdutoLabel.Location = new System.Drawing.Point(123, 69);
+            precoProdutoLabel.Location = new System.Drawing.Point(234, 69);
             precoProdutoLabel.Name = "precoProdutoLabel";
-            precoProdutoLabel.Size = new System.Drawing.Size(78, 13);
+            precoProdutoLabel.Size = new System.Drawing.Size(72, 13);
             precoProdutoLabel.TabIndex = 30;
-            precoProdutoLabel.Text = "Preco Produto:";
+            precoProdutoLabel.Text = "Preço Venda:";
             // 
             // descricaoProdutoLabel
             // 
@@ -192,7 +213,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(6, 71);
+            label5.Location = new System.Drawing.Point(421, 139);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(81, 13);
             label5.TabIndex = 37;
@@ -210,7 +231,7 @@
             // label17
             // 
             label17.AutoSize = true;
-            label17.Location = new System.Drawing.Point(243, 69);
+            label17.Location = new System.Drawing.Point(318, 69);
             label17.Name = "label17";
             label17.Size = new System.Drawing.Size(65, 13);
             label17.TabIndex = 40;
@@ -243,7 +264,7 @@
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(457, 302);
+            this.btnSair.Location = new System.Drawing.Point(522, 304);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(150, 43);
             this.btnSair.TabIndex = 35;
@@ -253,7 +274,7 @@
             // 
             // btnDoProduto
             // 
-            this.btnDoProduto.Location = new System.Drawing.Point(292, 303);
+            this.btnDoProduto.Location = new System.Drawing.Point(362, 304);
             this.btnDoProduto.Name = "btnDoProduto";
             this.btnDoProduto.Size = new System.Drawing.Size(150, 43);
             this.btnDoProduto.TabIndex = 34;
@@ -270,14 +291,14 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(603, 274);
+            this.tabPage3.Size = new System.Drawing.Size(673, 274);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "4 -Imagem";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(548, 13);
+            this.button1.Location = new System.Drawing.Point(618, 13);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(49, 23);
             this.button1.TabIndex = 15;
@@ -287,7 +308,7 @@
             // 
             // btnImg
             // 
-            this.btnImg.Location = new System.Drawing.Point(487, 14);
+            this.btnImg.Location = new System.Drawing.Point(557, 14);
             this.btnImg.Name = "btnImg";
             this.btnImg.Size = new System.Drawing.Size(55, 23);
             this.btnImg.TabIndex = 13;
@@ -299,7 +320,7 @@
             // 
             this.txtcaminhoImage.Location = new System.Drawing.Point(8, 16);
             this.txtcaminhoImage.Name = "txtcaminhoImage";
-            this.txtcaminhoImage.Size = new System.Drawing.Size(473, 20);
+            this.txtcaminhoImage.Size = new System.Drawing.Size(543, 20);
             this.txtcaminhoImage.TabIndex = 14;
             this.txtcaminhoImage.TextChanged += new System.EventHandler(this.txtcaminhoImage_TextChanged);
             // 
@@ -308,7 +329,7 @@
             this.imgProduto.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.imgProduto.Location = new System.Drawing.Point(8, 42);
             this.imgProduto.Name = "imgProduto";
-            this.imgProduto.Size = new System.Drawing.Size(589, 226);
+            this.imgProduto.Size = new System.Drawing.Size(659, 226);
             this.imgProduto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.imgProduto.TabIndex = 0;
             this.imgProduto.TabStop = false;
@@ -328,7 +349,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(603, 274);
+            this.tabPage2.Size = new System.Drawing.Size(673, 274);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "2 -Adicionais/Opcionais";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -352,7 +373,6 @@
             this.cbxTipoOpcao.Size = new System.Drawing.Size(107, 21);
             this.cbxTipoOpcao.TabIndex = 31;
             this.cbxTipoOpcao.DropDown += new System.EventHandler(this.cbxTipoOpcao_DropDown);
-            this.cbxTipoOpcao.SelectedIndexChanged += new System.EventHandler(this.FiltrarOpcaoPorTipo);
             // 
             // btnEditar
             // 
@@ -431,7 +451,7 @@
             this.panel1.Controls.Add(this.AdicionaisGridView);
             this.panel1.Location = new System.Drawing.Point(3, 90);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(592, 178);
+            this.panel1.Size = new System.Drawing.Size(647, 178);
             this.panel1.TabIndex = 0;
             // 
             // AdicionaisGridView
@@ -448,7 +468,7 @@
             this.AdicionaisGridView.Name = "AdicionaisGridView";
             this.AdicionaisGridView.ReadOnly = true;
             this.AdicionaisGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.AdicionaisGridView.Size = new System.Drawing.Size(592, 178);
+            this.AdicionaisGridView.Size = new System.Drawing.Size(647, 178);
             this.AdicionaisGridView.TabIndex = 2;
             this.AdicionaisGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AdicionaisGridView_CellClick);
             this.AdicionaisGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AdicionaisGridView_CellContentClick);
@@ -457,6 +477,12 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.txtPrecoSugerido);
+            this.tabPage1.Controls.Add(label22);
+            this.tabPage1.Controls.Add(this.txtMarkup);
+            this.tabPage1.Controls.Add(label21);
+            this.tabPage1.Controls.Add(this.txtPrecoCusto);
+            this.tabPage1.Controls.Add(label19);
             this.tabPage1.Controls.Add(this.txtCodInterno);
             this.tabPage1.Controls.Add(label17);
             this.tabPage1.Controls.Add(this.button2);
@@ -476,7 +502,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(603, 274);
+            this.tabPage1.Size = new System.Drawing.Size(673, 274);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "1 -Produto";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -485,9 +511,9 @@
             // 
             this.txtCodInterno.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
             this.txtCodInterno.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCodInterno.Location = new System.Drawing.Point(246, 86);
+            this.txtCodInterno.Location = new System.Drawing.Point(321, 86);
             this.txtCodInterno.Name = "txtCodInterno";
-            this.txtCodInterno.Size = new System.Drawing.Size(92, 26);
+            this.txtCodInterno.Size = new System.Drawing.Size(66, 26);
             this.txtCodInterno.TabIndex = 3;
             this.toolTip1.SetToolTip(this.txtCodInterno, "Crie um Código Personalizado para esse produto");
             // 
@@ -505,10 +531,11 @@
             // 
             this.txtMaxAdicionais.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
             this.txtMaxAdicionais.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxAdicionais.Location = new System.Drawing.Point(9, 88);
+            this.txtMaxAdicionais.Location = new System.Drawing.Point(424, 157);
             this.txtMaxAdicionais.Name = "txtMaxAdicionais";
-            this.txtMaxAdicionais.Size = new System.Drawing.Size(92, 26);
+            this.txtMaxAdicionais.Size = new System.Drawing.Size(83, 26);
             this.txtMaxAdicionais.TabIndex = 1;
+            this.txtMaxAdicionais.TextChanged += new System.EventHandler(this.txtMaxAdicionais_TextChanged);
             // 
             // nomeProdutoTextBox
             // 
@@ -516,7 +543,7 @@
             this.nomeProdutoTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nomeProdutoTextBox.Location = new System.Drawing.Point(11, 25);
             this.nomeProdutoTextBox.Name = "nomeProdutoTextBox";
-            this.nomeProdutoTextBox.Size = new System.Drawing.Size(575, 26);
+            this.nomeProdutoTextBox.Size = new System.Drawing.Size(401, 26);
             this.nomeProdutoTextBox.TabIndex = 0;
             // 
             // descricaoProdutoTextBox
@@ -526,22 +553,23 @@
             this.descricaoProdutoTextBox.Location = new System.Drawing.Point(6, 186);
             this.descricaoProdutoTextBox.Multiline = true;
             this.descricaoProdutoTextBox.Name = "descricaoProdutoTextBox";
-            this.descricaoProdutoTextBox.Size = new System.Drawing.Size(580, 82);
+            this.descricaoProdutoTextBox.Size = new System.Drawing.Size(406, 82);
             this.descricaoProdutoTextBox.TabIndex = 5;
             // 
             // precoProdutoTextBox
             // 
             this.precoProdutoTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
             this.precoProdutoTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.precoProdutoTextBox.Location = new System.Drawing.Point(126, 86);
+            this.precoProdutoTextBox.Location = new System.Drawing.Point(237, 86);
             this.precoProdutoTextBox.Name = "precoProdutoTextBox";
-            this.precoProdutoTextBox.Size = new System.Drawing.Size(92, 26);
+            this.precoProdutoTextBox.Size = new System.Drawing.Size(69, 26);
             this.precoProdutoTextBox.TabIndex = 2;
+            this.precoProdutoTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.precoProdutoTextBox_KeyPress);
             // 
             // chkOnline
             // 
             this.chkOnline.AutoSize = true;
-            this.chkOnline.Location = new System.Drawing.Point(422, 3);
+            this.chkOnline.Location = new System.Drawing.Point(302, 6);
             this.chkOnline.Name = "chkOnline";
             this.chkOnline.Size = new System.Drawing.Size(96, 17);
             this.chkOnline.TabIndex = 35;
@@ -553,7 +581,7 @@
             this.chkAtivo.AutoSize = true;
             this.chkAtivo.Checked = true;
             this.chkAtivo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAtivo.Location = new System.Drawing.Point(357, 2);
+            this.chkAtivo.Location = new System.Drawing.Point(237, 6);
             this.chkAtivo.Name = "chkAtivo";
             this.chkAtivo.Size = new System.Drawing.Size(59, 17);
             this.chkAtivo.TabIndex = 34;
@@ -574,7 +602,7 @@
             this.grpDesconto.Controls.Add(this.ChkQuarta);
             this.grpDesconto.Controls.Add(this.chkTerca);
             this.grpDesconto.Controls.Add(this.chkSegunda);
-            this.grpDesconto.Location = new System.Drawing.Point(354, 60);
+            this.grpDesconto.Location = new System.Drawing.Point(418, 6);
             this.grpDesconto.Name = "grpDesconto";
             this.grpDesconto.Size = new System.Drawing.Size(232, 123);
             this.grpDesconto.TabIndex = 32;
@@ -613,8 +641,10 @@
             this.txtPrecoDesconto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPrecoDesconto.Location = new System.Drawing.Point(154, 38);
             this.txtPrecoDesconto.Name = "txtPrecoDesconto";
-            this.txtPrecoDesconto.Size = new System.Drawing.Size(75, 26);
+            this.txtPrecoDesconto.Size = new System.Drawing.Size(72, 26);
             this.txtPrecoDesconto.TabIndex = 23;
+            this.toolTip1.SetToolTip(this.txtPrecoDesconto, "Informe o preço do produto com DESCONTO");
+            this.txtPrecoDesconto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrecoDesconto_KeyPress);
             // 
             // ChkSexta
             // 
@@ -696,10 +726,11 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tbInsumo);
             this.tabControl1.Location = new System.Drawing.Point(0, 1);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(611, 300);
+            this.tabControl1.Size = new System.Drawing.Size(681, 300);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
@@ -712,7 +743,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(603, 274);
+            this.tabPage4.Size = new System.Drawing.Size(673, 274);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "3 -Turno / Disponibilidade";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1094,11 +1125,179 @@
             this.checkBox7.Text = "Segunda";
             this.checkBox7.UseVisualStyleBackColor = true;
             // 
+            // tbInsumo
+            // 
+            this.tbInsumo.Controls.Add(this.label18);
+            this.tbInsumo.Controls.Add(this.txtQtd);
+            this.tbInsumo.Controls.Add(this.panel2);
+            this.tbInsumo.Controls.Add(this.btnEditarIns);
+            this.tbInsumo.Controls.Add(this.btnAdicionar);
+            this.tbInsumo.Controls.Add(this.cbxInsumo);
+            this.tbInsumo.Controls.Add(this.label20);
+            this.tbInsumo.Location = new System.Drawing.Point(4, 22);
+            this.tbInsumo.Name = "tbInsumo";
+            this.tbInsumo.Padding = new System.Windows.Forms.Padding(3);
+            this.tbInsumo.Size = new System.Drawing.Size(673, 274);
+            this.tbInsumo.TabIndex = 4;
+            this.tbInsumo.Text = "5 - Composição/Insumo";
+            this.tbInsumo.UseVisualStyleBackColor = true;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(383, 13);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(27, 13);
+            this.label18.TabIndex = 41;
+            this.label18.Text = "Qtd.";
+            // 
+            // txtQtd
+            // 
+            this.txtQtd.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtQtd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtQtd.Location = new System.Drawing.Point(386, 27);
+            this.txtQtd.Name = "txtQtd";
+            this.txtQtd.Size = new System.Drawing.Size(52, 26);
+            this.txtQtd.TabIndex = 40;
+            this.txtQtd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtQtd_KeyPress);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.gridInsumo);
+            this.panel2.Location = new System.Drawing.Point(3, 60);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(667, 208);
+            this.panel2.TabIndex = 39;
+            // 
+            // gridInsumo
+            // 
+            this.gridInsumo.AllowUserToAddRows = false;
+            this.gridInsumo.AllowUserToDeleteRows = false;
+            this.gridInsumo.AllowUserToOrderColumns = true;
+            this.gridInsumo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridInsumo.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.gridInsumo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridInsumo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridInsumo.Location = new System.Drawing.Point(0, 0);
+            this.gridInsumo.MultiSelect = false;
+            this.gridInsumo.Name = "gridInsumo";
+            this.gridInsumo.ReadOnly = true;
+            this.gridInsumo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridInsumo.Size = new System.Drawing.Size(667, 208);
+            this.gridInsumo.TabIndex = 2;
+            this.gridInsumo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxiliar);
+            this.gridInsumo.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EditarRegistro);
+            // 
+            // btnEditarIns
+            // 
+            this.btnEditarIns.Image = ((System.Drawing.Image)(resources.GetObject("btnEditarIns.Image")));
+            this.btnEditarIns.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEditarIns.Location = new System.Drawing.Point(532, 29);
+            this.btnEditarIns.Name = "btnEditarIns";
+            this.btnEditarIns.Size = new System.Drawing.Size(63, 26);
+            this.btnEditarIns.TabIndex = 38;
+            this.btnEditarIns.Text = "Editar";
+            this.btnEditarIns.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnEditarIns.UseVisualStyleBackColor = true;
+            this.btnEditarIns.Click += new System.EventHandler(this.btnEditarIns_Click);
+            // 
+            // btnAdicionar
+            // 
+            this.btnAdicionar.Image = ((System.Drawing.Image)(resources.GetObject("btnAdicionar.Image")));
+            this.btnAdicionar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAdicionar.Location = new System.Drawing.Point(451, 30);
+            this.btnAdicionar.Name = "btnAdicionar";
+            this.btnAdicionar.Size = new System.Drawing.Size(75, 26);
+            this.btnAdicionar.TabIndex = 37;
+            this.btnAdicionar.Text = "Adicionar";
+            this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAdicionar.UseVisualStyleBackColor = true;
+            this.btnAdicionar.Click += new System.EventHandler(this.AdicionarInsumoProduto);
+            // 
+            // cbxInsumo
+            // 
+            this.cbxInsumo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxInsumo.FormattingEnabled = true;
+            this.cbxInsumo.Location = new System.Drawing.Point(11, 32);
+            this.cbxInsumo.Name = "cbxInsumo";
+            this.cbxInsumo.Size = new System.Drawing.Size(359, 21);
+            this.cbxInsumo.TabIndex = 34;
+            this.cbxInsumo.DropDown += new System.EventHandler(this.ListaInsumos);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(8, 13);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(38, 13);
+            this.label20.TabIndex = 33;
+            this.label20.Text = "Nome ";
+            // 
+            // txtPrecoCusto
+            // 
+            this.txtPrecoCusto.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPrecoCusto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecoCusto.Location = new System.Drawing.Point(11, 86);
+            this.txtPrecoCusto.Name = "txtPrecoCusto";
+            this.txtPrecoCusto.Size = new System.Drawing.Size(54, 26);
+            this.txtPrecoCusto.TabIndex = 41;
+            this.toolTip1.SetToolTip(this.txtPrecoCusto, "Preço de custo calculado pelo sistema");
+            this.txtPrecoCusto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrecoCusto_KeyPress);
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Location = new System.Drawing.Point(8, 69);
+            label19.Name = "label19";
+            label19.Size = new System.Drawing.Size(65, 13);
+            label19.TabIndex = 42;
+            label19.Text = "Preço Custo";
+            // 
+            // txtMarkup
+            // 
+            this.txtMarkup.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtMarkup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMarkup.Location = new System.Drawing.Point(84, 86);
+            this.txtMarkup.Name = "txtMarkup";
+            this.txtMarkup.Size = new System.Drawing.Size(56, 26);
+            this.txtMarkup.TabIndex = 43;
+            this.toolTip1.SetToolTip(this.txtMarkup, "Informe a margem de lucro desejada no produto");
+            this.txtMarkup.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMarkup_KeyPress);
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new System.Drawing.Point(81, 69);
+            label21.Name = "label21";
+            label21.Size = new System.Drawing.Size(54, 13);
+            label21.TabIndex = 44;
+            label21.Text = "Markup %";
+            // 
+            // txtPrecoSugerido
+            // 
+            this.txtPrecoSugerido.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPrecoSugerido.Enabled = false;
+            this.txtPrecoSugerido.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecoSugerido.Location = new System.Drawing.Point(159, 86);
+            this.txtPrecoSugerido.Name = "txtPrecoSugerido";
+            this.txtPrecoSugerido.Size = new System.Drawing.Size(69, 26);
+            this.txtPrecoSugerido.TabIndex = 45;
+            this.toolTip1.SetToolTip(this.txtPrecoSugerido, "Preço de venda sugerido pelo sistema");
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Location = new System.Drawing.Point(156, 69);
+            label22.Name = "label22";
+            label22.Size = new System.Drawing.Size(65, 13);
+            label22.TabIndex = 46;
+            label22.Text = "Pr. Sugerido";
+            // 
             // frmCadastrarProduto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(623, 349);
+            this.ClientSize = new System.Drawing.Size(684, 349);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnDoProduto);
             this.Controls.Add(this.tabControl1);
@@ -1108,7 +1307,6 @@
             this.Name = "frmCadastrarProduto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[XDelivery] Cadastrar Produto ";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCadastrarProduto_FormClosed);
             this.Load += new System.EventHandler(this.frmCadastrarProduto_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastrarProduto_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).EndInit();
@@ -1132,6 +1330,10 @@
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tbInsumo.ResumeLayout(false);
+            this.tbInsumo.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridInsumo)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1220,5 +1422,17 @@
         private System.Windows.Forms.TextBox txtCodInterno;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.GroupBox grpPrecosDia;
+        private System.Windows.Forms.TabPage tbInsumo;
+        private System.Windows.Forms.Button btnEditarIns;
+        private System.Windows.Forms.Button btnAdicionar;
+        private System.Windows.Forms.ComboBox cbxInsumo;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.DataGridView gridInsumo;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txtQtd;
+        private System.Windows.Forms.TextBox txtMarkup;
+        private System.Windows.Forms.TextBox txtPrecoCusto;
+        private System.Windows.Forms.TextBox txtPrecoSugerido;
     }
 }

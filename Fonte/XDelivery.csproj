@@ -335,6 +335,7 @@
     <Compile Include="Models\Pessoa_OrigemCadastro.cs" />
     <Compile Include="Models\Pessoa_Endereco.cs" />
     <Compile Include="Models\Produto\Insumo.cs" />
+    <Compile Include="Models\Produto\InsumoProduto.cs" />
     <Compile Include="Models\Produto\Opcao.cs" />
     <Compile Include="Models\Produto\OpcaoDia.cs" />
     <Compile Include="Models\Produto\OpcaoItem.cs" />

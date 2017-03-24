@@ -15,13 +15,11 @@ create procedure spAdicionarInsumo
 @Nome nvarchar(max),
 @UnidadeMedida char(4),
 @Preco decimal(10,2),
-@AtivoSN bit,
-@DataCadastro datetime,
-@DataAlteracao datetime
+@AtivoSN bit
 as 
  begin
   insert into Insumo (Nome,UnidadeMedida,Preco,AtivoSN,DataCadastro,DataAlteracao) 
-           values (@Nome,@UnidadeMedida,@Preco,@AtivoSN,@DataCadastro,@DataAlteracao) 
+           values (@Nome,@UnidadeMedida,@Preco,@AtivoSN,Getdate(),Getdate()) 
  end
  
 go
@@ -30,9 +28,7 @@ create procedure spAlterarInsumo
 @Nome nvarchar(max),
 @UnidadeMedida char(4),
 @Preco decimal(10,2),
-@AtivoSN bit,
-@DataCadastro datetime,
-@DataAlteracao datetime
+@AtivoSN bit
 as 
  begin
   update  Insumo 
@@ -41,7 +37,7 @@ as
   UnidadeMedida=@UnidadeMedida,
   Preco=@Preco,
   AtivoSN=@AtivoSN,
-  DataCadastro=DataCadastro,
+  DataCadastro=Getdate(),
   DataAlteracao=Getdate() 
   where Codigo=@Codigo
  end
@@ -100,3 +96,20 @@ create procedure spExcluirProdutoInsumo
    begin
     delete from Produto_Insumo where Codigo=@Codigo
    end
+  go
+  create procedure spExcluirInsumo
+  @Codigo int
+  as
+  begin
+  delete from Insumo where Codigo=@Codigo
+  end
+go
+go
+create procedure spObterInsumoPorCodProduto
+ @CodProduto int
+ as
+ begin
+  select P.Codigo,I.Nome,I.Preco,P.Quantidade from Produto_Insumo P 
+  join Insumo I on I.Codigo=P.CodInsumo
+  where CodProduto=@CodProduto
+ end 

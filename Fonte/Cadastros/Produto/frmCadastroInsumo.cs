@@ -27,6 +27,8 @@ namespace DexComanda.Cadastros.Produto
         }
         private void ExibirRegistros()
         {
+            Utils.LimpaForm(this);
+            con = new Conexao();
             this.registrosGridView.DataSource = null;
             this.registrosGridView.AutoGenerateColumns = true;
             this.registrosGridView.DataSource = Utils.PopularGrid_SP("Insumo", registrosGridView, "spObterInsumo");
@@ -41,10 +43,8 @@ namespace DexComanda.Cadastros.Produto
                 {
                     AtivoSN = chkAtivoSN.Checked,
                     Nome = txtNome.Text,
-                    DataAlteracao = DateTime.Now,
-                    DataCadastro = DateTime.Now,
                     Preco = decimal.Parse(txtPreco.Text.Replace("R$", "")),
-                    UnidadeMedida = cbxUndMedida.SelectedText
+                    UnidadeMedida = cbxUndMedida.Text
                 };
                 con.Insert("spAdicionarInsumo", insumo);
                 ExibirRegistros();
@@ -72,6 +72,14 @@ namespace DexComanda.Cadastros.Produto
                 };
                 con.Update("spAlterarInsumo", ins);
                 ExibirRegistros();
+
+                this.btnAdicionar.Text = "Adicionar [F12]";
+                this.btnAdicionar.Click += new System.EventHandler(this.AdicionarRegistro);
+                this.btnAdicionar.Click -= new System.EventHandler(this.SalvarRegistro);
+
+                this.btnEditar.Text = "Editar [F11]";
+                this.btnEditar.Click += new System.EventHandler(this.EditarRegistro);
+                this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
             }
             catch (Exception erro)
             {
@@ -106,7 +114,7 @@ namespace DexComanda.Cadastros.Produto
                  codigo =int.Parse(registrosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
                 txtNome.Text = registrosGridView.CurrentRow.Cells["Nome"].Value.ToString();
                 txtPreco.Text = registrosGridView.CurrentRow.Cells["Preco"].Value.ToString();
-                cbxUndMedida.Text = registrosGridView.CurrentRow.Cells["UnidadeMedida"].Value.ToString();
+                cbxUndMedida.Text= registrosGridView.CurrentRow.Cells["UnidadeMedida"].Value.ToString();
                 chkAtivoSN.Checked = Convert.ToBoolean(registrosGridView.CurrentRow.Cells["AtivoSN"].Value.ToString());
 
                 this.btnAdicionar.Text = "Salvar [F12]";
@@ -116,6 +124,52 @@ namespace DexComanda.Cadastros.Produto
                 this.btnEditar.Text = "Cancelar [ESC]";
                 this.btnEditar.Click += new System.EventHandler(this.Cancelar);
                 this.btnEditar.Click -= new System.EventHandler(this.EditarRegistro);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
+        private void DeletaRegistro(object sender, EventArgs e)
+        {
+            try
+            {
+                if (registrosGridView.SelectedRows.Count > 0)
+                {
+                    int codRegistro = int.Parse(this.registrosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+                    con.DeleteAll("Insumo", "spExcluirInsumo", codRegistro);
+                    Utils.ControlaEventos("Excluir", this.Name);
+                    MessageBox.Show("Item excluído com sucesso.");
+                    ExibirRegistros();
+                }
+                else
+                {
+                    MessageBox.Show("Selecione o registro para excluir");
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+           
+
+        }
+        private void MenuAuxiliar(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                DataGridView dgv = sender as DataGridView;
+                if (e.Button == MouseButtons.Right)
+                {
+                    ContextMenu m = new ContextMenu();
+                    MenuItem Excluir = new MenuItem("Excluir Registro");
+                    Excluir.Click += DeletaRegistro;
+                    m.MenuItems.Add(Excluir);
+
+                    int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
+                    m.Show(dgv, new Point(e.X, e.Y));
+
+                }
             }
             catch (Exception erro)
             {

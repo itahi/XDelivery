@@ -1,4 +1,5 @@
 ﻿using DexComanda.Models;
+using DexComanda.Models.Produto;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,6 +26,7 @@ namespace DexComanda
         private string Marcados;
         private bool PromocaoDiasSemana = Sessions.returnConfig.DescontoDiaSemana;
         private List<PrecoDiaProduto> listPrecos;
+        private int codigoinsumo;
         public frmCadastrarProduto(Main parent)
         {
             InitializeComponent();
@@ -223,7 +225,7 @@ namespace DexComanda
         private void frmCadastrarProduto_Load(object sender, EventArgs e)
         {
             con = new Conexao();
-
+            ListaInsumos();
             btnEditar.Enabled = codigoProdutoParaAlterar != 0;
             DiasSelecionados = new List<string>();
             tabPage2.IsAccessible = btnDoProduto.Text == "Alterar [F12]";
@@ -292,8 +294,9 @@ namespace DexComanda
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                     DataAlteracao = DateTime.Now,
-                    //PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text)
-
+                    Markup = decimal.Parse(txtMarkup.Text),
+                    PrecoCusto = decimal.Parse(txtPrecoCusto.Text),
+                    PrecoSugerido= decimal.Parse(txtPrecoSugerido.Text),
                 };
                 produto.UrlImagem = "";
                 if (txtCodInterno.Text != "0")
@@ -337,7 +340,7 @@ namespace DexComanda
                 // this_FormClosing();
                 MessageBox.Show("Produto cadastrado com sucesso.");
                 SalvarAdicionais(con.getLastCodigo());
-
+                SalvarInsumo(con.getLastCodigo());
                 Utils.ControlaEventos("Inserir", this.Name);
                 nomeProdutoTextBox.Focus();
 
@@ -367,6 +370,31 @@ namespace DexComanda
                 AdicionaisGridView.DataSource = null;
                 AdicionaisGridView.DataMember = null;
                 AdicionaisGridView.AutoGenerateColumns = false;
+            }
+        }
+        /// <summary>
+        /// Salva os insumos do produto para compor o preço
+        /// </summary>
+        /// <param name="iCodProduto">
+        /// Código do Produto</param>
+        private void SalvarInsumo(int iCodProduto)
+        {
+            if (gridInsumo.Rows.Count > 0)
+            {
+                for (int i = 0; i < gridInsumo.Rows.Count; i++)
+                {
+                    InsumoProduto insumo = new InsumoProduto()
+                    {
+                        CodProduto = iCodProduto,
+                        CodInsumo = int.Parse(gridInsumo.Rows[i].Cells["CodInsumo"].Value.ToString()),
+                        Quantidade = decimal.Parse(gridInsumo.Rows[i].Cells["Preco"].Value.ToString()),
+                    };
+                    con.Insert("spAdicionarProdutoInsumo", insumo);
+                }
+
+                gridInsumo.DataSource = null;
+                gridInsumo.DataMember = null;
+                gridInsumo.AutoGenerateColumns = false;
             }
         }
         public string DiasSelecinado()
@@ -438,6 +466,9 @@ namespace DexComanda
                     DataAlteracao = DateTime.Now,
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
+                    Markup = decimal.Parse(txtMarkup.Text),
+                    PrecoCusto = decimal.Parse(txtPrecoCusto.Text),
+                    PrecoSugerido = decimal.Parse(txtPrecoSugerido.Text),
                 };
                 produto.CodigoPersonalizado = "0";
                 if (txtCodInterno.Text != "" && txtCodInterno.Text != "0")
@@ -587,7 +618,7 @@ namespace DexComanda
         private void ListaOpcao(object sender, EventArgs e)
         {
 
-            if (cbxTipoOpcao.SelectedIndex>=0)
+            if (cbxTipoOpcao.SelectedIndex >= 0)
             {
                 Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcaoPorTipo", int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
             }
@@ -738,6 +769,31 @@ namespace DexComanda
                 MessageBox.Show(erro.Message);
             }
 
+        }
+        private void SalvarRegistroInsumo(object sender, EventArgs e)
+        {
+            try
+            {
+                InsumoProduto ins = new InsumoProduto()
+                {
+                    Codigo = codigoinsumo,
+                    CodInsumo = int.Parse(cbxInsumo.SelectedValue.ToString()),
+                    CodProduto = codigoProdutoParaAlterar,
+                    Quantidade = decimal.Parse(txtQtd.Text)
+                };
+                con.Update("spAlterarProdutoInsumo", ins);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            this.btnAdicionar.Text = "Adicionar";
+            this.btnAdicionar.Click += new System.EventHandler(this.AdicionarInsumoProduto);
+            this.btnAdicionar.Click -= new System.EventHandler(this.SalvarRegistroInsumo);
+
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
         }
         private void SalvarRegistro(object sender, EventArgs e)
         {
@@ -960,25 +1016,200 @@ namespace DexComanda
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
         }
 
-        private void FiltrarOpcaoPorTipo(object sender, EventArgs e)
-        {
-            //ListaOpcao(sender, e);
-        }
-
         private void cbxTipoOpcao_DropDown(object sender, EventArgs e)
         {
             Utils.MontaCombox(cbxTipoOpcao, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
 
         }
-
-        private void frmCadastrarProduto_FormClosed(object sender, FormClosedEventArgs e)
+        private void ListaInsumos(object sender, EventArgs e)
         {
-            //Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
+            try
+            {
+                Utils.MontaCombox(cbxInsumo, "Nome", "Codigo", "Insumo", "spObterInsumo");
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
+        private void ListaInsumos()
+        {
+            if (codigoProdutoParaAlterar != 0)
+            {
+                gridInsumo.DataSource = con.SelectInsumoProduto(codigoProdutoParaAlterar);
+                gridInsumo.AutoGenerateColumns = true;
+                gridInsumo.DataMember = "Produto_Insumo";
+            }
+            else if (!gridInsumo.Columns.Contains("Codigo"))
+            {
+                gridInsumo.Columns.Add("Codigo", "Codigo");
+                gridInsumo.Columns.Add("Nome", "Nome");
+                gridInsumo.Columns.Add("Quantidade", "Quantidade");
+                gridInsumo.Columns.Add("Preco", "Preço");
+            }
+
+        }
+        private void AdicionarInsumoProduto(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbxInsumo.SelectedIndex < 0)
+                {
+                    MessageBox.Show("Selecione o insumo");
+                    cbxInsumo.Focus();
+                    return;
+                }
+                if (txtQtd.Text == "")
+                {
+                    MessageBox.Show("Informe a quantidade do insumo");
+                    txtQtd.Focus();
+                    return;
+                }
+            
+
+                for (int i = 0; i < gridInsumo.Rows.Count; i++)
+                {
+                    if (cbxInsumo.SelectedValue.ToString() == gridInsumo.Rows[i].Cells["Codigo"].Value.ToString())
+                    {
+                        if (!Utils.MessageBoxQuestion("Esse insumo já esta vinculada a esse produto , deseja adicionar novamente?"))
+                        {
+                            return;
+                        }
+                    }
+                }
+                if (codigoProdutoParaAlterar != 0)
+                {
+                    InsumoProduto insPro = new InsumoProduto()
+                    {
+                        CodInsumo = int.Parse(cbxInsumo.SelectedValue.ToString()),
+                        CodProduto = codigoProdutoParaAlterar,
+                        Quantidade = int.Parse(txtQtd.Text)
+                    };
+                    con.Insert("spAdicionarProdutoInsumo", insPro);
+                    ListaInsumos();
+                }
+                else
+                {
+                    int iCountLinhas = 0;
+                    if (gridInsumo.DataSource != null)
+                    {
+                        gridInsumo.AutoGenerateColumns = false;
+                        gridInsumo.DataSource = null;
+                        gridInsumo.DataMember = null;
+                    }
+
+                    gridInsumo.Rows.Add();
+                    gridInsumo.Rows[iCountLinhas].Cells["CodInsumo"].Value = int.Parse(cbxInsumo.SelectedValue.ToString());
+                    gridInsumo.Rows[iCountLinhas].Cells["Quantidade"].Value = decimal.Parse(txtQtd.Text);
+                    gridInsumo.Rows[iCountLinhas].Cells["Nome"].Value = cbxInsumo.Text.ToString();
+                    iCountLinhas = gridInsumo.Rows.Count;
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
         }
 
-        private void button3_Click_1(object sender, EventArgs e)
+        private void txtPrecoInsumo_KeyPress(object sender, KeyPressEventArgs e)
         {
-           
+            Utils.SoDecimais(e);
+        }
+        private void DeletarInsumo(object sender, EventArgs e)
+        {
+            if (gridInsumo.SelectedRows.Count > 0)
+            {
+                int codRegistro = int.Parse(this.gridInsumo.CurrentRow.Cells["Codigo"].Value.ToString());
+                con.DeleteAll("Produto_Insumo", "spExcluirProdutoInsumo", codRegistro);
+                Utils.ControlaEventos("Excluir", this.Name);
+                MessageBox.Show("Item excluído com sucesso.");
+                ListaInsumos();
+
+            }
+            else
+            {
+                MessageBox.Show("Selecione o grupo para excluir");
+            }
+
+        }
+        private void MenuAuxiliar(object sender, MouseEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu m = new ContextMenu();
+                MenuItem ExcluirRegistro = new MenuItem("Excluir Registro");
+                ExcluirRegistro.Click += DeletarInsumo;
+                m.MenuItems.Add(ExcluirRegistro);
+
+                int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
+                m.Show(dgv, new Point(e.X, e.Y));
+
+            }
+        }
+
+        private void txtQtd_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoPermiteNumeros(e);
+        }
+
+        private void EditarRegistro(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (gridInsumo.CurrentRow.Cells[0].Value.ToString()==null)
+                {
+                    MessageBox.Show("Selecione o registro para editar");
+                    return; 
+                }
+                codigoinsumo = int.Parse(gridInsumo.CurrentRow.Cells["Codigo"].Value.ToString());
+                cbxInsumo.Text = gridInsumo.CurrentRow.Cells["Nome"].Value.ToString();
+                txtQtd.Text = gridInsumo.CurrentRow.Cells["Quantidade"].Value.ToString();
+
+
+                this.btnAdicionar.Text = "Salvar";
+                this.btnAdicionar.Click += new System.EventHandler(this.SalvarRegistroInsumo);
+                this.btnAdicionar.Click -= new System.EventHandler(this.AdicionarInsumoProduto);
+
+                this.btnEditarIns.Text = "Cancelar";
+                this.btnEditarIns.Click += new System.EventHandler(this.Cancelar);
+                this.btnEditarIns.Click -= new System.EventHandler(this.btnEditarIns_Click);
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+        }
+
+        private void btnEditarIns_Click(object sender, EventArgs e)
+        {
+            btnEditar_Click(sender, e);
+        }
+
+        private void precoProdutoTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
+        }
+
+        private void txtPrecoCusto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
+        }
+
+        private void txtMarkup_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
+        }
+
+        private void txtMaxAdicionais_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPrecoDesconto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
         }
     }
 }

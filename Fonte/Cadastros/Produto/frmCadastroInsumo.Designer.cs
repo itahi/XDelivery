@@ -60,7 +60,6 @@
             // 
             // cbxUndMedida
             // 
-            this.cbxUndMedida.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxUndMedida.FormattingEnabled = true;
             this.cbxUndMedida.Items.AddRange(new object[] {
             "UND",
@@ -123,6 +122,7 @@
             this.registrosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.registrosGridView.Size = new System.Drawing.Size(295, 201);
             this.registrosGridView.TabIndex = 10;
+            this.registrosGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxiliar);
             // 
             // btnEditar
             // 

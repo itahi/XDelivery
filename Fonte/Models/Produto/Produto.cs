@@ -24,5 +24,8 @@ namespace DexComanda.Models
         public DateTime DataInicioPromocao { get; set; }
         public DateTime DataFimPromocao { get; set; }
         public string CodigoPersonalizado { get; set; }
+        public decimal Markup { get; set; }
+        public decimal PrecoSugerido { get; set; }
+        public decimal PrecoCusto { get; set; }
     }
 }

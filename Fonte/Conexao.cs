@@ -769,13 +769,13 @@ namespace DexComanda
             {
                 if (iSemPedido)
                 {
-                    ds= SelectObterClientesSemPedido("spObterClientesSemPedido",
+                    ds = SelectObterClientesSemPedido("spObterClientesSemPedido",
                        iData1,
                       iData1);
                 }
                 else if (iAniversariante)
                 {
-                    ds=  SelectObterAniversariantes("spObterAnivesariantes",
+                    ds = SelectObterAniversariantes("spObterAnivesariantes",
                        iData1,
                        iData2);
                 }
@@ -1250,6 +1250,16 @@ namespace DexComanda
             adapter.Fill(ds, "Produto_Opcao");
             return ds;
         }
+        public DataSet SelectInsumoProduto(int iCodProduto)
+        {
+            command = new SqlCommand("spObterInsumoPorCodProduto", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@CodProduto", iCodProduto);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto_Insumo");
+            return ds;
+        }
         public DataSet SelectPessoaPorNome(string iNome, string iSqlConsulta, string iParam)
         {
             iSqlConsulta = "select " + iSqlConsulta + " from Pessoa  where " + iParam + " like '%" + iNome + "%'";
@@ -1277,7 +1287,7 @@ namespace DexComanda
                 spName == "spAdicionarGrupo" || spName == "spAdicionarProduto" ||
                 spName == "spAdicionarConfiguracao" || spName == "spAdicionarEntregador" || spName == "spInserirMovimentoCaixa" || spName == "spAdicionarPedidoStatus" ||
                 spName == "spAdicionarEmpresa" || spName == "spAdicionarFamilia" || spName == "spAdicionarMensagen" || spName == "spAdicionarEvento"
-                || spName == "spAdicionarOpcaProduto" || spName == "spAdicionarProduto_OpcaoTipo" || spName == "spAdicionarEmpresa_HorarioEntrega" || spName == " spAdicionarPessoa_OrigemCadastro" )
+                || spName == "spAdicionarOpcaProduto" || spName == "spAdicionarProduto_OpcaoTipo" || spName == "spAdicionarEmpresa_HorarioEntrega" || spName == " spAdicionarPessoa_OrigemCadastro")
             {
 
                 if (spName == "spAdicionarProduto")
@@ -1501,6 +1511,13 @@ namespace DexComanda
                             command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                         }
 
+                    }
+                }
+                else if (spName == "spAlterarProdutoInsumo")
+                {
+                    if (!p.Name.Equals("Codigo") || !p.Name.Equals("Quantidade"))
+                    {
+                        command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                     }
                 }
                 else if (spName == "spAlterarGrupo")
@@ -1779,7 +1796,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-            
+
 
             return ds;
         }
@@ -2008,7 +2025,7 @@ namespace DexComanda
                 }
 
                 adapter = new SqlDataAdapter(command);
-               // adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                // adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
                 ds = new DataSet();
                 adapter.Fill(ds, table);
@@ -2017,7 +2034,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-            
+
 
             return ds;
         }
@@ -2084,7 +2101,7 @@ namespace DexComanda
         /// <param name="intCodItem"> Código do item na tabela ItemPedido.Codigo</param>
         /// <param name="intCodigoMesaDestino"> Código da mesa destino que receberá o item Mesas.Codigo</param>
         /// <returns></returns>
-        public int TransfereItemMesa(int intCodItem,int intCodigoMesaDestino)
+        public int TransfereItemMesa(int intCodItem, int intCodigoMesaDestino)
         {
             int iReturn = 0;
             try

@@ -13,7 +13,5 @@ namespace DexComanda.Models.Produto
         public decimal Preco { get; set; }
         public string UnidadeMedida { get; set; }
         public bool AtivoSN { get; set; }
-        public DateTime DataCadastro { get; set; }
-        public DateTime DataAlteracao { get; set; }
     }
 }

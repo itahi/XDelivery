@@ -2317,6 +2317,11 @@ namespace DexComanda
                 }
                 else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.ComboBox)))
                 {
+                    //If its a RichTextBox clear the text
+                    ((System.Windows.Forms.ComboBox)ctrControl).Text = "";
+                }
+                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.ComboBox)))
+                {
                     //Next check if it's a dropdown list 
                     ((System.Windows.Forms.ComboBox)ctrControl).SelectedIndex = -1;
                     //If it is then set its SelectedIndex to 0 
