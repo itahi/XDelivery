@@ -23,7 +23,7 @@ namespace DexComanda.Cadastros.Produto
 
         private void frmCadastroInsumo_Load(object sender, EventArgs e)
         {
-
+            ExibirRegistros();
         }
         private void ExibirRegistros()
         {

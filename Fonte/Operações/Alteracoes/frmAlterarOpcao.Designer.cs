@@ -85,7 +85,7 @@
             this.cbxOpcao.FormattingEnabled = true;
             this.cbxOpcao.Location = new System.Drawing.Point(201, 40);
             this.cbxOpcao.Name = "cbxOpcao";
-            this.cbxOpcao.Size = new System.Drawing.Size(155, 21);
+            this.cbxOpcao.Size = new System.Drawing.Size(205, 21);
             this.cbxOpcao.TabIndex = 3;
             this.cbxOpcao.DropDown += new System.EventHandler(this.cbxOpcao_DropDown);
             this.cbxOpcao.SelectedIndexChanged += new System.EventHandler(this.cbxOpcao_SelectedIndexChanged);
@@ -117,6 +117,7 @@
             this.cbxTipoOpcao.Name = "cbxTipoOpcao";
             this.cbxTipoOpcao.Size = new System.Drawing.Size(155, 21);
             this.cbxTipoOpcao.TabIndex = 0;
+            this.cbxTipoOpcao.DropDown += new System.EventHandler(this.cbxTipoOpcao_DropDown);
             this.cbxTipoOpcao.SelectionChangeCommitted += new System.EventHandler(this.BuscaOpcao);
             // 
             // groupBox2

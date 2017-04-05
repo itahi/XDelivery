@@ -60,11 +60,10 @@
             // 
             // cbxUndMedida
             // 
+            this.cbxUndMedida.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxUndMedida.FormattingEnabled = true;
             this.cbxUndMedida.Items.AddRange(new object[] {
-            "UND",
-            "KG",
-            "LT"});
+            "UND"});
             this.cbxUndMedida.Location = new System.Drawing.Point(12, 87);
             this.cbxUndMedida.Name = "cbxUndMedida";
             this.cbxUndMedida.Size = new System.Drawing.Size(77, 21);

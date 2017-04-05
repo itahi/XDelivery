@@ -142,7 +142,9 @@ namespace DexComanda
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
+            lblNumero.Text = dsResultado.Tables[0].Rows.Count.ToString();
             return dsResultado;
+
         }
         private void PopulaGrid(DataSet ds, string table)
         {

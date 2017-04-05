@@ -328,7 +328,7 @@ namespace DexComanda
                         dsPessoa.Tables[0].Rows[0].Field<string>("Numero")
                         + "-" + dsPessoa.Tables[0].Rows[0].Field<string>("Bairro") + " " +
                         dsPessoa.Tables[0].Rows[0].Field<string>("Cidade");
-                    lblEntrega.Text = Convert.ToString(Utils.RetornaTaxaPorCliente(codPessoa, 0));
+                    lblEntrega.Text = Convert.ToString(Utils.RetornaTaxaPorCliente(codPessoa, iCodEndereco));
                 }
                 else
                 {

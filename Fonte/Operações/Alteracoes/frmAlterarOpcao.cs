@@ -28,25 +28,37 @@ namespace DexComanda.Operações.Alteracoes
 
         private void frmAlterarOpcao_Load(object sender, EventArgs e)
         {
-            Utils.MontaCombox(cbxTipoOpcao, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
+           
         }
 
         private void Filtrar(object sender, EventArgs e)
         {
-            DataSet ds;
-            if (cbxTipoOpcao.SelectedValue != "")
+            try
             {
-                ds = con.RetornaOpcoesPortipo(int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
-                GridView.DataMember = "Opcao";
+                if (cbxOpcao.SelectedValue==null && cbxTipoOpcao.SelectedValue==null)
+                {
+                    MessageBox.Show("Selecione um tipo de busca para continuar");
+                    return;
+                }
+                DataSet ds;
+                if (cbxTipoOpcao.SelectedValue.ToString()!="")
+                {
+                    ds = con.RetornaOpcoesPortipo(int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
+                    GridView.DataMember = "Opcao";
+                }
+                else
+                {
+                    ds = con.RetornaOpcoes(int.Parse(cbxOpcao.SelectedValue.ToString()));
+                    GridView.DataMember = "Produto_Opcao";
+                }
+                GridView.AutoGenerateColumns = true;
+                GridView.DataSource = ds;
             }
-            else
+            catch (Exception erro)
             {
-                ds = con.RetornaOpcoes(int.Parse(cbxOpcao.SelectedValue.ToString()));
-                GridView.DataMember = "Produto_Opcao";
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-
-            GridView.AutoGenerateColumns = true;
-            GridView.DataSource = ds;
+            
         }
 
         private void ExecutarAlteracao(object sender, EventArgs e)
@@ -103,7 +115,7 @@ namespace DexComanda.Operações.Alteracoes
 
         private void BuscaOpcao(object sender, EventArgs e)
         {
-            
+           
         }
 
         private void cbxOpcao_SelectedIndexChanged(object sender, EventArgs e)
@@ -113,7 +125,17 @@ namespace DexComanda.Operações.Alteracoes
 
         private void cbxOpcao_DropDown(object sender, EventArgs e)
         {
+            if (cbxTipoOpcao.SelectedValue == null)
+            {
+                MessageBox.Show("Selecione o filtro tipo opção para continuar");
+                return;
+            }
             Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcaoPorTipo", int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
+        }
+
+        private void cbxTipoOpcao_DropDown(object sender, EventArgs e)
+        {
+            Utils.MontaCombox(cbxTipoOpcao, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
         }
     }
 }

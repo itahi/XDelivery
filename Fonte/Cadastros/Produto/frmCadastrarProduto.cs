@@ -38,7 +38,7 @@ namespace DexComanda
         }
         public frmCadastrarProduto(int CodProduto, string iNomeProduto, string iCodGrupo, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
                                    decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo,
-                                   DateTime idtFimPromo, bool iAtivoSN, string iCodInterno)
+                                   DateTime idtFimPromo, bool iAtivoSN, string iCodInterno,string iMarkup,string iPrecoSugerido)
         {
             try
             {
@@ -78,15 +78,15 @@ namespace DexComanda
                     chkDomingo.Checked = true;
                 }
 
-
+                txtMarkup.Text = iMarkup;
+                txtPrecoSugerido.Text = iPrecoSugerido;
                 MontaListPrecos(iDiasPromocao);
                 nomeProdutoTextBox.Text = iNomeProduto;
                 precoProdutoTextBox.Text = iPreco.ToString();
                 Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoPorCodigo", int.Parse(iCodGrupo));
-                //cbxGrupoProduto.DataSource = "Grupo";
-                //cbxGrupoProduto.DisplayMember = iGrupo;
-                //cbxGrupoProduto.ValueMember = iCodGrupo;
                 descricaoProdutoTextBox.Text = iDescricao;
+                con = new Conexao();
+                txtPrecoCusto.Text = Convert.ToString(con.CalculaPrecoInsumo(CodProduto));
                 chkAtivo.Checked = iAtivoSN;
                 chkOnline.Checked = iVendaOnline;
                 txtMaxAdicionais.Text = iMaximoAdicionais;
@@ -106,7 +106,7 @@ namespace DexComanda
             }
 
         }
-
+     
         public frmCadastrarProduto(Produtos prod, Main parent)
         {
             InitializeComponent();
@@ -158,6 +158,7 @@ namespace DexComanda
         }
         private List<PrecoDiaProduto> RetornaDiasMarcados()
         {
+            
             listPrecos = new List<PrecoDiaProduto>();
             // var precosDia = new PrecoDiaProduto();
             foreach (System.Windows.Forms.Control TEXT in grpPrecosDia.Controls)
@@ -222,6 +223,7 @@ namespace DexComanda
 
         }
 
+       
         private void frmCadastrarProduto_Load(object sender, EventArgs e)
         {
             con = new Conexao();
@@ -242,6 +244,7 @@ namespace DexComanda
                 codigoProdutoParaAlterar = produto.Codigo;
                 this.nomeProdutoTextBox.Text = produto.Nome;
                 //  MontaListPrecos(produto.DiaSemana);
+                txtPrecoCusto.Text = con.CalculaPrecoInsumo(codigoProdutoParaAlterar).ToString();
                 cbxGrupoProduto.ValueMember = produto.CodGrupo.ToString();
                 this.cbxGrupoProduto.Text = produto.GrupoProduto;
                 this.precoProdutoTextBox.Text = produto.Preco.ToString();
@@ -294,10 +297,20 @@ namespace DexComanda
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                     DataAlteracao = DateTime.Now,
-                    Markup = decimal.Parse(txtMarkup.Text),
-                    PrecoCusto = decimal.Parse(txtPrecoCusto.Text),
-                    PrecoSugerido= decimal.Parse(txtPrecoSugerido.Text),
+                   
                 };
+                if (txtPrecoCusto.Text!="")
+                {
+                    produto.PrecoCusto = decimal.Parse(txtPrecoCusto.Text);
+                }
+                if (txtMarkup.Text!="")
+                {
+                    produto.Markup = decimal.Parse(txtMarkup.Text);
+                }
+                if (txtPrecoSugerido.Text!="")
+                {
+                    produto.PrecoSugerido = decimal.Parse(txtPrecoSugerido.Text);
+                }
                 produto.UrlImagem = "";
                 if (txtCodInterno.Text != "0")
                 {
@@ -470,6 +483,18 @@ namespace DexComanda
                     PrecoCusto = decimal.Parse(txtPrecoCusto.Text),
                     PrecoSugerido = decimal.Parse(txtPrecoSugerido.Text),
                 };
+                if (txtPrecoCusto.Text != "")
+                {
+                    produto.PrecoCusto = decimal.Parse(txtPrecoCusto.Text);
+                }
+                if (txtMarkup.Text != "")
+                {
+                    produto.Markup = decimal.Parse(txtMarkup.Text);
+                }
+                if (txtPrecoSugerido.Text != "")
+                {
+                    produto.PrecoSugerido = decimal.Parse(txtPrecoSugerido.Text);
+                }
                 produto.CodigoPersonalizado = "0";
                 if (txtCodInterno.Text != "" && txtCodInterno.Text != "0")
                 {
@@ -1039,6 +1064,8 @@ namespace DexComanda
                 gridInsumo.DataSource = con.SelectInsumoProduto(codigoProdutoParaAlterar);
                 gridInsumo.AutoGenerateColumns = true;
                 gridInsumo.DataMember = "Produto_Insumo";
+
+                txtPrecoCusto.Text = con.CalculaPrecoInsumo(codigoProdutoParaAlterar).ToString();
             }
             else if (!gridInsumo.Columns.Contains("Codigo"))
             {
@@ -1047,7 +1074,7 @@ namespace DexComanda
                 gridInsumo.Columns.Add("Quantidade", "Quantidade");
                 gridInsumo.Columns.Add("Preco", "Preço");
             }
-
+           
         }
         private void AdicionarInsumoProduto(object sender, EventArgs e)
         {
@@ -1087,6 +1114,7 @@ namespace DexComanda
                     };
                     con.Insert("spAdicionarProdutoInsumo", insPro);
                     ListaInsumos();
+                    txtPrecoCusto.Text = con.CalculaPrecoInsumo(codigoProdutoParaAlterar).ToString();
                 }
                 else
                 {
@@ -1117,6 +1145,12 @@ namespace DexComanda
         }
         private void DeletarInsumo(object sender, EventArgs e)
         {
+            string iNomeInsumo = gridInsumo.CurrentRow.Cells["Nome"].Value.ToString();
+            if (!Utils.MessageBoxQuestion("Deseja excluir o " + iNomeInsumo + " da lista de insumo?"))
+            {
+                return;
+            }
+            
             if (gridInsumo.SelectedRows.Count > 0)
             {
                 int codRegistro = int.Parse(this.gridInsumo.CurrentRow.Cells["Codigo"].Value.ToString());
@@ -1210,6 +1244,29 @@ namespace DexComanda
         private void txtPrecoDesconto_KeyPress(object sender, KeyPressEventArgs e)
         {
             Utils.SoDecimais(e);
+        }
+
+        private void txtMarkup_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtPrecoCusto.Text == "")
+                {
+                    return;
+                }
+                decimal dPrecoCusto = decimal.Parse(txtPrecoCusto.Text);
+                decimal dPrecoSugerido = dPrecoCusto + decimal.Parse(txtPrecoCusto.Text)* (decimal.Parse(txtMarkup.Text)/100);
+                txtPrecoSugerido.Text = dPrecoSugerido.ToString();
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
+
+        private void txtPrecoCusto_Leave(object sender, EventArgs e)
+        {
+            txtMarkup_Leave(sender, e);
         }
     }
 }

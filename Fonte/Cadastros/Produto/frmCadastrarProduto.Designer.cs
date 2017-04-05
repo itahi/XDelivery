@@ -37,10 +37,10 @@
             System.Windows.Forms.Label label5;
             System.Windows.Forms.Label label6;
             System.Windows.Forms.Label label17;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarProduto));
             System.Windows.Forms.Label label19;
             System.Windows.Forms.Label label21;
             System.Windows.Forms.Label label22;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarProduto));
             this.dBExpertDataSet = new DexComanda.DBExpertDataSet();
             this.produtoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.produtoTableAdapter = new DexComanda.DBExpertDataSetTableAdapters.ProdutoTableAdapter();
@@ -65,6 +65,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.AdicionaisGridView = new System.Windows.Forms.DataGridView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtPrecoSugerido = new System.Windows.Forms.TextBox();
+            this.txtMarkup = new System.Windows.Forms.TextBox();
+            this.txtPrecoCusto = new System.Windows.Forms.TextBox();
             this.txtCodInterno = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.txtMaxAdicionais = new System.Windows.Forms.TextBox();
@@ -132,9 +135,6 @@
             this.cbxInsumo = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.txtPrecoCusto = new System.Windows.Forms.TextBox();
-            this.txtMarkup = new System.Windows.Forms.TextBox();
-            this.txtPrecoSugerido = new System.Windows.Forms.TextBox();
             grupoProdutoLabel = new System.Windows.Forms.Label();
             precoProdutoLabel = new System.Windows.Forms.Label();
             descricaoProdutoLabel = new System.Windows.Forms.Label();
@@ -236,6 +236,33 @@
             label17.Size = new System.Drawing.Size(65, 13);
             label17.TabIndex = 40;
             label17.Text = "Cod. Interno";
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Location = new System.Drawing.Point(8, 69);
+            label19.Name = "label19";
+            label19.Size = new System.Drawing.Size(65, 13);
+            label19.TabIndex = 42;
+            label19.Text = "Preço Custo";
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new System.Drawing.Point(81, 69);
+            label21.Name = "label21";
+            label21.Size = new System.Drawing.Size(54, 13);
+            label21.TabIndex = 44;
+            label21.Text = "Markup %";
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Location = new System.Drawing.Point(156, 69);
+            label22.Name = "label22";
+            label22.Size = new System.Drawing.Size(65, 13);
+            label22.TabIndex = 46;
+            label22.Text = "Pr. Sugerido";
             // 
             // dBExpertDataSet
             // 
@@ -506,6 +533,41 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "1 -Produto";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // txtPrecoSugerido
+            // 
+            this.txtPrecoSugerido.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPrecoSugerido.Enabled = false;
+            this.txtPrecoSugerido.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecoSugerido.Location = new System.Drawing.Point(159, 86);
+            this.txtPrecoSugerido.Name = "txtPrecoSugerido";
+            this.txtPrecoSugerido.Size = new System.Drawing.Size(69, 26);
+            this.txtPrecoSugerido.TabIndex = 45;
+            this.toolTip1.SetToolTip(this.txtPrecoSugerido, "Preço de venda sugerido pelo sistema");
+            // 
+            // txtMarkup
+            // 
+            this.txtMarkup.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtMarkup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMarkup.Location = new System.Drawing.Point(84, 86);
+            this.txtMarkup.Name = "txtMarkup";
+            this.txtMarkup.Size = new System.Drawing.Size(56, 26);
+            this.txtMarkup.TabIndex = 43;
+            this.toolTip1.SetToolTip(this.txtMarkup, "Informe a margem de lucro desejada no produto");
+            this.txtMarkup.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMarkup_KeyPress);
+            this.txtMarkup.Leave += new System.EventHandler(this.txtMarkup_Leave);
+            // 
+            // txtPrecoCusto
+            // 
+            this.txtPrecoCusto.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPrecoCusto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecoCusto.Location = new System.Drawing.Point(11, 86);
+            this.txtPrecoCusto.Name = "txtPrecoCusto";
+            this.txtPrecoCusto.Size = new System.Drawing.Size(54, 26);
+            this.txtPrecoCusto.TabIndex = 41;
+            this.toolTip1.SetToolTip(this.txtPrecoCusto, "Preço de custo calculado pelo sistema");
+            this.txtPrecoCusto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrecoCusto_KeyPress);
+            this.txtPrecoCusto.Leave += new System.EventHandler(this.txtPrecoCusto_Leave);
             // 
             // txtCodInterno
             // 
@@ -1159,6 +1221,7 @@
             this.txtQtd.Name = "txtQtd";
             this.txtQtd.Size = new System.Drawing.Size(52, 26);
             this.txtQtd.TabIndex = 40;
+            this.toolTip1.SetToolTip(this.txtQtd, "Informe a quantidade usada para produzir o produto");
             this.txtQtd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtQtd_KeyPress);
             // 
             // panel2
@@ -1192,7 +1255,7 @@
             // 
             this.btnEditarIns.Image = ((System.Drawing.Image)(resources.GetObject("btnEditarIns.Image")));
             this.btnEditarIns.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEditarIns.Location = new System.Drawing.Point(532, 29);
+            this.btnEditarIns.Location = new System.Drawing.Point(532, 27);
             this.btnEditarIns.Name = "btnEditarIns";
             this.btnEditarIns.Size = new System.Drawing.Size(63, 26);
             this.btnEditarIns.TabIndex = 38;
@@ -1205,7 +1268,7 @@
             // 
             this.btnAdicionar.Image = ((System.Drawing.Image)(resources.GetObject("btnAdicionar.Image")));
             this.btnAdicionar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAdicionar.Location = new System.Drawing.Point(451, 30);
+            this.btnAdicionar.Location = new System.Drawing.Point(451, 27);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(75, 26);
             this.btnAdicionar.TabIndex = 37;
@@ -1218,7 +1281,7 @@
             // 
             this.cbxInsumo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxInsumo.FormattingEnabled = true;
-            this.cbxInsumo.Location = new System.Drawing.Point(11, 32);
+            this.cbxInsumo.Location = new System.Drawing.Point(11, 29);
             this.cbxInsumo.Name = "cbxInsumo";
             this.cbxInsumo.Size = new System.Drawing.Size(359, 21);
             this.cbxInsumo.TabIndex = 34;
@@ -1232,66 +1295,6 @@
             this.label20.Size = new System.Drawing.Size(38, 13);
             this.label20.TabIndex = 33;
             this.label20.Text = "Nome ";
-            // 
-            // txtPrecoCusto
-            // 
-            this.txtPrecoCusto.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
-            this.txtPrecoCusto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecoCusto.Location = new System.Drawing.Point(11, 86);
-            this.txtPrecoCusto.Name = "txtPrecoCusto";
-            this.txtPrecoCusto.Size = new System.Drawing.Size(54, 26);
-            this.txtPrecoCusto.TabIndex = 41;
-            this.toolTip1.SetToolTip(this.txtPrecoCusto, "Preço de custo calculado pelo sistema");
-            this.txtPrecoCusto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrecoCusto_KeyPress);
-            // 
-            // label19
-            // 
-            label19.AutoSize = true;
-            label19.Location = new System.Drawing.Point(8, 69);
-            label19.Name = "label19";
-            label19.Size = new System.Drawing.Size(65, 13);
-            label19.TabIndex = 42;
-            label19.Text = "Preço Custo";
-            // 
-            // txtMarkup
-            // 
-            this.txtMarkup.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
-            this.txtMarkup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMarkup.Location = new System.Drawing.Point(84, 86);
-            this.txtMarkup.Name = "txtMarkup";
-            this.txtMarkup.Size = new System.Drawing.Size(56, 26);
-            this.txtMarkup.TabIndex = 43;
-            this.toolTip1.SetToolTip(this.txtMarkup, "Informe a margem de lucro desejada no produto");
-            this.txtMarkup.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMarkup_KeyPress);
-            // 
-            // label21
-            // 
-            label21.AutoSize = true;
-            label21.Location = new System.Drawing.Point(81, 69);
-            label21.Name = "label21";
-            label21.Size = new System.Drawing.Size(54, 13);
-            label21.TabIndex = 44;
-            label21.Text = "Markup %";
-            // 
-            // txtPrecoSugerido
-            // 
-            this.txtPrecoSugerido.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
-            this.txtPrecoSugerido.Enabled = false;
-            this.txtPrecoSugerido.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecoSugerido.Location = new System.Drawing.Point(159, 86);
-            this.txtPrecoSugerido.Name = "txtPrecoSugerido";
-            this.txtPrecoSugerido.Size = new System.Drawing.Size(69, 26);
-            this.txtPrecoSugerido.TabIndex = 45;
-            this.toolTip1.SetToolTip(this.txtPrecoSugerido, "Preço de venda sugerido pelo sistema");
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Location = new System.Drawing.Point(156, 69);
-            label22.Name = "label22";
-            label22.Size = new System.Drawing.Size(65, 13);
-            label22.TabIndex = 46;
-            label22.Text = "Pr. Sugerido";
             // 
             // frmCadastrarProduto
             // 

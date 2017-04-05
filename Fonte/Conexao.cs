@@ -156,6 +156,33 @@ namespace DexComanda
             return ds;
 
         }
+
+        public Decimal CalculaPrecoInsumo(int intCodProduto)
+        {
+            decimal iRetur = 0;
+            try
+            {
+                string iSql = "select  " +
+                              "  Isnull(sum(I.Preco * P.Quantidade),0) as Soma " +
+                              "  from Produto_Insumo P " +
+                              "  left join Insumo I on I.Codigo = P.CodInsumo " +
+                              " where CodProduto=@CodProduto";
+
+                command = new SqlCommand(iSql, conn);
+                command.Parameters.AddWithValue("@CodProduto", intCodProduto);
+                command.CommandType = CommandType.Text;
+                adapter = new SqlDataAdapter(command);
+                ds = new DataSet();
+                adapter.Fill(ds, "Pedido");
+                iRetur = ds.Tables[0].Rows[0].Field<decimal>("Soma");
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return iRetur;
+        }
         public DataSet ConsultaPedido(string iCodPedido, DateTime dtInicio, DateTime dtFim)
         {
             string strCodPedido;

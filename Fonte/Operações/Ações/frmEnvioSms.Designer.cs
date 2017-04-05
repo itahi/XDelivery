@@ -38,6 +38,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtMensagem = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.cbxOrigemCadastro = new System.Windows.Forms.ComboBox();
+            this.rbOrigemCadastro = new System.Windows.Forms.RadioButton();
+            this.cbxGrupo = new System.Windows.Forms.ComboBox();
+            this.rbProduto = new System.Windows.Forms.RadioButton();
+            this.cbxRegiao = new System.Windows.Forms.ComboBox();
+            this.rbRegiao = new System.Windows.Forms.RadioButton();
             this.grpPeriodo = new System.Windows.Forms.GroupBox();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
@@ -48,20 +55,15 @@
             this.lblRestante = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.cbxOrigemCadastro = new System.Windows.Forms.ComboBox();
-            this.rbOrigemCadastro = new System.Windows.Forms.RadioButton();
-            this.cbxGrupo = new System.Windows.Forms.ComboBox();
-            this.rbProduto = new System.Windows.Forms.RadioButton();
-            this.cbxRegiao = new System.Windows.Forms.ComboBox();
-            this.rbRegiao = new System.Windows.Forms.RadioButton();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblNumero = new System.Windows.Forms.Label();
             this.tbSelecao.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.grpGrid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridResultado)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.grpPeriodo.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.grpPeriodo.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbSelecao
@@ -75,6 +77,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.lblNumero);
+            this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.btnEnviar);
             this.tabPage1.Controls.Add(this.grpGrid);
             this.tabPage1.Controls.Add(this.label4);
@@ -104,7 +108,7 @@
             this.grpGrid.Controls.Add(this.gridResultado);
             this.grpGrid.Location = new System.Drawing.Point(8, 199);
             this.grpGrid.Name = "grpGrid";
-            this.grpGrid.Size = new System.Drawing.Size(220, 198);
+            this.grpGrid.Size = new System.Drawing.Size(220, 180);
             this.grpGrid.TabIndex = 14;
             this.grpGrid.TabStop = false;
             this.grpGrid.Text = "Resultado Filtro";
@@ -120,7 +124,7 @@
             this.gridResultado.Location = new System.Drawing.Point(3, 16);
             this.gridResultado.Name = "gridResultado";
             this.gridResultado.ReadOnly = true;
-            this.gridResultado.Size = new System.Drawing.Size(214, 179);
+            this.gridResultado.Size = new System.Drawing.Size(214, 161);
             this.gridResultado.TabIndex = 0;
             // 
             // label4
@@ -145,7 +149,7 @@
             this.txtMensagem.Location = new System.Drawing.Point(238, 212);
             this.txtMensagem.MaxLength = 145;
             this.txtMensagem.Name = "txtMensagem";
-            this.txtMensagem.Size = new System.Drawing.Size(214, 182);
+            this.txtMensagem.Size = new System.Drawing.Size(214, 163);
             this.txtMensagem.TabIndex = 1;
             this.txtMensagem.Text = "";
             this.toolTip1.SetToolTip(this.txtMensagem, "Escreva aqui o texto que será enviado ao cliente");
@@ -164,6 +168,80 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.cbxOrigemCadastro);
+            this.panel1.Controls.Add(this.rbOrigemCadastro);
+            this.panel1.Controls.Add(this.cbxGrupo);
+            this.panel1.Controls.Add(this.rbProduto);
+            this.panel1.Controls.Add(this.cbxRegiao);
+            this.panel1.Controls.Add(this.rbRegiao);
+            this.panel1.Location = new System.Drawing.Point(356, 15);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(205, 159);
+            this.panel1.TabIndex = 17;
+            // 
+            // cbxOrigemCadastro
+            // 
+            this.cbxOrigemCadastro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxOrigemCadastro.FormattingEnabled = true;
+            this.cbxOrigemCadastro.Location = new System.Drawing.Point(11, 132);
+            this.cbxOrigemCadastro.Name = "cbxOrigemCadastro";
+            this.cbxOrigemCadastro.Size = new System.Drawing.Size(169, 21);
+            this.cbxOrigemCadastro.TabIndex = 12;
+            // 
+            // rbOrigemCadastro
+            // 
+            this.rbOrigemCadastro.AutoSize = true;
+            this.rbOrigemCadastro.Location = new System.Drawing.Point(11, 109);
+            this.rbOrigemCadastro.Name = "rbOrigemCadastro";
+            this.rbOrigemCadastro.Size = new System.Drawing.Size(103, 17);
+            this.rbOrigemCadastro.TabIndex = 11;
+            this.rbOrigemCadastro.Text = "Origem Cadastro";
+            this.toolTip1.SetToolTip(this.rbOrigemCadastro, "Filtra clientes de acordo com a origem do cadastro");
+            this.rbOrigemCadastro.UseVisualStyleBackColor = true;
+            // 
+            // cbxGrupo
+            // 
+            this.cbxGrupo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxGrupo.FormattingEnabled = true;
+            this.cbxGrupo.Location = new System.Drawing.Point(11, 80);
+            this.cbxGrupo.Name = "cbxGrupo";
+            this.cbxGrupo.Size = new System.Drawing.Size(169, 21);
+            this.cbxGrupo.TabIndex = 10;
+            // 
+            // rbProduto
+            // 
+            this.rbProduto.AutoSize = true;
+            this.rbProduto.Location = new System.Drawing.Point(11, 57);
+            this.rbProduto.Name = "rbProduto";
+            this.rbProduto.Size = new System.Drawing.Size(107, 17);
+            this.rbProduto.TabIndex = 9;
+            this.rbProduto.Text = "Comprou Produto";
+            this.toolTip1.SetToolTip(this.rbProduto, "Filtra clientes que compraram determinado grupo de produto");
+            this.rbProduto.UseVisualStyleBackColor = true;
+            // 
+            // cbxRegiao
+            // 
+            this.cbxRegiao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxRegiao.FormattingEnabled = true;
+            this.cbxRegiao.Location = new System.Drawing.Point(11, 30);
+            this.cbxRegiao.Name = "cbxRegiao";
+            this.cbxRegiao.Size = new System.Drawing.Size(169, 21);
+            this.cbxRegiao.TabIndex = 7;
+            // 
+            // rbRegiao
+            // 
+            this.rbRegiao.AutoSize = true;
+            this.rbRegiao.Location = new System.Drawing.Point(13, 7);
+            this.rbRegiao.Name = "rbRegiao";
+            this.rbRegiao.Size = new System.Drawing.Size(119, 17);
+            this.rbRegiao.TabIndex = 6;
+            this.rbRegiao.Text = "Região selecionada";
+            this.toolTip1.SetToolTip(this.rbRegiao, "Clientes da região selecionada");
+            this.rbRegiao.UseVisualStyleBackColor = true;
+            this.rbRegiao.CheckedChanged += new System.EventHandler(this.rbRegiao_CheckedChanged);
             // 
             // grpPeriodo
             // 
@@ -253,79 +331,22 @@
             this.label3.TabIndex = 10;
             this.label3.Text = "Ainda restam:";
             // 
-            // panel1
+            // label6
             // 
-            this.panel1.Controls.Add(this.cbxOrigemCadastro);
-            this.panel1.Controls.Add(this.rbOrigemCadastro);
-            this.panel1.Controls.Add(this.cbxGrupo);
-            this.panel1.Controls.Add(this.rbProduto);
-            this.panel1.Controls.Add(this.cbxRegiao);
-            this.panel1.Controls.Add(this.rbRegiao);
-            this.panel1.Location = new System.Drawing.Point(356, 15);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(205, 159);
-            this.panel1.TabIndex = 17;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(13, 383);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(24, 13);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "Nr,:";
             // 
-            // cbxOrigemCadastro
+            // lblNumero
             // 
-            this.cbxOrigemCadastro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxOrigemCadastro.FormattingEnabled = true;
-            this.cbxOrigemCadastro.Location = new System.Drawing.Point(11, 132);
-            this.cbxOrigemCadastro.Name = "cbxOrigemCadastro";
-            this.cbxOrigemCadastro.Size = new System.Drawing.Size(169, 21);
-            this.cbxOrigemCadastro.TabIndex = 12;
-            // 
-            // rbOrigemCadastro
-            // 
-            this.rbOrigemCadastro.AutoSize = true;
-            this.rbOrigemCadastro.Location = new System.Drawing.Point(11, 109);
-            this.rbOrigemCadastro.Name = "rbOrigemCadastro";
-            this.rbOrigemCadastro.Size = new System.Drawing.Size(103, 17);
-            this.rbOrigemCadastro.TabIndex = 11;
-            this.rbOrigemCadastro.Text = "Origem Cadastro";
-            this.toolTip1.SetToolTip(this.rbOrigemCadastro, "Filtra clientes de acordo com a origem do cadastro");
-            this.rbOrigemCadastro.UseVisualStyleBackColor = true;
-            // 
-            // cbxGrupo
-            // 
-            this.cbxGrupo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxGrupo.FormattingEnabled = true;
-            this.cbxGrupo.Location = new System.Drawing.Point(11, 80);
-            this.cbxGrupo.Name = "cbxGrupo";
-            this.cbxGrupo.Size = new System.Drawing.Size(169, 21);
-            this.cbxGrupo.TabIndex = 10;
-            // 
-            // rbProduto
-            // 
-            this.rbProduto.AutoSize = true;
-            this.rbProduto.Location = new System.Drawing.Point(11, 57);
-            this.rbProduto.Name = "rbProduto";
-            this.rbProduto.Size = new System.Drawing.Size(107, 17);
-            this.rbProduto.TabIndex = 9;
-            this.rbProduto.Text = "Comprou Produto";
-            this.toolTip1.SetToolTip(this.rbProduto, "Filtra clientes que compraram determinado grupo de produto");
-            this.rbProduto.UseVisualStyleBackColor = true;
-            // 
-            // cbxRegiao
-            // 
-            this.cbxRegiao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxRegiao.FormattingEnabled = true;
-            this.cbxRegiao.Location = new System.Drawing.Point(11, 30);
-            this.cbxRegiao.Name = "cbxRegiao";
-            this.cbxRegiao.Size = new System.Drawing.Size(169, 21);
-            this.cbxRegiao.TabIndex = 7;
-            // 
-            // rbRegiao
-            // 
-            this.rbRegiao.AutoSize = true;
-            this.rbRegiao.Location = new System.Drawing.Point(13, 7);
-            this.rbRegiao.Name = "rbRegiao";
-            this.rbRegiao.Size = new System.Drawing.Size(119, 17);
-            this.rbRegiao.TabIndex = 6;
-            this.rbRegiao.Text = "Região selecionada";
-            this.toolTip1.SetToolTip(this.rbRegiao, "Clientes da região selecionada");
-            this.rbRegiao.UseVisualStyleBackColor = true;
-            this.rbRegiao.CheckedChanged += new System.EventHandler(this.rbRegiao_CheckedChanged);
+            this.lblNumero.AutoSize = true;
+            this.lblNumero.Location = new System.Drawing.Point(44, 383);
+            this.lblNumero.Name = "lblNumero";
+            this.lblNumero.Size = new System.Drawing.Size(0, 13);
+            this.lblNumero.TabIndex = 22;
             // 
             // frmEnvioSms
             // 
@@ -347,9 +368,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridResultado)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.grpPeriodo.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.grpPeriodo.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -383,5 +404,7 @@
         private System.Windows.Forms.RadioButton rbProduto;
         private System.Windows.Forms.ComboBox cbxRegiao;
         private System.Windows.Forms.RadioButton rbRegiao;
+        private System.Windows.Forms.Label lblNumero;
+        private System.Windows.Forms.Label label6;
     }
 }

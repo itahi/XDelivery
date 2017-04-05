@@ -40,6 +40,7 @@
             this.tipoOpçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.opçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.produtoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insumosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.empresaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotasDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuáriosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -156,7 +157,7 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.insumosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.produtoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -270,6 +271,13 @@
             this.produtoToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
             this.produtoToolStripMenuItem.Text = "Produto";
             this.produtoToolStripMenuItem.Click += new System.EventHandler(this.produtoToolStripMenuItem_Click);
+            // 
+            // insumosToolStripMenuItem
+            // 
+            this.insumosToolStripMenuItem.Name = "insumosToolStripMenuItem";
+            this.insumosToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+            this.insumosToolStripMenuItem.Text = "Insumos";
+            this.insumosToolStripMenuItem.Click += new System.EventHandler(this.insumosToolStripMenuItem_Click);
             // 
             // empresaToolStripMenuItem
             // 
@@ -629,16 +637,17 @@
             // produtosToolStripMenuItem1
             // 
             this.produtosToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.opçãoToolStripMenuItem1});
+            this.opçãoToolStripMenuItem1,
+            this.produtoToolStripMenuItem1});
             this.produtosToolStripMenuItem1.Name = "produtosToolStripMenuItem1";
             this.produtosToolStripMenuItem1.Size = new System.Drawing.Size(184, 26);
-            this.produtosToolStripMenuItem1.Text = "Produtos";
+            this.produtosToolStripMenuItem1.Text = "Itens";
             this.produtosToolStripMenuItem1.Click += new System.EventHandler(this.produtosToolStripMenuItem1_Click);
             // 
             // opçãoToolStripMenuItem1
             // 
             this.opçãoToolStripMenuItem1.Name = "opçãoToolStripMenuItem1";
-            this.opçãoToolStripMenuItem1.Size = new System.Drawing.Size(125, 26);
+            this.opçãoToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
             this.opçãoToolStripMenuItem1.Text = "Opção";
             this.opçãoToolStripMenuItem1.Click += new System.EventHandler(this.opçãoToolStripMenuItem1_Click);
             // 
@@ -1404,12 +1413,12 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // insumosToolStripMenuItem
+            // produtoToolStripMenuItem1
             // 
-            this.insumosToolStripMenuItem.Name = "insumosToolStripMenuItem";
-            this.insumosToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
-            this.insumosToolStripMenuItem.Text = "Insumos";
-            this.insumosToolStripMenuItem.Click += new System.EventHandler(this.insumosToolStripMenuItem_Click);
+            this.produtoToolStripMenuItem1.Name = "produtoToolStripMenuItem1";
+            this.produtoToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
+            this.produtoToolStripMenuItem1.Text = "Produto";
+            this.produtoToolStripMenuItem1.Click += new System.EventHandler(this.produtoToolStripMenuItem1_Click);
             // 
             // frmPrincipal
             // 
@@ -1582,5 +1591,6 @@
         private System.Windows.Forms.ToolStripMenuItem origemDoClienteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem classificadoPorOrigemToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem insumosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem produtoToolStripMenuItem1;
     }
 }

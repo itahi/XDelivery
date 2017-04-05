@@ -749,7 +749,7 @@ namespace DexComanda.Operações
 
                     RestResponse response = (RestResponse)client.Execute(request);
 
-                    if (response.Content.ToString() == "true")
+                    if (response.Content.Contains(" true"))
                     {
                         con.AtualizaDataSincronismo("Produto_Opcao", iCodProd, iCodOpcao);
                     }

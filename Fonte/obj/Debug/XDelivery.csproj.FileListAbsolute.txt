@@ -43,8 +43,6 @@ D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.ReportViewer.ProcessingObjectMo
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Types.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.SString.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Dmf.dll
-D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.SqlEnum.dll
-D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.ServiceBrokerEnum.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.RegSvrEnum.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.CommonControls.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\stdole.dll
