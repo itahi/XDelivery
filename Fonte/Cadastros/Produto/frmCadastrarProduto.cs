@@ -166,7 +166,7 @@ namespace DexComanda
                 //Loop through all controls 
                 if (object.ReferenceEquals(TEXT.GetType(), typeof(System.Windows.Forms.TextBox)))
                 {
-                    //Check to see if it's a textbox 
+                    //Check to see if  
                     if (((System.Windows.Forms.TextBox)TEXT).Text != "")
                     {
                         var precosDia = new PrecoDiaProduto()
@@ -179,7 +179,7 @@ namespace DexComanda
                         listPrecos.Add(precosDia);
                     }
 
-                    //If it is then set the text to String.Empty (empty textbox) 
+                    
                 }
 
             }
@@ -479,9 +479,9 @@ namespace DexComanda
                     DataAlteracao = DateTime.Now,
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
-                    Markup = decimal.Parse(txtMarkup.Text),
-                    PrecoCusto = decimal.Parse(txtPrecoCusto.Text),
-                    PrecoSugerido = decimal.Parse(txtPrecoSugerido.Text),
+                    //Markup = decimal.Parse(txtMarkup.Text),
+                    //PrecoCusto = decimal.Parse(txtPrecoCusto.Text),
+                    //PrecoSugerido = decimal.Parse(txtPrecoSugerido.Text),
                 };
                 if (txtPrecoCusto.Text != "")
                 {
@@ -1268,5 +1268,7 @@ namespace DexComanda
         {
             txtMarkup_Leave(sender, e);
         }
+
+   
     }
 }

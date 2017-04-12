@@ -127,7 +127,7 @@ namespace DexComanda
                                     Usa2Telefones = bool.Parse(config.ItemArray.GetValue(7).ToString()),
                                     UsaControleMesa = bool.Parse(config.ItemArray.GetValue(9).ToString()),
                                     ImprimeViaEntrega = bool.Parse(config.ItemArray.GetValue(10).ToString()),
-                                    ControlaFidelidade = bool.Parse(config.ItemArray.GetValue(11).ToString()),
+                                    ControlaFidelidade = config.ItemArray.GetValue(11).ToString(),
                                     PedidosParaFidelidade = int.Parse(config.ItemArray.GetValue(12).ToString()),
                                     DescontoDiaSemana = bool.Parse(config.ItemArray.GetValue(13).ToString()),
                                     PrevisaoEntregaSN = bool.Parse(config.ItemArray.GetValue(14).ToString()),

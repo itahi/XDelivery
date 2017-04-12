@@ -554,22 +554,30 @@ namespace DexComanda
         }
         private void TotalizaPedidos()
         {
-            //// Não exibir totais para o BurisBurguer
-            //if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cBuris)
-            //{
-            //    return;
-            //}
-            double dblTotalPedidos = 0;
-            for (int i = 0; i < pedidosGridView.Rows.Count; i++)
+            try
             {
-                if (pedidosGridView.Columns.Contains("TotalPedido"))
+            if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cBuris
+             || Sessions.returnEmpresa.CNPJ == Bibliotecas.cLeoHamburguer)
                 {
-                    dblTotalPedidos = dblTotalPedidos + double.Parse(pedidosGridView.Rows[i].Cells["TotalPedido"].Value.ToString());
+                    return;
                 }
-
+                double dblTotalPedidos =0;
+                for (int i = 0; i < pedidosGridView.Rows.Count; i++)
+                {
+                    if (pedidosGridView.Columns.Contains("TotalPedido"))
+                    {
+                        dblTotalPedidos = dblTotalPedidos + double.Parse(pedidosGridView.Rows[i].Cells["TotalPedido"].Value.ToString());
+                    }
+                }
+                lblValor.Text = dblTotalPedidos.ToString();
+                lblQtd.Text = pedidosGridView.Rows.Count.ToString();
             }
-            lblValor.Text = dblTotalPedidos.ToString();
-            lblQtd.Text = pedidosGridView.Rows.Count.ToString();
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            
+
         }
         private void BuscaPedidoCliente(object sender, KeyEventArgs e)
         {
@@ -598,7 +606,6 @@ namespace DexComanda
         private void MarcarPedidos(object sender, DataGridViewCellEventArgs e)
         {
             bool blSelecionado = Convert.ToBoolean(this.pedidosGridView.CurrentRow.Cells["Finalizado"].Value.ToString());
-            //if (pedidosGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             if (e.RowIndex >= 0)
             {
                 if (pedidosGridView.CurrentRow.Cells["Finalizado"].Value.ToString() != null)
@@ -1086,16 +1093,16 @@ namespace DexComanda
         }
         private void AtualizarFidelidade(int iCodPessoa)
         {
-            if (Sessions.returnConfig.ControlaFidelidade)
-            {
-                AtualizarFidelidade atlFideli = new AtualizarFidelidade()
-                {
-                    CodPessoa = iCodPessoa,
-                    Ticket = 1
-                };
+            //if (Sessions.returnConfig.ControlaFidelidade)
+            //{
+            //    AtualizarFidelidade atlFideli = new AtualizarFidelidade()
+            //    {
+            //        CodPessoa = iCodPessoa,
+            //        Ticket = 1
+            //    };
 
-                con.Update("spAlteraFidelidade", atlFideli);
-            }
+            //    con.Update("spAlteraFidelidade", atlFideli);
+            //}
         }
         private void GravaMOvimentoCaixa(int iFPagamento, decimal iValor, int iCodPedido)
         {
@@ -1362,7 +1369,7 @@ namespace DexComanda
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(),
                                                                       dRowPessoa.ItemArray.GetValue(16).ToString(),
-                                                                      dRowPessoa.ItemArray.GetValue(19).ToString(), CodEndereco,int.Parse(dRowPessoa.ItemArray.GetValue(21).ToString()));
+                                                                      dRowPessoa.ItemArray.GetValue(19).ToString(), CodEndereco, int.Parse(dRowPessoa.ItemArray.GetValue(21).ToString()));
 
 
                     Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
@@ -1660,7 +1667,7 @@ namespace DexComanda
 
         private void produtosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-           
+
 
         }
 

@@ -44,11 +44,6 @@ namespace DexComanda
             con.OpenConection(servidor, banco);
 
         }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
         private List<CidadesAtendidas> CidadesAtendidas()
         {
             List<CidadesAtendidas> Listcdd = new List<CidadesAtendidas>();
@@ -131,6 +126,109 @@ namespace DexComanda
             }
             return strReturn;
         }
+        private void MarcaDias(string iValores)
+        {
+            try
+            {
+                if (iValores == "")
+                {
+                    return;
+                }
+                List<FidelidadeDias> fidelidade = Utils.DeserializaObjetoFidelidade(iValores);
+                foreach (var item in fidelidade)
+                {
+                    foreach (Control check in grpControleFidelidade.Controls)
+                    {
+                        if (object.ReferenceEquals(check.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                        {
+                            if (((System.Windows.Forms.CheckBox)check).Tag.ToString() == item.DiaSemana)
+                            {
+                                ((System.Windows.Forms.CheckBox)check).Checked = true;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            
+        
+        }
+        private void MarcaConfiguracao(string iConfig)
+        {
+            try
+            {
+                if (iConfig == "" || iConfig == null)
+                {
+                    return;
+                }
+                Fidelidade fidelida = new Fidelidade();
+                fidelida = Utils.DeserializaObjeto5(iConfig);
+
+                MarcaDias(fidelida.Dias);
+                chkFidelidade.Checked = fidelida.AtivoSN == true;
+                rbPorPonto.Checked = fidelida.Tipo == "Por Ponto";
+                rbPorValor.Checked = fidelida.Tipo == "Por Valor";
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
+        private List<FidelidadeDias> DiasFidelidadeMarcados()
+        {
+            List<FidelidadeDias> listFidelidade = new List<FidelidadeDias>();
+            try
+            {
+                foreach (Control item in grpControleFidelidade.Controls)
+                {
+                    if (object.ReferenceEquals(item.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                    {
+                        //Check to see if it's a textbox 
+                        if (((System.Windows.Forms.CheckBox)item).Checked)
+                        {
+                            var fidelidade = new FidelidadeDias()
+                            {
+                                DiaSemana = (((System.Windows.Forms.CheckBox)item).Tag.ToString()),
+                            };
+                            listFidelidade.Add(fidelidade);
+                        }
+                        
+                    }
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return listFidelidade;
+        }
+        private string ConfigFidelidade()
+        {
+            string iReturn = "";
+            if (!chkFidelidade.Checked)
+            {
+                return iReturn;
+            }
+
+            Fidelidade fidelidade = new Fidelidade();
+            fidelidade.AtivoSN = true;
+            fidelidade.Multiplicador = int.Parse(txtMultiplicador.Text);
+            fidelidade.Dias = Utils.SerializaObjeto(DiasFidelidadeMarcados());
+            if (rbPorPonto.Checked)
+            {
+                fidelidade.Tipo = "Por Ponto";
+            }
+            else
+            {
+                fidelidade.Tipo = "Por Valor";
+            }
+
+            return Utils.SerializaObjeto(fidelidade);
+        }
         private void SalvaConfig(object sender, EventArgs e)
         {
             //con = new Conexao(); 
@@ -167,7 +265,7 @@ namespace DexComanda
             config.UsaControleMesa = chkControlaMesas.Checked;
             config.ImprimeViaEntrega = chkImprimeViaEntrega.Checked;
             config.DescontoDiaSemana = chkDescontoDiasemana.Checked;
-            config.ControlaFidelidade = chkFidelidade.Checked;
+            config.ControlaFidelidade = ConfigFidelidade();
             config.EnviaSMS = chkEnviaSms.Checked;
             config.RegistraCancelamentos = chkRegCancelamentos.Checked;
             config.DadosApp = Utils.GravaJson(cbxPlataforma1.Text, txtLink2.Text);// + cbxPlataforma2.Text + txtLink2.Text);
@@ -182,20 +280,6 @@ namespace DexComanda
             config.ImpressoraCopaBalcao = cbxImpressoraBalcao.Text;
             config.CobrancaProporcionalSN = chkProporcional.Checked;
             config.TipoImpressao = cbxTipoImpressao.Text;
-            //empresa.HorarioFuncionamento = "";
-            //if (chkEnviaSms.Checked)
-            //{
-            //    Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
-            //}
-            if (chkFidelidade.Checked)
-            {
-
-                config.PedidosParaFidelidade = int.Parse(txtNumeroPedidos.Text);
-            }
-            else
-            {
-                config.PedidosParaFidelidade = 0;
-            }
 
             config.PrevisaoEntregaSN = chkPrevisao.Checked;
             if (chkPrevisao.Checked)
@@ -301,9 +385,9 @@ namespace DexComanda
             config.Usa2Telefones = chk2Telefones.Checked;
             config.UsaControleMesa = chkControlaMesas.Checked;
             config.ImprimeViaEntrega = chkImprimeViaEntrega.Checked;
-            config.ControlaFidelidade = chkFidelidade.Checked;
+            config.ControlaFidelidade = ConfigFidelidade();
             config.DescontoDiaSemana = chkDescontoDiasemana.Checked;
-            config.PedidosParaFidelidade = int.Parse(txtNumeroPedidos.Text);
+            config.PedidosParaFidelidade = 0;
             config.QtdCaracteresImp = int.Parse(txtCaracterImpressora.Text.ToString());
             config.PrevisaoEntregaSN = chkPrevisao.Checked;
             config.PrevisaoEntrega = txtPrevisao.Text;
@@ -418,7 +502,6 @@ namespace DexComanda
         private void frmConfiguracoes_Load(object sender, EventArgs e)
         {
 
-            // Utils.RetornoTxt();//cbxCozinha.Text= cbxMesas.Text= cbxEntregas.Text = ListaImpressoras();
             if (Sessions.returnConfig != null)
             {
                 grpFidelidade.Enabled = chkFidelidade.Checked;
@@ -430,10 +513,10 @@ namespace DexComanda
                 chk2Telefones.Checked = Sessions.returnConfig.Usa2Telefones;
                 chkControlaMesas.Checked = Sessions.returnConfig.UsaControleMesa;
                 chkImprimeViaEntrega.Checked = Sessions.returnConfig.ImprimeViaEntrega;
-                chkFidelidade.Checked = Sessions.returnConfig.ControlaFidelidade;
+                MarcaConfiguracao(Sessions.returnConfig.ControlaFidelidade);
                 chkDescontoDiasemana.Checked = Sessions.returnConfig.DescontoDiaSemana;
-                txtNumeroPedidos.Text = Sessions.returnConfig.PedidosParaFidelidade.ToString();
-                this.txtCaracterImpressora.Text = Sessions.returnConfig.QtdCaracteresImp.ToString();
+                //txtNumeroPedidos.Text = "0";//Sessions.returnConfig.PedidosParaFidelidade.ToString();
+                txtCaracterImpressora.Text = Sessions.returnConfig.QtdCaracteresImp.ToString();
                 chkPrevisao.Checked = Sessions.returnConfig.PrevisaoEntregaSN;
                 txtPrevisao.Text = Sessions.returnConfig.PrevisaoEntrega.ToString();
                 chk10Garcon.Checked = Sessions.returnConfig.CobraTaxaGarcon;
@@ -964,5 +1047,6 @@ namespace DexComanda
         {
             grpLocaSMS.Enabled = rbLocaSMS.Checked;
         }
+
     }
 }

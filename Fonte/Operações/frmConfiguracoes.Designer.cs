@@ -127,10 +127,22 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtCaracterImpressora = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.grpFidelidade = new System.Windows.Forms.GroupBox();
+            this.grpControleFidelidade = new System.Windows.Forms.GroupBox();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chkSegunda = new System.Windows.Forms.CheckBox();
             this.label23 = new System.Windows.Forms.Label();
-            this.txtNumeroPedidos = new System.Windows.Forms.TextBox();
+            this.txtMultiplicador = new System.Windows.Forms.TextBox();
+            this.grpFidelidade = new System.Windows.Forms.GroupBox();
+            this.rbPorValor = new System.Windows.Forms.RadioButton();
+            this.rbPorPonto = new System.Windows.Forms.RadioButton();
             this.grpSms = new System.Windows.Forms.GroupBox();
+            this.rbLocaSMS = new System.Windows.Forms.RadioButton();
+            this.rbZenvia = new System.Windows.Forms.RadioButton();
             this.grpZenvia = new System.Windows.Forms.GroupBox();
             this.label38 = new System.Windows.Forms.Label();
             this.txtAgrZenvia = new System.Windows.Forms.TextBox();
@@ -227,8 +239,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.rbZenvia = new System.Windows.Forms.RadioButton();
-            this.rbLocaSMS = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -244,6 +254,7 @@
             this.grpImpressoras.SuspendLayout();
             this.grpViasImpressao.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.grpControleFidelidade.SuspendLayout();
             this.grpFidelidade.SuspendLayout();
             this.grpSms.SuspendLayout();
             this.grpZenvia.SuspendLayout();
@@ -1200,7 +1211,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.grpFidelidade);
+            this.tabPage2.Controls.Add(this.grpControleFidelidade);
             this.tabPage2.Controls.Add(this.grpSms);
             this.tabPage2.Controls.Add(this.chkEnviaSms);
             this.tabPage2.Controls.Add(this.chkFidelidade);
@@ -1213,34 +1224,157 @@
             this.tabPage2.Text = "Promoções / Ações";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // grpFidelidade
+            // grpControleFidelidade
             // 
-            this.grpFidelidade.Controls.Add(this.label23);
-            this.grpFidelidade.Controls.Add(this.txtNumeroPedidos);
-            this.grpFidelidade.Enabled = false;
-            this.grpFidelidade.Location = new System.Drawing.Point(6, 29);
-            this.grpFidelidade.Name = "grpFidelidade";
-            this.grpFidelidade.Size = new System.Drawing.Size(238, 72);
-            this.grpFidelidade.TabIndex = 4;
-            this.grpFidelidade.TabStop = false;
-            this.grpFidelidade.Text = "Parametros Fidelidade";
-            this.toolTip1.SetToolTip(this.grpFidelidade, "Numero de pedidos que o cliente atingirá a fidelidade");
+            this.grpControleFidelidade.Controls.Add(this.checkBox6);
+            this.grpControleFidelidade.Controls.Add(this.checkBox3);
+            this.grpControleFidelidade.Controls.Add(this.checkBox4);
+            this.grpControleFidelidade.Controls.Add(this.checkBox5);
+            this.grpControleFidelidade.Controls.Add(this.checkBox2);
+            this.grpControleFidelidade.Controls.Add(this.checkBox1);
+            this.grpControleFidelidade.Controls.Add(this.chkSegunda);
+            this.grpControleFidelidade.Controls.Add(this.label23);
+            this.grpControleFidelidade.Controls.Add(this.txtMultiplicador);
+            this.grpControleFidelidade.Controls.Add(this.grpFidelidade);
+            this.grpControleFidelidade.Location = new System.Drawing.Point(6, 29);
+            this.grpControleFidelidade.Name = "grpControleFidelidade";
+            this.grpControleFidelidade.Size = new System.Drawing.Size(350, 124);
+            this.grpControleFidelidade.TabIndex = 6;
+            this.grpControleFidelidade.TabStop = false;
+            this.grpControleFidelidade.Text = "Controle de Fidelidade";
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Location = new System.Drawing.Point(249, 79);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(48, 17);
+            this.checkBox6.TabIndex = 13;
+            this.checkBox6.Tag = "Sunday ";
+            this.checkBox6.Text = "Dom";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(300, 56);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(45, 17);
+            this.checkBox3.TabIndex = 12;
+            this.checkBox3.Tag = "Saturday";
+            this.checkBox3.Text = "Sab";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(249, 56);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(44, 17);
+            this.checkBox4.TabIndex = 11;
+            this.checkBox4.Tag = "Friday";
+            this.checkBox4.Text = "Sex";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(198, 56);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(42, 17);
+            this.checkBox5.TabIndex = 10;
+            this.checkBox5.Tag = "Thursday";
+            this.checkBox5.Text = "Qui";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(300, 32);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(46, 17);
+            this.checkBox2.TabIndex = 9;
+            this.checkBox2.Tag = "Wednesday";
+            this.checkBox2.Text = "Qua";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(249, 32);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(42, 17);
+            this.checkBox1.TabIndex = 8;
+            this.checkBox1.Tag = "Tuesday";
+            this.checkBox1.Text = "Ter";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // chkSegunda
+            // 
+            this.chkSegunda.AutoSize = true;
+            this.chkSegunda.Location = new System.Drawing.Point(198, 32);
+            this.chkSegunda.Name = "chkSegunda";
+            this.chkSegunda.Size = new System.Drawing.Size(45, 17);
+            this.chkSegunda.TabIndex = 7;
+            this.chkSegunda.Tag = "Monday";
+            this.chkSegunda.Text = "Seg";
+            this.chkSegunda.UseVisualStyleBackColor = true;
             // 
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(3, 16);
+            this.label23.Location = new System.Drawing.Point(125, 20);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(60, 13);
-            this.label23.TabIndex = 2;
-            this.label23.Text = "Nº Pedidos";
+            this.label23.Size = new System.Drawing.Size(66, 13);
+            this.label23.TabIndex = 6;
+            this.label23.Text = "Multiplicador";
             // 
-            // txtNumeroPedidos
+            // txtMultiplicador
             // 
-            this.txtNumeroPedidos.Location = new System.Drawing.Point(7, 33);
-            this.txtNumeroPedidos.Name = "txtNumeroPedidos";
-            this.txtNumeroPedidos.Size = new System.Drawing.Size(66, 20);
-            this.txtNumeroPedidos.TabIndex = 0;
+            this.txtMultiplicador.Location = new System.Drawing.Point(128, 36);
+            this.txtMultiplicador.Name = "txtMultiplicador";
+            this.txtMultiplicador.Size = new System.Drawing.Size(53, 20);
+            this.txtMultiplicador.TabIndex = 5;
+            this.txtMultiplicador.Text = "1";
+            this.toolTip1.SetToolTip(this.txtMultiplicador, "Use o multiplicador para fazer com que os pontos sejam \r\nmaiores em determinados " +
+        "dias da semana.");
+            // 
+            // grpFidelidade
+            // 
+            this.grpFidelidade.Controls.Add(this.rbPorValor);
+            this.grpFidelidade.Controls.Add(this.rbPorPonto);
+            this.grpFidelidade.Enabled = false;
+            this.grpFidelidade.Location = new System.Drawing.Point(6, 20);
+            this.grpFidelidade.Name = "grpFidelidade";
+            this.grpFidelidade.Size = new System.Drawing.Size(113, 68);
+            this.grpFidelidade.TabIndex = 4;
+            this.grpFidelidade.TabStop = false;
+            this.grpFidelidade.Text = "Tipos de Fidelidade";
+            this.toolTip1.SetToolTip(this.grpFidelidade, "Numero de pedidos que o cliente atingirá a fidelidade");
+            // 
+            // rbPorValor
+            // 
+            this.rbPorValor.AutoSize = true;
+            this.rbPorValor.Location = new System.Drawing.Point(6, 19);
+            this.rbPorValor.Name = "rbPorValor";
+            this.rbPorValor.Size = new System.Drawing.Size(85, 17);
+            this.rbPorValor.TabIndex = 1;
+            this.rbPorValor.TabStop = true;
+            this.rbPorValor.Text = "Por Valor R$";
+            this.toolTip1.SetToolTip(this.rbPorValor, "Cada R$1,00 vale um ponto ");
+            this.rbPorValor.UseVisualStyleBackColor = true;
+            // 
+            // rbPorPonto
+            // 
+            this.rbPorPonto.AutoSize = true;
+            this.rbPorPonto.Location = new System.Drawing.Point(6, 45);
+            this.rbPorPonto.Name = "rbPorPonto";
+            this.rbPorPonto.Size = new System.Drawing.Size(77, 17);
+            this.rbPorPonto.TabIndex = 0;
+            this.rbPorPonto.TabStop = true;
+            this.rbPorPonto.Text = "Por Pontos";
+            this.toolTip1.SetToolTip(this.rbPorPonto, "Cada produto tem sua pontuação.");
+            this.rbPorPonto.UseVisualStyleBackColor = true;
             // 
             // grpSms
             // 
@@ -1248,12 +1382,37 @@
             this.grpSms.Controls.Add(this.rbZenvia);
             this.grpSms.Controls.Add(this.grpZenvia);
             this.grpSms.Controls.Add(this.grpLocaSMS);
-            this.grpSms.Location = new System.Drawing.Point(6, 130);
+            this.grpSms.Location = new System.Drawing.Point(7, 182);
             this.grpSms.Name = "grpSms";
             this.grpSms.Size = new System.Drawing.Size(238, 203);
             this.grpSms.TabIndex = 3;
             this.grpSms.TabStop = false;
             this.grpSms.Text = "Dados Envio Sms";
+            // 
+            // rbLocaSMS
+            // 
+            this.rbLocaSMS.AutoSize = true;
+            this.rbLocaSMS.Location = new System.Drawing.Point(147, 23);
+            this.rbLocaSMS.Name = "rbLocaSMS";
+            this.rbLocaSMS.Size = new System.Drawing.Size(72, 17);
+            this.rbLocaSMS.TabIndex = 32;
+            this.rbLocaSMS.TabStop = true;
+            this.rbLocaSMS.Text = "LocaSMS";
+            this.rbLocaSMS.UseVisualStyleBackColor = true;
+            this.rbLocaSMS.CheckedChanged += new System.EventHandler(this.rbLocaSMS_CheckedChanged);
+            // 
+            // rbZenvia
+            // 
+            this.rbZenvia.AutoSize = true;
+            this.rbZenvia.Location = new System.Drawing.Point(21, 25);
+            this.rbZenvia.Name = "rbZenvia";
+            this.rbZenvia.Size = new System.Drawing.Size(58, 17);
+            this.rbZenvia.TabIndex = 31;
+            this.rbZenvia.TabStop = true;
+            this.rbZenvia.Text = "Zenvia";
+            this.rbZenvia.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.rbZenvia.UseVisualStyleBackColor = true;
+            this.rbZenvia.CheckedChanged += new System.EventHandler(this.rbZenvia_CheckedChanged);
             // 
             // grpZenvia
             // 
@@ -1355,7 +1514,7 @@
             // chkEnviaSms
             // 
             this.chkEnviaSms.AutoSize = true;
-            this.chkEnviaSms.Location = new System.Drawing.Point(5, 107);
+            this.chkEnviaSms.Location = new System.Drawing.Point(7, 159);
             this.chkEnviaSms.Name = "chkEnviaSms";
             this.chkEnviaSms.Size = new System.Drawing.Size(152, 17);
             this.chkEnviaSms.TabIndex = 2;
@@ -1379,7 +1538,7 @@
             // chkDescontoDiasemana
             // 
             this.chkDescontoDiasemana.AutoSize = true;
-            this.chkDescontoDiasemana.Location = new System.Drawing.Point(277, 6);
+            this.chkDescontoDiasemana.Location = new System.Drawing.Point(134, 6);
             this.chkDescontoDiasemana.Name = "chkDescontoDiasemana";
             this.chkDescontoDiasemana.Size = new System.Drawing.Size(161, 17);
             this.chkDescontoDiasemana.TabIndex = 0;
@@ -2233,31 +2392,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // rbZenvia
-            // 
-            this.rbZenvia.AutoSize = true;
-            this.rbZenvia.Location = new System.Drawing.Point(21, 25);
-            this.rbZenvia.Name = "rbZenvia";
-            this.rbZenvia.Size = new System.Drawing.Size(58, 17);
-            this.rbZenvia.TabIndex = 31;
-            this.rbZenvia.TabStop = true;
-            this.rbZenvia.Text = "Zenvia";
-            this.rbZenvia.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.rbZenvia.UseVisualStyleBackColor = true;
-            this.rbZenvia.CheckedChanged += new System.EventHandler(this.rbZenvia_CheckedChanged);
-            // 
-            // rbLocaSMS
-            // 
-            this.rbLocaSMS.AutoSize = true;
-            this.rbLocaSMS.Location = new System.Drawing.Point(147, 23);
-            this.rbLocaSMS.Name = "rbLocaSMS";
-            this.rbLocaSMS.Size = new System.Drawing.Size(72, 17);
-            this.rbLocaSMS.TabIndex = 32;
-            this.rbLocaSMS.TabStop = true;
-            this.rbLocaSMS.Text = "LocaSMS";
-            this.rbLocaSMS.UseVisualStyleBackColor = true;
-            this.rbLocaSMS.CheckedChanged += new System.EventHandler(this.rbLocaSMS_CheckedChanged);
-            // 
             // frmConfiguracoes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2297,6 +2431,8 @@
             this.grpViasImpressao.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.grpControleFidelidade.ResumeLayout(false);
+            this.grpControleFidelidade.PerformLayout();
             this.grpFidelidade.ResumeLayout(false);
             this.grpFidelidade.PerformLayout();
             this.grpSms.ResumeLayout(false);
@@ -2400,8 +2536,6 @@
         private System.Windows.Forms.GroupBox grpSms;
         private System.Windows.Forms.CheckBox chkEnviaSms;
         private System.Windows.Forms.GroupBox grpFidelidade;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.TextBox txtNumeroPedidos;
         private System.Windows.Forms.TextBox txtPrevisao;
         private System.Windows.Forms.CheckBox chkPrevisao;
         private System.Windows.Forms.CheckBox chk10Garcon;
@@ -2529,5 +2663,17 @@
         private System.Windows.Forms.TextBox txtAgrZenvia;
         private System.Windows.Forms.RadioButton rbLocaSMS;
         private System.Windows.Forms.RadioButton rbZenvia;
+        private System.Windows.Forms.RadioButton rbPorValor;
+        private System.Windows.Forms.RadioButton rbPorPonto;
+        private System.Windows.Forms.GroupBox grpControleFidelidade;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox txtMultiplicador;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkSegunda;
+        private System.Windows.Forms.CheckBox checkBox6;
     }
 }

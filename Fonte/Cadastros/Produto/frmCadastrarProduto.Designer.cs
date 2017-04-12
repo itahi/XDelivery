@@ -90,6 +90,8 @@
             this.cbxGrupoProduto = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label23 = new System.Windows.Forms.Label();
+            this.txtPontosFidelidade = new System.Windows.Forms.TextBox();
             this.grpPrecosDia = new System.Windows.Forms.GroupBox();
             this.label15 = new System.Windows.Forms.Label();
             this.txtPrecoDomingo = new System.Windows.Forms.TextBox();
@@ -177,7 +179,7 @@
             // precoProdutoLabel
             // 
             precoProdutoLabel.AutoSize = true;
-            precoProdutoLabel.Location = new System.Drawing.Point(234, 69);
+            precoProdutoLabel.Location = new System.Drawing.Point(254, 69);
             precoProdutoLabel.Name = "precoProdutoLabel";
             precoProdutoLabel.Size = new System.Drawing.Size(72, 13);
             precoProdutoLabel.TabIndex = 30;
@@ -213,7 +215,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(421, 139);
+            label5.Location = new System.Drawing.Point(331, 123);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(81, 13);
             label5.TabIndex = 37;
@@ -231,7 +233,7 @@
             // label17
             // 
             label17.AutoSize = true;
-            label17.Location = new System.Drawing.Point(318, 69);
+            label17.Location = new System.Drawing.Point(343, 66);
             label17.Name = "label17";
             label17.Size = new System.Drawing.Size(65, 13);
             label17.TabIndex = 40;
@@ -258,7 +260,7 @@
             // label22
             // 
             label22.AutoSize = true;
-            label22.Location = new System.Drawing.Point(156, 69);
+            label22.Location = new System.Drawing.Point(166, 66);
             label22.Name = "label22";
             label22.Size = new System.Drawing.Size(65, 13);
             label22.TabIndex = 46;
@@ -539,7 +541,7 @@
             this.txtPrecoSugerido.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
             this.txtPrecoSugerido.Enabled = false;
             this.txtPrecoSugerido.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecoSugerido.Location = new System.Drawing.Point(159, 86);
+            this.txtPrecoSugerido.Location = new System.Drawing.Point(162, 86);
             this.txtPrecoSugerido.Name = "txtPrecoSugerido";
             this.txtPrecoSugerido.Size = new System.Drawing.Size(69, 26);
             this.txtPrecoSugerido.TabIndex = 45;
@@ -573,7 +575,7 @@
             // 
             this.txtCodInterno.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
             this.txtCodInterno.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCodInterno.Location = new System.Drawing.Point(321, 86);
+            this.txtCodInterno.Location = new System.Drawing.Point(346, 86);
             this.txtCodInterno.Name = "txtCodInterno";
             this.txtCodInterno.Size = new System.Drawing.Size(66, 26);
             this.txtCodInterno.TabIndex = 3;
@@ -593,7 +595,7 @@
             // 
             this.txtMaxAdicionais.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
             this.txtMaxAdicionais.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxAdicionais.Location = new System.Drawing.Point(424, 157);
+            this.txtMaxAdicionais.Location = new System.Drawing.Point(329, 141);
             this.txtMaxAdicionais.Name = "txtMaxAdicionais";
             this.txtMaxAdicionais.Size = new System.Drawing.Size(83, 26);
             this.txtMaxAdicionais.TabIndex = 1;
@@ -622,7 +624,7 @@
             // 
             this.precoProdutoTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
             this.precoProdutoTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.precoProdutoTextBox.Location = new System.Drawing.Point(237, 86);
+            this.precoProdutoTextBox.Location = new System.Drawing.Point(257, 86);
             this.precoProdutoTextBox.Name = "precoProdutoTextBox";
             this.precoProdutoTextBox.Size = new System.Drawing.Size(69, 26);
             this.precoProdutoTextBox.TabIndex = 2;
@@ -799,6 +801,8 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.label23);
+            this.tabPage4.Controls.Add(this.txtPontosFidelidade);
             this.tabPage4.Controls.Add(this.grpPrecosDia);
             this.tabPage4.Controls.Add(this.groupBox2);
             this.tabPage4.Controls.Add(this.groupBox1);
@@ -807,8 +811,28 @@
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(673, 274);
             this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "3 -Turno / Disponibilidade";
+            this.tabPage4.Text = "3 - Preços e Promoções";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(301, 87);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(91, 13);
+            this.label23.TabIndex = 44;
+            this.label23.Text = "Pontos Fidelidade";
+            // 
+            // txtPontosFidelidade
+            // 
+            this.txtPontosFidelidade.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPontosFidelidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPontosFidelidade.Location = new System.Drawing.Point(304, 103);
+            this.txtPontosFidelidade.Name = "txtPontosFidelidade";
+            this.txtPontosFidelidade.Size = new System.Drawing.Size(69, 26);
+            this.txtPontosFidelidade.TabIndex = 43;
+            this.txtPontosFidelidade.Tag = "Friday";
+            this.toolTip1.SetToolTip(this.txtPontosFidelidade, "Defina quantos pontos vale o produto no programa de fidelidade");
             // 
             // grpPrecosDia
             // 
@@ -1060,7 +1084,7 @@
             this.groupBox2.Enabled = false;
             this.groupBox2.Location = new System.Drawing.Point(3, 62);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(594, 72);
+            this.groupBox2.Size = new System.Drawing.Size(271, 72);
             this.groupBox2.TabIndex = 33;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Horario que o produto estará disponivel";
@@ -1068,7 +1092,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(282, 21);
+            this.label9.Location = new System.Drawing.Point(144, 25);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(23, 13);
             this.label9.TabIndex = 14;
@@ -1077,7 +1101,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(160, 21);
+            this.label8.Location = new System.Drawing.Point(22, 25);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(32, 13);
             this.label8.TabIndex = 13;
@@ -1087,7 +1111,7 @@
             // 
             this.horaInicio.Checked = false;
             this.horaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.horaInicio.Location = new System.Drawing.Point(163, 40);
+            this.horaInicio.Location = new System.Drawing.Point(25, 44);
             this.horaInicio.Name = "horaInicio";
             this.horaInicio.Size = new System.Drawing.Size(82, 20);
             this.horaInicio.TabIndex = 11;
@@ -1095,7 +1119,7 @@
             // HoraFim
             // 
             this.HoraFim.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.HoraFim.Location = new System.Drawing.Point(285, 40);
+            this.HoraFim.Location = new System.Drawing.Point(147, 44);
             this.HoraFim.Name = "HoraFim";
             this.HoraFim.Size = new System.Drawing.Size(86, 20);
             this.HoraFim.TabIndex = 12;
@@ -1327,6 +1351,7 @@
             this.grpDesconto.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.grpPrecosDia.ResumeLayout(false);
             this.grpPrecosDia.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1437,5 +1462,7 @@
         private System.Windows.Forms.TextBox txtMarkup;
         private System.Windows.Forms.TextBox txtPrecoCusto;
         private System.Windows.Forms.TextBox txtPrecoSugerido;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox txtPontosFidelidade;
     }
 }

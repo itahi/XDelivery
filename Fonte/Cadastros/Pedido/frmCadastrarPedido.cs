@@ -45,7 +45,7 @@ namespace DexComanda
         private string itemNome, gNUmeroMesa;
         private bool ContraMesas = Sessions.returnConfig.UsaControleMesa;
         private string NomeEmpresa, Telefone, Telefone2;
-        private bool ControlaFidelidade = Sessions.returnConfig.ControlaFidelidade;
+       // private bool ControlaFidelidade = Sessions.returnConfig.ControlaFidelidade;
         private int NumeroPedidos; //= Sessions.returnPessoa.TicketFidelidade; 
         private int PedidosParaFidelidade = Sessions.returnConfig.PedidosParaFidelidade;
         private string DiaDaSema = DateTime.Now.DayOfWeek.ToString();
@@ -207,15 +207,15 @@ namespace DexComanda
             cbxTipoPedido.Visible = ContraMesas;
             DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
             DataRow dRow = pessoa.Tables["Pessoa"].Rows[0];
-            if (ControlaFidelidade)
-            {
-                NumeroPedidos = int.Parse(dRow.ItemArray.GetValue(13).ToString());
-                if (NumeroPedidos == PedidosParaFidelidade)
-                {
-                    lblFidelidade.Focus();
-                    lblFidelidade.Visible = true;
-                }
-            }
+            //if (ControlaFidelidade)
+            //{
+            //    NumeroPedidos = int.Parse(dRow.ItemArray.GetValue(13).ToString());
+            //    if (NumeroPedidos == PedidosParaFidelidade)
+            //    {
+            //        lblFidelidade.Focus();
+            //        lblFidelidade.Visible = true;
+            //    }
+            //}
 
             if (ProdutosPorCodigo)
             {
@@ -1859,7 +1859,7 @@ namespace DexComanda
                     {
                         iCodigo = codPedido;
                     }
-                    if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras  || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria
+                    if (Sessions.returnEmpresa.CNPJ==Bibliotecas.cClaudinei|| Sessions.returnEmpresa.CNPJ== Bibliotecas.cComamarella|| Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras  || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria
                         || Sessions.returnEmpresa.CNPJ == Bibliotecas.cTheBest || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGallegao)
                     {
                         ImpressaoPorCozinha(iCodigo);

@@ -19,7 +19,7 @@ namespace DexComanda.Models
         public bool Usa2Telefones { get; set; }
         public bool UsaControleMesa { get; set; }
         public bool ImprimeViaEntrega { get; set; }
-        public bool ControlaFidelidade { get; set; }
+        public string ControlaFidelidade { get; set; }
         public int  PedidosParaFidelidade { get; set; }
         public bool DescontoDiaSemana { get; set; }
         public string PrevisaoEntrega { get; set; }

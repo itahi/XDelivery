@@ -39,8 +39,10 @@ using DexComanda.Cadastros.Pessoa;
 
 namespace DexComanda
 {
+
     public class Utils
     {
+       
         private static DataSet dsItemsNaoImpresso;
         private static Conexao conexao;
         private static SimpleSending cliente;
@@ -400,7 +402,14 @@ namespace DexComanda
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
         }
-
+        public static string SerializaObjeto(List<FidelidadeDias> iValores)
+        {
+            if (iValores == null)
+            {
+                return new List<FidelidadeDias>().ToString();
+            }
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
         public static string SerializaObjeto(MultiSabores iValores)
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
@@ -417,11 +426,19 @@ namespace DexComanda
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
         }
-        //public static string SerializaObjeto(string iLista)
-        //{
-        //    return JsonConvert.SerializeObject(iLista Formatting.None);
-        //}
+        public static string SerializaObjeto(Fidelidade iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
 
+        public static List<FidelidadeDias> DeserializaObjetoFidelidade(string iValores)
+        {
+            if (iValores =="" || iValores==null)
+            {
+                return new List<FidelidadeDias>();
+            }
+            return JsonConvert.DeserializeObject<List<FidelidadeDias>>(iValores);
+        }
         public static List<PrecoDiaProduto> DeserializaObjeto(string iValores)
         {
             if (iValores == "")
@@ -430,6 +447,14 @@ namespace DexComanda
             }
             return JsonConvert.DeserializeObject<List<PrecoDiaProduto>>(iValores);
         }
+        //public static List<FidelidadeDias> DeserializaObjetoFidelidade(string iValores)
+        //{
+        //    if (iValores == "")
+        //    {
+        //        return new List<FidelidadeDias>();
+        //    }
+        //    return JsonConvert.DeserializeObject<List<FidelidadeDias>>(iValores);
+        //}
         public static DadosEnvioZenvia DeserializaObjetoZenvia(string iValores)
         {
             if (iValores == "")
@@ -472,6 +497,52 @@ namespace DexComanda
             }
             return JsonConvert.DeserializeObject<List<CidadesAtendidas>>(iValores);
 
+        }
+        public static Fidelidade DeserializaObjeto5(string iValores)
+        {
+            if (iValores == "")
+            {
+                return null;
+            }
+            return JsonConvert.DeserializeObject<Fidelidade>(iValores);
+
+        }
+        /// <summary>
+        /// Controla Ações de Fidelidade e acumula os pontos
+        /// </summary>
+        /// <param name="intCodProduto"> Código do produto que foi vendido</param
+        /// <param name="Multiplicador"> Multiplicador da fidelidade , casos em que o produto valerá mais </param>
+        /// <param name="vlrItemsPedido"> Valor do pedido , para casos que o tipo de promoção for por valor</param>
+        public static void ControleFidelidade(int intCodPedido,int intCodPessoa,int intCodProduto,int Multiplicador=1,decimal vlrItemsPedido=0)
+        {
+            try
+            {
+                Fidelidade fidelidade = new Fidelidade();
+                fidelidade = DeserializaObjeto5(Sessions.returnConfig.ControlaFidelidade);
+                int iQuantidadePonto = 1;
+                if (fidelidade.Tipo == "Por Ponto")
+                {
+                    iQuantidadePonto = conexao.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", intCodProduto).Tables[0].Rows[0].Field<int>("PontosFidelidade");
+                }
+                else
+                {
+                    iQuantidadePonto = Convert.ToInt32(vlrItemsPedido);
+                }
+
+                PessoaFidelidade pess = new PessoaFidelidade()
+                {
+                    CodPedido = intCodPedido,
+                    CodPessoa = intCodPessoa,
+                    Ponto = iQuantidadePonto* Multiplicador,
+                    Tipo = 'C' // Crédito
+                };
+                conexao.Insert("spAdicionarPessoa_Fidelidade", pess);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            
         }
         public static void MontaCombox(ComboBox icbxName, string idisplayName,
             string iValueMember, string iTable, string iSP, int iCod = -1)

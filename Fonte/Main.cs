@@ -1081,16 +1081,16 @@ namespace DexComanda
         }
         private void AtualizarFidelidade(int iCodPessoa)
         {
-            if (Sessions.returnConfig.ControlaFidelidade)
-            {
-                AtualizarFidelidade atlFideli = new AtualizarFidelidade()
-                {
-                    CodPessoa = iCodPessoa,
-                    Ticket = 1
-                };
+            //if (Sessions.returnConfig.ControlaFidelidade)
+            //{
+            //    AtualizarFidelidade atlFideli = new AtualizarFidelidade()
+            //    {
+            //        CodPessoa = iCodPessoa,
+            //        Ticket = 1
+            //    };
 
-                con.Update("spAlteraFidelidade", atlFideli);
-            }
+            //    con.Update("spAlteraFidelidade", atlFideli);
+            //}
         }
         private void GravaMOvimentoCaixa(string iFPagamento, decimal iValor, int iCodPedido)
         {

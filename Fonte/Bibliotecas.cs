@@ -8,7 +8,7 @@ namespace DexComanda
 {
     public class Bibliotecas
     {
-        public const string cException = "Exeção de tratamento , comunique a xSistemas ";
+        public static string cException = "Exeção de tratamento em , comunique a xSistemas ";
         public const string cGravacaoOK = "Registro gravado com sucesso";
         public const string cEdicaoOK = "Registro editado com sucesso";
         public const string cDeleteOK = "Registro deletado com sucesso";
@@ -20,10 +20,13 @@ namespace DexComanda
         public const int cStatuMesaLiberada = 1;
         public const int cStatusMesaOcupada = 2;
         public const string cAcaiFood = "15014504000138";
+        public const string cComamarella = "04533461000180";
+        public const string cLeoHamburguer = "";
         public const string cMassaRara = "21188769000155";
         public const string cEsphiras = "21128650000197";
         public const string cAcaiVitoria = "00830689000181";
         public const string cGallegao = "19642556000100";
+        public const string cClaudinei = "07977973000124";
         public const string cTopsAcai = "";
         public const string cBuris = "21207218000191";
         public const string cSkinaLanches = "24829903000148";
