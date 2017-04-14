@@ -346,10 +346,10 @@ namespace DexComanda
                 lblCaixa.Text = "Caixa Aberto";
                 lblCaixa.ForeColor = Color.Green;
             }
-
+            string strTipoPedido = "And Pd.Tipo='"+cbxFiltroTipo.Text +"'";
             this.txbTelefoneCliente.Focus();
             Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
-            Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
+            Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido,false,strTipoPedido);
             Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
             MontaMenu();
             TotalizaPedidos();
@@ -373,14 +373,8 @@ namespace DexComanda
             usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
 
             this.txtUsuarioLogado.Text = Sessions.retunrUsuario.Nome;
-            //usuáriosToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
-            //relatórioToolStripMenuItem.Enabled = Sessions.retunrUsuario.AcessaRelatoriosSN;
             configuraçãoToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
             usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
-            // FinanceiroToolStripMenuItem.Enabled = Sessions.retunrUsuario.AbreFechaCaixaSN;
-            // alteracaoStatusToolStripMenuItem.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
-            //sincronizaçãoToolStripMenuItem.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
-            //notificaçõesToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
             lançamentoAvulsoToolStripMenuItem.Enabled = iCaixaAberto > 0;
 
         }
@@ -556,12 +550,12 @@ namespace DexComanda
         {
             try
             {
-            if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cBuris
-             || Sessions.returnEmpresa.CNPJ == Bibliotecas.cLeoHamburguer)
+                if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cBuris
+                 || Sessions.returnEmpresa.CNPJ == Bibliotecas.cLeoHamburguer)
                 {
                     return;
                 }
-                double dblTotalPedidos =0;
+                double dblTotalPedidos = 0;
                 for (int i = 0; i < pedidosGridView.Rows.Count; i++)
                 {
                     if (pedidosGridView.Columns.Contains("TotalPedido"))
@@ -576,7 +570,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-            
+
 
         }
         private void BuscaPedidoCliente(object sender, KeyEventArgs e)
@@ -675,7 +669,8 @@ namespace DexComanda
                     CarregaPedido(codigo);
 
                 }
-                Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
+                string iTipoPedido = " And Pd.Tipo='"+cbxFiltroTipo.Text+ "'";
+                Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido,true, iTipoPedido);
 
             }
             catch (Exception es)

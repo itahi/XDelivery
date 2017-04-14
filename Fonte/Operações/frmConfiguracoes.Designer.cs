@@ -167,7 +167,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tbExibicao = new System.Windows.Forms.TabPage();
             this.label30 = new System.Windows.Forms.Label();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.grpPessoas = new System.Windows.Forms.GroupBox();
             this.chkTelefone2 = new System.Windows.Forms.CheckBox();
             this.chkTelefone = new System.Windows.Forms.CheckBox();
             this.chkCep = new System.Windows.Forms.CheckBox();
@@ -180,7 +180,6 @@
             this.chkBairro = new System.Windows.Forms.CheckBox();
             this.chkEndereco = new System.Windows.Forms.CheckBox();
             this.chkNomePessoa = new System.Windows.Forms.CheckBox();
-            this.chkCodPessoa = new System.Windows.Forms.CheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.chkAtendente = new System.Windows.Forms.CheckBox();
             this.chkEntregador = new System.Windows.Forms.CheckBox();
@@ -196,18 +195,15 @@
             this.chkTrocoPara = new System.Windows.Forms.CheckBox();
             this.chkTotal = new System.Windows.Forms.CheckBox();
             this.chkNomeCliente = new System.Windows.Forms.CheckBox();
-            this.chkCodPedido = new System.Windows.Forms.CheckBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.grpProdutos = new System.Windows.Forms.GroupBox();
             this.chkDtSincronismo = new System.Windows.Forms.CheckBox();
             this.chkDtAlteracao = new System.Windows.Forms.CheckBox();
             this.btnSalvarConfigProduto = new System.Windows.Forms.Button();
-            this.chkAtivo = new System.Windows.Forms.CheckBox();
             this.chkPrDesconto = new System.Windows.Forms.CheckBox();
             this.chkGrupo = new System.Windows.Forms.CheckBox();
             this.chkPreco = new System.Windows.Forms.CheckBox();
             this.chkDescricao = new System.Windows.Forms.CheckBox();
             this.chkNomeProd = new System.Windows.Forms.CheckBox();
-            this.chkCodigo = new System.Windows.Forms.CheckBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.grpCidades = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -263,9 +259,9 @@
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tbExibicao.SuspendLayout();
-            this.groupBox7.SuspendLayout();
+            this.grpPessoas.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.grpProdutos.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.grpCidades.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -1635,9 +1631,9 @@
             // tbExibicao
             // 
             this.tbExibicao.Controls.Add(this.label30);
-            this.tbExibicao.Controls.Add(this.groupBox7);
+            this.tbExibicao.Controls.Add(this.grpPessoas);
             this.tbExibicao.Controls.Add(this.groupBox6);
-            this.tbExibicao.Controls.Add(this.groupBox3);
+            this.tbExibicao.Controls.Add(this.grpProdutos);
             this.tbExibicao.Location = new System.Drawing.Point(4, 22);
             this.tbExibicao.Name = "tbExibicao";
             this.tbExibicao.Padding = new System.Windows.Forms.Padding(3);
@@ -1658,27 +1654,26 @@
     "ADOR";
             this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // groupBox7
+            // grpPessoas
             // 
-            this.groupBox7.Controls.Add(this.chkTelefone2);
-            this.groupBox7.Controls.Add(this.chkTelefone);
-            this.groupBox7.Controls.Add(this.chkCep);
-            this.groupBox7.Controls.Add(this.chkNUmero);
-            this.groupBox7.Controls.Add(this.chkTicket);
-            this.groupBox7.Controls.Add(this.btnSalvarConfigPessoas);
-            this.groupBox7.Controls.Add(this.chkPreferencia);
-            this.groupBox7.Controls.Add(this.chkUF);
-            this.groupBox7.Controls.Add(this.chkCidade);
-            this.groupBox7.Controls.Add(this.chkBairro);
-            this.groupBox7.Controls.Add(this.chkEndereco);
-            this.groupBox7.Controls.Add(this.chkNomePessoa);
-            this.groupBox7.Controls.Add(this.chkCodPessoa);
-            this.groupBox7.Location = new System.Drawing.Point(399, 3);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(231, 267);
-            this.groupBox7.TabIndex = 6;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Pessoas";
+            this.grpPessoas.Controls.Add(this.chkTelefone2);
+            this.grpPessoas.Controls.Add(this.chkTelefone);
+            this.grpPessoas.Controls.Add(this.chkCep);
+            this.grpPessoas.Controls.Add(this.chkNUmero);
+            this.grpPessoas.Controls.Add(this.chkTicket);
+            this.grpPessoas.Controls.Add(this.btnSalvarConfigPessoas);
+            this.grpPessoas.Controls.Add(this.chkPreferencia);
+            this.grpPessoas.Controls.Add(this.chkUF);
+            this.grpPessoas.Controls.Add(this.chkCidade);
+            this.grpPessoas.Controls.Add(this.chkBairro);
+            this.grpPessoas.Controls.Add(this.chkEndereco);
+            this.grpPessoas.Controls.Add(this.chkNomePessoa);
+            this.grpPessoas.Location = new System.Drawing.Point(399, 3);
+            this.grpPessoas.Name = "grpPessoas";
+            this.grpPessoas.Size = new System.Drawing.Size(231, 267);
+            this.grpPessoas.TabIndex = 6;
+            this.grpPessoas.TabStop = false;
+            this.grpPessoas.Text = "Pessoas";
             // 
             // chkTelefone2
             // 
@@ -1687,6 +1682,7 @@
             this.chkTelefone2.Name = "chkTelefone2";
             this.chkTelefone2.Size = new System.Drawing.Size(77, 17);
             this.chkTelefone2.TabIndex = 46;
+            this.chkTelefone2.Tag = "Telefone2";
             this.chkTelefone2.Text = "Telefone 2";
             this.chkTelefone2.UseVisualStyleBackColor = true;
             // 
@@ -1697,6 +1693,7 @@
             this.chkTelefone.Name = "chkTelefone";
             this.chkTelefone.Size = new System.Drawing.Size(68, 17);
             this.chkTelefone.TabIndex = 45;
+            this.chkTelefone.Tag = "Telefone";
             this.chkTelefone.Text = "Telefone";
             this.chkTelefone.UseVisualStyleBackColor = true;
             // 
@@ -1707,6 +1704,7 @@
             this.chkCep.Name = "chkCep";
             this.chkCep.Size = new System.Drawing.Size(47, 17);
             this.chkCep.TabIndex = 44;
+            this.chkCep.Tag = "Cep";
             this.chkCep.Text = "CEP";
             this.chkCep.UseVisualStyleBackColor = true;
             // 
@@ -1717,6 +1715,7 @@
             this.chkNUmero.Name = "chkNUmero";
             this.chkNUmero.Size = new System.Drawing.Size(63, 17);
             this.chkNUmero.TabIndex = 43;
+            this.chkNUmero.Tag = "Numero";
             this.chkNUmero.Text = "Numero";
             this.chkNUmero.UseVisualStyleBackColor = true;
             // 
@@ -1727,6 +1726,7 @@
             this.chkTicket.Name = "chkTicket";
             this.chkTicket.Size = new System.Drawing.Size(107, 17);
             this.chkTicket.TabIndex = 42;
+            this.chkTicket.Tag = "TicketFidelidade";
             this.chkTicket.Text = "Ticket Fidelidade";
             this.chkTicket.UseVisualStyleBackColor = true;
             // 
@@ -1747,6 +1747,7 @@
             this.chkPreferencia.Name = "chkPreferencia";
             this.chkPreferencia.Size = new System.Drawing.Size(91, 17);
             this.chkPreferencia.TabIndex = 40;
+            this.chkPreferencia.Tag = "PontoReferencia";
             this.chkPreferencia.Text = "P. Referencia";
             this.chkPreferencia.UseVisualStyleBackColor = true;
             // 
@@ -1757,6 +1758,7 @@
             this.chkUF.Name = "chkUF";
             this.chkUF.Size = new System.Drawing.Size(40, 17);
             this.chkUF.TabIndex = 39;
+            this.chkUF.Tag = "UF";
             this.chkUF.Text = "UF";
             this.chkUF.UseVisualStyleBackColor = true;
             // 
@@ -1767,6 +1769,7 @@
             this.chkCidade.Name = "chkCidade";
             this.chkCidade.Size = new System.Drawing.Size(59, 17);
             this.chkCidade.TabIndex = 38;
+            this.chkCidade.Tag = "Cidade";
             this.chkCidade.Text = "Cidade";
             this.chkCidade.UseVisualStyleBackColor = true;
             // 
@@ -1777,6 +1780,7 @@
             this.chkBairro.Name = "chkBairro";
             this.chkBairro.Size = new System.Drawing.Size(53, 17);
             this.chkBairro.TabIndex = 37;
+            this.chkBairro.Tag = "Bairro";
             this.chkBairro.Text = "Bairro";
             this.chkBairro.UseVisualStyleBackColor = true;
             // 
@@ -1787,31 +1791,21 @@
             this.chkEndereco.Name = "chkEndereco";
             this.chkEndereco.Size = new System.Drawing.Size(72, 17);
             this.chkEndereco.TabIndex = 36;
+            this.chkEndereco.Tag = "Endereco";
             this.chkEndereco.Text = "Endereço";
             this.chkEndereco.UseVisualStyleBackColor = true;
             // 
             // chkNomePessoa
             // 
+            this.chkNomePessoa.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.chkNomePessoa.AutoSize = true;
             this.chkNomePessoa.Location = new System.Drawing.Point(9, 35);
             this.chkNomePessoa.Name = "chkNomePessoa";
             this.chkNomePessoa.Size = new System.Drawing.Size(54, 17);
             this.chkNomePessoa.TabIndex = 35;
+            this.chkNomePessoa.Tag = "Nome";
             this.chkNomePessoa.Text = "Nome";
             this.chkNomePessoa.UseVisualStyleBackColor = true;
-            // 
-            // chkCodPessoa
-            // 
-            this.chkCodPessoa.AutoSize = true;
-            this.chkCodPessoa.Checked = true;
-            this.chkCodPessoa.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkCodPessoa.Enabled = false;
-            this.chkCodPessoa.Location = new System.Drawing.Point(8, 12);
-            this.chkCodPessoa.Name = "chkCodPessoa";
-            this.chkCodPessoa.Size = new System.Drawing.Size(59, 17);
-            this.chkCodPessoa.TabIndex = 34;
-            this.chkCodPessoa.Text = "Código";
-            this.chkCodPessoa.UseVisualStyleBackColor = true;
             // 
             // groupBox6
             // 
@@ -1829,7 +1823,6 @@
             this.groupBox6.Controls.Add(this.chkTrocoPara);
             this.groupBox6.Controls.Add(this.chkTotal);
             this.groupBox6.Controls.Add(this.chkNomeCliente);
-            this.groupBox6.Controls.Add(this.chkCodPedido);
             this.groupBox6.Location = new System.Drawing.Point(158, 6);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(235, 267);
@@ -1980,55 +1973,42 @@
             this.chkNomeCliente.Text = "Nome";
             this.chkNomeCliente.UseVisualStyleBackColor = true;
             // 
-            // chkCodPedido
+            // grpProdutos
             // 
-            this.chkCodPedido.AutoSize = true;
-            this.chkCodPedido.Checked = true;
-            this.chkCodPedido.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkCodPedido.Enabled = false;
-            this.chkCodPedido.Location = new System.Drawing.Point(10, 12);
-            this.chkCodPedido.Name = "chkCodPedido";
-            this.chkCodPedido.Size = new System.Drawing.Size(59, 17);
-            this.chkCodPedido.TabIndex = 34;
-            this.chkCodPedido.Text = "Código";
-            this.chkCodPedido.UseVisualStyleBackColor = true;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.chkDtSincronismo);
-            this.groupBox3.Controls.Add(this.chkDtAlteracao);
-            this.groupBox3.Controls.Add(this.btnSalvarConfigProduto);
-            this.groupBox3.Controls.Add(this.chkAtivo);
-            this.groupBox3.Controls.Add(this.chkPrDesconto);
-            this.groupBox3.Controls.Add(this.chkGrupo);
-            this.groupBox3.Controls.Add(this.chkPreco);
-            this.groupBox3.Controls.Add(this.chkDescricao);
-            this.groupBox3.Controls.Add(this.chkNomeProd);
-            this.groupBox3.Controls.Add(this.chkCodigo);
-            this.groupBox3.Location = new System.Drawing.Point(6, 6);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(146, 267);
-            this.groupBox3.TabIndex = 5;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Produtos";
+            this.grpProdutos.Controls.Add(this.chkDtSincronismo);
+            this.grpProdutos.Controls.Add(this.chkDtAlteracao);
+            this.grpProdutos.Controls.Add(this.btnSalvarConfigProduto);
+            this.grpProdutos.Controls.Add(this.chkPrDesconto);
+            this.grpProdutos.Controls.Add(this.chkGrupo);
+            this.grpProdutos.Controls.Add(this.chkPreco);
+            this.grpProdutos.Controls.Add(this.chkDescricao);
+            this.grpProdutos.Controls.Add(this.chkNomeProd);
+            this.grpProdutos.Location = new System.Drawing.Point(6, 6);
+            this.grpProdutos.Name = "grpProdutos";
+            this.grpProdutos.Size = new System.Drawing.Size(146, 267);
+            this.grpProdutos.TabIndex = 5;
+            this.grpProdutos.TabStop = false;
+            this.grpProdutos.Text = "Produtos";
             // 
             // chkDtSincronismo
             // 
             this.chkDtSincronismo.AutoSize = true;
-            this.chkDtSincronismo.Location = new System.Drawing.Point(9, 204);
+            this.chkDtSincronismo.Location = new System.Drawing.Point(6, 181);
             this.chkDtSincronismo.Name = "chkDtSincronismo";
             this.chkDtSincronismo.Size = new System.Drawing.Size(109, 17);
             this.chkDtSincronismo.TabIndex = 33;
+            this.chkDtSincronismo.Tag = "DataSincronismo";
             this.chkDtSincronismo.Text = "Data Sincronismo";
             this.chkDtSincronismo.UseVisualStyleBackColor = true;
             // 
             // chkDtAlteracao
             // 
             this.chkDtAlteracao.AutoSize = true;
-            this.chkDtAlteracao.Location = new System.Drawing.Point(8, 181);
+            this.chkDtAlteracao.Location = new System.Drawing.Point(6, 158);
             this.chkDtAlteracao.Name = "chkDtAlteracao";
             this.chkDtAlteracao.Size = new System.Drawing.Size(97, 17);
             this.chkDtAlteracao.TabIndex = 32;
+            this.chkDtAlteracao.Tag = "DataAlteracao";
             this.chkDtAlteracao.Text = "Data Alteração";
             this.chkDtAlteracao.UseVisualStyleBackColor = true;
             // 
@@ -2042,33 +2022,26 @@
             this.btnSalvarConfigProduto.UseVisualStyleBackColor = true;
             this.btnSalvarConfigProduto.Click += new System.EventHandler(this.SalvarConfigProduto);
             // 
-            // chkAtivo
-            // 
-            this.chkAtivo.AutoSize = true;
-            this.chkAtivo.Location = new System.Drawing.Point(8, 158);
-            this.chkAtivo.Name = "chkAtivo";
-            this.chkAtivo.Size = new System.Drawing.Size(53, 17);
-            this.chkAtivo.TabIndex = 30;
-            this.chkAtivo.Text = "Ativo ";
-            this.chkAtivo.UseVisualStyleBackColor = true;
-            // 
             // chkPrDesconto
             // 
             this.chkPrDesconto.AutoSize = true;
-            this.chkPrDesconto.Location = new System.Drawing.Point(9, 135);
+            this.chkPrDesconto.Location = new System.Drawing.Point(6, 135);
             this.chkPrDesconto.Name = "chkPrDesconto";
             this.chkPrDesconto.Size = new System.Drawing.Size(94, 17);
             this.chkPrDesconto.TabIndex = 29;
+            this.chkPrDesconto.Tag = "PrecoDesconto";
             this.chkPrDesconto.Text = "Preço C/Desc";
             this.chkPrDesconto.UseVisualStyleBackColor = true;
+            this.chkPrDesconto.CheckedChanged += new System.EventHandler(this.chkPrDesconto_CheckedChanged);
             // 
             // chkGrupo
             // 
             this.chkGrupo.AutoSize = true;
-            this.chkGrupo.Location = new System.Drawing.Point(8, 112);
+            this.chkGrupo.Location = new System.Drawing.Point(6, 112);
             this.chkGrupo.Name = "chkGrupo";
             this.chkGrupo.Size = new System.Drawing.Size(55, 17);
             this.chkGrupo.TabIndex = 28;
+            this.chkGrupo.Tag = "GrupoProduto";
             this.chkGrupo.Text = "Grupo";
             this.chkGrupo.UseVisualStyleBackColor = true;
             // 
@@ -2079,6 +2052,7 @@
             this.chkPreco.Name = "chkPreco";
             this.chkPreco.Size = new System.Drawing.Size(54, 17);
             this.chkPreco.TabIndex = 27;
+            this.chkPreco.Tag = "PrecoProduto";
             this.chkPreco.Text = "Preço";
             this.chkPreco.UseVisualStyleBackColor = true;
             // 
@@ -2089,6 +2063,7 @@
             this.chkDescricao.Name = "chkDescricao";
             this.chkDescricao.Size = new System.Drawing.Size(74, 17);
             this.chkDescricao.TabIndex = 26;
+            this.chkDescricao.Tag = "DescricaoProduto";
             this.chkDescricao.Text = "Descrição";
             this.chkDescricao.UseVisualStyleBackColor = true;
             // 
@@ -2099,21 +2074,9 @@
             this.chkNomeProd.Name = "chkNomeProd";
             this.chkNomeProd.Size = new System.Drawing.Size(54, 17);
             this.chkNomeProd.TabIndex = 25;
+            this.chkNomeProd.Tag = "NomeProduto";
             this.chkNomeProd.Text = "Nome";
             this.chkNomeProd.UseVisualStyleBackColor = true;
-            // 
-            // chkCodigo
-            // 
-            this.chkCodigo.AutoSize = true;
-            this.chkCodigo.Checked = true;
-            this.chkCodigo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkCodigo.Enabled = false;
-            this.chkCodigo.Location = new System.Drawing.Point(6, 19);
-            this.chkCodigo.Name = "chkCodigo";
-            this.chkCodigo.Size = new System.Drawing.Size(59, 17);
-            this.chkCodigo.TabIndex = 24;
-            this.chkCodigo.Text = "Código";
-            this.chkCodigo.UseVisualStyleBackColor = true;
             // 
             // tabPage5
             // 
@@ -2448,12 +2411,12 @@
             this.panel2.PerformLayout();
             this.tbExibicao.ResumeLayout(false);
             this.tbExibicao.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
+            this.grpPessoas.ResumeLayout(false);
+            this.grpPessoas.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.grpProdutos.ResumeLayout(false);
+            this.grpProdutos.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             this.grpCidades.ResumeLayout(false);
@@ -2554,16 +2517,14 @@
         private System.Windows.Forms.TextBox txtViasEntrega;
         private System.Windows.Forms.CheckBox chkUltPedido;
         private System.Windows.Forms.TabPage tbExibicao;
-        private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox grpPessoas;
+        private System.Windows.Forms.GroupBox grpProdutos;
         private System.Windows.Forms.Button btnSalvarConfigProduto;
-        private System.Windows.Forms.CheckBox chkAtivo;
         private System.Windows.Forms.CheckBox chkPrDesconto;
         private System.Windows.Forms.CheckBox chkGrupo;
         private System.Windows.Forms.CheckBox chkPreco;
         private System.Windows.Forms.CheckBox chkDescricao;
         private System.Windows.Forms.CheckBox chkNomeProd;
-        private System.Windows.Forms.CheckBox chkCodigo;
         private System.Windows.Forms.CheckBox chkRegCancelamentos;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TextBox txtCaminhoBkp;
@@ -2584,7 +2545,6 @@
         private System.Windows.Forms.CheckBox chkBairro;
         private System.Windows.Forms.CheckBox chkEndereco;
         private System.Windows.Forms.CheckBox chkNomePessoa;
-        private System.Windows.Forms.CheckBox chkCodPessoa;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.CheckBox chkDesconto;
         private System.Windows.Forms.CheckBox chkOrigem;
@@ -2598,7 +2558,6 @@
         private System.Windows.Forms.CheckBox chkTrocoPara;
         private System.Windows.Forms.CheckBox chkTotal;
         private System.Windows.Forms.CheckBox chkNomeCliente;
-        private System.Windows.Forms.CheckBox chkCodPedido;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.CheckBox chkTelefone2;
         private System.Windows.Forms.CheckBox chkTelefone;

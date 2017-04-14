@@ -153,8 +153,8 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-            
-        
+
+
         }
         private void MarcaConfiguracao(string iConfig)
         {
@@ -195,7 +195,7 @@ namespace DexComanda
                             };
                             listFidelidade.Add(fidelidade);
                         }
-                        
+
                     }
                 }
             }
@@ -501,7 +501,7 @@ namespace DexComanda
         }
         private void frmConfiguracoes_Load(object sender, EventArgs e)
         {
-
+            MarcaConfiguracaoExibicao();
             if (Sessions.returnConfig != null)
             {
                 grpFidelidade.Enabled = chkFidelidade.Checked;
@@ -829,39 +829,18 @@ namespace DexComanda
         {
             string strConfiProduto = "Codigo";
 
-            if (chkNomeProd.Checked)
+            foreach (Control item in grpProdutos.Controls)
             {
-                strConfiProduto = strConfiProduto + ",NomeProduto";
-            }
-            if (chkDescricao.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",DescricaoProduto";
-            }
-            if (chkPreco.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",PrecoProduto";
-            }
-            if (chkPrDesconto.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",PrecoDesconto";
-            }
-            if (chkGrupo.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",GrupoProduto";
-            }
-            if (chkAtivo.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",AtivoSN";
-            }
-            if (chkDtAlteracao.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",DataAlteracao";
-            }
-            if (chkDtSincronismo.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",DataSincronismo";
-            }
 
+                if (object.ReferenceEquals(item.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                {
+                    //Check to see if it's a checkbox e Checked 
+                    if (((System.Windows.Forms.CheckBox)item).Checked)
+                    {
+                        strConfiProduto = strConfiProduto +"," +((System.Windows.Forms.CheckBox)item).Tag;
+                    }
+                }
+            }
             Utils.SalvarConfiguracao("GridProduto", strConfiProduto);
 
         }
@@ -871,7 +850,7 @@ namespace DexComanda
             string strConfigPedido = "Pd.Codigo,";
             if (chkNomeCliente.Checked)
             {
-                strConfigPedido = strConfigPedido + "(select Nome from Pessoa P where P.Codigo = Pd.CodPessoa) as 'Nome Cliente'";
+                strConfigPedido = strConfigPedido + "(select Nome from Pessoa P where P.Codigo = Pd.CodPessoa) as 'Nome Cliente '";
             }
             if (chkFinalizado.Checked)
             {
@@ -930,54 +909,60 @@ namespace DexComanda
 
             Utils.SalvarConfiguracao("GridPedido", strConfigPedido);
         }
+        /// <summary>
+        /// Marca os checkBox de configuração da tela de Exibição
+        /// </summary>
+        private void MarcaConfiguracaoExibicao()
+        {
+            string strProduto = Sessions.SqlProduto;
+            string strSqlPessoa = Sessions.SqlPessoa;
+
+            string []strListaProduto = strProduto.Split(new char[] { ',' });
+            string [] strListaPessoa = strSqlPessoa.Split(new char[] { ',' });
+            foreach (var item in strListaProduto)
+            {
+                foreach (Control controlProduto in grpProdutos.Controls)
+                {
+                    if (object.ReferenceEquals(controlProduto.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                    {
+                        if (((System.Windows.Forms.CheckBox)controlProduto).Tag.ToString() == item)
+                        {
+                            ((System.Windows.Forms.CheckBox)controlProduto).Checked = true;
+                        }
+                    }
+                    
+                }
+            }
+            foreach (var item in strListaPessoa)
+            {
+                foreach (Control controlPessoa in grpPessoas.Controls)
+                {
+                    if (object.ReferenceEquals(controlPessoa.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                    {
+                        if (item == ((System.Windows.Forms.CheckBox)controlPessoa).Tag.ToString())
+                        {
+                            ((System.Windows.Forms.CheckBox)controlPessoa).Checked = true;
+                        }
+                    }
+                    
+                }
+            }
+        }
 
         private void btnSalvarConfigPessoas_Click(object sender, EventArgs e)
         {
             string strConfiPessoa = "Codigo";
 
-            if (chkNomePessoa.Checked)
+            foreach (Control controPessoa in grpPessoas.Controls)
             {
-                strConfiPessoa = strConfiPessoa + ",Nome";
-            }
-            if (chkEndereco.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Endereco";
-            }
-            if (chkBairro.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Bairro";
-            }
-            if (chkCidade.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Cidade";
-            }
-            if (chkUF.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",UF";
-            }
-            if (chkPreferencia.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",PontoReferencia";
-            }
-            if (chkTicket.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",TicketFidelidade";
-            }
-            if (chkNUmero.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Numero";
-            }
-            if (chkCep.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Cep";
-            }
-            if (chkTelefone.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Telefone";
-            }
-            if (chkTelefone2.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Telefone2";
+                if (object.ReferenceEquals(controPessoa.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                {
+                    //Check to see if it's a checkbox e Checked 
+                    if (((System.Windows.Forms.CheckBox)controPessoa).Checked)
+                    {
+                        strConfiPessoa += "," + ((System.Windows.Forms.CheckBox)controPessoa).Tag;
+                    }
+                }
             }
 
             Utils.SalvarConfiguracao("GridPessoa", strConfiPessoa);
@@ -1048,5 +1033,9 @@ namespace DexComanda
             grpLocaSMS.Enabled = rbLocaSMS.Checked;
         }
 
+        private void chkPrDesconto_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

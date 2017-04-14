@@ -1,6 +1,11 @@
 create table Fidelidade_Promocao
 (
-
+  Codigo int identity(1,1),
+  Nome nvarchar(max),
+  AtivoSN bit,
+  DataInicio date,
+  DataFim date,
+  Multiplicador int
 )
 
 
