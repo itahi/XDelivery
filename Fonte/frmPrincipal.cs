@@ -198,14 +198,14 @@ namespace DexComanda
             catch (Exception errobusca)
             {
 
-                MessageBox.Show(errobusca.Message, "Erro");
+                MessageBox.Show(Bibliotecas.cException + errobusca.Message);
             }
         }
         private void ExecutaCancelamento(int CodUserCancelamento)
         {
             try
             {
-                string NomeCliente = (this.pedidosGridView.CurrentRow.Cells["Nome Cliente"].Value.ToString());
+                string NomeCliente = pedidosGridView.CurrentRow.Cells["Nome Cliente"].Value.ToString();
                 int CodUser;
                 DateTime dtPedido;
 
@@ -334,8 +334,6 @@ namespace DexComanda
         }
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
-            //chkGerenciaImpressao.Checked = Utils.RetornaNomePc() == Sessions.returnEmpresa.Servidor;
-
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
             int iNumeroCaixa = Sessions.retunrUsuario.CaixaLogado;
             DataSet dsCaixa = con.RetornaCaixaPorTurno(iNumeroCaixa, Sessions.retunrUsuario.Turno, DateTime.Now);
@@ -427,7 +425,7 @@ namespace DexComanda
             catch (Exception erro)
             {
 
-                MessageBox.Show(erro.Message);
+                MessageBox.Show(Bibliotecas.cException +  erro.Message);
             }
         }
         private void CarregaProduto(int iCodProduto)
@@ -443,9 +441,11 @@ namespace DexComanda
                                                               Convert.ToBoolean(dRowProduto.ItemArray.GetValue(6).ToString()), decimal.Parse(dRowProduto.ItemArray.GetValue(5).ToString()),
                                                               dRowProduto.ItemArray.GetValue(4).ToString(), dRowProduto.ItemArray.GetValue(8).ToString(), dRowProduto.ItemArray.GetValue(9).ToString(),
                                                               Convert.ToDateTime(dRowProduto.ItemArray.GetValue(10).ToString()), Convert.ToDateTime(dRowProduto.ItemArray.GetValue(11).ToString()),
-                                                              Convert.ToBoolean(dRowProduto.ItemArray.GetValue(13).ToString()), dRowProduto.ItemArray.GetValue(14).ToString(), dRowProduto.ItemArray.GetValue(15).ToString(), dRowProduto.ItemArray.GetValue(16).ToString());
+                                                              Convert.ToBoolean(dRowProduto.ItemArray.GetValue(13).ToString()), dRowProduto.ItemArray.GetValue(14).ToString(), dRowProduto.ItemArray.GetValue(15).ToString(), dRowProduto.ItemArray.GetValue(16).ToString()
+                                                              ,int.Parse(dRowProduto.ItemArray.GetValue(18).ToString()),int.Parse(dRowProduto.ItemArray.GetValue(19).ToString()));
             frm.StartPosition = FormStartPosition.CenterParent;
             frm.ShowDialog();
+
             if (cbxGrupoProduto.SelectedValue.ToString() != "0")
             {
                 Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto, !chkProdutosInativos.Checked, " and CodGrupo=" + cbxGrupoProduto.SelectedValue.ToString(), rowIndex);
@@ -828,6 +828,7 @@ namespace DexComanda
                     GravaMOvimentoCaixa(icodFormaPagamento, dblTotalPedido, codigo);
                     InsereFormasPagamento(codigo, icodFormaPagamento, dblTotalPedido);
                     Utils.ControlaEventos("BaixaPed", this.Name);
+                    Utils.ControleFidelidade(codigo, intCodPessoa, dblTotalPedido);
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo, 1);
 
                 }
@@ -914,6 +915,7 @@ namespace DexComanda
                     {
                         con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo, 1);
                     }
+                    Utils.ControleFidelidade(codigo, intCodPessoa, dblTotalPedido);
 
                     //Atualiza Grid
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);

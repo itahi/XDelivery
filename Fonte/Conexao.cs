@@ -1206,7 +1206,6 @@ namespace DexComanda
             try
             {
                 string iSql = "", iSubSelect = "subSelect";
-
                 if (iParametrosConsulta != null)
                 {
                     iSql = "select " + iParametrosConsulta + iSubSelect + " from " + iTable;
@@ -1223,7 +1222,6 @@ namespace DexComanda
                         {
                             iSql = iSql.Replace(iSubSelect, ",(select top 1 Quantidade from Produto_Estoque E where E.CodProduto = Produto.Codigo and E.DataAtualizacao between '" + DateTime.Now.Date.ToShortDateString() + " 00:00:00" + "' and '" + DateTime.Now.Date.ToShortDateString() + " 23:59:59') as QtdVendida");
                         }
-
                         if (iAtivos)
                         {
                             iSql = iSql.Replace(iSubSelect, "") + " where AtivoSN=1" + iFiltrosAdicionais;

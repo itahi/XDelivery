@@ -1173,6 +1173,7 @@ namespace DexComanda
                                 con.Insert("spCriarPedido", itemDoPedido);
                                 Utils.ControlaEventos("Inserir", this.Name);
 
+                              
                             }
 
                             // Transferido rotina para spAdicionarPedido

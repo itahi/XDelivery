@@ -1970,6 +1970,7 @@
             this.chkNomeCliente.Name = "chkNomeCliente";
             this.chkNomeCliente.Size = new System.Drawing.Size(54, 17);
             this.chkNomeCliente.TabIndex = 35;
+            this.chkNomeCliente.Tag = "Nome Cliente";
             this.chkNomeCliente.Text = "Nome";
             this.chkNomeCliente.UseVisualStyleBackColor = true;
             // 

@@ -40,7 +40,8 @@ namespace DexComanda
         }
         public frmCadastrarProduto(int CodProduto, string iNomeProduto, string iCodGrupo, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
                                    decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo,
-                                   DateTime idtFimPromo, bool iAtivoSN, string iCodInterno,string iMarkup,string iPrecoSugerido)
+                                   DateTime idtFimPromo, bool iAtivoSN, string iCodInterno, string iMarkup, string iPrecoSugerido,
+                                    int iPontoCompra, int iPontoTroca)
         {
             try
             {
@@ -80,6 +81,8 @@ namespace DexComanda
                     chkDomingo.Checked = true;
                 }
 
+                txtPontosFidelidade.Text = iPontoCompra.ToString();
+                txtPontosTroca.Text = iPontoTroca.ToString();
                 txtMarkup.Text = iMarkup;
                 txtPrecoSugerido.Text = iPrecoSugerido;
                 MontaListPrecos(iDiasPromocao);
@@ -108,7 +111,7 @@ namespace DexComanda
             }
 
         }
-     
+
         public frmCadastrarProduto(Produtos prod, Main parent)
         {
             InitializeComponent();
@@ -160,7 +163,7 @@ namespace DexComanda
         }
         private List<PrecoDiaProduto> RetornaDiasMarcados()
         {
-            
+
             listPrecos = new List<PrecoDiaProduto>();
             // var precosDia = new PrecoDiaProduto();
             foreach (System.Windows.Forms.Control TEXT in grpPrecosDia.Controls)
@@ -181,7 +184,7 @@ namespace DexComanda
                         listPrecos.Add(precosDia);
                     }
 
-                    
+
                 }
 
             }
@@ -225,7 +228,7 @@ namespace DexComanda
 
         }
 
-       
+
         private void frmCadastrarProduto_Load(object sender, EventArgs e)
         {
             con = new Conexao();
@@ -270,7 +273,7 @@ namespace DexComanda
 
         private void AdicionarProduto(object sender, EventArgs e)
         {
-           
+
             try
             {
                 if (txtCodInterno.Text != "0" && txtCodInterno.Text != "")
@@ -300,25 +303,28 @@ namespace DexComanda
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                     DataAlteracao = DateTime.Now,
-                   
+
                 };
-                if (txtPontosFidelidade.Text!="")
+                if (txtPontosFidelidade.Text != "")
                 {
                     intPontosFidelidadeVenda = int.Parse(txtPontosFidelidade.Text);
                 }
-                if (txtPontosTroca.Text!="")
+                if (txtPontosTroca.Text != "")
                 {
                     intPontosFidelidadeTroca = int.Parse(txtPontosTroca.Text);
                 }
-                if (txtPrecoCusto.Text!="")
+
+                produto.PontoFidelidadeTroca = intPontosFidelidadeTroca;
+                produto.PontoFidelidadeVenda = intPontosFidelidadeVenda;
+                if (txtPrecoCusto.Text != "")
                 {
                     produto.PrecoCusto = decimal.Parse(txtPrecoCusto.Text);
                 }
-                if (txtMarkup.Text!="")
+                if (txtMarkup.Text != "")
                 {
                     produto.Markup = decimal.Parse(txtMarkup.Text);
                 }
-                if (txtPrecoSugerido.Text!="")
+                if (txtPrecoSugerido.Text != "")
                 {
                     produto.PrecoSugerido = decimal.Parse(txtPrecoSugerido.Text);
                 }
@@ -502,6 +508,8 @@ namespace DexComanda
                 {
                     intPontosFidelidadeTroca = int.Parse(txtPontosTroca.Text);
                 }
+                produto.PontoFidelidadeTroca = intPontosFidelidadeTroca;
+                produto.PontoFidelidadeVenda = intPontosFidelidadeVenda;
                 if (txtPrecoCusto.Text != "")
                 {
                     produto.PrecoCusto = decimal.Parse(txtPrecoCusto.Text);
@@ -1091,7 +1099,7 @@ namespace DexComanda
                 gridInsumo.Columns.Add("Quantidade", "Quantidade");
                 gridInsumo.Columns.Add("Preco", "Preço");
             }
-           
+
         }
         private void AdicionarInsumoProduto(object sender, EventArgs e)
         {
@@ -1109,7 +1117,7 @@ namespace DexComanda
                     txtQtd.Focus();
                     return;
                 }
-            
+
 
                 for (int i = 0; i < gridInsumo.Rows.Count; i++)
                 {
@@ -1167,7 +1175,7 @@ namespace DexComanda
             {
                 return;
             }
-            
+
             if (gridInsumo.SelectedRows.Count > 0)
             {
                 int codRegistro = int.Parse(this.gridInsumo.CurrentRow.Cells["Codigo"].Value.ToString());
@@ -1208,10 +1216,10 @@ namespace DexComanda
         {
             try
             {
-                if (gridInsumo.CurrentRow.Cells[0].Value.ToString()==null)
+                if (gridInsumo.CurrentRow.Cells[0].Value.ToString() == null)
                 {
                     MessageBox.Show("Selecione o registro para editar");
-                    return; 
+                    return;
                 }
                 codigoinsumo = int.Parse(gridInsumo.CurrentRow.Cells["Codigo"].Value.ToString());
                 cbxInsumo.Text = gridInsumo.CurrentRow.Cells["Nome"].Value.ToString();
@@ -1272,7 +1280,7 @@ namespace DexComanda
                     return;
                 }
                 decimal dPrecoCusto = decimal.Parse(txtPrecoCusto.Text);
-                decimal dPrecoSugerido = dPrecoCusto + decimal.Parse(txtPrecoCusto.Text)* (decimal.Parse(txtMarkup.Text)/100);
+                decimal dPrecoSugerido = dPrecoCusto + decimal.Parse(txtPrecoCusto.Text) * (decimal.Parse(txtMarkup.Text) / 100);
                 txtPrecoSugerido.Text = dPrecoSugerido.ToString();
             }
             catch (Exception erro)

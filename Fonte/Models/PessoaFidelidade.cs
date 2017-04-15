@@ -11,6 +11,5 @@ namespace DexComanda.Models
         public int CodPessoa { get; set; }
         public int CodPedido { get; set; }
         public int Ponto { get; set; }
-        public char Tipo { get; set; }
     }
 }

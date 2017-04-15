@@ -1,3 +1,6 @@
+update Produto set PontoFidelidadeVenda=0;
+update Produto set PontoFidelidadeTroca=0;
+go
 alter table Produto add PontoFidelidadeVenda int default 0;
 alter table Produto add PontoFidelidadeTroca int default 0;
 go
