@@ -90,8 +90,6 @@
             this.cbxGrupoProduto = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.label23 = new System.Windows.Forms.Label();
-            this.txtPontosFidelidade = new System.Windows.Forms.TextBox();
             this.grpPrecosDia = new System.Windows.Forms.GroupBox();
             this.label15 = new System.Windows.Forms.Label();
             this.txtPrecoDomingo = new System.Windows.Forms.TextBox();
@@ -137,6 +135,11 @@
             this.cbxInsumo = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.txtPontosFidelidade = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.txtPontosTroca = new System.Windows.Forms.TextBox();
             grupoProdutoLabel = new System.Windows.Forms.Label();
             precoProdutoLabel = new System.Windows.Forms.Label();
             descricaoProdutoLabel = new System.Windows.Forms.Label();
@@ -165,6 +168,7 @@
             this.tbInsumo.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridInsumo)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // grupoProdutoLabel
@@ -801,8 +805,7 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.label23);
-            this.tabPage4.Controls.Add(this.txtPontosFidelidade);
+            this.tabPage4.Controls.Add(this.groupBox3);
             this.tabPage4.Controls.Add(this.grpPrecosDia);
             this.tabPage4.Controls.Add(this.groupBox2);
             this.tabPage4.Controls.Add(this.groupBox1);
@@ -813,26 +816,6 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "3 - Preços e Promoções";
             this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(301, 87);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(91, 13);
-            this.label23.TabIndex = 44;
-            this.label23.Text = "Pontos Fidelidade";
-            // 
-            // txtPontosFidelidade
-            // 
-            this.txtPontosFidelidade.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
-            this.txtPontosFidelidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPontosFidelidade.Location = new System.Drawing.Point(304, 103);
-            this.txtPontosFidelidade.Name = "txtPontosFidelidade";
-            this.txtPontosFidelidade.Size = new System.Drawing.Size(69, 26);
-            this.txtPontosFidelidade.TabIndex = 43;
-            this.txtPontosFidelidade.Tag = "Friday";
-            this.toolTip1.SetToolTip(this.txtPontosFidelidade, "Defina quantos pontos vale o produto no programa de fidelidade");
             // 
             // grpPrecosDia
             // 
@@ -864,6 +847,7 @@
             this.grpPrecosDia.TabIndex = 34;
             this.grpPrecosDia.TabStop = false;
             this.grpPrecosDia.Text = "Preço Diferente por Dia";
+            this.grpPrecosDia.Enter += new System.EventHandler(this.grpPrecosDia_Enter);
             // 
             // label15
             // 
@@ -1320,6 +1304,59 @@
             this.label20.TabIndex = 33;
             this.label20.Text = "Nome ";
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label24);
+            this.groupBox3.Controls.Add(this.txtPontosTroca);
+            this.groupBox3.Controls.Add(this.label23);
+            this.groupBox3.Controls.Add(this.txtPontosFidelidade);
+            this.groupBox3.Location = new System.Drawing.Point(280, 62);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(317, 72);
+            this.groupBox3.TabIndex = 45;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Pontos Fidelidade";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(8, 18);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(74, 13);
+            this.label23.TabIndex = 46;
+            this.label23.Text = "Pontos Venda";
+            // 
+            // txtPontosFidelidade
+            // 
+            this.txtPontosFidelidade.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPontosFidelidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPontosFidelidade.Location = new System.Drawing.Point(11, 37);
+            this.txtPontosFidelidade.Name = "txtPontosFidelidade";
+            this.txtPontosFidelidade.Size = new System.Drawing.Size(69, 26);
+            this.txtPontosFidelidade.TabIndex = 45;
+            this.txtPontosFidelidade.Tag = "Friday";
+            this.toolTip1.SetToolTip(this.txtPontosFidelidade, "Defina quantos pontos vale o produto no programa de fidelidade");
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(121, 14);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(71, 13);
+            this.label24.TabIndex = 48;
+            this.label24.Text = "Pontos Troca";
+            // 
+            // txtPontosTroca
+            // 
+            this.txtPontosTroca.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPontosTroca.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPontosTroca.Location = new System.Drawing.Point(124, 33);
+            this.txtPontosTroca.Name = "txtPontosTroca";
+            this.txtPontosTroca.Size = new System.Drawing.Size(69, 26);
+            this.txtPontosTroca.TabIndex = 47;
+            this.txtPontosTroca.Tag = "Friday";
+            this.toolTip1.SetToolTip(this.txtPontosTroca, "Quantos pontos terá que junta para troca\r\n");
+            // 
             // frmCadastrarProduto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1351,7 +1388,6 @@
             this.grpDesconto.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
             this.grpPrecosDia.ResumeLayout(false);
             this.grpPrecosDia.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1362,6 +1398,8 @@
             this.tbInsumo.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridInsumo)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1462,7 +1500,10 @@
         private System.Windows.Forms.TextBox txtMarkup;
         private System.Windows.Forms.TextBox txtPrecoCusto;
         private System.Windows.Forms.TextBox txtPrecoSugerido;
+        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox txtPontosFidelidade;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox txtPontosTroca;
     }
 }

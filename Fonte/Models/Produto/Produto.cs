@@ -27,5 +27,7 @@ namespace DexComanda.Models
         public decimal Markup { get; set; }
         public decimal PrecoSugerido { get; set; }
         public decimal PrecoCusto { get; set; }
+        public int PontoFidelidadeVenda { get; set; }
+        public int PontoFidelidadeTroca { get; set; }
     }
 }

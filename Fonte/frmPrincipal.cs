@@ -250,7 +250,6 @@ namespace DexComanda
                             }
                         }
 
-
                         cancelPedid.Codigo = Codigo;
                         cancelPedid.RealizadoEm = DateTime.Now;
 
@@ -260,6 +259,7 @@ namespace DexComanda
                         //  AtualizaStatusMesa(iCodMesa, Bibliotecas.cStatuMesaLiberada);
 
                         cancelPedid.status = "Cancelado";
+                        cancelPedid.CodUsuario = Sessions.retunrUsuario.Codigo;
                         if (Sessions.returnConfig.RegistraCancelamentos)
                         {
                             frmHistoricoCancelamento frm = new frmHistoricoCancelamento();

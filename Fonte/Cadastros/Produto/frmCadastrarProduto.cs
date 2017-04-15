@@ -27,6 +27,8 @@ namespace DexComanda
         private bool PromocaoDiasSemana = Sessions.returnConfig.DescontoDiaSemana;
         private List<PrecoDiaProduto> listPrecos;
         private int codigoinsumo;
+        private int intPontosFidelidadeVenda = 0;
+        private int intPontosFidelidadeTroca = 0;
         public frmCadastrarProduto(Main parent)
         {
             InitializeComponent();
@@ -268,6 +270,7 @@ namespace DexComanda
 
         private void AdicionarProduto(object sender, EventArgs e)
         {
+           
             try
             {
                 if (txtCodInterno.Text != "0" && txtCodInterno.Text != "")
@@ -299,6 +302,14 @@ namespace DexComanda
                     DataAlteracao = DateTime.Now,
                    
                 };
+                if (txtPontosFidelidade.Text!="")
+                {
+                    intPontosFidelidadeVenda = int.Parse(txtPontosFidelidade.Text);
+                }
+                if (txtPontosTroca.Text!="")
+                {
+                    intPontosFidelidadeTroca = int.Parse(txtPontosTroca.Text);
+                }
                 if (txtPrecoCusto.Text!="")
                 {
                     produto.PrecoCusto = decimal.Parse(txtPrecoCusto.Text);
@@ -483,6 +494,14 @@ namespace DexComanda
                     //PrecoCusto = decimal.Parse(txtPrecoCusto.Text),
                     //PrecoSugerido = decimal.Parse(txtPrecoSugerido.Text),
                 };
+                if (txtPontosFidelidade.Text != "")
+                {
+                    intPontosFidelidadeVenda = int.Parse(txtPontosFidelidade.Text);
+                }
+                if (txtPontosTroca.Text != "")
+                {
+                    intPontosFidelidadeTroca = int.Parse(txtPontosTroca.Text);
+                }
                 if (txtPrecoCusto.Text != "")
                 {
                     produto.PrecoCusto = decimal.Parse(txtPrecoCusto.Text);
@@ -522,9 +541,7 @@ namespace DexComanda
                 {
                     produto.MaximoAdicionais = 0;
                 }
-
                 produto.DiaSemana = Utils.SerializaObjeto(RetornaDiasMarcados());
-                //  produto.DiaSemana = DiasSelecinado();
                 if (txtPrecoDesconto.Text != "")
                 {
                     produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text.Replace(".", ","));
@@ -1269,6 +1286,9 @@ namespace DexComanda
             txtMarkup_Leave(sender, e);
         }
 
-   
+        private void grpPrecosDia_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
