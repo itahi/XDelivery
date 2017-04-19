@@ -48,9 +48,12 @@ namespace DexComanda.Cadastros
         {
             lStatusMesa = 0;
             cbxStatusMesa.Text = "";
-            codigo = int.Parse(this.MesasGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-            this.txtNumeroMesa.Text = this.MesasGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
-            lStatusMesa = int.Parse(this.MesasGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
+            codigo = int.Parse(this.MesasGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+            this.txtNumeroMesa.Text = this.MesasGridView.CurrentRow.Cells["NumeroMesa"].Value.ToString();
+            lStatusMesa = int.Parse(this.MesasGridView.CurrentRow.Cells["StatusMesa"].Value.ToString());
+            chkAtivo.Checked = Convert.ToBoolean(MesasGridView.CurrentRow.Cells["AtivoSN"].Value.ToString());
+            chkOnline.Checked = Convert.ToBoolean(MesasGridView.CurrentRow.Cells["OnlineSN"].Value.ToString());
+
             cbxStatusMesa.SelectedText = "";
             if (lStatusMesa == 1)
             {
@@ -86,8 +89,9 @@ namespace DexComanda.Cadastros
                 Mesas mesa = new Mesas()
                 {
                     Codigo = codigo,
-                    NumeroMesa = this.txtNumeroMesa.Text
-                    
+                    NumeroMesa = this.txtNumeroMesa.Text,
+                    AtivoSN = chkAtivo.Checked,
+                    OnlineSN = chkOnline.Checked
                 };
                 if (cbxStatusMesa.Text == "Aberta")
                 {
@@ -139,7 +143,9 @@ namespace DexComanda.Cadastros
                 {
                     Mesas mesas = new Mesas()
                     {
-                        NumeroMesa = txtNumeroMesa.Text
+                        NumeroMesa = txtNumeroMesa.Text,
+                        AtivoSN = chkAtivo.Checked,
+                        OnlineSN = chkOnline.Checked
                     };
 
                     if (cbxStatusMesa.Text == "Aberta")

@@ -2079,6 +2079,10 @@ namespace DexComanda
             {
                 command.Parameters.AddWithValue("@CodPessoa", codigo);
             }
+            else if ( spName== "spObterFidelidadePessoa")
+            {
+                command.Parameters.AddWithValue("@Codigo", codigo);
+            }
             else
             {
                 command.Parameters.AddWithValue("@Codigo", codigo);

@@ -229,6 +229,12 @@
     <Compile Include="Cadastros\Pedido\frmOpcaoRadio.Designer.cs">
       <DependentUpon>frmOpcaoRadio.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cadastros\Pedido\frmProdutosTrocaFidelidade.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Pedido\frmProdutosTrocaFidelidade.Designer.cs">
+      <DependentUpon>frmProdutosTrocaFidelidade.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cadastros\Pedido\frmSabores.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -362,6 +368,7 @@
     <Compile Include="Models\WS\CidadesAtendidas.cs" />
     <Compile Include="Models\WS\DadosApp.cs" />
     <Compile Include="Models\WS\HorariosEntregaJson.cs" />
+    <Compile Include="Models\WS\MesaWS.cs" />
     <Compile Include="Models\WS\MultiSabores.cs" />
     <Compile Include="Models\WS\RetornoWS.cs" />
     <Compile Include="Models\WS\StatusPedido.cs" />
@@ -1084,6 +1091,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Pedido\frmOpcaoRadio.resx">
       <DependentUpon>frmOpcaoRadio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\Pedido\frmProdutosTrocaFidelidade.resx">
+      <DependentUpon>frmProdutosTrocaFidelidade.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Pedido\frmSabores.resx">
       <DependentUpon>frmSabores.cs</DependentUpon>

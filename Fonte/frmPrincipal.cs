@@ -148,7 +148,7 @@ namespace DexComanda
                         {
                             Utils.HistoricoCancelamentos(CodigoPessoa);
                         }
-
+                        Utils.VerificaPontosFidelidade(CodigoPessoa);
                         if (RepeteUltimoPedido)
                         {
                             ExecutaRepeticaoPedido(CodigoPessoa, intCodEndereco);
@@ -1337,8 +1337,9 @@ namespace DexComanda
                 {
                     return;
                 }
-                rowIndex = clientesGridView.CurrentRow.Index;
-                int CodCliente = int.Parse(clientesGridView.Rows[rowIndex].Cells[0].Value.ToString());
+
+                int CodCliente = int.Parse(clientesGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+                Utils.VerificaPontosFidelidade(CodCliente);
                 if (Sessions.returnConfig.RegistraCancelamentos)
                 {
                     Utils.HistoricoCancelamentos(CodCliente);

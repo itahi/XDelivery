@@ -138,3 +138,4 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\XDelivery.csproj.App.config
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pessoa.frmCadastroOrigem.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmReportClientePorOrigem.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Produto.frmCadastroInsumo.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pedido.frmProdutosTrocaFidelidade.resources

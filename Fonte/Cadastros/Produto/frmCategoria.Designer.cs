@@ -38,16 +38,16 @@
             this.chkOnline = new System.Windows.Forms.CheckBox();
             this.chkAtivo = new System.Windows.Forms.CheckBox();
             this.pnlImpressora = new System.Windows.Forms.Panel();
+            this.cbxNomeImpressora = new System.Windows.Forms.ComboBox();
             this.chkImprimeCozinha = new System.Windows.Forms.CheckBox();
             this.cbxFamilia = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnEditarFamilia = new System.Windows.Forms.Button();
             this.txtCodFamilia = new System.Windows.Forms.TextBox();
             this.grpMultiplo = new System.Windows.Forms.GroupBox();
+            this.cbxNumeroSabores = new System.Windows.Forms.ComboBox();
             this.chkMultiSabores = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.cbxNomeImpressora = new System.Windows.Forms.ComboBox();
-            this.cbxNumeroSabores = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.gruposGridView)).BeginInit();
             this.pnlImpressora.SuspendLayout();
             this.grpMultiplo.SuspendLayout();
@@ -144,6 +144,15 @@
             this.pnlImpressora.Size = new System.Drawing.Size(202, 48);
             this.pnlImpressora.TabIndex = 15;
             // 
+            // cbxNomeImpressora
+            // 
+            this.cbxNomeImpressora.FormattingEnabled = true;
+            this.cbxNomeImpressora.Location = new System.Drawing.Point(3, 13);
+            this.cbxNomeImpressora.Name = "cbxNomeImpressora";
+            this.cbxNomeImpressora.Size = new System.Drawing.Size(184, 21);
+            this.cbxNomeImpressora.TabIndex = 16;
+            this.cbxNomeImpressora.DropDown += new System.EventHandler(this.ListaImpressoras);
+            // 
             // chkImprimeCozinha
             // 
             this.chkImprimeCozinha.AutoSize = true;
@@ -207,6 +216,18 @@
             this.grpMultiplo.TabStop = false;
             this.grpMultiplo.Text = "Mult. Sabores";
             // 
+            // cbxNumeroSabores
+            // 
+            this.cbxNumeroSabores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxNumeroSabores.FormattingEnabled = true;
+            this.cbxNumeroSabores.Items.AddRange(new object[] {
+            "2",
+            "4"});
+            this.cbxNumeroSabores.Location = new System.Drawing.Point(23, 19);
+            this.cbxNumeroSabores.Name = "cbxNumeroSabores";
+            this.cbxNumeroSabores.Size = new System.Drawing.Size(43, 21);
+            this.cbxNumeroSabores.TabIndex = 17;
+            // 
             // chkMultiSabores
             // 
             this.chkMultiSabores.AutoSize = true;
@@ -219,27 +240,6 @@
         "limite da divisão");
             this.chkMultiSabores.UseVisualStyleBackColor = true;
             this.chkMultiSabores.CheckedChanged += new System.EventHandler(this.chkMultiSabores_CheckedChanged);
-            // 
-            // cbxNomeImpressora
-            // 
-            this.cbxNomeImpressora.FormattingEnabled = true;
-            this.cbxNomeImpressora.Location = new System.Drawing.Point(3, 13);
-            this.cbxNomeImpressora.Name = "cbxNomeImpressora";
-            this.cbxNomeImpressora.Size = new System.Drawing.Size(184, 21);
-            this.cbxNomeImpressora.TabIndex = 16;
-            this.cbxNomeImpressora.DropDown += new System.EventHandler(this.ListaImpressoras);
-            // 
-            // cbxNumeroSabores
-            // 
-            this.cbxNumeroSabores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxNumeroSabores.FormattingEnabled = true;
-            this.cbxNumeroSabores.Items.AddRange(new object[] {
-            "2",
-            "4"});
-            this.cbxNumeroSabores.Location = new System.Drawing.Point(23, 19);
-            this.cbxNumeroSabores.Name = "cbxNumeroSabores";
-            this.cbxNumeroSabores.Size = new System.Drawing.Size(43, 21);
-            this.cbxNumeroSabores.TabIndex = 17;
             // 
             // frmAdicionarGrupo
             // 

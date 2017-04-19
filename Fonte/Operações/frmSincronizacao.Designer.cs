@@ -49,6 +49,7 @@
             this.chkRegiaoEntrega = new System.Windows.Forms.CheckBox();
             this.chkFPagamento = new System.Windows.Forms.CheckBox();
             this.chkProdutos = new System.Windows.Forms.CheckBox();
+            this.lblSincronismo = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.grpBanner = new System.Windows.Forms.GroupBox();
@@ -65,7 +66,8 @@
             this.lblReturn = new System.Windows.Forms.Label();
             this.chkDesconto = new System.Windows.Forms.CheckBox();
             this.txtPercentualDesconto = new System.Windows.Forms.TextBox();
-            this.lblSincronismo = new System.Windows.Forms.Label();
+            this.prgBarMesa = new System.Windows.Forms.ProgressBar();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -84,11 +86,13 @@
             this.tabControl1.Location = new System.Drawing.Point(5, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(278, 300);
+            this.tabControl1.Size = new System.Drawing.Size(278, 311);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.prgBarMesa);
+            this.tabPage1.Controls.Add(this.checkBox1);
             this.tabPage1.Controls.Add(this.prgBarHorarios);
             this.tabPage1.Controls.Add(this.chkHorarios);
             this.tabPage1.Controls.Add(this.chkLink);
@@ -111,7 +115,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(270, 274);
+            this.tabPage1.Size = new System.Drawing.Size(270, 285);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Cadastros";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -164,7 +168,7 @@
             // lblMinimo
             // 
             this.lblMinimo.AutoSize = true;
-            this.lblMinimo.Location = new System.Drawing.Point(93, 206);
+            this.lblMinimo.Location = new System.Drawing.Point(93, 220);
             this.lblMinimo.Name = "lblMinimo";
             this.lblMinimo.Size = new System.Drawing.Size(74, 13);
             this.lblMinimo.TabIndex = 20;
@@ -173,7 +177,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 187);
+            this.label2.Location = new System.Drawing.Point(5, 200);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(93, 13);
             this.label2.TabIndex = 19;
@@ -181,7 +185,7 @@
             // 
             // txtVlrMinimo
             // 
-            this.txtVlrMinimo.Location = new System.Drawing.Point(8, 203);
+            this.txtVlrMinimo.Location = new System.Drawing.Point(8, 216);
             this.txtVlrMinimo.Name = "txtVlrMinimo";
             this.txtVlrMinimo.Size = new System.Drawing.Size(75, 20);
             this.txtVlrMinimo.TabIndex = 18;
@@ -191,7 +195,7 @@
             // lblSinc
             // 
             this.lblSinc.AutoSize = true;
-            this.lblSinc.Location = new System.Drawing.Point(12, 226);
+            this.lblSinc.Location = new System.Drawing.Point(12, 239);
             this.lblSinc.Name = "lblSinc";
             this.lblSinc.Size = new System.Drawing.Size(74, 13);
             this.lblSinc.TabIndex = 17;
@@ -217,7 +221,7 @@
             // 
             // btnSincronizar
             // 
-            this.btnSincronizar.Location = new System.Drawing.Point(89, 247);
+            this.btnSincronizar.Location = new System.Drawing.Point(89, 257);
             this.btnSincronizar.Name = "btnSincronizar";
             this.btnSincronizar.Size = new System.Drawing.Size(75, 23);
             this.btnSincronizar.TabIndex = 14;
@@ -277,6 +281,16 @@
             this.chkProdutos.TabIndex = 8;
             this.chkProdutos.Text = "Produtos";
             this.chkProdutos.UseVisualStyleBackColor = true;
+            // 
+            // lblSincronismo
+            // 
+            this.lblSincronismo.AutoSize = true;
+            this.lblSincronismo.Location = new System.Drawing.Point(42, 288);
+            this.lblSincronismo.Name = "lblSincronismo";
+            this.lblSincronismo.Size = new System.Drawing.Size(23, 13);
+            this.lblSincronismo.TabIndex = 4;
+            this.lblSincronismo.Text = "labl";
+            this.lblSincronismo.Visible = false;
             // 
             // tabPage2
             // 
@@ -447,21 +461,28 @@
             this.txtPercentualDesconto.Size = new System.Drawing.Size(45, 20);
             this.txtPercentualDesconto.TabIndex = 9;
             // 
-            // lblSincronismo
+            // prgBarMesa
             // 
-            this.lblSincronismo.AutoSize = true;
-            this.lblSincronismo.Location = new System.Drawing.Point(42, 288);
-            this.lblSincronismo.Name = "lblSincronismo";
-            this.lblSincronismo.Size = new System.Drawing.Size(23, 13);
-            this.lblSincronismo.TabIndex = 4;
-            this.lblSincronismo.Text = "labl";
-            this.lblSincronismo.Visible = false;
+            this.prgBarMesa.Location = new System.Drawing.Point(128, 172);
+            this.prgBarMesa.Name = "prgBarMesa";
+            this.prgBarMesa.Size = new System.Drawing.Size(114, 18);
+            this.prgBarMesa.TabIndex = 27;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(5, 173);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(57, 17);
+            this.checkBox1.TabIndex = 26;
+            this.checkBox1.Text = "Mesas";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // frmSincronizacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(286, 300);
+            this.ClientSize = new System.Drawing.Size(286, 316);
             this.Controls.Add(this.tabControl1);
             this.Name = "frmSincronizacao";
             this.Text = "[XSistemas] Sincronizacao";
@@ -518,5 +539,7 @@
         private System.Windows.Forms.ProgressBar prgBarHorarios;
         private System.Windows.Forms.CheckBox chkHorarios;
         private System.Windows.Forms.Label lblSincronismo;
+        private System.Windows.Forms.ProgressBar prgBarMesa;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

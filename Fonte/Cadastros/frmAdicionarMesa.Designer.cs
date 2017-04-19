@@ -38,6 +38,8 @@
             this.txtNumeroMesa = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.MesasGridView = new System.Windows.Forms.DataGridView();
+            this.chkAtivo = new System.Windows.Forms.CheckBox();
+            this.chkOnline = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MesasGridView)).BeginInit();
@@ -45,6 +47,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkAtivo);
+            this.groupBox1.Controls.Add(this.chkOnline);
             this.groupBox1.Controls.Add(this.cbxStatusMesa);
             this.groupBox1.Controls.Add(this.btnEditar);
             this.groupBox1.Controls.Add(this.label3);
@@ -66,14 +70,14 @@
             "Aberta",
             "Ocupada",
             "Reservada"});
-            this.cbxStatusMesa.Location = new System.Drawing.Point(110, 32);
+            this.cbxStatusMesa.Location = new System.Drawing.Point(80, 39);
             this.cbxStatusMesa.Name = "cbxStatusMesa";
             this.cbxStatusMesa.Size = new System.Drawing.Size(161, 21);
             this.cbxStatusMesa.TabIndex = 1;
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(172, 66);
+            this.btnEditar.Location = new System.Drawing.Point(144, 71);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(86, 39);
             this.btnEditar.TabIndex = 3;
@@ -84,7 +88,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(108, 16);
+            this.label3.Location = new System.Drawing.Point(77, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(37, 13);
             this.label3.TabIndex = 6;
@@ -92,7 +96,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(27, 68);
+            this.btnSalvar.Location = new System.Drawing.Point(27, 72);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(86, 37);
             this.btnSalvar.TabIndex = 2;
@@ -103,7 +107,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 16);
+            this.label1.Location = new System.Drawing.Point(24, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(33, 13);
             this.label1.TabIndex = 1;
@@ -111,7 +115,7 @@
             // 
             // txtNumeroMesa
             // 
-            this.txtNumeroMesa.Location = new System.Drawing.Point(27, 33);
+            this.txtNumeroMesa.Location = new System.Drawing.Point(27, 40);
             this.txtNumeroMesa.Name = "txtNumeroMesa";
             this.txtNumeroMesa.Size = new System.Drawing.Size(47, 20);
             this.txtNumeroMesa.TabIndex = 0;
@@ -145,6 +149,26 @@
             this.MesasGridView.Size = new System.Drawing.Size(300, 133);
             this.MesasGridView.TabIndex = 3;
             // 
+            // chkAtivo
+            // 
+            this.chkAtivo.AutoSize = true;
+            this.chkAtivo.Location = new System.Drawing.Point(224, 16);
+            this.chkAtivo.Name = "chkAtivo";
+            this.chkAtivo.Size = new System.Drawing.Size(56, 17);
+            this.chkAtivo.TabIndex = 14;
+            this.chkAtivo.Text = "Ativo?";
+            this.chkAtivo.UseVisualStyleBackColor = true;
+            // 
+            // chkOnline
+            // 
+            this.chkOnline.AutoSize = true;
+            this.chkOnline.Location = new System.Drawing.Point(144, 16);
+            this.chkOnline.Name = "chkOnline";
+            this.chkOnline.Size = new System.Drawing.Size(62, 17);
+            this.chkOnline.TabIndex = 13;
+            this.chkOnline.Text = "Online?";
+            this.chkOnline.UseVisualStyleBackColor = true;
+            // 
             // frmAdicionarMesa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -176,5 +200,7 @@
         private System.Windows.Forms.TextBox txtNumeroMesa;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView MesasGridView;
+        private System.Windows.Forms.CheckBox chkAtivo;
+        private System.Windows.Forms.CheckBox chkOnline;
     }
 }

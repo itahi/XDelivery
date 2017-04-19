@@ -34,3 +34,17 @@ as
 	        values   (@CodPessoa,@CodPedido,@Ponto,'C',Getdate())
 	  
   end
+go
+create procedure spObterFidelidadePessoa
+@Codigo int 
+as
+  select isnull(sum(Ponto),0) as Pontos from Pessoa_Fidelidade where CodPessoa=@Codigo
+go
+create procedure spObterMenorPontuacaoProduto
+as
+  select Isnull(Min(PontoFidelidadeTroca),0) PontoFidelidadeTroca from Produto where PontoFidelidadeTroca>0
+go
+create procedure spObterProdutosDisponivelsPratroca
+@Codigo int
+  as
+   select NomeProduto from Produto where PontoFidelidadeTroca>=@Codigo

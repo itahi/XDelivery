@@ -36,6 +36,7 @@ using DexComanda.Relatorios.Clientes.Crystal;
 using System.Drawing.Printing;
 using DexComanda.Models.Produto;
 using DexComanda.Cadastros.Pessoa;
+using DexComanda.Cadastros.Pedido;
 
 namespace DexComanda
 {
@@ -499,6 +500,28 @@ namespace DexComanda
             }
             return JsonConvert.DeserializeObject<Fidelidade>(iValores);
 
+        }
+        /// <summary>
+        /// Verifica se o cliente tem pontos suficientes pra troca e quer trocar
+        /// </summary>
+        /// <param  
+        /// <returns>Lista de itens selecionados pelo cliente</returns>
+        public static void VerificaPontosFidelidade(int iCodPessoa)
+        {
+            int pontosCliente = conexao.SelectRegistroPorCodigo("Pessoa_Fidelidade", "spObterFidelidadePessoa", iCodPessoa, false).Tables[0].
+                 Rows[0].Field<int>("Pontos");
+            int pontoTroca = conexao.SelectAll("Produto", "spObterMenorPontuacaoProduto").Tables[0].Rows[0].
+                Field<int>("PontoFidelidadeTroca");
+            if (pontosCliente>= pontoTroca)
+            {
+                if (Utils.MessageBoxQuestion("Esse cliente tem pontos suficientes para resgatar produtos, quer ver os produtos disponiveis ?" +
+                      " ** Será exibido uma lista de produtos possíveis a troca **"))
+                {
+                    frmProdutosTrocaFidelidade frm = new frmProdutosTrocaFidelidade(pontosCliente);
+                    frm.ShowDialog();
+                }
+                   
+            }
         }
         /// <summary>
         /// Controla Ações de Fidelidade e acumula os pontos

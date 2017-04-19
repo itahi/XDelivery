@@ -917,6 +917,10 @@ namespace DexComanda
             string strProduto = Sessions.SqlProduto;
             string strSqlPessoa = Sessions.SqlPessoa;
 
+            if (strProduto==null|| strSqlPessoa==null )
+            {
+                return;
+            }
             string []strListaProduto = strProduto.Split(new char[] { ',' });
             string [] strListaPessoa = strSqlPessoa.Split(new char[] { ',' });
             foreach (var item in strListaProduto)

@@ -52,6 +52,7 @@ namespace DexComanda.Operações
             iParamToken = Utils.CriptografarArquivo("xsistemas");
             iParamToken = iParamToken.ToLower();
         }
+
         private void Sincroniza()
         {
             iUrlWS = Sessions.returnEmpresa.UrlServidor;
@@ -64,7 +65,7 @@ namespace DexComanda.Operações
                     // Envia as formas de pagamento ao site , enviando a imagem da bandeira 
                     CadastraFormaPagamento(ObterDados("FormaPagamento"));
                 }
-               
+
                 if (chkProdutos.Checked)
                 {
                     if (chkLink.Checked)
@@ -76,7 +77,7 @@ namespace DexComanda.Operações
                                 con.AtualizaDataSincronismo("Grupo", -1, "DataAlteracao");
                                 con.AtualizaDataSincronismo("Produto", -1, "DataAlteracao");
                                 LimparUrlAmigaveis();
-                                CadastraLinkApp(true);
+                                // CadastraLinkApp(true);
                             }
                         }
                     }
@@ -107,14 +108,13 @@ namespace DexComanda.Operações
                 }
                 if (chkMobile.Checked)
                 {
-                    CadastraLinkApp();
+                    CadastraLinkApp(true);
                 }
 
-                if (txtVlrMinimo.Text!="" && txtVlrMinimo.Text!="0")
+                if (txtVlrMinimo.Text != "" && txtVlrMinimo.Text != "0")
                 {
                     CadastraPedidoMinimo();
                 }
-               
 
                 if (chkHorarios.Checked)
                 {
@@ -133,11 +133,11 @@ namespace DexComanda.Operações
             RestClient client = new RestClient(iUrlWS);
             RestResponse response = new RestResponse();
             RestRequest request = new RestRequest("ws/loja/setOpenSignalId", Method.POST);
-            request.AddParameter("token",iParamToken);
-            request.AddParameter("open_signal_id",Sessions.returnConfig.Pushapp_id);
-            request.AddParameter("store_id","0");
+            request.AddParameter("token", iParamToken);
+            request.AddParameter("open_signal_id", Sessions.returnConfig.Pushapp_id);
+            request.AddParameter("store_id", "0");
             request.AddParameter("nome_cliente", Sessions.returnEmpresa.Nome);
-            request.AddParameter("gcm_sender_id",Sessions.returnConfig.GCM);
+            request.AddParameter("gcm_sender_id", Sessions.returnConfig.GCM);
             request.AddParameter("onesignal_api_key", Sessions.returnConfig.Pushauthorization);
             MudaLabel("Códigos OneSignal");
             response = (RestResponse)client.Execute(request);
@@ -169,7 +169,7 @@ namespace DexComanda.Operações
                 MessageBox.Show("Erro LimparUrlAmigaveis" + er.Message + er.InnerException);
             }
         }
-        private void CadastraLinkApp(Boolean iLimpar=false)
+        private void CadastraLinkApp(Boolean iLimpar = false)
         {
             try
             {
@@ -178,11 +178,11 @@ namespace DexComanda.Operações
                 RestClient client = new RestClient(iUrlWS);
                 RestResponse response = new RestResponse();
                 RestRequest request = new RestRequest("ws/loja/baixarrApp", Method.POST);
-                
+
                 if (iLimpar)
                 {
-                    string strPlataformas = Utils.GravaJson("android","");
-                  //  strPlataformas = strPlataformas + Utils.GravaJson("ios", "");
+                    string strPlataformas = Utils.GravaJson("android", "");
+                    //  strPlataformas = strPlataformas + Utils.GravaJson("ios", "");
                     newDados = JsonConvert.DeserializeObject<List<DadosApp>>(strPlataformas);
                     foreach (var item in newDados)
                     {
@@ -387,14 +387,14 @@ namespace DexComanda.Operações
                 {
 
                     request.AddParameter("token", iParamToken);
-                   // request.AddParameter("store_id", "1");
+                    // request.AddParameter("store_id", "1");
                     request.AddParameter("cep", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("CEP"));
                     request.AddParameter("nome", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("NomeRegiao"));
                     request.AddParameter("valor", ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("TaxaServico"));
                     request.AddParameter("referencia_id", ds.Tables["RegiaoEntrega"].Rows[i].Field<int>("Codigo"));
                     request.AddParameter("ativo", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<Boolean>("OnlineSN")));
 
-                    if (ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("PrevisaoEntrega")!="0")
+                    if (ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("PrevisaoEntrega") != "0")
                     {
                         request.AddParameter("previsao_entrega", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("PrevisaoEntrega"));
                     }
@@ -422,7 +422,7 @@ namespace DexComanda.Operações
 
                 MessageBox.Show(erro.Message + "Erro ao cadastrar/sincronizar Regiões de Entrega ");
             }
-            
+
         }
         private void CadastrarOpcao(DataSet ds)
         {
@@ -443,7 +443,7 @@ namespace DexComanda.Operações
                     request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
                     request.AddParameter("referenciaId", dRow.ItemArray.GetValue(0).ToString());
                     RestResponse response = (RestResponse)client.Execute(request);
-                    prgBarProduto.Increment (i + 1);
+                    prgBarProduto.Increment(i + 1);
 
                     if (response.Content.ToString() == "true")
                     {
@@ -469,14 +469,13 @@ namespace DexComanda.Operações
         {
             try
             {
-
-              //  ManipulaProgressBar(ds.Tables[0].Rows.Count);
+                //  ManipulaProgressBar(ds.Tables[0].Rows.Count);
                 DataRow dRow;
                 MudaLabel("Grupo");
                 GerarToken();
                 prgBarProduto.Maximum = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
-               
+
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     RestClient client = new RestClient(iUrlWS);
@@ -504,7 +503,7 @@ namespace DexComanda.Operações
                     request.AddParameter("ativo", AtivoSN);
                     request.AddParameter("idReferencia", iCod);
                     RestResponse response = (RestResponse)client.Execute(request);
-                    prgBarProduto.Increment(i+1);
+                    prgBarProduto.Increment(i + 1);
 
                     if (response.Content.Contains("true"))
                     {
@@ -521,6 +520,42 @@ namespace DexComanda.Operações
             }
 
         }
+        private List<MesaWS> MontaObjetoMesa(DataSet ds)
+        {
+            List<MesaWS> listmesas = new List<MesaWS>();
+            prgBarMesa.Maximum = ds.Tables[0].Rows.Count;
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                var mesas = new MesaWS()
+                {
+                    id = ds.Tables[0].Rows[i].Field<int>("Codigo"),
+                    name = ds.Tables[0].Rows[i].Field<string>("NumeroMesa"),
+                    status = ds.Tables[0].Rows[i].Field<int>("StatusMesa")
+                };
+                listmesas.Add(mesas);
+                prgBarMesa.Increment(1);
+            }
+            return listmesas;
+        }
+
+            
+        private void CadastraMesas()
+        {
+            try
+            {
+                int iCod = 0;
+                DataRow dRow;
+                RestClient client = new RestClient(iUrlWS);
+                RestRequest request = new RestRequest("ws/v1/lojas/1/mesas", Method.POST);
+                request.AddHeader("token", iParamToken);
+                request.AddJsonBody(MontaObjetoMesa(ObterDados("Mesas")));
+                var restResponse = client.Execute(request);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
         private void CadastrarHorarios(DataSet ds)
         {
             try
@@ -536,7 +571,7 @@ namespace DexComanda.Operações
                 RestClient client = new RestClient(iUrlWS);
                 RestRequest request = new RestRequest("ws/loja/horarioEntrega", Method.POST);
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-                {    
+                {
                     dRow = ds.Tables[0].Rows[i];
                     int AtivoSN = 0;
                     if (Convert.ToBoolean(dRow.ItemArray.GetValue(3).ToString()) == true)
@@ -554,7 +589,7 @@ namespace DexComanda.Operações
                     horariosList.Add(horariosJson);
                     prgBarHorarios.Increment(i + 1);
                 }
-                if (horariosList.Count<=0)
+                if (horariosList.Count <= 0)
                 {
                     MessageBox.Show("Não há horarios cadastrados para sincronizar");
                     return;
@@ -581,7 +616,7 @@ namespace DexComanda.Operações
                 DataRow dRow;
                 prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
-               
+
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     RestClient client = new RestClient(iUrlWS);
@@ -612,12 +647,12 @@ namespace DexComanda.Operações
                     request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
 
                     //Caso o grupo esteja marcado como multi sabores ele enviará esse parametro
-                    if (dRow.ItemArray.GetValue(19).ToString()=="1")
+                    if (dRow.ItemArray.GetValue(19).ToString() == "1")
                     {
                         request.AddParameter("multi_product_id", dRow.ItemArray.GetValue(15).ToString());
                         request.AddParameter("multi_product_max", "2");
                     }
-                   
+
 
                     if (Sessions.returnEmpresa.CNPJ == "09395874000160")
                     {
@@ -654,19 +689,19 @@ namespace DexComanda.Operações
                     }
                     request.AddParameter("ativo", bAtivoSn);
                     request.AddParameter("maxOptions", dRow.ItemArray.GetValue(10).ToString());
+                    request.AddParameter("pontos_fidelidade", dRow.ItemArray.GetValue(22).ToString());
+                    request.AddParameter("pontos_para_troca", dRow.ItemArray.GetValue(23).ToString());
 
                     prgBarProduto.Increment(i + 1);
 
                     RestResponse response = (RestResponse)client.Execute(request);
 
-                    if (response.Content.Contains(" true"))
+                    if (response.Content.Contains("true"))
                     {
                         con.AtualizaDataSincronismo("Produto", int.Parse(dRow.ItemArray.GetValue(0).ToString()));
                         CadastrarOpcaoProduto(int.Parse(dRow.ItemArray.GetValue(0).ToString()));
                     }
                     iCaminhoImagem = "";
-
-                    // request = null;
                 }
             }
             catch (Exception er)
@@ -709,13 +744,12 @@ namespace DexComanda.Operações
             {
                 DataSet ds = con.SelectRegistroPorCodigo("Produto_Opcao", "spObterOpcaoProdutoCodigo", iCodProduto);
                 int iCodOpcao = 0;
-              //  ManipulaProgressBar(ds.Tables[0].Rows.Count);
-                 MudaLabel("Opcoes/Adicionais");
+                MudaLabel("Opcoes/Adicionais");
                 prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
 
                 DataRow dRow;
-              
+
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     RestClient client = new RestClient(iUrlWS);
@@ -744,7 +778,7 @@ namespace DexComanda.Operações
 
                         request.AddParameter("opcao[" + iCodOpcao + "]", iprice);
                         //}
-                        prgBarProduto.Increment( i + 1);
+                        prgBarProduto.Increment(i + 1);
                     }
 
                     RestResponse response = (RestResponse)client.Execute(request);
