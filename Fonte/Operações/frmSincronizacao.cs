@@ -120,6 +120,10 @@ namespace DexComanda.Operações
                 {
                     CadastrarHorarios(con.Select_Empresa_HorarioEntrega("Empresa_HorarioEntrega"));
                 }
+                if (chkMesas.Checked)
+                {
+                    CadastraMesas();
+                }
             }
             catch (Exception erro)
             {
@@ -526,14 +530,17 @@ namespace DexComanda.Operações
             prgBarMesa.Maximum = ds.Tables[0].Rows.Count;
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
+                //int intCod = ds.Tables[0].Rows[i].Field<int>("Codigo");
+                //string strN = ds.Tables[0].Rows[i].Field<string>("NumeroMesa");
+                //int intStat = ds.Tables[0].Rows[i].Field<int>("StatusMesa");
                 var mesas = new MesaWS()
                 {
                     id = ds.Tables[0].Rows[i].Field<int>("Codigo"),
                     name = ds.Tables[0].Rows[i].Field<string>("NumeroMesa"),
-                    status = ds.Tables[0].Rows[i].Field<int>("StatusMesa")
+                    status = Convert.ToInt16(ds.Tables[0].Rows[i].Field<string>("StatusMesa"))
                 };
                 listmesas.Add(mesas);
-                prgBarMesa.Increment(1);
+               
             }
             return listmesas;
         }
@@ -548,12 +555,36 @@ namespace DexComanda.Operações
                 RestClient client = new RestClient(iUrlWS);
                 RestRequest request = new RestRequest("ws/v1/lojas/1/mesas", Method.POST);
                 request.AddHeader("token", iParamToken);
-                request.AddJsonBody(MontaObjetoMesa(ObterDados("Mesas")));
+                DataSet ds = ObterDados("Mesas");
+                request.AddJsonBody(MontaObjetoMesa(ds));
                 var restResponse = client.Execute(request);
+                ConfirmaObjeto(restResponse.Content, ds, "Mesas");
             }
             catch (Exception erro)
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
+        private void ConfirmaObjeto(string strObjetRetur,DataSet dsObjetEnvio,string strNomeTable)
+        {
+            try
+            {
+                ObjetoRetornoWSBLL list = JsonConvert.DeserializeObject<ObjetoRetornoWSBLL>(strObjetRetur);
+                int[] lista = list.id;
+                if (list.status==true)
+                {
+                    for (int i = 0; i < dsObjetEnvio.Tables[0].Rows.Count; i++)
+                    {
+                        con.AtualizaDataSincronismo(strNomeTable,int.Parse(dsObjetEnvio.Tables[0].Rows[i].ItemArray.GetValue(0).ToString()));
+                        prgBarMesa.Increment(1);
+                    }
+                }
+                
+                
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
             }
         }
         private void CadastrarHorarios(DataSet ds)

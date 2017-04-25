@@ -329,6 +329,7 @@
     <Compile Include="Models\CaixaCadastros.cs" />
     <Compile Include="Models\CaixaDiferenca.cs" />
     <Compile Include="Models\CaixaMovimento.cs" />
+    <Compile Include="Models\ConfiguracaoBuscaPorCodigo.cs" />
     <Compile Include="Models\DadosEnvioLocaSMS.cs" />
     <Compile Include="Models\DescontoPedido.cs" />
     <Compile Include="Models\Familia.cs" />
@@ -370,6 +371,7 @@
     <Compile Include="Models\WS\HorariosEntregaJson.cs" />
     <Compile Include="Models\WS\MesaWS.cs" />
     <Compile Include="Models\WS\MultiSabores.cs" />
+    <Compile Include="Models\WS\ObjetoRetornoWSBLL.cs" />
     <Compile Include="Models\WS\RetornoWS.cs" />
     <Compile Include="Models\WS\StatusPedido.cs" />
     <Compile Include="Models\DadosEnvioZenvia.cs" />

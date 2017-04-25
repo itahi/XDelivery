@@ -229,6 +229,25 @@ namespace DexComanda
 
             return Utils.SerializaObjeto(fidelidade);
         }
+        private string RetornaTipoBuscaProduto()
+        {
+            ConfiguracaoBuscaPorCodigo conf = new ConfiguracaoBuscaPorCodigo();
+            try
+            {
+                 conf = new ConfiguracaoBuscaPorCodigo()
+                {
+                    PorCodigo = chkProdutoCodigo.Checked,
+                    TipoCodigo = cbxTipoCodigo.Text
+                };
+                
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return Utils.SerializaObjeto(conf);
+        }
+       
         private void SalvaConfig(object sender, EventArgs e)
         {
             //con = new Conexao(); 
@@ -260,7 +279,7 @@ namespace DexComanda
             config.UsaLoginSenha = chkLoginSenha.Checked;
             config.UsaDataNascimento = chkDataNAscimento.Checked;
             config.ControlaEntregador = chkEntregadores.Checked;
-            config.ProdutoPorCodigo = chkProdutoCodigo.Checked;
+            config.ProdutoPorCodigo = RetornaTipoBuscaProduto();
             config.Usa2Telefones = chk2Telefones.Checked;
             config.UsaControleMesa = chkControlaMesas.Checked;
             config.ImprimeViaEntrega = chkImprimeViaEntrega.Checked;
@@ -381,7 +400,7 @@ namespace DexComanda
             config.UsaLoginSenha = chkLoginSenha.Checked;
             config.UsaDataNascimento = chkDataNAscimento.Checked;
             config.ControlaEntregador = chkEntregadores.Checked;
-            config.ProdutoPorCodigo = chkProdutoCodigo.Checked;
+            config.ProdutoPorCodigo = RetornaTipoBuscaProduto();
             config.Usa2Telefones = chk2Telefones.Checked;
             config.UsaControleMesa = chkControlaMesas.Checked;
             config.ImprimeViaEntrega = chkImprimeViaEntrega.Checked;
@@ -509,7 +528,8 @@ namespace DexComanda
                 chkDataNAscimento.Checked = Sessions.returnConfig.UsaDataNascimento;
                 chkLoginSenha.Checked = Sessions.returnConfig.UsaLoginSenha;
                 chkEntregadores.Checked = Sessions.returnConfig.ControlaEntregador;
-                chkProdutoCodigo.Checked = Sessions.returnConfig.ProdutoPorCodigo;
+                chkProdutoCodigo.Checked= Utils.MarcaTipoConfiguracaoProduto().PorCodigo;
+                cbxTipoCodigo.Text = Utils.MarcaTipoConfiguracaoProduto().TipoCodigo;
                 chk2Telefones.Checked = Sessions.returnConfig.Usa2Telefones;
                 chkControlaMesas.Checked = Sessions.returnConfig.UsaControleMesa;
                 chkImprimeViaEntrega.Checked = Sessions.returnConfig.ImprimeViaEntrega;
@@ -1037,9 +1057,9 @@ namespace DexComanda
             grpLocaSMS.Enabled = rbLocaSMS.Checked;
         }
 
-        private void chkPrDesconto_CheckedChanged(object sender, EventArgs e)
+        private void chkProdutoCodigo_CheckStateChanged(object sender, EventArgs e)
         {
-
+            cbxTipoCodigo.Enabled = chkProdutoCodigo.Checked;
         }
     }
 }

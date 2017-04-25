@@ -235,6 +235,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.cbxTipoCodigo = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -715,6 +716,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.cbxTipoCodigo);
             this.groupBox4.Controls.Add(this.chkProporcional);
             this.groupBox4.Controls.Add(this.chkVendedor);
             this.groupBox4.Controls.Add(this.chkRegCancelamentos);
@@ -736,7 +738,7 @@
             // 
             this.chkProporcional.AutoSize = true;
             this.chkProporcional.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkProporcional.Location = new System.Drawing.Point(181, 70);
+            this.chkProporcional.Location = new System.Drawing.Point(148, 66);
             this.chkProporcional.Name = "chkProporcional";
             this.chkProporcional.Size = new System.Drawing.Size(134, 17);
             this.chkProporcional.TabIndex = 17;
@@ -762,7 +764,7 @@
             // 
             this.chkRegCancelamentos.AutoSize = true;
             this.chkRegCancelamentos.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkRegCancelamentos.Location = new System.Drawing.Point(462, 43);
+            this.chkRegCancelamentos.Location = new System.Drawing.Point(498, 42);
             this.chkRegCancelamentos.Name = "chkRegCancelamentos";
             this.chkRegCancelamentos.Size = new System.Drawing.Size(141, 17);
             this.chkRegCancelamentos.TabIndex = 15;
@@ -773,7 +775,7 @@
             // 
             this.chkUltPedido.AutoSize = true;
             this.chkUltPedido.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkUltPedido.Location = new System.Drawing.Point(462, 20);
+            this.chkUltPedido.Location = new System.Drawing.Point(498, 19);
             this.chkUltPedido.Name = "chkUltPedido";
             this.chkUltPedido.Size = new System.Drawing.Size(116, 17);
             this.chkUltPedido.TabIndex = 14;
@@ -784,7 +786,7 @@
             // 
             this.chk10Garcon.AutoSize = true;
             this.chk10Garcon.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chk10Garcon.Location = new System.Drawing.Point(315, 43);
+            this.chk10Garcon.Location = new System.Drawing.Point(358, 42);
             this.chk10Garcon.Name = "chk10Garcon";
             this.chk10Garcon.Size = new System.Drawing.Size(121, 17);
             this.chk10Garcon.TabIndex = 13;
@@ -794,7 +796,7 @@
             // chkControlaMesas
             // 
             this.chkControlaMesas.AutoSize = true;
-            this.chkControlaMesas.Location = new System.Drawing.Point(315, 20);
+            this.chkControlaMesas.Location = new System.Drawing.Point(358, 19);
             this.chkControlaMesas.Name = "chkControlaMesas";
             this.chkControlaMesas.Size = new System.Drawing.Size(141, 17);
             this.chkControlaMesas.TabIndex = 12;
@@ -804,7 +806,7 @@
             // chk2Telefones
             // 
             this.chk2Telefones.AutoSize = true;
-            this.chk2Telefones.Location = new System.Drawing.Point(181, 43);
+            this.chk2Telefones.Location = new System.Drawing.Point(148, 43);
             this.chk2Telefones.Name = "chk2Telefones";
             this.chk2Telefones.Size = new System.Drawing.Size(116, 17);
             this.chk2Telefones.TabIndex = 11;
@@ -814,12 +816,13 @@
             // chkProdutoCodigo
             // 
             this.chkProdutoCodigo.AutoSize = true;
-            this.chkProdutoCodigo.Location = new System.Drawing.Point(181, 19);
+            this.chkProdutoCodigo.Location = new System.Drawing.Point(148, 19);
             this.chkProdutoCodigo.Name = "chkProdutoCodigo";
             this.chkProdutoCodigo.Size = new System.Drawing.Size(128, 17);
             this.chkProdutoCodigo.TabIndex = 10;
             this.chkProdutoCodigo.Text = "Produtos por Codigo?";
             this.chkProdutoCodigo.UseVisualStyleBackColor = true;
+            this.chkProdutoCodigo.CheckStateChanged += new System.EventHandler(this.chkProdutoCodigo_CheckStateChanged);
             // 
             // chkEntregadores
             // 
@@ -2033,7 +2036,6 @@
             this.chkPrDesconto.Tag = "PrecoDesconto";
             this.chkPrDesconto.Text = "Preço C/Desc";
             this.chkPrDesconto.UseVisualStyleBackColor = true;
-            this.chkPrDesconto.CheckedChanged += new System.EventHandler(this.chkPrDesconto_CheckedChanged);
             // 
             // chkGrupo
             // 
@@ -2356,6 +2358,19 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // cbxTipoCodigo
+            // 
+            this.cbxTipoCodigo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTipoCodigo.FormattingEnabled = true;
+            this.cbxTipoCodigo.Items.AddRange(new object[] {
+            "Personalizado",
+            "Automatico"});
+            this.cbxTipoCodigo.Location = new System.Drawing.Point(273, 17);
+            this.cbxTipoCodigo.Name = "cbxTipoCodigo";
+            this.cbxTipoCodigo.Size = new System.Drawing.Size(69, 21);
+            this.cbxTipoCodigo.TabIndex = 31;
+            this.toolTip1.SetToolTip(this.cbxTipoCodigo, "Selecione o tipo de agrupamento para impressão do pedido da cozinha");
+            // 
             // frmConfiguracoes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2635,5 +2650,6 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox chkSegunda;
         private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.ComboBox cbxTipoCodigo;
     }
 }

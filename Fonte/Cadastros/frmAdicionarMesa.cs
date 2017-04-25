@@ -23,12 +23,6 @@ namespace DexComanda.Cadastros
             InitializeComponent();
             con = new Conexao();
         }
-
-        private void btnSalvar_Click(object sender, EventArgs e)
-        {
-           
-        }
-
         private void ListaMesas()
         {
             this.MesasGridView.DataSource = null;

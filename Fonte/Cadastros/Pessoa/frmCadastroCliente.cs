@@ -469,7 +469,7 @@ namespace DexComanda
                     CodRegiao = mCodRegiao,
                     DataCadastro = Convert.ToDateTime(txtDataCadastro.Text),
                     user_id = txtUserID.Text,
-                    PFPJ = char.Parse(txtPJPF.Text),
+                    PFPJ = 'F',
                     Sexo = "1",
                     DDD = "",
                     CodOrigemCadastro = int.Parse(cbxOrigemCadastro.SelectedValue.ToString())

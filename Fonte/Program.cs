@@ -123,7 +123,7 @@ namespace DexComanda
                                     UsaDataNascimento = bool.Parse(config.ItemArray.GetValue(2).ToString()),
                                     UsaLoginSenha = bool.Parse(config.ItemArray.GetValue(3).ToString()),
                                     ControlaEntregador = bool.Parse(config.ItemArray.GetValue(5).ToString()),
-                                    ProdutoPorCodigo = bool.Parse(config.ItemArray.GetValue(6).ToString()),
+                                    ProdutoPorCodigo = config.ItemArray.GetValue(6).ToString(),
                                     Usa2Telefones = bool.Parse(config.ItemArray.GetValue(7).ToString()),
                                     UsaControleMesa = bool.Parse(config.ItemArray.GetValue(9).ToString()),
                                     ImprimeViaEntrega = bool.Parse(config.ItemArray.GetValue(10).ToString()),

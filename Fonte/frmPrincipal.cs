@@ -148,7 +148,7 @@ namespace DexComanda
                         {
                             Utils.HistoricoCancelamentos(CodigoPessoa);
                         }
-                        Utils.VerificaPontosFidelidade(CodigoPessoa);
+                      //  Utils.VerificaPontosFidelidade(CodigoPessoa);
                         if (RepeteUltimoPedido)
                         {
                             ExecutaRepeticaoPedido(CodigoPessoa, intCodEndereco);
@@ -915,7 +915,8 @@ namespace DexComanda
                     {
                         con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo, 1);
                     }
-                    Utils.ControleFidelidade(codigo, intCodPessoa, dblTotalPedido);
+
+                    //Utils.ControleFidelidade(codigo, intCodPessoa, dblTotalPedido);
 
                     //Atualiza Grid
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
@@ -1339,7 +1340,7 @@ namespace DexComanda
                 }
 
                 int CodCliente = int.Parse(clientesGridView.CurrentRow.Cells["Codigo"].Value.ToString());
-                Utils.VerificaPontosFidelidade(CodCliente);
+               // Utils.VerificaPontosFidelidade(CodCliente);
                 if (Sessions.returnConfig.RegistraCancelamentos)
                 {
                     Utils.HistoricoCancelamentos(CodCliente);

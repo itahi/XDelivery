@@ -65,7 +65,7 @@ namespace DexComanda
         private int QtdViasCozinha = int.Parse(Sessions.returnConfig.ViasCozinha);
         private int QtdViasBalcao = int.Parse(Sessions.returnConfig.ViasBalcao);
         private int QtViasEntrega = int.Parse(Sessions.returnConfig.ViasEntrega);
-        private bool ProdutosPorCodigo = Sessions.returnConfig.ProdutoPorCodigo;
+        private bool ProdutosPorCodigo = Utils.MarcaTipoConfiguracaoProduto().PorCodigo;
         private decimal TaxaEntrega;
         private bool PedidoRepetio;
         private string TrocoPagar;
@@ -75,7 +75,8 @@ namespace DexComanda
         private string lnome;
         private string lNomeOpcao;
         private int lTipo;
-        private decimal lPreco;
+        private decimal lPrecoOpcao;
+        private decimal lPrecoProdutoMaisOpcao;
         private decimal dcTaxaEntrega;
         private int gMaximoOpcaoProduto;
         private DataSet dsGrupo;
@@ -223,6 +224,7 @@ namespace DexComanda
                 lblGrupo.Text = "Código:";
                 txtCodProduto1.Visible = true;
                 chkCodPersonalizado.Visible = true;
+                chkCodPersonalizado.Checked = Utils.MarcaTipoConfiguracaoProduto().TipoCodigo == "Personalizado";
 
             }
             else
@@ -363,7 +365,7 @@ namespace DexComanda
                 LimpaTamanhosSabores();
                 var produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxProdutosGrid.SelectedValue.ToString())).Tables["Produto"];
 
-                MontaMenuOpcoes(int.Parse(this.cbxProdutosGrid.SelectedValue.ToString()));
+                MontaMenuOpcoes();
 
                 this.txtQuantidade.Text = "1";
                 var ValorProduto = "";
@@ -584,9 +586,15 @@ namespace DexComanda
             try
             {
                 string grupo = this.cbxTipoProduto.Text;
+
                 this.cbxProdutosGrid.DataSource = con.SelectRegistroPorNome("@GrupoProduto", "Produto", "spObterProdutoPorGrupo", grupo).Tables["Produto"];
                 this.cbxProdutosGrid.DisplayMember = "NomeProduto";
                 this.cbxProdutosGrid.ValueMember = "Codigo";
+
+                this.cbxSabor.DataSource = con.SelectRegistroPorNome("@GrupoProduto", "Produto", "spObterProdutoPorGrupo", grupo).Tables["Produto"];
+                this.cbxSabor.DisplayMember = "NomeProduto";
+                this.cbxSabor.ValueMember = "Codigo";
+
                 this.txtQuantidade.Text = "1";
                 SemMeiaPizza();
 
@@ -625,7 +633,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    itemNome = "Meio " + cbxProdutosGrid.Text.Insert(cbxProdutosGrid.Text.Length, Environment.NewLine) + " Meio " + this.cbxSabor.Text;
+                    itemNome = "Meio " + cbxProdutosGrid.Text.Insert(cbxProdutosGrid.Text.Length, Environment.NewLine) + " / Meio " + this.cbxSabor.Text;
                 }
 
                 return true;
@@ -657,24 +665,67 @@ namespace DexComanda
             return valores.Max();
         }
 
-        private void MontaMenuOpcoes(int iCodProduto, int iCodProduto2 = 0)
+        private void MontaMenuOpcoes(int intCodProduto=0)
         {
+            int intCodProduto1 = intCodProduto;
+            int intCodProduto2 = 0;
+            int intCodOpcao = 0;
+            DataSet dsOpcoes = new DataSet();
             try
             {
-                DataSet dsOpcoes;
-                DataRow dRowOpcoes;
-                DataRow dRoOpcoes2;
-                DataSet dsOpcoes2;
-
-                if (chkCodPersonalizado.Checked && chkCodPersonalizado.Visible)
+                decimal dPrecoProduto;
+                if (ProdutosPorCodigo)
                 {
-                    dsOpcoes = con.RetornaOpcoesCodPersonalizado(iCodProduto);
-                    dsOpcoes2 = con.RetornaOpcoesCodPersonalizado(iCodProduto2);
+                    if (txtCodProduto1.Text!="")
+                    {
+                        intCodProduto1 = int.Parse(txtCodProduto1.Text);
+                    }
+                    if (txtCodProduto2.Text!="")
+                    {
+                        intCodProduto2 = int.Parse(txtCodProduto2.Text);
+                    }
+                    
                 }
                 else
                 {
-                    dsOpcoes = con.RetornaOpcoesProduto(iCodProduto);
-                    dsOpcoes2 = con.RetornaOpcoesProduto(iCodProduto2);
+                    if (cbxProdutosGrid.SelectedValue!=null && intCodProduto==0)
+                    {
+                        intCodProduto1 = int.Parse(cbxProdutosGrid.SelectedValue.ToString());
+                    }
+                    if (cbxSabor.SelectedIndex>0)
+                    {
+                        intCodProduto2 = int.Parse(cbxSabor.SelectedValue.ToString());
+                    }
+                }
+
+                if (chkCodPersonalizado.Checked)
+                {
+                    if (txtCodProduto1.Text!="")
+                    {
+                        dsOpcoes = con.RetornaOpcoesCodPersonalizado(intCodProduto1);
+                    }
+                    else
+                    {
+                        dsOpcoes = con.RetornaOpcoesCodPersonalizado(intCodProduto2);
+                    }
+                    
+                }
+                else
+                {
+                    if (txtCodProduto1.Text != ""|| cbxProdutosGrid.SelectedValue!=null || intCodProduto>0 && (!cbxMeiaPizza.Checked))
+                    {
+                        dsOpcoes = con.RetornaOpcoesProduto(intCodProduto1);
+                    }
+                    else
+                    {
+                        dsOpcoes = con.RetornaOpcoesProduto(intCodProduto2);
+                    }
+
+
+                    //if(txtCodProduto2.Text!="" ||cbxSabor.SelectedValue!=null)
+                    //{
+                    //    dsOpcoes = con.RetornaOpcoesProduto(intCodProduto2);
+                    //}
                 }
 
                 EscondeTamanhos();
@@ -683,109 +734,117 @@ namespace DexComanda
                 {
                     for (int i = 0; i < dsOpcoes.Tables[0].Rows.Count; i++)
                     {
-                        DataSet dsMaiorPreco = con.RetornaMaioresPrecos(iCodProduto.ToString(), iCodProduto2.ToString(), "", "", dsOpcoes.Tables[0].Rows[0].ItemArray.GetValue(5).ToString());
+                        DataSet dsMaiorPreco = con.RetornaMaioresPrecos(intCodProduto1, intCodProduto2, "", "", dsOpcoes.Tables[0].Rows[i].Field<int>("CodOpcao").ToString(),Sessions.returnConfig.CobrancaProporcionalSN);
                         lTipo = int.Parse(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo"));
-                        //if (dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString() != "")
-                        //{
-                        //    lPreco = Convert.ToDecimal(dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString());
-                        //}
-
-                        if (iCodProduto2 != 0 && lTipo == 1)
-                        {
-                            lPreco = RetornaMaiorValor(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco"), dsOpcoes2.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco"));
-                        }
-                        else
-                        {
-                            lPreco = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("Preco");
-                        }
-
+                        lPrecoOpcao = dsMaiorPreco.Tables[0].Rows[0].Field<Decimal>("PrecoOpcao");
+                        dPrecoProduto = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProduto");
                         gMaximoOpcaoProduto = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<int>("MaximoAdicionais");
                         lnome = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();//.Substring(1, 10);
                         lTipo = int.Parse(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo"));
                         if (lTipo == 1)
                         {
                             lNomeOpcao = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();
+
+                            lPrecoProdutoMaisOpcao = lPrecoOpcao; //+ dPrecoProduto;
                             if (!radioButton1.Visible)
                             {
                                 radioButton1.Text = lnome;
-                                radioButton1.Tag = lPreco;
+                                radioButton1.Tag = lPrecoProdutoMaisOpcao;
                                 radioButton1.Visible = true;
 
                             }
                             else if (!radioButton2.Visible)
                             {
                                 radioButton2.Text = lnome;
-                                radioButton2.Tag = lPreco;
+                                radioButton2.Tag = lPrecoProdutoMaisOpcao;
                                 radioButton2.Visible = true;
                             }
                             else if (!radioButton3.Visible)
                             {
                                 radioButton3.Text = lnome;
-                                radioButton3.Tag = lPreco;
+                                radioButton3.Tag = lPrecoProdutoMaisOpcao;
                                 radioButton3.Visible = true;
 
                             }
                             else if (!radioButton4.Visible)
                             {
                                 radioButton4.Text = lnome;
-                                radioButton4.Tag = lPreco;
+                                radioButton4.Tag = lPrecoProdutoMaisOpcao;
                                 radioButton4.Visible = true;
                             }
                             else if (!radioButton5.Visible)
                             {
                                 radioButton5.Text = lnome;
-                                radioButton5.Tag = lPreco;
+                                radioButton5.Tag = lPrecoProdutoMaisOpcao;
                                 radioButton5.Visible = true;
                             }
                             else if (!radioButton6.Visible)
                             {
                                 radioButton6.Text = lnome;
-                                radioButton6.Tag = lPreco;
+                                radioButton6.Tag = lPrecoProdutoMaisOpcao;
                                 radioButton6.Visible = true;
                             }
                             else if (!rb7.Visible)
                             {
                                 rb7.Text = lnome;
-                                rb7.Tag = lPreco;
+                                rb7.Tag = lPrecoProdutoMaisOpcao;
                                 rb7.Visible = true;
                             }
                             else if (!rb8.Visible)
                             {
                                 rb8.Text = lnome;
-                                rb8.Tag = lPreco;
+                                rb8.Tag = lPrecoProdutoMaisOpcao;
                                 rb8.Visible = true;
                             }
                             else if (!rb9.Visible)
                             {
                                 rb9.Text = lnome;
-                                rb9.Tag = lPreco;
+                                rb9.Tag = lPrecoProdutoMaisOpcao;
                                 rb9.Visible = true;
                             }
                             else if (!rb10.Visible)
                             {
                                 rb10.Text = lnome;
-                                rb10.Tag = lPreco;
+                                rb10.Tag = lPrecoProdutoMaisOpcao;
                                 rb10.Visible = true;
                             }
                             else if (!rb11.Visible)
                             {
                                 rb11.Text = lnome;
-                                rb11.Tag = lPreco;
+                                rb11.Tag = lPrecoProdutoMaisOpcao;
                                 rb11.Visible = true;
                             }
                             else if (!rb12.Visible)
                             {
                                 rb12.Text = lnome;
-                                rb12.Tag = lPreco;
+                                rb12.Tag = lPrecoProdutoMaisOpcao;
                                 rb12.Visible = true;
                             }
+
+
+
+                            ////Varre todos controles dentro do groupBox
+                            //foreach (Control radiobutons in grpBoxTamanhos.Controls)
+                            //{
+                            //    if (object.ReferenceEquals(radiobutons.GetType(), typeof(System.Windows.Forms.RadioButton)))
+                            //    {
+                            //        //Check to see if  
+                            //        if (!((System.Windows.Forms.RadioButton)radiobutons).Visible)
+                            //        {
+                            //            ((System.Windows.Forms.RadioButton)radiobutons).Tag = lPreco;
+                            //            ((System.Windows.Forms.RadioButton)radiobutons).Text = lnome;
+                            //            ((System.Windows.Forms.RadioButton)radiobutons).Visible =true;
+                            //        }
+                            //    }
+                            //}
+
 
                         }
                         if (lTipo == 2)
                         {
                             //  NumericUpDown newNumeric = new NumericUpDown();
                             //newNumeric.Tag = lPreco;
-                            chkListAdicionais.Items.Add(lnome + "(+" + lPreco + ")", false);
+                            chkListAdicionais.Items.Add(lnome + "(+" + lPrecoOpcao + ")", false);
                             //  listView1.Items.Add(newNumeric, 0)
                             //while (lTipo==2)
                             //{
@@ -905,7 +964,7 @@ namespace DexComanda
                                     Item = txtItemDescricao.Text
                                 };
 
-                                if (!Sessions.returnConfig.ProdutoPorCodigo)
+                                if (!ProdutosPorCodigo)
                                 {
                                     item.CodProduto = int.Parse(this.cbxProdutosGrid.SelectedValue.ToString());
                                 }
@@ -949,7 +1008,7 @@ namespace DexComanda
                                 PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$", "")),
                                 Item = txtItemDescricao.Text
                             };
-                            if (!Sessions.returnConfig.ProdutoPorCodigo)
+                            if (!ProdutosPorCodigo)
                             {
                                 item.CodProduto = int.Parse(this.cbxProdutosGrid.SelectedValue.ToString());
                             }
@@ -995,6 +1054,8 @@ namespace DexComanda
             txtPorcentagemDesconto.Text = "0";
             LimpaTamanhosSabores();
             chkSabores.Checked = false;
+            cbxMeiaPizza.Checked = false;
+            //MeiaPizzaMarcado(sender, e);
         }
         private void btnCancelarPedido_Click(object sender, EventArgs e)
         {
@@ -1860,7 +1921,7 @@ namespace DexComanda
                     {
                         iCodigo = codPedido;
                     }
-                    if (Sessions.returnEmpresa.CNPJ==Bibliotecas.cClaudinei|| Sessions.returnEmpresa.CNPJ== Bibliotecas.cComamarella|| Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras  || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria
+                    if (Sessions.returnEmpresa.CNPJ== Bibliotecas.cBigPizza|| Sessions.returnEmpresa.CNPJ==Bibliotecas.cClaudinei|| Sessions.returnEmpresa.CNPJ== Bibliotecas.cComamarella|| Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras  || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria
                         || Sessions.returnEmpresa.CNPJ == Bibliotecas.cTheBest || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGallegao)
                     {
                         ImpressaoPorCozinha(iCodigo);
@@ -2025,7 +2086,7 @@ namespace DexComanda
             if (cbxMeiaPizza.Checked)
             {
                 this.cbxSabor.Enabled = true;
-                if (Sessions.returnConfig.ProdutoPorCodigo == true)
+                if (ProdutosPorCodigo == true)
                 {
                     this.txtCodProduto2.Visible = true;
                 }
@@ -2054,137 +2115,160 @@ namespace DexComanda
                 this.txtCodProduto2.Visible = false;
             }
         }
-        public decimal ComparaValores()
-        {
-            var valorProduto = decimal.Parse("0.00");
-            decimal[] valores = new decimal[2];
-            var valorSabor = decimal.Parse("0.00");
-            decimal iValue = 0.00M;
-            if (cbxProdutosGrid.Text != null)
-            {
-                if (Sessions.returnConfig.ProdutoPorCodigo)
-                {
-                    DataTable produto;
-                    DataTable sabor;
+        //public decimal ComparaValores()
+        //{
+        //    var valorProduto = decimal.Parse("0.00");
+        //    decimal[] valores = new decimal[2];
+        //    var valorSabor = decimal.Parse("0.00");
+        //    decimal iValue = 0.00M;
+        //    int intCodInterno = 0;
+        //    if (cbxProdutosGrid.Text != null)
+        //    {
+        //        if (ProdutosPorCodigo)
+        //        {
+        //            DataTable produto;
+        //            DataTable sabor;
 
-                    if (txtCodProduto1.Text != "")
-                    {
-                        produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
-                    }
-                    else
-                    {
-                        produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxProdutosGrid.SelectedValue.ToString())).Tables["Produto"];
-                    }
+        //            if (txtCodProduto1.Text != "")
+        //            {
+        //                if (chkCodPersonalizado.Checked)
+        //                {
+        //                    intCodInterno = int.Parse(txtCodProduto1.Text);
+        //                    produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompletoPorCodPersonalizado", intCodInterno).Tables["Produto"];
+        //                }
+        //                else
+        //                {
+        //                    produto = con.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
+        //                }
+        //                //produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
+        //            }
+        //            else
+        //            {
+        //                produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxProdutosGrid.SelectedValue.ToString())).Tables["Produto"];
+        //            }
 
-                    if (txtCodProduto2.Text != "")
-                    {
-                        sabor = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(txtCodProduto2.Text)).Tables["Produto"];
-                    }
+                   
 
-                    if (PromocaoDiasSemana)
-                    {
-                        DiaDaPromocao = produto.Rows[0]["DiaSemana"].ToString();
-                        lol = DiaDaPromocao.Split(new char[] { ';' });
-                        List<PrecoDiaProduto> listPreco = new List<PrecoDiaProduto>();
+                   
 
-                        listPreco = Utils.DeserializaObjeto(produto.Rows[0]["DiaSemana"].ToString());
-                        if (listPreco != null && listPreco.Count > 0)
-                        {
-                            foreach (var item in listPreco)
-                            {
-                                if (item.Dia == DiaDaSema && item.Preco != 0 && item.Preco != null)
-                                {
-                                    txtPrecoUnitario.Text = item.Preco.ToString();
-                                    valorProduto = item.Preco;
-                                    break;
-                                }
-                                else
-                                {
-                                    txtPrecoUnitario.Text = produto.Rows[0]["PrecoProduto"].ToString();
-                                }
-                            }
-                        }
-                        else
-                        {
-                            valorProduto = decimal.Parse(produto.Rows[0]["PrecoProduto"].ToString());
-                            //  valorSabor = decimal.Parse(sabor.Rows[0]["PrecoProduto"].ToString());
-                        }
+        //            if (txtCodProduto2.Text != "")
+        //            {
+        //                if (chkCodPersonalizado.Checked)
+        //                {
+        //                    intCodInterno = int.Parse(txtCodProduto1.Text);
+        //                    sabor = con.SelectProdutoCompleto("Produto", "spObterProdutoCompletoPorCodPersonalizado", intCodInterno).Tables["Produto"];
+        //                }
+        //                else
+        //                {
+        //                    sabor = con.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
+        //                }
+        //                // sabor = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(txtCodProduto2.Text)).Tables["Produto"];
+        //            }
 
-                        CalcularTotalItem();
+        //            if (PromocaoDiasSemana)
+        //            {
+        //                DiaDaPromocao = produto.Rows[0]["DiaSemana"].ToString();
+        //                lol = DiaDaPromocao.Split(new char[] { ';' });
+        //                List<PrecoDiaProduto> listPreco = new List<PrecoDiaProduto>();
 
-                    }
-                    else
-                    {
-                        valorProduto = decimal.Parse(produto.Rows[0]["PrecoProduto"].ToString());
-                        // valorSabor = decimal.Parse(sabor.Rows[0]["PrecoProduto"].ToString());
-                    }
+        //                listPreco = Utils.DeserializaObjeto(produto.Rows[0]["DiaSemana"].ToString());
+        //                if (listPreco != null && listPreco.Count > 0)
+        //                {
+        //                    foreach (var item in listPreco)
+        //                    {
+        //                        if (item.Dia == DiaDaSema && item.Preco != 0 && item.Preco != null)
+        //                        {
+        //                            txtPrecoUnitario.Text = item.Preco.ToString();
+        //                            valorProduto = item.Preco;
+        //                            break;
+        //                        }
+        //                        else
+        //                        {
+        //                            txtPrecoUnitario.Text = produto.Rows[0]["PrecoProduto"].ToString();
+        //                        }
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    valorProduto = decimal.Parse(produto.Rows[0]["PrecoProduto"].ToString());
+        //                    //  valorSabor = decimal.Parse(sabor.Rows[0]["PrecoProduto"].ToString());
+        //                }
 
-                    txtPrecoUnitario.Text = Convert.ToString(RetornaMaiorValor(valorProduto, valorSabor));
-                    //if (valorProduto > valorSabor)
-                    //{
-                    //    this.txtPrecoUnitario.Text = valorProduto.ToString();
-                    //}
-                    //else
-                    //{
-                    //    this.txtPrecoUnitario.Text = valorSabor.ToString();
-                    //}
+        //                CalcularTotalItem();
 
+        //            }
+        //            else
+        //            {
+        //                valorProduto = decimal.Parse(produto.Rows[0]["PrecoProduto"].ToString());
+        //                // valorSabor = decimal.Parse(sabor.Rows[0]["PrecoProduto"].ToString());
+        //            }
 
-
-                }
-                else if (!Sessions.returnConfig.ProdutoPorCodigo && this.cbxSabor.Text != " ")
-                {
-                    var produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxProdutosGrid.SelectedValue.ToString())).Tables["Produto"];
-                    // MontaMenuOpcoes(int.Parse(cbxProdutosGrid.SelectedValue.ToString()));
-                    DataTable sabor = null;
-                    if (cbxSabor.Enabled)
-                    {
-                        sabor = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxSabor.SelectedValue.ToString())).Tables["Produto"];
-                        //  MontaMenuOpcoes(int.Parse(cbxProdutosGrid.SelectedValue.ToString()), int.Parse(cbxSabor.SelectedValue.ToString()));
-                    }
-
-                    List<PrecoDiaProduto> listPreco = new List<PrecoDiaProduto>();
-                    listPreco = Utils.DeserializaObjeto(produto.Rows[0]["DiaSemana"].ToString());
-                    if (listPreco != null && listPreco.Count > 0)
-                    {
-                        foreach (var item in listPreco)
-                        {
-                            if (item.Dia == DiaDaSema && item.Preco != 0 && item.Preco != null)
-                            {
-                                txtPrecoUnitario.Text = item.Preco.ToString();
-                                valorProduto = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
-                                break;
-                            }
-                            else
-                            {
-                                txtPrecoUnitario.Text = produto.Rows[0]["PrecoProduto"].ToString();
-                            }
-                            valorProduto = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
-                        }
-                    }
-                    else
-                    {
-                        valorProduto = decimal.Parse(produto.Rows[0]["PrecoProduto"].ToString());
-                        if (cbxSabor.Enabled)
-                        {
-                            valorSabor = decimal.Parse(sabor.Rows[0]["PrecoProduto"].ToString());
-                        }
-
-                    }
-
-                }
-
-                valores[0] = valorProduto;
-                valores[1] = valorSabor;
-
-                txtPrecoUnitario.Text = valores.Max().ToString();
-                // Calcula o preço total forçando a multiplicação
-                txtPrecoTotal.Text = Convert.ToString(decimal.Parse(txtQuantidade.Text) * valores.Max());
+        //            txtPrecoUnitario.Text = Convert.ToString(RetornaMaiorValor(valorProduto, valorSabor));
+        //            //if (valorProduto > valorSabor)
+        //            //{
+        //            //    this.txtPrecoUnitario.Text = valorProduto.ToString();
+        //            //}
+        //            //else
+        //            //{
+        //            //    this.txtPrecoUnitario.Text = valorSabor.ToString();
+        //            //}
 
 
-            }
-            return valores.Max();
-        }
+
+        //        }
+        //        else if (!ProdutosPorCodigo && this.cbxSabor.Text != " ")
+        //        {
+        //            var produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxProdutosGrid.SelectedValue.ToString())).Tables["Produto"];
+        //            // MontaMenuOpcoes(int.Parse(cbxProdutosGrid.SelectedValue.ToString()));
+        //            DataTable sabor = null;
+        //            if (cbxSabor.Enabled)
+        //            {
+        //                sabor = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxSabor.SelectedValue.ToString())).Tables["Produto"];
+        //                //  MontaMenuOpcoes(int.Parse(cbxProdutosGrid.SelectedValue.ToString()), int.Parse(cbxSabor.SelectedValue.ToString()));
+        //            }
+
+        //            List<PrecoDiaProduto> listPreco = new List<PrecoDiaProduto>();
+        //            listPreco = Utils.DeserializaObjeto(produto.Rows[0]["DiaSemana"].ToString());
+        //            if (listPreco != null && listPreco.Count > 0)
+        //            {
+        //                foreach (var item in listPreco)
+        //                {
+        //                    if (item.Dia == DiaDaSema && item.Preco != 0 && item.Preco != null)
+        //                    {
+        //                        txtPrecoUnitario.Text = item.Preco.ToString();
+        //                        valorProduto = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
+        //                        break;
+        //                    }
+        //                    else
+        //                    {
+        //                        txtPrecoUnitario.Text = produto.Rows[0]["PrecoProduto"].ToString();
+        //                    }
+        //                    valorProduto = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
+        //                }
+        //            }
+        //            else
+        //            {
+        //                valorProduto = decimal.Parse(produto.Rows[0]["PrecoProduto"].ToString());
+        //                if (cbxSabor.Enabled)
+        //                {
+        //                    valorSabor = decimal.Parse(sabor.Rows[0]["PrecoProduto"].ToString());
+        //                }
+
+        //            }
+
+        //        }
+
+        //        valores[0] = valorProduto;
+        //        valores[1] = valorSabor;
+
+        //        txtPrecoUnitario.Text = valores.Max().ToString();
+        //        // Calcula o preço total forçando a multiplicação
+        //        txtPrecoTotal.Text = Convert.ToString(decimal.Parse(txtQuantidade.Text) * valores.Max());
+
+
+        //    }
+        //    return valores.Max();
+        //}
         internal void changeValorTotal(decimal p)
         {
             this.lbTotal.Text = p.ToString() + lblEntrega.Text;
@@ -2292,7 +2376,7 @@ namespace DexComanda
 
                     if (produto.Rows.Count > 0)
                     {
-                        MontaMenuOpcoes(int.Parse(txtCodProduto1.Text));
+                      //  MontaMenuOpcoes(int.Parse(txtCodProduto1.Text));
                         cbxProdutosGrid.Text = produto.Rows[0]["NomeProduto"].ToString();
                         if (PromocaoDiasSemana)
                         {
@@ -2348,14 +2432,27 @@ namespace DexComanda
 
         private void BuscaProduto2(object sender, KeyEventArgs e)
         {
+            int intCodInterno = 0;
+            DataTable produto;
             if (e.KeyCode == Keys.Enter)
             {
                 if (txtCodProduto2.Text != "")
                 {
-                    var produto = con.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", int.Parse(txtCodProduto2.Text)).Tables["Produto"];
+
+                    if (chkCodPersonalizado.Checked)
+                    {
+                        intCodInterno = int.Parse(txtCodProduto2.Text);
+                        produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompletoPorCodPersonalizado", intCodInterno).Tables["Produto"];
+                    }
+                    else
+                    {
+                        produto = con.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
+                    }
+
+                    // produto = con.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", int.Parse(txtCodProduto2.Text)).Tables["Produto"];
                     if (produto.Rows.Count > 0)
                     {
-                        MontaMenuOpcoes(int.Parse(txtCodProduto2.Text));
+                      //  MontaMenuOpcoes(int.Parse(txtCodProduto2.Text));
                         cbxSabor.Text = produto.Rows[0]["NomeProduto"].ToString();
                         if (PromocaoDiasSemana)
                         {
@@ -2383,7 +2480,7 @@ namespace DexComanda
                         CalcularTotalItem();
                         this.txtQuantidade.Focus();
                         txtQuantidade.Text = "1";
-                        ComparaValores();
+                       // ComparaValores();
 
                     }
                     else
@@ -2729,6 +2826,7 @@ namespace DexComanda
             this.cbxProdutosGrid.Size = new System.Drawing.Size(232, 26);
             this.cbxProdutosGrid.TabIndex = 1;
             this.cbxProdutosGrid.SelectedIndexChanged += new System.EventHandler(this.cbxProdutosGrid_SelectedIndexChanged);
+            this.cbxProdutosGrid.TextChanged += new System.EventHandler(this.cbxProdutosGrid_TextChanged);
             // 
             // gridViewItemsPedido
             // 
@@ -2936,6 +3034,7 @@ namespace DexComanda
             this.cbxMeiaPizza.Text = "2º Sb";
             this.cbxMeiaPizza.UseVisualStyleBackColor = true;
             this.cbxMeiaPizza.CheckedChanged += new System.EventHandler(this.cbxMeiaPizza_CheckedChanged);
+            this.cbxMeiaPizza.CheckStateChanged += new System.EventHandler(this.MeiaPizzaMarcado);
             // 
             // cbxSabor
             // 
@@ -2950,6 +3049,7 @@ namespace DexComanda
             this.cbxSabor.TabIndex = 55;
             this.cbxSabor.SelectedIndexChanged += new System.EventHandler(this.cbxSabor_SelectedIndexChanged);
             this.cbxSabor.SelectionChangeCommitted += new System.EventHandler(this.cbxSabor_SelectionChangeCommitted);
+            this.cbxSabor.TextChanged += new System.EventHandler(this.cbxSabor_TextChanged);
             // 
             // btnAtualizar
             // 
@@ -3669,7 +3769,7 @@ namespace DexComanda
         private void cbxSabor_SelectionChangeCommitted(object sender, EventArgs e)
         {
             LimpaTamanhosSabores();
-            MontaMenuOpcoes(int.Parse(cbxProdutosGrid.SelectedValue.ToString()), int.Parse(cbxSabor.SelectedValue.ToString()));
+            //MontaMenuOpcoes(int.Parse(cbxProdutosGrid.SelectedValue.ToString()), int.Parse(cbxSabor.SelectedValue.ToString()));
             // ComparaValores();
         }
 
@@ -3926,8 +4026,7 @@ namespace DexComanda
         {
             if (radioButton1.Checked)
             {
-                decimal lPreco = decimal.Parse(radioButton1.Tag.ToString());
-                txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
+                txtPrecoUnitario.Text = radioButton1.Tag.ToString();
                 if (cbxMeiaPizza.Checked)
                 {
                     cbxSabor.Text = iNomeProd + " " + radioButton1.Text;
@@ -3944,8 +4043,8 @@ namespace DexComanda
         {
             if (radioButton2.Checked)
             {
-                decimal lPreco = decimal.Parse(radioButton2.Tag.ToString());
-                txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
+                txtPrecoUnitario.Text = radioButton2.Tag.ToString();
+                // txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
                 if (cbxMeiaPizza.Checked)
                 {
                     cbxSabor.Text = iNomeProd + " " + radioButton2.Text;
@@ -3963,8 +4062,8 @@ namespace DexComanda
         {
             if (radioButton3.Checked)
             {
-                decimal lPreco = decimal.Parse(radioButton3.Tag.ToString());
-                txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
+                txtPrecoUnitario.Text = radioButton3.Tag.ToString(); ;
+               // txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
                 if (cbxMeiaPizza.Checked)
                 {
                     cbxSabor.Text = iNomeProd + " " + radioButton3.Text;
@@ -3982,8 +4081,8 @@ namespace DexComanda
         {
             if (radioButton4.Checked)
             {
-                decimal lPreco = decimal.Parse(radioButton4.Tag.ToString());
-                txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
+                txtPrecoUnitario.Text = radioButton4.Tag.ToString();
+                //  txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
                 //cbxProdutosGrid.Text = iNomeProd + " " + radioButton4.Text;
                 if (cbxMeiaPizza.Checked)
                 {
@@ -4001,8 +4100,8 @@ namespace DexComanda
         {
             if (radioButton5.Checked)
             {
-                decimal lPreco = decimal.Parse(radioButton5.Tag.ToString());
-                txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
+                txtPrecoUnitario.Text = radioButton5.Tag.ToString();
+                // txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
                 // cbxProdutosGrid.Text = iNomeProd + " " + radioButton5.Text;
                 if (cbxMeiaPizza.Checked)
                 {
@@ -4020,8 +4119,8 @@ namespace DexComanda
         {
             if (radioButton6.Checked)
             {
-                decimal lPreco = decimal.Parse(radioButton6.Tag.ToString());
-                txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
+                txtPrecoUnitario.Text = radioButton6.Tag.ToString();
+                // txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
                 if (cbxMeiaPizza.Checked)
                 {
                     cbxSabor.Text = iNomeProd + " " + radioButton6.Text;
@@ -4090,8 +4189,8 @@ namespace DexComanda
         {
             if (rb7.Checked)
             {
-                decimal lPreco = decimal.Parse(rb7.Tag.ToString());
-                txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
+                txtPrecoUnitario.Text = rb7.Tag.ToString();
+                // txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
                 cbxProdutosGrid.Text = iNomeProd + " " + rb7.Text;
                 CalcularTotalItem();
             }
@@ -4101,8 +4200,8 @@ namespace DexComanda
         {
             if (rb8.Checked)
             {
-                decimal lPreco = decimal.Parse(rb8.Tag.ToString());
-                txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
+                txtPrecoUnitario.Text = rb8.Tag.ToString();
+                //  txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
                 if (cbxMeiaPizza.Checked)
                 {
                     cbxSabor.Text = iNomeProd + " " + rb8.Text;
@@ -4121,8 +4220,8 @@ namespace DexComanda
 
             if (rb9.Checked)
             {
-                decimal lPreco = decimal.Parse(rb9.Tag.ToString());
-                txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
+                txtPrecoUnitario.Text = rb9.Tag.ToString();
+                //  txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
                 if (cbxMeiaPizza.Checked)
                 {
                     cbxSabor.Text = iNomeProd + " " + rb9.Text;
@@ -4140,8 +4239,8 @@ namespace DexComanda
         {
             if (rb10.Checked)
             {
-                decimal lPreco = decimal.Parse(rb10.Tag.ToString());
-                txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
+                txtPrecoUnitario.Text = rb10.Tag.ToString();
+                //  txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
                 if (cbxMeiaPizza.Checked)
                 {
                     cbxSabor.Text = iNomeProd + " " + rb10.Text;
@@ -4159,8 +4258,8 @@ namespace DexComanda
         {
             if (rb11.Checked)
             {
-                decimal lPreco = decimal.Parse(rb11.Tag.ToString());
-                txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
+                txtPrecoUnitario.Text = rb11.Tag.ToString();
+                //  txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
                 if (cbxMeiaPizza.Checked)
                 {
                     cbxSabor.Text = iNomeProd + " " + rb11.Text;
@@ -4178,8 +4277,8 @@ namespace DexComanda
         {
             if (rb12.Checked)
             {
-                decimal lPreco = decimal.Parse(rb12.Tag.ToString());
-                txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
+                txtPrecoUnitario.Text = rb12.Tag.ToString();
+                // txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
                 if (cbxMeiaPizza.Checked)
                 {
                     cbxSabor.Text = iNomeProd + " " + rb12.Text;
@@ -4254,11 +4353,11 @@ namespace DexComanda
                 if (gridViewItemsPedido.SelectedRows.Count > 0)
                 {
                     int codItem = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells["CodProduto"].Value.ToString());
-                    MontaMenuOpcoes(codItem);
-                    var itemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codItem);
+                   
+                    DataSet dsItemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codItem);
                     string itemNome = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
-
-                    string[] sabores = (this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString()).Split('/');
+                    Utils.MontaCombox(cbxTipoProduto, "Nome", "Codigo", "Grupo", "spObterGrupoPOrCodigo", dsItemCompleto.Tables[0].Rows[0].Field<int>("CodGrupo"));
+                    string[] sabores = itemNome.Split('/');
                     List<string> list = new List<string>();
 
                     foreach (string sabor in sabores)
@@ -4280,6 +4379,7 @@ namespace DexComanda
                         this.cbxSabor.Text = "";
                         this.cbxProdutosGrid.Text = gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
                     }
+                    MontaMenuOpcoes(codItem);
                     if (codPedido == 0)
                     {
                         iRowSelecionada = rowIndex;
@@ -4378,7 +4478,174 @@ namespace DexComanda
 
         private void cbxSabor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            iNomeProd = cbxSabor.Text;
+
+
+          //  iNomeProd = cbxSabor.Text;
+
+            try
+            {
+                LimpaTamanhosSabores();
+                var produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxSabor.SelectedValue.ToString())).Tables["Produto"];
+                this.txtQuantidade.Text = "1";
+                var ValorProduto = "";
+                MontaMenuOpcoes();
+                if (PromocaoDiasSemana)
+                {
+                    List<PrecoDiaProduto> listPreco = new List<PrecoDiaProduto>();
+                    listPreco = Utils.DeserializaObjeto(produto.Rows[0]["DiaSemana"].ToString());
+                    if (listPreco != null && listPreco.Count != 0)
+                    {
+                        foreach (var item in listPreco)
+                        {
+                            if (item.Dia == DiaDaSema)
+                            {
+                                ValorProduto = item.Preco.ToString();
+                                this.txtPrecoUnitario.Text = ValorProduto;
+                                iTotalItem = txtPrecoUnitario.Text;
+                                if (cbxMeiaPizza.Checked)
+                                {
+                                    iNomeProd = cbxSabor.Text;
+                                }
+                                else
+                                {
+                                    iNomeProd = cbxProdutosGrid.Text;
+                                }
+
+                                return;
+                            }
+                            else
+                            {
+                                ValorProduto = produto.Rows[0]["PrecoProduto"].ToString();
+                                iTotalItem = txtPrecoUnitario.Text;
+                                if (cbxMeiaPizza.Checked)
+                                {
+                                    iNomeProd = cbxSabor.Text;
+                                }
+                                else
+                                {
+                                    iNomeProd = cbxProdutosGrid.Text;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ValorProduto = produto.Rows[0]["PrecoProduto"].ToString();
+                        iTotalItem = txtPrecoUnitario.Text;
+                        if (cbxMeiaPizza.Checked)
+                        {
+                            iNomeProd = cbxSabor.Text;
+                        }
+                        else
+                        {
+                            iNomeProd = cbxProdutosGrid.Text;
+                        }
+                    }
+                }
+                // DAqui
+                else
+                {
+                    ValorProduto = produto.Rows[0]["PrecoProduto"].ToString();
+                    iTotalItem = txtPrecoUnitario.Text;
+                    if (cbxMeiaPizza.Checked && cbxSabor.Focused)
+                    {
+                        iNomeProd = cbxSabor.Text;
+                    }
+                    else
+                    {
+                        iNomeProd = cbxProdutosGrid.Text;
+                    }
+                }
+
+                this.txtPrecoUnitario.Text = ValorProduto;
+                CalcularTotalItem();
+
+                if (this.cbxSabor.Focused)
+                {
+                    decimal valorProduto = 0;
+                    decimal valorSabor = 0;
+                    var _produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxProdutosGrid.SelectedValue.ToString())).Tables["Produto"];
+                    var sabor = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxSabor.SelectedValue.ToString())).Tables["Produto"];
+
+                    txtQuantidade.Text = "1";
+                    if (PromocaoDiasSemana)
+                    {
+                        List<PrecoDiaProduto> listPreco = new List<PrecoDiaProduto>();
+                        listPreco = Utils.DeserializaObjeto(produto.Rows[0]["DiaSemana"].ToString());
+                        if (listPreco != null)
+                        {
+                            foreach (var item in listPreco)
+                            {
+                                if (item.Dia == DiaDaSema)
+                                {
+                                    txtPrecoUnitario.Text = item.Preco.ToString();
+                                    iTotalItem = txtPrecoUnitario.Text;
+                                    if (cbxMeiaPizza.Checked)
+                                    {
+                                        iNomeProd = cbxSabor.Text;
+                                    }
+                                    else
+                                    {
+                                        iNomeProd = cbxProdutosGrid.Text;
+                                    }
+                                    return;
+                                }
+                                else
+                                {
+                                    txtPrecoUnitario.Text = produto.Rows[0]["PrecoProduto"].ToString();
+                                    iTotalItem = txtPrecoUnitario.Text;
+                                    if (cbxMeiaPizza.Checked)
+                                    {
+                                        iNomeProd = cbxSabor.Text;
+                                    }
+                                    else
+                                    {
+                                        iNomeProd = cbxProdutosGrid.Text;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            valorProduto = decimal.Parse(_produto.Rows[0]["PrecoProduto"].ToString());
+                            valorSabor = decimal.Parse(sabor.Rows[0]["PrecoProduto"].ToString());
+                        }
+
+                        if (valorProduto > valorSabor)
+                        {
+                            this.txtPrecoUnitario.Text = valorProduto.ToString();
+                        }
+                        else
+                        {
+                            this.txtPrecoUnitario.Text = valorSabor.ToString();
+                        }
+                    }
+                    else
+                    {
+                        valorProduto = decimal.Parse(_produto.Rows[0]["PrecoProduto"].ToString());
+                        valorSabor = decimal.Parse(sabor.Rows[0]["PrecoProduto"].ToString());
+
+                        txtPrecoUnitario.Text = Convert.ToString(RetornaMaiorValor(valorProduto, valorSabor));
+                        //if (valorProduto > valorSabor)
+                        //{
+                        //    this.txtPrecoUnitario.Text = valorProduto.ToString();
+                        //}
+                        //else
+                        //{
+                        //    this.txtPrecoUnitario.Text = valorSabor.ToString();
+                        //}
+                    }
+
+
+                }
+                // Pega o Preço unitário selecionado
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
         }
 
         private void cbxTipoPedido_SelectionChangeCommitted(object sender, EventArgs e)
@@ -4416,6 +4683,70 @@ namespace DexComanda
         {
             CalculaPorcentagemDesconto();
             //Passei aqui
+        }
+
+        private void MeiaPizzaMarcado(object sender, EventArgs e)
+        {
+
+
+
+            try
+            {
+                LimpaTamanhosSabores();
+                //string grupo = this.cbxTipoProduto.Text;
+                //this.cbxSabor.DataSource = con.SelectRegistroPorNome("@GrupoProduto", "Produto", "spObterProdutoPorGrupo", grupo).Tables["Produto"];
+                //this.cbxSabor.DisplayMember = "NomeProduto";
+                //this.cbxSabor.ValueMember = "Codigo";
+                //this.txtQuantidade.Text = "1";
+                //SemMeiaPizza();
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+          
+
+            if (cbxMeiaPizza.Checked)
+            {
+                this.cbxSabor.Enabled = true;
+                if (ProdutosPorCodigo)
+                {
+                    this.txtCodProduto2.Visible = true;
+                }
+                else
+                {
+                    this.txtCodProduto2.Visible = false;
+                    int CodPai = con.BuscaPaiGrupo(int.Parse(cbxTipoProduto.SelectedValue.ToString()));
+                    if (CodPai != 0)
+                    {
+                        this.cbxSabor.DataSource = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodPai", CodPai).Tables[0];
+                    }
+                    else
+                    {
+                        this.cbxSabor.DataSource = con.SelectRegistroPorNome("@GrupoProduto", "Produto", "spObterProdutoPorGrupo", this.cbxTipoProduto.Text).Tables["Produto"];
+                    }
+
+                    this.cbxSabor.DisplayMember = Convert.ToString("NomeProduto");
+                    this.cbxSabor.ValueMember = "Codigo";
+                }
+
+            }
+            else
+            {
+                this.cbxSabor.Enabled = false;
+                this.cbxSabor.Text = "";
+                this.txtCodProduto2.Visible = false;
+            }
+        }
+        private void cbxProdutosGrid_TextChanged(object sender, EventArgs e)
+        {
+            //MontaMenuOpcoes();
+        }
+
+        private void cbxSabor_TextChanged(object sender, EventArgs e)
+        {
+           // MontaMenuOpcoes();
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -206,7 +206,7 @@ namespace DexComanda
             return ds;
         }
         /// <summary>
-        /// 
+        /// Retornas informações dos produto filtrados
         /// </summary>
         /// <param name="iCod1"></param>
         /// <param name="iCod2"></param>
@@ -215,24 +215,27 @@ namespace DexComanda
         /// <param name="iCodOpcao"></param>
         /// <param name="iPrecoMar"></param>
         /// <returns></returns>
-        public DataSet RetornaMaioresPrecos(string iCod1, string iCod2, string iCod3,
+        public DataSet RetornaMaioresPrecos(int iCod1, int iCod2, string iCod3,
             string iCod4, string iCodOpcao, Boolean iPrecoMar = true)
         {
             string iSqlConsulta = "";
-            if (iPrecoMar)
+            
+            //Retorna o maior preço entre os produtos
+            if (!iPrecoMar)
             {
                 iSqlConsulta = "select" +
-                                    " max(PO.Preco + P.PrecoProduto) as Preco" +
+                                    " max(PO.Preco + P.PrecoProduto) as PrecoOpcao" +
                                     " from" +
                                     " Produto_Opcao PO" +
-                                    " left join Produto P on P.Codigo = PO.CodProduto" +
+                                    " left join Produto P on P.Codigo = PO.CodProduto or P.CodigoPersonalizado=PO.CodProduto" +
                                     " left join Opcao O on O.Codigo = PO.CodOpcao and O.Tipo = 1" +
                                     " where CodProduto in (@Cod1,@Cod2,@Cod3,@Cod4) and CodOpcao =@CodOpcao";
             }
+            //Retorna o preço médio entre os produtos
             else
             {
                 iSqlConsulta = "select " +
-                                     " CAST(AVG(PO.Preco + P.PrecoProduto) AS NUMERIC(10, 2)) as Preco " +
+                                     " AVG(PO.Preco) as PrecoOpcao " +
                                      " from " +
                                      " Produto_Opcao PO" +
                                      " left" +
@@ -593,13 +596,14 @@ namespace DexComanda
         {
             string lSqlConsulta = " select Op.Nome, " +
                                   " PoT.Tipo," +
-                                  " Prod.Preco," +
                                   " ISNULL((select MaximoAdicionais from Produto P where P.Codigo=Prod.CodProduto  ),0) as MaximoAdicionais," +
                                   " PoT.Nome as NomeTipo, " +
+                                  " P.PrecoProduto as PrecoProduto,  " +
                                   " Prod.CodOpcao " +
                                   " from Produto_Opcao Prod" +
                                   " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
                                   " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
+                                 " join Produto P on P.Codigo = Prod.CodProduto" +
                                   "  where Prod.CodProduto = @CodProduto" +
                                   " order by PoT.OrdenExibicao,Op.Nome";
             //" order by PoT.OrdenExibicao,Op.Nome";
@@ -617,7 +621,8 @@ namespace DexComanda
         {
             string lSqlConsulta = " select " +
                                   " Op.Nome,  PoT.Tipo," +
-                                  " Prod.Preco, " +
+                                  " Prod.Preco as Preco, " +
+                                  " P.PrecoProduto as PrecoProduto,  " +
                                  " ISNULL((select MaximoAdicionais from Produto P where P.Codigo = Prod.CodProduto  ),0) as MaximoAdicionais," +
                                  " PoT.Nome as NomeTipo,  Prod.CodOpcao" +
                                  "  from Produto_Opcao Prod join Opcao Op on Op.Codigo = Prod.CodOpcao" +
@@ -1864,15 +1869,23 @@ namespace DexComanda
         public DataSet SelectRegistroPorNome(string @iParametro, string table, string spName, string grupoProduto)
         {
 
-            command = new SqlCommand(spName, conn);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue(@iParametro, grupoProduto);
-            adapter = new SqlDataAdapter(command);
-            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+            try
+            {
+                command = new SqlCommand(spName, conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue(@iParametro, grupoProduto);
+                adapter = new SqlDataAdapter(command);
+                adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-            ds = new DataSet();
-            adapter.Fill(ds, table);
+                ds = new DataSet();
+                adapter.Fill(ds, table);
 
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+           
             return ds;
         }
         public DataSet LoginUsuario(string iLogin, string iSenha)

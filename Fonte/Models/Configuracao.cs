@@ -15,7 +15,7 @@ namespace DexComanda.Models
         public bool UsaLoginSenha { get; set; }
         public int QtdCaracteresImp { get; set; }
         public bool ControlaEntregador { get; set; }
-        public bool ProdutoPorCodigo { get; set; }
+        public string ProdutoPorCodigo { get; set; }
         public bool Usa2Telefones { get; set; }
         public bool UsaControleMesa { get; set; }
         public bool ImprimeViaEntrega { get; set; }

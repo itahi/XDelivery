@@ -400,6 +400,10 @@ namespace DexComanda
             dadosApp.url = iUrl;
             return '[' + JsonConvert.SerializeObject(dadosApp, Formatting.None) + ']';
         }
+        public static string SerializaObjeto(ConfiguracaoBuscaPorCodigo iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
         public static string SerializaObjeto(List<PrecoDiaProduto> iValores)
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
@@ -432,7 +436,28 @@ namespace DexComanda
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
         }
+        public static ConfiguracaoBuscaPorCodigo MarcaTipoConfiguracaoProduto()
+        {
+            ConfiguracaoBuscaPorCodigo confi = new ConfiguracaoBuscaPorCodigo();
+            try
+            {
+                confi = Utils.DeserializaObjetoConfig(Sessions.returnConfig.ProdutoPorCodigo);
 
+                //if (confi.PorCodigo!=true)
+                //{
+                //    return;
+                //}
+
+                //chkProdutoCodigo.Checked = confi.PorCodigo;
+                //cbxTipoCodigo.Text = confi.TipoCodigo;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return confi;
+        }
         public static List<FidelidadeDias> DeserializaObjetoFidelidade(string iValores)
         {
             if (iValores == "" || iValores == null)
@@ -440,6 +465,14 @@ namespace DexComanda
                 return new List<FidelidadeDias>();
             }
             return JsonConvert.DeserializeObject<List<FidelidadeDias>>(iValores);
+        }
+        public static ConfiguracaoBuscaPorCodigo DeserializaObjetoConfig(string iValores)
+        {
+            if (iValores == "")
+            {
+                return new ConfiguracaoBuscaPorCodigo ();
+            }
+            return JsonConvert.DeserializeObject<ConfiguracaoBuscaPorCodigo>(iValores);
         }
         public static List<PrecoDiaProduto> DeserializaObjeto(string iValores)
         {
@@ -878,11 +911,12 @@ namespace DexComanda
                     printersettings.PrinterName = iNomeImpressora;
                     printersettings.Copies = 1;
                     printersettings.Collate = false;
+                    string cam = Directory.GetCurrentDirectory() + @"\RelDelivery.rpt";
                     report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
                     crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                     crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                    crConnectionInfo.UserID = "dex";
-                    crConnectionInfo.Password = "1234";
+                    crConnectionInfo.UserID = "sa";
+                    crConnectionInfo.Password = "1001"; 
 
                     CrTables = report.Database.Tables;
                     foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)

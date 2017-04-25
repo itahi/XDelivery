@@ -31,6 +31,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.prgBarMesa = new System.Windows.Forms.ProgressBar();
+            this.chkMesas = new System.Windows.Forms.CheckBox();
             this.prgBarHorarios = new System.Windows.Forms.ProgressBar();
             this.chkHorarios = new System.Windows.Forms.CheckBox();
             this.chkLink = new System.Windows.Forms.CheckBox();
@@ -66,8 +68,6 @@
             this.lblReturn = new System.Windows.Forms.Label();
             this.chkDesconto = new System.Windows.Forms.CheckBox();
             this.txtPercentualDesconto = new System.Windows.Forms.TextBox();
-            this.prgBarMesa = new System.Windows.Forms.ProgressBar();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -92,7 +92,7 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.prgBarMesa);
-            this.tabPage1.Controls.Add(this.checkBox1);
+            this.tabPage1.Controls.Add(this.chkMesas);
             this.tabPage1.Controls.Add(this.prgBarHorarios);
             this.tabPage1.Controls.Add(this.chkHorarios);
             this.tabPage1.Controls.Add(this.chkLink);
@@ -119,6 +119,23 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Cadastros";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // prgBarMesa
+            // 
+            this.prgBarMesa.Location = new System.Drawing.Point(128, 172);
+            this.prgBarMesa.Name = "prgBarMesa";
+            this.prgBarMesa.Size = new System.Drawing.Size(114, 18);
+            this.prgBarMesa.TabIndex = 27;
+            // 
+            // chkMesas
+            // 
+            this.chkMesas.AutoSize = true;
+            this.chkMesas.Location = new System.Drawing.Point(5, 173);
+            this.chkMesas.Name = "chkMesas";
+            this.chkMesas.Size = new System.Drawing.Size(57, 17);
+            this.chkMesas.TabIndex = 26;
+            this.chkMesas.Text = "Mesas";
+            this.chkMesas.UseVisualStyleBackColor = true;
             // 
             // prgBarHorarios
             // 
@@ -301,7 +318,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(270, 274);
+            this.tabPage2.Size = new System.Drawing.Size(270, 285);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Descontos - Promo";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -461,23 +478,6 @@
             this.txtPercentualDesconto.Size = new System.Drawing.Size(45, 20);
             this.txtPercentualDesconto.TabIndex = 9;
             // 
-            // prgBarMesa
-            // 
-            this.prgBarMesa.Location = new System.Drawing.Point(128, 172);
-            this.prgBarMesa.Name = "prgBarMesa";
-            this.prgBarMesa.Size = new System.Drawing.Size(114, 18);
-            this.prgBarMesa.TabIndex = 27;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(5, 173);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(57, 17);
-            this.checkBox1.TabIndex = 26;
-            this.checkBox1.Text = "Mesas";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // frmSincronizacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -540,6 +540,6 @@
         private System.Windows.Forms.CheckBox chkHorarios;
         private System.Windows.Forms.Label lblSincronismo;
         private System.Windows.Forms.ProgressBar prgBarMesa;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkMesas;
     }
 }

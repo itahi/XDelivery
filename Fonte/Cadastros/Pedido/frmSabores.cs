@@ -164,7 +164,7 @@ namespace DexComanda.Cadastros.Pedido
                 for (int i = 0; i < dsOpcoesProduto.Tables[0].Rows.Count; i++)
                 {
                     string iCodOpcao = dsOpcoesProduto.Tables[0].Rows[i].ItemArray.GetValue(5).ToString();
-                    DataSet dsMaiorPreco = con.RetornaMaioresPrecos(iCod1, iCod2, iCod3, iCod4, iCodOpcao,!Sessions.returnConfig.CobrancaProporcionalSN);
+                    DataSet dsMaiorPreco = con.RetornaMaioresPrecos(int.Parse(iCod1), int.Parse(iCod2), iCod3, iCod4, iCodOpcao,!Sessions.returnConfig.CobrancaProporcionalSN);
                     string strPreco =dsMaiorPreco.Tables[0].Rows[0].ItemArray.GetValue(0).ToString();
                     strNome = dsOpcoesProduto.Tables[0].Rows[i].ItemArray.GetValue(0).ToString();
 
