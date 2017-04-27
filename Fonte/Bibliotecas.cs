@@ -26,6 +26,7 @@ namespace DexComanda
         public const string cEsphiras = "21128650000197";
         public const string cAcaiVitoria = "00830689000181";
         public const string cGallegao = "19642556000100";
+        public const string cxSistemas = "1129188000119";
         public const string cClaudinei = "07977973000124";
         public const string cTopsAcai = "";
         public const string cBuris = "21207218000191";
@@ -39,6 +40,7 @@ namespace DexComanda
         public const string cSolicitarPermissao = "Seu usuário não tem permissão para Executar essa ação, deseja solicitar Autorização?";
         public const string cUsuarioSemPermissao = "Seu usuário não tem permissão para Executar essa ação";
         public const string cSemRegistrosASincronizar = "Não há nada a sincronizar na tabela de ";
+        public const string cSemConexao = "Sem conexão com banco de dados ";
         public const string cCaixaAbertoTurno = "Caixa já esta aberto no turno selecionado";
         public const string cCaixaFechado = "Este Caixa já está fechado e não pode ter mais lançamentos";
         public const string cFiltroRetornaVazio = "Não há registros com filtro escolhido";

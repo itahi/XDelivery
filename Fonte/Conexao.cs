@@ -235,7 +235,7 @@ namespace DexComanda
             else
             {
                 iSqlConsulta = "select " +
-                                     " AVG(PO.Preco) as PrecoOpcao " +
+                                     " AVG(PO.Preco + P.PrecoProduto) as PrecoOpcao " +
                                      " from " +
                                      " Produto_Opcao PO" +
                                      " left" +
@@ -599,6 +599,7 @@ namespace DexComanda
                                   " ISNULL((select MaximoAdicionais from Produto P where P.Codigo=Prod.CodProduto  ),0) as MaximoAdicionais," +
                                   " PoT.Nome as NomeTipo, " +
                                   " P.PrecoProduto as PrecoProduto,  " +
+                                  " Prod.Preco as PrecoSoOpcao,  " +
                                   " Prod.CodOpcao " +
                                   " from Produto_Opcao Prod" +
                                   " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
@@ -624,7 +625,9 @@ namespace DexComanda
                                   " Prod.Preco as Preco, " +
                                   " P.PrecoProduto as PrecoProduto,  " +
                                  " ISNULL((select MaximoAdicionais from Produto P where P.Codigo = Prod.CodProduto  ),0) as MaximoAdicionais," +
-                                 " PoT.Nome as NomeTipo,  Prod.CodOpcao" +
+                                 " PoT.Nome as NomeTipo, "+
+                                  " Prod.CodOpcao, " +
+                                 " Prod.Preco as PrecoSoOpcao  " +
                                  "  from Produto_Opcao Prod join Opcao Op on Op.Codigo = Prod.CodOpcao" +
                                  "  join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
                                   " join Produto P on P.Codigo = Prod.CodProduto" +
@@ -1303,6 +1306,11 @@ namespace DexComanda
 
         public void Insert(string spName, Object obj)
         {
+            if (statusConexao != ConnectionState.Open)
+            {
+                MessageBox.Show("Você precisa estar conectado ao banco de dados para continuar");
+                return;
+            }
             SqlParameter codPedido = null;
             SqlParameter CodPessoa = null;
             SqlParameter CodProduto = null;
@@ -1517,6 +1525,11 @@ namespace DexComanda
         public void Update(string spName, Object obj)
         {
 
+            if (statusConexao != ConnectionState.Open)
+            {
+                MessageBox.Show("Você precisa estar conectado ao banco de dados para continuar");
+                return;
+            }
             Type ObjectType = obj.GetType();
             PropertyInfo[] properties = ObjectType.GetProperties();
             command = new SqlCommand(spName, conn);
@@ -1642,6 +1655,11 @@ namespace DexComanda
         {
             try
             {
+                if (statusConexao != ConnectionState.Open)
+                {
+                    MessageBox.Show("Você precisa estar conectado ao banco de dados para continuar");
+                    return;
+                }
                 Type ObjectType = obj.GetType();
                 PropertyInfo[] properties = ObjectType.GetProperties();
 
@@ -1973,7 +1991,11 @@ namespace DexComanda
 
         public DataSet SelectEnderecoPorCep(string table, string spName, int cep)
         {
-
+            if (statusConexao!=ConnectionState.Open)
+            {
+                MessageBox.Show(Bibliotecas.cSemConexao);
+                return new DataSet();
+            }
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Cep", cep);
@@ -2051,7 +2073,7 @@ namespace DexComanda
                     command.Parameters.AddWithValue("@Codigo", codigo);
                     //command.Parameters.AddWithValue("@CodGrupo", iCodigo2);
                 }
-                else if (spName == "spObterItemsNaoImpressoPorGrupo")
+                else if (spName == "spObterItemsNaoImpressoPorGrupo" || spName == "spObterItemsNaoImpressoPorCozinhaCodPersonalizado")
                 {
                     command.Parameters.AddWithValue("@Codigo", codigo);
                     command.Parameters.AddWithValue("@CodGrupo", iCodigo2);

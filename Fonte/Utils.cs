@@ -69,6 +69,7 @@ namespace DexComanda
         public static Boolean bMult;
         public static int intCodUserAutorizador;
         private static string strProxImpressora = "";
+      //  private static Boolean bCodigoPersonalizado =
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
         public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1, Boolean iAlterarUserLogado = false, string iTurno = "Dia")
         {
@@ -224,6 +225,7 @@ namespace DexComanda
         public static DataSet ItensSelect(int iCodPedido, string strNomeImpressora)
         {
             string iSqlWhere;
+            string iSqlJoin = "left join Produto P on P.Codigo = It.CodProduto ";
             string iTipoAgrupamento = Sessions.returnConfig.TipoImpressao;
             if (iTipoAgrupamento == "Por Impressora")
             {
@@ -233,13 +235,18 @@ namespace DexComanda
             {
                 iSqlWhere = " where  PE.Codigo=" + iCodPedido + " and ImprimeCozinhaSN = 1 and ImpressoSN=0 ";
             }
+
+            if (Utils.MarcaTipoConfiguracaoProduto().TipoCodigo == "Personalizado")
+            {
+                iSqlJoin = "left join Produto P on P.CodigoPersonalizado = It.CodProduto ";
+            }
             string iSql = " select IT.CodProduto ,PE.*,  " +
                            " CodGrupo, " +
                            " NomeImpressora, " +
                            " IT.CodProduto " +
                            " from ItemsPedido IT " +
                            " left join Pedido PE ON PE.Codigo = IT.CodPedido " +
-                           " left join Produto P on P.Codigo = It.CodProduto" +
+                           iSqlJoin+
                            " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo ";
 
             iSql = iSql + iSqlWhere;
@@ -248,25 +255,39 @@ namespace DexComanda
         }
         public static DataSet CarregaItens(int intCodPedido)
         {
-            DataSet ds = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterNomeImpressoraPorCodigoPedido", intCodPedido);
-            string strNomeImpressora = "";
-            int intCodGrupo;
-            strNomeImpressora = ds.Tables[0].Rows[0].Field<string>("NomeImpressora");
-            intCodGrupo = ds.Tables[0].Rows[0].Field<int>("Codigo");
-            if (Sessions.returnConfig.TipoImpressao == "Por Cozinha/Grupo")
+            DataSet ds;
+            if (Utils.MarcaTipoConfiguracaoProduto().TipoCodigo!="Personalizado" && !Utils.MarcaTipoConfiguracaoProduto().PorCodigo)
             {
-                dsItemsNaoImpresso = ItensSelect(intCodPedido, intCodGrupo, strNomeImpressora);
+                ds = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterNomeImpressoraPorCodigoPedido", intCodPedido);
             }
-            else if (Sessions.returnConfig.TipoImpressao == "Por Impressora")
+            else
             {
-                dsItemsNaoImpresso = ItensSelect(intCodPedido, strNomeImpressora);
+                ds = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterNomeImpressoraPorCodigoPedidoCodPersonalizado", intCodPedido);
             }
-            return dsItemsNaoImpresso;
+
+            if (ds.Tables[0].Rows.Count==0)
+            {
+                return new DataSet();
+            }
+            //string strNomeImpressora = "";
+            //int intCodGrupo;
+            //strNomeImpressora = ds.Tables[0].Rows[0].Field<string>("NomeImpressora");
+            //intCodGrupo = ds.Tables[0].Rows[0].Field<int>("Codigo");
+            //if (Sessions.returnConfig.TipoImpressao == "Por Cozinha/Grupo")
+            //{
+            //    dsItemsNaoImpresso = ItensSelect(intCodPedido, intCodGrupo, strNomeImpressora);
+            //}
+            //else if (Sessions.returnConfig.TipoImpressao == "Por Impressora")
+            //{
+            //    dsItemsNaoImpresso = ItensSelect(intCodPedido, strNomeImpressora);
+            //}
+            return ds;
         }
         public static DataSet ItensSelect(int iCodPedido, int intCodgrupo = 0,
             string iNomeImpressora = "")
         {
             string iSqlWhere;
+            string iSqlJoin = "left join Produto P on P.Codigo = It.CodProduto ";
             string iTipoAgrupamento = Sessions.returnConfig.TipoImpressao;
             if (iTipoAgrupamento == "Por Impressora")
             {
@@ -280,13 +301,18 @@ namespace DexComanda
             {
                 iSqlWhere = " where  PE.Codigo=" + iCodPedido + " and ImprimeCozinhaSN = 1 ";
             }
+            if (Utils.MarcaTipoConfiguracaoProduto().TipoCodigo == "Personalizado")
+            {
+                iSqlJoin = "left join Produto P on P.CodigoPersonalizado = It.CodProduto ";
+            }
             string iSql = " select IT.CodProduto ,PE.*,  " +
                            " CodGrupo, " +
                            " NomeImpressora, " +
-                           " IT.CodProduto " +
+                           " IT.CodProduto,  " +
+                           " IT.CodPedido " +
                            " from ItemsPedido IT " +
                            " left join Pedido PE ON PE.Codigo = IT.CodPedido " +
-                           " left join Produto P on P.Codigo = It.CodProduto" +
+                           iSqlJoin + 
                            " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo ";
 
             iSql = iSql + iSqlWhere;
@@ -401,6 +427,10 @@ namespace DexComanda
             return '[' + JsonConvert.SerializeObject(dadosApp, Formatting.None) + ']';
         }
         public static string SerializaObjeto(ConfiguracaoBuscaPorCodigo iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
+        public static string SerializaObjeto(OpcaoDia iValores)
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
         }
@@ -911,8 +941,8 @@ namespace DexComanda
                     printersettings.PrinterName = iNomeImpressora;
                     printersettings.Copies = 1;
                     printersettings.Collate = false;
-                    string cam = Directory.GetCurrentDirectory() + @"\RelDelivery.rpt";
-                    report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
+                   // string cam = Directory.GetCurrentDirectory() + @"\RelDelivery.rpt";
+                  //  report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
                     crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                     crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
                     crConnectionInfo.UserID = "sa";
@@ -1440,6 +1470,53 @@ namespace DexComanda
                 printersettings.Collate = false;
                 printersettings.PrinterName = iNomeImpressora;
                 report.Load(Directory.GetCurrentDirectory() + @"\RelDeliveryCozinhaGrupoCozinha.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "dex";
+                crConnectionInfo.Password = "1234";
+
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+
+                report.SetParameterValue("@Codigo", iCodPedido);
+                report.SetParameterValue("@CodGrupo", iCodGrupo);
+
+                if (iNomeImpressora != "")
+                {
+                    report.PrintOptions.PrinterName = iNomeImpressora;
+                    report.PrintToPrinter(printersettings, new PageSettings(), false);
+                }
+                else
+                {
+                    report.PrintToPrinter(1, false, 0, 0);
+                }
+
+            }
+            finally
+            {
+                report.Dispose();
+            }
+        }
+        public static void ImpressaoDelivery_CozinhaPorGrupoCodPersonalizado(int iCodPedido, string iNomeImpressora, int iCodGrupo)
+        {
+            RelDeliveryCozinhaGrupoCozinhaCodPersonalizado report;
+            crtableLogoninfos = new TableLogOnInfos();
+            crtableLogoninfo = new TableLogOnInfo();
+            crConnectionInfo = new ConnectionInfo();
+            report = new RelDeliveryCozinhaGrupoCozinhaCodPersonalizado();
+            try
+            {
+                Tables CrTables;
+                PrinterSettings printersettings = new PrinterSettings();
+                printersettings.Copies = 1;
+                printersettings.Collate = false;
+                printersettings.PrinterName = iNomeImpressora;
+                report.Load(Directory.GetCurrentDirectory() + @"\RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
                 crConnectionInfo.UserID = "dex";

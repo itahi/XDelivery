@@ -520,6 +520,10 @@ namespace DexComanda
         }
         private void frmConfiguracoes_Load(object sender, EventArgs e)
         {
+            if (con.statusConexao != ConnectionState.Open)
+            {
+                return;
+            }
             MarcaConfiguracaoExibicao();
             if (Sessions.returnConfig != null)
             {
@@ -565,9 +569,10 @@ namespace DexComanda
                 this.btnSalvar.Click += AlterarConfig;
 
             }
+
             //  Exibir DataLiberação Sistema
-            var servidorLocal = con.SelectAll("Empresa", "spObterEmpresa");
-            if (servidorLocal != null)
+            DataSet servidorLocal = con.SelectAll("Empresa", "spObterEmpresa");
+            if (servidorLocal.Tables[0].Rows.Count>0)
             {
                 DataRow Linha = servidorLocal.Tables["Empresa"].Rows[0];
                 txtNomeEmpresa.Text = Linha.ItemArray.GetValue(1).ToString();
@@ -870,7 +875,7 @@ namespace DexComanda
             string strConfigPedido = "Pd.Codigo,";
             if (chkNomeCliente.Checked)
             {
-                strConfigPedido = strConfigPedido + "(select Nome from Pessoa P where P.Codigo = Pd.CodPessoa) as 'Nome Cliente '";
+                strConfigPedido = strConfigPedido + "(select Nome from Pessoa P where P.Codigo = Pd.CodPessoa) as 'Nome Cliente'";
             }
             if (chkFinalizado.Checked)
             {

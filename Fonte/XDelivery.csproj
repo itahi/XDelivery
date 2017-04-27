@@ -600,6 +600,12 @@
       <DependentUpon>RelCozinhaPorCozinhaGrupo.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Delivery\RelDeliveryCozinhaPorImpressora.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1257,6 +1263,10 @@
     <EmbeddedResource Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinha.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDeliveryCozinhaGrupoCozinha.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelDeliveryCozinhaPorImpressora.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

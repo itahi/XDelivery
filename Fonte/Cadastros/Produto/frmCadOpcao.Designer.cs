@@ -178,6 +178,8 @@
             // chkDomingo
             // 
             this.chkDomingo.AutoSize = true;
+            this.chkDomingo.Checked = true;
+            this.chkDomingo.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkDomingo.Location = new System.Drawing.Point(111, 38);
             this.chkDomingo.Name = "chkDomingo";
             this.chkDomingo.Size = new System.Drawing.Size(51, 17);
@@ -189,6 +191,8 @@
             // ChkSexta
             // 
             this.ChkSexta.AutoSize = true;
+            this.ChkSexta.Checked = true;
+            this.ChkSexta.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ChkSexta.Location = new System.Drawing.Point(6, 38);
             this.ChkSexta.Name = "ChkSexta";
             this.ChkSexta.Size = new System.Drawing.Size(44, 17);
@@ -200,6 +204,8 @@
             // chkQuinta
             // 
             this.chkQuinta.AutoSize = true;
+            this.chkQuinta.Checked = true;
+            this.chkQuinta.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkQuinta.Location = new System.Drawing.Point(170, 13);
             this.chkQuinta.Name = "chkQuinta";
             this.chkQuinta.Size = new System.Drawing.Size(51, 17);
@@ -211,6 +217,8 @@
             // ChkSabado
             // 
             this.ChkSabado.AutoSize = true;
+            this.ChkSabado.Checked = true;
+            this.ChkSabado.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ChkSabado.Location = new System.Drawing.Point(60, 38);
             this.ChkSabado.Name = "ChkSabado";
             this.ChkSabado.Size = new System.Drawing.Size(48, 17);
@@ -222,6 +230,8 @@
             // ChkQuarta
             // 
             this.ChkQuarta.AutoSize = true;
+            this.ChkQuarta.Checked = true;
+            this.ChkQuarta.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ChkQuarta.Location = new System.Drawing.Point(111, 13);
             this.ChkQuarta.Name = "ChkQuarta";
             this.ChkQuarta.Size = new System.Drawing.Size(52, 17);
@@ -233,6 +243,8 @@
             // chkTerca
             // 
             this.chkTerca.AutoSize = true;
+            this.chkTerca.Checked = true;
+            this.chkTerca.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkTerca.Location = new System.Drawing.Point(60, 13);
             this.chkTerca.Name = "chkTerca";
             this.chkTerca.Size = new System.Drawing.Size(45, 17);
@@ -244,6 +256,8 @@
             // chkSegunda
             // 
             this.chkSegunda.AutoSize = true;
+            this.chkSegunda.Checked = true;
+            this.chkSegunda.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkSegunda.Location = new System.Drawing.Point(6, 15);
             this.chkSegunda.Name = "chkSegunda";
             this.chkSegunda.Size = new System.Drawing.Size(48, 17);

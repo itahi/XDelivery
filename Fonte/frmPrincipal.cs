@@ -828,7 +828,7 @@ namespace DexComanda
                     GravaMOvimentoCaixa(icodFormaPagamento, dblTotalPedido, codigo);
                     InsereFormasPagamento(codigo, icodFormaPagamento, dblTotalPedido);
                     Utils.ControlaEventos("BaixaPed", this.Name);
-                    Utils.ControleFidelidade(codigo, intCodPessoa, dblTotalPedido);
+                  //  Utils.ControleFidelidade(codigo, intCodPessoa, dblTotalPedido);
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo, 1);
 
                 }

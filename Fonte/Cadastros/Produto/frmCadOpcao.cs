@@ -41,10 +41,7 @@ namespace DexComanda.Cadastros.Produto
                         {
                             if (object.ReferenceEquals(obj.GetType(), typeof(System.Windows.Forms.CheckBox)))
                             {
-                                if (item.Dia == ((System.Windows.Forms.CheckBox)obj).Tag.ToString())
-                                {
-                                    ((System.Windows.Forms.CheckBox)obj).Checked = true;
-                                }
+                                ((System.Windows.Forms.CheckBox)obj).Checked = item.AtivoSN == 1;
                             }
 
                         }
@@ -68,20 +65,14 @@ namespace DexComanda.Cadastros.Produto
                 //Loop through all controls 
                 if (object.ReferenceEquals(TEXT.GetType(), typeof(System.Windows.Forms.CheckBox)))
                 {
-                    //Check to see if it's a textbox 
-                    if (((System.Windows.Forms.CheckBox)TEXT).Checked)
+
+                    var diasDisponiel = new Models.Produto.OpcaoDia()
                     {
-                        var precosDia = new Models.Produto.OpcaoDia()
-                        {
-                            Dia = (((System.Windows.Forms.CheckBox)TEXT).Tag.ToString()),
-                        };
-
-                        listDias.Add(precosDia);
-                    }
-
-                    //If it is then set the text to String.Empty (empty textbox) 
+                        Dia = (((System.Windows.Forms.CheckBox)TEXT).Tag.ToString().Substring(0, 3)),
+                        AtivoSN = Convert.ToInt16((((System.Windows.Forms.CheckBox)TEXT).Checked)),
+                    };
+                    listDias.Add(diasDisponiel);
                 }
-
             }
 
             return listDias;
@@ -104,8 +95,8 @@ namespace DexComanda.Cadastros.Produto
 
                     };
                     con.Insert("spAdicionarOpcao", opcao);
-                    Utils.LimpaForm(this);
-                    LimpaDias();
+                    // Utils.LimpaForm(this);
+                    //  LimpaDias();
                     ListaOpcao();
                 }
                 else
@@ -121,22 +112,22 @@ namespace DexComanda.Cadastros.Produto
             }
         }
 
-        private void ListaOpcao(int iTipoOpcao=0)
+        private void ListaOpcao(int iTipoOpcao = 0)
         {
-            if (iTipoOpcao==0)
+            if (iTipoOpcao == 0)
             {
-                Utils.PopularGrid("Opcao", OpcaoGridView); 
+                Utils.PopularGrid("Opcao", OpcaoGridView);
             }
             else
             {
                 Utils.PopularGrid_SP("Opcao", OpcaoGridView, "spObterOpcaoPorTipo", iTipoOpcao);
             }
-            
+
         }
 
         private void frmCadOpcao_Load(object sender, EventArgs e)
         {
-           Utils.MontaCombox(cbxTipo, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
+            Utils.MontaCombox(cbxTipo, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
 
             ListaOpcao();
         }
@@ -166,7 +157,7 @@ namespace DexComanda.Cadastros.Produto
                     MessageBox.Show("Não foi possivel deletar o registro pois o mesmo está sendo usando em algum produto", "xSistemas ");
                 }
             }
-            
+
 
         }
 
@@ -189,7 +180,7 @@ namespace DexComanda.Cadastros.Produto
         {
             try
             {
-               
+
                 codigoAlterarDeletar = int.Parse(this.OpcaoGridView.Rows[rowIndex].Cells[0].Value.ToString());
 
                 //DataSet ds = con.SelectRegistroPorCodigo("Opcao", "spObterOpcaoPorCodigo", codigoAlterarDeletar);
@@ -212,7 +203,7 @@ namespace DexComanda.Cadastros.Produto
             {
                 MessageBox.Show(erro.Message);
             }
-           
+
         }
         private void Cancelar(object sender, EventArgs e)
         {
@@ -224,7 +215,7 @@ namespace DexComanda.Cadastros.Produto
             }
             this.btnAdicionar.Text = "Adicionar";
             this.btnAdicionar.Click += new System.EventHandler(this.CadastraOpcao);
-         
+
             this.btnEditar.Text = "Editar";
             this.btnEditar.Click += new System.EventHandler(this.EditarOpcao);
             this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
@@ -255,7 +246,7 @@ namespace DexComanda.Cadastros.Produto
                 this.btnEditar.Text = "Editar";
                 this.btnEditar.Click += new System.EventHandler(this.EditarOpcao);
                 this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
-              
+
                 ListaOpcao(int.Parse(opcao.Tipo));
 
             }

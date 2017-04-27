@@ -66,6 +66,7 @@ namespace DexComanda
         private int QtdViasBalcao = int.Parse(Sessions.returnConfig.ViasBalcao);
         private int QtViasEntrega = int.Parse(Sessions.returnConfig.ViasEntrega);
         private bool ProdutosPorCodigo = Utils.MarcaTipoConfiguracaoProduto().PorCodigo;
+        private string TipoCodigo = Utils.MarcaTipoConfiguracaoProduto().TipoCodigo;
         private decimal TaxaEntrega;
         private bool PedidoRepetio;
         private string TrocoPagar;
@@ -673,7 +674,7 @@ namespace DexComanda
             DataSet dsOpcoes = new DataSet();
             try
             {
-                decimal dPrecoProduto;
+                decimal dPrecoProduto,dPrecoSoOpcao;
                 if (ProdutosPorCodigo)
                 {
                     if (txtCodProduto1.Text!="")
@@ -739,6 +740,7 @@ namespace DexComanda
                         lPrecoOpcao = dsMaiorPreco.Tables[0].Rows[0].Field<Decimal>("PrecoOpcao");
                         dPrecoProduto = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProduto");
                         gMaximoOpcaoProduto = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<int>("MaximoAdicionais");
+                        dPrecoSoOpcao = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoSoOpcao");
                         lnome = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();//.Substring(1, 10);
                         lTipo = int.Parse(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo"));
                         if (lTipo == 1)
@@ -844,7 +846,7 @@ namespace DexComanda
                         {
                             //  NumericUpDown newNumeric = new NumericUpDown();
                             //newNumeric.Tag = lPreco;
-                            chkListAdicionais.Items.Add(lnome + "(+" + lPrecoOpcao + ")", false);
+                            chkListAdicionais.Items.Add(lnome + "(+" + dPrecoSoOpcao + ")", false);
                             //  listView1.Items.Add(newNumeric, 0)
                             //while (lTipo==2)
                             //{
@@ -1921,7 +1923,9 @@ namespace DexComanda
                     {
                         iCodigo = codPedido;
                     }
-                    if (Sessions.returnEmpresa.CNPJ== Bibliotecas.cBigPizza|| Sessions.returnEmpresa.CNPJ==Bibliotecas.cClaudinei|| Sessions.returnEmpresa.CNPJ== Bibliotecas.cComamarella|| Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras  || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria
+                    if (Sessions.returnEmpresa.CNPJ== Bibliotecas.cBigPizza|| Sessions.returnEmpresa.CNPJ==Bibliotecas.cClaudinei|| 
+                        Sessions.returnEmpresa.CNPJ== Bibliotecas.cComamarella|| Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras  
+                        || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria || Sessions.returnEmpresa.CNPJ==Bibliotecas.cxSistemas
                         || Sessions.returnEmpresa.CNPJ == Bibliotecas.cTheBest || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGallegao)
                     {
                         ImpressaoPorCozinha(iCodigo);
@@ -1949,21 +1953,49 @@ namespace DexComanda
         {
             try
             {
-                DataSet itemsPedido, dsItemsNaoImpresso;
+                DataSet itemsPedido, dsItemsNaoImpresso,dsItems;
+                DataSet dsI = new DataSet(); 
                 dsItemsNaoImpresso = Utils.CarregaItens(iCodPedido);
-                for (int i = 0; i < dsItemsNaoImpresso.Tables[0].Rows.Count; i++)
+
+                if (dsItemsNaoImpresso.Tables.Count==0)
                 {
-                    int CodPedido = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(1).ToString());
-                    int CodGrupo = int.Parse(dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(23).ToString());
-                    string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].ItemArray.GetValue(24).ToString();
+                    return;
+                }
+                for (int i = 0; i < dsItemsNaoImpresso.Tables["ItemsPedido"].Rows.Count; i++) 
+                {
+                    int CodGrupo = dsItemsNaoImpresso.Tables[0].Rows[i].Field<int>("CodGrupo");
+                    string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].Field<string>("NomeImpressora");
+
+                    //if (Sessions.returnConfig.TipoImpressao == "Por Cozinha/Grupo")
+                    //{
+                    //     Utils.ItensSelect(iCodPedido, CodGrupo, iNomeImpressora);
+                    //}
+                    //else if (Sessions.returnConfig.TipoImpressao == "Por Impressora")
+                    //{
+                    //    Utils.ItensSelect(iCodPedido, iNomeImpressora);
+                    //}
+
                     if (Sessions.returnConfig.TipoImpressao == "Por Cozinha/Grupo")
                     {
-                        itemsPedido =  con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorGrupo", CodPedido, "", CodGrupo);
-                        if (itemsPedido.Tables[0].Rows.Count == 0)
+                        if (!ProdutosPorCodigo && TipoCodigo!= "Personalizado")
                         {
-                            return;
+                            itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorGrupo", iCodPedido, "", CodGrupo);
+                            if (itemsPedido.Tables[0].Rows.Count>0)
+                            {
+                                Utils.ImpressaoDelivery_CozinhaPorGrupo(iCodPedido, iNomeImpressora, CodGrupo);
+                            }
+                           
                         }
-                        Utils.ImpressaoDelivery_CozinhaPorGrupo(CodPedido, iNomeImpressora, CodGrupo);
+                        else
+                        {
+                            itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCozinhaCodPersonalizado", iCodPedido, "", CodGrupo);
+                            if (itemsPedido.Tables[0].Rows.Count > 0)
+                            {
+                                Utils.ImpressaoDelivery_CozinhaPorGrupoCodPersonalizado(iCodPedido, iNomeImpressora, CodGrupo);
+                            }
+                           
+                        }
+                        
                     }
                     else
                     {
@@ -1974,8 +2006,8 @@ namespace DexComanda
                         }
                         Utils.ImpressaoDeliveryCoziha_SeparadoPorImpressora(iCodPedido, iNomeImpressora);
                     }
-
-                    for (int intfor = 0; intfor < itemsPedido.Tables[0].Rows.Count; intfor++)
+                    //
+                    for (int intfor = 0; intfor < itemsPedido.Tables["ItemsPedido"].Rows.Count; intfor++)
                     {
                         AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
                         Atualiza.CodPedido = iCodPedido;
@@ -1983,24 +2015,28 @@ namespace DexComanda
                         Atualiza.ImpressoSN = true;
                         con.Update("spInformaItemImpresso", Atualiza);
                     }
-                    if (con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", iCodPedido).Tables[0].Rows.Count > 0)
-                    {
-                        ImpressaoPorCozinha(iCodPedido);
 
-                    }
-                    else
-                    {
-                         return;
-                    }
-
-                    // break;
-
-                    //1
-                   // ImpressaoPorCozinha(iCodPedido);
+                    //if (Utils.MarcaTipoConfiguracaoProduto().TipoCodigo != "Personalizado")
+                    //{
+                    //    dsI = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", intCodigoPedido);
+                    //}
+                    //else
+                    //{
+                    //    dsI = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigoCodPersonalizado", intCodigoPedido);
+                    //}
+                    // Aqui deveria sair e ir embora , só que volta do nada
+                
+                    //if (dsI.Tables["ItemsPedido"].Rows.Count > 0) {
+                    //    ImpressaoPorCozinha(intCodigoPedido);
+                    //}
+                    //else
+                    //{
+                    //   // dsItemsNaoImpresso = Utils.CarregaItens(999999999);
+                    //}
 
                 }
-
-
+             
+         
             }
             catch (Exception erro)
             {
@@ -2362,6 +2398,7 @@ namespace DexComanda
             DataTable produto;
             if (e.KeyCode == Keys.Enter)
             {
+                MontaMenuOpcoes();
                 if (txtCodProduto1.Text != "")
                 {
                     if (chkCodPersonalizado.Checked)
@@ -2438,7 +2475,7 @@ namespace DexComanda
             {
                 if (txtCodProduto2.Text != "")
                 {
-
+                    MontaMenuOpcoes();
                     if (chkCodPersonalizado.Checked)
                     {
                         intCodInterno = int.Parse(txtCodProduto2.Text);
