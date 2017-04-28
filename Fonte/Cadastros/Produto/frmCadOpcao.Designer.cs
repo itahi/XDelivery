@@ -45,6 +45,7 @@
             this.ChkQuarta = new System.Windows.Forms.CheckBox();
             this.chkTerca = new System.Windows.Forms.CheckBox();
             this.chkSegunda = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.OpcaoGridView)).BeginInit();
             this.grpDiasDisponivel.SuspendLayout();
             this.SuspendLayout();
@@ -73,7 +74,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(7, 24);
+            this.label1.Location = new System.Drawing.Point(7, 8);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(85, 13);
             this.label1.TabIndex = 15;
@@ -94,7 +95,7 @@
             this.txtNome.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNome.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNome.Location = new System.Drawing.Point(4, 42);
+            this.txtNome.Location = new System.Drawing.Point(4, 26);
             this.txtNome.MaxLength = 30;
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(284, 26);
@@ -140,7 +141,7 @@
             this.chkAtivoSN.AutoSize = true;
             this.chkAtivoSN.Checked = true;
             this.chkAtivoSN.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAtivoSN.Location = new System.Drawing.Point(139, 18);
+            this.chkAtivoSN.Location = new System.Drawing.Point(139, 2);
             this.chkAtivoSN.Name = "chkAtivoSN";
             this.chkAtivoSN.Size = new System.Drawing.Size(65, 17);
             this.chkAtivoSN.TabIndex = 67;
@@ -152,7 +153,7 @@
             this.chkOnlineSN.AutoSize = true;
             this.chkOnlineSN.Checked = true;
             this.chkOnlineSN.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkOnlineSN.Location = new System.Drawing.Point(210, 19);
+            this.chkOnlineSN.Location = new System.Drawing.Point(210, 3);
             this.chkOnlineSN.Name = "chkOnlineSN";
             this.chkOnlineSN.Size = new System.Drawing.Size(71, 17);
             this.chkOnlineSN.TabIndex = 66;
@@ -266,11 +267,26 @@
             this.chkSegunda.Text = "Seg.";
             this.chkSegunda.UseVisualStyleBackColor = true;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(90, 58);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(131, 17);
+            this.checkBox1.TabIndex = 26;
+            this.checkBox1.Tag = "Thursday";
+            this.checkBox1.Text = "Marca todos dias SN?";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckStateChanged += new System.EventHandler(this.checkBox1_CheckStateChanged);
+            // 
             // frmCadOpcao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(295, 478);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.grpDiasDisponivel);
             this.Controls.Add(this.chkAtivoSN);
             this.Controls.Add(this.chkOnlineSN);
@@ -312,5 +328,6 @@
         private System.Windows.Forms.CheckBox ChkQuarta;
         private System.Windows.Forms.CheckBox chkTerca;
         private System.Windows.Forms.CheckBox chkSegunda;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

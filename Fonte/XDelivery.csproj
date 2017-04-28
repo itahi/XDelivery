@@ -600,6 +600,12 @@
       <DependentUpon>RelCozinhaPorCozinhaGrupo.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Delivery\RelDelivery.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelDelivery.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -713,12 +719,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelBalcao.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Relatorios\Delivery\RelDelivery.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RelDelivery.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Delivery\RelDelivery_Epson.cs">
@@ -1260,6 +1260,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelCozinhaPorCozinhaGrupo.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelDelivery.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDelivery.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinha.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDeliveryCozinhaGrupoCozinha.cs</LastGenOutput>
@@ -1290,10 +1294,6 @@
     <EmbeddedResource Include="Relatorios\Delivery\RelBalcao.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelBalcao.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Delivery\RelDelivery.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelDelivery.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelDelivery_Epson.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

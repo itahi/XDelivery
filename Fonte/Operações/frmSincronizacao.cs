@@ -446,7 +446,7 @@ namespace DexComanda.Operações
                     request.AddParameter("tipo", dRow.ItemArray.GetValue(2).ToString());
                     request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
                     request.AddParameter("referenciaId", dRow.ItemArray.GetValue(0).ToString());
-                   //request.AddParameter("dias_exibicao", dRow.ItemArray.GetValue(8).ToString());
+                    request.AddParameter("dias_exibicao", dRow.ItemArray.GetValue(8).ToString());
                     RestResponse response = (RestResponse)client.Execute(request);
                     prgBarProduto.Increment(i + 1);
 

@@ -172,14 +172,14 @@ namespace DexComanda.Cadastros.Produto
         /// <summary>
         /// Marca todos checkBox 
         /// </summary>
-        private void MarcaTodosDias()
+        private void MarcaTodosDias(bool iMarca=true)
         {
             foreach (System.Windows.Forms.Control ctrControl in grpDiasDisponivel.Controls)
             {
                 if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.CheckBox)))
                 {
                     //select all RadioButtons
-                    ((System.Windows.Forms.CheckBox)ctrControl).Checked = true;
+                    ((System.Windows.Forms.CheckBox)ctrControl).Checked = iMarca;
                 }
             }
         }
@@ -303,6 +303,11 @@ namespace DexComanda.Cadastros.Produto
             {
                 ListaOpcao(int.Parse(cbxTipo.SelectedValue.ToString()));
             }
+        }
+
+        private void checkBox1_CheckStateChanged(object sender, EventArgs e)
+        {
+            MarcaTodosDias(checkBox1.Checked);
         }
 
         //private void FiltraOpcaoPorTipo(object sender, EventArgs e)

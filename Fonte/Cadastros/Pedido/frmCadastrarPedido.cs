@@ -1371,7 +1371,7 @@ namespace DexComanda
             }
             else
             {
-                pedido.Tipo = "0 - Entrega";
+                pedido.Tipo = cbxTipoPedido.Text;
                 pedido.NumeroMesa = "";
             }
             pedido.CodUsuario = RetornaCodVendedor();

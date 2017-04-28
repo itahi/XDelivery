@@ -941,8 +941,7 @@ namespace DexComanda
                     printersettings.PrinterName = iNomeImpressora;
                     printersettings.Copies = 1;
                     printersettings.Collate = false;
-                   // string cam = Directory.GetCurrentDirectory() + @"\RelDelivery.rpt";
-                  //  report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
+                    //report.Load(Directory.GetCurrentDirectory() + @"\RelDelivery.rpt");
                     crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                     crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
                     crConnectionInfo.UserID = "sa";
@@ -958,9 +957,9 @@ namespace DexComanda
 
                     report.SetParameterValue("@Codigo", iCodPedido);
                     report.SetParameterValue("@CodEndereco", CodEndereco);
-                    report.SetParameterValue("ValorPago", iValorPago);
-                    report.SetParameterValue("PrevEntrega", iPrevisaoEntrega);
-                    report.SetParameterValue("ClienteNovo", iClienteNovo);
+                    report.SetParameterValue("Troco", iValorPago);
+                    //report.SetParameterValue("PrevEntrega", iPrevisaoEntrega);
+                    //report.SetParameterValue("ClienteNovo", iClienteNovo);
                     if (iNomeImpressora != "")
                     {
                         for (int i = 0; i < iNumCopias; i++)
@@ -968,7 +967,6 @@ namespace DexComanda
                             report.PrintOptions.PrinterName = iNomeImpressora;
                             report.PrintToPrinter(printersettings, new PageSettings(), false);
                         }
-
                     }
                     else
                     {

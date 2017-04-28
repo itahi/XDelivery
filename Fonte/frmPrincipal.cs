@@ -368,11 +368,11 @@ namespace DexComanda
             entregadorToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
             //envioDeSMSToolStripMenuItem.Enabled = Sessions.returnConfig.EnviaSMS;
             alterarSenhaToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
-            usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
+            //usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
 
             this.txtUsuarioLogado.Text = Sessions.retunrUsuario.Nome;
             configuraçãoToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
-            usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
+          //  usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
             lançamentoAvulsoToolStripMenuItem.Enabled = iCaixaAberto > 0;
 
         }
