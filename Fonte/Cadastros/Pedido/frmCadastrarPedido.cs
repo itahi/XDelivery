@@ -33,7 +33,6 @@ namespace DexComanda
         private string iTotalItem;
         public int iCodPedido;
         private string iNomeProd;
-        private Main parentWindow;
         private frmCadastrarPedido parentWindowPedido;
         private int codigoItemParaAlterar;
         private int rowIndex;
@@ -45,28 +44,17 @@ namespace DexComanda
         private string itemNome, gNUmeroMesa;
         private bool ContraMesas = Sessions.returnConfig.UsaControleMesa;
         private string NomeEmpresa, Telefone, Telefone2;
-       // private bool ControlaFidelidade = Sessions.returnConfig.ControlaFidelidade;
         private int NumeroPedidos; //= Sessions.returnPessoa.TicketFidelidade; 
-        private int PedidosParaFidelidade = Sessions.returnConfig.PedidosParaFidelidade;
         private string DiaDaSema = DateTime.Now.DayOfWeek.ToString();
         private string DiaDaPromocao = null;
         private bool PromocaoDiasSemana = Sessions.returnConfig.DescontoDiaSemana;
         private string[] lol;
-        private bool ImprimeViaEntrega = Sessions.returnConfig.ImprimeViaEntrega;
-        private bool ImprimeViaCozinha = Sessions.returnConfig.ImpViaCozinha;
-        private bool ControlaPrevisao = Sessions.returnConfig.PrevisaoEntregaSN;
-        private int TempPrevisto = int.Parse(Sessions.returnConfig.PrevisaoEntrega);
         private DateTime DataPed;
         private string CNPJRETORNO = Sessions.returnEmpresa.CNPJ;
-        private string TamanhoFont = Sessions.returnConfig.TamanhoFont;
-        private string PortaImpressa = Sessions.returnConfig.PortaLPT;
-        private bool ImprimeLPT = Sessions.returnConfig.ImpLPT;
         private string line = null;
-        private int QtdViasCozinha = int.Parse(Sessions.returnConfig.ViasCozinha);
-        private int QtdViasBalcao = int.Parse(Sessions.returnConfig.ViasBalcao);
-        private int QtViasEntrega = int.Parse(Sessions.returnConfig.ViasEntrega);
         private bool ProdutosPorCodigo = Utils.MarcaTipoConfiguracaoProduto().PorCodigo;
         private string TipoCodigo = Utils.MarcaTipoConfiguracaoProduto().TipoCodigo;
+
         private decimal TaxaEntrega;
         private bool PedidoRepetio;
         private string TrocoPagar;
@@ -84,6 +72,21 @@ namespace DexComanda
         private int intCodPai;
         private int prvCodEndecoSelecionado = 0;
         private Boolean boolClienteNovo;
+        private bool ImprimeViaCozinha = Utils.RetornaConfiguracaoMesa().ImprimeSN;
+        private int QtdViasCozinha = int.Parse(Utils.RetornaConfiguracaoMesa().ViaCozinha);
+        private string TipoAgrupamentoCozinha = Utils.RetornaConfiguracaoMesa().TipoAgrupamento;
+        private bool ImprimeViaEntrega = Utils.RetornaConfiguracaoDelivery().ImprimeSN;
+        private int QtdViasEntrega = int.Parse(Utils.RetornaConfiguracaoDelivery().ViaDelivery);
+
+        private bool ImprimeViaBalcao = Utils.RetornaConfiguracaoDelivery().ImprimeSN;
+        private int QtdViasBalcao = int.Parse(Utils.RetornaConfiguracaoDelivery().ViaDelivery);
+        private string TipoAgrupamentoDelivery= Utils.RetornaConfiguracaoDelivery().TipoAgrupamento;
+
+        private int intCodProduto;
+        private string strNomeImpressoraDelivery = Utils.RetornaImpressoras().ImpressoraDelivery;
+        private string strNomeImpressoraBalcao = Utils.RetornaImpressoras().ImpressoraBalcao;
+        private string strNomeImpressoraContaMesa = Utils.RetornaImpressoras().ImpressoraContaMesa;
+
         public frmCadastrarPedido()
         {
             try
@@ -100,7 +103,7 @@ namespace DexComanda
         //private int HoraPedido = Sessions.returnPedido.RealizadoEm.Minute;
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, int iCodMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara, string fPagamento, string TipoPedido, string MesaBalcao,
-            Main parent = null, decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0,
+            decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0,
             string iObservacaoPedido = "", int iIntEnderecoSelecionado = 0, Boolean iClienteNovo = false)
         {
             try
@@ -113,7 +116,6 @@ namespace DexComanda
                 txtDesconto.Text = iDescontoPedido;
                 prvCodEndecoSelecionado = iIntEnderecoSelecionado;
                 boolClienteNovo = iClienteNovo;
-                parentWindow = parent;
                 codPessoa = CodPessoa;
                 codPedido = CodigoPedido;
                 trocoPara = tPara;
@@ -147,7 +149,7 @@ namespace DexComanda
                     lblTroco.Text = "0,00";
                     TrocoPagar = "0,00";
                 }
-
+                cbxListaMesas.Enabled = TipoPedido != "1 - Mesa";
                 CarregaMesas(iCodMesa);
                 gNUmeroMesa = Convert.ToString(iCodMesa);
                 cbxTipoPedido.Text = TipoPedido;
@@ -666,7 +668,7 @@ namespace DexComanda
             return valores.Max();
         }
 
-        private void MontaMenuOpcoes(int intCodProduto=0)
+        private void MontaMenuOpcoes(int intCodProduto = 0)
         {
             int intCodProduto1 = intCodProduto;
             int intCodProduto2 = 0;
@@ -674,26 +676,26 @@ namespace DexComanda
             DataSet dsOpcoes = new DataSet();
             try
             {
-                decimal dPrecoProduto,dPrecoSoOpcao;
+                decimal dPrecoProduto, dPrecoSoOpcao;
                 if (ProdutosPorCodigo)
                 {
-                    if (txtCodProduto1.Text!="")
+                    if (txtCodProduto1.Text != "")
                     {
                         intCodProduto1 = int.Parse(txtCodProduto1.Text);
                     }
-                    if (txtCodProduto2.Text!="")
+                    if (txtCodProduto2.Text != "")
                     {
                         intCodProduto2 = int.Parse(txtCodProduto2.Text);
                     }
-                    
+
                 }
                 else
                 {
-                    if (cbxProdutosGrid.SelectedValue!=null && intCodProduto==0)
+                    if (cbxProdutosGrid.SelectedValue != null && intCodProduto == 0)
                     {
                         intCodProduto1 = int.Parse(cbxProdutosGrid.SelectedValue.ToString());
                     }
-                    if (cbxSabor.SelectedIndex>0)
+                    if (cbxSabor.SelectedIndex > 0)
                     {
                         intCodProduto2 = int.Parse(cbxSabor.SelectedValue.ToString());
                     }
@@ -701,7 +703,7 @@ namespace DexComanda
 
                 if (chkCodPersonalizado.Checked)
                 {
-                    if (txtCodProduto1.Text!="")
+                    if (txtCodProduto1.Text != "")
                     {
                         dsOpcoes = con.RetornaOpcoesCodPersonalizado(intCodProduto1);
                     }
@@ -709,11 +711,11 @@ namespace DexComanda
                     {
                         dsOpcoes = con.RetornaOpcoesCodPersonalizado(intCodProduto2);
                     }
-                    
+
                 }
                 else
                 {
-                    if (txtCodProduto1.Text != ""|| cbxProdutosGrid.SelectedValue!=null || intCodProduto>0 && (!cbxMeiaPizza.Checked))
+                    if (txtCodProduto1.Text != "" || cbxProdutosGrid.SelectedValue != null || intCodProduto > 0 && (!cbxMeiaPizza.Checked))
                     {
                         dsOpcoes = con.RetornaOpcoesProduto(intCodProduto1);
                     }
@@ -735,7 +737,7 @@ namespace DexComanda
                 {
                     for (int i = 0; i < dsOpcoes.Tables[0].Rows.Count; i++)
                     {
-                        DataSet dsMaiorPreco = con.RetornaMaioresPrecos(intCodProduto1, intCodProduto2, "", "", dsOpcoes.Tables[0].Rows[i].Field<int>("CodOpcao").ToString(),Sessions.returnConfig.CobrancaProporcionalSN);
+                        DataSet dsMaiorPreco = con.RetornaMaioresPrecos(intCodProduto1, intCodProduto2, "", "", dsOpcoes.Tables[0].Rows[i].Field<int>("CodOpcao").ToString(), Sessions.returnConfig.CobrancaProporcionalSN);
                         lTipo = int.Parse(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo"));
                         lPrecoOpcao = dsMaiorPreco.Tables[0].Rows[0].Field<Decimal>("PrecoOpcao");
                         dPrecoProduto = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<decimal>("PrecoProduto");
@@ -972,7 +974,7 @@ namespace DexComanda
                                 }
                                 else
                                 {
-                                    item.CodProduto = int.Parse(this.txtCodProduto1.Text);
+                                    item.CodProduto = intCodProduto;
                                 }
 
                                 pedido.HorarioEntrega = "";
@@ -1143,7 +1145,7 @@ namespace DexComanda
                             };
                             if (txtTrocoPara.Text != "")
                             {
-                                pedido.TrocoPara = this.txtTrocoPara.Text;
+                                pedido.TrocoPara = txtTrocoPara.Text;
                             }
                             else
                             {
@@ -1236,7 +1238,7 @@ namespace DexComanda
                                 con.Insert("spCriarPedido", itemDoPedido);
                                 Utils.ControlaEventos("Inserir", this.Name);
 
-                              
+
                             }
 
                             // Transferido rotina para spAdicionarPedido
@@ -1273,7 +1275,7 @@ namespace DexComanda
                             //}
 
                             // Fecha o Formulario 
-                           // MessageBox.Show("Pedido gerado com sucesso.");
+                            // MessageBox.Show("Pedido gerado com sucesso.");
                             this.Close();
 
 
@@ -1307,12 +1309,12 @@ namespace DexComanda
         /// <param name="iDescricao">
         /// Descrição adicional do produto ( Observação, adicional) </param>
         /// <returns></returns>
-        private Boolean AgrupaItens(int intCodProduto , string iDescricao)
+        private Boolean AgrupaItens(int intCodProduto, string iDescricao)
         {
             try
             {
 
-               
+
             }
             catch (Exception erro)
             {
@@ -1537,7 +1539,7 @@ namespace DexComanda
         {
             if (!btnGerarPedido.Enabled || !btnReimprimir.Enabled)
             {
-               // MessageBox.Show("Não é possivel executar essa ação para esse pedido");
+                // MessageBox.Show("Não é possivel executar essa ação para esse pedido");
                 return;
             }
             DataGridView dgv = sender as DataGridView;
@@ -1573,7 +1575,7 @@ namespace DexComanda
             if (radioButton1.Visible && !radioButton1.Checked && !radioButton2.Checked && !radioButton3.Checked
                      && !radioButton4.Checked && !radioButton5.Checked && !radioButton6.Checked)
             {
-                MessageBox.Show("É obrigatório selecionar o tamanho ", "[xSistemas]", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("É obrigatório selecionar o " + grpBoxTamanhos.Text, "[xSistemas]", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -1845,11 +1847,11 @@ namespace DexComanda
                     }
                     if (Sessions.returnConfig.QtdCaracteresImp <= 30)
                     {
-                        iRetorno = Utils.ImpressaoFechamentoNovo_20(iCodigo, ImprimeLPT, QtdViasBalcao);
+                        iRetorno = Utils.ImpressaoFechamentoNovo_20(iCodigo, QtdViasBalcao);
                     }
                     else if (Sessions.returnConfig.QtdCaracteresImp >= 30)
                     {
-                        iRetorno = Utils.ImpressaoFechamentoNovo(iCodigo, ImprimeLPT, QtdViasBalcao, Sessions.returnConfig.ImpressoraCopaBalcao);
+                        iRetorno = Utils.ImpressaoFechamentoNovo(iCodigo, QtdViasBalcao,strNomeImpressoraContaMesa);
                     }
 
 
@@ -1867,10 +1869,18 @@ namespace DexComanda
                         iCodigo = codPedido;
                     }
 
-                    string iRetorno = Utils.ImpressaoBalcao(iCodigo, ImprimeLPT, QtdViasBalcao, Sessions.returnConfig.ImpressoraCopaBalcao);
+                    string iRetorno = Utils.ImpressaoBalcao(iCodigo, QtdViasBalcao,strNomeImpressoraBalcao);// Sessions.returnConfig.ImpressoraCopaBalcao);
                     if (ImprimeViaCozinha)
                     {
-                        Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
+                        if (TipoAgrupamentoCozinha == "Sem Agrupamento")
+                        {
+                            Utils.ImpressaoCozihanova(iCodigo);
+                        }
+                        else
+                        {
+                            ImpressaoPorCozinha(iCodigo);
+                        }
+
                     }
                 }
 
@@ -1879,8 +1889,6 @@ namespace DexComanda
                 {
                     int iCodigo;
                     string iRetorno;
-                    string dblPRevisao = DataPed.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString();
-
                     if (con.getLastCodigo() != 0)
                     {
                         iCodigo = con.getLastCodigo();
@@ -1892,49 +1900,34 @@ namespace DexComanda
 
                     if (Sessions.returnConfig.QtdCaracteresImp <= 30)
                     {
-                        iRetorno = Utils.ImpressaoEntreganova_20(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), ImprimeLPT, QtViasEntrega);
+                        iRetorno = Utils.ImpressaoEntreganova_20(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), QtdViasEntrega);
                     }
-                    else if (Sessions.returnConfig.QtdCaracteresImp >= 40 && !ImprimeLPT)
+                    else if (Sessions.returnConfig.QtdCaracteresImp >= 40)
                     {
-                        if (Sessions.returnEmpresa.CNPJ == "13004606798")
+                        Utils.ImpressaoEntreganova(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")),
+                            QtdViasEntrega, strNomeImpressoraDelivery, boolClienteNovo, prvCodEndecoSelecionado);
+                    }
+                    if (ImprimeViaCozinha && cbxTipoPedido.Text.Contains("0 - Entrega"))
+                    {
+                        if (con.getLastCodigo() != 0)
                         {
-                            iRetorno = Utils.ImpressaoEntre_Epson(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), dblPRevisao, ImprimeLPT, QtViasEntrega);
+                            iCodigo = con.getLastCodigo();
                         }
                         else
                         {
-                            iRetorno = Utils.ImpressaoEntreganova(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), dblPRevisao,
-                                ImprimeLPT, QtViasEntrega, Sessions.returnConfig.ImpressoraEntrega, boolClienteNovo, prvCodEndecoSelecionado);
+                            iCodigo = codPedido;
                         }
-                    }
-                    else if (ImprimeLPT)
-                    {
-                        Utils.ImpressaoEntreganova_Matricial(iCodigo, decimal.Parse(lblTroco.Text.Replace("R$", "")), dblPRevisao, false, 1);
-                    }
+                        if (TipoAgrupamentoDelivery != "Sem Agrupamento")
+                        {
+                            ImpressaoPorCozinha(iCodigo);
+                        }
+                        else
+                        {
+                            Utils.ImpressaoCozihanova(iCodigo, QtdViasCozinha);
+                            
+                        }
 
-                }
-                if (ImprimeViaCozinha && cbxTipoPedido.Text.Contains("0 - Entrega"))
-                {
-                    int iCodigo;
-                    if (con.getLastCodigo() != 0)
-                    {
-                        iCodigo = con.getLastCodigo();
                     }
-                    else
-                    {
-                        iCodigo = codPedido;
-                    }
-                    if (Sessions.returnEmpresa.CNPJ== Bibliotecas.cBigPizza|| Sessions.returnEmpresa.CNPJ==Bibliotecas.cClaudinei|| 
-                        Sessions.returnEmpresa.CNPJ== Bibliotecas.cComamarella|| Sessions.returnEmpresa.CNPJ == Bibliotecas.cEsphiras  
-                        || Sessions.returnEmpresa.CNPJ == Bibliotecas.cAcaiVitoria || Sessions.returnEmpresa.CNPJ==Bibliotecas.cxSistemas
-                        || Sessions.returnEmpresa.CNPJ == Bibliotecas.cTheBest || Sessions.returnEmpresa.CNPJ == Bibliotecas.cGallegao)
-                    {
-                        ImpressaoPorCozinha(iCodigo);
-                    }
-                    else
-                    {
-                        Utils.ImpressaoCozihanova(iCodigo, false, QtdViasCozinha);
-                    }
-                    
                 }
             }
             catch (Exception E)
@@ -1953,54 +1946,45 @@ namespace DexComanda
         {
             try
             {
-                DataSet itemsPedido, dsItemsNaoImpresso,dsItems;
-                DataSet dsI = new DataSet(); 
+                DataSet itemsPedido, dsItemsNaoImpresso, dsItems;
+                DataSet dsI = new DataSet();
                 dsItemsNaoImpresso = Utils.CarregaItens(iCodPedido);
 
-                if (dsItemsNaoImpresso.Tables.Count==0)
+                if (dsItemsNaoImpresso.Tables.Count == 0)
                 {
                     return;
                 }
-                for (int i = 0; i < dsItemsNaoImpresso.Tables["ItemsPedido"].Rows.Count; i++) 
+                for (int i = 0; i < dsItemsNaoImpresso.Tables["ItemsPedido"].Rows.Count; i++)
                 {
                     int CodGrupo = dsItemsNaoImpresso.Tables[0].Rows[i].Field<int>("CodGrupo");
                     string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].Field<string>("NomeImpressora");
 
-                    //if (Sessions.returnConfig.TipoImpressao == "Por Cozinha/Grupo")
-                    //{
-                    //     Utils.ItensSelect(iCodPedido, CodGrupo, iNomeImpressora);
-                    //}
-                    //else if (Sessions.returnConfig.TipoImpressao == "Por Impressora")
-                    //{
-                    //    Utils.ItensSelect(iCodPedido, iNomeImpressora);
-                    //}
-
-                    if (Sessions.returnConfig.TipoImpressao == "Por Cozinha/Grupo")
+                    if (TipoAgrupamentoDelivery == "Por Cozinha/Grupo")
                     {
-                        if (!ProdutosPorCodigo && TipoCodigo!= "Personalizado")
-                        {
+                        //if (!ProdutosPorCodigo && TipoCodigo != "Personalizado")
+                        //{
                             itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorGrupo", iCodPedido, "", CodGrupo);
-                            if (itemsPedido.Tables[0].Rows.Count>0)
+                            if (itemsPedido.Tables[0].Rows.Count > 0)
                             {
                                 Utils.ImpressaoDelivery_CozinhaPorGrupo(iCodPedido, iNomeImpressora, CodGrupo);
                             }
-                           
-                        }
-                        else
-                        {
-                            itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCozinhaCodPersonalizado", iCodPedido, "", CodGrupo);
-                            if (itemsPedido.Tables[0].Rows.Count > 0)
-                            {
-                                Utils.ImpressaoDelivery_CozinhaPorGrupoCodPersonalizado(iCodPedido, iNomeImpressora, CodGrupo);
-                            }
-                           
-                        }
-                        
+
+                        //}
+                        //else
+                        //{
+                        //    itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCozinhaCodPersonalizado", iCodPedido, "", CodGrupo);
+                        //    if (itemsPedido.Tables[0].Rows.Count > 0)
+                        //    {
+                        //        Utils.ImpressaoDelivery_CozinhaPorGrupoCodPersonalizado(iCodPedido, iNomeImpressora, CodGrupo);
+                        //    }
+
+                        //}
+
                     }
                     else
                     {
                         itemsPedido = con.SelectItensPorImpressora(iCodPedido, iNomeImpressora);
-                        if (itemsPedido.Tables[0].Rows.Count==0)
+                        if (itemsPedido.Tables[0].Rows.Count == 0)
                         {
                             return;
                         }
@@ -2016,61 +2000,16 @@ namespace DexComanda
                         con.Update("spInformaItemImpresso", Atualiza);
                     }
 
-                    //if (Utils.MarcaTipoConfiguracaoProduto().TipoCodigo != "Personalizado")
-                    //{
-                    //    dsI = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", intCodigoPedido);
-                    //}
-                    //else
-                    //{
-                    //    dsI = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigoCodPersonalizado", intCodigoPedido);
-                    //}
-                    // Aqui deveria sair e ir embora , só que volta do nada
-                
-                    //if (dsI.Tables["ItemsPedido"].Rows.Count > 0) {
-                    //    ImpressaoPorCozinha(intCodigoPedido);
-                    //}
-                    //else
-                    //{
-                    //   // dsItemsNaoImpresso = Utils.CarregaItens(999999999);
-                    //}
-
                 }
-             
-         
+
+
             }
             catch (Exception erro)
             {
                 MessageBox.Show("Não foi possivel imprimir o Item da Mesa verificar a impressora" + erro.Message);
             }
         }
-        public void ImprimirPedidoMesa(object sender, PrintPageEventArgs ev)
-        {
-            if (!ImprimeLPT)
-            {
-                ev.Graphics.DrawString(line, printFont, Brushes.Black, 0, 0);
-                ev.HasMorePages = false;
-            }
-
-        }
-        private void imprimirViaCozinha(object sender, PrintPageEventArgs ev)
-        {
-            //  ImpressaoCozinha();
-            if (!ImprimeLPT)
-            {
-                ev.Graphics.DrawString(line, printFont, Brushes.Black, 0, 0);
-                ev.HasMorePages = false;
-            }
-        }
-
-        private void imprimirViaEntrega(object sender, PrintPageEventArgs ev)
-        {
-            if (!ImprimeLPT)
-            {
-                ev.Graphics.DrawString(line, printFont, Brushes.Black, 0, 0);
-                ev.HasMorePages = false;
-            }
-
-        }
+        
         private string QuebrarString(string texto)
         {
             int totalDeCaracters = texto.Length - 1;
@@ -2183,9 +2122,9 @@ namespace DexComanda
         //                produto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", int.Parse(this.cbxProdutosGrid.SelectedValue.ToString())).Tables["Produto"];
         //            }
 
-                   
 
-                   
+
+
 
         //            if (txtCodProduto2.Text != "")
         //            {
@@ -2324,6 +2263,7 @@ namespace DexComanda
                 decimal troco = 0.00M;
 
                 decimal TotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", ""));
+
                 if (this.txtTrocoPara.Text != "")
                 {
                     troco = decimal.Parse(txtTrocoPara.Text);
@@ -2342,13 +2282,13 @@ namespace DexComanda
                     {
                         Codigo = codPedido,
                         TotalPedido = TotalPedido,
-                        TrocoPara = this.txtTrocoPara.Text,
+                        TrocoPara = "0,00",
                         FormaPagamento = this.cmbFPagamento.Text
                     };
-
-                    if (cbxTrocoParaOK.Checked == false && !troco.Equals("0,00"))
+                    txtTrocoPara.Text = "0,00";
+                    if (cbxTrocoParaOK.Checked == false && !troco.Equals("0.00"))
                     {
-                        ValorTroco = decimal.Parse(this.txtTrocoPara.Text.ToString()) - TotalPedido;
+                        ValorTroco = decimal.Parse(txtTrocoPara.Text.ToString()) - TotalPedido;
                         this.lblTroco.Text = "R$ " + Convert.ToString(ValorTroco);
                     }
                     else
@@ -2381,7 +2321,7 @@ namespace DexComanda
         {
             if (cbxTrocoParaOK.Checked == true)
             {
-                
+
                 txtTrocoPara.Text = "0,00";
                 lblTroco.Text = "R$ 0,00";
                 return true;
@@ -2413,8 +2353,10 @@ namespace DexComanda
 
                     if (produto.Rows.Count > 0)
                     {
-                      //  MontaMenuOpcoes(int.Parse(txtCodProduto1.Text));
+                        //  MontaMenuOpcoes(int.Parse(txtCodProduto1.Text));
                         cbxProdutosGrid.Text = produto.Rows[0]["NomeProduto"].ToString();
+                        intCodProduto = int.Parse(produto.Rows[0]["Codigo"].ToString());
+
                         if (PromocaoDiasSemana)
                         {
                             List<PrecoDiaProduto> listPreco = new List<PrecoDiaProduto>();
@@ -2489,7 +2431,8 @@ namespace DexComanda
                     // produto = con.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", int.Parse(txtCodProduto2.Text)).Tables["Produto"];
                     if (produto.Rows.Count > 0)
                     {
-                      //  MontaMenuOpcoes(int.Parse(txtCodProduto2.Text));
+                        //  MontaMenuOpcoes(int.Parse(txtCodProduto2.Text));
+                        intCodProduto = int.Parse(produto.Rows[0]["Codigo"].ToString());
                         cbxSabor.Text = produto.Rows[0]["NomeProduto"].ToString();
                         if (PromocaoDiasSemana)
                         {
@@ -2517,7 +2460,7 @@ namespace DexComanda
                         CalcularTotalItem();
                         this.txtQuantidade.Focus();
                         txtQuantidade.Text = "1";
-                       // ComparaValores();
+                        // ComparaValores();
 
                     }
                     else
@@ -2798,7 +2741,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(799, 3);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -3472,8 +3415,8 @@ namespace DexComanda
             // 
             // chkListAdicionais
             // 
-            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chkListAdicionais.CheckOnClick = true;
             this.chkListAdicionais.FormattingEnabled = true;
@@ -3715,10 +3658,10 @@ namespace DexComanda
             {
                 tempo -= DateTime.Now.Hour;
                 lblTempo.Text = tempo.ToString();
-                if (tempo == TempPrevisto)
-                {
-                    relogio.Stop();
-                }
+                //if (tempo == TempPrevisto)
+                //{
+                //    relogio.Stop();
+                //}
             };
             relogio.Start();
         }
@@ -4100,7 +4043,7 @@ namespace DexComanda
             if (radioButton3.Checked)
             {
                 txtPrecoUnitario.Text = radioButton3.Tag.ToString(); ;
-               // txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
+                // txtPrecoUnitario.Text = Convert.ToString(lPreco + ComparaValores());
                 if (cbxMeiaPizza.Checked)
                 {
                     cbxSabor.Text = iNomeProd + " " + radioButton3.Text;
@@ -4195,7 +4138,7 @@ namespace DexComanda
             else
             {
                 txtItemDescricao.Text = txtItemDescricao.Text.Replace(" + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString()), string.Empty);
-               // txtItemDescricao.Text.Remove()
+                // txtItemDescricao.Text.Remove()
                 decimal iValorItem = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
                 decimal iValorAdicional = decimal.Parse(ObterSomenteNumerosReais(chkListAdicionais.SelectedItem.ToString()));
                 decimal iValor = iValorItem - iValorAdicional;
@@ -4219,7 +4162,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-           
+
         }
 
         private void rb7_Click(object sender, EventArgs e)
@@ -4390,7 +4333,7 @@ namespace DexComanda
                 if (gridViewItemsPedido.SelectedRows.Count > 0)
                 {
                     int codItem = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells["CodProduto"].Value.ToString());
-                   
+
                     DataSet dsItemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codItem);
                     string itemNome = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
                     Utils.MontaCombox(cbxTipoProduto, "Nome", "Codigo", "Grupo", "spObterGrupoPOrCodigo", dsItemCompleto.Tables[0].Rows[0].Field<int>("CodGrupo"));
@@ -4517,7 +4460,7 @@ namespace DexComanda
         {
 
 
-          //  iNomeProd = cbxSabor.Text;
+            //  iNomeProd = cbxSabor.Text;
 
             try
             {
@@ -4742,7 +4685,7 @@ namespace DexComanda
             {
                 MessageBox.Show(erro.Message);
             }
-          
+
 
             if (cbxMeiaPizza.Checked)
             {
@@ -4783,7 +4726,7 @@ namespace DexComanda
 
         private void cbxSabor_TextChanged(object sender, EventArgs e)
         {
-           // MontaMenuOpcoes();
+            // MontaMenuOpcoes();
         }
 
         private void button1_Click(object sender, EventArgs e)

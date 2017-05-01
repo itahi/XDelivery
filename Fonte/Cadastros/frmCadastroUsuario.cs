@@ -16,7 +16,6 @@ namespace DexComanda
     {
         private Conexao con;
         private Usuario usuario;
-        private Main parentMain;
         string mSenha;
         int rowIndex;
         int codigo;
@@ -86,7 +85,6 @@ namespace DexComanda
         }
         private void this_FormClosing()
         {
-            this.parentMain.PopularGrid(false, "Usuario", usuariosGridView, "spObterUsuario");
             this.Dispose();
         }
 

@@ -96,12 +96,12 @@ namespace DexComanda.Operações
                 request.Method = "POST";
                 request.ContentType = "application/json";
                 string irul = Sessions.returnEmpresa.UrlServidor;
-                request.Headers.Add("authorization", "Basic " + Sessions.returnConfig.Pushauthorization);
+                request.Headers.Add("authorization", "Basic " + Utils.RetornaConfiguracaoPush().Pushauthorization);
 
 
 
                 byte[] byteArray = Encoding.UTF8.GetBytes("{"
-                                                        + "\"app_id\": \"" + Sessions.returnConfig.Pushapp_id + "\","
+                                                        + "\"app_id\": \"" + Utils.RetornaConfiguracaoPush().Pushapp_id + "\","
                                                         + "\"headings\": {\"en\": \"" + txtTitulo.Text + "\"},"
                                                         + "\"contents\": {\"en\": \"" + msg.Text + "\"},"
                                                         + Agendamento()

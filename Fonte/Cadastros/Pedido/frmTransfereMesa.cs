@@ -98,11 +98,7 @@ namespace DexComanda.Cadastros.Pedido
                     MessageBox.Show("A lista deve conter pelo menos 1 item para ser transferido");
                     return;
                 }
-                //if (gridDestino.Rows.Count>0)
-                //{
-                //    MessageBox.Show("A mesa " + cbxListaMesasD.Text + "já possuí itens");
-                //    return;
-                //}
+
                 int iRetunr=  con.TransfereMesa(intCodPedido, cbxListaMesasD.Text.ToString(), Sessions.retunrUsuario.Codigo, decTotalPedido,
                 int.Parse(cbxListaMesasO.SelectedValue.ToString()), intCodPessoa, int.Parse(cbxListaMesasD.SelectedValue.ToString()));
                 if (iRetunr!=0)

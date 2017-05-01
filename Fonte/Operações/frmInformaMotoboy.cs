@@ -13,7 +13,6 @@ namespace DexComanda.Operações
     public partial class frmInformaMotoboy : Form
     {
         private Conexao con;
-        private Main parentMain;
         public int CodMotoboy;
 
         public frmInformaMotoboy()

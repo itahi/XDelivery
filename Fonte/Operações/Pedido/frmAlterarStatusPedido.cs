@@ -113,7 +113,6 @@ namespace DexComanda.Operações.Pedido
                             {
                                 Codigo = ped.CodPedido,
                                 status = "Cancelado",
-                                RealizadoEm = DateTime.Now
                             };
                             con.Update("spCancelarPedido", cancPedido);
                             Utils.ControlaEventos("CancPedido", this.Name);

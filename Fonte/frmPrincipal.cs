@@ -98,7 +98,7 @@ namespace DexComanda
 
             frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", 0, "0,00", TaxaEntrega,
                                                                         false, DateTime.Now, 0, CodPessoa,
-                                                                        "", "", "", "", null, 0.00M, 0.00M, 0, "", iCodEndeco);
+                                                                        "", "", "", "", 0.00M, 0.00M, 0, "", iCodEndeco);
             CadPedido.ShowDialog();
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
             TotalizaPedidos();
@@ -251,7 +251,6 @@ namespace DexComanda
                         }
 
                         cancelPedid.Codigo = Codigo;
-                        cancelPedid.RealizadoEm = DateTime.Now;
 
                         int iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
 
@@ -645,7 +644,7 @@ namespace DexComanda
             frmCadastrarPedido frm = new frmCadastrarPedido(false, strDescPedido, iNumMesa,
                                       strTroco, TaxaServico, true, Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString()),
                                       int.Parse(DvPedido.ItemArray.GetValue(1).ToString()), int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), DvPedido.ItemArray.GetValue(4).ToString(),
-                                      DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(), null,
+                                      DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(),
                                       decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao, intCodEndereco);
             frm.ShowDialog();
         }
@@ -1260,7 +1259,7 @@ namespace DexComanda
                     decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, intCodEndereco);
                     frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", 0, "0,00",
                                                                     TaxaServico, false, DateTime.Now, 0,
-                                                                    CodPessoa, "0,00", "Dinheiro", "", "", null, 0.00M, 0, 0, "", intCodEndereco);
+                                                                    CodPessoa, "0,00", "Dinheiro", "", "", 0.00M, 0, 0, "", intCodEndereco);
                     frm.ShowDialog();
                 }
 
@@ -1506,8 +1505,8 @@ namespace DexComanda
             }
             else if (iTipo == "0 - Entrega")
             {
-                Utils.ImpressaoEntreganova(iCodPedido, iValue, iDataPedido.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString(),
-                    false, 1, "", false, intCodEndereco);
+                Utils.ImpressaoEntreganova(iCodPedido, iValue,
+                     1, "", false, intCodEndereco);
             }
             else if (iTipo == "2 - Balcao")
             {
@@ -1763,7 +1762,7 @@ namespace DexComanda
                     int intCodGrupo = itemsPedidoNaoImpresso.Tables[0].Rows[i].Field<int>("CodGrupo");
                     string strNomeImpressora = itemsPedidoNaoImpresso.Tables[0].Rows[i].Field<string>("NomeImpressora");
 
-                    if (Sessions.returnConfig.TipoImpressao == "Por Cozinha/Grupo")
+                    if (Utils.RetornaConfiguracaoMesa().TipoAgrupamento == "Por Cozinha/Grupo")
                     {
                         itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorGrupo", iCodPedido, "", intCodGrupo);
                         if (itemsPedido.Tables[0].Rows.Count == 0)

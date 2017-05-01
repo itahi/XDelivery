@@ -37,6 +37,8 @@ using System.Drawing.Printing;
 using DexComanda.Models.Produto;
 using DexComanda.Cadastros.Pessoa;
 using DexComanda.Cadastros.Pedido;
+using DexComanda.Relatorios.Caixa;
+using DexComanda.Models.Configuracoes;
 
 namespace DexComanda
 {
@@ -69,7 +71,7 @@ namespace DexComanda
         public static Boolean bMult;
         public static int intCodUserAutorizador;
         private static string strProxImpressora = "";
-      //  private static Boolean bCodigoPersonalizado =
+        //  private static Boolean bCodigoPersonalizado =
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
         public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1, Boolean iAlterarUserLogado = false, string iTurno = "Dia")
         {
@@ -146,7 +148,7 @@ namespace DexComanda
 
             return Logado;
         }
-      
+
         /// <summary>
         /// Função para validar se o tipo de pedido é "Mesa"
         /// </summary>
@@ -222,11 +224,23 @@ namespace DexComanda
             }
             return iReturn;
         }
-        public static DataSet ItensSelect(int iCodPedido, string strNomeImpressora)
+        public static DataSet ItensSelect(int iCodPedido, string strNomeImpressora, string iTipoPedido)
         {
-            string iSqlWhere;
+            string iSqlWhere, iTipoAgrupamento;
             string iSqlJoin = "left join Produto P on P.Codigo = It.CodProduto ";
-            string iTipoAgrupamento = Sessions.returnConfig.TipoImpressao;
+            if (iTipoPedido == "0 - Entrega")
+            {
+                iTipoAgrupamento = Utils.RetornaConfiguracaoDelivery().TipoAgrupamento;
+            }
+            else if (iTipoPedido == "2 - Balcao")
+            {
+                iTipoAgrupamento = Utils.RetornaConfiguracaoBalcao().TipoAgrupamento;
+            }
+            else
+            {
+                iTipoAgrupamento = Utils.RetornaConfiguracaoMesa().TipoAgrupamento;
+            }
+
             if (iTipoAgrupamento == "Por Impressora")
             {
                 iSqlWhere = " where  PE.Codigo=" + iCodPedido + " and ImprimeCozinhaSN = 1 and G.NomeImpressora='" + strNomeImpressora + "' and ImpressoSN=0";
@@ -246,7 +260,7 @@ namespace DexComanda
                            " IT.CodProduto " +
                            " from ItemsPedido IT " +
                            " left join Pedido PE ON PE.Codigo = IT.CodPedido " +
-                           iSqlJoin+
+                           iSqlJoin +
                            " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo ";
 
             iSql = iSql + iSqlWhere;
@@ -256,16 +270,16 @@ namespace DexComanda
         public static DataSet CarregaItens(int intCodPedido)
         {
             DataSet ds;
-            if (Utils.MarcaTipoConfiguracaoProduto().TipoCodigo!="Personalizado" && !Utils.MarcaTipoConfiguracaoProduto().PorCodigo)
-            {
-                ds = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterNomeImpressoraPorCodigoPedido", intCodPedido);
-            }
-            else
-            {
-                ds = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterNomeImpressoraPorCodigoPedidoCodPersonalizado", intCodPedido);
-            }
-
-            if (ds.Tables[0].Rows.Count==0)
+            //if (Utils.MarcaTipoConfiguracaoProduto().TipoCodigo != "Personalizado" && !Utils.MarcaTipoConfiguracaoProduto().PorCodigo)
+            //{
+            //    ds = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterNomeImpressoraPorCodigoPedido", intCodPedido);
+            //}
+            //else
+            //{
+            //    ds = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterNomeImpressoraPorCodigoPedidoCodPersonalizado", intCodPedido);
+            //}
+            ds = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterNomeImpressoraPorCodigoPedido", intCodPedido);
+            if (ds.Tables[0].Rows.Count == 0)
             {
                 return new DataSet();
             }
@@ -284,11 +298,24 @@ namespace DexComanda
             return ds;
         }
         public static DataSet ItensSelect(int iCodPedido, int intCodgrupo = 0,
-            string iNomeImpressora = "")
+            string iNomeImpressora = "", string iTipoPedido = "")
         {
             string iSqlWhere;
             string iSqlJoin = "left join Produto P on P.Codigo = It.CodProduto ";
-            string iTipoAgrupamento = Sessions.returnConfig.TipoImpressao;
+            string iTipoAgrupamento;
+
+            if (iTipoPedido == "0 - Entrega")
+            {
+                iTipoAgrupamento = Utils.RetornaConfiguracaoDelivery().TipoAgrupamento;
+            }
+            else if (iTipoPedido == "2 - Balcao")
+            {
+                iTipoAgrupamento = Utils.RetornaConfiguracaoBalcao().TipoAgrupamento;
+            }
+            else
+            {
+                iTipoAgrupamento = Utils.RetornaConfiguracaoMesa().TipoAgrupamento;
+            }
             if (iTipoAgrupamento == "Por Impressora")
             {
                 iSqlWhere = " where  PE.Codigo=" + iCodPedido + " and ImprimeCozinhaSN = 1 and G.NomeImpressora='" + iNomeImpressora + "'";
@@ -301,10 +328,10 @@ namespace DexComanda
             {
                 iSqlWhere = " where  PE.Codigo=" + iCodPedido + " and ImprimeCozinhaSN = 1 ";
             }
-            if (Utils.MarcaTipoConfiguracaoProduto().TipoCodigo == "Personalizado")
-            {
-                iSqlJoin = "left join Produto P on P.CodigoPersonalizado = It.CodProduto ";
-            }
+            //if (Utils.MarcaTipoConfiguracaoProduto().TipoCodigo == "Personalizado")
+            //{
+            //    iSqlJoin = "left join Produto P on P.CodigoPersonalizado = It.CodProduto ";
+            //}
             string iSql = " select IT.CodProduto ,PE.*,  " +
                            " CodGrupo, " +
                            " NomeImpressora, " +
@@ -312,7 +339,7 @@ namespace DexComanda
                            " IT.CodPedido " +
                            " from ItemsPedido IT " +
                            " left join Pedido PE ON PE.Codigo = IT.CodPedido " +
-                           iSqlJoin + 
+                           iSqlJoin +
                            " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo ";
 
             iSql = iSql + iSqlWhere;
@@ -424,9 +451,38 @@ namespace DexComanda
             DadosApp dadosApp = new DadosApp();
             dadosApp.plataforma = iPlataforma;
             dadosApp.url = iUrl;
-            return '[' + JsonConvert.SerializeObject(dadosApp, Formatting.None) + ']';
+            return  JsonConvert.SerializeObject(dadosApp, Formatting.None) ;
         }
         public static string SerializaObjeto(ConfiguracaoBuscaPorCodigo iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
+        public static string SerializaObjetoDadosApp(DadosApp iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
+        public static string SerializaObjetoDadosPush(DadosPush iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
+        public static string SerializaObjeto(DadosImpressoras iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
+        public static string SerializaObjeto(DadosPush iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
+        public static string SerializaObjeto(ImpressaoBalcao iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
+        public static string SerializaObjeto(ImpressaoDelivery iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
+
+        public static string SerializaObjeto(ImpressaoMesa iValores)
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
         }
@@ -500,9 +556,17 @@ namespace DexComanda
         {
             if (iValores == "")
             {
-                return new ConfiguracaoBuscaPorCodigo ();
+                return new ConfiguracaoBuscaPorCodigo();
             }
             return JsonConvert.DeserializeObject<ConfiguracaoBuscaPorCodigo>(iValores);
+        }
+        public static DadosImpressoras DeserializaObjetoImpressoras(string iValores)
+        {
+            if (iValores == "" || iValores==null)
+            {
+                return new DadosImpressoras();
+            }
+            return JsonConvert.DeserializeObject<DadosImpressoras>(iValores);
         }
         public static List<PrecoDiaProduto> DeserializaObjeto(string iValores)
         {
@@ -512,9 +576,105 @@ namespace DexComanda
             }
             return JsonConvert.DeserializeObject<List<PrecoDiaProduto>>(iValores);
         }
+        public static ImpressaoBalcao RetornaConfiguracaoBalcao()
+        {
+            ImpressaoBalcao imprBalcao = new Models.Configuracoes.ImpressaoBalcao();
+            try
+            {
+                imprBalcao = Utils.DeserializaObjetoBalcao(Sessions.returnConfig.ImprimeViaBalcao);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return imprBalcao;
+        }
+        public static ImpressaoMesa RetornaConfiguracaoMesa()
+        {
+            ImpressaoMesa imprCozinha = new ImpressaoMesa();
+            try
+            {
+                imprCozinha = Utils.DeserializaObjetoCozinha(Sessions.returnConfig.ImpViaCozinha);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return imprCozinha;
+        }
+        public static ImpressaoDelivery RetornaConfiguracaoDelivery()
+        {
+            ImpressaoDelivery imprDelivery = new ImpressaoDelivery();
+            try
+            {
+                imprDelivery = Utils.DeserializaObjetoDelivery(Sessions.returnConfig.ImprimeViaEntrega);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return imprDelivery;
+        }
+        public static DadosPush RetornaConfiguracaoPush()
+        {
+            DadosPush dadosPush = new DadosPush();
+            try
+            {
+                dadosPush = DeserializaObjetoPush(Sessions.returnConfig.DadosPush);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return dadosPush;
+        }
+        public static ImpressaoBalcao DeserializaObjetoBalcao(string iValores)
+        {
+            if (iValores == "" || iValores == null)
+            {
+                return new ImpressaoBalcao();
+            }
+            return JsonConvert.DeserializeObject<ImpressaoBalcao>(iValores);
+        }
+        public static ImpressaoMesa DeserializaObjetoCozinha(string iValores)
+        {
+            if (iValores == "" || iValores == null)
+            {
+                return new ImpressaoMesa();
+            }
+            return JsonConvert.DeserializeObject<ImpressaoMesa>(iValores);
+        }
+        public static ImpressaoDelivery DeserializaObjetoDelivery(string iValores)
+        {
+            if (iValores == ""|| iValores==null)
+            {
+                return new ImpressaoDelivery();
+            }
+            return JsonConvert.DeserializeObject<ImpressaoDelivery>(iValores);
+        }
+        public static DadosPush DeserializaObjetoPush(string iValores)
+        {
+            if (iValores =="" || iValores==null)
+            {
+                return new DadosPush();
+            }
+            return JsonConvert.DeserializeObject<DadosPush>(iValores);
+        }
+        public static DadosApp DeserializaObjetoApp(string iValores)
+        {
+            if (iValores == "" || iValores == null)
+            {
+                return new DadosApp();
+            }
+            return JsonConvert.DeserializeObject<DadosApp>(iValores);
+        }
         public static DadosEnvioZenvia DeserializaObjetoZenvia(string iValores)
         {
-            if (iValores == "")
+            if (iValores == "" || iValores == null)
             {
                 return new DadosEnvioZenvia();
             }
@@ -522,7 +682,7 @@ namespace DexComanda
         }
         public static DadosEnvioLocaSMS DeserializaObjetoLocaSMS(string iValores)
         {
-            if (iValores == "")
+            if (iValores == "" || iValores == null)
             {
                 return new DadosEnvioLocaSMS();
             }
@@ -575,7 +735,7 @@ namespace DexComanda
                  Rows[0].Field<int>("Pontos");
             int pontoTroca = conexao.SelectAll("Produto", "spObterMenorPontuacaoProduto").Tables[0].Rows[0].
                 Field<int>("PontoFidelidadeTroca");
-            if (pontosCliente>= pontoTroca)
+            if (pontosCliente >= pontoTroca)
             {
                 if (Utils.MessageBoxQuestion("Esse cliente tem pontos suficientes para resgatar produtos, quer ver os produtos disponiveis ?" +
                       " ** Será exibido uma lista de produtos possíveis a troca **"))
@@ -583,7 +743,7 @@ namespace DexComanda
                     frmProdutosTrocaFidelidade frm = new frmProdutosTrocaFidelidade(pontosCliente);
                     frm.ShowDialog();
                 }
-                   
+
             }
         }
         /// <summary>
@@ -604,11 +764,11 @@ namespace DexComanda
                 for (int i = 0; i < dsItems.Tables[0].Rows.Count; i++)
                 {
                     int iQdtProduto = Convert.ToInt16(dsItems.Tables[0].Rows[i].Field<decimal>("Quantidade"));
-                    iQuantidadePonto += conexao.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", dsItems.Tables[0].Rows[i].Field<int>("CodProduto")).Tables[0].Rows[0].Field<int>("PontoFidelidadeVenda")* iQdtProduto;
+                    iQuantidadePonto += conexao.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", dsItems.Tables[0].Rows[i].Field<int>("CodProduto")).Tables[0].Rows[0].Field<int>("PontoFidelidadeVenda") * iQdtProduto;
                 }
 
                 // Se tipo de fidelidade for por valor ele pega o total do pedido
-                if (fidelidade.Tipo!="Por Ponto")
+                if (fidelidade.Tipo != "Por Ponto")
                 {
                     iQuantidadePonto = Convert.ToInt16(vlrItemsPedido);
                 }
@@ -855,7 +1015,7 @@ namespace DexComanda
             }
 
         }
-        public static string ImpressaoEntre_Epson(int iCodPedido, decimal iValorPago, string iPrevisaoEntrega, Boolean iExport = false, int iNumCopias = 0)
+        public static string ImpressaoEntre_Epson(int iCodPedido, decimal iValorPago, string iPrevisaoEntrega, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
 
@@ -886,31 +1046,13 @@ namespace DexComanda
                 report.SetParameterValue("@Codigo", iCodPedido);
                 report.SetParameterValue("ValorPago", iValorPago);
                 report.SetParameterValue("PrevEntrega", iPrevisaoEntrega);
-                if (iExport)
+
+                for (int i = 0; i < iNumCopias; i++)
                 {
-                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
-                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery_Epson.txt";
-
-                    report.ExportOptions.ExportDestinationType =
-                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
-
-                    report.ExportOptions.ExportFormatType =
-                    CrystalDecisions.Shared.ExportFormatType.Text;
-
-                    report.ExportOptions.DestinationOptions = reportExport;
-                    report.Export();
-                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery_Epson.txt";
+                    report.PrintToPrinter(1, false, 0, 0);
                 }
-                else
-                {
-                    for (int i = 0; i < iNumCopias; i++)
-                    {
-                        report.PrintToPrinter(1, false, 0, 0);
-                    }
 
 
-                }
             }
             catch (Exception erro)
             {
@@ -919,8 +1061,8 @@ namespace DexComanda
             }
             return iRetorno;
         }
-        public static string ImpressaoEntreganova(int iCodPedido, decimal iValorPago, string iPrevisaoEntrega,
-            Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "",
+        public static string ImpressaoEntreganova(int iCodPedido, decimal iValorPago,
+            int iNumCopias = 0, string iNomeImpressora = "",
             Boolean iClienteNovo = false, int CodEndereco = 0)
         {
             string iRetorno = ""; ;
@@ -945,7 +1087,7 @@ namespace DexComanda
                     crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                     crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
                     crConnectionInfo.UserID = "sa";
-                    crConnectionInfo.Password = "1001"; 
+                    crConnectionInfo.Password = "1001";
 
                     CrTables = report.Database.Tables;
                     foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
@@ -958,7 +1100,6 @@ namespace DexComanda
                     report.SetParameterValue("@Codigo", iCodPedido);
                     report.SetParameterValue("@CodEndereco", CodEndereco);
                     report.SetParameterValue("Troco", iValorPago);
-                    //report.SetParameterValue("PrevEntrega", iPrevisaoEntrega);
                     //report.SetParameterValue("ClienteNovo", iClienteNovo);
                     if (iNomeImpressora != "")
                     {
@@ -1052,7 +1193,7 @@ namespace DexComanda
             }
             return iRetorno;
         }
-        public static string ImpressaoEntreganova_20(int iCodPedido, decimal iValorPago, Boolean iExport = false, int iNumCopias = 0)
+        public static string ImpressaoEntreganova_20(int iCodPedido, decimal iValorPago, int iNumCopias = 0)
         {
             string iRetorno = "";
             RelDelivery_20 report;
@@ -1084,30 +1225,12 @@ namespace DexComanda
 
                     report.SetParameterValue("@Codigo", iCodPedido);
                     report.SetParameterValue("ValorPago", iValorPago);
-                    if (iExport)
+
+                    for (int i = 0; i < iNumCopias; i++)
                     {
-                        CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
-                        new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                        reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery_20.txt";
-
-                        report.ExportOptions.ExportDestinationType =
-                        CrystalDecisions.Shared.ExportDestinationType.DiskFile;
-
-                        report.ExportOptions.ExportFormatType =
-                        CrystalDecisions.Shared.ExportFormatType.Text;
-
-                        report.ExportOptions.DestinationOptions = reportExport;
-                        report.Export();
-                        iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery_20.txt";
+                        report.PrintToPrinter(0, false, 0, 0);
                     }
-                    else
-                    {
-                        for (int i = 0; i < iNumCopias; i++)
-                        {
-                            report.PrintToPrinter(0, false, 0, 0);
-                        }
 
-                    }
                 }
                 finally
                 {
@@ -1122,7 +1245,7 @@ namespace DexComanda
             }
             return iRetorno;
         }
-        public static string ImpressaoCozihanova(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
+        public static string ImpressaoCozihanova(int iCodPedido, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
 
@@ -1151,30 +1274,12 @@ namespace DexComanda
                 }
                 report.SetParameterValue("@Codigo", iCodPedido);
                 report.SetParameterValue("@CodEndereco", 0);
-                if (iExport)
+
+                for (int i = 0; i < iNumCopias; i++)
                 {
-                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
-                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivey_Cozinha.txt";
-
-                    report.ExportOptions.ExportDestinationType =
-                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
-
-                    report.ExportOptions.ExportFormatType =
-                    CrystalDecisions.Shared.ExportFormatType.Text;
-
-                    report.ExportOptions.DestinationOptions = reportExport;
-                    report.Export();
-                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivey_Cozinha.txt";
+                    report.PrintToPrinter(1, false, 0, 0);
                 }
-                else
-                {
-                    for (int i = 0; i < iNumCopias; i++)
-                    {
-                        report.PrintToPrinter(1, false, 0, 0);
-                    }
 
-                }
             }
             catch (Exception erro)
             {
@@ -1182,6 +1287,25 @@ namespace DexComanda
                 MessageBox.Show(erro.InnerException.Message);
             }
             return iRetorno;
+        }
+        public static DadosApp RetornaDadosApp()
+        {
+            DadosApp app;
+            if (Sessions.returnConfig.DadosApp!=null)
+            {
+                app = DeserializaObjetoApp(Sessions.returnConfig.DadosApp);
+            }
+            else
+            {
+                app = new DadosApp();
+            }
+            
+            return app;
+        }
+        public static DadosImpressoras RetornaImpressoras()
+        {
+            DadosImpressoras impressoras = DeserializaObjetoImpressoras(Sessions.returnConfig.Impressoras);
+            return impressoras;
         }
         public static ReportClass GerarReport(ReportClass iReport)
         {
@@ -1912,7 +2036,7 @@ namespace DexComanda
         //    }
         //    return iRetorno;
         //}
-        public static string ImpressaoFechamentoNovo(int iCodPedido, Boolean iExport = false, int iNumCopias = 0, string iNomeImpressora = "")
+        public static string ImpressaoFechamentoNovo(int iCodPedido, int iNumCopias = 0, string iNomeImpressora = "")
         {
             string iRetorno = "";
             try
@@ -1971,7 +2095,7 @@ namespace DexComanda
             }
             return iRetorno;
         }
-        public static string ImpressaoFechamentoNovo_20(int iCodPedido, Boolean iExport = false, int iNumCopias = 0)
+        public static string ImpressaoFechamentoNovo_20(int iCodPedido, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
             RelFechamentoMesa_20 report;
@@ -1982,8 +2106,6 @@ namespace DexComanda
 
                 try
                 {
-
-
                     crtableLogoninfos = new TableLogOnInfos();
                     crtableLogoninfo = new TableLogOnInfo();
                     crConnectionInfo = new ConnectionInfo();
@@ -2003,27 +2125,7 @@ namespace DexComanda
                         CrTable.ApplyLogOnInfo(crtableLogoninfo);
                     }
                     report.SetParameterValue("@Codigo", iCodPedido);
-                    if (iExport)
-                    {
-                        CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
-                        new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                        reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelFechamentoMesa_20.txt";
-
-                        report.ExportOptions.ExportDestinationType =
-                        CrystalDecisions.Shared.ExportDestinationType.DiskFile;
-
-                        report.ExportOptions.ExportFormatType =
-                        CrystalDecisions.Shared.ExportFormatType.Text;
-
-                        report.ExportOptions.DestinationOptions = reportExport;
-                        report.Export();
-                        iRetorno = Directory.GetCurrentDirectory() + @"\RelFechamentoMesa_20.txt";
-                    }
-                    else
-                    {
-
-                        report.PrintToPrinter(0, true, 0, 0);
-                    }
+                    report.PrintToPrinter(0, true, 0, 0);
                 }
                 finally
                 {
@@ -2038,7 +2140,7 @@ namespace DexComanda
             }
             return iRetorno;
         }
-        public static string ImpressaoBalcao(int iCodPedido, Boolean iExport = false,
+        public static string ImpressaoBalcao(int iCodPedido,
             int iNumCopias = 0, string iNomeImpressora = "")
         {
             string iRetorno = ""; ;
@@ -2270,7 +2372,7 @@ namespace DexComanda
                     decimal TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
                     frmCadastrarPedido frm = new frmCadastrarPedido(true, DescPedido, NumMesa, strTroco, TaxaEntrega,
                                                      false, dtPedido, iCodPedido, CodPessoa, strTrocoPara, FormaPagamento,
-                                                     strTipoPedido, strMesa, null, decimal.Parse(strTotalPedido));
+                                                     strTipoPedido, strMesa, decimal.Parse(strTotalPedido));
 
 
                     frm.Show();
@@ -2367,7 +2469,7 @@ namespace DexComanda
                 TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
                 frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", 0, "", TaxaEntrega, false,
                                                                             DateTime.Now, CodPedido, CodPessoa,
-                                                                            "", FormaPagamento, "", "Balcao", null, 0.00M, 0, 0, "", iCodEndereco);
+                                                                            "", FormaPagamento, "", "Balcao", 0.00M, 0, 0, "", iCodEndereco);
                 frmRepetePedido.ShowDialog();
 
 
@@ -3024,29 +3126,6 @@ namespace DexComanda
 
         }
 
-        //public static DateTime CriaRegistroInstalacao(DateTime iDataInstalacao)
-        //{
-        //    DateTime iDataValidade;
-        //    RegistryKey RegistroKey;
-        //    try
-        //    {
-        //        if (RegistroKey.OpenSubKey("Software\\DexSistemas\\Validade")!="")
-        //        {
-
-        //        } 
-        //        RegistroKey = Registry.LocalMachine.OpenSubKey("Software", true);
-        //        RegistroKey = RegistroKey.CreateSubKey("DexSistemas");
-        //        RegistroKey.SetValue("Validade", CriptografarArquivo(iDataInstalacao.ToString()));
-
-        //    }
-        //    finally 
-        //    {
-
-
-        //    }
-
-        //    return iDataValidade;
-        //}
         public string Registro()
         {
             string lStrResultado = "";
@@ -3415,10 +3494,6 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-            //if (Sessions.retunrUsuario != null)
-            //{
-
-            //}
 
         }
         public static void SalvarConfiguracao(string iChave, string iValue)
@@ -3447,55 +3522,6 @@ namespace DexComanda
             }
 
         }
-
-
-        // Rotina para efetuar Backup Automátizado do Banco de dados
-        //public static void BackupBanco(string iNomeServidor, string iNomeBanco, string iLocalBackup)
-        //{
-        //    var PatchArquivo = Path.Combine("@E:\\Dados\\BKp.bkp");
-        //    try
-        //    {
-
-        //        var sc = new ServerConnection(iNomeServidor, "sa", "1001");
-        //        var server = new Server(sc);
-
-        //        if (server.Databases[iNomeBanco] != null)
-        //        {
-        //            //Criando o diretorio do Backup
-        //            //if (!Directory.Exists("@"+iLocalBackup))
-        //            //{
-        //            //    Directory.CreateDirectory("@"+iLocalBackup);
-        //            //}
-
-        //            // Criando o objeto Backup
-        //            var bak = new Backup();
-        //            bak.Incremental = false;
-
-        //            bak.Action = BackupActionType.Database;
-        //            //string data = DateTime.Now.Date.ToString("MM-dd-yy");
-        //            bak.BackupSetName = iNomeBanco + "_Backup"+DateTime.Now.ToShortDateString().Replace("/","")+".bkp";
-
-        //            // Definindo o banco de dados a ser salvo
-        //            bak.Database = iNomeBanco;
-
-        //            bak.Checksum = true;
-
-        //            // Adcionando um destino para o backup
-        //            BackupDeviceItem destino = new BackupDeviceItem(bak.BackupSetName, DeviceType.File);
-
-        //            bak.Devices.Add(destino);
-        //            // Executando o backup
-        //            bak.SqlBackup(server);
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-
-        //    }
-        //}
-
 
     }
 

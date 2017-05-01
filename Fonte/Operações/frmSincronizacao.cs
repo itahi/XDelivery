@@ -138,11 +138,11 @@ namespace DexComanda.Operações
             RestResponse response = new RestResponse();
             RestRequest request = new RestRequest("ws/loja/setOpenSignalId", Method.POST);
             request.AddParameter("token", iParamToken);
-            request.AddParameter("open_signal_id", Sessions.returnConfig.Pushapp_id);
+            request.AddParameter("open_signal_id", Utils.RetornaConfiguracaoPush().Pushapp_id);
             request.AddParameter("store_id", "0");
             request.AddParameter("nome_cliente", Sessions.returnEmpresa.Nome);
-            request.AddParameter("gcm_sender_id", Sessions.returnConfig.GCM);
-            request.AddParameter("onesignal_api_key", Sessions.returnConfig.Pushauthorization);
+            request.AddParameter("gcm_sender_id", Utils.RetornaConfiguracaoPush().GCM);
+            request.AddParameter("onesignal_api_key", Utils.RetornaConfiguracaoPush().Pushauthorization);
             MudaLabel("Códigos OneSignal");
             response = (RestResponse)client.Execute(request);
             ReturnPadrao lRetorno = new ReturnPadrao();
@@ -679,7 +679,7 @@ namespace DexComanda.Operações
                     request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
 
                     //Caso o grupo esteja marcado como multi sabores ele enviará esse parametro
-                    if (dRow.ItemArray.GetValue(19).ToString() == "1")
+                    if (ds.Tables[0].Rows[i].Field<int>("MultiploSabores")==1)
                     {
                         request.AddParameter("multi_product_id", dRow.ItemArray.GetValue(15).ToString());
                         request.AddParameter("multi_product_max", "2");
@@ -942,12 +942,12 @@ namespace DexComanda.Operações
         }
         private void frmSincronizacao_Load(object sender, EventArgs e)
         {
-            if (Sessions.returnConfig.PrevisaoEntrega != null)
-            {
-                strPrevisaoEntrega = Sessions.returnConfig.PrevisaoEntrega;
-            }
+            //    if (Sessions.returnConfig.PrevisaoEntrega != null)
+            //    {
+            //        strPrevisaoEntrega = Sessions.returnConfig.PrevisaoEntrega;
+            //    }
 
-            chkPrevisao.Text = chkPrevisao.Text + " " + strPrevisaoEntrega + " min.";
+            //    chkPrevisao.Text = chkPrevisao.Text + " " + strPrevisaoEntrega + " min.";
         }
 
         private void chkRemover_CheckedChanged(object sender, EventArgs e)

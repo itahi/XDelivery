@@ -13,7 +13,6 @@ namespace DexComanda
     public partial class frmCadastrarProduto : Form
     {
         private Conexao con;
-        private Main parentMain;
         private int rowIndex;
         int codigoOpcao;
         int codTipo;
@@ -29,11 +28,9 @@ namespace DexComanda
         private int codigoinsumo;
         private int intPontosFidelidadeVenda = 0;
         private int intPontosFidelidadeTroca = 0;
-        public frmCadastrarProduto(Main parent)
+        public frmCadastrarProduto()
         {
             InitializeComponent();
-            this.parentMain = parent;
-            //  parentMain = new Main();
             DiasSelecionados = new List<string>();
             grpDesconto.Visible = DescontoPordia;
 
@@ -112,10 +109,9 @@ namespace DexComanda
 
         }
 
-        public frmCadastrarProduto(Produtos prod, Main parent)
+        public frmCadastrarProduto(Produtos prod)
         {
             InitializeComponent();
-            this.parentMain = parent;
             DiasSelecionados = new List<string>();
             this.produto = prod;
             if (DescontoPordia)

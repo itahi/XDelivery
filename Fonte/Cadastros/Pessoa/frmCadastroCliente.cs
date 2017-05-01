@@ -10,7 +10,6 @@ namespace DexComanda
     public partial class frmCadastroCliente : Form
     {
         private Conexao con;
-        private Main parentMain;
         private Pessoa cliente;
         private int codigoClienteParaAlterar;
         private DataSet endereco;
@@ -22,20 +21,18 @@ namespace DexComanda
         private int codigo = 0;
         private int prvCodEndereco;
 
-        public frmCadastroCliente(Main parent = null)
+        public frmCadastroCliente()
         {
             InitializeComponent();
-            this.parentMain = parent;
             CarregaRegiao(0, cbxRegiao, txtTaxaEntrega);
 
             // ObterCidadePadrao();
             //ObterCidadePadrao();
         }
 
-        public frmCadastroCliente(Pessoa cli, Main parent)
+        public frmCadastroCliente(Pessoa cli)
         {
             InitializeComponent();
-            this.parentMain = parent;
             this.cliente = cli;
             txtDataNascimento.Text = cli.DataNascimento.ToString();
             txtDataCadastro.Text = cli.DataCadastro.ToString();
@@ -421,7 +418,7 @@ namespace DexComanda
 
                         var TaxaEntrega = Utils.RetornaTaxaPorCliente(iCodPessoa, 0);
                         frmCadastrarPedido frmCadastrarPedido = new frmCadastrarPedido(false, "0,00", 0, "", TaxaEntrega, false, DateTime.Now, 0, int.Parse(dRow.ItemArray.GetValue(0).ToString()),
-                                                                                       "", "", "", "", null, 0, 0, 0, "", iCodEndereco, true);
+                                                                                       "", "", "", "",0, 0, 0, "", iCodEndereco, true);
                         frmCadastrarPedido.ShowDialog();
                     }
                 }
@@ -510,8 +507,7 @@ namespace DexComanda
         }
         private void this_FormClosing()
         {
-            parentMain = new Main();
-            Utils.PopulaGrid_Novo("Pessoa", parentMain.produtosGridView, Sessions.SqlPessoa);
+          //  Utils.PopulaGrid_Novo("Pessoa", Sessions.SqlPessoa);
         }
         //private void CadastraCEP()
         //{
@@ -973,8 +969,6 @@ namespace DexComanda
             {
                 DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
                 DateTime dtPedido = Convert.ToDateTime(dRowPedido.ItemArray.GetValue(7).ToString());
-                string dblPRevisao = dtPedido.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString();
-
                 string iTipo = dRowPedido.ItemArray.GetValue(8).ToString();
                 decimal iTrocoPara = decimal.Parse(dRowPedido.ItemArray.GetValue(4).ToString());
                 decimal iTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
@@ -984,7 +978,7 @@ namespace DexComanda
                     iValue = iTrocoPara - iTotalPedido;
                 }
 
-                Utils.ImpressaoEntreganova(codPedido, iValue, dtPedido.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString(), false, 1);
+                Utils.ImpressaoEntreganova(codPedido, iValue,int.Parse(Utils.RetornaConfiguracaoDelivery().ViaDelivery));
             }
 
         }

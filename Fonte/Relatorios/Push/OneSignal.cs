@@ -34,7 +34,7 @@ namespace DexComanda.Push
             switch (iDMsg)
             {
                 case 1:
-                    iTexto = "Seu pedido chegará em aproximadamente " + Sessions.returnConfig.PrevisaoEntrega + " minutos.";
+                    iTexto = "Seu pedido chegará em aproximadamente " + "" + " minutos.";
                     break;
                 case 2:
                     iTexto = "Opa seu pedido acaba de ser confirmado e impresso!";
@@ -75,10 +75,10 @@ namespace DexComanda.Push
                 request.Method = "POST";
                 request.ContentType = "application/json";
                 string irul = Sessions.returnEmpresa.UrlServidor;
-                request.Headers.Add("authorization", "Basic " + Sessions.returnConfig.Pushauthorization);
+                request.Headers.Add("authorization", "Basic " + Utils.RetornaConfiguracaoPush().Pushauthorization);
 
                 byte[] byteArray = Encoding.UTF8.GetBytes("{"
-                                                        + "\"app_id\": \"" + Sessions.returnConfig.Pushapp_id + "\","
+                                                        + "\"app_id\": \"" + Utils.RetornaConfiguracaoPush().Pushapp_id + "\","
                                                         + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
                                                         + "\"contents\": {\"en\": \"" + iTexto + "\"},"
                                                          + "\"include_player_ids\": [\"" + iUserID + "\"]}");
@@ -141,9 +141,9 @@ namespace DexComanda.Push
                 request.Method = "POST";
                 request.ContentType = "application/json";
                 string irul = Sessions.returnEmpresa.UrlServidor;
-                request.Headers.Add("authorization", "Basic " + Sessions.returnConfig.Pushauthorization);
+                request.Headers.Add("authorization", "Basic " + Utils.RetornaConfiguracaoPush().Pushauthorization);
                 byte[] byteArray = Encoding.UTF8.GetBytes("{"
-                                                        + "\"app_id\": \"" + Sessions.returnConfig.Pushapp_id + "\","
+                                                        + "\"app_id\": \"" + Utils.RetornaConfiguracaoPush().Pushapp_id + "\","
                                                         + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
                                                         + "\"contents\": {\"en\": \"" + iTexto + "\"},"
                                                         + "\"included_segments\": [\"All\"]}");
@@ -206,13 +206,13 @@ namespace DexComanda.Push
                 request.Method = "POST";
                 request.ContentType = "application/json";
                 string irul = Sessions.returnEmpresa.UrlServidor;
-                request.Headers.Add("authorization", "Basic " + Sessions.returnConfig.Pushauthorization);
+                request.Headers.Add("authorization", "Basic " + Utils.RetornaConfiguracaoPush().Pushauthorization);
 
                 //Transforma os em uma lista separados por virgula
                 string result = String.Join(",",iUserID.ToArray());
 
                 byte[] byteArray = Encoding.UTF8.GetBytes("{"
-                                         + "\"app_id\": \""+ Sessions.returnConfig.Pushapp_id+ "\","
+                                         + "\"app_id\": \""+ Utils.RetornaConfiguracaoPush().Pushapp_id + "\","
                                          + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
                                          + "\"contents\": {\"en\": \"" + iTexto + "\"},"
                                          + iModoEntrega

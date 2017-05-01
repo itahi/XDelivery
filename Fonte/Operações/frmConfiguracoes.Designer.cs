@@ -80,6 +80,7 @@
             this.txtBanco = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.cbxTipoCodigo = new System.Windows.Forms.ComboBox();
             this.chkProporcional = new System.Windows.Forms.CheckBox();
             this.chkVendedor = new System.Windows.Forms.CheckBox();
             this.chkRegCancelamentos = new System.Windows.Forms.CheckBox();
@@ -98,8 +99,20 @@
             this.label1 = new System.Windows.Forms.Label();
             this.chkLoginSenha = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.cbxAgrupamentoBalcao = new System.Windows.Forms.ComboBox();
+            this.chkViaBalcao = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbxColunas = new System.Windows.Forms.ComboBox();
+            this.grpEntrega = new System.Windows.Forms.GroupBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.cbxAgrupamentoDelivery = new System.Windows.Forms.ComboBox();
+            this.chkViaEntrega = new System.Windows.Forms.CheckBox();
+            this.grpCozinha = new System.Windows.Forms.GroupBox();
+            this.chkViaCozinha = new System.Windows.Forms.CheckBox();
             this.label37 = new System.Windows.Forms.Label();
-            this.cbxTipoImpressao = new System.Windows.Forms.ComboBox();
+            this.cbxAgrupamentoCozinha = new System.Windows.Forms.ComboBox();
             this.grpImpressoras = new System.Windows.Forms.GroupBox();
             this.label54 = new System.Windows.Forms.Label();
             this.label53 = new System.Windows.Forms.Label();
@@ -114,18 +127,6 @@
             this.txtViasBalcao = new System.Windows.Forms.TextBox();
             this.txtViasCozinha = new System.Windows.Forms.TextBox();
             this.txtViasEntrega = new System.Windows.Forms.TextBox();
-            this.lblporta = new System.Windows.Forms.Label();
-            this.txtPortaLPT = new System.Windows.Forms.TextBox();
-            this.lbltempo = new System.Windows.Forms.Label();
-            this.chkImpLPT = new System.Windows.Forms.CheckBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.txtTamanhoFont = new System.Windows.Forms.TextBox();
-            this.txtPrevisao = new System.Windows.Forms.TextBox();
-            this.chkPrevisao = new System.Windows.Forms.CheckBox();
-            this.chkImprimeViaEntrega = new System.Windows.Forms.CheckBox();
-            this.chkViaCozinha = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtCaracterImpressora = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.grpControleFidelidade = new System.Windows.Forms.GroupBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
@@ -235,7 +236,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.cbxTipoCodigo = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -248,6 +248,9 @@
             this.grpLoginSenha.SuspendLayout();
             this.pInfoUserDefault.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.grpEntrega.SuspendLayout();
+            this.grpCozinha.SuspendLayout();
             this.grpImpressoras.SuspendLayout();
             this.grpViasImpressao.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -734,6 +737,19 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Gerais";
             // 
+            // cbxTipoCodigo
+            // 
+            this.cbxTipoCodigo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTipoCodigo.FormattingEnabled = true;
+            this.cbxTipoCodigo.Items.AddRange(new object[] {
+            "Personalizado",
+            "Automatico"});
+            this.cbxTipoCodigo.Location = new System.Drawing.Point(273, 17);
+            this.cbxTipoCodigo.Name = "cbxTipoCodigo";
+            this.cbxTipoCodigo.Size = new System.Drawing.Size(69, 21);
+            this.cbxTipoCodigo.TabIndex = 31;
+            this.toolTip1.SetToolTip(this.cbxTipoCodigo, "Selecione o tipo de agrupamento para impressão do pedido da cozinha");
+            // 
             // chkProporcional
             // 
             this.chkProporcional.AutoSize = true;
@@ -912,51 +928,178 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.label37);
-            this.groupBox2.Controls.Add(this.cbxTipoImpressao);
+            this.groupBox2.Controls.Add(this.groupBox3);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.cbxColunas);
+            this.groupBox2.Controls.Add(this.grpEntrega);
+            this.groupBox2.Controls.Add(this.grpCozinha);
             this.groupBox2.Controls.Add(this.grpImpressoras);
             this.groupBox2.Controls.Add(this.grpViasImpressao);
-            this.groupBox2.Controls.Add(this.lblporta);
-            this.groupBox2.Controls.Add(this.txtPortaLPT);
-            this.groupBox2.Controls.Add(this.lbltempo);
-            this.groupBox2.Controls.Add(this.chkImpLPT);
-            this.groupBox2.Controls.Add(this.label22);
-            this.groupBox2.Controls.Add(this.txtTamanhoFont);
-            this.groupBox2.Controls.Add(this.txtPrevisao);
-            this.groupBox2.Controls.Add(this.chkPrevisao);
-            this.groupBox2.Controls.Add(this.chkImprimeViaEntrega);
-            this.groupBox2.Controls.Add(this.chkViaCozinha);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.txtCaracterImpressora);
             this.groupBox2.Location = new System.Drawing.Point(7, 165);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(640, 174);
+            this.groupBox2.Size = new System.Drawing.Size(640, 193);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Impressão";
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label27);
+            this.groupBox3.Controls.Add(this.cbxAgrupamentoBalcao);
+            this.groupBox3.Controls.Add(this.chkViaBalcao);
+            this.groupBox3.Location = new System.Drawing.Point(166, 100);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(156, 82);
+            this.groupBox3.TabIndex = 36;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Config. Balcao";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(9, 38);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(135, 13);
+            this.label27.TabIndex = 31;
+            this.label27.Text = "Agrupamento da impressão";
+            // 
+            // cbxAgrupamentoBalcao
+            // 
+            this.cbxAgrupamentoBalcao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxAgrupamentoBalcao.FormattingEnabled = true;
+            this.cbxAgrupamentoBalcao.Items.AddRange(new object[] {
+            "Por Cozinha/Grupo",
+            "Por Impressora",
+            "Sem Agrupamento"});
+            this.cbxAgrupamentoBalcao.Location = new System.Drawing.Point(6, 55);
+            this.cbxAgrupamentoBalcao.Name = "cbxAgrupamentoBalcao";
+            this.cbxAgrupamentoBalcao.Size = new System.Drawing.Size(129, 21);
+            this.cbxAgrupamentoBalcao.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.cbxAgrupamentoBalcao, "Tipo de agrupamento na via de cozinha para Balcao");
+            // 
+            // chkViaBalcao
+            // 
+            this.chkViaBalcao.AutoSize = true;
+            this.chkViaBalcao.Location = new System.Drawing.Point(6, 19);
+            this.chkViaBalcao.Name = "chkViaBalcao";
+            this.chkViaBalcao.Size = new System.Drawing.Size(116, 17);
+            this.chkViaBalcao.TabIndex = 13;
+            this.chkViaBalcao.Text = "Imprime Via Balcao";
+            this.chkViaBalcao.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 102);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 13);
+            this.label2.TabIndex = 35;
+            this.label2.Text = "Colunas impressao";
+            // 
+            // cbxColunas
+            // 
+            this.cbxColunas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxColunas.FormattingEnabled = true;
+            this.cbxColunas.Items.AddRange(new object[] {
+            "20",
+            "40"});
+            this.cbxColunas.Location = new System.Drawing.Point(10, 119);
+            this.cbxColunas.Name = "cbxColunas";
+            this.cbxColunas.Size = new System.Drawing.Size(129, 21);
+            this.cbxColunas.TabIndex = 34;
+            this.toolTip1.SetToolTip(this.cbxColunas, "Selecione o tipo de agrupamento para impressão do pedido da cozinha");
+            // 
+            // grpEntrega
+            // 
+            this.grpEntrega.Controls.Add(this.label22);
+            this.grpEntrega.Controls.Add(this.cbxAgrupamentoDelivery);
+            this.grpEntrega.Controls.Add(this.chkViaEntrega);
+            this.grpEntrega.Location = new System.Drawing.Point(166, 15);
+            this.grpEntrega.Name = "grpEntrega";
+            this.grpEntrega.Size = new System.Drawing.Size(156, 82);
+            this.grpEntrega.TabIndex = 33;
+            this.grpEntrega.TabStop = false;
+            this.grpEntrega.Text = "Config. Entrega";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(9, 38);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(135, 13);
+            this.label22.TabIndex = 31;
+            this.label22.Text = "Agrupamento da impressão";
+            // 
+            // cbxAgrupamentoDelivery
+            // 
+            this.cbxAgrupamentoDelivery.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxAgrupamentoDelivery.FormattingEnabled = true;
+            this.cbxAgrupamentoDelivery.Items.AddRange(new object[] {
+            "Por Cozinha/Grupo",
+            "Por Impressora",
+            "Sem Agrupamento"});
+            this.cbxAgrupamentoDelivery.Location = new System.Drawing.Point(6, 55);
+            this.cbxAgrupamentoDelivery.Name = "cbxAgrupamentoDelivery";
+            this.cbxAgrupamentoDelivery.Size = new System.Drawing.Size(129, 21);
+            this.cbxAgrupamentoDelivery.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.cbxAgrupamentoDelivery, "Tipo de agrupamento na via de cozinha para delivery");
+            // 
+            // chkViaEntrega
+            // 
+            this.chkViaEntrega.AutoSize = true;
+            this.chkViaEntrega.Location = new System.Drawing.Point(6, 19);
+            this.chkViaEntrega.Name = "chkViaEntrega";
+            this.chkViaEntrega.Size = new System.Drawing.Size(126, 17);
+            this.chkViaEntrega.TabIndex = 13;
+            this.chkViaEntrega.Text = "Imprime Via Entrega?";
+            this.chkViaEntrega.UseVisualStyleBackColor = true;
+            this.chkViaEntrega.CheckedChanged += new System.EventHandler(this.chkImprimeViaEntrega_CheckedChanged);
+            // 
+            // grpCozinha
+            // 
+            this.grpCozinha.Controls.Add(this.chkViaCozinha);
+            this.grpCozinha.Controls.Add(this.label37);
+            this.grpCozinha.Controls.Add(this.cbxAgrupamentoCozinha);
+            this.grpCozinha.Location = new System.Drawing.Point(4, 15);
+            this.grpCozinha.Name = "grpCozinha";
+            this.grpCozinha.Size = new System.Drawing.Size(156, 82);
+            this.grpCozinha.TabIndex = 32;
+            this.grpCozinha.TabStop = false;
+            this.grpCozinha.Text = "Config. Cozinhas";
+            // 
+            // chkViaCozinha
+            // 
+            this.chkViaCozinha.AutoSize = true;
+            this.chkViaCozinha.Location = new System.Drawing.Point(6, 19);
+            this.chkViaCozinha.Name = "chkViaCozinha";
+            this.chkViaCozinha.Size = new System.Drawing.Size(125, 17);
+            this.chkViaCozinha.TabIndex = 5;
+            this.chkViaCozinha.Text = "Imprimir via Cozinha?";
+            this.chkViaCozinha.UseVisualStyleBackColor = true;
+            this.chkViaCozinha.CheckedChanged += new System.EventHandler(this.chkViaCozinha_CheckedChanged);
+            // 
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(18, 122);
+            this.label37.Location = new System.Drawing.Point(9, 38);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(135, 13);
             this.label37.TabIndex = 31;
             this.label37.Text = "Agrupamento da impressão";
             // 
-            // cbxTipoImpressao
+            // cbxAgrupamentoCozinha
             // 
-            this.cbxTipoImpressao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxTipoImpressao.FormattingEnabled = true;
-            this.cbxTipoImpressao.Items.AddRange(new object[] {
+            this.cbxAgrupamentoCozinha.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxAgrupamentoCozinha.FormattingEnabled = true;
+            this.cbxAgrupamentoCozinha.Items.AddRange(new object[] {
             "Por Cozinha/Grupo",
             "Por Impressora",
             "Sem Agrupamento"});
-            this.cbxTipoImpressao.Location = new System.Drawing.Point(21, 138);
-            this.cbxTipoImpressao.Name = "cbxTipoImpressao";
-            this.cbxTipoImpressao.Size = new System.Drawing.Size(129, 21);
-            this.cbxTipoImpressao.TabIndex = 30;
-            this.toolTip1.SetToolTip(this.cbxTipoImpressao, "Selecione o tipo de agrupamento para impressão do pedido da cozinha");
+            this.cbxAgrupamentoCozinha.Location = new System.Drawing.Point(6, 55);
+            this.cbxAgrupamentoCozinha.Name = "cbxAgrupamentoCozinha";
+            this.cbxAgrupamentoCozinha.Size = new System.Drawing.Size(129, 21);
+            this.cbxAgrupamentoCozinha.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.cbxAgrupamentoCozinha, "Selecione o tipo de agrupamento para impressão do pedido da cozinha");
             // 
             // grpImpressoras
             // 
@@ -1035,9 +1178,9 @@
             this.grpViasImpressao.Controls.Add(this.txtViasBalcao);
             this.grpViasImpressao.Controls.Add(this.txtViasCozinha);
             this.grpViasImpressao.Controls.Add(this.txtViasEntrega);
-            this.grpViasImpressao.Location = new System.Drawing.Point(315, 15);
+            this.grpViasImpressao.Location = new System.Drawing.Point(326, 15);
             this.grpViasImpressao.Name = "grpViasImpressao";
-            this.grpViasImpressao.Size = new System.Drawing.Size(121, 100);
+            this.grpViasImpressao.Size = new System.Drawing.Size(116, 131);
             this.grpViasImpressao.TabIndex = 27;
             this.grpViasImpressao.TabStop = false;
             this.grpViasImpressao.Text = "Vias Impressão";
@@ -1092,121 +1235,6 @@
             this.txtViasEntrega.Size = new System.Drawing.Size(39, 20);
             this.txtViasEntrega.TabIndex = 7;
             this.txtViasEntrega.Text = "0";
-            // 
-            // lblporta
-            // 
-            this.lblporta.AutoSize = true;
-            this.lblporta.Location = new System.Drawing.Point(218, 102);
-            this.lblporta.Name = "lblporta";
-            this.lblporta.Size = new System.Drawing.Size(52, 13);
-            this.lblporta.TabIndex = 26;
-            this.lblporta.Text = "Porta Imp";
-            this.lblporta.Visible = false;
-            // 
-            // txtPortaLPT
-            // 
-            this.txtPortaLPT.Location = new System.Drawing.Point(161, 95);
-            this.txtPortaLPT.Name = "txtPortaLPT";
-            this.txtPortaLPT.Size = new System.Drawing.Size(51, 20);
-            this.txtPortaLPT.TabIndex = 25;
-            // 
-            // lbltempo
-            // 
-            this.lbltempo.AutoSize = true;
-            this.lbltempo.Location = new System.Drawing.Point(219, 78);
-            this.lbltempo.Name = "lbltempo";
-            this.lbltempo.Size = new System.Drawing.Size(88, 13);
-            this.lbltempo.TabIndex = 24;
-            this.lbltempo.Text = "Prev. em minutos";
-            this.lbltempo.Visible = false;
-            // 
-            // chkImpLPT
-            // 
-            this.chkImpLPT.AutoSize = true;
-            this.chkImpLPT.Location = new System.Drawing.Point(20, 98);
-            this.chkImpLPT.Name = "chkImpLPT";
-            this.chkImpLPT.Size = new System.Drawing.Size(125, 17);
-            this.chkImpLPT.TabIndex = 23;
-            this.chkImpLPT.Text = "Impressora Matricial?";
-            this.chkImpLPT.UseVisualStyleBackColor = true;
-            this.chkImpLPT.CheckedChanged += new System.EventHandler(this.ImpressoaMatricial);
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(218, 52);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(76, 13);
-            this.label22.TabIndex = 22;
-            this.label22.Text = "Tamanho Font";
-            // 
-            // txtTamanhoFont
-            // 
-            this.txtTamanhoFont.Location = new System.Drawing.Point(161, 49);
-            this.txtTamanhoFont.Name = "txtTamanhoFont";
-            this.txtTamanhoFont.Size = new System.Drawing.Size(51, 20);
-            this.txtTamanhoFont.TabIndex = 21;
-            this.txtTamanhoFont.Text = "9";
-            // 
-            // txtPrevisao
-            // 
-            this.txtPrevisao.Location = new System.Drawing.Point(161, 71);
-            this.txtPrevisao.Name = "txtPrevisao";
-            this.txtPrevisao.Size = new System.Drawing.Size(51, 20);
-            this.txtPrevisao.TabIndex = 20;
-            this.txtPrevisao.Visible = false;
-            this.txtPrevisao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrevisao_KeyPress);
-            // 
-            // chkPrevisao
-            // 
-            this.chkPrevisao.AutoSize = true;
-            this.chkPrevisao.Location = new System.Drawing.Point(20, 74);
-            this.chkPrevisao.Name = "chkPrevisao";
-            this.chkPrevisao.Size = new System.Drawing.Size(97, 17);
-            this.chkPrevisao.TabIndex = 19;
-            this.chkPrevisao.Text = "Prev. Entrega?";
-            this.chkPrevisao.UseVisualStyleBackColor = true;
-            this.chkPrevisao.CheckedChanged += new System.EventHandler(this.ControlaPrevisao);
-            // 
-            // chkImprimeViaEntrega
-            // 
-            this.chkImprimeViaEntrega.AutoSize = true;
-            this.chkImprimeViaEntrega.Location = new System.Drawing.Point(21, 51);
-            this.chkImprimeViaEntrega.Name = "chkImprimeViaEntrega";
-            this.chkImprimeViaEntrega.Size = new System.Drawing.Size(126, 17);
-            this.chkImprimeViaEntrega.TabIndex = 13;
-            this.chkImprimeViaEntrega.Text = "Imprime Via Entrega?";
-            this.chkImprimeViaEntrega.UseVisualStyleBackColor = true;
-            this.chkImprimeViaEntrega.CheckedChanged += new System.EventHandler(this.chkImprimeViaEntrega_CheckedChanged);
-            // 
-            // chkViaCozinha
-            // 
-            this.chkViaCozinha.AutoSize = true;
-            this.chkViaCozinha.Location = new System.Drawing.Point(20, 28);
-            this.chkViaCozinha.Name = "chkViaCozinha";
-            this.chkViaCozinha.Size = new System.Drawing.Size(125, 17);
-            this.chkViaCozinha.TabIndex = 5;
-            this.chkViaCozinha.Text = "Imprimir via Cozinha?";
-            this.chkViaCozinha.UseVisualStyleBackColor = true;
-            this.chkViaCozinha.CheckedChanged += new System.EventHandler(this.chkViaCozinha_CheckedChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(218, 29);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Qtd. Caract Linha";
-            // 
-            // txtCaracterImpressora
-            // 
-            this.txtCaracterImpressora.Location = new System.Drawing.Point(161, 26);
-            this.txtCaracterImpressora.Name = "txtCaracterImpressora";
-            this.txtCaracterImpressora.Size = new System.Drawing.Size(51, 20);
-            this.txtCaracterImpressora.TabIndex = 6;
-            this.txtCaracterImpressora.Text = "40";
-            this.txtCaracterImpressora.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCaracterImpressora_KeyPress);
             // 
             // tabPage2
             // 
@@ -1342,7 +1370,6 @@
             // 
             this.grpFidelidade.Controls.Add(this.rbPorValor);
             this.grpFidelidade.Controls.Add(this.rbPorPonto);
-            this.grpFidelidade.Enabled = false;
             this.grpFidelidade.Location = new System.Drawing.Point(6, 20);
             this.grpFidelidade.Name = "grpFidelidade";
             this.grpFidelidade.Size = new System.Drawing.Size(113, 68);
@@ -1533,6 +1560,7 @@
             this.toolTip1.SetToolTip(this.chkFidelidade, "Ativa o programa de fidelidade");
             this.chkFidelidade.UseVisualStyleBackColor = true;
             this.chkFidelidade.CheckedChanged += new System.EventHandler(this.chkFidelidade_CheckedChanged);
+            this.chkFidelidade.CheckStateChanged += new System.EventHandler(this.chkFidelidade_CheckStateChanged);
             // 
             // chkDescontoDiasemana
             // 
@@ -2358,19 +2386,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // cbxTipoCodigo
-            // 
-            this.cbxTipoCodigo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxTipoCodigo.FormattingEnabled = true;
-            this.cbxTipoCodigo.Items.AddRange(new object[] {
-            "Personalizado",
-            "Automatico"});
-            this.cbxTipoCodigo.Location = new System.Drawing.Point(273, 17);
-            this.cbxTipoCodigo.Name = "cbxTipoCodigo";
-            this.cbxTipoCodigo.Size = new System.Drawing.Size(69, 21);
-            this.cbxTipoCodigo.TabIndex = 31;
-            this.toolTip1.SetToolTip(this.cbxTipoCodigo, "Selecione o tipo de agrupamento para impressão do pedido da cozinha");
-            // 
             // frmConfiguracoes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2404,6 +2419,12 @@
             this.pInfoUserDefault.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.grpEntrega.ResumeLayout(false);
+            this.grpEntrega.PerformLayout();
+            this.grpCozinha.ResumeLayout(false);
+            this.grpCozinha.PerformLayout();
             this.grpImpressoras.ResumeLayout(false);
             this.grpImpressoras.PerformLayout();
             this.grpViasImpressao.ResumeLayout(false);
@@ -2458,8 +2479,6 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.CheckBox chkLoginSenha;
         private System.Windows.Forms.CheckBox chkDataNAscimento;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtCaracterImpressora;
         private System.Windows.Forms.CheckBox chkViaCozinha;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -2510,20 +2529,12 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.CheckBox chkControlaMesas;
         private System.Windows.Forms.CheckBox chkDescontoDiasemana;
-        private System.Windows.Forms.CheckBox chkImprimeViaEntrega;
+        private System.Windows.Forms.CheckBox chkViaEntrega;
         private System.Windows.Forms.CheckBox chkFidelidade;
         private System.Windows.Forms.GroupBox grpSms;
         private System.Windows.Forms.CheckBox chkEnviaSms;
         private System.Windows.Forms.GroupBox grpFidelidade;
-        private System.Windows.Forms.TextBox txtPrevisao;
-        private System.Windows.Forms.CheckBox chkPrevisao;
         private System.Windows.Forms.CheckBox chk10Garcon;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox txtTamanhoFont;
-        private System.Windows.Forms.Label lblporta;
-        private System.Windows.Forms.TextBox txtPortaLPT;
-        private System.Windows.Forms.Label lbltempo;
-        private System.Windows.Forms.CheckBox chkImpLPT;
         private System.Windows.Forms.GroupBox grpViasImpressao;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label25;
@@ -2625,7 +2636,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Sábado;
         private System.Windows.Forms.DataGridViewTextBoxColumn Domingo;
         private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.ComboBox cbxTipoImpressao;
+        private System.Windows.Forms.ComboBox cbxAgrupamentoCozinha;
         private System.Windows.Forms.GroupBox grpZenvia;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.TextBox txtIDZenvia;
@@ -2651,5 +2662,15 @@
         private System.Windows.Forms.CheckBox chkSegunda;
         private System.Windows.Forms.CheckBox checkBox6;
         private System.Windows.Forms.ComboBox cbxTipoCodigo;
+        private System.Windows.Forms.GroupBox grpCozinha;
+        private System.Windows.Forms.GroupBox grpEntrega;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ComboBox cbxAgrupamentoDelivery;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbxColunas;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.ComboBox cbxAgrupamentoBalcao;
+        private System.Windows.Forms.CheckBox chkViaBalcao;
     }
 }

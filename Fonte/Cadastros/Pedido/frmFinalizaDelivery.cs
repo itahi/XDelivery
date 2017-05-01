@@ -15,6 +15,17 @@ namespace DexComanda.Cadastros.Pedido
     {
         private Conexao con;
         private int intCodPedido;
+        private bool ImprimeViaCozinha = Utils.RetornaConfiguracaoMesa().ImprimeSN;
+        private int QtdViasCozinha = int.Parse(Utils.RetornaConfiguracaoMesa().ViaCozinha);
+        private string TipoAgrupamentoCozinha = Utils.RetornaConfiguracaoMesa().TipoAgrupamento;
+        private bool ImprimeViaEntrega = Utils.RetornaConfiguracaoDelivery().ImprimeSN;
+        private int QtdViasEntrega = int.Parse(Utils.RetornaConfiguracaoDelivery().ViaDelivery);
+        private string TipoAgrupamentoEntrega = Utils.RetornaConfiguracaoDelivery().TipoAgrupamento;
+
+        private bool ImprimeViaBalcao = Utils.RetornaConfiguracaoDelivery().ImprimeSN;
+        private int QtdViasBalcao = int.Parse(Utils.RetornaConfiguracaoDelivery().ViaDelivery);
+        private string TipoAgrupamentoBalcao = Utils.RetornaConfiguracaoDelivery().TipoAgrupamento;
+
         public frmFinalizaDelivery()
         {
             InitializeComponent();
@@ -131,22 +142,20 @@ namespace DexComanda.Cadastros.Pedido
                 DateTime DataPed = ds.Tables[0].Rows[0].Field<DateTime>("RealizadoEM");
                 int intCodEndereco = ds.Tables[0].Rows[0].Field<int>("CodEndereco");
                 string strTipoPedido = ds.Tables[0].Rows[0].Field<string>("Tipo");
-                int QtViasEntrega = int.Parse(Sessions.returnConfig.ViasEntrega);
-                string dblPRevisao = DataPed.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString();
 
-                if (Sessions.returnConfig.ImpViaCozinha)
+                if (ImprimeViaCozinha)
                 {
                     Utils.ImpressaoCozihanova(intCodigoPedido);
                 }
 
-                if (Sessions.returnConfig.ImprimeViaEntrega && strTipoPedido== "0 - Entrega")
+                if (ImprimeViaEntrega && strTipoPedido== "0 - Entrega")
                 {
-                    Utils.ImpressaoEntreganova(intCodigoPedido, decimal.Parse(txtTrocoPara.Text.Replace("R$,", "")), dblPRevisao
-                        , false, QtViasEntrega,Sessions.returnConfig.ImpressoraEntrega,false, intCodEndereco);
+                    Utils.ImpressaoEntreganova(intCodigoPedido, decimal.Parse(txtTrocoPara.Text.Replace("R$,", ""))
+                        , QtdViasEntrega,""/*Sessions.returnConfig.ImpressoraEntrega*/,false, intCodEndereco);
                 }
                 else if (strTipoPedido== "2 - Balcao")
                 {
-                    Utils.ImpressaoBalcao(intCodigoPedido, false, int.Parse(Sessions.returnConfig.ViasBalcao), Sessions.returnConfig.ImpressoraCopaBalcao);
+                    Utils.ImpressaoBalcao(intCodigoPedido, QtdViasBalcao,"" );
                 }
 
             }

@@ -1,7 +1,5 @@
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.rpt
-D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\RelCaixaHistorico.rpt
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.cs
-D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\RelCaixaHistorico.cs
 D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.exe.config
 D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.exe.manifest
 D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.application
@@ -141,3 +139,5 @@ D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.CommonOb
 D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.ObjectFactory.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\ShockwaveFlashObjects.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.CommonControls.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Caixa\RelCaixaHistorico.rpt
+D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Caixa\RelCaixaHistorico.cs

@@ -131,7 +131,7 @@ namespace DexComanda.Cadastros
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", intCodPedido, int.Parse(txtNumero.Text));
                     if (Utils.MessageBoxQuestion("Deseja imprimir a conferencia desta dessa mesa?"))
                     {
-                        Utils.ImpressaoFechamentoNovo(intCodPedid, false, 1);
+                        Utils.ImpressaoFechamentoNovo(intCodPedid,1);
                     }
                     this.Close();
                 }

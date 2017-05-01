@@ -1,5 +1,6 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
+using DexComanda.Relatorios.Caixa;
 using DexComanda.Relatorios.Fechamentos.Novos;
 using System;
 using System.Collections.Generic;
@@ -62,8 +63,6 @@ namespace DexComanda.Operações
                     report.SetParameterValue("@DataI", dtInicioFiltro);
                     report.SetParameterValue("@DataF", dtFimFiltro);
                     report.SetParameterValue("@EntradaSaida", OperacaoMarcada());
-
-                    string teste = OperacaoMarcada();
                     crystalReportViewer1.ReportSource = report;
                     crystalReportViewer1.Refresh();
                 }

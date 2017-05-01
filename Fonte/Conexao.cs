@@ -2207,12 +2207,12 @@ namespace DexComanda
                 adapter = new SqlDataAdapter(command);
                 adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-                iReturn = command.ExecuteNonQuery();
+                command.ExecuteNonQuery();
 
             }
             catch (Exception erro)
             {
-                MessageBox.Show(Bibliotecas.cException);
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
             return iReturn;
         }
@@ -2242,7 +2242,6 @@ namespace DexComanda
                 {
 
                     MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
-                    // MysqlCommand.CommandTimeout = CmysqlTimeOut;
                     MysqlConnection.Open();
 
                     if (MysqlConnection.State == ConnectionState.Open)

@@ -314,12 +314,6 @@
     </Compile>
     <Compile Include="Integração\MP2032.cs" />
     <Compile Include="Integração\Zenvia.cs" />
-    <Compile Include="Main.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Main.Designer.cs">
-      <DependentUpon>Main.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Alteracoes Multiplas\AlteracaoCliente.cs" />
     <Compile Include="Models\Alteracoes Multiplas\AlteracaoMultiplaOpcao.cs" />
     <Compile Include="Models\Alteracoes Multiplas\MultiplaProduto.cs" />
@@ -330,6 +324,11 @@
     <Compile Include="Models\CaixaDiferenca.cs" />
     <Compile Include="Models\CaixaMovimento.cs" />
     <Compile Include="Models\ConfiguracaoBuscaPorCodigo.cs" />
+    <Compile Include="Models\Configuracoes\DadosImpressoras.cs" />
+    <Compile Include="Models\Configuracoes\DadosPush.cs" />
+    <Compile Include="Models\Configuracoes\ImpressaoBalcao.cs" />
+    <Compile Include="Models\Configuracoes\ImpressaoCozinha.cs" />
+    <Compile Include="Models\Configuracoes\ImpressaoDelivery.cs" />
     <Compile Include="Models\DadosEnvioLocaSMS.cs" />
     <Compile Include="Models\DescontoPedido.cs" />
     <Compile Include="Models\Familia.cs" />
@@ -624,7 +623,7 @@
       <DependentUpon>RelVendasOnline.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Relatorios\Fechamentos\Novos\RelCaixaHistorico2.cs">
+    <Compile Include="Relatorios\Caixa\RelCaixaHistorico2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelCaixaHistorico2.rpt</DependentUpon>
@@ -938,7 +937,7 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Relatorios\Fechamentos\Novos\RelCaixaHistorico.cs">
+    <Compile Include="Relatorios\Caixa\RelCaixaHistorico.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelCaixaHistorico.rpt</DependentUpon>
@@ -1280,7 +1279,7 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelVendasOnline.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelCaixaHistorico2.rpt">
+    <EmbeddedResource Include="Relatorios\Caixa\RelCaixaHistorico2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelCaixaHistorico2.cs</LastGenOutput>
     </EmbeddedResource>
@@ -1343,7 +1342,7 @@
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportCancelamentos.resx">
       <DependentUpon>frmReportCancelamentos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelCaixaHistorico.rpt">
+    <EmbeddedResource Include="Relatorios\Caixa\RelCaixaHistorico.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelCaixaHistorico.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
