@@ -8,7 +8,6 @@ namespace DexComanda.Models
 {
    public class Configuracao
     {
-
         public int cod { get; set; }
         public string ImpViaCozinha { get; set; }
         public bool UsaDataNascimento { get; set; }

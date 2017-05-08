@@ -25,6 +25,7 @@ namespace DexComanda.Operações
         private string strPrevisaoEntrega = "0";
         private Conexao con;
         private List<DadosApp> newDados;
+        private string strMultisabores = "2";
         public frmSincronizacao()
         {
             InitializeComponent();
@@ -81,7 +82,7 @@ namespace DexComanda.Operações
                             }
                         }
                     }
-                    CadastraPush();
+                   
                     // Sincronizar Grupos
                     CadastraCategorias(ObterDados("Grupo"));
                     // Sincronizar Tipo Opcao
@@ -108,6 +109,7 @@ namespace DexComanda.Operações
                 }
                 if (chkMobile.Checked)
                 {
+                    CadastraPush();
                     CadastraLinkApp(true);
                 }
 
@@ -186,7 +188,6 @@ namespace DexComanda.Operações
                 if (iLimpar)
                 {
                     string strPlataformas = Utils.GravaJson("android", "");
-                    //  strPlataformas = strPlataformas + Utils.GravaJson("ios", "");
                     newDados = JsonConvert.DeserializeObject<List<DadosApp>>(strPlataformas);
                     foreach (var item in newDados)
                     {
@@ -648,7 +649,11 @@ namespace DexComanda.Operações
                 DataRow dRow;
                 prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
-
+                if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cTioPaulinho)
+                {
+                    strMultisabores = "4";
+                }
+                //= Sessions.returnEmpresa.CNPJ == Bibliotecas.cTioPaulinho;
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     RestClient client = new RestClient(iUrlWS);
@@ -678,11 +683,12 @@ namespace DexComanda.Operações
                     request.AddParameter("idReferencia", dRow.ItemArray.GetValue(0).ToString());
                     request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
 
+                
                     //Caso o grupo esteja marcado como multi sabores ele enviará esse parametro
                     if (ds.Tables[0].Rows[i].Field<int>("MultiploSabores")==1)
                     {
                         request.AddParameter("multi_product_id", dRow.ItemArray.GetValue(15).ToString());
-                        request.AddParameter("multi_product_max", "2");
+                        request.AddParameter("multi_product_max", strMultisabores);
                     }
 
 

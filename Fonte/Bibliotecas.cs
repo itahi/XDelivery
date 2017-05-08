@@ -37,6 +37,7 @@ namespace DexComanda
         public const string cBigPizza = "18721062000158";
         public const string cTropicalExpress = "22164096000166";
         public const string cTheBest = "26067503000178";
+        public const string cTioPaulinho = "09567273000197";
         public const string cSolicitarPermissao = "Seu usuário não tem permissão para Executar essa ação, deseja solicitar Autorização?";
         public const string cUsuarioSemPermissao = "Seu usuário não tem permissão para Executar essa ação";
         public const string cSemRegistrosASincronizar = "Não há nada a sincronizar na tabela de ";
@@ -47,6 +48,7 @@ namespace DexComanda
         public const string cSelecioneRegistro = "Selecione corretamente a linha pra editar";
         public const string cCamposObrigatório = "Campos obrigatórios não preenchidos corretamente";
         public const string cTextoConferido = "Essa mensagem será enviada diretamente aos clientes do Site/App tem certeza que o texto foi revisado?";
+        public const string cSenhaEmUso = "Esta senha já esta em uso no momento";
     }
 
 

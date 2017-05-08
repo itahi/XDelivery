@@ -219,7 +219,7 @@ namespace DexComanda
             string iCod4, string iCodOpcao, Boolean iPrecoMar = true)
         {
             string iSqlConsulta = "";
-            
+
             //Retorna o maior preço entre os produtos
             if (!iPrecoMar)
             {
@@ -454,7 +454,7 @@ namespace DexComanda
                 MessageBox.Show("Não foi possivel alterar o statuso do Pedido" + erro.Message);
             }
 
-            // Utils.PopulaGrid_Novo("Pedido", grid, Sessions.SqlPedido);
+            Utils.PopulaGrid_Novo("Pedido", grid, Sessions.SqlPedido);
         }
         public decimal RetornaPrecoComEmbalagem(string iGrupoProduto, int iCodProduto)
         {
@@ -625,7 +625,7 @@ namespace DexComanda
                                   " Prod.Preco as Preco, " +
                                   " P.PrecoProduto as PrecoProduto,  " +
                                  " ISNULL((select MaximoAdicionais from Produto P where P.Codigo = Prod.CodProduto  ),0) as MaximoAdicionais," +
-                                 " PoT.Nome as NomeTipo, "+
+                                 " PoT.Nome as NomeTipo, " +
                                   " Prod.CodOpcao, " +
                                  " Prod.Preco as PrecoSoOpcao  " +
                                  "  from Produto_Opcao Prod join Opcao Op on Op.Codigo = Prod.CodOpcao" +
@@ -894,7 +894,7 @@ namespace DexComanda
             string lSqlConsulta;
             if (iNomeTable == "Produto")
             {
-                lSqlConsulta = " select P.*, G.MultiploSabores from Produto P join Grupo G on G.Codigo=P.CodGrupo where P.DataAlteracao>P.DataSincronismo or P.DataSincronismo is null";
+                lSqlConsulta = " select P.*,ISNULL( G.MultiploSabores,0) as MultiploSabores from Produto P join Grupo G on G.Codigo=P.CodGrupo where P.DataAlteracao>P.DataSincronismo or P.DataSincronismo is null";
 
             }
             else
@@ -1208,9 +1208,30 @@ namespace DexComanda
             adapter.Fill(ds, iTable);
             return ds;
         }
+        public string MontaGridPedido(int statusPedido)
+        {
+            string iSql = "";
+            try
+            {
+
+                //  string sqlStatusPedidoComFiltro = "(select PS.Nome from PedidoStatusMovimento PSM join  PedidoStatus PS on Status = PSM.CodStatus where PSM.CodPedido="+statusPedido.ToString()+") as 'Situacao Pedido'";
+                //string sqlStatusPedido = "(select top 1 PS.Nome from PedidoStatusMovimento PSM join  PedidoStatus PS on Status = PSM.CodStatus where PSM.CodPedido=PD.Codigo order by PSM.DataAlteracao desc) as 'Situacao Pedido'";
+                iSql = "select " + Sessions.SqlPedido + " from Pedido ";
+
+                iSql = iSql + " Pd join Pessoa P on P.Codigo=Pd.CodPessoa join PedidoStatusMovimento PSM on PSM.CodPedido=PD.Codigo ";
+                iSql = iSql + " where Finalizado = 0 and PD.status ='Aberto' and PSM.CodStatus=" + statusPedido.ToString() + " ORDER BY Pd.Codigo DESC";
+
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show("Não foi possivel montar a grid " + erro.Message);
+            }
+
+            return iSql;
+        }
         public DataSet SelectMontaGrid(string iTable, string iParametrosConsulta, Boolean iAtivos = true, string iFiltrosAdicionais = "")
         {
-
             try
             {
                 string iSql = "", iSubSelect = "subSelect";
@@ -1291,6 +1312,7 @@ namespace DexComanda
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, "Produto_Insumo");
+
             return ds;
         }
         public DataSet SelectPessoaPorNome(string iNome, string iSqlConsulta, string iParam)
@@ -1420,7 +1442,8 @@ namespace DexComanda
                 {
                     if (!propriedade.Name.Equals("Codigo"))
                     {
-                        if (propriedade.Name.ToString() == "CodUsuario" && propriedade.GetValue(obj).ToString() == "0")
+                        if ((propriedade.Name.ToString() == "CodUsuario" && propriedade.GetValue(obj).ToString() == "0")
+                           || (propriedade.Name.ToString() == "Senha" && propriedade.GetValue(obj) == null))
                         {
                             command.Parameters.AddWithValue("@" + propriedade.Name, DBNull.Value);
                         }
@@ -1903,7 +1926,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-           
+
             return ds;
         }
         public DataSet LoginUsuario(string iLogin, string iSenha)
@@ -1991,7 +2014,7 @@ namespace DexComanda
 
         public DataSet SelectEnderecoPorCep(string table, string spName, int cep)
         {
-            if (statusConexao!=ConnectionState.Open)
+            if (statusConexao != ConnectionState.Open)
             {
                 MessageBox.Show(Bibliotecas.cSemConexao);
                 return new DataSet();
@@ -2054,6 +2077,10 @@ namespace DexComanda
                 {
                     command.Parameters.AddWithValue("@NumeroMesa", iCodString);
                 }
+                else if (spName == "spObterPedidoPorSenha")
+                {
+                    command.Parameters.AddWithValue("@Senha", iCodString);
+                }
                 else if (spName == "spObterHistoricoPorPessoa")
                 {
                     command.Parameters.AddWithValue("@CodPessoa", codigo);
@@ -2071,7 +2098,6 @@ namespace DexComanda
                 else if (spName == "spObterItemsNaoImpressoPorCodigo")
                 {
                     command.Parameters.AddWithValue("@Codigo", codigo);
-                    //command.Parameters.AddWithValue("@CodGrupo", iCodigo2);
                 }
                 else if (spName == "spObterItemsNaoImpressoPorGrupo" || spName == "spObterItemsNaoImpressoPorCozinhaCodPersonalizado")
                 {
@@ -2114,7 +2140,7 @@ namespace DexComanda
             {
                 command.Parameters.AddWithValue("@CodPessoa", codigo);
             }
-            else if ( spName== "spObterFidelidadePessoa")
+            else if (spName == "spObterFidelidadePessoa")
             {
                 command.Parameters.AddWithValue("@Codigo", codigo);
             }
@@ -2203,7 +2229,7 @@ namespace DexComanda
                 command.Parameters.AddWithValue("@CodigoMesa", iCodMesaOrigem);
                 command.Parameters.AddWithValue("@CodPessoa", iCodPessoa);
                 command.Parameters.AddWithValue("@NewMesa", iNewMesa);
-                command.Parameters.AddWithValue("@Data", DateTime.Now);
+
                 adapter = new SqlDataAdapter(command);
                 adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 

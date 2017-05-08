@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace DexComanda.Cadastros.Pedido
         {
             con = new Conexao();
             InitializeComponent();
-          //  intCodPedido = iCodPedido;
+            //  intCodPedido = iCodPedido;
             decTotalPedido = iTotalPedido;
             intCodPessoa = iCodPessoa;
         }
@@ -40,13 +41,13 @@ namespace DexComanda.Cadastros.Pedido
             {
                 dtGrid.DataSource = null;
                 dtGrid.AutoGenerateColumns = true;
-                DataSet ds  = con.SelectRegistroPorCodigo("ItemsPedido", "spObterPedidoPorNumeroMesa", intCodMesa);
-                if (ds.Tables[0].Rows.Count==0)
+                DataSet ds = con.SelectRegistroPorCodigo("ItemsPedido", "spObterPedidoPorNumeroMesa", intCodMesa);
+                if (ds.Tables[0].Rows.Count == 0)
                 {
                     MessageBox.Show(Bibliotecas.cFiltroRetornaVazio);
                     return;
                 }
-                intCodPedido = ds.Tables[0].Rows[0].Field<int>("CodPedido");
+                //  intCodPedido = ds.Tables[0].Rows[0].Field<int>("CodPedido");
                 dtGrid.DataSource = ds;
                 dtGrid.DataMember = "ItemsPedido";
             }
@@ -70,7 +71,8 @@ namespace DexComanda.Cadastros.Pedido
         {
             try
             {
-                if (!Utils.MessageBoxQuestion("Deseja transferir TODOS itens da mesa "+cbxListaMesasO.Text + "para mesa: "+cbxListaMesasD.Text))
+
+                if (!Utils.MessageBoxQuestion("Deseja transferir TODOS itens da mesa " + cbxListaMesasO.Text + "para mesa: " + cbxListaMesasD.Text))
                 {
                     return;
                 }
@@ -93,23 +95,20 @@ namespace DexComanda.Cadastros.Pedido
                     return;
                 }
 
-                if (gridOrigem.Rows.Count==0)
+                if (gridOrigem.Rows.Count == 0)
                 {
                     MessageBox.Show("A lista deve conter pelo menos 1 item para ser transferido");
                     return;
                 }
-
-                int iRetunr=  con.TransfereMesa(intCodPedido, cbxListaMesasD.Text.ToString(), Sessions.retunrUsuario.Codigo, decTotalPedido,
+                intCodPedido = int.Parse(gridOrigem.CurrentRow.Cells["CodPedido"].Value.ToString());
+                int iRetunr = con.TransfereMesa(intCodPedido, cbxListaMesasD.Text.ToString(), Sessions.retunrUsuario.Codigo, decTotalPedido,
                 int.Parse(cbxListaMesasO.SelectedValue.ToString()), intCodPessoa, int.Parse(cbxListaMesasD.SelectedValue.ToString()));
-                if (iRetunr!=0)
-                {
-                    gridOrigem.DataSource = null;
-                    gridOrigem.Refresh();
-                    PopulaGrid(int.Parse(cbxListaMesasD.SelectedValue.ToString()), gridDestino);
-                }
-                
+                gridOrigem.DataSource = null;
+                gridOrigem.Refresh();
+                PopulaGrid(int.Parse(cbxListaMesasD.SelectedValue.ToString()), gridDestino);
+
             }
-            catch (Exception erro)
+            catch (SqlException erro)
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
@@ -144,13 +143,13 @@ namespace DexComanda.Cadastros.Pedido
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-            
+
         }
         private void TransferirItemMesa(object sender, EventArgs e)
         {
             try
             {
-                if (gridOrigem.Rows.Count<=2)
+                if (gridOrigem.Rows.Count <= 2)
                 {
                     MessageBox.Show("Use a rotina de transfêrencia completa");
                     return;
@@ -166,5 +165,5 @@ namespace DexComanda.Cadastros.Pedido
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
-        }
+    }
 }

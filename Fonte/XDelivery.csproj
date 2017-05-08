@@ -635,6 +635,12 @@
       <DependentUpon>RelEntregasMotoboyAgrupado.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Gerenciais\Cristal\RelTickeMedio.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelTickeMedio.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Gerenciais\frmReporVendasPorVendedor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1010,12 +1016,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelEvolucaoVendas.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Relatorios\Gerenciais\Cristal\RelTickeMedio.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RelTickeMedio.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportVendasPorVendedor.cs">
@@ -1450,16 +1450,16 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelEvolucaoVendas.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelTickeMedio.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelTickeMedio.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportVendasPorVendedor.resx">
       <DependentUpon>frmReportVendasPorVendedor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\Impressao Termica\RelVendasPorVendedor.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelVendasPorVendedor.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelTickeMedio.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelTickeMedio.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelVendasPorVendedores.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

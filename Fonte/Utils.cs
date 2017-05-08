@@ -270,31 +270,11 @@ namespace DexComanda
         public static DataSet CarregaItens(int intCodPedido)
         {
             DataSet ds;
-            //if (Utils.MarcaTipoConfiguracaoProduto().TipoCodigo != "Personalizado" && !Utils.MarcaTipoConfiguracaoProduto().PorCodigo)
-            //{
-            //    ds = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterNomeImpressoraPorCodigoPedido", intCodPedido);
-            //}
-            //else
-            //{
-            //    ds = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterNomeImpressoraPorCodigoPedidoCodPersonalizado", intCodPedido);
-            //}
             ds = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterNomeImpressoraPorCodigoPedido", intCodPedido);
             if (ds.Tables[0].Rows.Count == 0)
             {
                 return new DataSet();
             }
-            //string strNomeImpressora = "";
-            //int intCodGrupo;
-            //strNomeImpressora = ds.Tables[0].Rows[0].Field<string>("NomeImpressora");
-            //intCodGrupo = ds.Tables[0].Rows[0].Field<int>("Codigo");
-            //if (Sessions.returnConfig.TipoImpressao == "Por Cozinha/Grupo")
-            //{
-            //    dsItemsNaoImpresso = ItensSelect(intCodPedido, intCodGrupo, strNomeImpressora);
-            //}
-            //else if (Sessions.returnConfig.TipoImpressao == "Por Impressora")
-            //{
-            //    dsItemsNaoImpresso = ItensSelect(intCodPedido, strNomeImpressora);
-            //}
             return ds;
         }
         public static DataSet ItensSelect(int iCodPedido, int intCodgrupo = 0,
@@ -451,7 +431,7 @@ namespace DexComanda
             DadosApp dadosApp = new DadosApp();
             dadosApp.plataforma = iPlataforma;
             dadosApp.url = iUrl;
-            return  JsonConvert.SerializeObject(dadosApp, Formatting.None) ;
+            return JsonConvert.SerializeObject(dadosApp, Formatting.None);
         }
         public static string SerializaObjeto(ConfiguracaoBuscaPorCodigo iValores)
         {
@@ -562,7 +542,7 @@ namespace DexComanda
         }
         public static DadosImpressoras DeserializaObjetoImpressoras(string iValores)
         {
-            if (iValores == "" || iValores==null)
+            if (iValores == "" || iValores == null)
             {
                 return new DadosImpressoras();
             }
@@ -650,7 +630,7 @@ namespace DexComanda
         }
         public static ImpressaoDelivery DeserializaObjetoDelivery(string iValores)
         {
-            if (iValores == ""|| iValores==null)
+            if (iValores == "" || iValores == null)
             {
                 return new ImpressaoDelivery();
             }
@@ -658,7 +638,7 @@ namespace DexComanda
         }
         public static DadosPush DeserializaObjetoPush(string iValores)
         {
-            if (iValores =="" || iValores==null)
+            if (iValores == "" || iValores == null)
             {
                 return new DadosPush();
             }
@@ -1061,9 +1041,9 @@ namespace DexComanda
             }
             return iRetorno;
         }
-        public static string ImpressaoEntreganova(int iCodPedido, decimal iValorPago,
+        public static string ImpressaoEntreganova(int iCodPedido, decimal iTotalReceber,
             int iNumCopias = 0, string iNomeImpressora = "",
-            Boolean iClienteNovo = false, int CodEndereco = 0)
+            int CodEndereco = 0,decimal iTroco=0)
         {
             string iRetorno = ""; ;
 
@@ -1099,8 +1079,8 @@ namespace DexComanda
 
                     report.SetParameterValue("@Codigo", iCodPedido);
                     report.SetParameterValue("@CodEndereco", CodEndereco);
-                    report.SetParameterValue("Troco", iValorPago);
-                    //report.SetParameterValue("ClienteNovo", iClienteNovo);
+                    report.SetParameterValue("TotalReceber", iTotalReceber);
+                    report.SetParameterValue("Troco", iTroco);
                     if (iNomeImpressora != "")
                     {
                         for (int i = 0; i < iNumCopias; i++)
@@ -1131,7 +1111,7 @@ namespace DexComanda
             return iRetorno;
         }
 
-        public static string ImpressaoEntreganova_Matricial(int iCodPedido, decimal iValorPago, string iPrevisaoEntrega, Boolean iExport = false, int iNumCopias = 0)
+        public static string ImpressaoEntreganova_Matricial(int iCodPedido, decimal iValorPago, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
 
@@ -1160,31 +1140,11 @@ namespace DexComanda
 
                 report.SetParameterValue("@Codigo", iCodPedido);
                 report.SetParameterValue("ValorPago", iValorPago);
-                report.SetParameterValue("PrevEntrega", iPrevisaoEntrega);
-                if (iExport)
+                for (int i = 0; i < iNumCopias; i++)
                 {
-                    CrystalDecisions.Shared.DiskFileDestinationOptions reportExport =
-                    new CrystalDecisions.Shared.DiskFileDestinationOptions();
-                    reportExport.DiskFileName = Directory.GetCurrentDirectory() + @"\RelDelivery.txt";
-
-                    report.ExportOptions.ExportDestinationType =
-                    CrystalDecisions.Shared.ExportDestinationType.DiskFile;
-
-                    report.ExportOptions.ExportFormatType =
-                    CrystalDecisions.Shared.ExportFormatType.Text;
-
-                    report.ExportOptions.DestinationOptions = reportExport;
-                    report.Export();
-                    iRetorno = Directory.GetCurrentDirectory() + @"\RelDelivery_Matricial.txt";
+                    report.PrintToPrinter(0, true, 0, 0);
                 }
-                else
-                {
-                    for (int i = 0; i < iNumCopias; i++)
-                    {
-                        report.PrintToPrinter(0, true, 0, 0);
-                    }
 
-                }
             }
             catch (Exception erro)
             {
@@ -1291,7 +1251,7 @@ namespace DexComanda
         public static DadosApp RetornaDadosApp()
         {
             DadosApp app;
-            if (Sessions.returnConfig.DadosApp!=null)
+            if (Sessions.returnConfig.DadosApp != null)
             {
                 app = DeserializaObjetoApp(Sessions.returnConfig.DadosApp);
             }
@@ -1299,7 +1259,7 @@ namespace DexComanda
             {
                 app = new DadosApp();
             }
-            
+
             return app;
         }
         public static DadosImpressoras RetornaImpressoras()
@@ -2979,16 +2939,31 @@ namespace DexComanda
 
             return Dados;
         }
+        public static DataSet PopularGridPedido(string iCamposConsulta)
+        {
+            Conexao con = new Conexao();
+            return con.SelectAll("Pedido", "", iCamposConsulta);
+
+            //gridView.DataSource = null;
+            //gridView.AutoGenerateColumns = true;
+            //gridView.DataSource = Dados;
+            //gridView.DataMember = "Pedido";
+
+        }
         public static DataSet PopulaGrid_Novo(string table, DataGridView gridView, string iParametrosConsulta, bool iAtivo = true, string iFiltrosAd = "", int iRowIndex = 0)
         {
             Conexao con = new Conexao();
             DataSet Dados = null;
             Dados = con.SelectMontaGrid(table, iParametrosConsulta, iAtivo, iFiltrosAd);
 
-            gridView.DataSource = null;
-            gridView.AutoGenerateColumns = true;
-            gridView.DataSource = Dados;
-            gridView.DataMember = table;
+            if (gridView != null)
+            {
+                gridView.DataSource = null;
+                gridView.AutoGenerateColumns = true;
+                gridView.DataSource = Dados;
+                gridView.DataMember = table;
+            }
+
 
             con.Close();
 

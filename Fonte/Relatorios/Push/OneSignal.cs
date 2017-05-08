@@ -34,7 +34,7 @@ namespace DexComanda.Push
             switch (iDMsg)
             {
                 case 1:
-                    iTexto = "Seu pedido chegará em aproximadamente " + "" + " minutos.";
+                    iTexto = "Seu pedido chegará em aproximadamente " + "60" + " minutos.";
                     break;
                 case 2:
                     iTexto = "Opa seu pedido acaba de ser confirmado e impresso!";

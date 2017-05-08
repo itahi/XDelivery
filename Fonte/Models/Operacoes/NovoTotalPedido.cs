@@ -17,6 +17,7 @@ namespace DexComanda.Models.Operacoes
         public decimal DescontoValor { get; set; }
         public string Observacao { get; set; }
         public int CodEndereco { get; set; }
+        public string Senha { get; set; }
 
     }
 }

@@ -87,6 +87,7 @@
             this.alteraçõesMultiplasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.produtosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.opçãoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.produtoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.taxasDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alterarSenhaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -122,6 +123,10 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.pnlPedido = new System.Windows.Forms.Panel();
+            this.grpTipoPedido = new System.Windows.Forms.GroupBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtCodBusca = new System.Windows.Forms.TextBox();
+            this.cbxStatusPedido = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbxFiltroTipo = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -157,12 +162,13 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.produtoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pnlPedido.SuspendLayout();
+            this.grpTipoPedido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pedidosGridView)).BeginInit();
             this.pnlBuscaProduto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.produtosGridView)).BeginInit();
@@ -206,6 +212,7 @@
             this.cadastrosToolStripMenuItem.Name = "cadastrosToolStripMenuItem";
             this.cadastrosToolStripMenuItem.Size = new System.Drawing.Size(91, 25);
             this.cadastrosToolStripMenuItem.Text = "Cadastros";
+            this.cadastrosToolStripMenuItem.Click += new System.EventHandler(this.cadastrosToolStripMenuItem_Click);
             // 
             // produtosToolStripMenuItem
             // 
@@ -647,9 +654,16 @@
             // opçãoToolStripMenuItem1
             // 
             this.opçãoToolStripMenuItem1.Name = "opçãoToolStripMenuItem1";
-            this.opçãoToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
+            this.opçãoToolStripMenuItem1.Size = new System.Drawing.Size(136, 26);
             this.opçãoToolStripMenuItem1.Text = "Opção";
             this.opçãoToolStripMenuItem1.Click += new System.EventHandler(this.opçãoToolStripMenuItem1_Click);
+            // 
+            // produtoToolStripMenuItem1
+            // 
+            this.produtoToolStripMenuItem1.Name = "produtoToolStripMenuItem1";
+            this.produtoToolStripMenuItem1.Size = new System.Drawing.Size(136, 26);
+            this.produtoToolStripMenuItem1.Text = "Produto";
+            this.produtoToolStripMenuItem1.Click += new System.EventHandler(this.produtoToolStripMenuItem1_Click);
             // 
             // clientesToolStripMenuItem1
             // 
@@ -943,6 +957,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlPedido.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlPedido.Controls.Add(this.grpTipoPedido);
             this.pnlPedido.Controls.Add(this.label3);
             this.pnlPedido.Controls.Add(this.cbxFiltroTipo);
             this.pnlPedido.Controls.Add(this.label2);
@@ -953,11 +968,52 @@
             this.pnlPedido.Size = new System.Drawing.Size(510, 201);
             this.pnlPedido.TabIndex = 2;
             // 
+            // grpTipoPedido
+            // 
+            this.grpTipoPedido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpTipoPedido.Controls.Add(this.label14);
+            this.grpTipoPedido.Controls.Add(this.txtCodBusca);
+            this.grpTipoPedido.Controls.Add(this.cbxStatusPedido);
+            this.grpTipoPedido.Location = new System.Drawing.Point(316, 3);
+            this.grpTipoPedido.Name = "grpTipoPedido";
+            this.grpTipoPedido.Size = new System.Drawing.Size(183, 58);
+            this.grpTipoPedido.TabIndex = 25;
+            this.grpTipoPedido.TabStop = false;
+            this.grpTipoPedido.Text = "Filtros";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(84, 9);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(93, 13);
+            this.label14.TabIndex = 2;
+            this.label14.Text = "Cód/Senha/Mesa";
+            // 
+            // txtCodBusca
+            // 
+            this.txtCodBusca.Enabled = false;
+            this.txtCodBusca.Location = new System.Drawing.Point(120, 27);
+            this.txtCodBusca.Name = "txtCodBusca";
+            this.txtCodBusca.Size = new System.Drawing.Size(58, 20);
+            this.txtCodBusca.TabIndex = 1;
+            // 
+            // cbxStatusPedido
+            // 
+            this.cbxStatusPedido.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxStatusPedido.FormattingEnabled = true;
+            this.cbxStatusPedido.Location = new System.Drawing.Point(6, 25);
+            this.cbxStatusPedido.Name = "cbxStatusPedido";
+            this.cbxStatusPedido.Size = new System.Drawing.Size(96, 21);
+            this.cbxStatusPedido.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.cbxStatusPedido, "Filtra pedidos de acordo com tipo");
+            this.cbxStatusPedido.SelectionChangeCommitted += new System.EventHandler(this.FiltraPedidoPorStatus);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(155, 6);
+            this.label3.Location = new System.Drawing.Point(142, 8);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(123, 16);
             this.label3.TabIndex = 24;
@@ -973,9 +1029,9 @@
             "1 - Mesa",
             "2 - Balcao",
             "Todos "});
-            this.cbxFiltroTipo.Location = new System.Drawing.Point(4, 33);
+            this.cbxFiltroTipo.Location = new System.Drawing.Point(7, 27);
             this.cbxFiltroTipo.Name = "cbxFiltroTipo";
-            this.cbxFiltroTipo.Size = new System.Drawing.Size(139, 30);
+            this.cbxFiltroTipo.Size = new System.Drawing.Size(132, 30);
             this.cbxFiltroTipo.TabIndex = 18;
             this.cbxFiltroTipo.SelectedIndexChanged += new System.EventHandler(this.FiltraTipoPedido);
             // 
@@ -985,7 +1041,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label2.Location = new System.Drawing.Point(6, 9);
+            this.label2.Location = new System.Drawing.Point(3, 4);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 21);
             this.label2.TabIndex = 17;
@@ -998,10 +1054,11 @@
             this.txtBuscaPedido.BackColor = System.Drawing.SystemColors.Window;
             this.txtBuscaPedido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBuscaPedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.txtBuscaPedido.Location = new System.Drawing.Point(158, 34);
+            this.txtBuscaPedido.Location = new System.Drawing.Point(145, 27);
             this.txtBuscaPedido.Name = "txtBuscaPedido";
-            this.txtBuscaPedido.Size = new System.Drawing.Size(260, 29);
+            this.txtBuscaPedido.Size = new System.Drawing.Size(165, 29);
             this.txtBuscaPedido.TabIndex = 16;
+            this.toolTip1.SetToolTip(this.txtBuscaPedido, "Busca clientes na lista de pedidos");
             this.txtBuscaPedido.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BuscaPedidoCliente);
             // 
             // pedidosGridView
@@ -1413,13 +1470,6 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // produtoToolStripMenuItem1
-            // 
-            this.produtoToolStripMenuItem1.Name = "produtoToolStripMenuItem1";
-            this.produtoToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
-            this.produtoToolStripMenuItem1.Text = "Produto";
-            this.produtoToolStripMenuItem1.Click += new System.EventHandler(this.produtoToolStripMenuItem1_Click);
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1447,6 +1497,8 @@
             this.statusStrip1.PerformLayout();
             this.pnlPedido.ResumeLayout(false);
             this.pnlPedido.PerformLayout();
+            this.grpTipoPedido.ResumeLayout(false);
+            this.grpTipoPedido.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pedidosGridView)).EndInit();
             this.pnlBuscaProduto.ResumeLayout(false);
             this.pnlBuscaProduto.PerformLayout();
@@ -1592,5 +1644,10 @@
         private System.Windows.Forms.ToolStripMenuItem classificadoPorOrigemToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem insumosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem produtoToolStripMenuItem1;
+        private System.Windows.Forms.GroupBox grpTipoPedido;
+        private System.Windows.Forms.ComboBox cbxStatusPedido;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.TextBox txtCodBusca;
+        private System.Windows.Forms.Label label14;
     }
 }

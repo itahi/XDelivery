@@ -111,50 +111,62 @@ namespace DexComanda
 
         public frmCadastrarProduto(Produtos prod)
         {
-            InitializeComponent();
-            DiasSelecionados = new List<string>();
-            this.produto = prod;
-            if (DescontoPordia)
+            try
             {
-                grpDesconto.Visible = DescontoPordia;
-                txtPrecoDesconto.Text = produto.PrecoDesconto.ToString();
-
-                if (produto.DiaSemana != "")
+                InitializeComponent();
+                DiasSelecionados = new List<string>();
+                if (prod==null)
                 {
-                    string[] lol = produto.DiaSemana.Split(new char[] { ';' });
-
-                    if (lol.Contains("Monday"))
-                    {
-                        chkSegunda.Checked = true;
-                    }
-                    if (lol.Contains("Tuesday"))
-                    {
-                        chkTerca.Checked = true;
-                    }
-                    if (lol.Contains("Wednesday "))
-                    {
-                        ChkQuarta.Checked = true;
-                    }
-                    if (lol.Contains("Thursday"))
-                    {
-                        chkQuinta.Checked = true;
-                    }
-                    if (lol.Contains("Friday"))
-                    {
-                        ChkSexta.Checked = true;
-                    }
-                    if (lol.Contains("Sunday"))
-                    {
-                        ChkSabado.Checked = true;
-                    }
-                    if (lol.Contains("Sunday"))
-                    {
-                        chkDomingo.Checked = true;
-                    }
+                    return;
                 }
+                this.produto = prod;
+                if (DescontoPordia)
+                {
+                    grpDesconto.Visible = DescontoPordia;
+                    txtPrecoDesconto.Text = produto.PrecoDesconto.ToString();
+
+                    if (produto.DiaSemana != "")
+                    {
+                        string[] lol = produto.DiaSemana.Split(new char[] { ';' });
+
+                        if (lol.Contains("Monday"))
+                        {
+                            chkSegunda.Checked = true;
+                        }
+                        if (lol.Contains("Tuesday"))
+                        {
+                            chkTerca.Checked = true;
+                        }
+                        if (lol.Contains("Wednesday "))
+                        {
+                            ChkQuarta.Checked = true;
+                        }
+                        if (lol.Contains("Thursday"))
+                        {
+                            chkQuinta.Checked = true;
+                        }
+                        if (lol.Contains("Friday"))
+                        {
+                            ChkSexta.Checked = true;
+                        }
+                        if (lol.Contains("Sunday"))
+                        {
+                            ChkSabado.Checked = true;
+                        }
+                        if (lol.Contains("Sunday"))
+                        {
+                            chkDomingo.Checked = true;
+                        }
+                    }
 
 
+                }
             }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+           
 
         }
         private List<PrecoDiaProduto> RetornaDiasMarcados()

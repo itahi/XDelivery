@@ -236,6 +236,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.chkSenha = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -986,6 +987,7 @@
             this.chkViaBalcao.TabIndex = 13;
             this.chkViaBalcao.Text = "Imprime Via Balcao";
             this.chkViaBalcao.UseVisualStyleBackColor = true;
+            this.chkViaBalcao.CheckedChanged += new System.EventHandler(this.chkViaBalcao_CheckedChanged);
             // 
             // label2
             // 
@@ -1840,6 +1842,7 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.chkSenha);
             this.groupBox6.Controls.Add(this.chkAtendente);
             this.groupBox6.Controls.Add(this.chkEntregador);
             this.groupBox6.Controls.Add(this.chkDesconto);
@@ -2386,6 +2389,16 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // chkSenha
+            // 
+            this.chkSenha.AutoSize = true;
+            this.chkSenha.Location = new System.Drawing.Point(130, 128);
+            this.chkSenha.Name = "chkSenha";
+            this.chkSenha.Size = new System.Drawing.Size(57, 17);
+            this.chkSenha.TabIndex = 49;
+            this.chkSenha.Text = "Senha";
+            this.chkSenha.UseVisualStyleBackColor = true;
+            // 
             // frmConfiguracoes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2672,5 +2685,6 @@
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.ComboBox cbxAgrupamentoBalcao;
         private System.Windows.Forms.CheckBox chkViaBalcao;
+        private System.Windows.Forms.CheckBox chkSenha;
     }
 }

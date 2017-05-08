@@ -342,7 +342,7 @@ namespace DexComanda
         }
         private void SalvaConfig(object sender, EventArgs e)
         {
-            //con = new Conexao(); 
+            con = new Conexao(); 
             Empresa empresa = new Empresa()
             {
                 Nome = txtNomeEmpresa.Text,
@@ -896,7 +896,7 @@ namespace DexComanda
             string strConfigPedido = "Pd.Codigo,";
             if (chkNomeCliente.Checked)
             {
-                strConfigPedido = strConfigPedido + "(select Nome from Pessoa P where P.Codigo = Pd.CodPessoa) as 'Nome Cliente'";
+                strConfigPedido = strConfigPedido + " case PD.Tipo when '1 - Mesa' then P.Nome + ' - ' + PD.NumeroMesa when '2 - Balcao' then 'Cliente Balcao ' + PD.Senha +' '+Pd.Observacao when '0 - Entrega' then P.Nome end as  'Nome Cliente'";
             }
             if (chkFinalizado.Checked)
             {
@@ -951,6 +951,10 @@ namespace DexComanda
             if (chkAtendente.Checked)
             {
                 strConfigPedido = strConfigPedido + ",(Select Nome from Usuario where Cod = PD.CodUsuario) as 'Atendente'";
+            }
+            if (chkSenha.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",Senha";
             }
 
             Utils.SalvarConfiguracao("GridPedido", strConfigPedido);
@@ -1091,6 +1095,11 @@ namespace DexComanda
         private void chkFidelidade_CheckStateChanged(object sender, EventArgs e)
         {
             grpControleFidelidade.Enabled = chkFidelidade.Checked;
+        }
+
+        private void chkViaBalcao_CheckedChanged(object sender, EventArgs e)
+        {
+            txtViasBalcao.Text = "1";
         }
     }
 }

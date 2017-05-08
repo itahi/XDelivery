@@ -151,7 +151,7 @@ namespace DexComanda.Cadastros.Pedido
                 if (ImprimeViaEntrega && strTipoPedido== "0 - Entrega")
                 {
                     Utils.ImpressaoEntreganova(intCodigoPedido, decimal.Parse(txtTrocoPara.Text.Replace("R$,", ""))
-                        , QtdViasEntrega,""/*Sessions.returnConfig.ImpressoraEntrega*/,false, intCodEndereco);
+                        , QtdViasEntrega,"", intCodEndereco);
                 }
                 else if (strTipoPedido== "2 - Balcao")
                 {

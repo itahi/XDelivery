@@ -99,7 +99,7 @@ namespace DexComanda
             frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", 0, "0,00", TaxaEntrega,
                                                                         false, DateTime.Now, 0, CodPessoa,
                                                                         "", "", "", "", 0.00M, 0.00M, 0, "", iCodEndeco);
-            CadPedido.ShowDialog();
+            CadPedido.Show(this);
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
             TotalizaPedidos();
         }
@@ -333,6 +333,7 @@ namespace DexComanda
         }
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
+            Utils.MontaCombox(cbxStatusPedido, "Nome", "Status", "PedidoStatus", "spObterPedidoStatus");
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
             int iNumeroCaixa = Sessions.retunrUsuario.CaixaLogado;
             DataSet dsCaixa = con.RetornaCaixaPorTurno(iNumeroCaixa, Sessions.retunrUsuario.Turno, DateTime.Now);
@@ -343,7 +344,12 @@ namespace DexComanda
                 lblCaixa.Text = "Caixa Aberto";
                 lblCaixa.ForeColor = Color.Green;
             }
-            string strTipoPedido = "And Pd.Tipo='"+cbxFiltroTipo.Text +"'";
+            string strTipoPedido = "";
+            if (cbxFiltroTipo.Text!="")
+            {
+                strTipoPedido = "And Pd.Tipo='" + cbxFiltroTipo.Text + "'";
+            }
+           
             this.txbTelefoneCliente.Focus();
             Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido,false,strTipoPedido);
@@ -419,7 +425,7 @@ namespace DexComanda
         {
             try
             {
-                CarregaProduto(int.Parse(produtosGridView.SelectedCells[0].Value.ToString()));
+                CarregaProduto(int.Parse(produtosGridView.CurrentRow.Cells["Codigo"].Value.ToString()));
             }
             catch (Exception erro)
             {
@@ -429,21 +435,28 @@ namespace DexComanda
         }
         private void CarregaProduto(int iCodProduto)
         {
+            try
+            {
+                DataSet dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", iCodProduto, !chkProdutosInativos.Checked);
+
+                DataRow dRowProduto = dsProduto.Tables["Produto"].Rows[0];
+
+                frmCadastrarProduto frm = new frmCadastrarProduto(int.Parse(dRowProduto.ItemArray.GetValue(7).ToString()), dRowProduto.ItemArray.GetValue(0).ToString(), dRowProduto.ItemArray.GetValue(12).ToString(), dRowProduto.ItemArray.GetValue(3).ToString(),
+                                                                  decimal.Parse(dRowProduto.ItemArray.GetValue(1).ToString()), dRowProduto.ItemArray.GetValue(2).ToString(),
+                                                                  Convert.ToBoolean(dRowProduto.ItemArray.GetValue(6).ToString()), decimal.Parse(dRowProduto.ItemArray.GetValue(5).ToString()),
+                                                                  dRowProduto.ItemArray.GetValue(4).ToString(), dRowProduto.ItemArray.GetValue(8).ToString(), dRowProduto.ItemArray.GetValue(9).ToString(),
+                                                                  Convert.ToDateTime(dRowProduto.ItemArray.GetValue(10).ToString()), Convert.ToDateTime(dRowProduto.ItemArray.GetValue(11).ToString()),
+                                                                  Convert.ToBoolean(dRowProduto.ItemArray.GetValue(13).ToString()), dRowProduto.ItemArray.GetValue(14).ToString(), dRowProduto.ItemArray.GetValue(15).ToString(), dRowProduto.ItemArray.GetValue(16).ToString()
+                                                                  , int.Parse(dRowProduto.ItemArray.GetValue(18).ToString()), int.Parse(dRowProduto.ItemArray.GetValue(19).ToString()));
+                frm.StartPosition = FormStartPosition.CenterParent;
+                frm.ShowDialog();
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
             //Carrega Produto
-            int index = rowIndex;
-            DataSet dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", iCodProduto, !chkProdutosInativos.Checked);
-
-            DataRow dRowProduto = dsProduto.Tables["Produto"].Rows[0];
-
-            frmCadastrarProduto frm = new frmCadastrarProduto(int.Parse(dRowProduto.ItemArray.GetValue(7).ToString()), dRowProduto.ItemArray.GetValue(0).ToString(), dRowProduto.ItemArray.GetValue(12).ToString(), dRowProduto.ItemArray.GetValue(3).ToString(),
-                                                              decimal.Parse(dRowProduto.ItemArray.GetValue(1).ToString()), dRowProduto.ItemArray.GetValue(2).ToString(),
-                                                              Convert.ToBoolean(dRowProduto.ItemArray.GetValue(6).ToString()), decimal.Parse(dRowProduto.ItemArray.GetValue(5).ToString()),
-                                                              dRowProduto.ItemArray.GetValue(4).ToString(), dRowProduto.ItemArray.GetValue(8).ToString(), dRowProduto.ItemArray.GetValue(9).ToString(),
-                                                              Convert.ToDateTime(dRowProduto.ItemArray.GetValue(10).ToString()), Convert.ToDateTime(dRowProduto.ItemArray.GetValue(11).ToString()),
-                                                              Convert.ToBoolean(dRowProduto.ItemArray.GetValue(13).ToString()), dRowProduto.ItemArray.GetValue(14).ToString(), dRowProduto.ItemArray.GetValue(15).ToString(), dRowProduto.ItemArray.GetValue(16).ToString()
-                                                              ,int.Parse(dRowProduto.ItemArray.GetValue(18).ToString()),int.Parse(dRowProduto.ItemArray.GetValue(19).ToString()));
-            frm.StartPosition = FormStartPosition.CenterParent;
-            frm.ShowDialog();
+           
 
             if (cbxGrupoProduto.SelectedValue.ToString() != "0")
             {
@@ -509,7 +522,7 @@ namespace DexComanda
             {
                 DataSet ds;
                 ds = new DataSet("Pedido");
-                if (cbxFiltroTipo.Text.Contains("Todos"))
+                if (cbxFiltroTipo.Text.Contains("Todos") ||cbxFiltroTipo.Text=="")
                 {
                     ds = Utils.PopularGrid("Pedido", pedidosGridView, Sessions.SqlPedido);
                 }
@@ -519,7 +532,7 @@ namespace DexComanda
                     DataSet result = con.SelectAll("Pedido", "spObterPedido");
                     Consulta = cbxFiltroTipo.Text;
 
-                    Consulta = "Tipo LIKE '%" + cbxFiltroTipo.Text + "%'";
+                    Consulta = "Tipo='" + cbxFiltroTipo.Text+"'";
 
                     var Linhas = result.Tables[0].DefaultView;
                     Linhas.RowFilter = Consulta;
@@ -628,39 +641,32 @@ namespace DexComanda
                 TaxaServico = Utils.RetornaTaxaPorCliente(int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), 0);
             }
 
-            string strTrocoPara = DvPedido.ItemArray.GetValue(4).ToString();
-            string strTotalPedido = DvPedido.ItemArray.GetValue(3).ToString();
-            string strDescPedido = DvPedido.ItemArray.GetValue(14).ToString();
+            decimal strTrocoPara = DsPedido.Tables[0].Rows[0].Field<decimal>("TrocoPara");
+            string strTotalPedido = DsPedido.Tables[0].Rows[0].Field<decimal>("TotalPedido").ToString();
+            string strDescPedido = DsPedido.Tables[0].Rows[0].Field<decimal>("DescontoValor").ToString();
             string strTroco = "0,00";
-            decimal MargemGarcon = decimal.Parse(DvPedido.ItemArray.GetValue(16).ToString());
-            int intCodVendedor = int.Parse(DvPedido.ItemArray.GetValue(17).ToString());
-            string iObservacao = DvPedido.ItemArray.GetValue(18).ToString();
-            int iNumMesa = int.Parse(DvPedido.ItemArray.GetValue(12).ToString());
-            if (strTrocoPara != "0,00" && strTrocoPara != "0")
+            decimal MargemGarcon = DsPedido.Tables[0].Rows[0].Field<decimal>("MargemGarcon");
+            int intCodVendedor = DsPedido.Tables[0].Rows[0].Field<int>("CodUsuario");
+            string iObservacao = DsPedido.Tables[0].Rows[0].Field<string>("Observacao");
+            int iNumMesa = DsPedido.Tables[0].Rows[0].Field<int>("CodigoMesa");
+            if (strTrocoPara!=0.00M)
             {
-                strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
+                strTroco = Convert.ToString(strTrocoPara - decimal.Parse(strTotalPedido));
             }
-            int intCodEndereco = int.Parse(DvPedido.ItemArray.GetValue(20).ToString());
+            int intCodEndereco = DsPedido.Tables[0].Rows[0].Field<int>("CodEndereco");
             frmCadastrarPedido frm = new frmCadastrarPedido(false, strDescPedido, iNumMesa,
-                                      strTroco, TaxaServico, true, Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString()),
-                                      int.Parse(DvPedido.ItemArray.GetValue(1).ToString()), int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), DvPedido.ItemArray.GetValue(4).ToString(),
+                                      strTroco, TaxaServico, true, DsPedido.Tables[0].Rows[0].Field<DateTime>("RealizadoEM"),
+                                     DsPedido.Tables[0].Rows[0].Field<int>("Codigo"), DsPedido.Tables[0].Rows[0].Field<int>("CodPessoa"), DvPedido.ItemArray.GetValue(4).ToString(),
                                       DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(),
-                                      decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao, intCodEndereco);
-            frm.ShowDialog();
+                                      decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao, intCodEndereco, DsPedido.Tables[0].Rows[0].Field<string>("Senha"));
+            frm.Show();
+            
         }
         private void EditarPedido(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
                 int codigo = 0;
-                int codigoPessoa = 0;
-                decimal tPara = 0.00M;
-                decimal TotalPedido = 0.00M;
-                decimal TaxaEntrega = 0.00M;
-                string TrocoTotal = "0.00";
-                string fPagamento = null;
-                DateTime DataPedido;
-
                 /* Code here */
                 if (pedidosGridView.SelectedCells.Count > 0)
                 {
@@ -669,7 +675,8 @@ namespace DexComanda
 
                 }
                 string iTipoPedido = " And Pd.Tipo='"+cbxFiltroTipo.Text+ "'";
-                Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido,true, iTipoPedido);
+                FiltraTipoPedido(sender, e);
+                // Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido,true, iTipoPedido);
 
             }
             catch (Exception es)
@@ -1249,7 +1256,7 @@ namespace DexComanda
         {
             try
             {
-                int intCodEndereco = int.Parse(con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", CodPessoa).Tables[0].Rows[0].ItemArray.GetValue(20).ToString());
+                int intCodEndereco = (con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", CodPessoa).Tables[0].Rows[0].Field<int>("CodEndereco"));
                 if (Sessions.returnConfig.RepeteUltimoPedido)
                 {
                     ExecutaRepeticaoPedido(CodPessoa, intCodEndereco);
@@ -1260,7 +1267,7 @@ namespace DexComanda
                     frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", 0, "0,00",
                                                                     TaxaServico, false, DateTime.Now, 0,
                                                                     CodPessoa, "0,00", "Dinheiro", "", "", 0.00M, 0, 0, "", intCodEndereco);
-                    frm.ShowDialog();
+                    frm.Show(this);
                 }
 
             }
@@ -1285,9 +1292,6 @@ namespace DexComanda
 
                     m.MenuItems.Add(MontarPedido);
                     m.MenuItems.Add(ExcluirCliente);
-                    // Se o caixa estiver aberto ele Libera pra criar PEdido
-
-
                     int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
 
                     m.Show(dgv, new Point(e.X, e.Y));
@@ -1345,6 +1349,7 @@ namespace DexComanda
                     Utils.HistoricoCancelamentos(CodCliente);
                 }
                 AbrirPedido(CodCliente);
+                FiltraTipoPedido(sender, e);
             }
             catch (Exception xx)
             {
@@ -1492,9 +1497,16 @@ namespace DexComanda
             decimal iTotalPedido = decimal.Parse(DvPedido.ItemArray.GetValue(3).ToString());
             decimal iValue = 0;
             int intCodEndereco = DsPedido.Tables[0].Rows[0].Field<int>("CodEndereco");
-            if (iTrocoPara != 0.00M && iTrocoPara != 0)
+
+            decimal dbTotalReceber = iTrocoPara;
+            if (dbTotalReceber == 0)
             {
-                iValue = iTrocoPara - iTotalPedido;
+                dbTotalReceber = iTotalPedido;
+            }
+            decimal dblTroco = iTrocoPara - iTotalPedido;
+            if (dblTroco < 0)
+            {
+                dblTroco = 0;
             }
 
             DateTime iDataPedido = Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString());
@@ -1505,8 +1517,8 @@ namespace DexComanda
             }
             else if (iTipo == "0 - Entrega")
             {
-                Utils.ImpressaoEntreganova(iCodPedido, iValue,
-                     1, "", false, intCodEndereco);
+                Utils.ImpressaoEntreganova(iCodPedido, dbTotalReceber,
+                     1, "", intCodEndereco, dblTroco);
             }
             else if (iTipo == "2 - Balcao")
             {
@@ -1896,7 +1908,7 @@ namespace DexComanda
                 DataSet dsPedidosAbertos = con.SelectAll("Pedido", "spObterPedido");
                 int iPedidosAberto = dsPedidosAbertos.Tables["Pedido"].Rows.Count;
 
-                if (iPedidosAberto != pedidosGridView.Rows.Count && cbxFiltroTipo.Text == "")
+                if (iPedidosAberto != pedidosGridView.Rows.Count && cbxFiltroTipo.Text == "" && cbxStatusPedido.SelectedIndex==0)
                 {
                     TotalizaPedidos();
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
@@ -1919,6 +1931,7 @@ namespace DexComanda
                 }
                 DataRow dRowPedido = dsItemsNaoImpresso.Tables[0].Rows[0];
                 Boolean iMesa = dRowPedido.ItemArray.GetValue(8).ToString() == "1 - Mesa";
+
 
                 for (int i = 0; i < dsItemsNaoImpresso.Tables[0].Rows.Count; i++)
                 {
@@ -2127,6 +2140,24 @@ namespace DexComanda
                 frmAlteracaoProduto frm = new frmAlteracaoProduto();
                 frm.ShowDialog();
             }
+        }
+
+        private void FiltraPedidoPorStatus(object sender, EventArgs e)
+        {
+            if (cbxStatusPedido.SelectedIndex>0)
+            {
+                int intStatusPedio = int.Parse(cbxStatusPedido.SelectedValue.ToString());
+                pedidosGridView.DataSource = null;
+                pedidosGridView.AutoGenerateColumns = true;
+                pedidosGridView.DataSource = Utils.PopularGridPedido(con.MontaGridPedido(intStatusPedio));
+                pedidosGridView.DataMember = "Pedido";
+                pedidosGridView.Refresh();
+            }
+        }
+
+        private void cadastrosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

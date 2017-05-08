@@ -418,7 +418,7 @@ namespace DexComanda
 
                         var TaxaEntrega = Utils.RetornaTaxaPorCliente(iCodPessoa, 0);
                         frmCadastrarPedido frmCadastrarPedido = new frmCadastrarPedido(false, "0,00", 0, "", TaxaEntrega, false, DateTime.Now, 0, int.Parse(dRow.ItemArray.GetValue(0).ToString()),
-                                                                                       "", "", "", "",0, 0, 0, "", iCodEndereco, true);
+                                                                                       "", "", "", "",0, 0, 0, "", iCodEndereco);
                         frmCadastrarPedido.ShowDialog();
                     }
                 }

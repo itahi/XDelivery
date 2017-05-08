@@ -57,10 +57,10 @@ namespace DexComanda
                     string[] iText = words[0].Split('\'');
 
                     //Verifica se o Serviço do SQLSERVER está Ativo para inicia-lo
-                    if (Utils.RetornaNomePc() == iText[0])
-                    {
-                        Utils.ServicoSQLATIVO(iText[0]);
-                    }
+                    //if (Utils.RetornaNomePc() == iText[0])
+                    //{
+                    //    Utils.ServicoSQLATIVO(iText[0]);
+                    //}
 
                     con = new Conexao();
 
@@ -89,13 +89,9 @@ namespace DexComanda
                             Contato = servidor.Tables[0].Rows[0].Field<string>("Contato"),
                             Servidor = servidor.Tables[0].Rows[0].Field<string>("Servidor"),
                             CaminhoBackup = servidor.Tables[0].Rows[0].Field<string>("CaminhoBackup"),
-
-                            //  VersaoBanco = dRow.ItemArray.GetValue(15).ToString(),
                             DataInicio = servidor.Tables[0].Rows[0].Field<DateTime>("DataInicio"),
                             UrlServidor = servidor.Tables[0].Rows[0].Field<string>("UrlServidor"),
                             ConfiguracaoSMS = servidor.Tables[0].Rows[0].Field<string>("ConfiguracaoSMS"),
-
-                            //  Versao = dRow.ItemArray.GetValue(17).ToString()
                         };
                         Sessions.returnEmpresa = empresas;
 
@@ -135,13 +131,14 @@ namespace DexComanda
                                     QtdCaracteresImp = dsconfiguracao.Tables[0].Rows[0].Field<int>("QtdCaracteresImp"),
                                     DadosPush = dsconfiguracao.Tables[0].Rows[0].Field<string>("DadosPush"),
                                     Impressoras =  dsconfiguracao.Tables[0].Rows[0].Field<string>("Impressoras"),
-                                    ExigeVendedorSN = dsconfiguracao.Tables[0].Rows[0].Field<Boolean>("ExigeVendedorSN")
+                                    ExigeVendedorSN = dsconfiguracao.Tables[0].Rows[0].Field<Boolean>("ExigeVendedorSN"),
+                                    ImprimeViaBalcao = dsconfiguracao.Tables[0].Rows[0].Field<string>("ImprimeViaBalcao")
                                 };
                                 Sessions.returnConfig = configs;
                             }
                             else
                             {
-                                MessageBox.Show("Preencha as configurações que deseja utilizar, nao operação do Sistema", "XCommanda Aviso");
+                                MessageBox.Show("Preencha as configurações que deseja utilizar", "[xSistemas] Aviso");
                                 frmConfiguracoes frm = new frmConfiguracoes();
                                 frm.ShowDialog();
                             }
