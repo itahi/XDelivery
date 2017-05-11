@@ -1166,7 +1166,7 @@ namespace DexComanda
         {
             try
             {
-                int intCodPedido = int.Parse(pedidosGridView.SelectedRows[rowIndex].Cells["Codigo"].Value.ToString());
+                int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
                 CodPedidoWS = VerificaPedidoOnline(intCodPedido);
                 if (CodPedidoWS > 0)
                 {
@@ -1192,7 +1192,7 @@ namespace DexComanda
         {
             try
             {
-                int intCodPedido = int.Parse(pedidosGridView.SelectedRows[rowIndex].Cells["Codigo"].Value.ToString());
+                int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
                 CodPedidoWS = VerificaPedidoOnline(intCodPedido);
                 if (CodPedidoWS > 0)
                 {

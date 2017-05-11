@@ -141,3 +141,4 @@ D:\#Projetos\xDelivery\Fonte\bin\Debug\ShockwaveFlashObjects.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.CommonControls.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Caixa\RelCaixaHistorico.rpt
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Caixa\RelCaixaHistorico.cs
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Alteracoes.frmAlterarMultOpcao.resources

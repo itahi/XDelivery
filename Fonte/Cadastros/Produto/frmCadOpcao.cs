@@ -1,5 +1,6 @@
 ﻿using DexComanda.Models;
 using DexComanda.Models.Produto;
+using DexComanda.Operações.Alteracoes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -308,6 +309,12 @@ namespace DexComanda.Cadastros.Produto
         private void checkBox1_CheckStateChanged(object sender, EventArgs e)
         {
             MarcaTodosDias(checkBox1.Checked);
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            frmAlterarMultOpcao frm = new frmAlterarMultOpcao();
+            frm.Show(this);
         }
 
         //private void FiltraOpcaoPorTipo(object sender, EventArgs e)

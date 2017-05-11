@@ -219,7 +219,16 @@ namespace DexComanda
             string iCod4, string iCodOpcao, Boolean iPrecoMar = true)
         {
             string iSqlConsulta = "";
-
+            string sqlWhere = "";
+            //if (Utils.MarcaTipoConfiguracaoProduto().TipoCodigo=="Personalizado")
+            //{
+            //    sqlWhere = " where P.CodigoPersonalizado in (@Cod1, @Cod2, @Cod3, @Cod4) and CodOpcao = @CodOpcao";
+            //}
+            //else
+            //{
+            //    sqlWhere = "where CodProduto in (@Cod1,@Cod2,@Cod3,@Cod4) and CodOpcao =@CodOpcao";
+            //}
+            
             //Retorna o maior preço entre os produtos
             if (!iPrecoMar)
             {
@@ -229,7 +238,7 @@ namespace DexComanda
                                     " Produto_Opcao PO" +
                                     " left join Produto P on P.Codigo = PO.CodProduto or P.CodigoPersonalizado=PO.CodProduto" +
                                     " left join Opcao O on O.Codigo = PO.CodOpcao and O.Tipo = 1" +
-                                    " where CodProduto in (@Cod1,@Cod2,@Cod3,@Cod4) and CodOpcao =@CodOpcao";
+                                    " where ( CodProduto in (@Cod1,@Cod2,@Cod3,@Cod4) or P.CodigoPersonalizado in (@Cod1,@Cod2,@Cod3,@Cod4) AND p.CodigoPersonalizado>0   )and CodOpcao =@CodOpcao";
             }
             //Retorna o preço médio entre os produtos
             else
@@ -241,7 +250,7 @@ namespace DexComanda
                                      " left" +
                                      " join Produto P on P.Codigo = PO.CodProduto" +
                                      " left join Opcao O on O.Codigo = PO.CodOpcao and O.Tipo = 1" +
-                                     " where CodProduto in (@Cod1, @Cod2, @Cod3, @Cod4) and CodOpcao = @CodOpcao ";
+                                     " where ( CodProduto in (@Cod1,@Cod2,@Cod3,@Cod4) or P.CodigoPersonalizado in (@Cod1,@Cod2,@Cod3,@Cod4) AND p.CodigoPersonalizado>0   )and CodOpcao =@CodOpcao";
             }
 
 

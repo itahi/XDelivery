@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.OpcaoGridView = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.btnEditar = new System.Windows.Forms.Button();
@@ -46,6 +47,8 @@
             this.chkTerca = new System.Windows.Forms.CheckBox();
             this.chkSegunda = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.OpcaoGridView)).BeginInit();
             this.grpDiasDisponivel.SuspendLayout();
             this.SuspendLayout();
@@ -65,7 +68,7 @@
             this.OpcaoGridView.Name = "OpcaoGridView";
             this.OpcaoGridView.ReadOnly = true;
             this.OpcaoGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.OpcaoGridView.Size = new System.Drawing.Size(288, 252);
+            this.OpcaoGridView.Size = new System.Drawing.Size(302, 252);
             this.OpcaoGridView.TabIndex = 2;
             this.OpcaoGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OpcaoGridView_CellClick);
             this.OpcaoGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OpcaoGridView_MouseClick);
@@ -82,7 +85,7 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(158, 179);
+            this.btnEditar.Location = new System.Drawing.Point(167, 178);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(130, 35);
             this.btnEditar.TabIndex = 2;
@@ -98,7 +101,7 @@
             this.txtNome.Location = new System.Drawing.Point(4, 26);
             this.txtNome.MaxLength = 30;
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(284, 26);
+            this.txtNome.Size = new System.Drawing.Size(298, 26);
             this.txtNome.TabIndex = 0;
             // 
             // btnAdicionar
@@ -162,6 +165,7 @@
             // 
             // grpDiasDisponivel
             // 
+            this.grpDiasDisponivel.Controls.Add(this.btnEdit);
             this.grpDiasDisponivel.Controls.Add(this.chkDomingo);
             this.grpDiasDisponivel.Controls.Add(this.ChkSexta);
             this.grpDiasDisponivel.Controls.Add(this.chkQuinta);
@@ -171,10 +175,11 @@
             this.grpDiasDisponivel.Controls.Add(this.chkSegunda);
             this.grpDiasDisponivel.Location = new System.Drawing.Point(4, 73);
             this.grpDiasDisponivel.Name = "grpDiasDisponivel";
-            this.grpDiasDisponivel.Size = new System.Drawing.Size(284, 60);
+            this.grpDiasDisponivel.Size = new System.Drawing.Size(293, 59);
             this.grpDiasDisponivel.TabIndex = 70;
             this.grpDiasDisponivel.TabStop = false;
             this.grpDiasDisponivel.Text = "Disponibilidade";
+            this.toolTip1.SetToolTip(this.grpDiasDisponivel, "Marque os dias em que o produto estará disponivel no site/app");
             // 
             // chkDomingo
             // 
@@ -281,11 +286,21 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckStateChanged += new System.EventHandler(this.checkBox1_CheckStateChanged);
             // 
+            // btnEdit
+            // 
+            this.btnEdit.Location = new System.Drawing.Point(216, 19);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(71, 34);
+            this.btnEdit.TabIndex = 71;
+            this.btnEdit.Text = "Ed. Multipla";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
             // frmCadOpcao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(295, 478);
+            this.ClientSize = new System.Drawing.Size(309, 478);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.grpDiasDisponivel);
             this.Controls.Add(this.chkAtivoSN);
@@ -299,7 +314,9 @@
             this.Controls.Add(this.OpcaoGridView);
             this.KeyPreview = true;
             this.Name = "frmCadOpcao";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[xSistemas] Cadastros de Opção";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmCadOpcao_Load);
             ((System.ComponentModel.ISupportInitialize)(this.OpcaoGridView)).EndInit();
             this.grpDiasDisponivel.ResumeLayout(false);
@@ -329,5 +346,7 @@
         private System.Windows.Forms.CheckBox chkTerca;
         private System.Windows.Forms.CheckBox chkSegunda;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnEdit;
     }
 }

@@ -105,7 +105,7 @@ namespace DexComanda
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, int iCodMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara, string fPagamento, string TipoPedido, string MesaBalcao,
             decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0,
-            string iObservacaoPedido = "", int iIntEnderecoSelecionado = 0,string strSenha="")
+            string iObservacaoPedido = "", int iIntEnderecoSelecionado = 0, string strSenha = "")
         {
             try
             {
@@ -673,23 +673,19 @@ namespace DexComanda
         {
             int intCodProduto1 = intCodProduto;
             int intCodProduto2 = 0;
-            int intCodOpcao = 0;
             DataSet dsOpcoes = new DataSet();
+            decimal dPrecoProduto, dPrecoSoOpcao;
             try
             {
-                decimal dPrecoProduto, dPrecoSoOpcao;
-                if (ProdutosPorCodigo)
+                if (txtCodProduto1.Text != "")
                 {
-                    if (txtCodProduto1.Text != "")
-                    {
-                        intCodProduto1 = int.Parse(txtCodProduto1.Text);
-                    }
-                    if (txtCodProduto2.Text != "")
-                    {
-                        intCodProduto2 = int.Parse(txtCodProduto2.Text);
-                    }
-
+                    intCodProduto1 = int.Parse(txtCodProduto1.Text);
                 }
+                if (txtCodProduto2.Text != "")
+                {
+                    intCodProduto2 = int.Parse(txtCodProduto2.Text);
+                }
+
                 else
                 {
                     if (cbxProdutosGrid.SelectedValue != null && intCodProduto == 0)
@@ -725,11 +721,6 @@ namespace DexComanda
                         dsOpcoes = con.RetornaOpcoesProduto(intCodProduto2);
                     }
 
-
-                    //if(txtCodProduto2.Text!="" ||cbxSabor.SelectedValue!=null)
-                    //{
-                    //    dsOpcoes = con.RetornaOpcoesProduto(intCodProduto2);
-                    //}
                 }
 
                 EscondeTamanhos();
@@ -1117,20 +1108,20 @@ namespace DexComanda
                     MessageBox.Show("Formaga de Pagamento não selecionada", "[xSistemas] Aviso");
                     cmbFPagamento.Focus();
                     return;
-                } 
+                }
                 else
                 {
-                    if (txtSenha.Text != "" && cbxTipoPedido.Text== "2 - Balcao")
+                    if (txtSenha.Text != "" && cbxTipoPedido.Text == "2 - Balcao")
                     {
-                        if ( con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorSenha", 0, txtSenha.Text).Tables[0].Rows.Count > 0)
+                        if (con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorSenha", 0, txtSenha.Text).Tables[0].Rows.Count > 0)
                         {
                             MessageBox.Show(Bibliotecas.cSenhaEmUso);
                             btnGerarPedido.Enabled = true;
                             return;
                         }
-                      
+
                     }
-                   
+
                     if (AtualizaTroco(false))
                     {
                         int totalDeItems = this.gridViewItemsPedido.RowCount;
@@ -1152,10 +1143,10 @@ namespace DexComanda
                                 CodUsuario = RetornaCodVendedor(),
                                 Observacao = txtObsPedido.Text,
                                 CodEndereco = prvCodEndecoSelecionado,
-                              
+
 
                             };
-                            if (txtSenha.Text!="")
+                            if (txtSenha.Text != "")
                             {
                                 pedido.Senha = txtSenha.Text;
                             }
@@ -1258,7 +1249,7 @@ namespace DexComanda
                             }
 
                             iCodPedido = con.getLastCodigo();
-                            con.AtualizaSituacao(iCodPedido, Sessions.retunrUsuario.Codigo,1 );
+                            con.AtualizaSituacao(iCodPedido, Sessions.retunrUsuario.Codigo, 1);
 
 
                             if (ContraMesas && cbxTipoPedido.Text != "1 - Mesa")
@@ -1876,7 +1867,7 @@ namespace DexComanda
                         iCodigo = codPedido;
                     }
 
-                    string iRetorno = Utils.ImpressaoBalcao(iCodigo, QtdViasBalcao,strNomeImpressoraBalcao);// Sessions.returnConfig.ImpressoraCopaBalcao);
+                    string iRetorno = Utils.ImpressaoBalcao(iCodigo, QtdViasBalcao, strNomeImpressoraBalcao);// Sessions.returnConfig.ImpressoraCopaBalcao);
                     if (ImprimeViaCozinha)
                     {
                         if (TipoAgrupamentoCozinha == "Sem Agrupamento")
@@ -1912,7 +1903,7 @@ namespace DexComanda
                     else if (Sessions.returnConfig.QtdCaracteresImp >= 40)
                     {
                         decimal dbTotalReceber = decimal.Parse(txtTrocoPara.Text);
-                        if (dbTotalReceber==0)
+                        if (dbTotalReceber == 0)
                         {
                             dbTotalReceber = decimal.Parse(lbTotal.Text.Replace("R$", ""));
                         }
@@ -1941,7 +1932,7 @@ namespace DexComanda
                         else
                         {
                             Utils.ImpressaoCozihanova(iCodigo, QtdViasCozinha);
-                            
+
                         }
 
                     }
@@ -1980,11 +1971,11 @@ namespace DexComanda
                     {
                         //if (!ProdutosPorCodigo && TipoCodigo != "Personalizado")
                         //{
-                            itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorGrupo", iCodPedido, "", CodGrupo);
-                            if (itemsPedido.Tables[0].Rows.Count > 0)
-                            {
-                                Utils.ImpressaoDelivery_CozinhaPorGrupo(iCodPedido, iNomeImpressora, CodGrupo);
-                            }
+                        itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorGrupo", iCodPedido, "", CodGrupo);
+                        if (itemsPedido.Tables[0].Rows.Count > 0)
+                        {
+                            Utils.ImpressaoDelivery_CozinhaPorGrupo(iCodPedido, iNomeImpressora, CodGrupo);
+                        }
 
                         //}
                         //else
@@ -2026,7 +2017,7 @@ namespace DexComanda
                 MessageBox.Show("Não foi possivel imprimir o Item da Mesa verificar a impressora" + erro.Message);
             }
         }
-        
+
         private string QuebrarString(string texto)
         {
             int totalDeCaracters = texto.Length - 1;
@@ -2354,7 +2345,7 @@ namespace DexComanda
             DataTable produto;
             if (e.KeyCode == Keys.Enter)
             {
-                MontaMenuOpcoes();
+
                 if (txtCodProduto1.Text != "")
                 {
                     if (chkCodPersonalizado.Checked)
@@ -2369,10 +2360,9 @@ namespace DexComanda
 
                     if (produto.Rows.Count > 0)
                     {
-                        //  MontaMenuOpcoes(int.Parse(txtCodProduto1.Text));
                         cbxProdutosGrid.Text = produto.Rows[0]["NomeProduto"].ToString();
                         intCodProduto = int.Parse(produto.Rows[0]["Codigo"].ToString());
-
+                        MontaMenuOpcoes(intCodProduto);
                         if (PromocaoDiasSemana)
                         {
                             List<PrecoDiaProduto> listPreco = new List<PrecoDiaProduto>();
@@ -2385,6 +2375,7 @@ namespace DexComanda
                                     if (item.Dia == DiaDaSema && item.Preco != null && item.Preco != 0)
                                     {
                                         txtPrecoUnitario.Text = item.Preco.ToString();
+                                        break;
                                     }
                                     else
                                     {
@@ -2460,6 +2451,7 @@ namespace DexComanda
                                 if (item.Dia == DiaDaSema)
                                 {
                                     txtPrecoUnitario.Text = item.Preco.ToString();
+                                    break;
                                 }
                                 else
                                 {
@@ -2759,7 +2751,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(799, 3);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -3433,8 +3425,8 @@ namespace DexComanda
             // 
             // chkListAdicionais
             // 
-            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chkListAdicionais.CheckOnClick = true;
             this.chkListAdicionais.FormattingEnabled = true;
@@ -3718,7 +3710,7 @@ namespace DexComanda
                 lblSenha.Visible = false;
                 txtSenha.Visible = false;
             }
-            else if (cbxTipoPedido.Text== "2 - Balcao")
+            else if (cbxTipoPedido.Text == "2 - Balcao")
             {
                 lblSenha.Visible = true;
                 txtSenha.Visible = true;
@@ -4765,7 +4757,7 @@ namespace DexComanda
 
         private void txtSenha_Leave(object sender, EventArgs e)
         {
-            if (con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorSenha", 0, txtSenha.Text).Tables[0].Rows.Count>0)
+            if (con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorSenha", 0, txtSenha.Text).Tables[0].Rows.Count > 0)
             {
                 MessageBox.Show(Bibliotecas.cSenhaEmUso);
             }
