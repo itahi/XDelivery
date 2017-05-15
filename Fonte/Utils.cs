@@ -2427,7 +2427,7 @@ namespace DexComanda
 
                 // Retorna a Taxa de Entrega do cadastro do Cliente
                 TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
-                frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", 0, "", TaxaEntrega, false,
+                frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", 0, "0,00", TaxaEntrega, false,
                                                                             DateTime.Now, CodPedido, CodPessoa,
                                                                             "", FormaPagamento, "", "Balcao", 0.00M, 0, 0, "", iCodEndereco);
                 frmRepetePedido.ShowDialog();

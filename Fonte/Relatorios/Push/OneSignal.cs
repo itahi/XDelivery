@@ -51,13 +51,10 @@ namespace DexComanda.Push
                 
 
             }
-            DataRow dRowCliente = dsCliente.Tables[0].Rows[0];
-            string iNomeCliente, iUserId;
-            iNomeCliente = dRowCliente.ItemArray.GetValue(1).ToString();
-            iUserId = dRowCliente.ItemArray.GetValue(16).ToString();
+
 
             OneSignal one = new OneSignal();
-            one.EnviaNotificacao(iNomeCliente, iTexto, "");
+            one.EnviaNotificacao(dsCliente.Tables[0].Rows[0].Field<string>("Nome"), iTexto, dsCliente.Tables[0].Rows[0].Field<string>("user_id"));
         }
         /// <summary>
         /// Envia push para um espeficico
@@ -112,8 +109,8 @@ namespace DexComanda.Push
                 }
                 catch (WebException ex)
                 {
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
-                    System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
+                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
 
                 }
 
@@ -132,8 +129,9 @@ namespace DexComanda.Push
         /// <param name="iTexto"></param>
         /// <param name="iUserID">
         /// Id do usuario </param>
-        public void EnviaNotificacao(string iTituloMsg,string iTexto)
+        public bool EnviaNotificacao(string iTituloMsg,string iTexto)
         {
+            Boolean iretur = false;
             try
             {
                 var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
@@ -141,9 +139,11 @@ namespace DexComanda.Push
                 request.Method = "POST";
                 request.ContentType = "application/json";
                 string irul = Sessions.returnEmpresa.UrlServidor;
-                request.Headers.Add("authorization", "Basic " + Utils.RetornaConfiguracaoPush().Pushauthorization);
+                string pushAut = Utils.RetornaConfiguracaoPush().Pushauthorization;
+                string pushAppID = Utils.RetornaConfiguracaoPush().Pushapp_id;
+                request.Headers.Add("authorization", "Basic "+ pushAut);
                 byte[] byteArray = Encoding.UTF8.GetBytes("{"
-                                                        + "\"app_id\": \"" + Utils.RetornaConfiguracaoPush().Pushapp_id + "\","
+                                                        + "\"app_id\": \"" + pushAppID + "\","
                                                         + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
                                                         + "\"contents\": {\"en\": \"" + iTexto + "\"},"
                                                         + "\"included_segments\": [\"All\"]}");
@@ -170,15 +170,16 @@ namespace DexComanda.Push
                             Notificacao notify = new Notificacao();
 
                             notify = JsonConvert.DeserializeObject<Notificacao>(responseContent);
-
+                            MessageBox.Show("Parabéns " + notify.recipients.ToString() + " foram atingidos prepare-se para bombar nas vendas");
+                            iretur = true;
                         }
                     }
                    
                 }
                 catch (WebException ex)
                 {
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
-                    System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
+                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
 
                 }
 
@@ -189,6 +190,7 @@ namespace DexComanda.Push
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
+            return iretur;
         }
         /// <summary>
         /// Envia push para uma lista de usuarios filtrados
@@ -197,8 +199,9 @@ namespace DexComanda.Push
         /// <param name="iTexto"></param>
         /// <param name="iUserID">
         /// Lista de usuarios separados por ,(virgula)</param>
-        public void EnviaNotificacao(string iTituloMsg, string iTexto, List<string> iUserID,string iModoEntrega)
+        public bool EnviaNotificacao(string iTituloMsg, string iTexto, List<string> iUserID,string iModoEntrega)
         {
+            Boolean iReturn = false;
             try
             {
                 var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
@@ -236,9 +239,9 @@ namespace DexComanda.Push
                         if (response.StatusCode == HttpStatusCode.OK)
                         {
                             Notificacao notify = new Notificacao();
-
                             notify = JsonConvert.DeserializeObject<Notificacao>(responseContent);
                             MessageBox.Show(Bibliotecas.cMsgEnviadaOK + notify.recipients.ToString() + "usuários");
+                            iReturn = true;
                         }
                     }
 
@@ -246,8 +249,8 @@ namespace DexComanda.Push
                 }
                 catch (WebException ex)
                 {
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
-                    System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
+                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
 
                     //MessageBox.Show(ex.Message);
                 }
@@ -259,6 +262,7 @@ namespace DexComanda.Push
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
+            return iReturn;
         }
     }
 }

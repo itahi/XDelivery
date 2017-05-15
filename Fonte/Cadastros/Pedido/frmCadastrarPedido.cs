@@ -119,7 +119,7 @@ namespace DexComanda
                 codPessoa = CodPessoa;
                 txtSenha.Text = strSenha;
                 codPedido = CodigoPedido;
-                trocoPara = tPara;
+                trocoPara = "0,00";
                 txtTrocoPara.Text = "0,00";
                 formaPagamento = fPagamento;
                 txtObsPedido.Text = iObservacaoPedido;

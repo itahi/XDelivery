@@ -26,6 +26,11 @@ namespace DexComanda.Operações.Ações
             DataSet dsResultado = null;
             try
             {
+                if (rbTodos.Checked)
+                {
+                    MessageBox.Show("Envio para todos usuários não precisa preencher o filtro , apenas preencha o texto e envie");
+                    return;
+                }
                 if (rbAniversario.Checked)
                 {
                     dsResultado = con.SelectObterAniversariantes("spObterAnivesariantesPush",
@@ -125,7 +130,8 @@ namespace DexComanda.Operações.Ações
                 if (rbTodos.Checked)
                 {
                     OneSignal on = new OneSignal();
-                    on.EnviaNotificacao(txtTitulo.Text, txtTextoMsg.Text,ModoEntrega());
+                    if (on.EnviaNotificacao(txtTitulo.Text, txtTextoMsg.Text))
+                        Utils.LimpaForm(this);
                     return;
                 }
                 if (gridResultado.Rows.Count==0)
@@ -141,7 +147,9 @@ namespace DexComanda.Operações.Ações
                     {
                         listaId.Add("\""+gridResultado.Rows[i].Cells["user_id"].Value.ToString()+"\"");
                     }
-                    on.EnviaNotificacao(txtTitulo.Text ,txtTextoMsg.Text, listaId, ModoEntrega());
+                    if(on.EnviaNotificacao(txtTitulo.Text ,txtTextoMsg.Text, listaId, ModoEntrega()))
+                    Utils.LimpaForm(this);
+                    return;
                 }
             }
             catch (Exception erros)
