@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroCliente));
             this.tbEndereco = new System.Windows.Forms.TabControl();
             this.tbPrincipal = new System.Windows.Forms.TabPage();
+            this.label37 = new System.Windows.Forms.Label();
+            this.cbxOrigemCadastro = new System.Windows.Forms.ComboBox();
             this.pnConsultaCEp = new System.Windows.Forms.Panel();
             this.label26 = new System.Windows.Forms.Label();
             this.txtPJPF = new System.Windows.Forms.TextBox();
@@ -130,8 +132,6 @@
             this.txtNomeEnd = new System.Windows.Forms.TextBox();
             this.label34 = new System.Windows.Forms.Label();
             this.txtCEPEnd = new System.Windows.Forms.TextBox();
-            this.cbxOrigemCadastro = new System.Windows.Forms.ComboBox();
-            this.label37 = new System.Windows.Forms.Label();
             this.tbEndereco.SuspendLayout();
             this.tbPrincipal.SuspendLayout();
             this.pnConsultaCEp.SuspendLayout();
@@ -208,6 +208,25 @@
             this.tbPrincipal.Text = "Dados do Cliente";
             this.tbPrincipal.UseVisualStyleBackColor = true;
             // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(280, 346);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(111, 13);
+            this.label37.TabIndex = 63;
+            this.label37.Text = "Como nos conheceu?";
+            // 
+            // cbxOrigemCadastro
+            // 
+            this.cbxOrigemCadastro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxOrigemCadastro.FormattingEnabled = true;
+            this.cbxOrigemCadastro.Location = new System.Drawing.Point(398, 343);
+            this.cbxOrigemCadastro.Name = "cbxOrigemCadastro";
+            this.cbxOrigemCadastro.Size = new System.Drawing.Size(171, 21);
+            this.cbxOrigemCadastro.TabIndex = 62;
+            this.cbxOrigemCadastro.DropDown += new System.EventHandler(this.ListaOrigens);
+            // 
             // pnConsultaCEp
             // 
             this.pnConsultaCEp.Controls.Add(this.label26);
@@ -237,7 +256,6 @@
             this.txtPJPF.Size = new System.Drawing.Size(60, 29);
             this.txtPJPF.TabIndex = 60;
             this.txtPJPF.Visible = false;
-            this.txtPJPF.TextChanged += new System.EventHandler(this.txtPJPF_TextChanged);
             // 
             // txtUserID
             // 
@@ -248,7 +266,6 @@
             this.txtUserID.Size = new System.Drawing.Size(133, 29);
             this.txtUserID.TabIndex = 59;
             this.txtUserID.Visible = false;
-            this.txtUserID.TextChanged += new System.EventHandler(this.txtUserID_TextChanged);
             // 
             // btnAlteraRegiao
             // 
@@ -468,12 +485,16 @@
             // 
             // txtBairro
             // 
+            this.txtBairro.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.txtBairro.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtBairro.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBairro.Location = new System.Drawing.Point(15, 146);
             this.txtBairro.MaxLength = 100;
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(276, 29);
             this.txtBairro.TabIndex = 37;
+            this.txtBairro.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtBairro_KeyUp);
+            this.txtBairro.Leave += new System.EventHandler(this.txtBairro_Leave);
             // 
             // txtEndereco
             // 
@@ -819,11 +840,11 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(429, 10);
+            this.label19.Location = new System.Drawing.Point(441, 10);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(80, 13);
+            this.label19.Size = new System.Drawing.Size(68, 13);
             this.label19.TabIndex = 14;
-            this.label19.Text = "Quant. Pedidos";
+            this.label19.Text = "Qtd. Pedidos";
             // 
             // lblData
             // 
@@ -837,7 +858,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(429, 64);
+            this.label22.Location = new System.Drawing.Point(427, 61);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(59, 13);
             this.label22.TabIndex = 12;
@@ -1095,7 +1116,7 @@
             this.cbxRegiaoEnd.Size = new System.Drawing.Size(143, 21);
             this.cbxRegiaoEnd.TabIndex = 17;
             this.cbxRegiaoEnd.DropDown += new System.EventHandler(this.cbxRegiaoEnd_DropDown);
-            this.cbxRegiaoEnd.SelectedIndexChanged += new System.EventHandler(this.cbxRegiaoEnd_SelectedIndexChanged);
+            this.cbxRegiaoEnd.SelectionChangeCommitted += new System.EventHandler(this.cbxRegiaoEnd_SelectionChangeCommitted);
             // 
             // label28
             // 
@@ -1212,26 +1233,6 @@
             this.txtCEPEnd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCEPEnd_KeyDown);
             this.txtCEPEnd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCEPEnd_KeyPress);
             this.txtCEPEnd.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCEPEnd_KeyUp);
-            // 
-            // cbxOrigemCadastro
-            // 
-            this.cbxOrigemCadastro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxOrigemCadastro.FormattingEnabled = true;
-            this.cbxOrigemCadastro.Location = new System.Drawing.Point(398, 343);
-            this.cbxOrigemCadastro.Name = "cbxOrigemCadastro";
-            this.cbxOrigemCadastro.Size = new System.Drawing.Size(171, 21);
-            this.cbxOrigemCadastro.TabIndex = 62;
-            this.cbxOrigemCadastro.DropDown += new System.EventHandler(this.ListaOrigens);
-            this.cbxOrigemCadastro.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(280, 346);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(111, 13);
-            this.label37.TabIndex = 63;
-            this.label37.Text = "Como nos conheceu?";
             // 
             // frmCadastroCliente
             // 

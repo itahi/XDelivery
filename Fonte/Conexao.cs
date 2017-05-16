@@ -15,6 +15,7 @@ using System.Management;
 using System.Net;
 using XIntegrador.Classe.Local;
 using Microsoft.Win32;
+using DexComanda.Models.WS;
 
 namespace DexComanda
 {
@@ -135,6 +136,15 @@ namespace DexComanda
 
 
         }
+        public async void AtualizaImpressaoBalcao(int intCodPedido)
+        {
+            string iSqlConsulta = " update Pedido set ImpressoSN=1 where Codigo=@Codigo";
+            command = new SqlCommand(iSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@Codigo", intCodPedido);
+            await command.ExecuteNonQueryAsync();
+
+        }
         public DataSet RetornaPedidosOnline(Boolean iOnlineSN, DateTime iDataInicio, DateTime iDataFim)
         {
             string iSqlConsulta = " select P.CodPessoa, P.Codigo , Pe.Nome , P.TotalPedido, P.RealizadoEm," +
@@ -228,7 +238,7 @@ namespace DexComanda
             //{
             //    sqlWhere = "where CodProduto in (@Cod1,@Cod2,@Cod3,@Cod4) and CodOpcao =@CodOpcao";
             //}
-            
+
             //Retorna o maior preço entre os produtos
             if (!iPrecoMar)
             {
@@ -395,6 +405,28 @@ namespace DexComanda
             ds = new DataSet();
             adapter.Fill(ds, "Caixa");
             return ds;
+        }
+        public DataSet ListaBairro(string iBairro)
+        {
+            List<CidadesAtendidas> cidades = new List<CidadesAtendidas>();
+            cidades = Utils.DeserializaObjeto2(Sessions.returnConfig.CidadesAtendidas);
+            string result = "";
+            foreach (var item in cidades)
+            {
+                result = string.Join(",", item.Cidade);
+            }
+            // string result = string.Join<string>(",", cidades.ToString());
+
+           // string iSql = "select bairro from base_cep where  bairro like '%" + iBairro + "%' and cidade in (@Cidades)";
+            string iSql = "select bairro from base_cep where cidade in (@Cidades)";
+            command = new SqlCommand(iSql, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@Cidades", result);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "base_cep");
+            return ds;
+
         }
         public DataSet RetornarTaxaPorBairro(string iNOmeBairro)
         {

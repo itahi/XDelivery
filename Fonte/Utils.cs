@@ -71,6 +71,7 @@ namespace DexComanda
         public static Boolean bMult;
         public static int intCodUserAutorizador;
         private static string strProxImpressora = "";
+        private static string TipoAgrupamentoDelivery = Utils.RetornaConfiguracaoDelivery().TipoAgrupamento;
         //  private static Boolean bCodigoPersonalizado =
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
         public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1, Boolean iAlterarUserLogado = false, string iTurno = "Dia")
@@ -784,6 +785,7 @@ namespace DexComanda
             {
                 if (iCod == -1)
                 {
+                    icbxName.DataSource = null; 
                     icbxName.DataSource = conexao.SelectAll(iTable, iSP).Tables[iTable];
                 }
                 else
@@ -2100,6 +2102,62 @@ namespace DexComanda
             }
             return iRetorno;
         }
+        public static void ImpressaoPorCozinha(int iCodPedido)
+        {
+            try
+            {
+                DataSet itemsPedido, dsItemsNaoImpresso, dsItems;
+                DataSet dsI = new DataSet();
+                dsItemsNaoImpresso = Utils.CarregaItens(iCodPedido);
+
+                if (dsItemsNaoImpresso.Tables.Count == 0)
+                {
+                    return;
+                }
+                for (int i = 0; i < dsItemsNaoImpresso.Tables["ItemsPedido"].Rows.Count; i++)
+                {
+                    int CodGrupo = dsItemsNaoImpresso.Tables[0].Rows[i].Field<int>("CodGrupo");
+                    string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].Field<string>("NomeImpressora");
+
+                    if (TipoAgrupamentoDelivery == "Por Cozinha/Grupo")
+                    {
+                        //if (!ProdutosPorCodigo && TipoCodigo != "Personalizado")
+                        //{
+                        itemsPedido = conexao.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorGrupo", iCodPedido, "", CodGrupo);
+                        if (itemsPedido.Tables[0].Rows.Count > 0)
+                        {
+                            Utils.ImpressaoDelivery_CozinhaPorGrupo(iCodPedido, iNomeImpressora, CodGrupo);
+                        }
+
+                    }
+                    else
+                    {
+                        itemsPedido = conexao.SelectItensPorImpressora(iCodPedido, iNomeImpressora);
+                        if (itemsPedido.Tables[0].Rows.Count == 0)
+                        {
+                            return;
+                        }
+                        Utils.ImpressaoDeliveryCoziha_SeparadoPorImpressora(iCodPedido, iNomeImpressora);
+                    }
+                    //
+                    for (int intfor = 0; intfor < itemsPedido.Tables["ItemsPedido"].Rows.Count; intfor++)
+                    {
+                        AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
+                        Atualiza.CodPedido = iCodPedido;
+                        Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[intfor].Field<int>("CodProduto");
+                        Atualiza.ImpressoSN = true;
+                        conexao.Update("spInformaItemImpresso", Atualiza);
+                    }
+
+                }
+
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Não foi possivel imprimir o Item da Mesa verificar a impressora" + erro.Message);
+            }
+        }
         public static string ImpressaoBalcao(int iCodPedido,
             int iNumCopias = 0, string iNomeImpressora = "")
         {
@@ -2144,6 +2202,7 @@ namespace DexComanda
                 {
                     report.PrintToPrinter(1, false, 0, 0);
                 }
+
             }
             catch (Exception erro)
             {

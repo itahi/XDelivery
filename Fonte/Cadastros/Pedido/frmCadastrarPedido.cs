@@ -1511,14 +1511,9 @@ namespace DexComanda
                             this.txtPrecoTotal.Text = "";
                             this.txtItemDescricao.Text = "";
 
-                            //Comentário Teste
-                            //if (ContraMesas && cbxListaMesas.Visible)
-                            //{
-                            //    int CodigoMesa = Utils.RetornaCodigoMesa(cbxListaMesas.Text);
-                            //    Utils.AtualizaMesa(CodigoMesa, 2);
-                            //}
-
                             MessageBox.Show("Item alterado com sucesso.", "[xSistemas]");
+                            
+                            Utils.MontaCombox(cbxTipoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
                             txtPorcentagemDesconto.Text = "0";
                             this.btnAdicionarItemNoPedido.Text = "Adicionar";
                             this.btnAdicionarItemNoPedido.Click += new System.EventHandler(this.btnAdicionarItemNoPedido_Click);
@@ -1678,6 +1673,9 @@ namespace DexComanda
                         }
 
                         MessageBox.Show("Item alterado com sucesso.", "[xSistemas]");
+                        cbxTipoProduto.DataSource = con.SelectAll("Grupo", "spObterGrupoAtivo").Tables[0];
+                        cbxTipoProduto.DisplayMember = "NomeGrupo";
+                        cbxTipoProduto.ValueMember = "Codigo";
                     }
                 }
             }
@@ -1977,17 +1975,6 @@ namespace DexComanda
                             Utils.ImpressaoDelivery_CozinhaPorGrupo(iCodPedido, iNomeImpressora, CodGrupo);
                         }
 
-                        //}
-                        //else
-                        //{
-                        //    itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCozinhaCodPersonalizado", iCodPedido, "", CodGrupo);
-                        //    if (itemsPedido.Tables[0].Rows.Count > 0)
-                        //    {
-                        //        Utils.ImpressaoDelivery_CozinhaPorGrupoCodPersonalizado(iCodPedido, iNomeImpressora, CodGrupo);
-                        //    }
-
-                        //}
-
                     }
                     else
                     {
@@ -2022,7 +2009,6 @@ namespace DexComanda
         {
             int totalDeCaracters = texto.Length - 1;
             var TamanhoCaracterImpressao = Sessions.returnConfig.QtdCaracteresImp.ToString();
-            // string textoTratado = "";
             if (totalDeCaracters > int.Parse(TamanhoCaracterImpressao) - 1)
             {
                 for (int i = 0, count = 0; i < totalDeCaracters; i++)
