@@ -187,7 +187,7 @@ namespace DexComanda
                 iRetur = ds.Tables[0].Rows[0].Field<decimal>("Soma");
 
             }
-            catch (Exception erro)
+            catch (SqlException erro)
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }

@@ -502,11 +502,11 @@
     <Compile Include="Operações\frmInformaMotoboy.Designer.cs">
       <DependentUpon>frmInformaMotoboy.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operações\Estoque\frmLancaEstoque.cs">
+    <Compile Include="Operações\Estoque\frmLancaEstoqueProd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Operações\Estoque\frmLancaEstoque.Designer.cs">
-      <DependentUpon>frmLancaEstoque.cs</DependentUpon>
+    <Compile Include="Operações\Estoque\frmLancaEstoqueProd.Designer.cs">
+      <DependentUpon>frmLancaEstoqueProd.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\frmLicencaOFFLINE.cs">
       <SubType>Form</SubType>
@@ -1187,8 +1187,8 @@
     <EmbeddedResource Include="Operações\frmInformaMotoboy.resx">
       <DependentUpon>frmInformaMotoboy.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Operações\Estoque\frmLancaEstoque.resx">
-      <DependentUpon>frmLancaEstoque.cs</DependentUpon>
+    <EmbeddedResource Include="Operações\Estoque\frmLancaEstoqueProd.resx">
+      <DependentUpon>frmLancaEstoqueProd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmNotificacao.resx">
       <DependentUpon>frmNotificacao.cs</DependentUpon>

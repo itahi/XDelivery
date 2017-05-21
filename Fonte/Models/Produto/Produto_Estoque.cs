@@ -9,7 +9,9 @@ namespace DexComanda.Models
    public class Produto_Estoque
     {
         public int CodProduto { get; set; }
+        public string NomeProduto { get; set; }
         public decimal Quantidade { get; set; }
+        public decimal PrecoCompra { get; set; }
         public DateTime DataAtualizacao { get; set; }
 
     }

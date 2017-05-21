@@ -2204,5 +2204,11 @@ namespace DexComanda
         {
 
         }
+
+        private void produtoToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            frmLancaEstoqueProd frm = new frmLancaEstoqueProd();
+            frm.Show(this);
+        }
     }
 }

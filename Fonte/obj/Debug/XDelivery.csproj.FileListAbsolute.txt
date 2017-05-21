@@ -61,7 +61,6 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmCaixaMovimento.
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmExibeCancelamentos.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmHistoricoCancelamento.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmInformaMotoboy.resources
-D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmLancaEstoque.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmNotificacao.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmSincronizacao.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Funções.frmLiberação.resources
@@ -119,8 +118,6 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pessoa.frmCadastroOr
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Clientes.frmReportClientePorOrigem.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Produto.frmCadastroInsumo.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Pedido.frmProdutosTrocaFidelidade.resources
-D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.SqlEnum.dll
-D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.ServiceBrokerEnum.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.CrystalReports.Engine.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.ReportSource.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.Shared.dll
@@ -142,3 +139,9 @@ D:\#Projetos\xDelivery\Fonte\bin\Debug\CrystalDecisions.ReportAppServer.CommonCo
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Caixa\RelCaixaHistorico.rpt
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Caixa\RelCaixaHistorico.cs
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Alteracoes.frmAlterarMultOpcao.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmLancaEstoqueProd.resources
+D:\#Projetos\xDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.Management.Collector.resources.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.Management.Sdk.Sfc.resources.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.Management.Utility.resources.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.Dmf.resources.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.RegSvrEnum.resources.dll

@@ -26,5 +26,6 @@ namespace DexComanda.Models
         public string Observacao { get; set; }
         public int CodEndereco { get; set; }
         public string Senha { get; set; }
+        public Boolean PagoFidelidade { get; set; }
     }
 }

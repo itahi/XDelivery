@@ -163,6 +163,8 @@
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.produtoToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.insumoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -750,9 +752,12 @@
             // 
             // lançarMovimentoToolStripMenuItem
             // 
+            this.lançarMovimentoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.produtoToolStripMenuItem2,
+            this.insumoToolStripMenuItem});
             this.lançarMovimentoToolStripMenuItem.Name = "lançarMovimentoToolStripMenuItem";
             this.lançarMovimentoToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
-            this.lançarMovimentoToolStripMenuItem.Text = "Lançar Movimento";
+            this.lançarMovimentoToolStripMenuItem.Text = "Lançamento Estoque";
             // 
             // consultaMovimentoToolStripMenuItem
             // 
@@ -1470,6 +1475,19 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
+            // produtoToolStripMenuItem2
+            // 
+            this.produtoToolStripMenuItem2.Name = "produtoToolStripMenuItem2";
+            this.produtoToolStripMenuItem2.Size = new System.Drawing.Size(152, 26);
+            this.produtoToolStripMenuItem2.Text = "Produto";
+            this.produtoToolStripMenuItem2.Click += new System.EventHandler(this.produtoToolStripMenuItem2_Click);
+            // 
+            // insumoToolStripMenuItem
+            // 
+            this.insumoToolStripMenuItem.Name = "insumoToolStripMenuItem";
+            this.insumoToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.insumoToolStripMenuItem.Text = "Insumo";
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1649,5 +1667,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TextBox txtCodBusca;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ToolStripMenuItem produtoToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem insumoToolStripMenuItem;
     }
 }

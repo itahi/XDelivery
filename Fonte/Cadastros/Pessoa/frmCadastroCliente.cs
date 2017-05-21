@@ -807,7 +807,6 @@ namespace DexComanda
             var Regiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", int.Parse(this.cbxRegiao.SelectedValue.ToString())).Tables["RegiaoEntrega"];
             mCodRegiao = int.Parse(Regiao.Rows[0]["Codigo"].ToString());
             txtTaxaEntrega.Text = Convert.ToString(Regiao.Rows[0]["TaxaServico"].ToString());
-            // txtTaxaEntrega.Text =Convert.ToString(TaxaEntrega);
 
         }
 

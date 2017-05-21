@@ -1923,14 +1923,14 @@ namespace DexComanda
                         {
                             iCodigo = codPedido;
                         }
-                        if (TipoAgrupamentoDelivery != "Sem Agrupamento")
+
+                        if (TipoAgrupamentoCozinha == "Sem Agrupamento")
                         {
-                            ImpressaoPorCozinha(iCodigo);
+                            Utils.ImpressaoCozihanova(iCodigo);
                         }
                         else
                         {
-                            Utils.ImpressaoCozihanova(iCodigo, QtdViasCozinha);
-
+                            ImpressaoPorCozinha(iCodigo);
                         }
 
                     }
@@ -1952,7 +1952,7 @@ namespace DexComanda
         {
             try
             {
-                DataSet itemsPedido, dsItemsNaoImpresso, dsItems;
+                DataSet itemsPedido, dsItemsNaoImpresso;
                 DataSet dsI = new DataSet();
                 dsItemsNaoImpresso = Utils.CarregaItens(iCodPedido);
 
@@ -1974,7 +1974,6 @@ namespace DexComanda
                         {
                             Utils.ImpressaoDelivery_CozinhaPorGrupo(iCodPedido, iNomeImpressora, CodGrupo);
                         }
-
                     }
                     else
                     {
@@ -1985,7 +1984,6 @@ namespace DexComanda
                         }
                         Utils.ImpressaoDeliveryCoziha_SeparadoPorImpressora(iCodPedido, iNomeImpressora);
                     }
-                    //
                     for (int intfor = 0; intfor < itemsPedido.Tables["ItemsPedido"].Rows.Count; intfor++)
                     {
                         AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();

@@ -28,16 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtNome = new System.Windows.Forms.TextBox();
             this.chkAtivoSN = new System.Windows.Forms.CheckBox();
             this.cbxUndMedida = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtPreco = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.registrosGridView = new System.Windows.Forms.DataGridView();
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnAdicionar = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.registrosGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,6 +47,7 @@
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(293, 20);
             this.txtNome.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.txtNome, "Nome do insumo ");
             // 
             // chkAtivoSN
             // 
@@ -60,14 +61,18 @@
             // 
             // cbxUndMedida
             // 
-            this.cbxUndMedida.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxUndMedida.FormattingEnabled = true;
             this.cbxUndMedida.Items.AddRange(new object[] {
-            "UND"});
+            "UND",
+            "KG",
+            "LT",
+            "PC",
+            "CX"});
             this.cbxUndMedida.Location = new System.Drawing.Point(12, 87);
             this.cbxUndMedida.Name = "cbxUndMedida";
             this.cbxUndMedida.Size = new System.Drawing.Size(77, 21);
             this.cbxUndMedida.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.cbxUndMedida, "Tipo de medida que compra o insumo");
             // 
             // label1
             // 
@@ -77,23 +82,6 @@
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 5;
             this.label1.Text = "Nome";
-            // 
-            // txtPreco
-            // 
-            this.txtPreco.Location = new System.Drawing.Point(118, 88);
-            this.txtPreco.Name = "txtPreco";
-            this.txtPreco.Size = new System.Drawing.Size(86, 20);
-            this.txtPreco.TabIndex = 6;
-            this.txtPreco.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPreco_KeyPress);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(115, 66);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Preço";
             // 
             // label3
             // 
@@ -152,8 +140,6 @@
             this.Controls.Add(this.btnAdicionar);
             this.Controls.Add(this.registrosGridView);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.txtPreco);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbxUndMedida);
             this.Controls.Add(this.chkAtivoSN);
@@ -173,11 +159,10 @@
         private System.Windows.Forms.CheckBox chkAtivoSN;
         private System.Windows.Forms.ComboBox cbxUndMedida;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtPreco;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView registrosGridView;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnAdicionar;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

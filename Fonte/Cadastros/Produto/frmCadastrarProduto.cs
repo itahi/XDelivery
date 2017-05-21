@@ -256,7 +256,6 @@ namespace DexComanda
 
                 codigoProdutoParaAlterar = produto.Codigo;
                 this.nomeProdutoTextBox.Text = produto.Nome;
-                //  MontaListPrecos(produto.DiaSemana);
                 txtPrecoCusto.Text = con.CalculaPrecoInsumo(codigoProdutoParaAlterar).ToString();
                 cbxGrupoProduto.ValueMember = produto.CodGrupo.ToString();
                 this.cbxGrupoProduto.Text = produto.GrupoProduto;
@@ -1098,14 +1097,14 @@ namespace DexComanda
                 gridInsumo.AutoGenerateColumns = true;
                 gridInsumo.DataMember = "Produto_Insumo";
 
-                txtPrecoCusto.Text = con.CalculaPrecoInsumo(codigoProdutoParaAlterar).ToString();
+             //   txtPrecoCusto.Text = con.CalculaPrecoInsumo(codigoProdutoParaAlterar).ToString();
             }
             else if (!gridInsumo.Columns.Contains("Codigo"))
             {
                 gridInsumo.Columns.Add("Codigo", "Codigo");
                 gridInsumo.Columns.Add("Nome", "Nome");
                 gridInsumo.Columns.Add("Quantidade", "Quantidade");
-                gridInsumo.Columns.Add("Preco", "Preço");
+                //gridInsumo.Columns.Add("Preco", "Preço");
             }
 
         }

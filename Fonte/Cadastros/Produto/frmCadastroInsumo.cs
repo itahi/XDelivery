@@ -43,7 +43,6 @@ namespace DexComanda.Cadastros.Produto
                 {
                     AtivoSN = chkAtivoSN.Checked,
                     Nome = txtNome.Text,
-                    Preco = decimal.Parse(txtPreco.Text.Replace("R$", "")),
                     UnidadeMedida = cbxUndMedida.Text
                 };
                 con.Insert("spAdicionarInsumo", insumo);
@@ -67,8 +66,7 @@ namespace DexComanda.Cadastros.Produto
                     Codigo = codigo,
                     AtivoSN = chkAtivoSN.Checked,
                     Nome = txtNome.Text,
-                    Preco = decimal.Parse(txtPreco.Text),
-                    UnidadeMedida = cbxUndMedida.SelectedText.ToString()
+                    UnidadeMedida = cbxUndMedida.Text.ToString()
                 };
                 con.Update("spAlterarInsumo", ins);
                 ExibirRegistros();
@@ -107,14 +105,13 @@ namespace DexComanda.Cadastros.Produto
         {
             try
             {
-                if (registrosGridView.CurrentRow.Cells[0].Value.ToString()=="")
+                if (registrosGridView.CurrentRow.Cells[0].Value.ToString() == "")
                 {
                     return;
                 }
-                 codigo =int.Parse(registrosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+                codigo = int.Parse(registrosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
                 txtNome.Text = registrosGridView.CurrentRow.Cells["Nome"].Value.ToString();
-                txtPreco.Text = registrosGridView.CurrentRow.Cells["Preco"].Value.ToString();
-                cbxUndMedida.Text= registrosGridView.CurrentRow.Cells["UnidadeMedida"].Value.ToString();
+                cbxUndMedida.Text =registrosGridView.CurrentRow.Cells["UnidadeMedida"].Value.ToString();
                 chkAtivoSN.Checked = Convert.ToBoolean(registrosGridView.CurrentRow.Cells["AtivoSN"].Value.ToString());
 
                 this.btnAdicionar.Text = "Salvar [F12]";
@@ -151,7 +148,7 @@ namespace DexComanda.Cadastros.Produto
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-           
+
 
         }
         private void MenuAuxiliar(object sender, MouseEventArgs e)
