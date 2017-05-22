@@ -453,7 +453,8 @@ namespace DexComanda
                                                                   dRowProduto.ItemArray.GetValue(4).ToString(), dRowProduto.ItemArray.GetValue(8).ToString(), dRowProduto.ItemArray.GetValue(9).ToString(),
                                                                   Convert.ToDateTime(dRowProduto.ItemArray.GetValue(10).ToString()), Convert.ToDateTime(dRowProduto.ItemArray.GetValue(11).ToString()),
                                                                   Convert.ToBoolean(dRowProduto.ItemArray.GetValue(13).ToString()), dRowProduto.ItemArray.GetValue(14).ToString(), dRowProduto.ItemArray.GetValue(15).ToString(), dRowProduto.ItemArray.GetValue(16).ToString()
-                                                                  , int.Parse(dRowProduto.ItemArray.GetValue(18).ToString()), int.Parse(dRowProduto.ItemArray.GetValue(19).ToString()));
+                                                                  , int.Parse(dRowProduto.ItemArray.GetValue(18).ToString()), int.Parse(dRowProduto.ItemArray.GetValue(19).ToString()),
+                                                                  dsProduto.Tables[0].Rows[0].Field<Boolean>("ControlaEstoque"), dsProduto.Tables[0].Rows[0].Field<decimal>("EstoqueMinimo"));
                 frm.StartPosition = FormStartPosition.CenterParent;
                 frm.ShowDialog();
             }

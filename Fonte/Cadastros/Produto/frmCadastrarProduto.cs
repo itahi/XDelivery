@@ -38,7 +38,7 @@ namespace DexComanda
         public frmCadastrarProduto(int CodProduto, string iNomeProduto, string iCodGrupo, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
                                    decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo,
                                    DateTime idtFimPromo, bool iAtivoSN, string iCodInterno, string iMarkup, string iPrecoSugerido,
-                                    int iPontoCompra, int iPontoTroca)
+                                    int iPontoCompra, int iPontoTroca,Boolean iControlaEstoque,decimal iEstMinimo)
         {
             try
             {
@@ -78,6 +78,8 @@ namespace DexComanda
                     chkDomingo.Checked = true;
                 }
 
+                chkControleEstoque.Checked = iControlaEstoque;
+                txtEstMinimo.Text = iEstMinimo.ToString();
                 txtPontosFidelidade.Text = iPontoCompra.ToString();
                 txtPontosTroca.Text = iPontoTroca.ToString();
                 txtMarkup.Text = iMarkup;
@@ -310,8 +312,16 @@ namespace DexComanda
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                     DataAlteracao = DateTime.Now,
-
+                    ControlaEstoque = chkControleEstoque.Checked
                 };
+
+                if (chkControleEstoque.Checked && txtEstMinimo.Text=="")
+                {
+                    MessageBox.Show("Defina o estoque minimo para esse produto");
+                    txtEstMinimo.Focus();
+                    return;
+                }
+                produto.EstoqueMinimo = decimal.Parse(txtEstMinimo.Text);
                 if (txtPontosFidelidade.Text != "")
                 {
                     intPontosFidelidadeVenda = int.Parse(txtPontosFidelidade.Text);
@@ -503,10 +513,18 @@ namespace DexComanda
                     DataAlteracao = DateTime.Now,
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
+                    ControlaEstoque = chkControleEstoque.Checked
                     //Markup = decimal.Parse(txtMarkup.Text),
                     //PrecoCusto = decimal.Parse(txtPrecoCusto.Text),
                     //PrecoSugerido = decimal.Parse(txtPrecoSugerido.Text),
                 };
+                if (chkControleEstoque.Checked && txtEstMinimo.Text == "")
+                {
+                    MessageBox.Show("Defina o estoque minimo para esse produto");
+                    txtEstMinimo.Focus();
+                    return;
+                }
+                produto.EstoqueMinimo = decimal.Parse(txtEstMinimo.Text);
                 if (txtPontosFidelidade.Text != "")
                 {
                     intPontosFidelidadeVenda = int.Parse(txtPontosFidelidade.Text);
@@ -1301,9 +1319,9 @@ namespace DexComanda
             txtMarkup_Leave(sender, e);
         }
 
-        private void grpPrecosDia_Enter(object sender, EventArgs e)
+        private void txtEstMinimo_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            Utils.SoDecimais(e);
         }
     }
 }

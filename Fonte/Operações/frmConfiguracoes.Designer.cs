@@ -182,6 +182,7 @@
             this.chkEndereco = new System.Windows.Forms.CheckBox();
             this.chkNomePessoa = new System.Windows.Forms.CheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.chkSenha = new System.Windows.Forms.CheckBox();
             this.chkAtendente = new System.Windows.Forms.CheckBox();
             this.chkEntregador = new System.Windows.Forms.CheckBox();
             this.chkDesconto = new System.Windows.Forms.CheckBox();
@@ -236,7 +237,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.chkSenha = new System.Windows.Forms.CheckBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -707,6 +708,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.groupBox7);
             this.tabPage3.Controls.Add(this.groupBox4);
             this.tabPage3.Controls.Add(this.grpLoginSenha);
             this.tabPage3.Controls.Add(this.groupBox2);
@@ -747,7 +749,7 @@
             "Automatico"});
             this.cbxTipoCodigo.Location = new System.Drawing.Point(273, 17);
             this.cbxTipoCodigo.Name = "cbxTipoCodigo";
-            this.cbxTipoCodigo.Size = new System.Drawing.Size(69, 21);
+            this.cbxTipoCodigo.Size = new System.Drawing.Size(79, 21);
             this.cbxTipoCodigo.TabIndex = 31;
             this.toolTip1.SetToolTip(this.cbxTipoCodigo, "Selecione o tipo de agrupamento para impressão do pedido da cozinha");
             // 
@@ -865,7 +867,7 @@
             // 
             this.grpLoginSenha.Controls.Add(this.pInfoUserDefault);
             this.grpLoginSenha.Controls.Add(this.chkLoginSenha);
-            this.grpLoginSenha.Location = new System.Drawing.Point(6, 99);
+            this.grpLoginSenha.Location = new System.Drawing.Point(6, 167);
             this.grpLoginSenha.Name = "grpLoginSenha";
             this.grpLoginSenha.Size = new System.Drawing.Size(640, 60);
             this.grpLoginSenha.TabIndex = 11;
@@ -936,7 +938,7 @@
             this.groupBox2.Controls.Add(this.grpCozinha);
             this.groupBox2.Controls.Add(this.grpImpressoras);
             this.groupBox2.Controls.Add(this.grpViasImpressao);
-            this.groupBox2.Location = new System.Drawing.Point(7, 165);
+            this.groupBox2.Location = new System.Drawing.Point(5, 245);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(640, 193);
             this.groupBox2.TabIndex = 10;
@@ -1864,6 +1866,16 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Pedidos";
             // 
+            // chkSenha
+            // 
+            this.chkSenha.AutoSize = true;
+            this.chkSenha.Location = new System.Drawing.Point(130, 128);
+            this.chkSenha.Name = "chkSenha";
+            this.chkSenha.Size = new System.Drawing.Size(57, 17);
+            this.chkSenha.TabIndex = 49;
+            this.chkSenha.Text = "Senha";
+            this.chkSenha.UseVisualStyleBackColor = true;
+            // 
             // chkAtendente
             // 
             this.chkAtendente.AutoSize = true;
@@ -2389,15 +2401,14 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // chkSenha
+            // groupBox7
             // 
-            this.chkSenha.AutoSize = true;
-            this.chkSenha.Location = new System.Drawing.Point(130, 128);
-            this.chkSenha.Name = "chkSenha";
-            this.chkSenha.Size = new System.Drawing.Size(57, 17);
-            this.chkSenha.TabIndex = 49;
-            this.chkSenha.Text = "Senha";
-            this.chkSenha.UseVisualStyleBackColor = true;
+            this.groupBox7.Location = new System.Drawing.Point(7, 105);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(640, 60);
+            this.groupBox7.TabIndex = 12;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Controle de Estoque";
             // 
             // frmConfiguracoes
             // 
@@ -2686,5 +2697,6 @@
         private System.Windows.Forms.ComboBox cbxAgrupamentoBalcao;
         private System.Windows.Forms.CheckBox chkViaBalcao;
         private System.Windows.Forms.CheckBox chkSenha;
+        private System.Windows.Forms.GroupBox groupBox7;
     }
 }

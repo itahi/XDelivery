@@ -29,5 +29,7 @@ namespace DexComanda.Models
         public decimal PrecoCusto { get; set; }
         public int PontoFidelidadeVenda { get; set; }
         public int PontoFidelidadeTroca { get; set; }
+        public Boolean ControlaEstoque { get; set; }
+        public decimal EstoqueMinimo { get; set; }
     }
 }

@@ -40,6 +40,8 @@
             System.Windows.Forms.Label label19;
             System.Windows.Forms.Label label21;
             System.Windows.Forms.Label label22;
+            System.Windows.Forms.Label label25;
+            System.Windows.Forms.Label label26;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastrarProduto));
             this.dBExpertDataSet = new DexComanda.DBExpertDataSet();
             this.produtoBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -65,6 +67,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.AdicionaisGridView = new System.Windows.Forms.DataGridView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.grpEstoque = new System.Windows.Forms.GroupBox();
+            this.txtEstMinimo = new System.Windows.Forms.TextBox();
+            this.chkControleEstoque = new System.Windows.Forms.CheckBox();
+            this.txtEstoqueAtual = new System.Windows.Forms.TextBox();
             this.txtPrecoSugerido = new System.Windows.Forms.TextBox();
             this.txtMarkup = new System.Windows.Forms.TextBox();
             this.txtPrecoCusto = new System.Windows.Forms.TextBox();
@@ -90,6 +96,11 @@
             this.cbxGrupoProduto = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.txtPontosTroca = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.txtPontosFidelidade = new System.Windows.Forms.TextBox();
             this.grpPrecosDia = new System.Windows.Forms.GroupBox();
             this.label15 = new System.Windows.Forms.Label();
             this.txtPrecoDomingo = new System.Windows.Forms.TextBox();
@@ -135,11 +146,6 @@
             this.cbxInsumo = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.txtPontosFidelidade = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.txtPontosTroca = new System.Windows.Forms.TextBox();
             grupoProdutoLabel = new System.Windows.Forms.Label();
             precoProdutoLabel = new System.Windows.Forms.Label();
             descricaoProdutoLabel = new System.Windows.Forms.Label();
@@ -151,6 +157,8 @@
             label19 = new System.Windows.Forms.Label();
             label21 = new System.Windows.Forms.Label();
             label22 = new System.Windows.Forms.Label();
+            label25 = new System.Windows.Forms.Label();
+            label26 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dBExpertDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produtoBindingSource)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -159,16 +167,17 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AdicionaisGridView)).BeginInit();
             this.tabPage1.SuspendLayout();
+            this.grpEstoque.SuspendLayout();
             this.grpDesconto.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.grpPrecosDia.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tbInsumo.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridInsumo)).BeginInit();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // grupoProdutoLabel
@@ -269,6 +278,24 @@
             label22.Size = new System.Drawing.Size(65, 13);
             label22.TabIndex = 46;
             label22.Text = "Pr. Sugerido";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Location = new System.Drawing.Point(6, 48);
+            label25.Name = "label25";
+            label25.Size = new System.Drawing.Size(55, 13);
+            label25.TabIndex = 32;
+            label25.Text = "Est. Atual:";
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Location = new System.Drawing.Point(97, 48);
+            label26.Name = "label26";
+            label26.Size = new System.Drawing.Size(63, 13);
+            label26.TabIndex = 35;
+            label26.Text = "Est. Mínimo";
             // 
             // dBExpertDataSet
             // 
@@ -510,6 +537,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.grpEstoque);
             this.tabPage1.Controls.Add(this.txtPrecoSugerido);
             this.tabPage1.Controls.Add(label22);
             this.tabPage1.Controls.Add(this.txtMarkup);
@@ -539,6 +567,54 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "1 -Produto";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // grpEstoque
+            // 
+            this.grpEstoque.Controls.Add(this.txtEstMinimo);
+            this.grpEstoque.Controls.Add(label26);
+            this.grpEstoque.Controls.Add(this.chkControleEstoque);
+            this.grpEstoque.Controls.Add(this.txtEstoqueAtual);
+            this.grpEstoque.Controls.Add(label25);
+            this.grpEstoque.Location = new System.Drawing.Point(420, 139);
+            this.grpEstoque.Name = "grpEstoque";
+            this.grpEstoque.Size = new System.Drawing.Size(232, 123);
+            this.grpEstoque.TabIndex = 33;
+            this.grpEstoque.TabStop = false;
+            this.grpEstoque.Text = "Controle Estoque";
+            // 
+            // txtEstMinimo
+            // 
+            this.txtEstMinimo.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtEstMinimo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEstMinimo.Location = new System.Drawing.Point(100, 65);
+            this.txtEstMinimo.Name = "txtEstMinimo";
+            this.txtEstMinimo.Size = new System.Drawing.Size(69, 26);
+            this.txtEstMinimo.TabIndex = 34;
+            this.toolTip1.SetToolTip(this.txtEstMinimo, "Estoque minimo do produto , quando o valor do estoque atingir esse numero o siste" +
+        "ma avisará no pedido");
+            this.txtEstMinimo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtEstMinimo_KeyPress);
+            // 
+            // chkControleEstoque
+            // 
+            this.chkControleEstoque.AutoSize = true;
+            this.chkControleEstoque.Location = new System.Drawing.Point(9, 21);
+            this.chkControleEstoque.Name = "chkControleEstoque";
+            this.chkControleEstoque.Size = new System.Drawing.Size(106, 17);
+            this.chkControleEstoque.TabIndex = 33;
+            this.chkControleEstoque.Text = "Controla estoque";
+            this.toolTip1.SetToolTip(this.chkControleEstoque, "Marque essa opção caso deseje controlar estoque esse produto ");
+            this.chkControleEstoque.UseVisualStyleBackColor = true;
+            // 
+            // txtEstoqueAtual
+            // 
+            this.txtEstoqueAtual.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtEstoqueAtual.Enabled = false;
+            this.txtEstoqueAtual.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEstoqueAtual.Location = new System.Drawing.Point(9, 65);
+            this.txtEstoqueAtual.Name = "txtEstoqueAtual";
+            this.txtEstoqueAtual.Size = new System.Drawing.Size(69, 26);
+            this.txtEstoqueAtual.TabIndex = 31;
+            this.toolTip1.SetToolTip(this.txtEstoqueAtual, "Posição atual do estoque do produto");
             // 
             // txtPrecoSugerido
             // 
@@ -817,6 +893,59 @@
             this.tabPage4.Text = "3 - Preços e Promoções";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label24);
+            this.groupBox3.Controls.Add(this.txtPontosTroca);
+            this.groupBox3.Controls.Add(this.label23);
+            this.groupBox3.Controls.Add(this.txtPontosFidelidade);
+            this.groupBox3.Location = new System.Drawing.Point(280, 62);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(317, 72);
+            this.groupBox3.TabIndex = 45;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Pontos Fidelidade";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(121, 14);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(71, 13);
+            this.label24.TabIndex = 48;
+            this.label24.Text = "Pontos Troca";
+            // 
+            // txtPontosTroca
+            // 
+            this.txtPontosTroca.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPontosTroca.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPontosTroca.Location = new System.Drawing.Point(124, 33);
+            this.txtPontosTroca.Name = "txtPontosTroca";
+            this.txtPontosTroca.Size = new System.Drawing.Size(69, 26);
+            this.txtPontosTroca.TabIndex = 47;
+            this.txtPontosTroca.Tag = "Friday";
+            this.toolTip1.SetToolTip(this.txtPontosTroca, "Quantos pontos terá que junta para troca\r\n");
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(8, 18);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(74, 13);
+            this.label23.TabIndex = 46;
+            this.label23.Text = "Pontos Venda";
+            // 
+            // txtPontosFidelidade
+            // 
+            this.txtPontosFidelidade.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
+            this.txtPontosFidelidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPontosFidelidade.Location = new System.Drawing.Point(11, 37);
+            this.txtPontosFidelidade.Name = "txtPontosFidelidade";
+            this.txtPontosFidelidade.Size = new System.Drawing.Size(69, 26);
+            this.txtPontosFidelidade.TabIndex = 45;
+            this.txtPontosFidelidade.Tag = "Friday";
+            this.toolTip1.SetToolTip(this.txtPontosFidelidade, "Defina quantos pontos vale o produto no programa de fidelidade");
+            // 
             // grpPrecosDia
             // 
             this.grpPrecosDia.BackColor = System.Drawing.Color.Transparent;
@@ -847,7 +976,6 @@
             this.grpPrecosDia.TabIndex = 34;
             this.grpPrecosDia.TabStop = false;
             this.grpPrecosDia.Text = "Preço Diferente por Dia";
-            this.grpPrecosDia.Enter += new System.EventHandler(this.grpPrecosDia_Enter);
             // 
             // label15
             // 
@@ -1304,59 +1432,6 @@
             this.label20.TabIndex = 33;
             this.label20.Text = "Nome ";
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.label24);
-            this.groupBox3.Controls.Add(this.txtPontosTroca);
-            this.groupBox3.Controls.Add(this.label23);
-            this.groupBox3.Controls.Add(this.txtPontosFidelidade);
-            this.groupBox3.Location = new System.Drawing.Point(280, 62);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(317, 72);
-            this.groupBox3.TabIndex = 45;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Pontos Fidelidade";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(8, 18);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(74, 13);
-            this.label23.TabIndex = 46;
-            this.label23.Text = "Pontos Venda";
-            // 
-            // txtPontosFidelidade
-            // 
-            this.txtPontosFidelidade.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
-            this.txtPontosFidelidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPontosFidelidade.Location = new System.Drawing.Point(11, 37);
-            this.txtPontosFidelidade.Name = "txtPontosFidelidade";
-            this.txtPontosFidelidade.Size = new System.Drawing.Size(69, 26);
-            this.txtPontosFidelidade.TabIndex = 45;
-            this.txtPontosFidelidade.Tag = "Friday";
-            this.toolTip1.SetToolTip(this.txtPontosFidelidade, "Defina quantos pontos vale o produto no programa de fidelidade");
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(121, 14);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(71, 13);
-            this.label24.TabIndex = 48;
-            this.label24.Text = "Pontos Troca";
-            // 
-            // txtPontosTroca
-            // 
-            this.txtPontosTroca.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
-            this.txtPontosTroca.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPontosTroca.Location = new System.Drawing.Point(124, 33);
-            this.txtPontosTroca.Name = "txtPontosTroca";
-            this.txtPontosTroca.Size = new System.Drawing.Size(69, 26);
-            this.txtPontosTroca.TabIndex = 47;
-            this.txtPontosTroca.Tag = "Friday";
-            this.toolTip1.SetToolTip(this.txtPontosTroca, "Quantos pontos terá que junta para troca\r\n");
-            // 
             // frmCadastrarProduto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1384,10 +1459,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.AdicionaisGridView)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.grpEstoque.ResumeLayout(false);
+            this.grpEstoque.PerformLayout();
             this.grpDesconto.ResumeLayout(false);
             this.grpDesconto.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.grpPrecosDia.ResumeLayout(false);
             this.grpPrecosDia.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1398,8 +1477,6 @@
             this.tbInsumo.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridInsumo)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1505,5 +1582,9 @@
         private System.Windows.Forms.TextBox txtPontosFidelidade;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtPontosTroca;
+        private System.Windows.Forms.GroupBox grpEstoque;
+        private System.Windows.Forms.CheckBox chkControleEstoque;
+        private System.Windows.Forms.TextBox txtEstoqueAtual;
+        private System.Windows.Forms.TextBox txtEstMinimo;
     }
 }

@@ -136,6 +136,55 @@ namespace DexComanda
 
 
         }
+        public DataSet ContaEstoque(string strNomeProduto)
+        {
+            try
+            {
+                command = new SqlCommand("spContaEstoqueAtual", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@NomeProduto", strNomeProduto);
+                adapter = new SqlDataAdapter(command);
+                ds = new DataSet();
+                adapter.Fill(ds, "Produto_Estoque");
+                
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return ds;
+        }
+        public Boolean ValidaEstoque(int intCodProduto,string strNomeProd)
+        {
+            Boolean breturn = true;
+
+            try
+            {
+                DataSet dsProduto;
+                DataSet dsEstoque;
+                dsProduto = SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", intCodProduto);
+                dsEstoque = ContaEstoque(strNomeProd);
+                decimal estAtual = 0;
+                if (dsEstoque.Tables[0].Rows.Count > 0)
+                {
+                    if (dsProduto.Tables[0].Rows[0].Field<decimal>("EstoqueMinimo") <= dsEstoque.Tables[0].Rows[0].Field<decimal>("EstoqueAtual"))
+                    {
+                        MessageBox.Show("Estoque minimo para vendas atingido");
+                    }
+                    if (ContaEstoque(dsProduto.Tables[0].Rows[0].Field<string>("NomeProduto")).Tables[0].Rows[0].Field<decimal>("EstoqueAtual") <= 0)
+                    {
+                        MessageBox.Show("Produto não tem estoque disponivel");
+                        breturn = false;
+                    }
+                }
+                
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return breturn;
+        }
         public async void AtualizaImpressaoBalcao(int intCodPedido)
         {
             string iSqlConsulta = " update Pedido set ImpressoSN=1 where Codigo=@Codigo";
@@ -417,7 +466,7 @@ namespace DexComanda
             }
             // string result = string.Join<string>(",", cidades.ToString());
 
-           // string iSql = "select bairro from base_cep where  bairro like '%" + iBairro + "%' and cidade in (@Cidades)";
+            // string iSql = "select bairro from base_cep where  bairro like '%" + iBairro + "%' and cidade in (@Cidades)";
             string iSql = "select bairro from base_cep where cidade in (@Cidades)";
             command = new SqlCommand(iSql, conn);
             command.CommandType = CommandType.Text;
@@ -1735,7 +1784,7 @@ namespace DexComanda
 
                     if (spName == "spExcluirItemPedido")
                     {
-                        if (p.Name.Equals("CodProduto") || p.Name.Equals("CodPedido") || p.Name.Equals("Codigo"))
+                        if (p.Name.Equals("CodProduto") || p.Name.Equals("CodPedido") || p.Name.Equals("Codigo") || p.Name.Equals("NomeProduto"))
                         {
                             command.Parameters.AddWithValue("@" + p.Name, p.GetValue(obj));
                         }

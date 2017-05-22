@@ -1695,9 +1695,9 @@ namespace DexComanda
                 }
                 if (gridViewItemsPedido.SelectedRows.Count > 0)
                 {
-                    string iNomeProduto = gridViewItemsPedido.Rows[rowIndex].Cells["Nome do Produto"].Value.ToString();
-                    codigoItemParaAlterar = int.Parse(gridViewItemsPedido.Rows[rowIndex].Cells["CodProduto"].Value.ToString());
-                    int CodigoLinha = int.Parse(gridViewItemsPedido.Rows[rowIndex].Cells["Codigo"].Value.ToString());
+                    string iNomeProduto = gridViewItemsPedido.CurrentRow.Cells["Nome do Produto"].Value.ToString();
+                    codigoItemParaAlterar = int.Parse(gridViewItemsPedido.CurrentRow.Cells["CodProduto"].Value.ToString());
+                    int CodigoLinha = int.Parse(gridViewItemsPedido.CurrentRow.Cells["Codigo"].Value.ToString());
                     if (!Utils.MessageBoxQuestion("Deseja excluir o item " + iNomeProduto
                         + " Do Pedido?"))
                     {
@@ -1714,11 +1714,12 @@ namespace DexComanda
                     {
                         CodProduto = codigoItemParaAlterar,
                         CodPedido = codPedido,
-                        Codigo = CodigoLinha
+                        Codigo = CodigoLinha,
+                        NomeProduto = iNomeProduto
 
                     };
 
-                    ValorTotal = ValorTotal - decimal.Parse(((this.gridViewItemsPedido.Rows[rowIndex].Cells["Preço Total"].Value.ToString()).Replace("R$ ", "")));
+                    ValorTotal = ValorTotal - decimal.Parse(((this.gridViewItemsPedido.CurrentRow.Cells["Preço Total"].Value.ToString()).Replace("R$ ", "")));
                     this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal + decimal.Parse(lblEntrega.Text.Replace("R$ ", "")));
                     this.gridViewItemsPedido.Rows.RemoveAt(rowIndex);
                     items.RemoveAt(rowIndex);
@@ -2322,7 +2323,12 @@ namespace DexComanda
                 return false;
             }
         }
-
+       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BuscaProduto1(object sender, KeyEventArgs e)
         {
             int intCodInterno = 0;
@@ -2342,8 +2348,14 @@ namespace DexComanda
                         produto = con.SelectProdutoCompleto("Produto", "spObterProdutoPorCodigo", int.Parse(txtCodProduto1.Text)).Tables["Produto"];
                     }
 
+                  
+                  
                     if (produto.Rows.Count > 0)
                     {
+                        //if (!con.ValidaEstoque(int.Parse(produto.Rows[0]["Codigo"].ToString()), produto.Rows[0]["NomeProduto"].ToString()))
+                        //{
+                        //    return;
+                        //}
                         cbxProdutosGrid.Text = produto.Rows[0]["NomeProduto"].ToString();
                         intCodProduto = int.Parse(produto.Rows[0]["Codigo"].ToString());
                         MontaMenuOpcoes(intCodProduto);
