@@ -392,6 +392,16 @@ namespace DexComanda.Operações.Alteracoes
                     AdicionaisGridView.DataMember = null;
                 }
 
+                for (int i = 0; i < AdicionaisGridView.Rows.Count; i++)
+                {
+                    if (cbxOpcao.SelectedValue.ToString() == AdicionaisGridView.Rows[i].Cells["CodOpcao"].Value.ToString())
+                    {
+                        if (!Utils.MessageBoxQuestion("Essa opção já esta vinculada a esse produto , deseja adicionar novamente?"))
+                        {
+                            return;
+                        }
+                    }
+                }
                 AdicionaisGridView.Rows.Add();
                 AdicionaisGridView.Rows[iCountLinhas].Cells[0].Value = int.Parse(cbxOpcao.SelectedValue.ToString());
                 AdicionaisGridView.Rows[iCountLinhas].Cells[1].Value = decimal.Parse(txtPrecoOpcao.Text);

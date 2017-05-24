@@ -320,12 +320,27 @@ namespace DexComanda
             this.gridViewItemsPedido.CurrentCell = null;
             CalculaTaxaEntrega(cbxTipoPedido.Text == "0 - Entrega");
         }
+        private void ExibiFiado(int intCodPessoa)
+        {
+            decimal dDébito = 0;
+           DataSet dsHis= con.SelectRegistroPorCodigo("HistoricoPessoa", "spObterHistoricoPorPessoa", intCodPessoa);
+            for (int i = 0; i < dsHis.Tables[0].Rows.Count; i++)
+            {
+                dDébito += dsHis.Tables[0].Rows[i].Field<Decimal>("Valor");
+            }
+
+            if (dDébito<0)
+            {
+                
+                lblDébito.Visible = true;
+                lblDébito.Text = "Débito R$:" + dDébito.ToString();
+            }
+        }
         public void AtualizaClienteTela(int iCodEndereco = 0)
         {
             DataSet dsPessoa;
             try
             {
-
                 if (iCodEndereco == 0)
                 {
                     dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
@@ -348,7 +363,7 @@ namespace DexComanda
                 }
 
                 AtualizaTotalPedido();
-
+                ExibiFiado(codPessoa);
             }
             catch (Exception erros)
             {
@@ -2494,6 +2509,7 @@ namespace DexComanda
             this.btnAdicionarItemNoPedido = new System.Windows.Forms.Button();
             this.btnCancelarPedido = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblDébito = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.btnAtlCadastro = new System.Windows.Forms.Button();
             this.lblTempo = new System.Windows.Forms.Label();
@@ -2700,6 +2716,7 @@ namespace DexComanda
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.lblDébito);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.btnAtlCadastro);
             this.panel1.Controls.Add(this.lblTempo);
@@ -2710,6 +2727,17 @@ namespace DexComanda
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1051, 43);
             this.panel1.TabIndex = 41;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // lblDébito
+            // 
+            this.lblDébito.AutoSize = true;
+            this.lblDébito.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDébito.ForeColor = System.Drawing.Color.Red;
+            this.lblDébito.Location = new System.Drawing.Point(344, 11);
+            this.lblDébito.Name = "lblDébito";
+            this.lblDébito.Size = new System.Drawing.Size(0, 20);
+            this.lblDébito.TabIndex = 68;
             // 
             // button1
             // 
@@ -2747,7 +2775,7 @@ namespace DexComanda
             // 
             this.lblFidelidade.AutoSize = true;
             this.lblFidelidade.BackColor = System.Drawing.Color.Red;
-            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic)
+            this.lblFidelidade.Font = new System.Drawing.Font("Marlett", 20.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFidelidade.Location = new System.Drawing.Point(799, 3);
             this.lblFidelidade.Name = "lblFidelidade";
@@ -3421,8 +3449,8 @@ namespace DexComanda
             // 
             // chkListAdicionais
             // 
-            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.chkListAdicionais.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chkListAdicionais.CheckOnClick = true;
             this.chkListAdicionais.FormattingEnabled = true;
@@ -4757,6 +4785,11 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cSenhaEmUso);
             }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
         private void button1_Click(object sender, EventArgs e)

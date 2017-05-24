@@ -99,5 +99,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TextBox txtSenha;
         private System.Windows.Forms.Label lblSenha;
+        private System.Windows.Forms.Label lblDébito;
     }
 }

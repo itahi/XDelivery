@@ -103,6 +103,8 @@ namespace DexComanda.Cadastros.Produto
                     // Utils.LimpaForm(this);
                     MarcaTodosDias();
                     ListaOpcao();
+                    txtNome.Text = string.Empty;
+                    txtNome.Focus();
                 }
                 else
                 {
@@ -255,6 +257,8 @@ namespace DexComanda.Cadastros.Produto
                 this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
 
                 ListaOpcao(int.Parse(opcao.Tipo));
+                txtNome.Text = string.Empty;
+                txtNome.Focus();
 
             }
             catch (Exception erro)

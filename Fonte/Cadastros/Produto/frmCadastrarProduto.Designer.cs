@@ -590,6 +590,7 @@
             this.txtEstMinimo.Name = "txtEstMinimo";
             this.txtEstMinimo.Size = new System.Drawing.Size(69, 26);
             this.txtEstMinimo.TabIndex = 34;
+            this.txtEstMinimo.Text = "0";
             this.toolTip1.SetToolTip(this.txtEstMinimo, "Estoque minimo do produto , quando o valor do estoque atingir esse numero o siste" +
         "ma avisará no pedido");
             this.txtEstMinimo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtEstMinimo_KeyPress);

@@ -745,7 +745,7 @@ namespace DexComanda.Operações
             catch (Exception er)
             {
 
-                MessageBox.Show("Erro ao cadastrarar Produto" + er.Message + er.InnerException);
+                MessageBox.Show("Erro ao cadastrarar Produto " + er.Message + er.InnerException);
             }
 
 
