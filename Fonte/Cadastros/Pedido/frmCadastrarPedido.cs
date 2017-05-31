@@ -333,7 +333,7 @@ namespace DexComanda
             {
                 
                 lblDébito.Visible = true;
-                lblDébito.Text = "Débito R$:" + dDébito.ToString();
+                lblDébito.Text = "Débito R$: " + dDébito.ToString();
             }
         }
         public void AtualizaClienteTela(int iCodEndereco = 0)
@@ -897,8 +897,25 @@ namespace DexComanda
 
         private void btnAdicionarItemNoPedido_Click(object sender, EventArgs e)
         {
+            int intCodigoProdutoBusca = 0;
             try
             {
+                if (!ProdutosPorCodigo)
+                {
+                    intCodigoProdutoBusca = int.Parse(this.cbxProdutosGrid.SelectedValue.ToString());
+                }
+                else
+                {
+                    intCodigoProdutoBusca = intCodProduto;
+                }
+
+                if (con.ControlaEstoque(intCodigoProdutoBusca))
+                {
+                    if (con.ContaEstoque(cbxProdutosGrid.Text).Tables[0].Rows[0].Field<decimal>("EstoqueAtual")==0)                   {
+                        MessageBox.Show("Produto selecionado não possui estoque");
+                        return;
+                    }
+                }
                 if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                 {
                     MessageBox.Show(Bibliotecas.cCaixaFechado);
@@ -2367,10 +2384,6 @@ namespace DexComanda
                   
                     if (produto.Rows.Count > 0)
                     {
-                        //if (!con.ValidaEstoque(int.Parse(produto.Rows[0]["Codigo"].ToString()), produto.Rows[0]["NomeProduto"].ToString()))
-                        //{
-                        //    return;
-                        //}
                         cbxProdutosGrid.Text = produto.Rows[0]["NomeProduto"].ToString();
                         intCodProduto = int.Parse(produto.Rows[0]["Codigo"].ToString());
                         MontaMenuOpcoes(intCodProduto);

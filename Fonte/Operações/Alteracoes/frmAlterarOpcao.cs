@@ -35,13 +35,14 @@ namespace DexComanda.Operações.Alteracoes
         {
             try
             {
+
+                DataSet ds;
                 if (cbxOpcao.SelectedValue==null && cbxTipoOpcao.SelectedValue==null)
                 {
                     MessageBox.Show("Selecione um tipo de busca para continuar");
                     return;
                 }
-                DataSet ds;
-                if (cbxTipoOpcao.SelectedValue.ToString()!="")
+                if (cbxTipoOpcao.SelectedValue!=null && cbxOpcao.SelectedValue==null)
                 {
                     ds = con.RetornaOpcoesPortipo(int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
                     GridView.DataMember = "Opcao";
@@ -95,7 +96,7 @@ namespace DexComanda.Operações.Alteracoes
                         //};
                         AlteracaoMultiplaOpcao multiOpcao = new AlteracaoMultiplaOpcao()
                         {
-                            CodOpcao = int.Parse(GridView.Rows[i].Cells["Codigo"].Value.ToString()),
+                            CodOpcao = int.Parse(GridView.Rows[i].Cells["CodOpcao"].Value.ToString()),
                             OnlineSN = boolOnlineSN,
                             Preco = dblNovoPreco
                         };

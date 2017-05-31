@@ -630,7 +630,11 @@ namespace DexComanda
 
                 if (con.IsConnected())
                 {
-                    var Dados = Utils.DadosLicenca(txtCNPJ.Text, Utils.EnderecoMAC(), Utils.RetornaNomePc());
+                    DataSet Dados = Utils.DadosLicenca(txtCNPJ.Text, Utils.EnderecoMAC(), Utils.RetornaNomePc());
+                    if (Dados.Tables.Count==0)
+                    {
+                        return;
+                    }
                     DataRow LinhasLicenca = Dados.Tables["Licenca"].Rows[0];
                     lblDataExpiracao.Text = LinhasLicenca.ItemArray.GetValue(3).ToString().Substring(0, 10);
                     txtLicenca.Text = LinhasLicenca.ItemArray.GetValue(1).ToString() + LinhasLicenca.ItemArray.GetValue(9).ToString();

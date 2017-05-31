@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCaixaMovimento));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.horaFim = new System.Windows.Forms.DateTimePicker();
+            this.horaInicio = new System.Windows.Forms.DateTimePicker();
             this.grpMovimento = new System.Windows.Forms.GroupBox();
             this.rbSaida = new System.Windows.Forms.RadioButton();
             this.rbEntrada = new System.Windows.Forms.RadioButton();
@@ -45,8 +47,6 @@
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
             this.panel1 = new System.Windows.Forms.Panel();
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.horaInicio = new System.Windows.Forms.DateTimePicker();
-            this.horaFim = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
             this.grpMovimento.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -72,6 +72,22 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
+            // 
+            // horaFim
+            // 
+            this.horaFim.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.horaFim.Location = new System.Drawing.Point(407, 18);
+            this.horaFim.Name = "horaFim";
+            this.horaFim.Size = new System.Drawing.Size(85, 20);
+            this.horaFim.TabIndex = 18;
+            // 
+            // horaInicio
+            // 
+            this.horaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.horaInicio.Location = new System.Drawing.Point(178, 18);
+            this.horaInicio.Name = "horaInicio";
+            this.horaInicio.Size = new System.Drawing.Size(85, 20);
+            this.horaInicio.TabIndex = 17;
             // 
             // grpMovimento
             // 
@@ -227,6 +243,7 @@
             this.crystalReportViewer1.EnableRefresh = false;
             this.crystalReportViewer1.Location = new System.Drawing.Point(0, 0);
             this.crystalReportViewer1.Name = "crystalReportViewer1";
+            this.crystalReportViewer1.PrintMode = CrystalDecisions.Windows.Forms.PrintMode.PrintOutputController;
             this.crystalReportViewer1.ShowCloseButton = false;
             this.crystalReportViewer1.ShowCopyButton = false;
             this.crystalReportViewer1.ShowExportButton = false;
@@ -240,22 +257,6 @@
             this.crystalReportViewer1.Size = new System.Drawing.Size(703, 474);
             this.crystalReportViewer1.TabIndex = 0;
             this.crystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
-            // 
-            // horaInicio
-            // 
-            this.horaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.horaInicio.Location = new System.Drawing.Point(178, 18);
-            this.horaInicio.Name = "horaInicio";
-            this.horaInicio.Size = new System.Drawing.Size(85, 20);
-            this.horaInicio.TabIndex = 17;
-            // 
-            // horaFim
-            // 
-            this.horaFim.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.horaFim.Location = new System.Drawing.Point(407, 18);
-            this.horaFim.Name = "horaFim";
-            this.horaFim.Size = new System.Drawing.Size(85, 20);
-            this.horaFim.TabIndex = 18;
             // 
             // frmCaixaMovimento
             // 

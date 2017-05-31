@@ -413,6 +413,12 @@
     <Compile Include="Operações\Consultas\frmConsultaPedido.Designer.cs">
       <DependentUpon>frmConsultaPedido.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operações\Estoque\frmConsultaEstoque.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Estoque\frmConsultaEstoque.Designer.cs">
+      <DependentUpon>frmConsultaEstoque.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operações\Financeiro\frmAberturaCaixa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -640,6 +646,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelEntregasMotoboyAgrupado.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\Cristal\RelEstoque.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelEstoque.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Gerenciais\Cristal\RelTickeMedio.cs">
@@ -1160,6 +1172,9 @@
     <EmbeddedResource Include="Operações\Consultas\frmConsultaPedido.resx">
       <DependentUpon>frmConsultaPedido.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Estoque\frmConsultaEstoque.resx">
+      <DependentUpon>frmConsultaEstoque.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Operações\Financeiro\frmAberturaCaixa.resx">
       <DependentUpon>frmAberturaCaixa.cs</DependentUpon>
     </EmbeddedResource>
@@ -1455,6 +1470,10 @@
     <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelEntregasPorRegiao.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelEntregasPorRegiao.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelEstoque.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelEstoque.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelEvolucaoVendas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

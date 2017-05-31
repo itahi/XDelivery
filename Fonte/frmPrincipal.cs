@@ -10,6 +10,7 @@ using DexComanda.Operações;
 using DexComanda.Operações.Ações;
 using DexComanda.Operações.Alteracoes;
 using DexComanda.Operações.Consultas;
+using DexComanda.Operações.Estoque;
 using DexComanda.Operações.Financeiro;
 using DexComanda.Operações.Funções;
 using DexComanda.Push;
@@ -2209,6 +2210,12 @@ namespace DexComanda
         private void produtoToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             frmLancaEstoqueProd frm = new frmLancaEstoqueProd();
+            frm.Show(this);
+        }
+
+        private void consultaMovimentoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaEstoque frm = new frmConsultaEstoque();
             frm.Show(this);
         }
     }

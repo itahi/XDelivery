@@ -1174,7 +1174,7 @@ namespace DexComanda
             {
                 return;
             }
-            DataSet dsBairros = con.ListaBairro(txtBairro.Text);
+            DataSet dsBairros = con.ListaBairro();
            
             for (int i = 0; i < dsBairros.Tables[0].Rows.Count; i++)
             {
@@ -1203,6 +1203,11 @@ namespace DexComanda
             }
             Utils.MontaCombox(cbxRegiao, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioesPorCodigo", ds.Tables[0].Rows[0].Field<int>("Codigo"));
             txtTaxaEntrega.Text = ds.Tables[0].Rows[0].Field<decimal>("TaxaServico").ToString();
+        }
+
+        private void txtBairro_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

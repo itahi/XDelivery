@@ -23,7 +23,6 @@ using CrystalDecisions.Shared;
 using CrystalDecisions.CrystalReports.Engine;
 using System.Diagnostics;
 using System.Configuration;
-using DexComanda.Relatorios.Fechamentos.Novos;
 using DexComanda.Operações.Financeiro;
 using DexComanda.Operações;
 using Microsoft.VisualBasic;
@@ -46,13 +45,11 @@ namespace DexComanda
     public class Utils
     {
 
-        private static DataSet dsItemsNaoImpresso;
         private static Conexao conexao;
         private static SimpleSending cliente;
         private static SimpleMessage mensagem;
         private static string RetornoServ;
         private static DateTime DataInicial;
-        private static string NomeEmpresa;
         private static DateTime DataFinal;
         private static string NomeCliente;
         private static int TotalSelecionado;
@@ -70,7 +67,6 @@ namespace DexComanda
         private static Tables CrTables;
         public static Boolean bMult;
         public static int intCodUserAutorizador;
-        private static string strProxImpressora = "";
         private static string TipoAgrupamentoDelivery = Utils.RetornaConfiguracaoDelivery().TipoAgrupamento;
         //  private static Boolean bCodigoPersonalizado =
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
@@ -802,7 +798,7 @@ namespace DexComanda
             catch (Exception erro)
             {
 
-                MessageBox.Show("Erro ao listar itens do " + icbxName + erro.Message);
+                MessageBox.Show("Erro ao listar itens tabela "  + iTable + erro.Message);
             }
 
         }
@@ -815,7 +811,7 @@ namespace DexComanda
 
                 var resultado = consulta.consultaCEP(iCEP.Replace("-", ""));
 
-
+                //Insere o CEP no Banco Local caso retorne do WS
                 if (resultado != null)
                 {
                     cep.Cep = iCEP.Replace("-", "");
@@ -827,12 +823,12 @@ namespace DexComanda
                 }
                 else
                 {
-                    MessageBox.Show("Endereço não encontrado ou cep inválido");
+                    MessageBox.Show("Endereço não encontrado ou CEP inválido");
                 }
             }
             catch (Exception erro)
             {
-                MessageBox.Show(Bibliotecas.cException + erro.Message);
+                MessageBox.Show(erro.Message);
             }
             //CepUtil cep = new CepUtil();
             //Boolean iReturn = false;
@@ -1268,6 +1264,47 @@ namespace DexComanda
         {
             DadosImpressoras impressoras = DeserializaObjetoImpressoras(Sessions.returnConfig.Impressoras);
             return impressoras;
+        }
+
+        /// <summary>
+        /// Gera relatório e imprimi
+        /// </summary>
+        /// <param name="iReport"> Relatório a ser montando</param>
+        /// <param name="inCodigo">Código do registro a ser filtrado</param>
+        /// <returns></returns>
+        public static ReportClass GerarReportCodigo(ReportClass iReport,int inCodigo)
+        {
+            try
+            {
+                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                Tables CrTables;
+
+                string nameReport = iReport.FileName;
+                iReport.Load(Directory.GetCurrentDirectory() + @"\" + nameReport + ".rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
+
+                CrTables = iReport.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                {
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                }
+
+                iReport.SetParameterValue("@Codigo", inCodigo);
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return iReport;
         }
         public static ReportClass GerarReport(ReportClass iReport)
         {
@@ -2353,7 +2390,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    MessageBox.Show(erro.Message, "[XSistemas] Algo de errado aconteceu");
+                    MessageBox.Show(erro.Message, "[xSistemas] Algo de errado aconteceu");
                 }
 
             }
@@ -3231,10 +3268,9 @@ namespace DexComanda
                 // Cria Registro Inicial 
 
                 string lArquivoRegistro = CriptografarArquivo(iArquivo);
-
-                RegistryKey RegistroKey = Registry.LocalMachine.OpenSubKey("Software", true);
-                RegistroKey = RegistroKey.CreateSubKey("DexSistemas");
-                RegistroKey.SetValue("RegistroDex", lArquivoRegistro);
+                RegistryKey RegistroKey = Registry.LocalMachine.OpenSubKey("Software", false);
+                RegistroKey = RegistroKey.CreateSubKey("xSistemas",RegistryKeyPermissionCheck.ReadSubTree);
+                RegistroKey.SetValue("xDelivery", lArquivoRegistro);
                 RegistroKey.Close();
 
                 Retorno = true;
@@ -3251,8 +3287,7 @@ namespace DexComanda
 
         public static string RetornaNomePc()
         {
-            string PcName = System.Net.Dns.GetHostName();
-            return PcName;
+            return  System.Net.Dns.GetHostName();
         }
         public static bool LeArquivoRegistro()
         {
@@ -3260,24 +3295,16 @@ namespace DexComanda
             bool OK = false;
             try
             {
-                //  Utils.RetornaNomePc()+ empresas.CNPJ + empresas.Cidade + empresas.Nome
                 RegistryKey RegistroKey = Registry.LocalMachine.OpenSubKey("Software", true);
-                iRetorno = RegistroKey.OpenSubKey("DexSistemas", true).GetValue("RegistroDex", true).ToString().ToString();
-                strDataLimiteRegistro = RegistroKey.OpenSubKey("DexSistemas", true).GetValue("Expiracao", true).ToString().ToString();
+                iRetorno = RegistroKey.OpenSubKey("xSistemas", true).GetValue("xDelivery", true).ToString().ToString();
+                strDataLimiteRegistro = RegistroKey.OpenSubKey("xSistemas", true).GetValue("Expiracao", true).ToString().ToString();
                 iRegistroCritografado = CriptografarArquivo(RetornaNomePc() + Sessions.returnEmpresa.CNPJ + Sessions.returnEmpresa.Cidade + Sessions.returnEmpresa.Nome);
-
-                //CriptoGrafarOnExecute(RetornaNomePc(), Sessions.returnEmpresa.CNPJ + Sessions.returnEmpresa.Cidade + Sessions.returnEmpresa.Nome);
-
-                if (iRegistroCritografado == iRetorno)
-                {
-                    OK = true;
-                }
-
+                OK = iRegistroCritografado == iRetorno;
             }
             catch (Exception erro)
             {
 
-                MessageBox.Show("Erro de falta de memória , tente executar como administrador :" + erro.Message, "Dex Erro");
+                MessageBox.Show("Erro de falta de memória , tente executar como administrador :" + erro.Message, "[xSistemas]");
             }
 
             return OK;
@@ -3461,7 +3488,7 @@ namespace DexComanda
             try
             {
                 iConexao = new MySqlConnection(LinkServidor);
-                iConexao.Open();
+                 iConexao.OpenAsync();
                 if (iConexao.State == ConnectionState.Open)
                 {
                     MysqlCommand = new MySqlCommand(lConsulta, iConexao);

@@ -493,6 +493,7 @@
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(276, 29);
             this.txtBairro.TabIndex = 37;
+            this.txtBairro.TextChanged += new System.EventHandler(this.txtBairro_TextChanged);
             this.txtBairro.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtBairro_KeyUp);
             this.txtBairro.Leave += new System.EventHandler(this.txtBairro_Leave);
             // 

@@ -145,3 +145,4 @@ D:\#Projetos\xDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.Management.Sdk.Sfc
 D:\#Projetos\xDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.Management.Utility.resources.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.Dmf.resources.dll
 D:\#Projetos\xDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.RegSvrEnum.resources.dll
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Estoque.frmConsultaEstoque.resources

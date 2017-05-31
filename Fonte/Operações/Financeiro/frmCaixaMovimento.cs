@@ -95,7 +95,6 @@ namespace DexComanda.Operações
                     report.SetParameterValue("@CodCaixa", cbxNumCaixa.Text);
                     report.SetParameterValue("@DataI", dtInicioFiltro);
                     report.SetParameterValue("@DataF", dtFimFiltro);
-                    string teste = OperacaoMarcada();
                     crystalReportViewer1.ReportSource = report;
                     crystalReportViewer1.Refresh();
                 }

@@ -44,17 +44,23 @@ namespace DexComanda
                 ////{
                 ////    return;
                 ////}
-
+              
                 if (connectionString != null)
                 {
                     conn = new SqlConnection(connectionString);
-                    conn.Open();
+
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        conn.Open();
+                    }
+
+                    conn.OpenAsync();
                     statusConexao = conn.State;
                 }
             }
             catch (Exception msg)
             {
-                MessageBox.Show(msg.Message, "Erro conexao com o SQLSERVER");
+                MessageBox.Show("Erro conexao com o SQLSERVER");
             }
 
         }
@@ -153,6 +159,25 @@ namespace DexComanda
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
             return ds;
+        }
+        public Boolean ControlaEstoque(int intCodProduto)
+        {
+            try
+            {
+                command = new SqlCommand("spObterProdutoPorCodigo", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Codigo", intCodProduto);
+                command.Parameters.AddWithValue("@AtivoSN", true);
+                adapter = new SqlDataAdapter(command);
+                ds = new DataSet();
+                adapter.Fill(ds, "Produto");
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return ds.Tables[0].Rows[0].Field<Boolean>("ControlaEstoque");
         }
         public Boolean ValidaEstoque(int intCodProduto,string strNomeProd)
         {
@@ -455,7 +480,12 @@ namespace DexComanda
             adapter.Fill(ds, "Caixa");
             return ds;
         }
-        public DataSet ListaBairro(string iBairro)
+        /// <summary>
+        /// Lista os Bairros baseando-se nas cidades atendidas ( Configuração > Config Gerais > Cidades Atendidas)
+        /// </summary>
+        /// <returns>
+        /// Lista de bairros </returns>
+        public DataSet ListaBairro()
         {
             List<CidadesAtendidas> cidades = new List<CidadesAtendidas>();
             cidades = Utils.DeserializaObjeto2(Sessions.returnConfig.CidadesAtendidas);
@@ -491,6 +521,20 @@ namespace DexComanda
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, "RegiaoEntrega");
+            return ds;
+
+        }
+        public DataSet RetornaCEPPorBairro(string iNOmeBairro)
+        {
+            string lSqlConsulta = " select top 1 cep from base_cep " +
+                                  " where bairro like '%" + iNOmeBairro + "%'"+
+                                  " and cidade ='"+Sessions.returnEmpresa.Cidade +"'";
+
+            command = new SqlCommand(lSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "base_cep");
             return ds;
 
         }
@@ -789,11 +833,25 @@ namespace DexComanda
             adapter.Fill(ds, "Opcao");
             return ds;
         }
+        public decimal ConsultaEstoqueProduto(string strNomeProduto)
+        {
+            decimal qtdEstoque = 0;
+            try
+            {
+                
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return qtdEstoque;
+        }
         public DataSet RetornaOpcoes(int iIDOpcao)
         {
             string lSqlConsulta = " select " +
                                   " (select NomeProduto from  Produto where Produto.Codigo=Prod.CodProduto) as 'Nome do Produto'," +
-                                  " Op.Codigo as 'CodOpcao', " +
+                                  " Op.Codigo , " +
                                   " Op.Nome as 'Nome Opcao', " +
                                   " Prod.Preco " +
                                   " from Produto_Opcao Prod" +
@@ -1058,15 +1116,13 @@ namespace DexComanda
             return ds;
 
         }
-        public DataSet RetornaCEPporBairro(string iNomeBairro, Boolean iCidadePadrao)
+        public DataSet RetornaCEPporBairro(string iCEP, Boolean iCidadePadrao=false)
         {
-            string lSqlConsulta = "select cep,bairro cep from base_cep where cep=" + iNomeBairro;
+            string lSqlConsulta = "select cep,bairro cep from base_cep where cep=" + iCEP;
             if (iCidadePadrao)
             {
                 lSqlConsulta = lSqlConsulta + " and cidade='" + Sessions.returnEmpresa.Cidade + "'";
             }
-
-
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
 
@@ -2346,7 +2402,7 @@ namespace DexComanda
 
             return ds;
         }
-        public DataSet Liberacao(string iNomeEmpresa, string CNPJ, string iNomePC, string iMAC)
+        public  DataSet Liberacao(string iNomeEmpresa, string CNPJ, string iNomePC, string iMAC)
         {
             try
             {
@@ -2359,12 +2415,9 @@ namespace DexComanda
 
                     MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
                     MysqlConnection.Open();
-
                     if (MysqlConnection.State == ConnectionState.Open)
                     {
-
                         MysqlCommand = new MySqlCommand("select cnpj,AtivoSN,NomePC,MACPC from Licenca where cnpj='" + CNPJ + "' and NomePC='" + iNomePC + "' and MACPC='" + iMAC + "'", MysqlConnection);
-
                         MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
                         MysqlDataAdapter.Fill(ds, "Licenca");
                         if (ds.Tables["Licenca"].Rows.Count > 0)
@@ -2394,11 +2447,11 @@ namespace DexComanda
 
 
 
-                        MysqlCommand.ExecuteNonQuery();
+                        MysqlCommand.ExecuteNonQueryAsync();
                     }
                     else
                     {
-                        MessageBox.Show("Sem conexão com o servidor central para validação da Licença , tente novamente  reiniciando o sistema", "[xSistemas] Erro ");
+                        MessageBox.Show("Sem conexão com o servidor [xSistemas - Amazon AWS] para validação da Licença , tente novamente  reiniciando o sistema", "[xSistemas] Erro ");
                     }
 
                 }
@@ -2429,7 +2482,6 @@ namespace DexComanda
             try
             {
                 MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
-                // MysqlCommand.CommandTimeout = CmysqlTimeOut;
                 MysqlConnection.Open();
                 MysqlCommand = new MySqlCommand("insert into Licenca(CNPJ,AtivoSN,Nome,DataLiberacao,DataExpiracao) values " + CNPJ + ", " + AtivoSN + " ," + NomeEmpresa + ", " + dataLiberacao + " ," + DataExpiracao, MysqlConnection);
                 MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);

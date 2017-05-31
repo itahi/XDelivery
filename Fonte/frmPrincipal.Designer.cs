@@ -100,6 +100,8 @@
             this.sincronizaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.controleDeEstoqueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lançarMovimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.produtoToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.insumoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaMovimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pedidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastroStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -163,8 +165,6 @@
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.produtoToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.insumoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -759,11 +759,25 @@
             this.lançarMovimentoToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
             this.lançarMovimentoToolStripMenuItem.Text = "Lançamento Estoque";
             // 
+            // produtoToolStripMenuItem2
+            // 
+            this.produtoToolStripMenuItem2.Name = "produtoToolStripMenuItem2";
+            this.produtoToolStripMenuItem2.Size = new System.Drawing.Size(136, 26);
+            this.produtoToolStripMenuItem2.Text = "Produto";
+            this.produtoToolStripMenuItem2.Click += new System.EventHandler(this.produtoToolStripMenuItem2_Click);
+            // 
+            // insumoToolStripMenuItem
+            // 
+            this.insumoToolStripMenuItem.Name = "insumoToolStripMenuItem";
+            this.insumoToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.insumoToolStripMenuItem.Text = "Insumo";
+            // 
             // consultaMovimentoToolStripMenuItem
             // 
             this.consultaMovimentoToolStripMenuItem.Name = "consultaMovimentoToolStripMenuItem";
             this.consultaMovimentoToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
             this.consultaMovimentoToolStripMenuItem.Text = "Consultar Movimento";
+            this.consultaMovimentoToolStripMenuItem.Click += new System.EventHandler(this.consultaMovimentoToolStripMenuItem_Click);
             // 
             // pedidoToolStripMenuItem
             // 
@@ -1474,19 +1488,6 @@
             this.AtualizaGrid.Enabled = true;
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
-            // 
-            // produtoToolStripMenuItem2
-            // 
-            this.produtoToolStripMenuItem2.Name = "produtoToolStripMenuItem2";
-            this.produtoToolStripMenuItem2.Size = new System.Drawing.Size(152, 26);
-            this.produtoToolStripMenuItem2.Text = "Produto";
-            this.produtoToolStripMenuItem2.Click += new System.EventHandler(this.produtoToolStripMenuItem2_Click);
-            // 
-            // insumoToolStripMenuItem
-            // 
-            this.insumoToolStripMenuItem.Name = "insumoToolStripMenuItem";
-            this.insumoToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
-            this.insumoToolStripMenuItem.Text = "Insumo";
             // 
             // frmPrincipal
             // 

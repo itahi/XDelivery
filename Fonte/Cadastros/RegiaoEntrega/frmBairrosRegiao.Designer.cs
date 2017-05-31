@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBairrosRegiao));
             this.cbxRegiao = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -35,13 +36,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.pnConsultaCEp = new System.Windows.Forms.Panel();
+            this.label26 = new System.Windows.Forms.Label();
             this.RegioesGridView = new System.Windows.Forms.DataGridView();
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnAdicionar = new System.Windows.Forms.Button();
             this.txtBairro = new System.Windows.Forms.TextBox();
             this.chkAtivo = new System.Windows.Forms.CheckBox();
             this.chkOnlineSN = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox2.SuspendLayout();
+            this.pnConsultaCEp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RegioesGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,6 +76,7 @@
             this.txtCEP.Name = "txtCEP";
             this.txtCEP.Size = new System.Drawing.Size(80, 20);
             this.txtCEP.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.txtCEP, "Preencha o CEP para buscar o bairro");
             this.txtCEP.TextChanged += new System.EventHandler(this.txtCEP_TextChanged);
             this.txtCEP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCEP_KeyDown);
             // 
@@ -97,6 +103,7 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.pnConsultaCEp);
             this.groupBox2.Controls.Add(this.RegioesGridView);
             this.groupBox2.Location = new System.Drawing.Point(1, 162);
             this.groupBox2.Name = "groupBox2";
@@ -104,6 +111,26 @@
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Bairros";
+            // 
+            // pnConsultaCEp
+            // 
+            this.pnConsultaCEp.Controls.Add(this.label26);
+            this.pnConsultaCEp.Location = new System.Drawing.Point(3, 16);
+            this.pnConsultaCEp.Name = "pnConsultaCEp";
+            this.pnConsultaCEp.Size = new System.Drawing.Size(283, 65);
+            this.pnConsultaCEp.TabIndex = 62;
+            this.pnConsultaCEp.Visible = false;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(49, 16);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(189, 32);
+            this.label26.TabIndex = 0;
+            this.label26.Text = "Aguarde consultando CEP\r\n na Base dos correios ...";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // RegioesGridView
             // 
@@ -152,10 +179,15 @@
             // 
             // txtBairro
             // 
+            this.txtBairro.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.txtBairro.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtBairro.Location = new System.Drawing.Point(4, 104);
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(177, 20);
             this.txtBairro.TabIndex = 35;
+            this.toolTip1.SetToolTip(this.txtBairro, "d");
+            this.txtBairro.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RetornaCEP);
+            this.txtBairro.Leave += new System.EventHandler(this.txtBairro_Leave);
             // 
             // chkAtivo
             // 
@@ -197,6 +229,8 @@
             this.Text = "[xDelivery] Cadastro de Bairros ";
             this.Load += new System.EventHandler(this.frmBairrosRegiao_Load);
             this.groupBox2.ResumeLayout(false);
+            this.pnConsultaCEp.ResumeLayout(false);
+            this.pnConsultaCEp.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RegioesGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -217,5 +251,8 @@
         private System.Windows.Forms.TextBox txtBairro;
         private System.Windows.Forms.CheckBox chkAtivo;
         private System.Windows.Forms.CheckBox chkOnlineSN;
+        private System.Windows.Forms.Panel pnConsultaCEp;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

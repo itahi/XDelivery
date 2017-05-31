@@ -91,6 +91,14 @@ namespace DexComanda
                 descricaoProdutoTextBox.Text = iDescricao;
                 con = new Conexao();
                 txtPrecoCusto.Text = Convert.ToString(con.CalculaPrecoInsumo(CodProduto));
+
+                DataSet dsEstoque = con.ContaEstoque(iNomeProduto);
+                if (dsEstoque.Tables[0].Rows.Count>0)
+                {
+                    txtEstoqueAtual.Text = dsEstoque.Tables[0].Rows[0].Field<decimal>("EstoqueAtual").ToString();
+
+                }
+
                 chkAtivo.Checked = iAtivoSN;
                 chkOnline.Checked = iVendaOnline;
                 txtMaxAdicionais.Text = iMaximoAdicionais;
@@ -264,6 +272,13 @@ namespace DexComanda
                 this.precoProdutoTextBox.Text = produto.Preco.ToString();
                 this.descricaoProdutoTextBox.Text = produto.Descricao.ToString();
                 this.chkAtivo.Checked = produto.AtivoSN;
+                DataSet dsEstoque = con.ContaEstoque(produto.Nome);
+                if (dsEstoque.Tables[0].Rows.Count > 0)
+                {
+                    txtEstoqueAtual.Text = dsEstoque.Tables[0].Rows[0].Field<decimal>("EstoqueAtual").ToString();
+
+                }
+                // txtEstoqueAtual.Text= con.ContaEstoque(nomeProdutoTextBox.Text).Tables[0].Rows[0].Field<decimal>("EstoqueAtual").ToString();
             }
 
         }
@@ -320,6 +335,10 @@ namespace DexComanda
                     MessageBox.Show("Defina o estoque minimo para esse produto");
                     txtEstMinimo.Focus();
                     return;
+                }
+                else
+                {
+                    txtEstMinimo.Text = "0";
                 }
                 produto.EstoqueMinimo = decimal.Parse(txtEstMinimo.Text);
                 if (txtPontosFidelidade.Text != "")
@@ -514,15 +533,16 @@ namespace DexComanda
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                     ControlaEstoque = chkControleEstoque.Checked
-                    //Markup = decimal.Parse(txtMarkup.Text),
-                    //PrecoCusto = decimal.Parse(txtPrecoCusto.Text),
-                    //PrecoSugerido = decimal.Parse(txtPrecoSugerido.Text),
                 };
                 if (chkControleEstoque.Checked && txtEstMinimo.Text == "")
                 {
                     MessageBox.Show("Defina o estoque minimo para esse produto");
                     txtEstMinimo.Focus();
                     return;
+                }
+                else
+                {
+                    txtEstMinimo.Text = "0";
                 }
                 produto.EstoqueMinimo = decimal.Parse(txtEstMinimo.Text);
                 if (txtPontosFidelidade.Text != "")

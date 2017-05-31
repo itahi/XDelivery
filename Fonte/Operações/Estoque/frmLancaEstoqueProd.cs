@@ -137,7 +137,7 @@ namespace DexComanda.Operações
         {
             try
             {
-                cbxProdutos.DataSource = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodGrupo", int.Parse(cbxGrupo.SelectedValue.ToString())).Tables["Produto"];
+                cbxProdutos.DataSource = con.SelectRegistroPorCodigo("Produto", "spObterProdutoEstoque", int.Parse(cbxGrupo.SelectedValue.ToString())).Tables["Produto"];
                 cbxProdutos.DisplayMember = "NomeProduto";
                 cbxProdutos.ValueMember = "Codigo";
                 txtQuantidade.Text = "1";
