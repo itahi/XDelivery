@@ -37,31 +37,6 @@ namespace DexComanda.Operações.Estoque
             }
         }
 
-        private void btnBuscar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                //if (cbxGrupo.SelectedValue == null)
-                //{
-                //    MessageBox.Show("Primeiro selecione o grupo");
-                //    cbxGrupo.Focus();
-                //    return;
-                //}
-                //DataSet ds = con.SelectRegistroPorCodigo("Produto_Estoque", "spContaEstoquePorGrupo", int.Parse(cbxGrupo.SelectedValue.ToString()));
-                //if (ds.Tables[0].Rows.Count == 0)
-                //{
-                //    MessageBox.Show(Bibliotecas.cFiltroRetornaVazio);
-                //    return;
-                //}
-               
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(Bibliotecas.cException + erro.Message);
-            }
-            
-        }
-
         private void btnImprmir_Click(object sender, EventArgs e)
         {
             try

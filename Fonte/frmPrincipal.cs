@@ -875,19 +875,19 @@ namespace DexComanda
                 {
                     codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
                     DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
-                    DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
-                    int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
+                    //  DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
+                    int intCodPessoa = dsPedido.Tables[0].Rows[0].Field<int>("CodPessoa");
                     CodPedidoWS = VerificaPedidoOnline(codigo);
                     if (CodPedidoWS > 0)
                     {
                         AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoConcluido, intCodPessoa);
-                        MessageBox.Show("Atualização realizada com sucesso, pedido entregue");
+                        //MessageBox.Show("Atualização realizada com sucesso, pedido entregue");
                     }
 
-                    iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
+                    iCodMesa = dsPedido.Tables[0].Rows[0].Field<int>("CodigoMesa");
 
-                    dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
-                    string iTipo = dRowPedido.ItemArray.GetValue(8).ToString();
+                    dblTotalPedido = dsPedido.Tables[0].Rows[0].Field<decimal>("TotalPedido");
+                    string iTipo = dsPedido.Tables[0].Rows[0].Field<string>("Tipo");
 
                     //Caso O Pedido for Entrega e o Sistema controle 
                     //os entregadores ele abre a tela pedido pra informar quem entregou
@@ -911,8 +911,8 @@ namespace DexComanda
                     }
 
                     // Grava Débito caso o Tipo de Pagamento gerar financeiro 
-                    string strFormaPagamento = dRowPedido.ItemArray.GetValue(5).ToString();
-                    Utils.GeraHistorico(DateTime.Now, int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()), dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D', strFormaPagamento);
+                    string strFormaPagamento = dsPedido.Tables[0].Rows[0].Field<string>("FormaPagamento");
+                    Utils.GeraHistorico(DateTime.Now, intCodPessoa, dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D', strFormaPagamento);
 
                     // Grava Movimento De Caixa
                     int icodFormaPagamento = RetornaCodFormaPagamento(strFormaPagamento);
@@ -943,7 +943,7 @@ namespace DexComanda
             }
             catch (Exception erro)
             {
-                MessageBox.Show("Não foi possivel selecionar o Pedido" + erro.Message);
+                MessageBox.Show("Não foi possivel selecionar o Pedido " + erro.Message);
             }
 
         }
@@ -1045,22 +1045,26 @@ namespace DexComanda
             InformaMotoboyPedido(intCodPedido);
 
         }
+        /// <summary>
+        /// Verifica se o motoboy já foi informado
+        /// </summary>
+        /// <param name="iCodPedido">Código do pedido</param>
+        /// <returns></returns>
         private Boolean VerificaSeMotoboyFoiInformado(int iCodPedido)
         {
             Boolean iReturn = false;
-            int teste = int.Parse(con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).
-                Tables[0].Rows[0].ItemArray.GetValue(15).ToString());
-            if (teste > 0)
-            {
-                iReturn = true;
-            }
-
-            if (iReturn)
-            {
-                iReturn = Utils.MessageBoxQuestion("Motoboy já foi informado nesse pedido deseja alterar?");
-            }
-            return iReturn;
+            return iReturn =  con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).
+                Tables[0].Rows[0].Field<int>("CodMotoboy")>0;
+           
+            //if (iReturn)
+            //{
+            //    iReturn = Utils.MessageBoxQuestion("Motoboy já foi informado nesse pedido deseja alterar?");
+            //}
         }
+        /// <summary>
+        /// Informa o entregador no pedido
+        /// </summary>
+        /// <param name="iCodPedido">Código do pedido a ser alterado</param>
         private void InformaMotoboyPedido(int iCodPedido)
         {
             try
