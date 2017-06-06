@@ -7,14 +7,14 @@
     <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="DexComanda.exe.manifest" size="52690">
+    <dependentAssembly dependencyType="install" codebase="DexComanda.exe.manifest" size="52243">
       <assemblyIdentity name="DexComanda.exe" version="1.0.0.54" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>d7jaXJD3KgGXk4kTitWaeWVT/QyQ5OolDvy1bHAqEbk=</dsig:DigestValue>
+        <dsig:DigestValue>8STvajsKO0dhPdgVk4WGT/q56gv3wFRfzyHPvWtfEVo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
