@@ -204,24 +204,10 @@ namespace DexComanda
         public void frmCadastrarPedido_Load(object sender, EventArgs e)
         {
             grpVendedor.Enabled = Sessions.returnConfig.ExigeVendedorSN;
-            //if (gNUmeroMesa == "")
-            //{
-            //    CarregaMesas();
-            //}
-
             cbxTipoPedido.Visible = ContraMesas;
             DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
             DataRow dRow = pessoa.Tables["Pessoa"].Rows[0];
-            //if (ControlaFidelidade)
-            //{
-            //    NumeroPedidos = int.Parse(dRow.ItemArray.GetValue(13).ToString());
-            //    if (NumeroPedidos == PedidosParaFidelidade)
-            //    {
-            //        lblFidelidade.Focus();
-            //        lblFidelidade.Visible = true;
-            //    }
-            //}
-
+            
             if (ProdutosPorCodigo)
             {
                 cbxTipoProduto.Visible = false;

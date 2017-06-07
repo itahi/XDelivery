@@ -2185,7 +2185,7 @@ namespace DexComanda
                         Atualiza.ImpressoSN = true;
                         conexao.Update("spInformaItemImpresso", Atualiza);
                     }
-
+                    ImpressaoPorCozinha(iCodPedido);
                 }
 
 
@@ -2211,7 +2211,7 @@ namespace DexComanda
 
                 PrinterSettings printersettings = new PrinterSettings();
                 printersettings.PrinterName = iNomeImpressora;
-                printersettings.Copies = short.Parse(iNumCopias.ToString());
+              //  printersettings.Copies = short.Parse(iNumCopias.ToString());
                 printersettings.Collate = false;
 
                 report.Load(Directory.GetCurrentDirectory() + @"\RelBalcao.rpt");
@@ -2229,6 +2229,7 @@ namespace DexComanda
                 }
                 report.SetParameterValue("@Codigo", iCodPedido);
                 report.SetParameterValue("@CodEndereco", 0);
+
                 if (iNomeImpressora != "")
                 {
                     report.PrintOptions.PrinterName = iNomeImpressora;

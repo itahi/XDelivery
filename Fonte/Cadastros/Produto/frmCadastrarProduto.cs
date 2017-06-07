@@ -25,6 +25,7 @@ namespace DexComanda
         private string Marcados;
         private bool PromocaoDiasSemana = Sessions.returnConfig.DescontoDiaSemana;
         private List<PrecoDiaProduto> listPrecos;
+        private DataGridView gridAtualizada;
         private int codigoinsumo;
         private int intPontosFidelidadeVenda = 0;
         private int intPontosFidelidadeTroca = 0;
@@ -38,7 +39,7 @@ namespace DexComanda
         public frmCadastrarProduto(int CodProduto, string iNomeProduto, string iCodGrupo, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
                                    decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo,
                                    DateTime idtFimPromo, bool iAtivoSN, string iCodInterno, string iMarkup, string iPrecoSugerido,
-                                    int iPontoCompra, int iPontoTroca,Boolean iControlaEstoque,decimal iEstMinimo)
+                                    int iPontoCompra, int iPontoTroca,Boolean iControlaEstoque,decimal iEstMinimo, DataGridView gridProduto=null)
         {
             try
             {
@@ -47,6 +48,7 @@ namespace DexComanda
                 grpDesconto.Visible = DescontoPordia;
                 txtPrecoDesconto.Text = iPrecoPromocao.ToString();
                 intCodGrupo = iCodGrupo;
+                gridAtualizada = gridProduto;
                 string[] lol = iDiasPromocao.Split(new char[] { ';' });
 
                 if (lol.Contains("Monday"))
@@ -119,12 +121,13 @@ namespace DexComanda
 
         }
 
-        public frmCadastrarProduto(Produtos prod)
+        public frmCadastrarProduto(Produtos prod,DataGridView gridProduto)
         {
             try
             {
                 InitializeComponent();
                 DiasSelecionados = new List<string>();
+                gridAtualizada = gridProduto;
                 if (prod==null)
                 {
                     return;
@@ -393,23 +396,22 @@ namespace DexComanda
                         produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text);
                     }
 
-                    con.Insert("spAdicionarProduto", produto);
                 }
                 else
                 {
                     produto.DiaSemana = "";
                     produto.PrecoDesconto = decimal.Parse("0");
-
-                    con.Insert("spAdicionarProduto", produto);
                 }
+                con.Insert("spAdicionarProduto", produto);
+            
                 ClearForm(this);
-                // this_FormClosing();
                 MessageBox.Show("Produto cadastrado com sucesso.");
                 SalvarAdicionais(con.getLastCodigo());
                 SalvarInsumo(con.getLastCodigo());
                 Utils.ControlaEventos("Inserir", this.Name);
                 nomeProdutoTextBox.Focus();
 
+             //   Utils.PopularGrid("Produto",gridvi)
             }
             catch (Exception errro)
             {
@@ -608,7 +610,7 @@ namespace DexComanda
                 this.btnDoProduto.Text = "Cadastrar [F12]";
                 this.btnDoProduto.Click -= AlterarProduto;
                 this.btnDoProduto.Click += AdicionarProduto;
-
+                Utils.PopulaGrid_Novo("Produto", gridAtualizada, Sessions.SqlProduto);
                 Utils.ControlaEventos("Alterar", this.Name);
                 MessageBox.Show("Produto alterado com sucesso.");
                 this.Close();

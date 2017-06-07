@@ -455,7 +455,7 @@ namespace DexComanda
                                                                   Convert.ToDateTime(dRowProduto.ItemArray.GetValue(10).ToString()), Convert.ToDateTime(dRowProduto.ItemArray.GetValue(11).ToString()),
                                                                   Convert.ToBoolean(dRowProduto.ItemArray.GetValue(13).ToString()), dRowProduto.ItemArray.GetValue(14).ToString(), dRowProduto.ItemArray.GetValue(15).ToString(), dRowProduto.ItemArray.GetValue(16).ToString()
                                                                   , int.Parse(dRowProduto.ItemArray.GetValue(18).ToString()), int.Parse(dRowProduto.ItemArray.GetValue(19).ToString()),
-                                                                  dsProduto.Tables[0].Rows[0].Field<Boolean>("ControlaEstoque"), dsProduto.Tables[0].Rows[0].Field<decimal>("EstoqueMinimo"));
+                                                                  dsProduto.Tables[0].Rows[0].Field<Boolean>("ControlaEstoque"), dsProduto.Tables[0].Rows[0].Field<decimal>("EstoqueMinimo"),produtosGridView);
                 frm.StartPosition = FormStartPosition.CenterParent;
                 frm.ShowDialog();
             }
@@ -1558,9 +1558,9 @@ namespace DexComanda
 
         private void produtoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmCadastrarProduto frm = new frmCadastrarProduto(null);
+            frmCadastrarProduto frm = new frmCadastrarProduto(null,produtosGridView);
             frm.ShowDialog();
-            Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
+          //  Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
         }
 
         private void usuáriosToolStripMenuItem_Click(object sender, EventArgs e)
