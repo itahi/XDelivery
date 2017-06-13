@@ -1,0 +1,1 @@
+alter table Pedido add Constraint FK03_CodPessoa foreign key (CodPessoa) references Pessoa(Codigo)

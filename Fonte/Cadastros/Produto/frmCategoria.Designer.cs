@@ -78,7 +78,7 @@
             this.btnAdicionarGrupo.Location = new System.Drawing.Point(4, 212);
             this.btnAdicionarGrupo.Name = "btnAdicionarGrupo";
             this.btnAdicionarGrupo.Size = new System.Drawing.Size(115, 35);
-            this.btnAdicionarGrupo.TabIndex = 2;
+            this.btnAdicionarGrupo.TabIndex = 3;
             this.btnAdicionarGrupo.Text = "Adicionar [F12]";
             this.btnAdicionarGrupo.UseVisualStyleBackColor = true;
             this.btnAdicionarGrupo.Click += new System.EventHandler(this.AdicionarGrupo);
@@ -91,7 +91,7 @@
             this.txbNomeGrupo.Location = new System.Drawing.Point(4, 180);
             this.txbNomeGrupo.Name = "txbNomeGrupo";
             this.txbNomeGrupo.Size = new System.Drawing.Size(300, 26);
-            this.txbNomeGrupo.TabIndex = 1;
+            this.txbNomeGrupo.TabIndex = 0;
             this.txbNomeGrupo.TextChanged += new System.EventHandler(this.txbNomeGrupo_TextChanged);
             // 
             // btnEditarGrupo
@@ -99,7 +99,7 @@
             this.btnEditarGrupo.Location = new System.Drawing.Point(172, 212);
             this.btnEditarGrupo.Name = "btnEditarGrupo";
             this.btnEditarGrupo.Size = new System.Drawing.Size(131, 35);
-            this.btnEditarGrupo.TabIndex = 3;
+            this.btnEditarGrupo.TabIndex = 4;
             this.btnEditarGrupo.Text = "Editar [F11]";
             this.btnEditarGrupo.UseVisualStyleBackColor = true;
             this.btnEditarGrupo.Click += new System.EventHandler(this.EditarGrupo);
@@ -120,7 +120,7 @@
             this.chkOnline.Location = new System.Drawing.Point(92, 160);
             this.chkOnline.Name = "chkOnline";
             this.chkOnline.Size = new System.Drawing.Size(62, 17);
-            this.chkOnline.TabIndex = 11;
+            this.chkOnline.TabIndex = 1;
             this.chkOnline.Text = "Online?";
             this.chkOnline.UseVisualStyleBackColor = true;
             // 
@@ -130,7 +130,7 @@
             this.chkAtivo.Location = new System.Drawing.Point(172, 160);
             this.chkAtivo.Name = "chkAtivo";
             this.chkAtivo.Size = new System.Drawing.Size(56, 17);
-            this.chkAtivo.TabIndex = 12;
+            this.chkAtivo.TabIndex = 2;
             this.chkAtivo.Text = "Ativo?";
             this.chkAtivo.UseVisualStyleBackColor = true;
             // 
@@ -166,8 +166,6 @@
             // 
             // cbxFamilia
             // 
-            this.cbxFamilia.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxFamilia.FormattingEnabled = true;
             this.cbxFamilia.Location = new System.Drawing.Point(9, 124);
             this.cbxFamilia.Name = "cbxFamilia";

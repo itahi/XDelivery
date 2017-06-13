@@ -97,7 +97,15 @@ namespace DexComanda
         {
             if ((e.KeyCode == Keys.F12) && (btnAdicionar.Text == "Adicionar [F12]"))
             {
+                btnAdicionar_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.F11 && btnEditar.Text == "Editar [F11")
+            {
                 btnEditarFP_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.F12 && btnAdicionar.Text == "Salvar [F12]")
+            {
+                SalvarFP(sender, e);
             }
 
         }
@@ -208,7 +216,7 @@ namespace DexComanda
                 chkOnline.Checked = Convert.ToBoolean(this.FPGridView.CurrentRow.Cells[4].Value.ToString());
                 txtcaminhoImage.Text = FPGridView.CurrentRow.Cells[5].Value.ToString();
                 chkAtivoSN.Checked = Convert.ToBoolean(FPGridView.CurrentRow.Cells[6].Value.ToString());
-                this.btnAdicionar.Text = "Salvar";
+                this.btnAdicionar.Text = "Salvar [F12]";
                 this.btnAdicionar.Click += new System.EventHandler(this.SalvarFP);
                 this.btnAdicionar.Click -= new System.EventHandler(this.btnAdicionar_Click);
 
@@ -238,6 +246,10 @@ namespace DexComanda
             {
                 MessageBox.Show("Arquivo de imagem não existe no caminho " + txtcaminhoImage.Text + " informado, favor verificar");
             }
+        }
+
+        private void frmCadastrarFormaPagamento_KeyDown_1(object sender, KeyEventArgs e)
+        {
         }
     }
 }

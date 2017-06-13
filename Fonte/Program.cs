@@ -55,12 +55,13 @@ namespace DexComanda
                     Conexao.connectionString = sLine;
                     string[] words = sLine.Split(';');
                     string[] iText = words[0].Split('\'');
-
-                    //Verifica se o Serviço do SQLSERVER está Ativo para inicia-lo
-                    //if (Utils.RetornaNomePc() == iText[0])
-                    //{
-                    //    Utils.ServicoSQLATIVO(iText[0]);
-                    //}
+                    string strNomePC = Utils.RetornaNomePc();
+                    
+                    // Verifica se o Serviço do SQLSERVER está Ativo para inicia-lo
+                    if (strNomePC == iText[0].Replace("Data Source=", ""))
+                    {
+                        Utils.ServicoSQLATIVO(iText[0]);
+                    }
 
                     con = new Conexao();
 

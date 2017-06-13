@@ -149,5 +149,23 @@ namespace DexComanda.Cadastros.Produto
             
 
         }
+
+        private void frmFamilia_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode== Keys.F12 && btnAdicionarGrupo.Text== "Adicionar [F12]")
+            {
+                btnAdicionarGrupo_Click(sender, e);
+            }
+            if (e.KeyCode == Keys.F12 && btnAdicionarGrupo.Text == "Salvar [F12]")
+            {
+                SalvarGrupo(sender, e);
+            }
+
+            if (e.KeyCode == Keys.F11 && btnEditarGrupo.Text == "Editar [F11]")
+            {
+                EditarFamilia(sender, e);
+            }
+
+        }
     }
 }

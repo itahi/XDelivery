@@ -32,7 +32,6 @@ D:\#Projetos\xDelivery\Fonte\bin\Debug\RestSharp.xml
 D:\#Projetos\xDelivery\Fonte\obj\Debug\XDelivery.csprojResolveAssemblyReference.cache
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Empresa.frmCadastraFornecedor.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Empresa.frmHorariosEntrega.resources
-D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.Financeiro.frmCadTurno.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmAdicionarMesa.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmCadastroStatus.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmFinalizacaoPedido.resources

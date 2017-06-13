@@ -39,7 +39,8 @@ namespace DexComanda
         public frmCadastrarProduto(int CodProduto, string iNomeProduto, string iCodGrupo, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
                                    decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo,
                                    DateTime idtFimPromo, bool iAtivoSN, string iCodInterno, string iMarkup, string iPrecoSugerido,
-                                    int iPontoCompra, int iPontoTroca,Boolean iControlaEstoque,decimal iEstMinimo, DataGridView gridProduto=null)
+                                    int iPontoCompra, int iPontoTroca,Boolean iControlaEstoque,decimal iEstMinimo, DataGridView gridProduto=null,
+                                    string iPalavrasCHave="")
         {
             try
             {
@@ -85,6 +86,7 @@ namespace DexComanda
                 txtPontosFidelidade.Text = iPontoCompra.ToString();
                 txtPontosTroca.Text = iPontoTroca.ToString();
                 txtMarkup.Text = iMarkup;
+                txtPalavrasChave.Text = iPalavrasCHave;
                 txtPrecoSugerido.Text = iPrecoSugerido;
                 MontaListPrecos(iDiasPromocao);
                 nomeProdutoTextBox.Text = iNomeProduto;
@@ -330,7 +332,9 @@ namespace DexComanda
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                     DataAlteracao = DateTime.Now,
-                    ControlaEstoque = chkControleEstoque.Checked
+                    ControlaEstoque = chkControleEstoque.Checked,
+                    PalavrasChaves = txtPalavrasChave.Text
+                
                 };
 
                 if (chkControleEstoque.Checked && txtEstMinimo.Text=="")
@@ -534,7 +538,8 @@ namespace DexComanda
                     DataAlteracao = DateTime.Now,
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
-                    ControlaEstoque = chkControleEstoque.Checked
+                    ControlaEstoque = chkControleEstoque.Checked,
+                    PalavrasChaves = txtPalavrasChave.Text
                 };
                 if (chkControleEstoque.Checked && txtEstMinimo.Text == "")
                 {
@@ -740,9 +745,7 @@ namespace DexComanda
                     if (cbxOpcao.SelectedValue.ToString() == AdicionaisGridView.Rows[i].Cells["CodOpcao"].Value.ToString())
                     {
                         if (!Utils.MessageBoxQuestion("Essa opção já esta vinculada a esse produto , deseja adicionar novamente?"))
-                        {
                             return;
-                        }
                     }
                 }
                 int iCountLinhas = AdicionaisGridView.Rows.Count;

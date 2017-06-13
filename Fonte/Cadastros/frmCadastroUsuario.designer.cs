@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadastroUsuario));
             this.txtNomeUsuario = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,6 +50,7 @@
             this.chkAbreCaixa = new System.Windows.Forms.CheckBox();
             this.chkEditaCliente = new System.Windows.Forms.CheckBox();
             this.chkAlteraPedido = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.usuariosGridView)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -131,9 +133,10 @@
             this.chkCancelaPedidos.AutoSize = true;
             this.chkCancelaPedidos.Location = new System.Drawing.Point(287, 3);
             this.chkCancelaPedidos.Name = "chkCancelaPedidos";
-            this.chkCancelaPedidos.Size = new System.Drawing.Size(95, 17);
+            this.chkCancelaPedidos.Size = new System.Drawing.Size(106, 17);
             this.chkCancelaPedidos.TabIndex = 8;
-            this.chkCancelaPedidos.Text = "Canc. Pedidos";
+            this.chkCancelaPedidos.Text = "Cancela Pedidos";
+            this.toolTip1.SetToolTip(this.chkCancelaPedidos, "Permite que o usuário \"CANCELE\" pedidos");
             this.chkCancelaPedidos.UseVisualStyleBackColor = true;
             // 
             // chkAcessaRelat
@@ -144,6 +147,7 @@
             this.chkAcessaRelat.Size = new System.Drawing.Size(92, 17);
             this.chkAcessaRelat.TabIndex = 9;
             this.chkAcessaRelat.Text = "Ac. Relatórios";
+            this.toolTip1.SetToolTip(this.chkAcessaRelat, "Permite visualização e impressão de relatórios ( caixa, estoque, vendas etc)");
             this.chkAcessaRelat.UseVisualStyleBackColor = true;
             // 
             // chkAlteraProdutos
@@ -174,6 +178,7 @@
             this.chkFechaPedido.Size = new System.Drawing.Size(92, 17);
             this.chkFechaPedido.TabIndex = 13;
             this.chkFechaPedido.Text = "Fecha Pedido";
+            this.toolTip1.SetToolTip(this.chkFechaPedido, "Permite que o usuário finalize pedidos");
             this.chkFechaPedido.UseVisualStyleBackColor = true;
             // 
             // chkDescSN
@@ -213,6 +218,8 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(218, 35);
             this.panel1.TabIndex = 16;
+            this.toolTip1.SetToolTip(this.panel1, "Permite que o usuário insira descontos no pedido.\r\nLimitando-o a máximo de porcet" +
+        "agem definidio\r\n");
             // 
             // chkAbreCliente
             // 
@@ -222,6 +229,7 @@
             this.chkAbreCliente.Size = new System.Drawing.Size(83, 17);
             this.chkAbreCliente.TabIndex = 20;
             this.chkAbreCliente.Text = "Abre Cliente";
+            this.toolTip1.SetToolTip(this.chkAbreCliente, "Permite visualizar o cadastro de clientes");
             this.chkAbreCliente.UseVisualStyleBackColor = true;
             // 
             // chkAbreCaixa
@@ -232,6 +240,7 @@
             this.chkAbreCaixa.Size = new System.Drawing.Size(112, 17);
             this.chkAbreCaixa.TabIndex = 19;
             this.chkAbreCaixa.Text = "Abre/Fecha Caixa";
+            this.toolTip1.SetToolTip(this.chkAbreCaixa, "Permite o fechamento e abertura de caixa");
             this.chkAbreCaixa.UseVisualStyleBackColor = true;
             // 
             // chkEditaCliente
@@ -242,6 +251,7 @@
             this.chkEditaCliente.Size = new System.Drawing.Size(85, 17);
             this.chkEditaCliente.TabIndex = 18;
             this.chkEditaCliente.Text = "Edita Cliente";
+            this.toolTip1.SetToolTip(this.chkEditaCliente, "Permite a edição de clientes cadastrados");
             this.chkEditaCliente.UseVisualStyleBackColor = true;
             // 
             // chkAlteraPedido
@@ -252,6 +262,7 @@
             this.chkAlteraPedido.Size = new System.Drawing.Size(89, 17);
             this.chkAlteraPedido.TabIndex = 17;
             this.chkAlteraPedido.Text = "Altera Pedido";
+            this.toolTip1.SetToolTip(this.chkAlteraPedido, "Permite que o usuário altere pedidos lançados");
             this.chkAlteraPedido.UseVisualStyleBackColor = true;
             // 
             // frmCadastroUsuario
@@ -313,5 +324,6 @@
         private System.Windows.Forms.CheckBox chkAbreCaixa;
         private System.Windows.Forms.CheckBox chkEditaCliente;
         private System.Windows.Forms.CheckBox chkAlteraPedido;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

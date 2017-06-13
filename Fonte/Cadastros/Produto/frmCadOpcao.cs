@@ -321,12 +321,19 @@ namespace DexComanda.Cadastros.Produto
             frm.Show(this);
         }
 
-        //private void FiltraOpcaoPorTipo(object sender, EventArgs e)
-        //{
-        //    if (cbxTipo.SelectedIndex != null)
-        //    {
-        //        ListaOpcao(int.Parse(cbxTipo.SelectedValue.ToString()));
-        //    }
-        //}
+       
+        private void btnAdicionar_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyCode == Keys.F12)
+            {
+                CadastraOpcao(sender, e);
+            }
+            if (e.KeyCode == Keys.F11)
+            {
+                EditarOpcao(sender, e);
+            }
+        }
+
     }
 }

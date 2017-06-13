@@ -31,5 +31,6 @@ namespace DexComanda.Models
         public int PontoFidelidadeTroca { get; set; }
         public Boolean ControlaEstoque { get; set; }
         public decimal EstoqueMinimo { get; set; }
+        public string PalavrasChaves { get; set; }
     }
 }

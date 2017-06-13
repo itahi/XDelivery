@@ -261,5 +261,22 @@ namespace DexComanda.Cadastros.Produto
                 }
             }
         }
+
+        private void frmTipoOpcao_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12 && btnAdicionar.Text == "Adicionar [F12]")
+            {
+                btnAdicionar_Click(sender, e);
+            }
+            if (e.KeyCode == Keys.F12 && btnAdicionar.Text == "Salvar [F12]")
+            {
+                SalvarRegistro(sender, e);
+            }
+
+            if (e.KeyCode == Keys.F11 && btnEditar.Text == "Editar [F11]")
+            {
+                btnEditar_Click(sender, e);
+            }
+        }
     }
 }

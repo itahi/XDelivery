@@ -94,7 +94,7 @@
             this.btnEditar.Location = new System.Drawing.Point(169, 69);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(113, 48);
-            this.btnEditar.TabIndex = 7;
+            this.btnEditar.TabIndex = 3;
             this.btnEditar.Text = "Editar [F11]";
             this.btnEditar.UseVisualStyleBackColor = true;
             this.btnEditar.Click += new System.EventHandler(this.EditarRegistro);
@@ -104,7 +104,7 @@
             this.btnAdicionar.Location = new System.Drawing.Point(7, 69);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(108, 48);
-            this.btnAdicionar.TabIndex = 6;
+            this.btnAdicionar.TabIndex = 1;
             this.btnAdicionar.Text = "Adicionar [F12]";
             this.btnAdicionar.UseVisualStyleBackColor = true;
             this.btnAdicionar.Click += new System.EventHandler(this.AdicionarEntregador);

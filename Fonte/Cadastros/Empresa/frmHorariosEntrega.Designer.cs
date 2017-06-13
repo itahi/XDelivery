@@ -116,7 +116,7 @@
             this.dtEntregaFim.Location = new System.Drawing.Point(115, 17);
             this.dtEntregaFim.Name = "dtEntregaFim";
             this.dtEntregaFim.Size = new System.Drawing.Size(66, 20);
-            this.dtEntregaFim.TabIndex = 5;
+            this.dtEntregaFim.TabIndex = 3;
             this.toolTip1.SetToolTip(this.dtEntregaFim, "Horario fim da entrega a ser exibida");
             // 
             // dtEntregaInicio
@@ -125,7 +125,7 @@
             this.dtEntregaInicio.Location = new System.Drawing.Point(14, 18);
             this.dtEntregaInicio.Name = "dtEntregaInicio";
             this.dtEntregaInicio.Size = new System.Drawing.Size(66, 20);
-            this.dtEntregaInicio.TabIndex = 4;
+            this.dtEntregaInicio.TabIndex = 2;
             this.toolTip1.SetToolTip(this.dtEntregaInicio, "Horario inicio da entrega a ser exibida");
             // 
             // btnAdicionar
@@ -134,7 +134,7 @@
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(110, 36);
             this.btnAdicionar.TabIndex = 6;
-            this.btnAdicionar.Text = "Adicionar";
+            this.btnAdicionar.Text = "Adicionar [F12]";
             this.btnAdicionar.UseVisualStyleBackColor = true;
             this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
             // 
@@ -144,7 +144,7 @@
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(133, 36);
             this.btnEditar.TabIndex = 7;
-            this.btnEditar.Text = "Editar";
+            this.btnEditar.Text = "Editar [F11]";
             this.btnEditar.UseVisualStyleBackColor = true;
             this.btnEditar.Click += new System.EventHandler(this.EditarRegistro);
             // 
@@ -154,7 +154,7 @@
             this.chkOnlineSN.Location = new System.Drawing.Point(12, 67);
             this.chkOnlineSN.Name = "chkOnlineSN";
             this.chkOnlineSN.Size = new System.Drawing.Size(65, 17);
-            this.chkOnlineSN.TabIndex = 8;
+            this.chkOnlineSN.TabIndex = 4;
             this.chkOnlineSN.Text = "AtivoSN";
             this.chkOnlineSN.UseVisualStyleBackColor = true;
             // 
@@ -170,9 +170,11 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dtLimite);
             this.Controls.Add(this.groupBox1);
+            this.KeyPreview = true;
             this.Name = "frmHorariosEntrega";
             this.Text = "[xSistemas] Horarios Entrega";
             this.Load += new System.EventHandler(this.frmHorariosEntrega_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmHorariosEntrega_KeyDown);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridViewHorarios)).EndInit();
             this.groupBox2.ResumeLayout(false);

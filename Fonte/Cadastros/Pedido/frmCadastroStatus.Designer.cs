@@ -31,9 +31,9 @@
             this.StatusGridView = new System.Windows.Forms.DataGridView();
             this.chkAlertar = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnEditarGrupo = new System.Windows.Forms.Button();
+            this.btnEditar = new System.Windows.Forms.Button();
             this.txbNome = new System.Windows.Forms.TextBox();
-            this.btnAdicionarGrupo = new System.Windows.Forms.Button();
+            this.btnAdicionar = new System.Windows.Forms.Button();
             this.cbxOrder = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.StatusGridView)).BeginInit();
@@ -76,15 +76,15 @@
             this.label1.TabIndex = 16;
             this.label1.Text = "Nome";
             // 
-            // btnEditarGrupo
+            // btnEditar
             // 
-            this.btnEditarGrupo.Location = new System.Drawing.Point(179, 108);
-            this.btnEditarGrupo.Name = "btnEditarGrupo";
-            this.btnEditarGrupo.Size = new System.Drawing.Size(130, 35);
-            this.btnEditarGrupo.TabIndex = 4;
-            this.btnEditarGrupo.Text = "Editar [F11]";
-            this.btnEditarGrupo.UseVisualStyleBackColor = true;
-            this.btnEditarGrupo.Click += new System.EventHandler(this.btnEditarGrupo_Click);
+            this.btnEditar.Location = new System.Drawing.Point(179, 108);
+            this.btnEditar.Name = "btnEditar";
+            this.btnEditar.Size = new System.Drawing.Size(130, 35);
+            this.btnEditar.TabIndex = 4;
+            this.btnEditar.Text = "Editar [F11]";
+            this.btnEditar.UseVisualStyleBackColor = true;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditarGrupo_Click);
             // 
             // txbNome
             // 
@@ -94,15 +94,15 @@
             this.txbNome.Size = new System.Drawing.Size(301, 26);
             this.txbNome.TabIndex = 0;
             // 
-            // btnAdicionarGrupo
+            // btnAdicionar
             // 
-            this.btnAdicionarGrupo.Location = new System.Drawing.Point(5, 108);
-            this.btnAdicionarGrupo.Name = "btnAdicionarGrupo";
-            this.btnAdicionarGrupo.Size = new System.Drawing.Size(149, 35);
-            this.btnAdicionarGrupo.TabIndex = 3;
-            this.btnAdicionarGrupo.Text = "Adicionar [F12]";
-            this.btnAdicionarGrupo.UseVisualStyleBackColor = true;
-            this.btnAdicionarGrupo.Click += new System.EventHandler(this.btnAdicionarGrupo_Click);
+            this.btnAdicionar.Location = new System.Drawing.Point(5, 108);
+            this.btnAdicionar.Name = "btnAdicionar";
+            this.btnAdicionar.Size = new System.Drawing.Size(149, 35);
+            this.btnAdicionar.TabIndex = 3;
+            this.btnAdicionar.Text = "Adicionar [F12]";
+            this.btnAdicionar.UseVisualStyleBackColor = true;
+            this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionarGrupo_Click);
             // 
             // cbxOrder
             // 
@@ -138,13 +138,15 @@
             this.Controls.Add(this.cbxOrder);
             this.Controls.Add(this.chkAlertar);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnEditarGrupo);
+            this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.txbNome);
-            this.Controls.Add(this.btnAdicionarGrupo);
+            this.Controls.Add(this.btnAdicionar);
             this.Controls.Add(this.StatusGridView);
+            this.KeyPreview = true;
             this.Name = "frmCadastroStatus";
             this.Text = "[xDelivery] Cadastro Status";
             this.Load += new System.EventHandler(this.frmCadastroStatus_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastroStatus_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.StatusGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -156,9 +158,9 @@
         private System.Windows.Forms.DataGridView StatusGridView;
         private System.Windows.Forms.CheckBox chkAlertar;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnEditarGrupo;
+        private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.TextBox txbNome;
-        private System.Windows.Forms.Button btnAdicionarGrupo;
+        private System.Windows.Forms.Button btnAdicionar;
         private System.Windows.Forms.ComboBox cbxOrder;
         private System.Windows.Forms.Label label2;
     }

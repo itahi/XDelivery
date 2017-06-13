@@ -71,7 +71,7 @@
             this.cbxUndMedida.Location = new System.Drawing.Point(12, 87);
             this.cbxUndMedida.Name = "cbxUndMedida";
             this.cbxUndMedida.Size = new System.Drawing.Size(77, 21);
-            this.cbxUndMedida.TabIndex = 4;
+            this.cbxUndMedida.TabIndex = 2;
             this.toolTip1.SetToolTip(this.cbxUndMedida, "Tipo de medida que compra o insumo");
             // 
             // label1
@@ -116,7 +116,7 @@
             this.btnEditar.Location = new System.Drawing.Point(180, 128);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(127, 35);
-            this.btnEditar.TabIndex = 12;
+            this.btnEditar.TabIndex = 4;
             this.btnEditar.Text = "Editar [F11]";
             this.btnEditar.UseVisualStyleBackColor = true;
             this.btnEditar.Click += new System.EventHandler(this.EditarRegistro);
@@ -126,7 +126,7 @@
             this.btnAdicionar.Location = new System.Drawing.Point(12, 128);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(115, 35);
-            this.btnAdicionar.TabIndex = 11;
+            this.btnAdicionar.TabIndex = 3;
             this.btnAdicionar.Text = "Adicionar [F12]";
             this.btnAdicionar.UseVisualStyleBackColor = true;
             this.btnAdicionar.Click += new System.EventHandler(this.AdicionarRegistro);
@@ -144,9 +144,11 @@
             this.Controls.Add(this.cbxUndMedida);
             this.Controls.Add(this.chkAtivoSN);
             this.Controls.Add(this.txtNome);
+            this.KeyPreview = true;
             this.Name = "frmCadastroInsumo";
             this.Text = "[xSistemas] Cadastro Insumo";
             this.Load += new System.EventHandler(this.frmCadastroInsumo_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastroInsumo_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.registrosGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

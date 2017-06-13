@@ -38,6 +38,7 @@ using DexComanda.Cadastros.Pessoa;
 using DexComanda.Cadastros.Pedido;
 using DexComanda.Relatorios.Caixa;
 using DexComanda.Models.Configuracoes;
+using XIntegrador.Classe;
 
 namespace DexComanda
 {
@@ -67,7 +68,6 @@ namespace DexComanda
         private static Tables CrTables;
         public static Boolean bMult;
         public static int intCodUserAutorizador;
-        private static string TipoAgrupamentoDelivery = Utils.RetornaConfiguracaoDelivery().TipoAgrupamento;
         //  private static Boolean bCodigoPersonalizado =
         private const string LinkServidor = "Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;";
         public static Boolean EfetuarLogin(string nomeUsuario, string senha, bool iAbreFrmPrincipal = true, int iNumCaixa = 1, Boolean iAlterarUserLogado = false, string iTurno = "Dia")
@@ -2143,7 +2143,9 @@ namespace DexComanda
         {
             try
             {
-                DataSet itemsPedido, dsItemsNaoImpresso, dsItems;
+
+        string TipoAgrupamentoDelivery = Utils.RetornaConfiguracaoDelivery().TipoAgrupamento;
+        DataSet itemsPedido, dsItemsNaoImpresso, dsItems;
                 DataSet dsI = new DataSet();
                 dsItemsNaoImpresso = Utils.CarregaItens(iCodPedido);
 
@@ -3288,7 +3290,16 @@ namespace DexComanda
 
         public static string RetornaNomePc()
         {
-            return  System.Net.Dns.GetHostName();
+            string strNome = "";
+            try
+            {
+                strNome= System.Net.Dns.GetHostName();
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message); 
+            }
+            return strNome;
         }
         public static bool LeArquivoRegistro()
         {
@@ -3363,7 +3374,6 @@ namespace DexComanda
         public static string ServicoSQLATIVO(string iNomePC)
         {
             string status = "";
-            // string command = "SELECT * FROM sys.databases WHERE name = 'DbExpert'";
             try
             {
                 iNomePC = iNomePC.Replace("Data Source=", "");

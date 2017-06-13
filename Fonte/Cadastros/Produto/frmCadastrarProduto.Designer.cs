@@ -96,6 +96,8 @@
             this.cbxGrupoProduto = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label27 = new System.Windows.Forms.Label();
+            this.txtPalavrasChave = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label24 = new System.Windows.Forms.Label();
             this.txtPontosTroca = new System.Windows.Forms.TextBox();
@@ -327,7 +329,7 @@
             this.btnSair.Location = new System.Drawing.Point(522, 304);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(150, 43);
-            this.btnSair.TabIndex = 35;
+            this.btnSair.TabIndex = 7;
             this.btnSair.Text = "Sair [ESC]";
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click_1);
@@ -337,7 +339,7 @@
             this.btnDoProduto.Location = new System.Drawing.Point(362, 304);
             this.btnDoProduto.Name = "btnDoProduto";
             this.btnDoProduto.Size = new System.Drawing.Size(150, 43);
-            this.btnDoProduto.TabIndex = 34;
+            this.btnDoProduto.TabIndex = 6;
             this.btnDoProduto.Text = "Cadastrar [F12]";
             this.btnDoProduto.UseVisualStyleBackColor = true;
             this.btnDoProduto.Click += new System.EventHandler(this.AdicionarProduto);
@@ -708,7 +710,7 @@
             this.precoProdutoTextBox.Location = new System.Drawing.Point(257, 86);
             this.precoProdutoTextBox.Name = "precoProdutoTextBox";
             this.precoProdutoTextBox.Size = new System.Drawing.Size(69, 26);
-            this.precoProdutoTextBox.TabIndex = 2;
+            this.precoProdutoTextBox.TabIndex = 3;
             this.precoProdutoTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.precoProdutoTextBox_KeyPress);
             // 
             // chkOnline
@@ -717,7 +719,7 @@
             this.chkOnline.Location = new System.Drawing.Point(302, 6);
             this.chkOnline.Name = "chkOnline";
             this.chkOnline.Size = new System.Drawing.Size(96, 17);
-            this.chkOnline.TabIndex = 35;
+            this.chkOnline.TabIndex = 2;
             this.chkOnline.Text = "Venda Online?";
             this.chkOnline.UseVisualStyleBackColor = true;
             // 
@@ -729,7 +731,7 @@
             this.chkAtivo.Location = new System.Drawing.Point(237, 6);
             this.chkAtivo.Name = "chkAtivo";
             this.chkAtivo.Size = new System.Drawing.Size(59, 17);
-            this.chkAtivo.TabIndex = 34;
+            this.chkAtivo.TabIndex = 1;
             this.chkAtivo.Text = "Ativo ?";
             this.chkAtivo.UseVisualStyleBackColor = true;
             // 
@@ -882,6 +884,8 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.label27);
+            this.tabPage4.Controls.Add(this.txtPalavrasChave);
             this.tabPage4.Controls.Add(this.groupBox3);
             this.tabPage4.Controls.Add(this.grpPrecosDia);
             this.tabPage4.Controls.Add(this.groupBox2);
@@ -894,15 +898,35 @@
             this.tabPage4.Text = "3 - Preços e Promoções";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(394, 57);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(140, 13);
+            this.label27.TabIndex = 47;
+            this.label27.Text = "Palavras Chave (KeyWords)";
+            // 
+            // txtPalavrasChave
+            // 
+            this.txtPalavrasChave.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "DescricaoProduto", true));
+            this.txtPalavrasChave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPalavrasChave.Location = new System.Drawing.Point(390, 76);
+            this.txtPalavrasChave.Multiline = true;
+            this.txtPalavrasChave.Name = "txtPalavrasChave";
+            this.txtPalavrasChave.Size = new System.Drawing.Size(207, 64);
+            this.txtPalavrasChave.TabIndex = 46;
+            this.toolTip1.SetToolTip(this.txtPalavrasChave, resources.GetString("txtPalavrasChave.ToolTip"));
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label24);
             this.groupBox3.Controls.Add(this.txtPontosTroca);
             this.groupBox3.Controls.Add(this.label23);
             this.groupBox3.Controls.Add(this.txtPontosFidelidade);
-            this.groupBox3.Location = new System.Drawing.Point(280, 62);
+            this.groupBox3.Location = new System.Drawing.Point(217, 68);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(317, 72);
+            this.groupBox3.Size = new System.Drawing.Size(167, 72);
             this.groupBox3.TabIndex = 45;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Pontos Fidelidade";
@@ -910,7 +934,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(121, 14);
+            this.label24.Location = new System.Drawing.Point(88, 16);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(71, 13);
             this.label24.TabIndex = 48;
@@ -920,7 +944,7 @@
             // 
             this.txtPontosTroca.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.produtoBindingSource, "PrecoProduto", true));
             this.txtPontosTroca.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPontosTroca.Location = new System.Drawing.Point(124, 33);
+            this.txtPontosTroca.Location = new System.Drawing.Point(86, 37);
             this.txtPontosTroca.Name = "txtPontosTroca";
             this.txtPontosTroca.Size = new System.Drawing.Size(69, 26);
             this.txtPontosTroca.TabIndex = 47;
@@ -1195,9 +1219,9 @@
             this.groupBox2.Controls.Add(this.horaInicio);
             this.groupBox2.Controls.Add(this.HoraFim);
             this.groupBox2.Enabled = false;
-            this.groupBox2.Location = new System.Drawing.Point(3, 62);
+            this.groupBox2.Location = new System.Drawing.Point(3, 68);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(271, 72);
+            this.groupBox2.Size = new System.Drawing.Size(208, 72);
             this.groupBox2.TabIndex = 33;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Horario que o produto estará disponivel";
@@ -1205,7 +1229,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(144, 25);
+            this.label9.Location = new System.Drawing.Point(95, 24);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(23, 13);
             this.label9.TabIndex = 14;
@@ -1214,7 +1238,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(22, 25);
+            this.label8.Location = new System.Drawing.Point(7, 24);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(32, 13);
             this.label8.TabIndex = 13;
@@ -1224,7 +1248,7 @@
             // 
             this.horaInicio.Checked = false;
             this.horaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.horaInicio.Location = new System.Drawing.Point(25, 44);
+            this.horaInicio.Location = new System.Drawing.Point(10, 43);
             this.horaInicio.Name = "horaInicio";
             this.horaInicio.Size = new System.Drawing.Size(82, 20);
             this.horaInicio.TabIndex = 11;
@@ -1232,7 +1256,7 @@
             // HoraFim
             // 
             this.HoraFim.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.HoraFim.Location = new System.Drawing.Point(147, 44);
+            this.HoraFim.Location = new System.Drawing.Point(98, 43);
             this.HoraFim.Name = "HoraFim";
             this.HoraFim.Size = new System.Drawing.Size(86, 20);
             this.HoraFim.TabIndex = 12;
@@ -1466,6 +1490,7 @@
             this.grpDesconto.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.grpPrecosDia.ResumeLayout(false);
@@ -1587,5 +1612,7 @@
         private System.Windows.Forms.CheckBox chkControleEstoque;
         private System.Windows.Forms.TextBox txtEstoqueAtual;
         private System.Windows.Forms.TextBox txtEstMinimo;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox txtPalavrasChave;
     }
 }

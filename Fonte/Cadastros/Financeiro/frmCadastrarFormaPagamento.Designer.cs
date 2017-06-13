@@ -35,6 +35,7 @@
             this.chkAtivoSN = new System.Windows.Forms.CheckBox();
             this.chkOnline = new System.Windows.Forms.CheckBox();
             this.chkFinanceiro = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.chkDesconto2 = new System.Windows.Forms.CheckBox();
             this.txtNomeFP = new System.Windows.Forms.TextBox();
             this.btnEditarFP = new System.Windows.Forms.Button();
@@ -45,7 +46,6 @@
             this.btnImg = new System.Windows.Forms.Button();
             this.txtcaminhoImage = new System.Windows.Forms.TextBox();
             this.img = new System.Windows.Forms.PictureBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -92,7 +92,7 @@
             this.chkAtivoSN.Location = new System.Drawing.Point(128, 41);
             this.chkAtivoSN.Name = "chkAtivoSN";
             this.chkAtivoSN.Size = new System.Drawing.Size(71, 17);
-            this.chkAtivoSN.TabIndex = 19;
+            this.chkAtivoSN.TabIndex = 3;
             this.chkAtivoSN.Text = "AtivoSN?";
             this.chkAtivoSN.UseVisualStyleBackColor = true;
             // 
@@ -102,7 +102,7 @@
             this.chkOnline.Location = new System.Drawing.Point(8, 41);
             this.chkOnline.Name = "chkOnline";
             this.chkOnline.Size = new System.Drawing.Size(62, 17);
-            this.chkOnline.TabIndex = 18;
+            this.chkOnline.TabIndex = 2;
             this.chkOnline.Text = "Online?";
             this.chkOnline.UseVisualStyleBackColor = true;
             // 
@@ -112,11 +112,21 @@
             this.chkFinanceiro.Location = new System.Drawing.Point(128, 7);
             this.chkFinanceiro.Name = "chkFinanceiro";
             this.chkFinanceiro.Size = new System.Drawing.Size(107, 17);
-            this.chkFinanceiro.TabIndex = 17;
+            this.chkFinanceiro.TabIndex = 1;
             this.chkFinanceiro.Text = "Gera Financeiro?";
             this.toolTip1.SetToolTip(this.chkFinanceiro, "Marcando essa opção , vendas feitas nessa forma de pagamento geram débitos para o" +
         " cliente");
             this.chkFinanceiro.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(6, 69);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 16);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Nome:";
             // 
             // chkDesconto2
             // 
@@ -127,6 +137,7 @@
             this.chkDesconto2.TabIndex = 15;
             this.chkDesconto2.Text = "Permite Desconto?";
             this.chkDesconto2.UseVisualStyleBackColor = true;
+            this.chkDesconto2.Visible = false;
             // 
             // txtNomeFP
             // 
@@ -136,14 +147,14 @@
             this.txtNomeFP.Location = new System.Drawing.Point(6, 92);
             this.txtNomeFP.Name = "txtNomeFP";
             this.txtNomeFP.Size = new System.Drawing.Size(252, 26);
-            this.txtNomeFP.TabIndex = 14;
+            this.txtNomeFP.TabIndex = 0;
             // 
             // btnEditarFP
             // 
             this.btnEditarFP.Location = new System.Drawing.Point(136, 124);
             this.btnEditarFP.Name = "btnEditarFP";
             this.btnEditarFP.Size = new System.Drawing.Size(124, 48);
-            this.btnEditarFP.TabIndex = 13;
+            this.btnEditarFP.TabIndex = 5;
             this.btnEditarFP.Text = "Editar [F11]";
             this.btnEditarFP.UseVisualStyleBackColor = true;
             this.btnEditarFP.Click += new System.EventHandler(this.btnEditarFP_Click);
@@ -153,7 +164,7 @@
             this.btnAdicionar.Location = new System.Drawing.Point(3, 124);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(108, 48);
-            this.btnAdicionar.TabIndex = 12;
+            this.btnAdicionar.TabIndex = 4;
             this.btnAdicionar.Text = "Adicionar [F12]";
             this.btnAdicionar.UseVisualStyleBackColor = true;
             this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
@@ -186,7 +197,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(268, 341);
+            this.tabPage2.Size = new System.Drawing.Size(268, 363);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Imagen";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -228,19 +239,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.img.Location = new System.Drawing.Point(6, 82);
             this.img.Name = "img";
-            this.img.Size = new System.Drawing.Size(259, 178);
+            this.img.Size = new System.Drawing.Size(259, 200);
             this.img.TabIndex = 0;
             this.img.TabStop = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 69);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 16);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "Nome:";
             // 
             // frmCadastrarFormaPagamento
             // 
@@ -248,11 +249,13 @@
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "frmCadastrarFormaPagamento";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[XDelivery]  Formas De Pagamento";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmCadastrarFormaPagamento_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCadastrarFormaPagamento_KeyDown_1);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

@@ -96,17 +96,17 @@ namespace DexComanda.Operações
                 {
                     CadastraRegioes(con.RetornaRegiao());
                 }
-                if (!chkPrevisao.Checked)
-                {
-                    if (Utils.MessageBoxQuestion("Deseja desativar a previsão de entrega exibida no site/app?"))
-                    {
-                        CadastraPrevisao();
-                    }
-                }
-                else
-                {
-                    CadastraPrevisao();
-                }
+                //if (!chkPrevisao.Checked)
+                //{
+                //    if (Utils.MessageBoxQuestion("Deseja desativar a previsão de entrega exibida no site/app?"))
+                //    {
+                //        CadastraPrevisao();
+                //    }
+                //}
+                //else
+                //{
+                //    CadastraPrevisao();
+                //}
                 if (chkMobile.Checked)
                 {
                     CadastraPush();
@@ -234,24 +234,7 @@ namespace DexComanda.Operações
             lblMinimo.Visible = true;
             lblMinimo.Text = lRetorno.msg;
         }
-        private void CadastraPrevisao()
-        {
-
-            RestClient client = new RestClient(iUrlWS);
-            RestRequest request = new RestRequest("ws/previsao/entrega/set", Method.POST);
-            request.AddParameter("token", iParamToken);
-            request.AddParameter("tempo", strPrevisaoEntrega);
-            request.AddParameter("status", Convert.ToInt32(chkPrevisao.Checked));
-            MudaLabel("Previsão de Entrega");
-            RestResponse response = (RestResponse)client.Execute(request);
-
-            ReturnPadrao lRetorno = new ReturnPadrao();
-            lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
-            if (lRetorno.status == true)
-            {
-                prgBarPrevisao.Value = 100;
-            }
-        }
+       
         private DataSet ObterDados(string iNomeTable)
         {
             if (iNomeTable != "FormaPagamento")

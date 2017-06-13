@@ -54,13 +54,12 @@ namespace DexComanda
                         conn.Open();
                     }
 
-                    conn.OpenAsync();
                     statusConexao = conn.State;
                 }
             }
             catch (Exception msg)
             {
-                MessageBox.Show("Erro conexao com o SQLSERVER");
+                MessageBox.Show("Erro conexao com o SQLSERVER " + msg.Message);
             }
 
         }

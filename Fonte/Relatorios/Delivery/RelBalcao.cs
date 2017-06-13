@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DexComanda.Relatorios.Delivery {
+namespace XIntegrador.Classe {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -41,7 +41,7 @@ namespace DexComanda.Relatorios.Delivery {
         
         public override string FullResourceName {
             get {
-                return "DexComanda.Relatorios.Delivery.RelBalcao.rpt";
+                return "XIntegrador.Classe.RelBalcao.rpt";
             }
             set {
                 // Do nothing
@@ -82,7 +82,7 @@ namespace DexComanda.Relatorios.Delivery {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section DetailSection3 {
+        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
             get {
                 return this.ReportDefinition.Sections[4];
             }
@@ -90,7 +90,7 @@ namespace DexComanda.Relatorios.Delivery {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
+        public CrystalDecisions.CrystalReports.Engine.Section ReportFooterSection2 {
             get {
                 return this.ReportDefinition.Sections[5];
             }

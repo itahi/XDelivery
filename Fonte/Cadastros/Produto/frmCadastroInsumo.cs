@@ -173,5 +173,26 @@ namespace DexComanda.Cadastros.Produto
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
+
+        private void frmCadastroInsumo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12 && btnAdicionar.Text == "Adicionar [F12]")
+            {
+                AdicionarRegistro(sender, e);
+            }
+            else if (btnAdicionar.Text == "Salvar [F12]" && e.KeyCode == Keys.F12)
+            {
+                SalvarRegistro(sender, e);
+            }
+
+            else if (e.KeyCode == Keys.F11 && btnEditar.Text == "Editar [F11]")
+            {
+                EditarRegistro(sender, e);
+            }
+            else if (btnEditar.Text == "Cancelar [ESC]" && e.KeyCode == Keys.Escape)
+            {
+                Cancelar(sender, e);
+            }
+        }
     }
 }

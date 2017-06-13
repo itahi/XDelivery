@@ -75,7 +75,7 @@
             this.grpTipo.Location = new System.Drawing.Point(15, 68);
             this.grpTipo.Name = "grpTipo";
             this.grpTipo.Size = new System.Drawing.Size(216, 67);
-            this.grpTipo.TabIndex = 2;
+            this.grpTipo.TabIndex = 4;
             this.grpTipo.TabStop = false;
             this.grpTipo.Text = "Tipo de Seleção";
             // 
@@ -191,6 +191,7 @@
             // 
             // btnEditar
             // 
+            this.btnEditar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnEditar.Location = new System.Drawing.Point(149, 143);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(130, 35);
@@ -201,6 +202,7 @@
             // 
             // btnAdicionar
             // 
+            this.btnAdicionar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnAdicionar.Location = new System.Drawing.Point(15, 142);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(114, 35);
@@ -230,7 +232,7 @@
             this.cbxOrdem.Location = new System.Drawing.Point(246, 39);
             this.cbxOrdem.Name = "cbxOrdem";
             this.cbxOrdem.Size = new System.Drawing.Size(42, 26);
-            this.cbxOrdem.TabIndex = 63;
+            this.cbxOrdem.TabIndex = 3;
             // 
             // chkOnlineSN
             // 
@@ -240,7 +242,7 @@
             this.chkOnlineSN.Location = new System.Drawing.Point(140, 22);
             this.chkOnlineSN.Name = "chkOnlineSN";
             this.chkOnlineSN.Size = new System.Drawing.Size(71, 17);
-            this.chkOnlineSN.TabIndex = 64;
+            this.chkOnlineSN.TabIndex = 2;
             this.chkOnlineSN.Text = "OnlineSN";
             this.chkOnlineSN.UseVisualStyleBackColor = true;
             // 
@@ -252,7 +254,7 @@
             this.chkAtivoSN.Location = new System.Drawing.Point(69, 21);
             this.chkAtivoSN.Name = "chkAtivoSN";
             this.chkAtivoSN.Size = new System.Drawing.Size(65, 17);
-            this.chkAtivoSN.TabIndex = 65;
+            this.chkAtivoSN.TabIndex = 1;
             this.chkAtivoSN.Text = "AtivoSN";
             this.chkAtivoSN.UseVisualStyleBackColor = true;
             // 
@@ -273,10 +275,12 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtNome);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "frmTipoOpcao";
             this.Text = "[xDelivery] Tipo Opção";
             this.Load += new System.EventHandler(this.frmTipoOpcao_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmTipoOpcao_KeyDown);
             this.grpTipo.ResumeLayout(false);
             this.grpTipo.PerformLayout();
             this.grpMaxMin.ResumeLayout(false);

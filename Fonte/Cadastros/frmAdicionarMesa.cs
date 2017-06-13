@@ -193,5 +193,20 @@ namespace DexComanda.Cadastros
             return iRetorno;
         }
 
+        private void frmAdicionarMesa_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12 && btnSalvar.Text == "Adicionar [F12]")
+            {
+                AdicionarMesa(sender, e);
+            }
+            else if (e.KeyCode == Keys.F12 && btnSalvar.Text == "Salvar [F12]")
+            {
+                SalvarMesa(sender, e);
+            }
+            else if (e.KeyCode == Keys.F11 && btnEditar.Text == "Editar [F11]")
+            {
+                EditarRegistro(sender, e);
+            }
+        }
     }
 }

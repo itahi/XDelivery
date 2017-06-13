@@ -39,6 +39,7 @@
             this.chkAtivoSN = new System.Windows.Forms.CheckBox();
             this.chkOnlineSN = new System.Windows.Forms.CheckBox();
             this.grpDiasDisponivel = new System.Windows.Forms.GroupBox();
+            this.btnEdit = new System.Windows.Forms.Button();
             this.chkDomingo = new System.Windows.Forms.CheckBox();
             this.ChkSexta = new System.Windows.Forms.CheckBox();
             this.chkQuinta = new System.Windows.Forms.CheckBox();
@@ -47,7 +48,6 @@
             this.chkTerca = new System.Windows.Forms.CheckBox();
             this.chkSegunda = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.btnEdit = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.OpcaoGridView)).BeginInit();
             this.grpDiasDisponivel.SuspendLayout();
@@ -88,7 +88,7 @@
             this.btnEditar.Location = new System.Drawing.Point(167, 178);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(130, 35);
-            this.btnEditar.TabIndex = 2;
+            this.btnEditar.TabIndex = 7;
             this.btnEditar.Text = "Editar [F11]";
             this.btnEditar.UseVisualStyleBackColor = true;
             this.btnEditar.Click += new System.EventHandler(this.EditarOpcao);
@@ -109,10 +109,11 @@
             this.btnAdicionar.Location = new System.Drawing.Point(4, 181);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(114, 35);
-            this.btnAdicionar.TabIndex = 1;
+            this.btnAdicionar.TabIndex = 6;
             this.btnAdicionar.Text = "Adicionar [F12]";
             this.btnAdicionar.UseVisualStyleBackColor = true;
             this.btnAdicionar.Click += new System.EventHandler(this.CadastraOpcao);
+            this.btnAdicionar.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnAdicionar_KeyDown);
             // 
             // cbxTipo
             // 
@@ -125,7 +126,7 @@
             this.cbxTipo.Location = new System.Drawing.Point(4, 151);
             this.cbxTipo.Name = "cbxTipo";
             this.cbxTipo.Size = new System.Drawing.Size(186, 21);
-            this.cbxTipo.TabIndex = 17;
+            this.cbxTipo.TabIndex = 5;
             this.cbxTipo.DropDown += new System.EventHandler(this.cbxTipo_DropDown);
             this.cbxTipo.SelectionChangeCommitted += new System.EventHandler(this.cbxTipo_SelectionChangeCommitted);
             // 
@@ -147,7 +148,7 @@
             this.chkAtivoSN.Location = new System.Drawing.Point(139, 2);
             this.chkAtivoSN.Name = "chkAtivoSN";
             this.chkAtivoSN.Size = new System.Drawing.Size(65, 17);
-            this.chkAtivoSN.TabIndex = 67;
+            this.chkAtivoSN.TabIndex = 1;
             this.chkAtivoSN.Text = "AtivoSN";
             this.chkAtivoSN.UseVisualStyleBackColor = true;
             // 
@@ -159,7 +160,7 @@
             this.chkOnlineSN.Location = new System.Drawing.Point(210, 3);
             this.chkOnlineSN.Name = "chkOnlineSN";
             this.chkOnlineSN.Size = new System.Drawing.Size(71, 17);
-            this.chkOnlineSN.TabIndex = 66;
+            this.chkOnlineSN.TabIndex = 2;
             this.chkOnlineSN.Text = "OnlineSN";
             this.chkOnlineSN.UseVisualStyleBackColor = true;
             // 
@@ -176,10 +177,20 @@
             this.grpDiasDisponivel.Location = new System.Drawing.Point(4, 73);
             this.grpDiasDisponivel.Name = "grpDiasDisponivel";
             this.grpDiasDisponivel.Size = new System.Drawing.Size(293, 59);
-            this.grpDiasDisponivel.TabIndex = 70;
+            this.grpDiasDisponivel.TabIndex = 4;
             this.grpDiasDisponivel.TabStop = false;
             this.grpDiasDisponivel.Text = "Disponibilidade";
             this.toolTip1.SetToolTip(this.grpDiasDisponivel, "Marque os dias em que o produto estará disponivel no site/app");
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Location = new System.Drawing.Point(216, 19);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(71, 34);
+            this.btnEdit.TabIndex = 71;
+            this.btnEdit.Text = "Ed. Multipla";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // chkDomingo
             // 
@@ -280,21 +291,11 @@
             this.checkBox1.Location = new System.Drawing.Point(90, 58);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(131, 17);
-            this.checkBox1.TabIndex = 26;
+            this.checkBox1.TabIndex = 3;
             this.checkBox1.Tag = "Thursday";
             this.checkBox1.Text = "Marca todos dias SN?";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckStateChanged += new System.EventHandler(this.checkBox1_CheckStateChanged);
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Location = new System.Drawing.Point(216, 19);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(71, 34);
-            this.btnEdit.TabIndex = 71;
-            this.btnEdit.Text = "Ed. Multipla";
-            this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // frmCadOpcao
             // 

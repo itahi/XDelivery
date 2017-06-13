@@ -455,7 +455,8 @@ namespace DexComanda
                                                                   Convert.ToDateTime(dRowProduto.ItemArray.GetValue(10).ToString()), Convert.ToDateTime(dRowProduto.ItemArray.GetValue(11).ToString()),
                                                                   Convert.ToBoolean(dRowProduto.ItemArray.GetValue(13).ToString()), dRowProduto.ItemArray.GetValue(14).ToString(), dRowProduto.ItemArray.GetValue(15).ToString(), dRowProduto.ItemArray.GetValue(16).ToString()
                                                                   , int.Parse(dRowProduto.ItemArray.GetValue(18).ToString()), int.Parse(dRowProduto.ItemArray.GetValue(19).ToString()),
-                                                                  dsProduto.Tables[0].Rows[0].Field<Boolean>("ControlaEstoque"), dsProduto.Tables[0].Rows[0].Field<decimal>("EstoqueMinimo"),produtosGridView);
+                                                                  dsProduto.Tables[0].Rows[0].Field<Boolean>("ControlaEstoque"), dsProduto.Tables[0].Rows[0].Field<decimal>("EstoqueMinimo"),produtosGridView,
+                                                                  dsProduto.Tables[0].Rows[0].Field<string>("PalavrasChaves"));
                 frm.StartPosition = FormStartPosition.CenterParent;
                 frm.ShowDialog();
             }
@@ -1461,15 +1462,17 @@ namespace DexComanda
 
         private void frmPrincipal_FormClosed(object sender, FormClosedEventArgs e)
         {
-            string strServidor = Sessions.returnEmpresa.Servidor;
-            string strBanco = Sessions.returnEmpresa.Banco;
-            string strCaminhoBkp = Sessions.returnEmpresa.CaminhoBackup;
-            // VerificaRegistroASincronizar();
-            con.BackupBanco(strServidor, strBanco, strCaminhoBkp);
+          
+                string strServidor = Sessions.returnEmpresa.Servidor;
+                string strBanco = Sessions.returnEmpresa.Banco;
+                string strCaminhoBkp = Sessions.returnEmpresa.CaminhoBackup;
+                // VerificaRegistroASincronizar();
+                con.BackupBanco(strServidor, strBanco, strCaminhoBkp);
 
-            this.Dispose();
-            con.Close();
-            Utils.Kill();
+                this.Dispose();
+                con.Close();
+                Utils.Kill();
+          
 
         }
 

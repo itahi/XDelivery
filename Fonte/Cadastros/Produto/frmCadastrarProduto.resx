@@ -205,6 +205,12 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>675, 17</value>
   </metadata>
+  <data name="txtPalavrasChave.ToolTip" xml:space="preserve">
+    <value>Preencha aqui palavras que serão indexadas por ferramentas de busca
+(Google, Yahoo,Bing) , para melhorar o posicionamento do produto 
+Ex."nome produto"  gostoso, delivery de "nome do produto",  lanchontes em "nome da cidade",
+"nome da lanchonete  telefone"  etc...</value>
+  </data>
   <data name="btnEditarIns.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAA2pJREFUOE9t

@@ -75,7 +75,7 @@
             this.txtCEP.MaxLength = 9;
             this.txtCEP.Name = "txtCEP";
             this.txtCEP.Size = new System.Drawing.Size(80, 20);
-            this.txtCEP.TabIndex = 2;
+            this.txtCEP.TabIndex = 1;
             this.toolTip1.SetToolTip(this.txtCEP, "Preencha o CEP para buscar o bairro");
             this.txtCEP.TextChanged += new System.EventHandler(this.txtCEP_TextChanged);
             this.txtCEP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCEP_KeyDown);
@@ -158,7 +158,7 @@
             this.btnEditar.Location = new System.Drawing.Point(107, 130);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(74, 24);
-            this.btnEditar.TabIndex = 32;
+            this.btnEditar.TabIndex = 6;
             this.btnEditar.Text = "Editar";
             this.btnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnEditar.UseVisualStyleBackColor = true;
@@ -171,7 +171,7 @@
             this.btnAdicionar.Location = new System.Drawing.Point(4, 130);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(74, 24);
-            this.btnAdicionar.TabIndex = 31;
+            this.btnAdicionar.TabIndex = 5;
             this.btnAdicionar.Text = "Adicionar";
             this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAdicionar.UseVisualStyleBackColor = true;
@@ -184,7 +184,7 @@
             this.txtBairro.Location = new System.Drawing.Point(4, 104);
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(177, 20);
-            this.txtBairro.TabIndex = 35;
+            this.txtBairro.TabIndex = 4;
             this.toolTip1.SetToolTip(this.txtBairro, "d");
             this.txtBairro.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RetornaCEP);
             this.txtBairro.Leave += new System.EventHandler(this.txtBairro_Leave);
@@ -195,7 +195,7 @@
             this.chkAtivo.Location = new System.Drawing.Point(193, 61);
             this.chkAtivo.Name = "chkAtivo";
             this.chkAtivo.Size = new System.Drawing.Size(71, 17);
-            this.chkAtivo.TabIndex = 36;
+            this.chkAtivo.TabIndex = 2;
             this.chkAtivo.Text = "AtivoSN?";
             this.chkAtivo.UseVisualStyleBackColor = true;
             // 
@@ -205,7 +205,7 @@
             this.chkOnlineSN.Location = new System.Drawing.Point(193, 84);
             this.chkOnlineSN.Name = "chkOnlineSN";
             this.chkOnlineSN.Size = new System.Drawing.Size(77, 17);
-            this.chkOnlineSN.TabIndex = 37;
+            this.chkOnlineSN.TabIndex = 3;
             this.chkOnlineSN.Text = "OnlineSN?";
             this.chkOnlineSN.UseVisualStyleBackColor = true;
             // 

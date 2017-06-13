@@ -96,11 +96,11 @@ namespace DexComanda.Cadastros.Empresa
 
             Button iButton = (Button)sender;
             Utils.LimpaForm(this);
-            this.btnAdicionar.Text = "Adicionar";
+            this.btnAdicionar.Text = "Adicionar [F12]";
             this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
             this.btnAdicionar.Click -= new System.EventHandler(this.Salvar);
 
-            this.btnEditar.Text = "Editar";
+            this.btnEditar.Text = "Editar [F11]";
             this.btnEditar.Click += new System.EventHandler(this.EditarRegistro);
             this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
         }
@@ -108,19 +108,18 @@ namespace DexComanda.Cadastros.Empresa
         {
             try
             {
-                int intCodRegistro = 0;
                 if (gridViewHorarios.SelectedRows.Count > 0)
                 {
-                    codigo = int.Parse(gridViewHorarios.Rows[rowIndex].Cells[0].Value.ToString());
-                    dtLimite.Value = Convert.ToDateTime(gridViewHorarios.Rows[rowIndex].Cells[1].Value.ToString());
+                    codigo = int.Parse(gridViewHorarios.CurrentRow.Cells[0].Value.ToString());
+                    dtLimite.Value = Convert.ToDateTime(gridViewHorarios.CurrentRow.Cells[1].Value.ToString());
 
 
-                    string text = gridViewHorarios.Rows[rowIndex].Cells[2].Value.ToString().Substring(0, 5);
-                    string text2 = gridViewHorarios.Rows[rowIndex].Cells[2].Value.ToString().Substring(9, 5);
-                    dtEntregaInicio.Value = DateTime.Parse(gridViewHorarios.Rows[rowIndex].Cells[2].Value.ToString().Substring(0, 5));
-                    dtEntregaFim.Value = DateTime.Parse(gridViewHorarios.Rows[rowIndex].Cells[2].Value.ToString().Substring(9, 5));
-                    chkOnlineSN.Checked = Boolean.Parse(gridViewHorarios.Rows[rowIndex].Cells[3].Value.ToString());
-                    this.btnAdicionar.Text = "Salvar";
+                    string text = gridViewHorarios.CurrentRow.Cells[2].Value.ToString().Substring(0, 5);
+                    string text2 = gridViewHorarios.CurrentRow.Cells[2].Value.ToString().Substring(9, 5);
+                    dtEntregaInicio.Value = DateTime.Parse(gridViewHorarios.CurrentRow.Cells[2].Value.ToString().Substring(0, 5));
+                    dtEntregaFim.Value = DateTime.Parse(gridViewHorarios.CurrentRow.Cells[2].Value.ToString().Substring(9, 5));
+                    chkOnlineSN.Checked = Boolean.Parse(gridViewHorarios.CurrentRow.Cells[3].Value.ToString());
+                    this.btnAdicionar.Text = "Salvar [F12]";
                     this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
                     this.btnAdicionar.Click -= new System.EventHandler(this.btnAdicionar_Click);
 
@@ -146,6 +145,22 @@ namespace DexComanda.Cadastros.Empresa
         private void BuscaRowIndex(object sender, DataGridViewCellEventArgs e)
         {
             rowIndex = e.RowIndex;
+        }
+
+        private void frmHorariosEntrega_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12 && btnAdicionar.Text == "Adicionar [F12]")
+            {
+                btnAdicionar_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.F12 && btnAdicionar.Text == "Salvar [F12]")
+            {
+                Salvar(sender, e);
+            }
+            else if (e.KeyCode == Keys.F11 && btnEditar.Text == "Editar [F11]")
+            {
+                Salvar(sender, e);
+            }
         }
     }
 }
