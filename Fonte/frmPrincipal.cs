@@ -1463,16 +1463,6 @@ namespace DexComanda
         private void frmPrincipal_FormClosed(object sender, FormClosedEventArgs e)
         {
           
-                string strServidor = Sessions.returnEmpresa.Servidor;
-                string strBanco = Sessions.returnEmpresa.Banco;
-                string strCaminhoBkp = Sessions.returnEmpresa.CaminhoBackup;
-                // VerificaRegistroASincronizar();
-                con.BackupBanco(strServidor, strBanco, strCaminhoBkp);
-
-                this.Dispose();
-                con.Close();
-                Utils.Kill();
-          
 
         }
 
@@ -1549,8 +1539,8 @@ namespace DexComanda
 
         private void tipoOpçãoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmTipoOpcao frm = new frmTipoOpcao();
-            frm.ShowDialog();
+            frmTipoOpcao frmTipo = new frmTipoOpcao();
+            frmTipo.ShowDialog(this);
         }
 
         private void opçõesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2224,6 +2214,27 @@ namespace DexComanda
         {
             frmConsultaEstoque frm = new frmConsultaEstoque();
             frm.Show(this);
+        }
+
+        private void frmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                if (!Utils.MessageBoxQuestion("Você tem certeza que deseja sair?"))
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                string strServidor = Sessions.returnEmpresa.Servidor;
+                string strBanco = Sessions.returnEmpresa.Banco;
+                string strCaminhoBkp = Sessions.returnEmpresa.CaminhoBackup;
+                // VerificaRegistroASincronizar();
+                con.BackupBanco(strServidor, strBanco, strCaminhoBkp);
+
+                this.Dispose();
+                con.Close();
+                Utils.Kill();
+            }
         }
     }
 }

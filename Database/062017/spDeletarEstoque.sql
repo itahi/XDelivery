@@ -1,6 +1,4 @@
-alter table Produto_Estoque add NomeProduto nvarchar(max);
-alter table Produto_Estoque add CodPedido int;
-go
+
 create procedure spDeletarEstoque
 @CodPedido int,
 @CodProduto int,

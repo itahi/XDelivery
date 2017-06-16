@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace XIntegrador.Classe {
+namespace DexComanda.Relatorios.Delivery {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -41,7 +41,7 @@ namespace XIntegrador.Classe {
         
         public override string FullResourceName {
             get {
-                return "XIntegrador.Classe.RelBalcao.rpt";
+                return "DexComanda.Relatorios.Delivery.RelBalcao.rpt";
             }
             set {
                 // Do nothing

@@ -191,18 +191,16 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnEditar.Location = new System.Drawing.Point(149, 143);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(130, 35);
             this.btnEditar.TabIndex = 16;
             this.btnEditar.Text = "Editar [F11]";
             this.btnEditar.UseVisualStyleBackColor = true;
-            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            this.btnEditar.Click += new System.EventHandler(this.EditarRegistro);
             // 
             // btnAdicionar
             // 
-            this.btnAdicionar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnAdicionar.Location = new System.Drawing.Point(15, 142);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(114, 35);
@@ -278,6 +276,7 @@
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "frmTipoOpcao";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[xDelivery] Tipo Opção";
             this.Load += new System.EventHandler(this.frmTipoOpcao_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmTipoOpcao_KeyDown);

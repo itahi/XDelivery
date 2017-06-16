@@ -76,9 +76,11 @@ namespace DexComanda.Operações
                             if (Utils.ImputStringQuestion())
                             {
                                 con.AtualizaDataSincronismo("Grupo", -1, "DataAlteracao");
+                                con.AtualizaDataSincronismo("Produto_OpcaoTipo", -1, "DataAlteracao");
+                                con.AtualizaDataSincronismo("Opcao", -1, "DataAlteracao");
                                 con.AtualizaDataSincronismo("Produto", -1, "DataAlteracao");
+                                con.AtualizaDataSincronismo("Produto_Opcao", -1, "DataAlteracao");
                                 LimparUrlAmigaveis();
-                                // CadastraLinkApp(true);
                             }
                         }
                     }
@@ -96,17 +98,6 @@ namespace DexComanda.Operações
                 {
                     CadastraRegioes(con.RetornaRegiao());
                 }
-                //if (!chkPrevisao.Checked)
-                //{
-                //    if (Utils.MessageBoxQuestion("Deseja desativar a previsão de entrega exibida no site/app?"))
-                //    {
-                //        CadastraPrevisao();
-                //    }
-                //}
-                //else
-                //{
-                //    CadastraPrevisao();
-                //}
                 if (chkMobile.Checked)
                 {
                     CadastraPush();
@@ -135,21 +126,28 @@ namespace DexComanda.Operações
         }
         private void CadastraPush()
         {
-            GerarToken();
-            RestClient client = new RestClient(iUrlWS);
-            RestResponse response = new RestResponse();
-            RestRequest request = new RestRequest("ws/loja/setOpenSignalId", Method.POST);
-            request.AddParameter("token", iParamToken);
-            request.AddParameter("open_signal_id", Utils.RetornaConfiguracaoPush().Pushapp_id);
-            request.AddParameter("store_id", "0");
-            request.AddParameter("nome_cliente", Sessions.returnEmpresa.Nome);
-            request.AddParameter("gcm_sender_id", Utils.RetornaConfiguracaoPush().GCM);
-            request.AddParameter("onesignal_api_key", Utils.RetornaConfiguracaoPush().Pushauthorization);
-            MudaLabel("Códigos OneSignal");
-            response = (RestResponse)client.Execute(request);
-            ReturnPadrao lRetorno = new ReturnPadrao();
-            lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
-
+            try
+            {
+                GerarToken();
+                RestClient client = new RestClient(iUrlWS);
+                RestResponse response = new RestResponse();
+                RestRequest request = new RestRequest("ws/loja/setOpenSignalId", Method.POST);
+                request.AddParameter("token", iParamToken);
+                request.AddParameter("open_signal_id", Utils.RetornaConfiguracaoPush().Pushapp_id);
+                request.AddParameter("store_id", "0");
+                request.AddParameter("nome_cliente", Sessions.returnEmpresa.Nome);
+                request.AddParameter("gcm_sender_id", Utils.RetornaConfiguracaoPush().GCM);
+                request.AddParameter("onesignal_api_key", Utils.RetornaConfiguracaoPush().Pushauthorization);
+                MudaLabel("Códigos OneSignal");
+                response = (RestResponse)client.Execute(request);
+                ReturnPadrao lRetorno = new ReturnPadrao();
+                lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Não foi possivel enviados os dados do OneSignal " + erro.Message);
+            }
+            
 
         }
         private void LimparUrlAmigaveis()
@@ -168,7 +166,6 @@ namespace DexComanda.Operações
                 lRetorno = JsonConvert.DeserializeObject<ReturnPadrao>(response.Content);
 
             }
-
             catch (Exception er)
             {
 
@@ -515,9 +512,6 @@ namespace DexComanda.Operações
             prgBarMesa.Maximum = ds.Tables[0].Rows.Count;
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                //int intCod = ds.Tables[0].Rows[i].Field<int>("Codigo");
-                //string strN = ds.Tables[0].Rows[i].Field<string>("NumeroMesa");
-                //int intStat = ds.Tables[0].Rows[i].Field<int>("StatusMesa");
                 var mesas = new MesaWS()
                 {
                     id = ds.Tables[0].Rows[i].Field<int>("Codigo"),
@@ -804,7 +798,7 @@ namespace DexComanda.Operações
 
                     RestResponse response = (RestResponse)client.Execute(request);
 
-                    if (response.Content.Contains(" true"))
+                    if (response.Content.Equals(true))
                     {
                         con.AtualizaDataSincronismo("Produto_Opcao", iCodProd, iCodOpcao);
                     }

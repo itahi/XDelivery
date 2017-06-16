@@ -130,6 +130,7 @@
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.btnAdicionarGrupo);
             this.Controls.Add(this.FamiliaGridView);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.KeyPreview = true;
             this.Name = "frmFamilia";
             this.Text = "[xDelivery] Cadastro de Familia";

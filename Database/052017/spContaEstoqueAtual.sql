@@ -1,3 +1,6 @@
+alter table Produto_Estoque add NomeProduto nvarchar(max);
+alter table Produto_Estoque add CodPedido int;
+go
 create procedure spContaEstoqueAtual
 @NomeProduto nvarchar(max)
 as

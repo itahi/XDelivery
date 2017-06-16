@@ -628,22 +628,22 @@ namespace DexComanda
                 txtURL.Text = Sessions.returnEmpresa.UrlServidor;
                 CarregaConfigSMS(Sessions.returnEmpresa.ConfiguracaoSMS);
 
-                if (con.IsConnected())
-                {
-                    DataSet Dados = Utils.DadosLicenca(txtCNPJ.Text, Utils.EnderecoMAC(), Utils.RetornaNomePc());
-                    if (Dados.Tables.Count==0)
-                    {
-                        return;
-                    }
-                    DataRow LinhasLicenca = Dados.Tables["Licenca"].Rows[0];
-                    lblDataExpiracao.Text = LinhasLicenca.ItemArray.GetValue(3).ToString().Substring(0, 10);
-                    txtLicenca.Text = LinhasLicenca.ItemArray.GetValue(1).ToString() + LinhasLicenca.ItemArray.GetValue(9).ToString();
-                }
-                else
-                {
-                    txtLicenca.Text = txtCNPJ.Text + Utils.EnderecoMAC();
-                    lblDataExpiracao.Text = DateTime.Now.AddMonths(1).ToString();
-                }
+                //if (con.IsConnected())
+                //{
+                //    DataSet Dados = Utils.DadosLicenca(txtCNPJ.Text, Utils.EnderecoMAC(), Utils.RetornaNomePc());
+                //    if (Dados.Tables.Count==0)
+                //    {
+                //        return;
+                //    }
+                //    DataRow LinhasLicenca = Dados.Tables["Licenca"].Rows[0];
+                //    lblDataExpiracao.Text = LinhasLicenca.ItemArray.GetValue(3).ToString().Substring(0, 10);
+                //    txtLicenca.Text = LinhasLicenca.ItemArray.GetValue(1).ToString() + LinhasLicenca.ItemArray.GetValue(9).ToString();
+                //}
+                //else
+                //{
+                //    txtLicenca.Text = txtCNPJ.Text + Utils.EnderecoMAC();
+                //    lblDataExpiracao.Text = DateTime.Now.AddMonths(1).ToString();
+                //}
 
             }
 

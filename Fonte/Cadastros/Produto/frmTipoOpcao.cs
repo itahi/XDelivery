@@ -18,8 +18,8 @@ namespace DexComanda.Cadastros.Produto
         private int intCodopcaTipo;
         public frmTipoOpcao()
         {
-            con = new Conexao();
             InitializeComponent();
+            con = new Conexao();
         }
 
         private void frmTipoOpcao_Load(object sender, EventArgs e)
@@ -113,42 +113,6 @@ namespace DexComanda.Cadastros.Produto
             }
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                intCodopcaTipo = int.Parse(TipoOpcaoGrid.SelectedRows[rowIndex].Cells[0].Value.ToString());
-                DataSet ds = con.SelectRegistroPorCodigo("Produto_OpcaoTipo", "spObterProduto_OpcaoTipoPorCodigo", intCodopcaTipo);
-                if (ds.Tables["Produto_OpcaoTipo"].Rows.Count > 0)
-                {
-                    txtNome.Text = ds.Tables[0].Rows[0].Field<string>("Nome");
-                    cbxOrdem.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("OrdenExibicao"));
-                    chkAtivoSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("AtivoSN");
-                    chkOnlineSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("OnlineSN");
-                    int iTipo = int.Parse(ds.Tables[0].Rows[0].Field<string>("Tipo"));
-
-                    MarcaRadio(iTipo);
-                    if (grpMaxMin.Visible)
-                    {
-                        txtMax.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("MaximoOpcionais"));
-                        txtMinimo.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("MinimoOpcionais"));
-                    }
-
-                }
-
-                this.btnAdicionar.Text = "Salvar [F12]";
-                this.btnAdicionar.Click += new System.EventHandler(this.SalvarRegistro);
-                this.btnAdicionar.Click -= new System.EventHandler(this.btnAdicionar_Click);
-
-                this.btnEditar.Text = "Cancelar [ESC]";
-                this.btnEditar.Click += new System.EventHandler(this.Cancelar);
-                this.btnEditar.Click -= new System.EventHandler(this.btnEditar_Click);
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(Bibliotecas.cException + erro.Message);
-            }
-        }
         private void Cancelar(object sender, EventArgs e)
         {
 
@@ -268,14 +232,50 @@ namespace DexComanda.Cadastros.Produto
             {
                 btnAdicionar_Click(sender, e);
             }
-            if (e.KeyCode == Keys.F12 && btnAdicionar.Text == "Salvar [F12]")
+            else if (e.KeyCode == Keys.F12 && btnAdicionar.Text == "Salvar [F12]")
             {
                 SalvarRegistro(sender, e);
             }
-
-            if (e.KeyCode == Keys.F11 && btnEditar.Text == "Editar [F11]")
+            else if (e.KeyCode == Keys.F11 && btnEditar.Text == "Editar [F11]")
             {
-                btnEditar_Click(sender, e);
+                EditarRegistro(sender, e);
+            }
+        }
+
+        private void EditarRegistro(object sender, EventArgs e)
+        {
+            try
+            {
+                intCodopcaTipo = int.Parse(TipoOpcaoGrid.SelectedRows[rowIndex].Cells[0].Value.ToString());
+                DataSet ds = con.SelectRegistroPorCodigo("Produto_OpcaoTipo", "spObterProduto_OpcaoTipoPorCodigo", intCodopcaTipo);
+                if (ds.Tables["Produto_OpcaoTipo"].Rows.Count > 0)
+                {
+                    txtNome.Text = ds.Tables[0].Rows[0].Field<string>("Nome");
+                    cbxOrdem.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("OrdenExibicao"));
+                    chkAtivoSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("AtivoSN");
+                    chkOnlineSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("OnlineSN");
+                    int iTipo = int.Parse(ds.Tables[0].Rows[0].Field<string>("Tipo"));
+
+                    MarcaRadio(iTipo);
+                    if (grpMaxMin.Visible)
+                    {
+                        txtMax.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("MaximoOpcionais"));
+                        txtMinimo.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("MinimoOpcionais"));
+                    }
+
+                }
+
+                this.btnAdicionar.Text = "Salvar [F12]";
+                this.btnAdicionar.Click += new System.EventHandler(this.SalvarRegistro);
+                this.btnAdicionar.Click -= new System.EventHandler(this.btnAdicionar_Click);
+
+                this.btnEditar.Text = "Cancelar [ESC]";
+                this.btnEditar.Click += new System.EventHandler(this.Cancelar);
+                this.btnEditar.Click -= new System.EventHandler(this.btnEditar_Click);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
     }

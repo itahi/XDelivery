@@ -589,6 +589,9 @@
       <DependentUpon>frmReporVendaOnline.cs</DependentUpon>
     </Compile>
     <Compile Include="Relatorios\Delivery\RelBalcao.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelBalcao.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Delivery\RelComandaMesaPorGrupo.cs">
@@ -1262,6 +1265,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelBalcao.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelBalcao.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesaPorGrupo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

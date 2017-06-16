@@ -24,6 +24,12 @@ namespace DexComanda.Cadastros.Produto
 
         private void btnAdicionarGrupo_Click(object sender, EventArgs e)
         {
+            if (txtNome.Text=="")
+            {
+                MessageBox.Show("Preencha o nome da familia");
+                txtNome.Focus();
+                return;
+            }
             Familia fami = new Familia()
             {
                 Nome = txtNome.Text,
@@ -75,6 +81,12 @@ namespace DexComanda.Cadastros.Produto
         }
         private void SalvarGrupo(object sender, EventArgs e)
         {
+            if (txtNome.Text == "")
+            {
+                MessageBox.Show("Preencha o nome da familia");
+                txtNome.Focus();
+                return;
+            }
             Familia fam = new Familia()
             {
                 Codigo = codigo,

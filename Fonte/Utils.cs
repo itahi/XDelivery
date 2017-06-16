@@ -816,7 +816,7 @@ namespace DexComanda
                 {
                     cep.Cep = iCEP.Replace("-", "");
                     cep.Bairro = resultado.bairro.ToUpper();
-                    cep.Cidade = resultado.cep.ToUpper();
+                    cep.Cidade = resultado.cidade.ToUpper();
                     cep.Estado = resultado.uf.ToUpper();
                     cep.Logradouro = resultado.end.ToUpper();
                     conexao.Insert("spAdicionarCep", cep);

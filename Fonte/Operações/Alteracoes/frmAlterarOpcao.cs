@@ -96,7 +96,7 @@ namespace DexComanda.Operações.Alteracoes
                         //};
                         AlteracaoMultiplaOpcao multiOpcao = new AlteracaoMultiplaOpcao()
                         {
-                            CodOpcao = int.Parse(GridView.Rows[i].Cells["CodOpcao"].Value.ToString()),
+                            CodOpcao = int.Parse(GridView.Rows[i].Cells["Codigo"].Value.ToString()),
                             OnlineSN = boolOnlineSN,
                             Preco = dblNovoPreco
                         };
