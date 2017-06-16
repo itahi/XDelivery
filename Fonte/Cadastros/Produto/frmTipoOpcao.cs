@@ -127,7 +127,6 @@ namespace DexComanda.Cadastros.Produto
             this.btnAdicionar.Click -= new System.EventHandler(this.SalvarRegistro);
 
             this.btnEditar.Text = "Editar";
-            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
         }
         private Boolean TipoSelecionado()
@@ -189,7 +188,6 @@ namespace DexComanda.Cadastros.Produto
             this.btnAdicionar.Click -= new System.EventHandler(this.SalvarRegistro);
 
             this.btnEditar.Text = "Editar [F11]";
-            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             //   this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
             Utils.LimpaForm(this);
             ListaTipoOpcao();
@@ -271,7 +269,6 @@ namespace DexComanda.Cadastros.Produto
 
                 this.btnEditar.Text = "Cancelar [ESC]";
                 this.btnEditar.Click += new System.EventHandler(this.Cancelar);
-                this.btnEditar.Click -= new System.EventHandler(this.btnEditar_Click);
             }
             catch (Exception erro)
             {

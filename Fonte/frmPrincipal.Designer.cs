@@ -115,11 +115,6 @@
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoAtivaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlPrincipal = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.lblValor = new System.Windows.Forms.Label();
-            this.lblQtd = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.chkGerenciaImpressao = new System.Windows.Forms.CheckBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -165,9 +160,11 @@
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.grpAndamentoPedido = new System.Windows.Forms.GroupBox();
+            this.btnEntrega = new System.Windows.Forms.Button();
+            this.btnCozinha = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pnlPedido.SuspendLayout();
             this.grpTipoPedido.SuspendLayout();
@@ -178,6 +175,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.clientesGridView)).BeginInit();
             this.pnlRetornaCliente.SuspendLayout();
             this.pnlDigitaTelefone.SuspendLayout();
+            this.grpAndamentoPedido.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -192,7 +190,7 @@
             this.contatoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1044, 29);
+            this.menuStrip1.Size = new System.Drawing.Size(1052, 29);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -864,7 +862,7 @@
             // pnlPrincipal
             // 
             this.pnlPrincipal.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.pnlPrincipal.Controls.Add(this.panel1);
+            this.pnlPrincipal.Controls.Add(this.grpAndamentoPedido);
             this.pnlPrincipal.Controls.Add(this.chkGerenciaImpressao);
             this.pnlPrincipal.Controls.Add(this.statusStrip1);
             this.pnlPrincipal.Controls.Add(this.pnlPedido);
@@ -875,66 +873,15 @@
             this.pnlPrincipal.ForeColor = System.Drawing.Color.Black;
             this.pnlPrincipal.Location = new System.Drawing.Point(0, 29);
             this.pnlPrincipal.Name = "pnlPrincipal";
-            this.pnlPrincipal.Size = new System.Drawing.Size(1044, 481);
+            this.pnlPrincipal.Size = new System.Drawing.Size(1052, 536);
             this.pnlPrincipal.TabIndex = 2;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.lblValor);
-            this.panel1.Controls.Add(this.lblQtd);
-            this.panel1.Controls.Add(this.label12);
-            this.panel1.Controls.Add(this.label13);
-            this.panel1.Location = new System.Drawing.Point(537, 455);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(499, 23);
-            this.panel1.TabIndex = 26;
-            // 
-            // lblValor
-            // 
-            this.lblValor.AutoSize = true;
-            this.lblValor.Location = new System.Drawing.Point(420, 2);
-            this.lblValor.Name = "lblValor";
-            this.lblValor.Size = new System.Drawing.Size(13, 13);
-            this.lblValor.TabIndex = 12;
-            this.lblValor.Text = "0";
-            this.lblValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblQtd
-            // 
-            this.lblQtd.AutoSize = true;
-            this.lblQtd.Location = new System.Drawing.Point(61, 3);
-            this.lblQtd.Name = "lblQtd";
-            this.lblQtd.Size = new System.Drawing.Size(13, 13);
-            this.lblQtd.TabIndex = 2;
-            this.lblQtd.Text = "0";
-            this.lblQtd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(363, 2);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(51, 13);
-            this.label12.TabIndex = 1;
-            this.label12.Text = "Total R$:";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(7, 2);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(48, 13);
-            this.label13.TabIndex = 0;
-            this.label13.Text = "Pedidos:";
             // 
             // chkGerenciaImpressao
             // 
             this.chkGerenciaImpressao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkGerenciaImpressao.AutoSize = true;
             this.chkGerenciaImpressao.ForeColor = System.Drawing.Color.Black;
-            this.chkGerenciaImpressao.Location = new System.Drawing.Point(204, 460);
+            this.chkGerenciaImpressao.Location = new System.Drawing.Point(204, 515);
             this.chkGerenciaImpressao.Name = "chkGerenciaImpressao";
             this.chkGerenciaImpressao.Size = new System.Drawing.Size(120, 17);
             this.chkGerenciaImpressao.TabIndex = 20;
@@ -949,7 +896,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.txtUsuarioLogado});
-            this.statusStrip1.Location = new System.Drawing.Point(8, 455);
+            this.statusStrip1.Location = new System.Drawing.Point(8, 510);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(159, 22);
             this.statusStrip1.TabIndex = 19;
@@ -984,7 +931,7 @@
             this.pnlPedido.Controls.Add(this.pedidosGridView);
             this.pnlPedido.Location = new System.Drawing.Point(531, 251);
             this.pnlPedido.Name = "pnlPedido";
-            this.pnlPedido.Size = new System.Drawing.Size(510, 201);
+            this.pnlPedido.Size = new System.Drawing.Size(518, 233);
             this.pnlPedido.TabIndex = 2;
             // 
             // grpTipoPedido
@@ -993,7 +940,7 @@
             this.grpTipoPedido.Controls.Add(this.label14);
             this.grpTipoPedido.Controls.Add(this.txtCodBusca);
             this.grpTipoPedido.Controls.Add(this.cbxStatusPedido);
-            this.grpTipoPedido.Location = new System.Drawing.Point(316, 3);
+            this.grpTipoPedido.Location = new System.Drawing.Point(324, 3);
             this.grpTipoPedido.Name = "grpTipoPedido";
             this.grpTipoPedido.Size = new System.Drawing.Size(183, 58);
             this.grpTipoPedido.TabIndex = 25;
@@ -1075,7 +1022,7 @@
             this.txtBuscaPedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
             this.txtBuscaPedido.Location = new System.Drawing.Point(145, 27);
             this.txtBuscaPedido.Name = "txtBuscaPedido";
-            this.txtBuscaPedido.Size = new System.Drawing.Size(165, 29);
+            this.txtBuscaPedido.Size = new System.Drawing.Size(173, 29);
             this.txtBuscaPedido.TabIndex = 16;
             this.toolTip1.SetToolTip(this.txtBuscaPedido, "Busca clientes na lista de pedidos");
             this.txtBuscaPedido.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BuscaPedidoCliente);
@@ -1090,11 +1037,11 @@
             this.pedidosGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.pedidosGridView.BackgroundColor = System.Drawing.Color.White;
             this.pedidosGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.pedidosGridView.Location = new System.Drawing.Point(4, 67);
+            this.pedidosGridView.Location = new System.Drawing.Point(4, 66);
             this.pedidosGridView.Name = "pedidosGridView";
             this.pedidosGridView.ReadOnly = true;
             this.pedidosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.pedidosGridView.Size = new System.Drawing.Size(499, 127);
+            this.pedidosGridView.Size = new System.Drawing.Size(507, 159);
             this.pedidosGridView.TabIndex = 8;
             this.pedidosGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MarcarPedidos);
             this.pedidosGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.EditarPedido);
@@ -1116,7 +1063,7 @@
             this.pnlBuscaProduto.Controls.Add(this.produtosGridView);
             this.pnlBuscaProduto.Location = new System.Drawing.Point(3, 251);
             this.pnlBuscaProduto.Name = "pnlBuscaProduto";
-            this.pnlBuscaProduto.Size = new System.Drawing.Size(522, 201);
+            this.pnlBuscaProduto.Size = new System.Drawing.Size(530, 256);
             this.pnlBuscaProduto.TabIndex = 1;
             // 
             // chkSEmFotos
@@ -1161,7 +1108,7 @@
             this.txtNomeProd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
             this.txtNomeProd.Location = new System.Drawing.Point(245, 31);
             this.txtNomeProd.Name = "txtNomeProd";
-            this.txtNomeProd.Size = new System.Drawing.Size(270, 29);
+            this.txtNomeProd.Size = new System.Drawing.Size(278, 29);
             this.txtNomeProd.TabIndex = 10;
             this.txtNomeProd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BuscaProduto);
             // 
@@ -1207,7 +1154,7 @@
             this.produtosGridView.Name = "produtosGridView";
             this.produtosGridView.ReadOnly = true;
             this.produtosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.produtosGridView.Size = new System.Drawing.Size(515, 127);
+            this.produtosGridView.Size = new System.Drawing.Size(515, 182);
             this.produtosGridView.TabIndex = 7;
             this.produtosGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.produtosGridView_CellClick);
             this.produtosGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.produtosGridView_CellMouseDoubleClick);
@@ -1225,7 +1172,7 @@
             this.pnlBuscaCliente.Controls.Add(this.clientesGridView);
             this.pnlBuscaCliente.Location = new System.Drawing.Point(531, 3);
             this.pnlBuscaCliente.Name = "pnlBuscaCliente";
-            this.pnlBuscaCliente.Size = new System.Drawing.Size(510, 240);
+            this.pnlBuscaCliente.Size = new System.Drawing.Size(518, 295);
             this.pnlBuscaCliente.TabIndex = 1;
             // 
             // label10
@@ -1281,7 +1228,7 @@
             this.clientesGridView.Name = "clientesGridView";
             this.clientesGridView.ReadOnly = true;
             this.clientesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.clientesGridView.Size = new System.Drawing.Size(499, 193);
+            this.clientesGridView.Size = new System.Drawing.Size(507, 193);
             this.clientesGridView.TabIndex = 11;
             this.clientesGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.clientesGridView_CellContentClick);
             this.clientesGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.EditarCliente);
@@ -1477,7 +1424,7 @@
             this.lblCaixa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCaixa.ForeColor = System.Drawing.Color.White;
             this.lblCaixa.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblCaixa.Location = new System.Drawing.Point(913, 6);
+            this.lblCaixa.Location = new System.Drawing.Point(921, 6);
             this.lblCaixa.Name = "lblCaixa";
             this.lblCaixa.Size = new System.Drawing.Size(128, 20);
             this.lblCaixa.TabIndex = 9;
@@ -1489,11 +1436,51 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
+            // grpAndamentoPedido
+            // 
+            this.grpAndamentoPedido.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpAndamentoPedido.Controls.Add(this.btnCozinha);
+            this.grpAndamentoPedido.Controls.Add(this.btnEntrega);
+            this.grpAndamentoPedido.Location = new System.Drawing.Point(537, 484);
+            this.grpAndamentoPedido.Name = "grpAndamentoPedido";
+            this.grpAndamentoPedido.Size = new System.Drawing.Size(507, 44);
+            this.grpAndamentoPedido.TabIndex = 21;
+            this.grpAndamentoPedido.TabStop = false;
+            this.grpAndamentoPedido.Text = "[Andamento Pedido]";
+            // 
+            // btnEntrega
+            // 
+            this.btnEntrega.Image = ((System.Drawing.Image)(resources.GetObject("btnEntrega.Image")));
+            this.btnEntrega.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEntrega.Location = new System.Drawing.Point(135, 15);
+            this.btnEntrega.Name = "btnEntrega";
+            this.btnEntrega.Size = new System.Drawing.Size(98, 27);
+            this.btnEntrega.TabIndex = 0;
+            this.btnEntrega.Text = "Na Entrega";
+            this.toolTip1.SetToolTip(this.btnEntrega, "Pedido marcado na tela mudarão o status para Entrega");
+            this.btnEntrega.UseVisualStyleBackColor = true;
+            this.btnEntrega.Click += new System.EventHandler(this.MudaStatusPraEntrega);
+            // 
+            // btnCozinha
+            // 
+            this.btnCozinha.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCozinha.Image = ((System.Drawing.Image)(resources.GetObject("btnCozinha.Image")));
+            this.btnCozinha.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCozinha.Location = new System.Drawing.Point(245, 15);
+            this.btnCozinha.Name = "btnCozinha";
+            this.btnCozinha.Size = new System.Drawing.Size(98, 27);
+            this.btnCozinha.TabIndex = 1;
+            this.btnCozinha.Text = "Na Cozinha";
+            this.toolTip1.SetToolTip(this.btnCozinha, "Pedido marcado na tela mudarão o status para Entrega");
+            this.btnCozinha.UseVisualStyleBackColor = true;
+            this.btnCozinha.Click += new System.EventHandler(this.MudaStatusCozinha);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1044, 510);
+            this.ClientSize = new System.Drawing.Size(1052, 565);
             this.Controls.Add(this.lblCaixa);
             this.Controls.Add(this.pnlPrincipal);
             this.Controls.Add(this.menuStrip1);
@@ -1511,8 +1498,6 @@
             this.menuStrip1.PerformLayout();
             this.pnlPrincipal.ResumeLayout(false);
             this.pnlPrincipal.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.pnlPedido.ResumeLayout(false);
@@ -1529,6 +1514,7 @@
             this.pnlRetornaCliente.ResumeLayout(false);
             this.pnlDigitaTelefone.ResumeLayout(false);
             this.pnlDigitaTelefone.PerformLayout();
+            this.grpAndamentoPedido.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1635,11 +1621,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Timer AtualizaGrid;
         private System.Windows.Forms.CheckBox chkGerenciaImpressao;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label lblValor;
-        private System.Windows.Forms.Label lblQtd;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ToolStripMenuItem familiaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grupoToolStripMenuItem;
         private System.Windows.Forms.CheckBox chkSEmFotos;
@@ -1671,5 +1652,8 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ToolStripMenuItem produtoToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem insumoToolStripMenuItem;
+        private System.Windows.Forms.GroupBox grpAndamentoPedido;
+        private System.Windows.Forms.Button btnCozinha;
+        private System.Windows.Forms.Button btnEntrega;
     }
 }
