@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInformaMotoboy));
             this.cbxListaMotoboy = new System.Windows.Forms.ComboBox();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // cbxListaMotoboy
@@ -42,6 +44,7 @@
             this.cbxListaMotoboy.Name = "cbxListaMotoboy";
             this.cbxListaMotoboy.Size = new System.Drawing.Size(203, 21);
             this.cbxListaMotoboy.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.cbxListaMotoboy, "Informe o entregador");
             // 
             // btnSalvar
             // 
@@ -66,7 +69,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(242, 83);
+            this.ClientSize = new System.Drawing.Size(260, 83);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.cbxListaMotoboy);
@@ -74,7 +77,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmInformaMotoboy";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = " [XSistemas] Moto Boy";
+            this.Text = "[xSistemas] Entregador";
             this.Load += new System.EventHandler(this.frmInformaMotoboy_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -86,5 +89,6 @@
         private System.Windows.Forms.ComboBox cbxListaMotoboy;
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

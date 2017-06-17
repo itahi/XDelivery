@@ -115,6 +115,9 @@
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoAtivaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlPrincipal = new System.Windows.Forms.Panel();
+            this.grpAndamentoPedido = new System.Windows.Forms.GroupBox();
+            this.btnCozinha = new System.Windows.Forms.Button();
+            this.btnEntrega = new System.Windows.Forms.Button();
             this.chkGerenciaImpressao = new System.Windows.Forms.CheckBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -160,11 +163,9 @@
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.grpAndamentoPedido = new System.Windows.Forms.GroupBox();
-            this.btnEntrega = new System.Windows.Forms.Button();
-            this.btnCozinha = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
+            this.grpAndamentoPedido.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pnlPedido.SuspendLayout();
             this.grpTipoPedido.SuspendLayout();
@@ -175,7 +176,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.clientesGridView)).BeginInit();
             this.pnlRetornaCliente.SuspendLayout();
             this.pnlDigitaTelefone.SuspendLayout();
-            this.grpAndamentoPedido.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -876,6 +876,46 @@
             this.pnlPrincipal.Size = new System.Drawing.Size(1052, 536);
             this.pnlPrincipal.TabIndex = 2;
             // 
+            // grpAndamentoPedido
+            // 
+            this.grpAndamentoPedido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpAndamentoPedido.Controls.Add(this.btnCozinha);
+            this.grpAndamentoPedido.Controls.Add(this.btnEntrega);
+            this.grpAndamentoPedido.Location = new System.Drawing.Point(537, 484);
+            this.grpAndamentoPedido.Name = "grpAndamentoPedido";
+            this.grpAndamentoPedido.Size = new System.Drawing.Size(512, 44);
+            this.grpAndamentoPedido.TabIndex = 21;
+            this.grpAndamentoPedido.TabStop = false;
+            this.grpAndamentoPedido.Text = "[Andamento Pedido]";
+            // 
+            // btnCozinha
+            // 
+            this.btnCozinha.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.btnCozinha.Image = ((System.Drawing.Image)(resources.GetObject("btnCozinha.Image")));
+            this.btnCozinha.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCozinha.Location = new System.Drawing.Point(302, 7);
+            this.btnCozinha.Name = "btnCozinha";
+            this.btnCozinha.Size = new System.Drawing.Size(98, 31);
+            this.btnCozinha.TabIndex = 1;
+            this.btnCozinha.Text = "Na Cozinha";
+            this.toolTip1.SetToolTip(this.btnCozinha, "Pedido marcado na tela mudarão o status para Entrega");
+            this.btnCozinha.UseVisualStyleBackColor = true;
+            this.btnCozinha.Click += new System.EventHandler(this.MudaStatusCozinha);
+            // 
+            // btnEntrega
+            // 
+            this.btnEntrega.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.btnEntrega.Image = ((System.Drawing.Image)(resources.GetObject("btnEntrega.Image")));
+            this.btnEntrega.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEntrega.Location = new System.Drawing.Point(163, 7);
+            this.btnEntrega.Name = "btnEntrega";
+            this.btnEntrega.Size = new System.Drawing.Size(98, 31);
+            this.btnEntrega.TabIndex = 0;
+            this.btnEntrega.Text = "Na Entrega";
+            this.toolTip1.SetToolTip(this.btnEntrega, "Pedido marcado na tela mudarão o status para Entrega");
+            this.btnEntrega.UseVisualStyleBackColor = true;
+            this.btnEntrega.Click += new System.EventHandler(this.MudaStatusPraEntrega);
+            // 
             // chkGerenciaImpressao
             // 
             this.chkGerenciaImpressao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -1436,46 +1476,6 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // grpAndamentoPedido
-            // 
-            this.grpAndamentoPedido.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpAndamentoPedido.Controls.Add(this.btnCozinha);
-            this.grpAndamentoPedido.Controls.Add(this.btnEntrega);
-            this.grpAndamentoPedido.Location = new System.Drawing.Point(537, 484);
-            this.grpAndamentoPedido.Name = "grpAndamentoPedido";
-            this.grpAndamentoPedido.Size = new System.Drawing.Size(507, 44);
-            this.grpAndamentoPedido.TabIndex = 21;
-            this.grpAndamentoPedido.TabStop = false;
-            this.grpAndamentoPedido.Text = "[Andamento Pedido]";
-            // 
-            // btnEntrega
-            // 
-            this.btnEntrega.Image = ((System.Drawing.Image)(resources.GetObject("btnEntrega.Image")));
-            this.btnEntrega.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEntrega.Location = new System.Drawing.Point(135, 15);
-            this.btnEntrega.Name = "btnEntrega";
-            this.btnEntrega.Size = new System.Drawing.Size(98, 27);
-            this.btnEntrega.TabIndex = 0;
-            this.btnEntrega.Text = "Na Entrega";
-            this.toolTip1.SetToolTip(this.btnEntrega, "Pedido marcado na tela mudarão o status para Entrega");
-            this.btnEntrega.UseVisualStyleBackColor = true;
-            this.btnEntrega.Click += new System.EventHandler(this.MudaStatusPraEntrega);
-            // 
-            // btnCozinha
-            // 
-            this.btnCozinha.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCozinha.Image = ((System.Drawing.Image)(resources.GetObject("btnCozinha.Image")));
-            this.btnCozinha.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCozinha.Location = new System.Drawing.Point(245, 15);
-            this.btnCozinha.Name = "btnCozinha";
-            this.btnCozinha.Size = new System.Drawing.Size(98, 27);
-            this.btnCozinha.TabIndex = 1;
-            this.btnCozinha.Text = "Na Cozinha";
-            this.toolTip1.SetToolTip(this.btnCozinha, "Pedido marcado na tela mudarão o status para Entrega");
-            this.btnCozinha.UseVisualStyleBackColor = true;
-            this.btnCozinha.Click += new System.EventHandler(this.MudaStatusCozinha);
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1498,6 +1498,7 @@
             this.menuStrip1.PerformLayout();
             this.pnlPrincipal.ResumeLayout(false);
             this.pnlPrincipal.PerformLayout();
+            this.grpAndamentoPedido.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.pnlPedido.ResumeLayout(false);
@@ -1514,7 +1515,6 @@
             this.pnlRetornaCliente.ResumeLayout(false);
             this.pnlDigitaTelefone.ResumeLayout(false);
             this.pnlDigitaTelefone.PerformLayout();
-            this.grpAndamentoPedido.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

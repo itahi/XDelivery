@@ -882,7 +882,6 @@ namespace DexComanda
                     if (CodPedidoWS > 0)
                     {
                         AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoConcluido, intCodPessoa);
-                        //MessageBox.Show("Atualização realizada com sucesso, pedido entregue");
                     }
 
                     iCodMesa = dsPedido.Tables[0].Rows[0].Field<int>("CodigoMesa");
@@ -2256,6 +2255,11 @@ namespace DexComanda
                 //        return;
                 //    }
 
+                if (pedidosGridView.SelectedRows.Count == 0)
+                {
+                    return;
+                }
+
                 int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
                 CodPedidoWS = VerificaPedidoOnline(intCodPedido);
 
@@ -2284,6 +2288,10 @@ namespace DexComanda
         {
             try
             {
+                if (pedidosGridView.SelectedRows.Count==0)
+                {
+                    return;
+                }
                 int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
                 CodPedidoWS = VerificaPedidoOnline(intCodPedido);
 

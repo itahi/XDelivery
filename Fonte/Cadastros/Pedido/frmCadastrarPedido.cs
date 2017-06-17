@@ -1178,7 +1178,7 @@ namespace DexComanda
                             }
 
                             // Validar o Desconto Máximo Por Usuario
-                            if (txtDesconto.Text != "0,00" || txtDesconto.Text != "")
+                            if (decimal.Parse(txtDesconto.Text)>0)
                             {
                                 if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "DescontoPedidoSN"))
                                 {
