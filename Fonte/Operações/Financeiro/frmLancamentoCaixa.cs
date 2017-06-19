@@ -24,7 +24,7 @@ namespace DexComanda.Cadastros
         private void frmLancamentoCaixa_Load(object sender, EventArgs e)
         {
             cbxTurno.SelectedIndex = 0;
-            DataSet dsCaixas = con.SelectAll("Caixa", "spObterCaixaAberto");
+            DataSet dsCaixas = con.SelectAll("Caixa", "spObterCaixa");
             cbxCaixas.DataSource = dsCaixas.Tables["Caixa"];
             cbxCaixas.DisplayMember = "Numero";
             cbxCaixas.ValueMember = "Codigo";
@@ -79,13 +79,14 @@ namespace DexComanda.Cadastros
                 {
                     CaixaMovimento cxMovimento = new CaixaMovimento()
                     {
-                        CodCaixa = intNumCaixa,
+                        //CodCaixa = intNumCaixa,
                         CodFormaPagamento = int.Parse(cbxFormaPagamento.SelectedValue.ToString()),
                         Data = dtMovimento.Value,
                         CodUser = Sessions.retunrUsuario.Codigo,
                         Historico = txtDescricao.Text,
                         NumeroDocumento = txtDocumento.Text,
-                        Turno = cbxTurno.Text
+                        Turno = cbxTurno.Text,
+                       // Valor = decimal.Parse(txtValor.Text)
                     };
                     if (intNumCaixa.ToString() == "" || txtValor.Text == "")
                     {
@@ -96,6 +97,7 @@ namespace DexComanda.Cadastros
                     {
                         cxMovimento.Tipo = 'E';
                         strTipoMovimento = "de entrada";
+                        cxMovimento.Valor = decimal.Parse(txtValor.Text);
                     }
                     else if (rbSaida.Checked)
                     {
@@ -148,16 +150,6 @@ namespace DexComanda.Cadastros
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
-
-        }
-
-        private void rbSaida_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
         }
 

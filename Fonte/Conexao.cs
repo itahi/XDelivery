@@ -464,16 +464,27 @@ namespace DexComanda
         {
             string iSqlConsulta = "select top 1 * from Caixa " +
                                    " where Numero=@Numero and " +
-                                   " Turno=@Turno and Data<@Data and " +
-                                   " HorarioFechamento>@HorarioFechamento" +
+                                   " Turno=@Turno and Data=@Data " +
+                                   " and Estado=0"+
+                                  // " HorarioFechamento>@HorarioFechamento" +
                                    " order by Codigo desc";
             command = new SqlCommand(iSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@Numero", iCodCaixa);
             command.Parameters.AddWithValue("@Turno", iTurno);
-            command.Parameters.AddWithValue("@Data", DateTime.Now);
-            command.Parameters.AddWithValue("@HorarioFechamento", DateTime.Now);
+            command.Parameters.AddWithValue("@Data", DateTime.Now.ToShortDateString());
+           // command.Parameters.AddWithValue("@HorarioFechamento", DateTime.Now);
 
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Caixa");
+            return ds;
+        }
+        public DataSet CaixaAbertoAnterior(string iTurno)
+        {
+            command = new SqlCommand("spCaixaAbertoAnterior", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Turno", iTurno);
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, "Caixa");

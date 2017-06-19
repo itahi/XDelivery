@@ -39,7 +39,6 @@ namespace DexComanda.Operações.Financeiro
 
                 txtDtAbertura.Text = dRow.ItemArray.GetValue(1).ToString();
                 txtVlrAbertura.Text = dRow.ItemArray.GetValue(4).ToString();
-                txtUAbertura.Text = dRow.ItemArray.GetValue(7).ToString();
 
                 txtUFechamento.Text = Sessions.retunrUsuario.Nome;
                 // txtVlrAbertura.Text  
@@ -52,8 +51,6 @@ namespace DexComanda.Operações.Financeiro
             decimal vlrEntrada = 0.00M;
             decimal vlrSaida = 0.00M;
             DataSet dsMovimento = con.SelectCaixaFechamento(iDataFiltro + " 00:00:00", iDataFiltro + " 23:59:59", cbxCaixas.Text, "CaixaMovimento");
-
-           
             if (dsMovimento.Tables[0].Rows.Count > 0)
             {
                 FechamentosGrid.DataSource = null;
@@ -63,7 +60,6 @@ namespace DexComanda.Operações.Financeiro
                 FechamentosGrid.Columns["Total Somado"].Visible = false;
                 for (int i = 0; i < FechamentosGrid.Rows.Count; i++)
                 {
-                    
                     if (FechamentosGrid.Rows[i].Cells["Tipo Movimento"].Value.ToString() == "Entradas")
                     {
                         vlrEntrada = vlrEntrada + decimal.Parse(FechamentosGrid.Rows[i].Cells["Total Somado"].Value.ToString());
@@ -74,18 +70,15 @@ namespace DexComanda.Operações.Financeiro
                     }
                 }
 
-
                 vlrValorTotal = vlrEntrada - vlrSaida;
-
                 if (!FechamentosGrid.Columns.Contains("ValorInformado"))
                 {
                     FechamentosGrid.Columns.Add("ValorInformado", "ValorInformado");
-                    
                     FechamentosGrid.Refresh();
-
                 }
 
                 con.Close();
+                
             }
 
         }

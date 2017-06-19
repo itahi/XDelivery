@@ -41,8 +41,6 @@
             this.txtVlrAbertura = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtUFechamento = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtUAbertura = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtDtAbertura = new System.Windows.Forms.TextBox();
@@ -88,8 +86,6 @@
             this.groupBox3.Controls.Add(this.txtVlrAbertura);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.txtUFechamento);
-            this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Controls.Add(this.txtUAbertura);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.txtDtAbertura);
@@ -151,7 +147,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(330, 9);
+            this.label10.Location = new System.Drawing.Point(214, 11);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(65, 13);
             this.label10.TabIndex = 20;
@@ -160,7 +156,7 @@
             // txtVlrAbertura
             // 
             this.txtVlrAbertura.Enabled = false;
-            this.txtVlrAbertura.Location = new System.Drawing.Point(333, 26);
+            this.txtVlrAbertura.Location = new System.Drawing.Point(217, 27);
             this.txtVlrAbertura.Name = "txtVlrAbertura";
             this.txtVlrAbertura.Size = new System.Drawing.Size(86, 20);
             this.txtVlrAbertura.TabIndex = 19;
@@ -182,23 +178,6 @@
             this.txtUFechamento.Size = new System.Drawing.Size(86, 20);
             this.txtUFechamento.TabIndex = 17;
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(91, 10);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(61, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "U. Abertura";
-            // 
-            // txtUAbertura
-            // 
-            this.txtUAbertura.Enabled = false;
-            this.txtUAbertura.Location = new System.Drawing.Point(94, 27);
-            this.txtUAbertura.Name = "txtUAbertura";
-            this.txtUAbertura.Size = new System.Drawing.Size(86, 20);
-            this.txtUAbertura.TabIndex = 15;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -211,7 +190,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(208, 9);
+            this.label6.Location = new System.Drawing.Point(91, 11);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(64, 13);
             this.label6.TabIndex = 12;
@@ -220,7 +199,7 @@
             // txtDtAbertura
             // 
             this.txtDtAbertura.Enabled = false;
-            this.txtDtAbertura.Location = new System.Drawing.Point(211, 26);
+            this.txtDtAbertura.Location = new System.Drawing.Point(94, 26);
             this.txtDtAbertura.Name = "txtDtAbertura";
             this.txtDtAbertura.Size = new System.Drawing.Size(86, 20);
             this.txtDtAbertura.TabIndex = 11;
@@ -293,8 +272,6 @@
         private System.Windows.Forms.TextBox txtVlrAbertura;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtUFechamento;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtUAbertura;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtDtAbertura;

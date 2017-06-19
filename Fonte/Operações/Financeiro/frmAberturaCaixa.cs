@@ -15,6 +15,7 @@ namespace DexComanda.Operações.Financeiro
     {
         private Conexao con;
         private int CodUser;
+
         public frmAberturaCaixa()
         {
             con = new Conexao();
@@ -33,7 +34,6 @@ namespace DexComanda.Operações.Financeiro
             cbxCaixas.DataSource = dsCaixas.Tables["CaixaCadastro"];
             cbxCaixas.DisplayMember = "Numero";
             cbxCaixas.ValueMember = "Codigo";
-
             cbxFuncionario.Text = Sessions.retunrUsuario.Nome;
         }
 
@@ -41,27 +41,17 @@ namespace DexComanda.Operações.Financeiro
         {
             try
             {
-                DateTime dtFechamento = horafechamento.Value;
-                if (horafechamento.Value.TimeOfDay >= TimeSpan.Parse("00:00:00"))
-                {
-                    horafechamento.Value.AddDays(1);
-                    dtFechamento = horafechamento.Value.AddDays(1);
-                }
-                //if (horafechamento.Value.TimeOfDay<=DateTime.Now.TimeOfDay)
-                //{
-                //    MessageBox.Show("Horário Fechamento não pode ser igual ou menor a horario atual");
-                //    return;
-                //}
-                if (cbxTurno.Text=="")
+                if (cbxTurno.Text == "")
                 {
                     MessageBox.Show("Selecione o turno que deseja abrir");
+                    cbxTurno.Focus();
                     return;
                 }
 
                 DataSet dsCaixa = con.RetornaCaixaPorTurno(int.Parse(cbxCaixas.Text), cbxTurno.Text, Convert.ToDateTime(dtAbertura.Value.ToShortDateString()));
-                if (dsCaixa.Tables[0].Rows.Count>0)
+                if (dsCaixa.Tables[0].Rows.Count > 0)
                 {
-                    if (Boolean.Parse(dsCaixa.Tables[0].Rows[0].ItemArray.GetValue(7).ToString())==false)
+                    if (Boolean.Parse(dsCaixa.Tables[0].Rows[0].ItemArray.GetValue(7).ToString()) == false)
                     {
                         MessageBox.Show(Bibliotecas.cCaixaAbertoTurno);
                         return;
@@ -79,20 +69,19 @@ namespace DexComanda.Operações.Financeiro
                     {
                         Data = dtAbertura.Value,
                         Estado = false /*Caixa Aber*/,
-                        Historico = "Abertura Inicial",
+                        Historico = "Abertura Caixa",
                         Numero = cbxCaixas.Text,
                         Turno = cbxTurno.Text.ToString(),
                         ValorAbertura = decimal.Parse(txtValor.Text),
-                        HorarioFechamento = dtFechamento
                     };
-                
+
                     if (cbxFuncionario.Text != "")
                     {
                         caixa.CodUsuario = Sessions.retunrUsuario.Codigo;
 
                         CaixaMovimento cxMovi = new CaixaMovimento()
                         {
-                            CodCaixa = int.Parse(caixa.Numero),
+                            //CodCaixa = int.Parse(caixa.Numero),
                             CodFormaPagamento = 1,
                             Data = caixa.Data,
                             Historico = "Abertura de Caixa",
@@ -106,24 +95,21 @@ namespace DexComanda.Operações.Financeiro
                         // Lança movimento no Caixa de abertura
                         con.Insert("spAbrirCaixa", caixa);
                         con.Insert("spInserirMovimentoCaixa", cxMovi);
-
-                        con.LimpaTabela("Produto_Estoque", "spLimparEstoque");
+                        // con.LimpaTabela("Produto_Estoque", "spLimparEstoque");
                         MessageBox.Show("Caixa aberto", "[xSistemas] Aviso");
-                        //Utils.Restart();
                         this.Close();
                     }
                     else
                     {
                         MessageBox.Show("Usuario não selecionado", "[xSistemas] Aviso");
+                        cbxFuncionario.Focus();
                     }
 
                 }
             }
             catch (Exception erro)
             {
-
-
-                MessageBox.Show(erro.Message);
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
         }

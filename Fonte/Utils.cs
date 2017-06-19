@@ -93,7 +93,7 @@ namespace DexComanda
                     {
                         MessageBox.Show("Usuário o senha incorretos");
                         Logado = false;
-
+                        
                     }
                     else if (hashSenha == dsUsuario.Tables[0].Rows[0].Field<string>("Senha").ToString())
                     {
@@ -125,7 +125,7 @@ namespace DexComanda
                     }
                     else
                     {
-                        MessageBox.Show("Usuário ou Senha incorretos.", "[XSistemas] Aviso");
+                        MessageBox.Show("Usuário ou Senha incorretos.", "[xSistemas] Aviso");
                         Logado = false;
                     }
                 }
@@ -2318,7 +2318,7 @@ namespace DexComanda
         {
             caixa = new Models.CaixaMovimento()
             {
-                CodCaixa = caixa.CodCaixa,
+                //CodCaixa = caixa.CodCaixa,
                 CodFormaPagamento = caixa.CodFormaPagamento,
                 Data = caixa.Data,
                 Historico = caixa.Historico,
@@ -2336,7 +2336,7 @@ namespace DexComanda
 
 
         }
-
+        
         public static bool CaixaAberto(DateTime iDataRegistro, int iNumero, string iTurno)
         {
             bool iRetorno = false;
@@ -2345,6 +2345,13 @@ namespace DexComanda
             conexao = new Conexao();
             try
             {
+                if (conexao.CaixaAbertoAnterior(iTurno).Tables[0].Rows.Count>0)
+                {
+                    MessageBox.Show("O Caixa do dia anterior ainda esta aberto, favor execute o fechamento");
+                    frmCaixaFechamento frm = new frmCaixaFechamento();
+                    frm.ShowDialog();
+                    CaixaAberto(iDataRegistro, iNumero, iTurno);
+                }
                 dsCaixa = conexao.RetornaCaixaPorTurno(iNumero, iTurno, DateTime.Parse(iDataRegistro.ToShortDateString()));
                 if (dsCaixa.Tables[0].Rows.Count > 0)
                 {
@@ -2352,7 +2359,6 @@ namespace DexComanda
                     iRetorno = dRow.ItemArray.GetValue(7).ToString() == Convert.ToString(false);
                 }
                 else
-
                 {
                     if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus && Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai && Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday && Sessions.returnEmpresa.CNPJ != Bibliotecas.cCarangoVix)
                     {

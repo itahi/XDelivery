@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAberturaCaixa));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.horafechamento = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
             this.cbxTurno = new System.Windows.Forms.ComboBox();
             this.cbxCaixas = new System.Windows.Forms.ComboBox();
@@ -59,8 +57,6 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.horafechamento);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.cbxTurno);
             this.panel1.Controls.Add(this.cbxCaixas);
@@ -69,29 +65,8 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(5, 6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(283, 104);
+            this.panel1.Size = new System.Drawing.Size(283, 79);
             this.panel1.TabIndex = 0;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(7, 81);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(75, 20);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Fecham.";
-            // 
-            // horafechamento
-            // 
-            this.horafechamento.CustomFormat = "";
-            this.horafechamento.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.horafechamento.Location = new System.Drawing.Point(94, 79);
-            this.horafechamento.Name = "horafechamento";
-            this.horafechamento.Size = new System.Drawing.Size(89, 20);
-            this.horafechamento.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.horafechamento, "Informe a hora que o caixa deve fechar");
             // 
             // label6
             // 
@@ -162,7 +137,7 @@
             // 
             this.panel2.Controls.Add(this.cbxFuncionario);
             this.panel2.Controls.Add(this.label2);
-            this.panel2.Location = new System.Drawing.Point(5, 116);
+            this.panel2.Location = new System.Drawing.Point(5, 91);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(283, 49);
             this.panel2.TabIndex = 1;
@@ -195,7 +170,7 @@
             // 
             this.panel3.Controls.Add(this.txtValor);
             this.panel3.Controls.Add(this.label3);
-            this.panel3.Location = new System.Drawing.Point(5, 169);
+            this.panel3.Location = new System.Drawing.Point(3, 146);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(283, 49);
             this.panel3.TabIndex = 2;
@@ -223,7 +198,7 @@
             // 
             this.panel4.Controls.Add(this.txtSenha);
             this.panel4.Controls.Add(this.label4);
-            this.panel4.Location = new System.Drawing.Point(5, 223);
+            this.panel4.Location = new System.Drawing.Point(3, 201);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(283, 44);
             this.panel4.TabIndex = 3;
@@ -251,7 +226,7 @@
             // 
             this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
             this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalvar.Location = new System.Drawing.Point(66, 271);
+            this.btnSalvar.Location = new System.Drawing.Point(65, 251);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(76, 32);
             this.btnSalvar.TabIndex = 4;
@@ -264,7 +239,7 @@
             // 
             this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(148, 271);
+            this.btnCancelar.Location = new System.Drawing.Point(145, 251);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(86, 32);
             this.btnCancelar.TabIndex = 5;
@@ -276,7 +251,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(293, 307);
+            this.ClientSize = new System.Drawing.Size(293, 285);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.panel4);
@@ -287,7 +262,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmAberturaCaixa";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "[XDelivery] Abertuda Caixa";
+            this.Text = "[xSistemas] Abertuda Caixa";
             this.Load += new System.EventHandler(this.frmAberturaCaixa_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -321,8 +296,6 @@
         private System.Windows.Forms.ComboBox cbxCaixas;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbxTurno;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DateTimePicker horafechamento;
         private System.Windows.Forms.ToolTip toolTip1;
     }
 }

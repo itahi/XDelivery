@@ -58,10 +58,10 @@ namespace DexComanda
                     string strNomePC = Utils.RetornaNomePc();
                     
                     // Verifica se o Serviço do SQLSERVER está Ativo para inicia-lo
-                    if (strNomePC == iText[0].Replace("Data Source=", ""))
-                    {
+                    //if (strNomePC == iText[0].Replace("Data Source=", ""))
+                    //{
                         Utils.ServicoSQLATIVO(iText[0]);
-                    }
+                    //}
 
                     con = new Conexao();
 

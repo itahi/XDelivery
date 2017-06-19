@@ -15,8 +15,6 @@ namespace DexComanda
         private Pessoa cliente;
         private int codigoClienteParaAlterar;
         private DataSet endereco;
-        private string CidadePadrao;
-        private string EstadoPadrao;
         private DataRow RowsClientes;
         private int mCodRegiao;
         private int rowIndex;
@@ -27,7 +25,7 @@ namespace DexComanda
         {
             InitializeComponent();
             CarregaRegiao(0, cbxRegiao, txtTaxaEntrega);
-
+            txtNomeCliente.Focus();
             // ObterCidadePadrao();
             //ObterCidadePadrao();
         }

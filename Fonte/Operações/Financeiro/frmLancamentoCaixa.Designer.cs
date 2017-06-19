@@ -111,7 +111,6 @@
             this.cbxTurno.Name = "cbxTurno";
             this.cbxTurno.Size = new System.Drawing.Size(46, 21);
             this.cbxTurno.TabIndex = 3;
-            this.cbxTurno.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label8
             // 
@@ -194,7 +193,6 @@
             this.rbSaida.Text = "Saida";
             this.toolTip1.SetToolTip(this.rbSaida, "Use para solicitações de vale, compras de itens , pagamentos de freelancer");
             this.rbSaida.UseVisualStyleBackColor = true;
-            this.rbSaida.CheckedChanged += new System.EventHandler(this.rbSaida_CheckedChanged);
             // 
             // rbEntrada
             // 

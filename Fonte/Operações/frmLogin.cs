@@ -66,7 +66,7 @@ namespace DexComanda
             }
             else
             {
-                MessageBox.Show("Selecione o Caixa  e turno para entrar", "[XSistemas] Aviso");
+                MessageBox.Show("Selecione o Caixa  e turno para entrar", "[xSistemas] Aviso");
                 return;
             }
 

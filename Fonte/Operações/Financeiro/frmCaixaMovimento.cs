@@ -59,7 +59,7 @@ namespace DexComanda.Operações
                     }
 
                     report.SetParameterValue("@Turno", cbxTurno.Text);
-                    report.SetParameterValue("@CodCaixa", cbxNumCaixa.Text);
+                    //report.SetParameterValue("@CodCaixa", cbxNumCaixa.Text);
                     report.SetParameterValue("@DataI", dtInicioFiltro);
                     report.SetParameterValue("@DataF", dtFimFiltro);
                     report.SetParameterValue("@EntradaSaida", OperacaoMarcada());
@@ -92,7 +92,7 @@ namespace DexComanda.Operações
                     }
 
                     report.SetParameterValue("@Turno", cbxTurno.Text);
-                    report.SetParameterValue("@CodCaixa", cbxNumCaixa.Text);
+                   // report.SetParameterValue("@CodCaixa", cbxNumCaixa.Text);
                     report.SetParameterValue("@DataI", dtInicioFiltro);
                     report.SetParameterValue("@DataF", dtFimFiltro);
                     crystalReportViewer1.ReportSource = report;

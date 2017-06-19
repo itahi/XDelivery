@@ -9,7 +9,7 @@ namespace DexComanda.Models
    public class CaixaMovimento
     {
        public int Codigo { get; set; }
-       public int CodCaixa { get; set; }
+     //  public int CodCaixa { get; set; }
        public int CodUser { get; set; }
        public DateTime Data { get; set; }
        public string Historico { get; set; }

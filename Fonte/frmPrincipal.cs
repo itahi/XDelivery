@@ -69,7 +69,6 @@ namespace DexComanda
         private void ConsultarCliente(object sender, EventArgs e)
         {
             BuscarCliente(txbTelefoneCliente.Text);
-
         }
         private void ExecutaRepeticaoPedido(int iCodPessoa, int codEnde)
         {
@@ -127,17 +126,15 @@ namespace DexComanda
                         frmCadastroCliente frm = new frmCadastroCliente();
                         frm.txtTelefone.Text = telefone;
                         frm.ShowDialog();
+                        
                     }
                 }
                 else if ((pessoaTelefone.Tables["Pessoa"].Rows.Count == 1))
                 {
                     if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                     {
-
                         DataSet Pessoa = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", telefone);
                         DataRow dRow = Pessoa.Tables["Pessoa"].Rows[0];
-
-
                         int CodigoPessoa = int.Parse(dRow.ItemArray.GetValue(0).ToString());
                         // intCodEndereco =  Utils.MaisEnderecos(CodigoPessoa);
                         intCodEndereco = int.Parse(dRow.ItemArray.GetValue(16).ToString());
@@ -197,7 +194,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    MessageBox.Show("Caixa precisa estar aberto", "[XSistemas] Aviso");
+                    MessageBox.Show("Caixa precisa estar aberto", "[xSistemas] Aviso");
                 }
                 LimpaCampos();
             }
@@ -512,6 +509,10 @@ namespace DexComanda
         }
         private void MenuAuxiliar(object sender, MouseEventArgs e)
         {
+            if (produtosGridView.Rows.Count == 0)
+            {
+                return;
+            }
             DataGridView dgv = sender as DataGridView;
             if (e.Button == MouseButtons.Right)
             {
@@ -697,6 +698,10 @@ namespace DexComanda
 
         private void MenuAuxiliarPedido(object sender, MouseEventArgs e)
         {
+            if (pedidosGridView.Rows.Count == 0)
+            {
+                return;
+            }
             DataGridView dgv = sender as DataGridView;
             if (e.Button == MouseButtons.Right)
             {
@@ -1128,8 +1133,7 @@ namespace DexComanda
 
                 CaixaMovimento caixa = new CaixaMovimento()
                 {
-                    CodCaixa = Sessions.retunrUsuario.CaixaLogado,
-                    CodFormaPagamento = iFPagamento,
+                    CodFormaPagamento = iFPagamento,    
                     Data = DateTime.Now,
                     Historico = "Pedido " + iCodPedido,
                     NumeroDocumento = iCodPedido.ToString(),
@@ -1299,6 +1303,11 @@ namespace DexComanda
 
         private void MenuAuxiliarCliente(object sender, MouseEventArgs e)
         {
+            if (clientesGridView.Rows.Count==0)
+            {
+                return;
+            }
+
             try
             {
                 DataGridView dgv = sender as DataGridView;
