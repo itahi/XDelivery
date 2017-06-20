@@ -41,6 +41,7 @@ namespace DexComanda.Cadastros
         
         private void Adicionar(object sender, EventArgs e)
         {
+           
             if (cbxRegiao.SelectedIndex != -1 && txtCEP.Text != "")
             {
                 try
@@ -90,20 +91,7 @@ namespace DexComanda.Cadastros
 
         private void txtCEP_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                DataSet dsCEp = con.RetornaCEPporBairro(txtCEP.Text.Replace("-",""), false);
-                if (dsCEp.Tables[0].Rows.Count > 0)
-                {
-                    txtBairro.Text = con.RetornaCEPporBairro(txtCEP.Text.Replace("-",""), false).Tables[0].Rows[0].ItemArray.GetValue(1).ToString();
-                    btnAdicionar.Focus();
-                }
-                else
-                {
-                    MessageBox.Show("Registro não encontrado", "[xSistemas]");
-                }
-
-            }
+         
 
         }
 
@@ -167,6 +155,11 @@ namespace DexComanda.Cadastros
             string iCodSelecionado = cbxRegiao.SelectedValue.ToString();
             try
             {
+                if (cbxRegiao.Text=="" || txtCEP.Text=="" || txtBairro.Text=="")
+                {
+                    MessageBox.Show("Campos obrigatórios não preenchidos");
+                    return;
+                }
               
                 RegiaoEntrega_Bairros reg = new RegiaoEntrega_Bairros()
                 {
@@ -182,7 +175,6 @@ namespace DexComanda.Cadastros
                     MessageBox.Show("Esse cep já está vinculado a outra região");
                     return;
                 }
-
                 con.Update("spAlterarBairrosRegiao", reg);
                 con.AtualizaDataSincronismo("RegiaoEntrega_Bairros", reg.CodRegiao, "DataCadastro","CodRegiao");
                 Utils.ControlaEventos("Alterar", this.Name);
@@ -191,6 +183,15 @@ namespace DexComanda.Cadastros
                 txtCEP.Enabled = true;
                 txtBairro.Enabled = true;
                 ListaBairrosPorRegiao(reg.CodRegiao);
+
+                this.btnAdicionar.Text = "Adicionar";
+                this.btnAdicionar.Click += new System.EventHandler(this.Adicionar);
+                this.btnAdicionar.Click -= new System.EventHandler(this.Salvar);
+
+                this.btnEditar.Text = "Editar";
+                this.btnEditar.Click += new System.EventHandler(this.Editar);
+                this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+
             }
             catch (Exception erro)
             {
@@ -283,6 +284,73 @@ namespace DexComanda.Cadastros
         private void RegioesGridView_DoubleClick(object sender, EventArgs e)
         {
             Editar(sender, e);
+        }
+
+        private void txtCEP_TextChanged(object sender, EventArgs e)
+        {
+
+            if (txtCEP.Text.Length >= 8)
+            {
+                DataSet dsCEp = con.RetornaCEPporBairro(txtCEP.Text.Replace("-", ""), false);
+                if (dsCEp.Tables[0].Rows.Count > 0)
+                {
+                    txtBairro.Text = con.RetornaCEPporBairro(txtCEP.Text.Replace("-", ""), false).Tables[0].Rows[0].ItemArray.GetValue(1).ToString();
+                    btnAdicionar.Focus();
+                }
+                else
+                {
+                    // MessageBox.Show("Cep não encontrado");
+                    if (!con.IsConnected())
+                    {
+                        return;
+                    }
+                    pnConsultaCEp.Visible = true;
+                    CepUtil _cepCorreios = Utils.BuscaCEPOnline(txtCEP.Text);
+                    if (_cepCorreios != null)
+                    {
+                        txtBairro.Text = _cepCorreios.Bairro;
+                    }
+                    pnConsultaCEp.Visible = false;
+
+                    //  MessageBox.Show("Registro não encontrado", "[xSistemas]");
+                }
+
+            }
+        }
+
+        private void txtBairro_Leave(object sender, EventArgs e)
+        {
+            DataSet ds = con.RetornaCEPPorBairro(txtBairro.Text);
+            if (ds.Tables[0].Rows.Count == 0)
+            {
+                return;
+            }
+            txtCEP.Text = ds.Tables[0].Rows[0].Field<string>("Cep");
+        }
+
+        private void RetornaCEP(object sender, KeyEventArgs e)
+        {
+            AutoCompleteStringCollection lista = new AutoCompleteStringCollection();
+            if (txtBairro.Text.Length <= 3)
+            {
+                return;
+            }
+            DataSet dsBairros = con.ListaBairro();
+
+            for (int i = 0; i < dsBairros.Tables[0].Rows.Count; i++)
+            {
+                lista.Add(dsBairros.Tables[0].Rows[i].Field<string>("bairro"));
+            }
+            txtBairro.AutoCompleteCustomSource = lista;
+            if (e.KeyCode == Keys.Enter)
+            {
+                DataSet ds = con.RetornaCEPPorBairro(txtBairro.Text);
+                if (ds.Tables[0].Rows.Count == 0)
+                {
+                    return;
+                }
+                txtCEP.Text = ds.Tables[0].Rows[0].Field<string>("Cep");
+            }
         }
     }
 }

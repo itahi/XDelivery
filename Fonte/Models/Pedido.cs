@@ -11,7 +11,7 @@ namespace DexComanda.Models
         public int Codigo { get; set; }
         public int CodPessoa { get; set; }
         public decimal TotalPedido { get; set; }
-        public string TrocoPara { get; set; }
+        public decimal TrocoPara { get; set; }
         public string FormaPagamento { get; set; }
         public DateTime RealizadoEm { get; set; }
         public string Tipo { get; set; }
@@ -25,5 +25,7 @@ namespace DexComanda.Models
         public string HorarioEntrega { get; set; }
         public string Observacao { get; set; }
         public int CodEndereco { get; set; }
+        public string Senha { get; set; }
+        public Boolean PagoFidelidade { get; set; }
     }
 }

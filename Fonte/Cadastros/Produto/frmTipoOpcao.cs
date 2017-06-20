@@ -18,8 +18,8 @@ namespace DexComanda.Cadastros.Produto
         private int intCodopcaTipo;
         public frmTipoOpcao()
         {
-            con = new Conexao();
             InitializeComponent();
+            con = new Conexao();
         }
 
         private void frmTipoOpcao_Load(object sender, EventArgs e)
@@ -43,7 +43,7 @@ namespace DexComanda.Cadastros.Produto
                     {
                         iReturn = int.Parse(((System.Windows.Forms.RadioButton)ctrControl).Tag.ToString());
                     }
-                    
+
                 }
             }
             return iReturn;
@@ -67,7 +67,7 @@ namespace DexComanda.Cadastros.Produto
         {
             try
             {
-                if (!rbMultipla.Checked && !rbTexto.Checked && !rbUnica.Checked && (cbxOrdem.SelectedIndex<0))
+                if (!TipoSelecionado())
                 {
                     MessageBox.Show("Marque uma opção para continuar");
                     grpMaxMin.Focus();
@@ -88,7 +88,7 @@ namespace DexComanda.Cadastros.Produto
                     };
                     if (grpTipo.Enabled && rbMultipla.Checked)
                     {
-                        if (txtMax.Text=="" && txtMinimo.Text=="")
+                        if (txtMax.Text == "" && txtMinimo.Text == "")
                         {
                             MessageBox.Show("Campos obrigatórios não preenchidos");
                             txtMax.Focus();
@@ -99,11 +99,12 @@ namespace DexComanda.Cadastros.Produto
                             prodOp.MaximoOpcionais = int.Parse(txtMax.Text);
                             prodOp.MinimoOpcionais = int.Parse(txtMinimo.Text);
                         }
-                        
+
                     }
                     con.Insert("spAdicionarProduto_OpcaoTipo", prodOp);
                     ListaTipoOpcao();
-                    Utils.LimpaForm(this);                }
+                    Utils.LimpaForm(this);
+                }
             }
             catch (Exception erro)
             {
@@ -112,46 +113,6 @@ namespace DexComanda.Cadastros.Produto
             }
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                intCodopcaTipo = int.Parse(TipoOpcaoGrid.SelectedRows[rowIndex].Cells[0].Value.ToString());
-                DataSet ds = con.SelectRegistroPorCodigo("Produto_OpcaoTipo", "spObterProduto_OpcaoTipoPorCodigo", intCodopcaTipo);
-                if (ds.Tables["Produto_OpcaoTipo"].Rows.Count > 0)
-                {
-                    txtNome.Text = ds.Tables[0].Rows[0].Field<string>("Nome");
-                    cbxOrdem.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("OrdenExibicao"));
-                    chkAtivoSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("AtivoSN");
-                    chkOnlineSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("OnlineSN");
-                    int iTipo = int.Parse(ds.Tables[0].Rows[0].Field<string>("Tipo"));
-
-                    MarcaRadio(iTipo);
-                    if (grpMaxMin.Visible)
-                    {
-                        txtMax.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("MaximoOpcionais"));
-                        txtMinimo.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("MinimoOpcionais"));
-                    }
-               
-                }
-
-                this.btnAdicionar.Text = "Salvar [F12]";
-                this.btnAdicionar.Click += new System.EventHandler(this.SalvarRegistro);
-                this.btnAdicionar.Click -= new System.EventHandler(this.btnAdicionar_Click);
-
-                this.btnEditar.Text = "Cancelar [ESC]";
-                this.btnEditar.Click += new System.EventHandler(this.Cancelar);
-                this.btnEditar.Click -= new System.EventHandler(this.btnEditar_Click);
-            }
-            catch (Exception erro)
-            {
-
-                throw;
-            }
-           
-
-
-        }
         private void Cancelar(object sender, EventArgs e)
         {
 
@@ -166,12 +127,28 @@ namespace DexComanda.Cadastros.Produto
             this.btnAdicionar.Click -= new System.EventHandler(this.SalvarRegistro);
 
             this.btnEditar.Text = "Editar";
-            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+        }
+        private Boolean TipoSelecionado()
+        {
+            Boolean iReturn = false;
+            //Percorre o controle groupbox
+            foreach (Control control in grpTipo.Controls)
+            {
+                //Busca pelo controle radiobutton
+                if (object.ReferenceEquals(control.GetType(), typeof(System.Windows.Forms.RadioButton)))
+                {
+                    if( (((System.Windows.Forms.RadioButton)control).Checked))
+                    {
+                        iReturn=true;
+                    }
+                }
+            }
+            return iReturn;
         }
         private void SalvarRegistro(object sender, EventArgs e)
         {
-            if (!rbMultipla.Checked && !rbTexto.Checked && !rbUnica.Checked)
+            if (!TipoSelecionado())
             {
                 MessageBox.Show("Marque uma opção para continuar");
                 grpMaxMin.Focus();
@@ -205,16 +182,13 @@ namespace DexComanda.Cadastros.Produto
 
             }
             con.Update("spAlterarProduto_OpcaoTipo", prodOp);
-            
+            Utils.ControlaEventos("Alterar", this.Name);
+            this.btnAdicionar.Text = "Adicionar [F12]";
+            this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
+            this.btnAdicionar.Click -= new System.EventHandler(this.SalvarRegistro);
 
-                Utils.ControlaEventos("Alterar", this.Name);
-                this.btnAdicionar.Text = "Adicionar [F12]";
-                this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
-                this.btnAdicionar.Click -= new System.EventHandler(this.SalvarRegistro);
-
-                this.btnEditar.Text = "Editar [F11]";
-                this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
-             //   this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
+            this.btnEditar.Text = "Editar [F11]";
+            //   this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
             Utils.LimpaForm(this);
             ListaTipoOpcao();
 
@@ -227,7 +201,7 @@ namespace DexComanda.Cadastros.Produto
             {
                 if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))
                 {
-                    if (int.Parse(((System.Windows.Forms.RadioButton)ctrControl).Tag.ToString())== iTipo)
+                    if (int.Parse(((System.Windows.Forms.RadioButton)ctrControl).Tag.ToString()) == iTipo)
                     {
                         (((System.Windows.Forms.RadioButton)ctrControl).Checked) = true;
                         return;
@@ -247,6 +221,58 @@ namespace DexComanda.Cadastros.Produto
                 {
                     rowIndex = this.TipoOpcaoGrid.Rows[i].Index;
                 }
+            }
+        }
+
+        private void frmTipoOpcao_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12 && btnAdicionar.Text == "Adicionar [F12]")
+            {
+                btnAdicionar_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.F12 && btnAdicionar.Text == "Salvar [F12]")
+            {
+                SalvarRegistro(sender, e);
+            }
+            else if (e.KeyCode == Keys.F11 && btnEditar.Text == "Editar [F11]")
+            {
+                EditarRegistro(sender, e);
+            }
+        }
+
+        private void EditarRegistro(object sender, EventArgs e)
+        {
+            try
+            {
+                intCodopcaTipo = int.Parse(TipoOpcaoGrid.SelectedRows[rowIndex].Cells[0].Value.ToString());
+                DataSet ds = con.SelectRegistroPorCodigo("Produto_OpcaoTipo", "spObterProduto_OpcaoTipoPorCodigo", intCodopcaTipo);
+                if (ds.Tables["Produto_OpcaoTipo"].Rows.Count > 0)
+                {
+                    txtNome.Text = ds.Tables[0].Rows[0].Field<string>("Nome");
+                    cbxOrdem.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("OrdenExibicao"));
+                    chkAtivoSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("AtivoSN");
+                    chkOnlineSN.Checked = ds.Tables[0].Rows[0].Field<Boolean>("OnlineSN");
+                    int iTipo = int.Parse(ds.Tables[0].Rows[0].Field<string>("Tipo"));
+
+                    MarcaRadio(iTipo);
+                    if (grpMaxMin.Visible)
+                    {
+                        txtMax.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("MaximoOpcionais"));
+                        txtMinimo.Text = Convert.ToString(ds.Tables[0].Rows[0].Field<int>("MinimoOpcionais"));
+                    }
+
+                }
+
+                this.btnAdicionar.Text = "Salvar [F12]";
+                this.btnAdicionar.Click += new System.EventHandler(this.SalvarRegistro);
+                this.btnAdicionar.Click -= new System.EventHandler(this.btnAdicionar_Click);
+
+                this.btnEditar.Text = "Cancelar [ESC]";
+                this.btnEditar.Click += new System.EventHandler(this.Cancelar);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
     }

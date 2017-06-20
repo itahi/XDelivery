@@ -1,5 +1,6 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
+using DexComanda.Relatorios.Caixa;
 using DexComanda.Relatorios.Fechamentos.Novos;
 using System;
 using System.Collections.Generic;
@@ -24,22 +25,24 @@ namespace DexComanda.Operações
             InitializeComponent();
         }
 
-        private void ExecutaFiltro(object sender, EventArgs e)
-        {
 
-            string iRetorno = ""; ;
-            RelCaixaHistorico report;
-            report = new RelCaixaHistorico();
+
+        private void GerarReport()
+        {
             try
             {
-
-                TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
-                TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
-                ConnectionInfo crConnectionInfo = new ConnectionInfo();
-                Tables CrTables;
-
-                try
+                DateTime dtInicioFiltro = Convert.ToDateTime(dtInicio.Value.ToShortDateString() + " " + horaInicio.Value.ToShortTimeString());
+                DateTime dtFimFiltro = Convert.ToDateTime(dtFim.Value.ToShortDateString() + " " + horaFim.Value.ToShortTimeString());
+                if (!rbEntradaSaida.Checked)
                 {
+                    string iRetorno = ""; ;
+                    RelCaixaHistorico report;
+                    report = new RelCaixaHistorico();
+                    TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                    TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                    ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                    Tables CrTables;
+
                     string str = Directory.GetCurrentDirectory();
                     report.Load(Directory.GetCurrentDirectory() + @"\RelCaixaHistorico.rpt");
                     crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
@@ -56,34 +59,58 @@ namespace DexComanda.Operações
                     }
 
                     report.SetParameterValue("@Turno", cbxTurno.Text);
-                    report.SetParameterValue("@CodCaixa", cbxNumCaixa.Text);
-                    report.SetParameterValue("@DataI", dtInicio.Value);
-                    report.SetParameterValue("@DataF", dtFim.Value);
-                    report.SetParameterValue("@CodPagamento", cbxFPagamento.SelectedValue.ToString());
+                    //report.SetParameterValue("@CodCaixa", cbxNumCaixa.Text);
+                    report.SetParameterValue("@DataI", dtInicioFiltro);
+                    report.SetParameterValue("@DataF", dtFimFiltro);
                     report.SetParameterValue("@EntradaSaida", OperacaoMarcada());
-                    
                     crystalReportViewer1.ReportSource = report;
                     crystalReportViewer1.Refresh();
-
                 }
-                catch (Exception erro)
+                else
                 {
+                    string iRetorno = ""; ;
+                    RelCaixaHistorico2 report;
+                    report = new RelCaixaHistorico2();
+                    TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
+                    TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
+                    ConnectionInfo crConnectionInfo = new ConnectionInfo();
+                    Tables CrTables;
 
-                    MessageBox.Show("Erro na impressao :" + erro.Message);
+                    string str = Directory.GetCurrentDirectory();
+                    report.Load(Directory.GetCurrentDirectory() + @"\RelCaixaHistorico2.rpt");
+                    crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                    crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                    crConnectionInfo.UserID = "dex";
+                    crConnectionInfo.Password = "1234";
+
+                    CrTables = report.Database.Tables;
+                    foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                    {
+                        crtableLogoninfo = CrTable.LogOnInfo;
+                        crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                        CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                    }
+
+                    report.SetParameterValue("@Turno", cbxTurno.Text);
+                   // report.SetParameterValue("@CodCaixa", cbxNumCaixa.Text);
+                    report.SetParameterValue("@DataI", dtInicioFiltro);
+                    report.SetParameterValue("@DataF", dtFimFiltro);
+                    crystalReportViewer1.ReportSource = report;
+                    crystalReportViewer1.Refresh();
                 }
             }
-            finally
+            catch (Exception erro)
             {
-                report.Dispose();
 
+                throw;
             }
-
-            //
-           
-
-
-
+            
         }
+        private void ExecutaFiltro(object sender, EventArgs e)
+        {
+            GerarReport();
+        }
+
         //private void SomaValores()
         //{
         //    decimal vlrSaidas = 0.00M;
@@ -116,15 +143,15 @@ namespace DexComanda.Operações
             cbxNumCaixa.DisplayMember = "Numero";
             cbxNumCaixa.ValueMember = "Codigo";
 
-            cbxFPagamento.DataSource = con.SelectAll("FormaPagamento", "spObterFormaPagamento").Tables["FormaPagamento"];
-            cbxFPagamento.DisplayMember = "Descricao";
-            cbxFPagamento.ValueMember = "Codigo";
+            //cbxFPagamento.DataSource = con.SelectAll("FormaPagamento", "spObterFormaPagamento").Tables["FormaPagamento"];
+            //cbxFPagamento.DisplayMember = "Descricao";
+            //cbxFPagamento.ValueMember = "Codigo";
 
         }
 
         private void chkFPagamento_CheckedChanged(object sender, EventArgs e)
         {
-            cbxFPagamento.Enabled = !chkFPagamento.Checked;
+           // cbxFPagamento.Enabled = !chkFPagamento.Checked;
         }
 
         private void btnImprimir_Click(object sender, EventArgs e)
@@ -148,31 +175,40 @@ namespace DexComanda.Operações
                     }
                 }
             }
+            if (rbEntradaSaida.Checked)
+            {
+                iReturn = "'E','S'";
+            }
             return iReturn;
         }
-        private string FormaPagamento()
+        //private string FormaPagamento()
+        //{
+        //    string iReturn = "";
+        //    if (!chkFPagamento.Checked)
+        //    {
+        //        iReturn = cbxFPagamento.SelectedValue.ToString();
+        //    }
+        //    else
+        //    {
+        //        DataSet dsFormasPagamento = con.SelectFormasPagamento();
+        //        for (int i = 0; i < dsFormasPagamento.Tables[0].Rows.Count; i++)
+        //        {
+        //            //// Itext = dsFormasPagamento.Tables[0].Rows[i].ItemArray.GetValue(0).ToString()+ Itext;
+        //            //iReturn = dsFormasPagamento.Tables[0].Rows[i].ItemArray.GetValue(0).ToString()+",";
+        //            //if (i == dsFormasPagamento.Tables[0].Rows.Count)
+        //            //{
+        //            //    iReturn = iReturn + dsFormasPagamento.Tables[0].Rows[i].ItemArray.GetValue(0).ToString();
+        //            //}
+
+        //        }
+
+        //    }
+        //    return iReturn;
+
+        //}
+
+        private void rbSaida_CheckedChanged(object sender, EventArgs e)
         {
-            string iReturn = "";
-            if (!chkFPagamento.Checked)
-            {
-                iReturn = cbxFPagamento.SelectedValue.ToString();
-            }
-            else
-            {
-                DataSet dsFormasPagamento = con.SelectFormasPagamento();
-                for (int i = 0; i < dsFormasPagamento.Tables[0].Rows.Count; i++)
-                {
-                    //// Itext = dsFormasPagamento.Tables[0].Rows[i].ItemArray.GetValue(0).ToString()+ Itext;
-                    //iReturn = dsFormasPagamento.Tables[0].Rows[i].ItemArray.GetValue(0).ToString()+",";
-                    //if (i == dsFormasPagamento.Tables[0].Rows.Count)
-                    //{
-                    //    iReturn = iReturn + dsFormasPagamento.Tables[0].Rows[i].ItemArray.GetValue(0).ToString();
-                    //}
-
-                }
-
-            }
-            return iReturn;
 
         }
     }

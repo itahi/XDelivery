@@ -1,14 +1,11 @@
 ﻿using DexComanda.Models;
-using Microsoft.VisualBasic;
+using DexComanda.Models.Produto;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DexComanda
@@ -16,7 +13,6 @@ namespace DexComanda
     public partial class frmCadastrarProduto : Form
     {
         private Conexao con;
-        private Main parentMain;
         private int rowIndex;
         int codigoOpcao;
         int codTipo;
@@ -29,18 +25,22 @@ namespace DexComanda
         private string Marcados;
         private bool PromocaoDiasSemana = Sessions.returnConfig.DescontoDiaSemana;
         private List<PrecoDiaProduto> listPrecos;
-        public frmCadastrarProduto(Main parent)
+        private DataGridView gridAtualizada;
+        private int codigoinsumo;
+        private int intPontosFidelidadeVenda = 0;
+        private int intPontosFidelidadeTroca = 0;
+        public frmCadastrarProduto()
         {
             InitializeComponent();
-            this.parentMain = parent;
-            //  parentMain = new Main();
             DiasSelecionados = new List<string>();
             grpDesconto.Visible = DescontoPordia;
 
         }
         public frmCadastrarProduto(int CodProduto, string iNomeProduto, string iCodGrupo, string iGrupo, decimal iPreco, string iDescricao, bool iVendaOnline,
                                    decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo,
-                                   DateTime idtFimPromo, bool iAtivoSN, string iCodInterno)
+                                   DateTime idtFimPromo, bool iAtivoSN, string iCodInterno, string iMarkup, string iPrecoSugerido,
+                                    int iPontoCompra, int iPontoTroca,Boolean iControlaEstoque,decimal iEstMinimo, DataGridView gridProduto=null,
+                                    string iPalavrasCHave="")
         {
             try
             {
@@ -49,6 +49,7 @@ namespace DexComanda
                 grpDesconto.Visible = DescontoPordia;
                 txtPrecoDesconto.Text = iPrecoPromocao.ToString();
                 intCodGrupo = iCodGrupo;
+                gridAtualizada = gridProduto;
                 string[] lol = iDiasPromocao.Split(new char[] { ';' });
 
                 if (lol.Contains("Monday"))
@@ -80,15 +81,28 @@ namespace DexComanda
                     chkDomingo.Checked = true;
                 }
 
-
+                chkControleEstoque.Checked = iControlaEstoque;
+                txtEstMinimo.Text = iEstMinimo.ToString();
+                txtPontosFidelidade.Text = iPontoCompra.ToString();
+                txtPontosTroca.Text = iPontoTroca.ToString();
+                txtMarkup.Text = iMarkup;
+                txtPalavrasChave.Text = iPalavrasCHave;
+                txtPrecoSugerido.Text = iPrecoSugerido;
                 MontaListPrecos(iDiasPromocao);
                 nomeProdutoTextBox.Text = iNomeProduto;
                 precoProdutoTextBox.Text = iPreco.ToString();
                 Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoPorCodigo", int.Parse(iCodGrupo));
-                //cbxGrupoProduto.DataSource = "Grupo";
-                //cbxGrupoProduto.DisplayMember = iGrupo;
-                //cbxGrupoProduto.ValueMember = iCodGrupo;
                 descricaoProdutoTextBox.Text = iDescricao;
+                con = new Conexao();
+                txtPrecoCusto.Text = Convert.ToString(con.CalculaPrecoInsumo(CodProduto));
+
+                DataSet dsEstoque = con.ContaEstoque(iNomeProduto);
+                if (dsEstoque.Tables[0].Rows.Count>0)
+                {
+                    txtEstoqueAtual.Text = dsEstoque.Tables[0].Rows[0].Field<decimal>("EstoqueAtual").ToString();
+
+                }
+
                 chkAtivo.Checked = iAtivoSN;
                 chkOnline.Checked = iVendaOnline;
                 txtMaxAdicionais.Text = iMaximoAdicionais;
@@ -109,57 +123,70 @@ namespace DexComanda
 
         }
 
-        public frmCadastrarProduto(Produtos prod, Main parent)
+        public frmCadastrarProduto(Produtos prod,DataGridView gridProduto)
         {
-            InitializeComponent();
-            this.parentMain = parent;
-            DiasSelecionados = new List<string>();
-            this.produto = prod;
-            if (DescontoPordia)
+            try
             {
-                grpDesconto.Visible = DescontoPordia;
-                txtPrecoDesconto.Text = produto.PrecoDesconto.ToString();
-
-                if (produto.DiaSemana != "")
+                InitializeComponent();
+                DiasSelecionados = new List<string>();
+                gridAtualizada = gridProduto;
+                if (prod==null)
                 {
-                    string[] lol = produto.DiaSemana.Split(new char[] { ';' });
-
-                    if (lol.Contains("Monday"))
-                    {
-                        chkSegunda.Checked = true;
-                    }
-                    if (lol.Contains("Tuesday"))
-                    {
-                        chkTerca.Checked = true;
-                    }
-                    if (lol.Contains("Wednesday "))
-                    {
-                        ChkQuarta.Checked = true;
-                    }
-                    if (lol.Contains("Thursday"))
-                    {
-                        chkQuinta.Checked = true;
-                    }
-                    if (lol.Contains("Friday"))
-                    {
-                        ChkSexta.Checked = true;
-                    }
-                    if (lol.Contains("Sunday"))
-                    {
-                        ChkSabado.Checked = true;
-                    }
-                    if (lol.Contains("Sunday"))
-                    {
-                        chkDomingo.Checked = true;
-                    }
+                    return;
                 }
+                this.produto = prod;
+                if (DescontoPordia)
+                {
+                    grpDesconto.Visible = DescontoPordia;
+                    txtPrecoDesconto.Text = produto.PrecoDesconto.ToString();
+
+                    if (produto.DiaSemana != "")
+                    {
+                        string[] lol = produto.DiaSemana.Split(new char[] { ';' });
+
+                        if (lol.Contains("Monday"))
+                        {
+                            chkSegunda.Checked = true;
+                        }
+                        if (lol.Contains("Tuesday"))
+                        {
+                            chkTerca.Checked = true;
+                        }
+                        if (lol.Contains("Wednesday "))
+                        {
+                            ChkQuarta.Checked = true;
+                        }
+                        if (lol.Contains("Thursday"))
+                        {
+                            chkQuinta.Checked = true;
+                        }
+                        if (lol.Contains("Friday"))
+                        {
+                            ChkSexta.Checked = true;
+                        }
+                        if (lol.Contains("Sunday"))
+                        {
+                            ChkSabado.Checked = true;
+                        }
+                        if (lol.Contains("Sunday"))
+                        {
+                            chkDomingo.Checked = true;
+                        }
+                    }
 
 
+                }
             }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+           
 
         }
         private List<PrecoDiaProduto> RetornaDiasMarcados()
         {
+
             listPrecos = new List<PrecoDiaProduto>();
             // var precosDia = new PrecoDiaProduto();
             foreach (System.Windows.Forms.Control TEXT in grpPrecosDia.Controls)
@@ -167,7 +194,7 @@ namespace DexComanda
                 //Loop through all controls 
                 if (object.ReferenceEquals(TEXT.GetType(), typeof(System.Windows.Forms.TextBox)))
                 {
-                    //Check to see if it's a textbox 
+                    //Check to see if  
                     if (((System.Windows.Forms.TextBox)TEXT).Text != "")
                     {
                         var precosDia = new PrecoDiaProduto()
@@ -180,7 +207,7 @@ namespace DexComanda
                         listPrecos.Add(precosDia);
                     }
 
-                    //If it is then set the text to String.Empty (empty textbox) 
+
                 }
 
             }
@@ -224,10 +251,11 @@ namespace DexComanda
 
         }
 
+
         private void frmCadastrarProduto_Load(object sender, EventArgs e)
         {
             con = new Conexao();
-
+            ListaInsumos();
             btnEditar.Enabled = codigoProdutoParaAlterar != 0;
             DiasSelecionados = new List<string>();
             tabPage2.IsAccessible = btnDoProduto.Text == "Alterar [F12]";
@@ -243,19 +271,26 @@ namespace DexComanda
 
                 codigoProdutoParaAlterar = produto.Codigo;
                 this.nomeProdutoTextBox.Text = produto.Nome;
-                //  MontaListPrecos(produto.DiaSemana);
+                txtPrecoCusto.Text = con.CalculaPrecoInsumo(codigoProdutoParaAlterar).ToString();
                 cbxGrupoProduto.ValueMember = produto.CodGrupo.ToString();
                 this.cbxGrupoProduto.Text = produto.GrupoProduto;
                 this.precoProdutoTextBox.Text = produto.Preco.ToString();
                 this.descricaoProdutoTextBox.Text = produto.Descricao.ToString();
                 this.chkAtivo.Checked = produto.AtivoSN;
+                DataSet dsEstoque = con.ContaEstoque(produto.Nome);
+                if (dsEstoque.Tables[0].Rows.Count > 0)
+                {
+                    txtEstoqueAtual.Text = dsEstoque.Tables[0].Rows[0].Field<decimal>("EstoqueAtual").ToString();
+
+                }
+                // txtEstoqueAtual.Text= con.ContaEstoque(nomeProdutoTextBox.Text).Tables[0].Rows[0].Field<decimal>("EstoqueAtual").ToString();
             }
 
         }
-        private bool ValidaCodigoPersonalizado(int iCodigo, string iCodProduto)
+        private bool ValidaCodigoPersonalizado(int iCodigoPersonalizado, string iCodProduto)
         {
             Boolean retur = false;
-            DataSet dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoCodigoInterno", iCodigo, iCodProduto);
+            DataSet dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoCodigoInterno", iCodigoPersonalizado, iCodProduto);
             if (dsProduto.Tables[0].Rows.Count > 0)
             {
                 retur = true;
@@ -267,6 +302,7 @@ namespace DexComanda
 
         private void AdicionarProduto(object sender, EventArgs e)
         {
+
             try
             {
                 if (txtCodInterno.Text != "0" && txtCodInterno.Text != "")
@@ -296,9 +332,45 @@ namespace DexComanda
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                     DataAlteracao = DateTime.Now,
-                    //PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text)
-
+                    ControlaEstoque = chkControleEstoque.Checked,
+                    PalavrasChaves = txtPalavrasChave.Text
+                
                 };
+
+                if (chkControleEstoque.Checked && txtEstMinimo.Text=="")
+                {
+                    MessageBox.Show("Defina o estoque minimo para esse produto");
+                    txtEstMinimo.Focus();
+                    return;
+                }
+                else
+                {
+                    txtEstMinimo.Text = "0";
+                }
+                produto.EstoqueMinimo = decimal.Parse(txtEstMinimo.Text);
+                if (txtPontosFidelidade.Text != "")
+                {
+                    intPontosFidelidadeVenda = int.Parse(txtPontosFidelidade.Text);
+                }
+                if (txtPontosTroca.Text != "")
+                {
+                    intPontosFidelidadeTroca = int.Parse(txtPontosTroca.Text);
+                }
+
+                produto.PontoFidelidadeTroca = intPontosFidelidadeTroca;
+                produto.PontoFidelidadeVenda = intPontosFidelidadeVenda;
+                if (txtPrecoCusto.Text != "")
+                {
+                    produto.PrecoCusto = decimal.Parse(txtPrecoCusto.Text);
+                }
+                if (txtMarkup.Text != "")
+                {
+                    produto.Markup = decimal.Parse(txtMarkup.Text);
+                }
+                if (txtPrecoSugerido.Text != "")
+                {
+                    produto.PrecoSugerido = decimal.Parse(txtPrecoSugerido.Text);
+                }
                 produto.UrlImagem = "";
                 if (txtCodInterno.Text != "0")
                 {
@@ -328,23 +400,22 @@ namespace DexComanda
                         produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text);
                     }
 
-                    con.Insert("spAdicionarProduto", produto);
                 }
                 else
                 {
                     produto.DiaSemana = "";
                     produto.PrecoDesconto = decimal.Parse("0");
-
-                    con.Insert("spAdicionarProduto", produto);
                 }
+                con.Insert("spAdicionarProduto", produto);
+            
                 ClearForm(this);
-                // this_FormClosing();
                 MessageBox.Show("Produto cadastrado com sucesso.");
                 SalvarAdicionais(con.getLastCodigo());
-
+                SalvarInsumo(con.getLastCodigo());
                 Utils.ControlaEventos("Inserir", this.Name);
                 nomeProdutoTextBox.Focus();
 
+             //   Utils.PopularGrid("Produto",gridvi)
             }
             catch (Exception errro)
             {
@@ -371,6 +442,31 @@ namespace DexComanda
                 AdicionaisGridView.DataSource = null;
                 AdicionaisGridView.DataMember = null;
                 AdicionaisGridView.AutoGenerateColumns = false;
+            }
+        }
+        /// <summary>
+        /// Salva os insumos do produto para compor o preço
+        /// </summary>
+        /// <param name="iCodProduto">
+        /// Código do Produto</param>
+        private void SalvarInsumo(int iCodProduto)
+        {
+            if (gridInsumo.Rows.Count > 0)
+            {
+                for (int i = 0; i < gridInsumo.Rows.Count; i++)
+                {
+                    InsumoProduto insumo = new InsumoProduto()
+                    {
+                        CodProduto = iCodProduto,
+                        CodInsumo = int.Parse(gridInsumo.Rows[i].Cells["CodInsumo"].Value.ToString()),
+                        Quantidade = decimal.Parse(gridInsumo.Rows[i].Cells["Preco"].Value.ToString()),
+                    };
+                    con.Insert("spAdicionarProdutoInsumo", insumo);
+                }
+
+                gridInsumo.DataSource = null;
+                gridInsumo.DataMember = null;
+                gridInsumo.AutoGenerateColumns = false;
             }
         }
         public string DiasSelecinado()
@@ -442,7 +538,42 @@ namespace DexComanda
                     DataAlteracao = DateTime.Now,
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
+                    ControlaEstoque = chkControleEstoque.Checked,
+                    PalavrasChaves = txtPalavrasChave.Text
                 };
+                if (chkControleEstoque.Checked && txtEstMinimo.Text == "")
+                {
+                    MessageBox.Show("Defina o estoque minimo para esse produto");
+                    txtEstMinimo.Focus();
+                    return;
+                }
+                else
+                {
+                    txtEstMinimo.Text = "0";
+                }
+                produto.EstoqueMinimo = decimal.Parse(txtEstMinimo.Text);
+                if (txtPontosFidelidade.Text != "")
+                {
+                    intPontosFidelidadeVenda = int.Parse(txtPontosFidelidade.Text);
+                }
+                if (txtPontosTroca.Text != "")
+                {
+                    intPontosFidelidadeTroca = int.Parse(txtPontosTroca.Text);
+                }
+                produto.PontoFidelidadeTroca = intPontosFidelidadeTroca;
+                produto.PontoFidelidadeVenda = intPontosFidelidadeVenda;
+                if (txtPrecoCusto.Text != "")
+                {
+                    produto.PrecoCusto = decimal.Parse(txtPrecoCusto.Text);
+                }
+                if (txtMarkup.Text != "")
+                {
+                    produto.Markup = decimal.Parse(txtMarkup.Text);
+                }
+                if (txtPrecoSugerido.Text != "")
+                {
+                    produto.PrecoSugerido = decimal.Parse(txtPrecoSugerido.Text);
+                }
                 produto.CodigoPersonalizado = "0";
                 if (txtCodInterno.Text != "" && txtCodInterno.Text != "0")
                 {
@@ -470,9 +601,7 @@ namespace DexComanda
                 {
                     produto.MaximoAdicionais = 0;
                 }
-
                 produto.DiaSemana = Utils.SerializaObjeto(RetornaDiasMarcados());
-                //  produto.DiaSemana = DiasSelecinado();
                 if (txtPrecoDesconto.Text != "")
                 {
                     produto.PrecoDesconto = decimal.Parse(txtPrecoDesconto.Text.Replace(".", ","));
@@ -486,7 +615,7 @@ namespace DexComanda
                 this.btnDoProduto.Text = "Cadastrar [F12]";
                 this.btnDoProduto.Click -= AlterarProduto;
                 this.btnDoProduto.Click += AdicionarProduto;
-
+                Utils.PopulaGrid_Novo("Produto", gridAtualizada, Sessions.SqlProduto);
                 Utils.ControlaEventos("Alterar", this.Name);
                 MessageBox.Show("Produto alterado com sucesso.");
                 this.Close();
@@ -590,7 +719,8 @@ namespace DexComanda
 
         private void ListaOpcao(object sender, EventArgs e)
         {
-            if (cbxTipoOpcao.SelectedValue.ToString() != "")
+
+            if (cbxTipoOpcao.SelectedIndex >= 0)
             {
                 Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcaoPorTipo", int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
             }
@@ -615,9 +745,7 @@ namespace DexComanda
                     if (cbxOpcao.SelectedValue.ToString() == AdicionaisGridView.Rows[i].Cells["CodOpcao"].Value.ToString())
                     {
                         if (!Utils.MessageBoxQuestion("Essa opção já esta vinculada a esse produto , deseja adicionar novamente?"))
-                        {
                             return;
-                        }
                     }
                 }
                 int iCountLinhas = AdicionaisGridView.Rows.Count;
@@ -741,6 +869,31 @@ namespace DexComanda
                 MessageBox.Show(erro.Message);
             }
 
+        }
+        private void SalvarRegistroInsumo(object sender, EventArgs e)
+        {
+            try
+            {
+                InsumoProduto ins = new InsumoProduto()
+                {
+                    Codigo = codigoinsumo,
+                    CodInsumo = int.Parse(cbxInsumo.SelectedValue.ToString()),
+                    CodProduto = codigoProdutoParaAlterar,
+                    Quantidade = decimal.Parse(txtQtd.Text)
+                };
+                con.Update("spAlterarProdutoInsumo", ins);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            this.btnAdicionar.Text = "Adicionar";
+            this.btnAdicionar.Click += new System.EventHandler(this.AdicionarInsumoProduto);
+            this.btnAdicionar.Click -= new System.EventHandler(this.SalvarRegistroInsumo);
+
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
         }
         private void SalvarRegistro(object sender, EventArgs e)
         {
@@ -963,20 +1116,237 @@ namespace DexComanda
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
         }
 
-        private void FiltrarOpcaoPorTipo(object sender, EventArgs e)
-        {
-            //ListaOpcao(sender, e);
-        }
-
         private void cbxTipoOpcao_DropDown(object sender, EventArgs e)
         {
             Utils.MontaCombox(cbxTipoOpcao, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
 
         }
-
-        private void frmCadastrarProduto_FormClosed(object sender, FormClosedEventArgs e)
+        private void ListaInsumos(object sender, EventArgs e)
         {
-            //Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
+            try
+            {
+                Utils.MontaCombox(cbxInsumo, "Nome", "Codigo", "Insumo", "spObterInsumo");
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
+        private void ListaInsumos()
+        {
+            if (codigoProdutoParaAlterar != 0)
+            {
+                gridInsumo.DataSource = con.SelectInsumoProduto(codigoProdutoParaAlterar);
+                gridInsumo.AutoGenerateColumns = true;
+                gridInsumo.DataMember = "Produto_Insumo";
+
+             //   txtPrecoCusto.Text = con.CalculaPrecoInsumo(codigoProdutoParaAlterar).ToString();
+            }
+            else if (!gridInsumo.Columns.Contains("Codigo"))
+            {
+                gridInsumo.Columns.Add("Codigo", "Codigo");
+                gridInsumo.Columns.Add("Nome", "Nome");
+                gridInsumo.Columns.Add("Quantidade", "Quantidade");
+                //gridInsumo.Columns.Add("Preco", "Preço");
+            }
+
+        }
+        private void AdicionarInsumoProduto(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbxInsumo.SelectedIndex < 0)
+                {
+                    MessageBox.Show("Selecione o insumo");
+                    cbxInsumo.Focus();
+                    return;
+                }
+                if (txtQtd.Text == "")
+                {
+                    MessageBox.Show("Informe a quantidade do insumo");
+                    txtQtd.Focus();
+                    return;
+                }
+
+
+                for (int i = 0; i < gridInsumo.Rows.Count; i++)
+                {
+                    if (cbxInsumo.SelectedValue.ToString() == gridInsumo.Rows[i].Cells["Codigo"].Value.ToString())
+                    {
+                        if (!Utils.MessageBoxQuestion("Esse insumo já esta vinculada a esse produto , deseja adicionar novamente?"))
+                        {
+                            return;
+                        }
+                    }
+                }
+                if (codigoProdutoParaAlterar != 0)
+                {
+                    InsumoProduto insPro = new InsumoProduto()
+                    {
+                        CodInsumo = int.Parse(cbxInsumo.SelectedValue.ToString()),
+                        CodProduto = codigoProdutoParaAlterar,
+                        Quantidade = int.Parse(txtQtd.Text)
+                    };
+                    con.Insert("spAdicionarProdutoInsumo", insPro);
+                    ListaInsumos();
+                    txtPrecoCusto.Text = con.CalculaPrecoInsumo(codigoProdutoParaAlterar).ToString();
+                }
+                else
+                {
+                    int iCountLinhas = 0;
+                    if (gridInsumo.DataSource != null)
+                    {
+                        gridInsumo.AutoGenerateColumns = false;
+                        gridInsumo.DataSource = null;
+                        gridInsumo.DataMember = null;
+                    }
+
+                    gridInsumo.Rows.Add();
+                    gridInsumo.Rows[iCountLinhas].Cells["CodInsumo"].Value = int.Parse(cbxInsumo.SelectedValue.ToString());
+                    gridInsumo.Rows[iCountLinhas].Cells["Quantidade"].Value = decimal.Parse(txtQtd.Text);
+                    gridInsumo.Rows[iCountLinhas].Cells["Nome"].Value = cbxInsumo.Text.ToString();
+                    iCountLinhas = gridInsumo.Rows.Count;
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
+
+        private void txtPrecoInsumo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
+        }
+        private void DeletarInsumo(object sender, EventArgs e)
+        {
+            string iNomeInsumo = gridInsumo.CurrentRow.Cells["Nome"].Value.ToString();
+            if (!Utils.MessageBoxQuestion("Deseja excluir o " + iNomeInsumo + " da lista de insumo?"))
+            {
+                return;
+            }
+
+            if (gridInsumo.SelectedRows.Count > 0)
+            {
+                int codRegistro = int.Parse(this.gridInsumo.CurrentRow.Cells["Codigo"].Value.ToString());
+                con.DeleteAll("Produto_Insumo", "spExcluirProdutoInsumo", codRegistro);
+                Utils.ControlaEventos("Excluir", this.Name);
+                MessageBox.Show("Item excluído com sucesso.");
+                ListaInsumos();
+
+            }
+            else
+            {
+                MessageBox.Show("Selecione o grupo para excluir");
+            }
+
+        }
+        private void MenuAuxiliar(object sender, MouseEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu m = new ContextMenu();
+                MenuItem ExcluirRegistro = new MenuItem("Excluir Registro");
+                ExcluirRegistro.Click += DeletarInsumo;
+                m.MenuItems.Add(ExcluirRegistro);
+
+                int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
+                m.Show(dgv, new Point(e.X, e.Y));
+
+            }
+        }
+
+        private void txtQtd_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoPermiteNumeros(e);
+        }
+
+        private void EditarRegistro(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (gridInsumo.CurrentRow.Cells[0].Value.ToString() == null)
+                {
+                    MessageBox.Show("Selecione o registro para editar");
+                    return;
+                }
+                codigoinsumo = int.Parse(gridInsumo.CurrentRow.Cells["Codigo"].Value.ToString());
+                cbxInsumo.Text = gridInsumo.CurrentRow.Cells["Nome"].Value.ToString();
+                txtQtd.Text = gridInsumo.CurrentRow.Cells["Quantidade"].Value.ToString();
+
+
+                this.btnAdicionar.Text = "Salvar";
+                this.btnAdicionar.Click += new System.EventHandler(this.SalvarRegistroInsumo);
+                this.btnAdicionar.Click -= new System.EventHandler(this.AdicionarInsumoProduto);
+
+                this.btnEditarIns.Text = "Cancelar";
+                this.btnEditarIns.Click += new System.EventHandler(this.Cancelar);
+                this.btnEditarIns.Click -= new System.EventHandler(this.btnEditarIns_Click);
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+        }
+
+        private void btnEditarIns_Click(object sender, EventArgs e)
+        {
+            btnEditar_Click(sender, e);
+        }
+
+        private void precoProdutoTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
+        }
+
+        private void txtPrecoCusto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
+        }
+
+        private void txtMarkup_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
+        }
+
+        private void txtMaxAdicionais_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPrecoDesconto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
+        }
+
+        private void txtMarkup_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtPrecoCusto.Text == "")
+                {
+                    return;
+                }
+                decimal dPrecoCusto = decimal.Parse(txtPrecoCusto.Text);
+                decimal dPrecoSugerido = dPrecoCusto + decimal.Parse(txtPrecoCusto.Text) * (decimal.Parse(txtMarkup.Text) / 100);
+                txtPrecoSugerido.Text = dPrecoSugerido.ToString();
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
+
+        private void txtPrecoCusto_Leave(object sender, EventArgs e)
+        {
+            txtMarkup_Leave(sender, e);
+        }
+
+        private void txtEstMinimo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
         }
     }
 }

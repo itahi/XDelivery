@@ -24,6 +24,12 @@ namespace DexComanda.Cadastros.Produto
 
         private void btnAdicionarGrupo_Click(object sender, EventArgs e)
         {
+            if (txtNome.Text=="")
+            {
+                MessageBox.Show("Preencha o nome da familia");
+                txtNome.Focus();
+                return;
+            }
             Familia fami = new Familia()
             {
                 Nome = txtNome.Text,
@@ -75,6 +81,12 @@ namespace DexComanda.Cadastros.Produto
         }
         private void SalvarGrupo(object sender, EventArgs e)
         {
+            if (txtNome.Text == "")
+            {
+                MessageBox.Show("Preencha o nome da familia");
+                txtNome.Focus();
+                return;
+            }
             Familia fam = new Familia()
             {
                 Codigo = codigo,
@@ -147,6 +159,24 @@ namespace DexComanda.Cadastros.Produto
                 MessageBox.Show("Não foi possivel excluir o registro " + erro.Message);
             }
             
+
+        }
+
+        private void frmFamilia_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode== Keys.F12 && btnAdicionarGrupo.Text== "Adicionar [F12]")
+            {
+                btnAdicionarGrupo_Click(sender, e);
+            }
+            if (e.KeyCode == Keys.F12 && btnAdicionarGrupo.Text == "Salvar [F12]")
+            {
+                SalvarGrupo(sender, e);
+            }
+
+            if (e.KeyCode == Keys.F11 && btnEditarGrupo.Text == "Editar [F11]")
+            {
+                EditarFamilia(sender, e);
+            }
 
         }
     }

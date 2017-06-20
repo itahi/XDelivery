@@ -1,5 +1,6 @@
 ﻿using DexComanda.Models;
 using DexComanda.Models.Produto;
+using DexComanda.Operações.Alteracoes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,24 +28,25 @@ namespace DexComanda.Cadastros.Produto
         {
             try
             {
-                List<OpcaoDia> pr = new List<OpcaoDia>();
+                List<OpcaoDia> listaDias = new List<OpcaoDia>();
                 if (ivalor == "")
                 {
                     return;
                 }
-                pr = Utils.DeserializaObjeto3(ivalor);
-                if (pr.Count > 0)
+                listaDias = Utils.DeserializaObjeto3(ivalor);
+                if (listaDias.Count > 0)
                 {
-                    foreach (var item in pr)
+                    foreach (var item in listaDias)
                     {
                         foreach (System.Windows.Forms.Control obj in grpDiasDisponivel.Controls)
                         {
                             if (object.ReferenceEquals(obj.GetType(), typeof(System.Windows.Forms.CheckBox)))
                             {
-                                if (item.Dia == ((System.Windows.Forms.CheckBox)obj).Tag.ToString())
+                                if (((System.Windows.Forms.CheckBox)obj).Tag.ToString().Substring(0,3) == item.Dia)
                                 {
-                                    ((System.Windows.Forms.CheckBox)obj).Checked = true;
+                                    ((System.Windows.Forms.CheckBox)obj).Checked = item.AtivoSN == 1;
                                 }
+                                
                             }
 
                         }
@@ -68,20 +70,14 @@ namespace DexComanda.Cadastros.Produto
                 //Loop through all controls 
                 if (object.ReferenceEquals(TEXT.GetType(), typeof(System.Windows.Forms.CheckBox)))
                 {
-                    //Check to see if it's a textbox 
-                    if (((System.Windows.Forms.CheckBox)TEXT).Checked)
+
+                    var diasDisponiel = new Models.Produto.OpcaoDia()
                     {
-                        var precosDia = new Models.Produto.OpcaoDia()
-                        {
-                            Dia = (((System.Windows.Forms.CheckBox)TEXT).Tag.ToString()),
-                        };
-
-                        listDias.Add(precosDia);
-                    }
-
-                    //If it is then set the text to String.Empty (empty textbox) 
+                        Dia = (((System.Windows.Forms.CheckBox)TEXT).Tag.ToString().Substring(0, 3)),
+                        AtivoSN = Convert.ToInt16((((System.Windows.Forms.CheckBox)TEXT).Checked)),
+                    };
+                    listDias.Add(diasDisponiel);
                 }
-
             }
 
             return listDias;
@@ -104,9 +100,11 @@ namespace DexComanda.Cadastros.Produto
 
                     };
                     con.Insert("spAdicionarOpcao", opcao);
-                    Utils.LimpaForm(this);
-                    LimpaDias();
+                    // Utils.LimpaForm(this);
+                    MarcaTodosDias();
                     ListaOpcao();
+                    txtNome.Text = string.Empty;
+                    txtNome.Focus();
                 }
                 else
                 {
@@ -121,23 +119,23 @@ namespace DexComanda.Cadastros.Produto
             }
         }
 
-        private void ListaOpcao(int iTipoOpcao=0)
+        private void ListaOpcao(int iTipoOpcao = 0)
         {
-            if (iTipoOpcao==0)
+            if (iTipoOpcao == 0)
             {
-                Utils.PopularGrid("Opcao", OpcaoGridView); 
+                Utils.PopularGrid("Opcao", OpcaoGridView);
             }
             else
             {
                 Utils.PopularGrid_SP("Opcao", OpcaoGridView, "spObterOpcaoPorTipo", iTipoOpcao);
             }
-            
+
         }
 
         private void frmCadOpcao_Load(object sender, EventArgs e)
         {
-           Utils.MontaCombox(cbxTipo, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
-
+            Utils.MontaCombox(cbxTipo, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
+            MarcaTodosDias();
             ListaOpcao();
         }
         private void DeletaRegistro(object sender, EventArgs e)
@@ -166,7 +164,7 @@ namespace DexComanda.Cadastros.Produto
                     MessageBox.Show("Não foi possivel deletar o registro pois o mesmo está sendo usando em algum produto", "xSistemas ");
                 }
             }
-            
+
 
         }
 
@@ -174,14 +172,17 @@ namespace DexComanda.Cadastros.Produto
         {
             Utils.MontaCombox(cbxTipo, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterProduto_OpcaoTipoPorCodigo", iTipo);
         }
-        private void LimpaDias()
+        /// <summary>
+        /// Marca todos checkBox 
+        /// </summary>
+        private void MarcaTodosDias(bool iMarca=true)
         {
             foreach (System.Windows.Forms.Control ctrControl in grpDiasDisponivel.Controls)
             {
                 if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.CheckBox)))
                 {
-                    //Unselect all RadioButtons
-                    ((System.Windows.Forms.CheckBox)ctrControl).Checked = false;
+                    //select all RadioButtons
+                    ((System.Windows.Forms.CheckBox)ctrControl).Checked = iMarca;
                 }
             }
         }
@@ -189,7 +190,7 @@ namespace DexComanda.Cadastros.Produto
         {
             try
             {
-               
+
                 codigoAlterarDeletar = int.Parse(this.OpcaoGridView.Rows[rowIndex].Cells[0].Value.ToString());
 
                 //DataSet ds = con.SelectRegistroPorCodigo("Opcao", "spObterOpcaoPorCodigo", codigoAlterarDeletar);
@@ -212,7 +213,7 @@ namespace DexComanda.Cadastros.Produto
             {
                 MessageBox.Show(erro.Message);
             }
-           
+
         }
         private void Cancelar(object sender, EventArgs e)
         {
@@ -224,7 +225,7 @@ namespace DexComanda.Cadastros.Produto
             }
             this.btnAdicionar.Text = "Adicionar";
             this.btnAdicionar.Click += new System.EventHandler(this.CadastraOpcao);
-         
+
             this.btnEditar.Text = "Editar";
             this.btnEditar.Click += new System.EventHandler(this.EditarOpcao);
             this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
@@ -245,8 +246,7 @@ namespace DexComanda.Cadastros.Produto
                     DiasDisponivel = Utils.SerializaObjeto(RetornaDiasMarcados())
                 };
                 con.Update("spAlteraOpcao", opcao);
-                // Utils.LimpaForm(this);
-                LimpaDias();
+                MarcaTodosDias();
                 con.AtualizaProdutosOpcao(codigoAlterarDeletar);
                 this.btnAdicionar.Text = "Adicionar";
                 this.btnAdicionar.Click += new System.EventHandler(this.CadastraOpcao);
@@ -255,8 +255,10 @@ namespace DexComanda.Cadastros.Produto
                 this.btnEditar.Text = "Editar";
                 this.btnEditar.Click += new System.EventHandler(this.EditarOpcao);
                 this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
-              
+
                 ListaOpcao(int.Parse(opcao.Tipo));
+                txtNome.Text = string.Empty;
+                txtNome.Focus();
 
             }
             catch (Exception erro)
@@ -308,12 +310,30 @@ namespace DexComanda.Cadastros.Produto
             }
         }
 
-        //private void FiltraOpcaoPorTipo(object sender, EventArgs e)
-        //{
-        //    if (cbxTipo.SelectedIndex != null)
-        //    {
-        //        ListaOpcao(int.Parse(cbxTipo.SelectedValue.ToString()));
-        //    }
-        //}
+        private void checkBox1_CheckStateChanged(object sender, EventArgs e)
+        {
+            MarcaTodosDias(checkBox1.Checked);
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            frmAlterarMultOpcao frm = new frmAlterarMultOpcao();
+            frm.Show(this);
+        }
+
+       
+        private void btnAdicionar_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyCode == Keys.F12)
+            {
+                CadastraOpcao(sender, e);
+            }
+            if (e.KeyCode == Keys.F11)
+            {
+                EditarOpcao(sender, e);
+            }
+        }
+
     }
 }

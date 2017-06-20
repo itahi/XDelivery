@@ -95,5 +95,10 @@
         private System.Windows.Forms.TextBox txtObsPedido;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox chkCodPersonalizado;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.TextBox txtSenha;
+        private System.Windows.Forms.Label lblSenha;
+        private System.Windows.Forms.Label lblDébito;
     }
 }

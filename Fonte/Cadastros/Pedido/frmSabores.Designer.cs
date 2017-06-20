@@ -162,7 +162,7 @@
             // 
             // btnTamanhos
             // 
-            this.btnTamanhos.Location = new System.Drawing.Point(270, 98);
+            this.btnTamanhos.Location = new System.Drawing.Point(255, 98);
             this.btnTamanhos.Name = "btnTamanhos";
             this.btnTamanhos.Size = new System.Drawing.Size(107, 30);
             this.btnTamanhos.TabIndex = 0;

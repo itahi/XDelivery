@@ -148,6 +148,16 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -177,12 +187,6 @@
     <Compile Include="Cadastros\Empresa\frmHorariosEntrega.Designer.cs">
       <DependentUpon>frmHorariosEntrega.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cadastros\Financeiro\frmCadTurno.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Cadastros\Financeiro\frmCadTurno.Designer.cs">
-      <DependentUpon>frmCadTurno.cs</DependentUpon>
-    </Compile>
     <Compile Include="Cadastros\frmAdicionarMesa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,6 +205,12 @@
     <Compile Include="Cadastros\Pedido\frmFinalizacaoPedido.Designer.cs">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cadastros\Pedido\frmFinalizaDelivery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Pedido\frmFinalizaDelivery.Designer.cs">
+      <DependentUpon>frmFinalizaDelivery.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cadastros\Pedido\frmOpcaoNumeric.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -212,6 +222,12 @@
     </Compile>
     <Compile Include="Cadastros\Pedido\frmOpcaoRadio.Designer.cs">
       <DependentUpon>frmOpcaoRadio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\Pedido\frmProdutosTrocaFidelidade.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Pedido\frmProdutosTrocaFidelidade.Designer.cs">
+      <DependentUpon>frmProdutosTrocaFidelidade.cs</DependentUpon>
     </Compile>
     <Compile Include="Cadastros\Pedido\frmSabores.cs">
       <SubType>Form</SubType>
@@ -225,11 +241,23 @@
     <Compile Include="Cadastros\Pedido\frmTransfereMesa.Designer.cs">
       <DependentUpon>frmTransfereMesa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cadastros\Pessoa\frmCadastroOrigem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Pessoa\frmCadastroOrigem.Designer.cs">
+      <DependentUpon>frmCadastroOrigem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cadastros\Pessoa\frmSelecionaEndereco.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Cadastros\Pessoa\frmSelecionaEndereco.Designer.cs">
       <DependentUpon>frmSelecionaEndereco.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\Produto\frmCadastroInsumo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\Produto\frmCadastroInsumo.Designer.cs">
+      <DependentUpon>frmCadastroInsumo.cs</DependentUpon>
     </Compile>
     <Compile Include="Cadastros\Produto\frmFamilia.cs">
       <SubType>Form</SubType>
@@ -279,12 +307,7 @@
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Integração\MP2032.cs" />
-    <Compile Include="Main.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Main.Designer.cs">
-      <DependentUpon>Main.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Integração\Zenvia.cs" />
     <Compile Include="Models\Alteracoes Multiplas\AlteracaoCliente.cs" />
     <Compile Include="Models\Alteracoes Multiplas\AlteracaoMultiplaOpcao.cs" />
     <Compile Include="Models\Alteracoes Multiplas\MultiplaProduto.cs" />
@@ -294,17 +317,32 @@
     <Compile Include="Models\CaixaCadastros.cs" />
     <Compile Include="Models\CaixaDiferenca.cs" />
     <Compile Include="Models\CaixaMovimento.cs" />
+    <Compile Include="Models\ConfiguracaoBuscaPorCodigo.cs" />
+    <Compile Include="Models\Configuracoes\DadosImpressoras.cs" />
+    <Compile Include="Models\Configuracoes\DadosPush.cs" />
+    <Compile Include="Models\Configuracoes\ImpressaoBalcao.cs" />
+    <Compile Include="Models\Configuracoes\ImpressaoCozinha.cs" />
+    <Compile Include="Models\Configuracoes\ImpressaoDelivery.cs" />
+    <Compile Include="Models\DadosEnvioLocaSMS.cs" />
     <Compile Include="Models\DescontoPedido.cs" />
     <Compile Include="Models\Familia.cs" />
+    <Compile Include="Models\Fidelidade.cs" />
+    <Compile Include="Models\FidelidadeDias.cs" />
     <Compile Include="Models\FinalizaPedido.cs" />
     <Compile Include="Models\HistoricoPessoa.cs" />
     <Compile Include="Models\HorarioEntrega.cs" />
+    <Compile Include="Models\ListaSms.cs" />
     <Compile Include="Models\Operacoes\HorarioFuncionamento.cs" />
     <Compile Include="Models\Operacoes\Notificacao.cs" />
+    <Compile Include="Models\PessoaFidelidade.cs" />
+    <Compile Include="Models\Pessoa_OrigemCadastro.cs" />
     <Compile Include="Models\Pessoa_Endereco.cs" />
+    <Compile Include="Models\Produto\Insumo.cs" />
+    <Compile Include="Models\Produto\InsumoProduto.cs" />
     <Compile Include="Models\Produto\Opcao.cs" />
     <Compile Include="Models\Produto\OpcaoDia.cs" />
     <Compile Include="Models\Produto\OpcaoItem.cs" />
+    <Compile Include="Models\Produto\OpcaoMult.cs" />
     <Compile Include="Models\Produto\OpcaoPedido.cs" />
     <Compile Include="Models\Operacoes\PedidoStatus.cs" />
     <Compile Include="Models\Operacoes\NovoTotalPedido.cs" />
@@ -325,8 +363,14 @@
     <Compile Include="Models\WS\CidadesAtendidas.cs" />
     <Compile Include="Models\WS\DadosApp.cs" />
     <Compile Include="Models\WS\HorariosEntregaJson.cs" />
+    <Compile Include="Models\WS\MesaWS.cs" />
+    <Compile Include="Models\WS\MultiSabores.cs" />
+    <Compile Include="Models\WS\ObjetoRetornoWSBLL.cs" />
     <Compile Include="Models\WS\RetornoWS.cs" />
     <Compile Include="Models\WS\StatusPedido.cs" />
+    <Compile Include="Models\DadosEnvioZenvia.cs" />
+    <Compile Include="Models\Zenvia\SendSmsResponse.cs" />
+    <Compile Include="Models\Zenvia\sendSmsMultiRequest.cs" />
     <Compile Include="Operações\Alteracoes\frmAlteracaoCliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -339,17 +383,35 @@
     <Compile Include="Operações\Alteracoes\frmAlteracaoProduto.Designer.cs">
       <DependentUpon>frmAlteracaoProduto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operações\Alteracoes\frmAlterarMultOpcao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Alteracoes\frmAlterarMultOpcao.Designer.cs">
+      <DependentUpon>frmAlterarMultOpcao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operações\Alteracoes\frmAlterarOpcao.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Operações\Alteracoes\frmAlterarOpcao.Designer.cs">
       <DependentUpon>frmAlterarOpcao.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operações\Ações\frmEnvioPush.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Ações\frmEnvioPush.Designer.cs">
+      <DependentUpon>frmEnvioPush.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operações\Consultas\frmConsultaPedido.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Operações\Consultas\frmConsultaPedido.Designer.cs">
       <DependentUpon>frmConsultaPedido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operações\Estoque\frmConsultaEstoque.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Estoque\frmConsultaEstoque.Designer.cs">
+      <DependentUpon>frmConsultaEstoque.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\Financeiro\frmAberturaCaixa.cs">
       <SubType>Form</SubType>
@@ -440,11 +502,11 @@
     <Compile Include="Operações\frmInformaMotoboy.Designer.cs">
       <DependentUpon>frmInformaMotoboy.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operações\Estoque\frmLancaEstoque.cs">
+    <Compile Include="Operações\Estoque\frmLancaEstoqueProd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Operações\Estoque\frmLancaEstoque.Designer.cs">
-      <DependentUpon>frmLancaEstoque.cs</DependentUpon>
+    <Compile Include="Operações\Estoque\frmLancaEstoqueProd.Designer.cs">
+      <DependentUpon>frmLancaEstoqueProd.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\frmLicencaOFFLINE.cs">
       <SubType>Form</SubType>
@@ -501,11 +563,24 @@
     <Compile Include="Operações\Pedido\frmCadastrarStatus.Designer.cs">
       <DependentUpon>frmCadastrarStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="PromocoesFidelidade.cs" />
     <Compile Include="Relatorios\Caixa\RelFechamentoCaixaCompleto.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelFechamentoCaixaCompleto.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\Crystal\RelClientesPorOrigem.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelClientesPorOrigem.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\frmReportClientePorOrigem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Clientes\frmReportClientePorOrigem.Designer.cs">
+      <DependentUpon>frmReportClientePorOrigem.cs</DependentUpon>
     </Compile>
     <Compile Include="Relatorios\Delivery\Forms\frmReporVendaOnline.cs">
       <SubType>Form</SubType>
@@ -513,10 +588,58 @@
     <Compile Include="Relatorios\Delivery\Forms\frmReporVendaOnline.Designer.cs">
       <DependentUpon>frmReporVendaOnline.cs</DependentUpon>
     </Compile>
+    <Compile Include="Relatorios\Delivery\RelBalcao.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelBalcao.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelComandaMesaPorGrupo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelComandaMesaPorGrupo.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelComandaMesa_PorImpressora.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelComandaMesa_PorImpressora.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelCozinhaPorCozinhaGrupo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelCozinhaPorCozinhaGrupo.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelDelivery.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelDelivery.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelDeliveryCozinhaPorImpressora.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelDeliveryCozinhaPorImpressora.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Delivery\RelVendasOnline.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelVendasOnline.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Caixa\RelCaixaHistorico2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelCaixaHistorico2.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboyAgrupado.cs">
@@ -525,17 +648,23 @@
       <DependentUpon>RelEntregasMotoboyAgrupado.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Gerenciais\Cristal\RelEstoque.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelEstoque.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\Cristal\RelTickeMedio.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelTickeMedio.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Gerenciais\frmReporVendasPorVendedor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Relatorios\Gerenciais\frmReporVendasPorVendedor.Designer.cs">
       <DependentUpon>frmReporVendasPorVendedor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Relatorios\Push\frmEnvioPush.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Relatorios\Push\frmEnvioPush.Designer.cs">
-      <DependentUpon>frmEnvioPush.cs</DependentUpon>
     </Compile>
     <Compile Include="Relatorios\Push\OneSignal.cs" />
     <Compile Include="Relatorios\Caixa\RelSangria.cs">
@@ -562,8 +691,8 @@
     <Compile Include="Relatorios\Clientes\frmReporVendasPorCliente.Designer.cs">
       <DependentUpon>frmReporVendasPorCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="Relatorios\Delivery\RelComandaMesaSeparado.cs">
-      <DependentUpon>RelComandaMesaSeparado.rpt</DependentUpon>
+    <Compile Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinha.cs">
+      <DependentUpon>RelDeliveryCozinhaGrupoCozinha.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
@@ -608,18 +737,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelHistoricoCliente.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Relatorios\Delivery\RelBalcao.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RelBalcao.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Relatorios\Delivery\RelDelivery.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RelDelivery.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Delivery\RelDelivery_Epson.cs">
@@ -705,10 +822,10 @@
     <Compile Include="Cadastros\Produto\frmCadastrarProduto.Designer.cs">
       <DependentUpon>frmCadastrarProduto.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cadastros\frmCadastroCliente.cs">
+    <Compile Include="Cadastros\Pessoa\frmCadastroCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cadastros\frmCadastroCliente.Designer.cs">
+    <Compile Include="Cadastros\Pessoa\frmCadastroCliente.Designer.cs">
       <DependentUpon>frmCadastroCliente.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\frmConfiguracoes.cs">
@@ -731,10 +848,10 @@
     <Compile Include="Operações\frmEnvioEmail.Designer.cs">
       <DependentUpon>frmEnvioEmail.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operações\frmEnvioSms.cs">
+    <Compile Include="Operações\Ações\frmEnvioSms.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Operações\frmEnvioSms.Designer.cs">
+    <Compile Include="Operações\Ações\frmEnvioSms.Designer.cs">
       <DependentUpon>frmEnvioSms.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\frmLogin.cs">
@@ -839,7 +956,7 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Relatorios\Fechamentos\Novos\RelCaixaHistorico.cs">
+    <Compile Include="Relatorios\Caixa\RelCaixaHistorico.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelCaixaHistorico.rpt</DependentUpon>
@@ -914,12 +1031,6 @@
       <DependentUpon>RelEvolucaoVendas.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Relatorios\Gerenciais\Cristal\RelTickeMedio.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RelTickeMedio.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportVendasPorVendedor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -980,9 +1091,6 @@
     <EmbeddedResource Include="Cadastros\Empresa\frmHorariosEntrega.resx">
       <DependentUpon>frmHorariosEntrega.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\Financeiro\frmCadTurno.resx">
-      <DependentUpon>frmCadTurno.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmAdicionarMesa.resx">
       <DependentUpon>frmAdicionarMesa.cs</DependentUpon>
     </EmbeddedResource>
@@ -992,11 +1100,17 @@
     <EmbeddedResource Include="Cadastros\Pedido\frmFinalizacaoPedido.resx">
       <DependentUpon>frmFinalizacaoPedido.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\Pedido\frmFinalizaDelivery.resx">
+      <DependentUpon>frmFinalizaDelivery.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Pedido\frmOpcaoNumeric.resx">
       <DependentUpon>frmOpcaoNumeric.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Pedido\frmOpcaoRadio.resx">
       <DependentUpon>frmOpcaoRadio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\Pedido\frmProdutosTrocaFidelidade.resx">
+      <DependentUpon>frmProdutosTrocaFidelidade.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Pedido\frmSabores.resx">
       <DependentUpon>frmSabores.cs</DependentUpon>
@@ -1004,8 +1118,14 @@
     <EmbeddedResource Include="Cadastros\Pedido\frmTransfereMesa.resx">
       <DependentUpon>frmTransfereMesa.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\Pessoa\frmCadastroOrigem.resx">
+      <DependentUpon>frmCadastroOrigem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Pessoa\frmSelecionaEndereco.resx">
       <DependentUpon>frmSelecionaEndereco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\Produto\frmCadastroInsumo.resx">
+      <DependentUpon>frmCadastroInsumo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\Produto\frmFamilia.resx">
       <DependentUpon>frmFamilia.cs</DependentUpon>
@@ -1031,11 +1151,20 @@
     <EmbeddedResource Include="Operações\Alteracoes\frmAlteracaoProduto.resx">
       <DependentUpon>frmAlteracaoProduto.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Alteracoes\frmAlterarMultOpcao.resx">
+      <DependentUpon>frmAlterarMultOpcao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Operações\Alteracoes\frmAlterarOpcao.resx">
       <DependentUpon>frmAlterarOpcao.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Ações\frmEnvioPush.resx">
+      <DependentUpon>frmEnvioPush.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Operações\Consultas\frmConsultaPedido.resx">
       <DependentUpon>frmConsultaPedido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Estoque\frmConsultaEstoque.resx">
+      <DependentUpon>frmConsultaEstoque.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\Financeiro\frmAberturaCaixa.resx">
       <DependentUpon>frmAberturaCaixa.cs</DependentUpon>
@@ -1064,8 +1193,8 @@
     <EmbeddedResource Include="Operações\frmInformaMotoboy.resx">
       <DependentUpon>frmInformaMotoboy.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Operações\Estoque\frmLancaEstoque.resx">
-      <DependentUpon>frmLancaEstoque.cs</DependentUpon>
+    <EmbeddedResource Include="Operações\Estoque\frmLancaEstoqueProd.resx">
+      <DependentUpon>frmLancaEstoqueProd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmNotificacao.resx">
       <DependentUpon>frmNotificacao.cs</DependentUpon>
@@ -1094,6 +1223,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelSuprimento.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelClientesPorOrigem.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelClientesPorOrigem.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\Crystal\RelDebitosGeral.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDebitosGeral.cs</LastGenOutput>
@@ -1121,19 +1254,54 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelHistoricoCliente.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Clientes\frmReportClientePorOrigem.resx">
+      <DependentUpon>frmReportClientePorOrigem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Clientes\frmReporVendasPorCliente.resx">
       <DependentUpon>frmReporVendasPorCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\Forms\frmReporVendaOnline.resx">
       <DependentUpon>frmReporVendaOnline.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesaSeparado.rpt">
+    <EmbeddedResource Include="Relatorios\Delivery\RelBalcao.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelComandaMesaSeparado.cs</LastGenOutput>
+      <LastGenOutput>RelBalcao.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesaPorGrupo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelComandaMesaPorGrupo.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelComandaMesa_PorImpressora.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelComandaMesa_PorImpressora.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelCozinhaPorCozinhaGrupo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelCozinhaPorCozinhaGrupo.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelDelivery.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDelivery.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinha.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDeliveryCozinhaGrupoCozinha.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelDeliveryCozinhaPorImpressora.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelDeliveryCozinhaPorImpressora.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelVendasOnline.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelVendasOnline.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Caixa\RelCaixaHistorico2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelCaixaHistorico2.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboyAgrupado.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -1141,14 +1309,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\frmReportPadrao.resx">
       <DependentUpon>frmReportPadrao.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Delivery\RelBalcao.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelBalcao.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Delivery\RelDelivery.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelDelivery.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelDelivery_Epson.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -1198,7 +1358,7 @@
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportCancelamentos.resx">
       <DependentUpon>frmReportCancelamentos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelCaixaHistorico.rpt">
+    <EmbeddedResource Include="Relatorios\Caixa\RelCaixaHistorico.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelCaixaHistorico.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1239,7 +1399,7 @@
     <EmbeddedResource Include="Cadastros\Produto\frmCadastrarProduto.resx">
       <DependentUpon>frmCadastrarProduto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cadastros\frmCadastroCliente.resx">
+    <EmbeddedResource Include="Cadastros\Pessoa\frmCadastroCliente.resx">
       <DependentUpon>frmCadastroCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cadastros\frmCadastroEmailSMS.resx">
@@ -1263,7 +1423,7 @@
     <EmbeddedResource Include="Operações\frmEnvioEmail.resx">
       <DependentUpon>frmEnvioEmail.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Operações\frmEnvioSms.resx">
+    <EmbeddedResource Include="Operações\Ações\frmEnvioSms.resx">
       <DependentUpon>frmEnvioSms.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmLogin.resx">
@@ -1302,13 +1462,13 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelEntregasPorRegiao.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelEstoque.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelEstoque.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelEvolucaoVendas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelEvolucaoVendas.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelTickeMedio.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelTickeMedio.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportVendasPorVendedor.resx">
       <DependentUpon>frmReportVendasPorVendedor.cs</DependentUpon>
@@ -1316,6 +1476,10 @@
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\Impressao Termica\RelVendasPorVendedor.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelVendasPorVendedor.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelTickeMedio.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelTickeMedio.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelVendasPorVendedores.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -1332,9 +1496,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\frmReporVendasPorVendedor.resx">
       <DependentUpon>frmReporVendasPorVendedor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Push\frmEnvioPush.resx">
-      <DependentUpon>frmEnvioPush.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="DBExpertDataSet.xsc">
@@ -1633,182 +1794,182 @@
   <ItemGroup>
     <PublishFile Include="de\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="Dlls\mp2032.dll">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="Dlls\SiUSBXp.dll">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="es\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="fr\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="it\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="ja\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="ko\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.ReportViewer.Common">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.ReportViewer.DataVisualization">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.ReportViewer.WinForms">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.SqlServer.Types">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="pt\Microsoft.ReportViewer.WinForms.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="pt\Microsoft.SqlServer.Types.resources">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="Reports">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Resources\login.ico">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="Resources\login.png">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="XSistemas.ico">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>
@@ -1860,6 +2021,11 @@
     <Folder Include="bin\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

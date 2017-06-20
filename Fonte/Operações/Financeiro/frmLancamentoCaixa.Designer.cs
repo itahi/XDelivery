@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLancamentoCaixa));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtSolicitante = new System.Windows.Forms.TextBox();
@@ -51,6 +52,7 @@
             this.dtMovimento = new System.Windows.Forms.DateTimePicker();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,7 +88,8 @@
             this.txtSolicitante.Location = new System.Drawing.Point(142, 154);
             this.txtSolicitante.Name = "txtSolicitante";
             this.txtSolicitante.Size = new System.Drawing.Size(100, 20);
-            this.txtSolicitante.TabIndex = 7;
+            this.txtSolicitante.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.txtSolicitante, "Nome da pessoa que solicita o valor ");
             // 
             // label9
             // 
@@ -108,7 +111,6 @@
             this.cbxTurno.Name = "cbxTurno";
             this.cbxTurno.Size = new System.Drawing.Size(46, 21);
             this.cbxTurno.TabIndex = 3;
-            this.cbxTurno.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label8
             // 
@@ -189,8 +191,8 @@
             this.rbSaida.Size = new System.Drawing.Size(52, 17);
             this.rbSaida.TabIndex = 5;
             this.rbSaida.Text = "Saida";
+            this.toolTip1.SetToolTip(this.rbSaida, "Use para solicitações de vale, compras de itens , pagamentos de freelancer");
             this.rbSaida.UseVisualStyleBackColor = true;
-            this.rbSaida.CheckedChanged += new System.EventHandler(this.rbSaida_CheckedChanged);
             // 
             // rbEntrada
             // 
@@ -202,6 +204,7 @@
             this.rbEntrada.TabIndex = 4;
             this.rbEntrada.TabStop = true;
             this.rbEntrada.Text = "Entrada";
+            this.toolTip1.SetToolTip(this.rbEntrada, "Geralmente é usado quando se precisa colocar mais dinheiro para trocos no caixa");
             this.rbEntrada.UseVisualStyleBackColor = true;
             // 
             // txtDescricao
@@ -210,6 +213,7 @@
             this.txtDescricao.Name = "txtDescricao";
             this.txtDescricao.Size = new System.Drawing.Size(423, 20);
             this.txtDescricao.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.txtDescricao, "Preencha com a descrição do lançamento assim ficará fácil identifica-lo no caixa");
             // 
             // label3
             // 
@@ -325,5 +329,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtSolicitante;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

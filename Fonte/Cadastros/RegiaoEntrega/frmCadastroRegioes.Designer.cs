@@ -90,7 +90,7 @@
             this.txtPrevisao.MaxLength = 8;
             this.txtPrevisao.Name = "txtPrevisao";
             this.txtPrevisao.Size = new System.Drawing.Size(80, 20);
-            this.txtPrevisao.TabIndex = 40;
+            this.txtPrevisao.TabIndex = 6;
             this.toolTip1.SetToolTip(this.txtPrevisao, "Previsão de entrega para essa determinada região em Minutos");
             this.txtPrevisao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrevisao_KeyPress);
             // 
@@ -108,7 +108,7 @@
             this.txtTaxaGratis.Location = new System.Drawing.Point(141, 71);
             this.txtTaxaGratis.Name = "txtTaxaGratis";
             this.txtTaxaGratis.Size = new System.Drawing.Size(93, 20);
-            this.txtTaxaGratis.TabIndex = 9;
+            this.txtTaxaGratis.TabIndex = 5;
             this.toolTip1.SetToolTip(this.txtTaxaGratis, "Informe aqui o valor minimo que dará a entrega grátis");
             // 
             // chkOnline
@@ -117,7 +117,7 @@
             this.chkOnline.Location = new System.Drawing.Point(281, 32);
             this.chkOnline.Name = "chkOnline";
             this.chkOnline.Size = new System.Drawing.Size(77, 17);
-            this.chkOnline.TabIndex = 8;
+            this.chkOnline.TabIndex = 2;
             this.chkOnline.Text = "OnlineSN?";
             this.chkOnline.UseVisualStyleBackColor = true;
             // 
@@ -127,7 +127,7 @@
             this.chkAtivo.Location = new System.Drawing.Point(204, 33);
             this.chkAtivo.Name = "chkAtivo";
             this.chkAtivo.Size = new System.Drawing.Size(71, 17);
-            this.chkAtivo.TabIndex = 7;
+            this.chkAtivo.TabIndex = 1;
             this.chkAtivo.Text = "AtivoSN?";
             this.chkAtivo.UseVisualStyleBackColor = true;
             // 
@@ -136,7 +136,7 @@
             this.btnEditar.Location = new System.Drawing.Point(204, 104);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(154, 37);
-            this.btnEditar.TabIndex = 4;
+            this.btnEditar.TabIndex = 8;
             this.btnEditar.Text = "Editar [F11]";
             this.btnEditar.UseVisualStyleBackColor = true;
             this.btnEditar.Click += new System.EventHandler(this.Editar);
@@ -155,7 +155,7 @@
             this.txtEntrega.Location = new System.Drawing.Point(11, 71);
             this.txtEntrega.Name = "txtEntrega";
             this.txtEntrega.Size = new System.Drawing.Size(93, 20);
-            this.txtEntrega.TabIndex = 1;
+            this.txtEntrega.TabIndex = 4;
             this.toolTip1.SetToolTip(this.txtEntrega, "Valor da entrega para região");
             // 
             // btnSalvar
@@ -163,7 +163,7 @@
             this.btnSalvar.Location = new System.Drawing.Point(11, 104);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(161, 37);
-            this.btnSalvar.TabIndex = 3;
+            this.btnSalvar.TabIndex = 7;
             this.btnSalvar.Text = "Adicionar [F12]";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.AdicionarRegiao);
@@ -183,7 +183,6 @@
             this.txtRegiao.Name = "txtRegiao";
             this.txtRegiao.Size = new System.Drawing.Size(164, 20);
             this.txtRegiao.TabIndex = 0;
-            this.txtRegiao.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ConsultarCEP);
             // 
             // groupBox2
             // 

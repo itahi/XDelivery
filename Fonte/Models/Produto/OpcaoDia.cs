@@ -9,5 +9,6 @@ namespace DexComanda.Models.Produto
     public class OpcaoDia
     {
         public string Dia { get; set; }
+        public int AtivoSN { get; set; }
     }
 }

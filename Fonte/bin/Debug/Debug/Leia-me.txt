@@ -1,7 +1,0 @@
-é necessário a instalação do CrystalReport
-
-64 Bit
-http://downloads.businessobjects.com/akdlm/cr4vs2010/CRforVS_redist_install_64bit_13_0_14.zip
-
-32 Bit
-http://downloads.businessobjects.com/akdlm/cr4vs2010/CRforVS_redist_install_32bit_13_0_14.zip

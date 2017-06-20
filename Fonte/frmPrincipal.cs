@@ -7,8 +7,10 @@ using DexComanda.Integração;
 using DexComanda.Models;
 using DexComanda.Models.WS;
 using DexComanda.Operações;
+using DexComanda.Operações.Ações;
 using DexComanda.Operações.Alteracoes;
 using DexComanda.Operações.Consultas;
+using DexComanda.Operações.Estoque;
 using DexComanda.Operações.Financeiro;
 using DexComanda.Operações.Funções;
 using DexComanda.Push;
@@ -50,17 +52,23 @@ namespace DexComanda
         private DataSet dsPedidosAbertos;
         private DataSet itemsPedidoNaoImpresso;
         private int intCodEndereco;
-        public frmPrincipal()
+        private bool ImprimeViaBalcao = Utils.RetornaConfiguracaoBalcao().ImprimeSN;
+        private int QtdViasBalcao = int.Parse(Utils.RetornaConfiguracaoBalcao().ViaBalcao);
+
+        private bool ImprimeViaCozinha = Utils.RetornaConfiguracaoMesa().ImprimeSN;
+        private int QtdViasCozinha = int.Parse(Utils.RetornaConfiguracaoMesa().ViaCozinha);
+        private string TipoAgrupamentoCozinha = Utils.RetornaConfiguracaoMesa().TipoAgrupamento;
+        public frmPrincipal(Boolean iTimer = true)
         {
             con = new Conexao();
             InitializeComponent();
             this.Text = Text + RetornaVersao();
+            AtualizaGrid.Enabled = iTimer;
         }
 
         private void ConsultarCliente(object sender, EventArgs e)
         {
             BuscarCliente(txbTelefoneCliente.Text);
-
         }
         private void ExecutaRepeticaoPedido(int iCodPessoa, int codEnde)
         {
@@ -96,8 +104,8 @@ namespace DexComanda
 
             frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", 0, "0,00", TaxaEntrega,
                                                                         false, DateTime.Now, 0, CodPessoa,
-                                                                        "", "", "", "", null, 0.00M, 0.00M, 0, "", iCodEndeco);
-            CadPedido.ShowDialog();
+                                                                        "", "", "", "", 0.00M, 0.00M, 0, "", iCodEndeco);
+            CadPedido.Show(this);
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
             TotalizaPedidos();
         }
@@ -118,17 +126,15 @@ namespace DexComanda
                         frmCadastroCliente frm = new frmCadastroCliente();
                         frm.txtTelefone.Text = telefone;
                         frm.ShowDialog();
+                        
                     }
                 }
                 else if ((pessoaTelefone.Tables["Pessoa"].Rows.Count == 1))
                 {
                     if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                     {
-
                         DataSet Pessoa = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", telefone);
                         DataRow dRow = Pessoa.Tables["Pessoa"].Rows[0];
-
-
                         int CodigoPessoa = int.Parse(dRow.ItemArray.GetValue(0).ToString());
                         // intCodEndereco =  Utils.MaisEnderecos(CodigoPessoa);
                         intCodEndereco = int.Parse(dRow.ItemArray.GetValue(16).ToString());
@@ -146,7 +152,7 @@ namespace DexComanda
                         {
                             Utils.HistoricoCancelamentos(CodigoPessoa);
                         }
-
+                        //  Utils.VerificaPontosFidelidade(CodigoPessoa);
                         if (RepeteUltimoPedido)
                         {
                             ExecutaRepeticaoPedido(CodigoPessoa, intCodEndereco);
@@ -188,7 +194,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    MessageBox.Show("Caixa precisa estar aberto", "[XSistemas] Aviso");
+                    MessageBox.Show("Caixa precisa estar aberto", "[xSistemas] Aviso");
                 }
                 LimpaCampos();
             }
@@ -196,116 +202,121 @@ namespace DexComanda
             catch (Exception errobusca)
             {
 
-                MessageBox.Show(errobusca.Message, "Erro");
+                MessageBox.Show(Bibliotecas.cException + errobusca.Message);
             }
         }
         private void ExecutaCancelamento(int CodUserCancelamento)
         {
-            string NomeCliente = (this.pedidosGridView.CurrentRow.Cells["Nome Cliente"].Value.ToString());
-            int CodUser;
-            DateTime dtPedido;
-
-            if (pedidosGridView.SelectedRows.Count > 0)
+            try
             {
-                if (MessageBox.Show("Deseja **CANCELAR** o  pedido do Cliente " + NomeCliente + "?", "Cancelamento de Pedido !!!", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                string NomeCliente = pedidosGridView.CurrentRow.Cells["Nome Cliente"].Value.ToString();
+                int CodUser;
+                DateTime dtPedido;
+
+                if (pedidosGridView.SelectedRows.Count > 0)
                 {
-                    cancelPedid = new CancelarPedido();
-                    int Codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
-
-                    DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", Codigo);
-
-                    dtPedido = dsPedido.Tables[0].Rows[0].Field<DateTime>("RealizadoEm");
-                    DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
-                    int iCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
-
-                    if (Sessions.returnEmpresa.CNPJ == "13004606798")
+                    if (MessageBox.Show("Deseja **CANCELAR** o  pedido do Cliente " + NomeCliente + "?", "Cancelamento de Pedido !!!", MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
-                        DataSet dsItensPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsPedido", Codigo);
-                        for (int i = 0; i < dsItensPedido.Tables[0].Rows.Count; i++)
+                        cancelPedid = new CancelarPedido();
+                        int Codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+
+                        DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", Codigo);
+
+                        dtPedido = dsPedido.Tables[0].Rows[0].Field<DateTime>("RealizadoEm");
+                        DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
+                        int iCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
+
+                        if (Sessions.returnEmpresa.CNPJ == "13004606798")
                         {
-                            DataRow dRow = dsItensPedido.Tables[0].Rows[i];
-                            AtualizaEstoque atl = new AtualizaEstoque()
+                            DataSet dsItensPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsPedido", Codigo);
+                            for (int i = 0; i < dsItensPedido.Tables[0].Rows.Count; i++)
                             {
-                                CodProduto = int.Parse(dRow.ItemArray.GetValue(2).ToString()),
-                                Quantidade = -decimal.Parse(dRow.ItemArray.GetValue(4).ToString()),
-                                DataAtualizacao = Convert.ToDateTime(dtPedido.ToShortDateString()) //dsItensPedido.Tables[0].Rows[i]
-
-                            };
-                            con.Update("spAtualizaEstoque", atl);
-                        }
-                    }
-
-                    CodPedidoWS = VerificaPedidoOnline(Codigo);
-
-                    if (CodPedidoWS > 0)
-                    {
-                        if (Utils.MessageBoxQuestion("Este é um pedido gerado/recebido na plataforma Online , tem certeza que deseja cancela-lo?"))
-                        {
-                            AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoCancelado, iCodPessoa);
-                            // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
-                        }
-                    }
-
-
-                    cancelPedid.Codigo = Codigo;
-                    cancelPedid.RealizadoEm = DateTime.Now;
-
-                    int iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
-
-                    AtualizaStatusMesa(iCodMesa, Bibliotecas.cStatuMesaLiberada);
-                    //if (ControlaMesas && iCodMesa !=0)
-                    //{
-                    //    Utils.AtualizaMesa(iCodMesa, 1);
-                    //}
-                    cancelPedid.status = "Cancelado";
-                    if (Sessions.returnConfig.RegistraCancelamentos)
-                    {
-                        frmHistoricoCancelamento frm = new frmHistoricoCancelamento();
-                        int CodPessoa;
-                        try
-                        {
-                            frm.ShowDialog();
-                            if (frm.DialogResult == DialogResult.OK)
-                            {
-                                HistoricoCancelamento Hist = new HistoricoCancelamento()
+                                DataRow dRow = dsItensPedido.Tables[0].Rows[i];
+                                AtualizaEstoque atl = new AtualizaEstoque()
                                 {
-                                    CodMotivo = frm.CodMotivo,
-                                    CodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()),
-                                    Data = DateTime.Now,
-                                    Motivo = frm.ObsCancelamento,
-                                    CodPedido = Codigo
-                                };
+                                    CodProduto = int.Parse(dRow.ItemArray.GetValue(2).ToString()),
+                                    Quantidade = -decimal.Parse(dRow.ItemArray.GetValue(4).ToString()),
+                                    DataAtualizacao = Convert.ToDateTime(dtPedido.ToShortDateString()) //dsItensPedido.Tables[0].Rows[i]
 
-                                con.Insert("spAdicionaHistoricoCancelamento", Hist);
+                                };
+                                con.Update("spAtualizaEstoque", atl);
+                            }
+                        }
+
+                        CodPedidoWS = VerificaPedidoOnline(Codigo);
+
+                        if (CodPedidoWS > 0)
+                        {
+                            if (Utils.MessageBoxQuestion("Este é um pedido gerado/recebido na plataforma Online , tem certeza que deseja cancela-lo?"))
+                            {
+                                AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoCancelado, iCodPessoa);
+                                // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
+                            }
+                        }
+
+                        cancelPedid.Codigo = Codigo;
+
+                        int iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
+
+                        // Transferido rotina para spCancelarPedido
+                        //  AtualizaStatusMesa(iCodMesa, Bibliotecas.cStatuMesaLiberada);
+
+                        cancelPedid.status = "Cancelado";
+                        cancelPedid.CodUsuario = Sessions.retunrUsuario.Codigo;
+                        if (Sessions.returnConfig.RegistraCancelamentos)
+                        {
+                            frmHistoricoCancelamento frm = new frmHistoricoCancelamento();
+                            int CodPessoa;
+                            try
+                            {
+                                frm.ShowDialog();
+                                if (frm.DialogResult == DialogResult.OK)
+                                {
+                                    HistoricoCancelamento Hist = new HistoricoCancelamento()
+                                    {
+                                        CodMotivo = frm.CodMotivo,
+                                        CodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()),
+                                        Data = DateTime.Now,
+                                        Motivo = frm.ObsCancelamento,
+                                        CodPedido = Codigo
+                                    };
+
+                                    con.Insert("spAdicionaHistoricoCancelamento", Hist);
+                                }
+
+                            }
+
+                            finally
+                            {
+                                // dsPedido.Dispose();
+
                             }
 
                         }
-
-                        finally
+                        RemoveFinalizacao rem = new RemoveFinalizacao()
                         {
-                            // dsPedido.Dispose();
+                            CodPedido = cancelPedid.Codigo
+                        };
+                        con.Delete("spExcluirFinalizaPedido_Pedido", rem);
+                        cancelPedid.CodUsuario = CodUserCancelamento;
+                        //Utils.ControlaEventos("CancPedido", this.Name);
+                        con.Update("spCancelarPedido", cancelPedid);
 
-                        }
-
+                        Utils.ControlaEventos("CancPedido", this.Name);
+                        MessageBox.Show("Pedido Cancelado com sucesso.");
+                        Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
                     }
-                    RemoveFinalizacao rem = new RemoveFinalizacao()
-                    {
-                        CodPedido = cancelPedid.Codigo
-                    };
-                    con.Delete("spExcluirFinalizaPedido_Pedido", rem);
-                    cancelPedid.CodUsuario = CodUserCancelamento;
-                    //Utils.ControlaEventos("CancPedido", this.Name);
-                    con.Update("spCancelarPedido", cancelPedid);
-
-                    Utils.ControlaEventos("CancPedido", this.Name);
-                    MessageBox.Show("Pedido Cancelado com sucesso.");
-                    Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
+                }
+                else
+                {
+                    MessageBox.Show("Selecione um Pedido para **CANCELAR**");
                 }
             }
-            else
+            catch (Exception erro)
             {
-                MessageBox.Show("Selecione um Pedido para **CANCELAR**");
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
+
         }
         private void AtualizaStatusMesa(int iCodMesa, int iStatus)
         {
@@ -326,7 +337,7 @@ namespace DexComanda
         }
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
-
+            Utils.MontaCombox(cbxStatusPedido, "Nome", "Status", "PedidoStatus", "spObterPedidoStatus");
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
             int iNumeroCaixa = Sessions.retunrUsuario.CaixaLogado;
             DataSet dsCaixa = con.RetornaCaixaPorTurno(iNumeroCaixa, Sessions.retunrUsuario.Turno, DateTime.Now);
@@ -337,14 +348,18 @@ namespace DexComanda
                 lblCaixa.Text = "Caixa Aberto";
                 lblCaixa.ForeColor = Color.Green;
             }
+            string strTipoPedido = "";
+            if (cbxFiltroTipo.Text != "")
+            {
+                strTipoPedido = "And Pd.Tipo='" + cbxFiltroTipo.Text + "'";
+            }
 
             this.txbTelefoneCliente.Focus();
             Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
-            Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
+            Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido, false, strTipoPedido);
             Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
             MontaMenu();
             TotalizaPedidos();
-
         }
         private void MontaMenu() // Monta o menu de opções
         {
@@ -360,19 +375,13 @@ namespace DexComanda
             // Menu Visivel
             //relatórioToolStripMenuItem.Enabled = Sessions.retunrUsuario.AcessaRelatoriosSN;
             entregadorToolStripMenuItem.Visible = Sessions.returnConfig.ControlaEntregador;
-            envioDeSMSToolStripMenuItem.Enabled = Sessions.returnConfig.EnviaSMS;
+            //envioDeSMSToolStripMenuItem.Enabled = Sessions.returnConfig.EnviaSMS;
             alterarSenhaToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
-            usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
+            //usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
 
             this.txtUsuarioLogado.Text = Sessions.retunrUsuario.Nome;
-            //usuáriosToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
-            //relatórioToolStripMenuItem.Enabled = Sessions.retunrUsuario.AcessaRelatoriosSN;
             configuraçãoToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
-            usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
-            // FinanceiroToolStripMenuItem.Enabled = Sessions.retunrUsuario.AbreFechaCaixaSN;
-            // alteracaoStatusToolStripMenuItem.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
-            //sincronizaçãoToolStripMenuItem.Enabled = Sessions.retunrUsuario.AlteraProdutosSN;
-            //notificaçõesToolStripMenuItem.Enabled = Sessions.retunrUsuario.AdministradorSN;
+            //  usuáriosToolStripMenuItem.Visible = Sessions.returnConfig.UsaLoginSenha;
             lançamentoAvulsoToolStripMenuItem.Enabled = iCaixaAberto > 0;
 
         }
@@ -420,30 +429,41 @@ namespace DexComanda
         {
             try
             {
-                CarregaProduto(int.Parse(produtosGridView.SelectedCells[0].Value.ToString()));
+                CarregaProduto(int.Parse(produtosGridView.CurrentRow.Cells["Codigo"].Value.ToString()));
             }
             catch (Exception erro)
             {
 
-                MessageBox.Show(erro.Message);
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
         private void CarregaProduto(int iCodProduto)
         {
+            try
+            {
+                DataSet dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", iCodProduto, !chkProdutosInativos.Checked);
+
+                DataRow dRowProduto = dsProduto.Tables["Produto"].Rows[0];
+
+                frmCadastrarProduto frm = new frmCadastrarProduto(int.Parse(dRowProduto.ItemArray.GetValue(7).ToString()), dRowProduto.ItemArray.GetValue(0).ToString(), dRowProduto.ItemArray.GetValue(12).ToString(), dRowProduto.ItemArray.GetValue(3).ToString(),
+                                                                  decimal.Parse(dRowProduto.ItemArray.GetValue(1).ToString()), dRowProduto.ItemArray.GetValue(2).ToString(),
+                                                                  Convert.ToBoolean(dRowProduto.ItemArray.GetValue(6).ToString()), decimal.Parse(dRowProduto.ItemArray.GetValue(5).ToString()),
+                                                                  dRowProduto.ItemArray.GetValue(4).ToString(), dRowProduto.ItemArray.GetValue(8).ToString(), dRowProduto.ItemArray.GetValue(9).ToString(),
+                                                                  Convert.ToDateTime(dRowProduto.ItemArray.GetValue(10).ToString()), Convert.ToDateTime(dRowProduto.ItemArray.GetValue(11).ToString()),
+                                                                  Convert.ToBoolean(dRowProduto.ItemArray.GetValue(13).ToString()), dRowProduto.ItemArray.GetValue(14).ToString(), dRowProduto.ItemArray.GetValue(15).ToString(), dRowProduto.ItemArray.GetValue(16).ToString()
+                                                                  , int.Parse(dRowProduto.ItemArray.GetValue(18).ToString()), int.Parse(dRowProduto.ItemArray.GetValue(19).ToString()),
+                                                                  dsProduto.Tables[0].Rows[0].Field<Boolean>("ControlaEstoque"), dsProduto.Tables[0].Rows[0].Field<decimal>("EstoqueMinimo"), produtosGridView,
+                                                                  dsProduto.Tables[0].Rows[0].Field<string>("PalavrasChaves"));
+                frm.StartPosition = FormStartPosition.CenterParent;
+                frm.ShowDialog();
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
             //Carrega Produto
-            int index = rowIndex;
-            DataSet dsProduto = con.SelectRegistroPorCodigo("Produto", "spObterProdutoPorCodigo", iCodProduto, !chkProdutosInativos.Checked);
 
-            DataRow dRowProduto = dsProduto.Tables["Produto"].Rows[0];
 
-            frmCadastrarProduto frm = new frmCadastrarProduto(int.Parse(dRowProduto.ItemArray.GetValue(7).ToString()), dRowProduto.ItemArray.GetValue(0).ToString(), dRowProduto.ItemArray.GetValue(12).ToString(), dRowProduto.ItemArray.GetValue(3).ToString(),
-                                                              decimal.Parse(dRowProduto.ItemArray.GetValue(1).ToString()), dRowProduto.ItemArray.GetValue(2).ToString(),
-                                                              Convert.ToBoolean(dRowProduto.ItemArray.GetValue(6).ToString()), decimal.Parse(dRowProduto.ItemArray.GetValue(5).ToString()),
-                                                              dRowProduto.ItemArray.GetValue(4).ToString(), dRowProduto.ItemArray.GetValue(8).ToString(), dRowProduto.ItemArray.GetValue(9).ToString(),
-                                                              Convert.ToDateTime(dRowProduto.ItemArray.GetValue(10).ToString()), Convert.ToDateTime(dRowProduto.ItemArray.GetValue(11).ToString()),
-                                                              Convert.ToBoolean(dRowProduto.ItemArray.GetValue(13).ToString()), dRowProduto.ItemArray.GetValue(14).ToString());
-            frm.StartPosition = FormStartPosition.CenterParent;
-            frm.ShowDialog();
             if (cbxGrupoProduto.SelectedValue.ToString() != "0")
             {
                 Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto, !chkProdutosInativos.Checked, " and CodGrupo=" + cbxGrupoProduto.SelectedValue.ToString(), rowIndex);
@@ -489,6 +509,10 @@ namespace DexComanda
         }
         private void MenuAuxiliar(object sender, MouseEventArgs e)
         {
+            if (produtosGridView.Rows.Count == 0)
+            {
+                return;
+            }
             DataGridView dgv = sender as DataGridView;
             if (e.Button == MouseButtons.Right)
             {
@@ -508,7 +532,7 @@ namespace DexComanda
             {
                 DataSet ds;
                 ds = new DataSet("Pedido");
-                if (cbxFiltroTipo.Text.Contains("Todos"))
+                if (cbxFiltroTipo.Text.Contains("Todos") || cbxFiltroTipo.Text == "")
                 {
                     ds = Utils.PopularGrid("Pedido", pedidosGridView, Sessions.SqlPedido);
                 }
@@ -518,7 +542,7 @@ namespace DexComanda
                     DataSet result = con.SelectAll("Pedido", "spObterPedido");
                     Consulta = cbxFiltroTipo.Text;
 
-                    Consulta = "Tipo LIKE '%" + cbxFiltroTipo.Text + "%'";
+                    Consulta = "Tipo='" + cbxFiltroTipo.Text + "'";
 
                     var Linhas = result.Tables[0].DefaultView;
                     Linhas.RowFilter = Consulta;
@@ -546,21 +570,30 @@ namespace DexComanda
         }
         private void TotalizaPedidos()
         {
-            if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cBuris)
+            try
             {
-                return;
-            }
-            double dblTotalPedidos = 0;
-            for (int i = 0; i < pedidosGridView.Rows.Count; i++)
-            {
-                if (pedidosGridView.Columns.Contains("TotalPedido"))
+                if (Sessions.returnEmpresa.CNPJ == Bibliotecas.cBuris
+                 || Sessions.returnEmpresa.CNPJ == Bibliotecas.cLeoHamburguer)
                 {
-                    dblTotalPedidos = dblTotalPedidos + double.Parse(pedidosGridView.Rows[i].Cells["TotalPedido"].Value.ToString());
+                    return;
                 }
-
+                double dblTotalPedidos = 0;
+                for (int i = 0; i < pedidosGridView.Rows.Count; i++)
+                {
+                    if (pedidosGridView.Columns.Contains("TotalPedido"))
+                    {
+                        dblTotalPedidos = dblTotalPedidos + double.Parse(pedidosGridView.Rows[i].Cells["TotalPedido"].Value.ToString());
+                    }
+                }
+                //lblValor.Text = dblTotalPedidos.ToString();
+                //lblQtd.Text = pedidosGridView.Rows.Count.ToString();
             }
-            lblValor.Text = dblTotalPedidos.ToString();
-            lblQtd.Text = pedidosGridView.Rows.Count.ToString();
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+
         }
         private void BuscaPedidoCliente(object sender, KeyEventArgs e)
         {
@@ -589,7 +622,6 @@ namespace DexComanda
         private void MarcarPedidos(object sender, DataGridViewCellEventArgs e)
         {
             bool blSelecionado = Convert.ToBoolean(this.pedidosGridView.CurrentRow.Cells["Finalizado"].Value.ToString());
-            //if (pedidosGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             if (e.RowIndex >= 0)
             {
                 if (pedidosGridView.CurrentRow.Cells["Finalizado"].Value.ToString() != null)
@@ -619,39 +651,32 @@ namespace DexComanda
                 TaxaServico = Utils.RetornaTaxaPorCliente(int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), 0);
             }
 
-            string strTrocoPara = DvPedido.ItemArray.GetValue(4).ToString();
-            string strTotalPedido = DvPedido.ItemArray.GetValue(3).ToString();
-            string strDescPedido = DvPedido.ItemArray.GetValue(14).ToString();
+            decimal strTrocoPara = DsPedido.Tables[0].Rows[0].Field<decimal>("TrocoPara");
+            string strTotalPedido = DsPedido.Tables[0].Rows[0].Field<decimal>("TotalPedido").ToString();
+            string strDescPedido = DsPedido.Tables[0].Rows[0].Field<decimal>("DescontoValor").ToString();
             string strTroco = "0,00";
-            decimal MargemGarcon = decimal.Parse(DvPedido.ItemArray.GetValue(16).ToString());
-            int intCodVendedor = int.Parse(DvPedido.ItemArray.GetValue(17).ToString());
-            string iObservacao = DvPedido.ItemArray.GetValue(18).ToString();
-            int iNumMesa = int.Parse(DvPedido.ItemArray.GetValue(12).ToString());
-            if (strTrocoPara != "0,00" && strTrocoPara != "0")
+            decimal MargemGarcon = DsPedido.Tables[0].Rows[0].Field<decimal>("MargemGarcon");
+            int intCodVendedor = DsPedido.Tables[0].Rows[0].Field<int>("CodUsuario");
+            string iObservacao = DsPedido.Tables[0].Rows[0].Field<string>("Observacao");
+            int iNumMesa = DsPedido.Tables[0].Rows[0].Field<int>("CodigoMesa");
+            if (strTrocoPara != 0.00M)
             {
-                strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
+                strTroco = Convert.ToString(strTrocoPara - decimal.Parse(strTotalPedido));
             }
-            int intCodEndereco = int.Parse(DvPedido.ItemArray.GetValue(20).ToString());
+            int intCodEndereco = DsPedido.Tables[0].Rows[0].Field<int>("CodEndereco");
             frmCadastrarPedido frm = new frmCadastrarPedido(false, strDescPedido, iNumMesa,
-                                      strTroco, TaxaServico, true, Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString()),
-                                      int.Parse(DvPedido.ItemArray.GetValue(1).ToString()), int.Parse(DvPedido.ItemArray.GetValue(2).ToString()), DvPedido.ItemArray.GetValue(4).ToString(),
-                                      DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(), null,
-                                      decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao, intCodEndereco);
-            frm.ShowDialog();
+                                      strTroco, TaxaServico, true, DsPedido.Tables[0].Rows[0].Field<DateTime>("RealizadoEM"),
+                                     DsPedido.Tables[0].Rows[0].Field<int>("Codigo"), DsPedido.Tables[0].Rows[0].Field<int>("CodPessoa"), DvPedido.ItemArray.GetValue(4).ToString(),
+                                      DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(),
+                                      decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao, intCodEndereco, DsPedido.Tables[0].Rows[0].Field<string>("Senha"));
+            frm.Show();
+
         }
         private void EditarPedido(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
                 int codigo = 0;
-                int codigoPessoa = 0;
-                decimal tPara = 0.00M;
-                decimal TotalPedido = 0.00M;
-                decimal TaxaEntrega = 0.00M;
-                string TrocoTotal = "0.00";
-                string fPagamento = null;
-                DateTime DataPedido;
-
                 /* Code here */
                 if (pedidosGridView.SelectedCells.Count > 0)
                 {
@@ -659,7 +684,9 @@ namespace DexComanda
                     CarregaPedido(codigo);
 
                 }
-                Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
+                string iTipoPedido = " And Pd.Tipo='" + cbxFiltroTipo.Text + "'";
+                FiltraTipoPedido(sender, e);
+                // Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido,true, iTipoPedido);
 
             }
             catch (Exception es)
@@ -671,6 +698,10 @@ namespace DexComanda
 
         private void MenuAuxiliarPedido(object sender, MouseEventArgs e)
         {
+            if (pedidosGridView.Rows.Count == 0)
+            {
+                return;
+            }
             DataGridView dgv = sender as DataGridView;
             if (e.Button == MouseButtons.Right)
             {
@@ -709,7 +740,7 @@ namespace DexComanda
                 FinalizaSelecionados.Click += FinalizaTodos;
                 InformaEntregador.Click += SelecionaBoy;
                 StatusConcluido.Click += PEdidoConcluido;
-                
+
 
                 m.MenuItems.Add(CancPedido);
                 m.MenuItems.Add(FinalizarPed);
@@ -717,11 +748,15 @@ namespace DexComanda
                 m.MenuItems.Add(InformaEntregador);
                 m.MenuItems.Add(StatusConcluido);
 
-                if (Utils.VerificaSeEmesa(int.Parse(pedidosGridView.CurrentRow.Cells[0].Value.ToString())))
+                if (pedidosGridView.Rows.Count > 0)
                 {
-                    m.MenuItems.Add(TransMesa);
-                    TransMesa.Click += TransfereMesa;
+                    if (Utils.VerificaSeEmesa(int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString())))
+                    {
+                        m.MenuItems.Add(TransMesa);
+                        TransMesa.Click += TransfereMesa;
+                    }
                 }
+
                 m.MenuItems.Add(PedidoONline);
                 int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
                 m.Show(dgv, new Point(e.X, e.Y));
@@ -734,59 +769,32 @@ namespace DexComanda
             try
             {
                 bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
-                int codigo;
-                bool Marcado;
-                string NumeroMesa;
-                int iCodMesa;
 
                 if (Utils.MessageBoxQuestion("Deseja ** FINALIZAR ** Todos Pedidos Selecionado?"))
                 {
-
-                    for (int i = 0; i < pedidosGridView.Rows.Count; i++)
+                    if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "FinalizaPedidoSN"))
                     {
-                        Marcado = Convert.ToBoolean(this.pedidosGridView.Rows[i].Cells["Finalizado"].Value.ToString());
-                        decimal dblTotalPedido;
-                        if (Marcado)
+                        if (Utils.MessageBoxQuestion(Bibliotecas.cSolicitarPermissao))
                         {
-                            codigo = int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString());
-                            //int.Parse(pedidosGridView.CurrentRow[i].Cells["Codigo"].Value.ToString());
-
-                            DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
-                            DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
-                            int iCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
-                            CodPedidoWS = VerificaPedidoOnline(codigo);
-                            if (CodPedidoWS > 0)
+                            frmLiberação frm = new frmLiberação("FinalizaPedidoSN");
+                            if (frm.Autorizacao)
                             {
-                                AlteraStatusPedido(CodPedidoWS, 5, iCodPessoa);
-                                // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
+                                ExecutaFinalizacaoMultipla();
+                                frm.Close();
                             }
-                            int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
-                            dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
-
-                            // Atualiza Ticket Fidelidade
-                            AtualizarFidelidade(intCodPessoa);
-
-                            // Grava Débito caso o Tipo de Pagamento gerar financeiro 
-                            string strFormaPagamento = dRowPedido.ItemArray.GetValue(5).ToString();
-                            Utils.GeraHistorico(DateTime.Now, int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()), dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D', strFormaPagamento);
-
-                            // Grava Movimento De Caixa
-                            GravaMOvimentoCaixa(strFormaPagamento, dblTotalPedido, codigo);
-
-                            iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
-                            if (ControlaMesas && iCodMesa != 0)
+                            else
                             {
-                                Utils.AtualizaMesa(iCodMesa, 1);
+                                MessageBox.Show(Bibliotecas.cUsuarioSemPermissao);
                             }
-                            Utils.ControlaEventos("BaixaPed", this.Name);
-                            con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo, 1);
-
                         }
-
+                    }
+                    else
+                    {
+                        ExecutaFinalizacaoMultipla();
                     }
 
 
-                    Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
+
                 }
 
 
@@ -796,6 +804,70 @@ namespace DexComanda
                 MessageBox.Show("Não foi possivel selecionar o Pedido" + erro.Message);
             }
 
+        }
+        private void ExecutaFinalizacaoMultipla()
+        {
+
+            for (int i = 0; i < pedidosGridView.Rows.Count; i++)
+            {
+                Boolean Marcado = Convert.ToBoolean(this.pedidosGridView.Rows[i].Cells["Finalizado"].Value.ToString());
+                decimal dblTotalPedido;
+                int codigo;
+                if (Marcado)
+                {
+                    codigo = int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString());
+                    //int.Parse(pedidosGridView.CurrentRow[i].Cells["Codigo"].Value.ToString());
+
+                    DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
+                    if (dsPedido.Tables[0].Rows[0].Field<int>("CodigoMesa") != 0)
+                    {
+                        MessageBox.Show("Esse modo de finalização não pode ser para 'Mesas' ");
+                        return;
+
+                    }
+
+                    DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
+                    int iCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
+                    CodPedidoWS = VerificaPedidoOnline(codigo);
+                    if (CodPedidoWS > 0)
+                    {
+                        AlteraStatusPedido(CodPedidoWS, 5, iCodPessoa);
+                        // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
+                    }
+                    int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
+                    dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
+
+                    // Atualiza Ticket Fidelidade
+                    AtualizarFidelidade(intCodPessoa);
+
+                    // Grava Débito caso o Tipo de Pagamento gerar financeiro 
+                    string strFormaPagamento = dRowPedido.ItemArray.GetValue(5).ToString();
+                    Utils.GeraHistorico(DateTime.Now, int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()), dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D', strFormaPagamento);
+
+                    int icodFormaPagamento = RetornaCodFormaPagamento(strFormaPagamento);
+                    GravaMOvimentoCaixa(icodFormaPagamento, dblTotalPedido, codigo);
+                    InsereFormasPagamento(codigo, icodFormaPagamento, dblTotalPedido);
+                    Utils.ControlaEventos("BaixaPed", this.Name);
+                    //  Utils.ControleFidelidade(codigo, intCodPessoa, dblTotalPedido);
+                    con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo, 1);
+
+                }
+
+            }
+
+
+            Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
+        }
+        private int RetornaCodFormaPagamento(string strFormaPagamento)
+        {
+            int iIFormaPagamento = 1;
+            DataSet dsPedido = con.SelectObterFormaPagamentoPorNOme(strFormaPagamento, "FormaPagamento");
+            if (dsPedido.Tables[0].Rows.Count > 0)
+            {
+                DataRow dRow = dsPedido.Tables[0].Rows[0];
+                iIFormaPagamento = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+            }
+            return iIFormaPagamento;
         }
         private void ExecutaFinalizacao()
         {
@@ -809,19 +881,18 @@ namespace DexComanda
                 {
                     codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
                     DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
-                    DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
-                    int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
+                    //  DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
+                    int intCodPessoa = dsPedido.Tables[0].Rows[0].Field<int>("CodPessoa");
                     CodPedidoWS = VerificaPedidoOnline(codigo);
                     if (CodPedidoWS > 0)
                     {
                         AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoConcluido, intCodPessoa);
-                        MessageBox.Show("Atualização realizada com sucesso, pedido entregue");
                     }
 
-                    iCodMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
+                    iCodMesa = dsPedido.Tables[0].Rows[0].Field<int>("CodigoMesa");
 
-                    dblTotalPedido = decimal.Parse(dRowPedido.ItemArray.GetValue(3).ToString());
-                    string iTipo = dRowPedido.ItemArray.GetValue(8).ToString();
+                    dblTotalPedido = dsPedido.Tables[0].Rows[0].Field<decimal>("TotalPedido");
+                    string iTipo = dsPedido.Tables[0].Rows[0].Field<string>("Tipo");
 
                     //Caso O Pedido for Entrega e o Sistema controle 
                     //os entregadores ele abre a tela pedido pra informar quem entregou
@@ -837,25 +908,22 @@ namespace DexComanda
                         frmFinalizacaoPedido frm = new frmFinalizacaoPedido(dblTotalPedido, false, codigo, iCodMesa);
                         frm.StartPosition = FormStartPosition.CenterParent;
                         frm.ShowDialog();
-
-                        if (frm.boolFinalizou)
-                        {
-                            bFinalizouViaMesa = true;
-                            AtualizaStatusMesa(iCodMesa, Bibliotecas.cStatuMesaLiberada);
-                        }
-                        else
+                        bFinalizouViaMesa = frm.boolFinalizou;
+                        if (!bFinalizouViaMesa)
                         {
                             return;
                         }
-
                     }
 
                     // Grava Débito caso o Tipo de Pagamento gerar financeiro 
-                    string strFormaPagamento = dRowPedido.ItemArray.GetValue(5).ToString();
-                    Utils.GeraHistorico(DateTime.Now, int.Parse(dRowPedido.ItemArray.GetValue(2).ToString()), dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D', strFormaPagamento);
+                    string strFormaPagamento = dsPedido.Tables[0].Rows[0].Field<string>("FormaPagamento");
+                    Utils.GeraHistorico(DateTime.Now, intCodPessoa, dblTotalPedido, Sessions.retunrUsuario.Codigo, "Pedido Nº " + codigo, 'D', strFormaPagamento);
 
                     // Grava Movimento De Caixa
-                    GravaMOvimentoCaixa(strFormaPagamento, dblTotalPedido, codigo);
+                    int icodFormaPagamento = RetornaCodFormaPagamento(strFormaPagamento);
+                    GravaMOvimentoCaixa(icodFormaPagamento, dblTotalPedido, codigo);
+
+                    InsereFormasPagamento(codigo, icodFormaPagamento, dblTotalPedido);
 
                     // Atualiza Ticket Fidelidade
                     AtualizarFidelidade(intCodPessoa);
@@ -866,6 +934,8 @@ namespace DexComanda
                     {
                         con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", codigo, 1);
                     }
+
+                    //Utils.ControleFidelidade(codigo, intCodPessoa, dblTotalPedido);
 
                     //Atualiza Grid
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
@@ -878,14 +948,56 @@ namespace DexComanda
             }
             catch (Exception erro)
             {
-                MessageBox.Show("Não foi possivel selecionar o Pedido" + erro.Message);
+                MessageBox.Show("Não foi possivel selecionar o Pedido " + erro.Message);
             }
 
         }
+        private void InsereFormasPagamento(int iCodPedido, int iCodPagamento, decimal dTotalPedido)
+        {
+            try
+            {
+                DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPOrCodigo", iCodPedido);
+
+                if (dsPedido.Tables[0].Rows.Count == 0)
+                {
+                    return;
+                }
+
+                if (con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPOrCodigo", iCodPedido).Tables[0].Rows
+                    [0].Field<string>("Tipo") == "1 - Mesa")
+                {
+                    return;
+                }
+                FinalizaPedido finalizaPed = new FinalizaPedido()
+                {
+                    CodPedido = iCodPedido,
+                    CodPagamento = iCodPagamento,
+                    ValorPagamento = dTotalPedido
+                };
+                con.Insert("spAdicionarFinalizaPedido_Pedido", finalizaPed);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
         private void TransfereMesa(object sender, EventArgs e)
         {
-            frmTransfereMesa frmMe = new frmTransfereMesa();
-            frmMe.ShowDialog();
+            decimal totalPedido = 0.00M;
+            int codPessoa = 0;
+            int codPedidtransfe = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+            DataSet ds = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoporCodigo", codPedidtransfe);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                totalPedido = ds.Tables[0].Rows[0].Field<decimal>("TotalPedido");
+                codPessoa = ds.Tables[0].Rows[0].Field<int>("CodPessoa");
+
+                frmTransfereMesa frmMe = new frmTransfereMesa(codPedidtransfe, totalPedido, codPessoa);
+                frmMe.ShowDialog();
+            }
+
+
+
         }
 
         private void PEdidoConcluido(object sender, EventArgs e)
@@ -902,7 +1014,6 @@ namespace DexComanda
                 if (Utils.MessageBoxQuestion(Bibliotecas.cSolicitarPermissao))
                 {
                     frmLiberação frm = new frmLiberação("FinalizaPedidoSN");
-                    //frm.ShowDialog();
                     if (frm.Autorizacao)
                     {
                         ExecutaFinalizacao();
@@ -939,22 +1050,26 @@ namespace DexComanda
             InformaMotoboyPedido(intCodPedido);
 
         }
+        /// <summary>
+        /// Verifica se o motoboy já foi informado
+        /// </summary>
+        /// <param name="iCodPedido">Código do pedido</param>
+        /// <returns></returns>
         private Boolean VerificaSeMotoboyFoiInformado(int iCodPedido)
         {
             Boolean iReturn = false;
-            int teste = int.Parse(con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).
-                Tables[0].Rows[0].ItemArray.GetValue(15).ToString());
-            if (teste > 0)
-            {
-                iReturn = true;
-            }
+            return iReturn = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).
+                Tables[0].Rows[0].Field<int>("CodMotoboy") > 0;
 
-            if (iReturn)
-            {
-                iReturn = Utils.MessageBoxQuestion("Motoboy já foi informado nesse pedido deseja alterar?");
-            }
-            return iReturn;
+            //if (iReturn)
+            //{
+            //    iReturn = Utils.MessageBoxQuestion("Motoboy já foi informado nesse pedido deseja alterar?");
+            //}
         }
+        /// <summary>
+        /// Informa o entregador no pedido
+        /// </summary>
+        /// <param name="iCodPedido">Código do pedido a ser alterado</param>
         private void InformaMotoboyPedido(int iCodPedido)
         {
             try
@@ -999,33 +1114,26 @@ namespace DexComanda
         }
         private void AtualizarFidelidade(int iCodPessoa)
         {
-            if (Sessions.returnConfig.ControlaFidelidade)
-            {
-                AtualizarFidelidade atlFideli = new AtualizarFidelidade()
-                {
-                    CodPessoa = iCodPessoa,
-                    Ticket = 1
-                };
+            //if (Sessions.returnConfig.ControlaFidelidade)
+            //{
+            //    AtualizarFidelidade atlFideli = new AtualizarFidelidade()
+            //    {
+            //        CodPessoa = iCodPessoa,
+            //        Ticket = 1
+            //    };
 
-                con.Update("spAlteraFidelidade", atlFideli);
-            }
+            //    con.Update("spAlteraFidelidade", atlFideli);
+            //}
         }
-        private void GravaMOvimentoCaixa(string iFPagamento, decimal iValor, int iCodPedido)
+        private void GravaMOvimentoCaixa(int iFPagamento, decimal iValor, int iCodPedido)
         {
             // Retornando o IDFpagamento
             try
             {
-                int iIFormaPagamento = 1;
-                DataSet dsPedido = con.SelectObterFormaPagamentoPorNOme(iFPagamento, "FormaPagamento");
-                if (dsPedido.Tables[0].Rows.Count > 0)
-                {
-                    DataRow dRow = dsPedido.Tables[0].Rows[0];
-                    iIFormaPagamento = int.Parse(dRow.ItemArray.GetValue(0).ToString());
-                }
+
                 CaixaMovimento caixa = new CaixaMovimento()
                 {
-                    CodCaixa = Sessions.retunrUsuario.CaixaLogado,
-                    CodFormaPagamento = iIFormaPagamento,
+                    CodFormaPagamento = iFPagamento,    
                     Data = DateTime.Now,
                     Historico = "Pedido " + iCodPedido,
                     NumeroDocumento = iCodPedido.ToString(),
@@ -1033,7 +1141,6 @@ namespace DexComanda
                     Valor = iValor,
                     CodUser = Sessions.retunrUsuario.Codigo,
                     Turno = Sessions.retunrUsuario.Turno
-
                 };
                 con.Insert("spInserirMovimentoCaixa", caixa);
 
@@ -1045,18 +1152,6 @@ namespace DexComanda
             }
 
         }
-        //private void CancelarPedidos(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-
-
-        //    }
-        //    catch (Exception ER)
-        //    {
-        //        MessageBox.Show("Não foi possivel **CANCELAR O PEDIDO**" + ER.Message);
-        //    }
-        //}
         private void CancelarPedidos(object sender, EventArgs e)
         {
             try
@@ -1087,7 +1182,7 @@ namespace DexComanda
         {
             try
             {
-                int intCodPedido = int.Parse(pedidosGridView.SelectedRows[rowIndex].Cells["Codigo"].Value.ToString());
+                int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
                 CodPedidoWS = VerificaPedidoOnline(intCodPedido);
                 if (CodPedidoWS > 0)
                 {
@@ -1113,7 +1208,7 @@ namespace DexComanda
         {
             try
             {
-                int intCodPedido = int.Parse(pedidosGridView.SelectedRows[rowIndex].Cells["Codigo"].Value.ToString());
+                int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
                 CodPedidoWS = VerificaPedidoOnline(intCodPedido);
                 if (CodPedidoWS > 0)
                 {
@@ -1151,25 +1246,33 @@ namespace DexComanda
 
         private void AlteraStatusPedido(int iCodPedidows, int iStatus, int iIdCliente = 0)
         {
-            GerarToken();
-            RestClient client = new RestClient(cUrlWs);
-            RestRequest request = new RestRequest("ws/pedidos/status", Method.POST);
-            request.AddParameter("idPedido", iCodPedidows);
-            request.AddParameter("idStatus", iStatus);
-            request.AddParameter("token", iParamToken);
-            RestResponse response = (RestResponse)client.Execute(request);
-            OneSignal on = new OneSignal();
-
-            on.BuscaCliente(iIdCliente, iStatus);
-            if (response.Content.Contains("true"))
+            try
             {
-                MessageBox.Show("Alteração realizada com sucesso");
+                GerarToken();
+                RestClient client = new RestClient(cUrlWs);
+                RestRequest request = new RestRequest("ws/pedidos/status", Method.POST);
+                request.AddParameter("idPedido", iCodPedidows);
+                request.AddParameter("idStatus", iStatus);
+                request.AddParameter("token", iParamToken);
+                RestResponse response = (RestResponse)client.Execute(request);
+                OneSignal on = new OneSignal();
 
+                on.BuscaCliente(iIdCliente, iStatus);
             }
-            else
+            catch (Exception erro)
             {
-                MessageBox.Show("Alteração não pode ser realizada, favor tentar novamente mais tarde");
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
+
+            //if (response.Content.Contains("true"))
+            //{
+            //    MessageBox.Show("Alteração realizada com sucesso");
+
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Alteração não pode ser realizada, favor tentar novamente mais tarde");
+            //}
 
 
         }
@@ -1177,7 +1280,7 @@ namespace DexComanda
         {
             try
             {
-                int intCodEndereco = int.Parse(con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", CodPessoa).Tables[0].Rows[0].ItemArray.GetValue(20).ToString());
+                int intCodEndereco = (con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", CodPessoa).Tables[0].Rows[0].Field<int>("CodEndereco"));
                 if (Sessions.returnConfig.RepeteUltimoPedido)
                 {
                     ExecutaRepeticaoPedido(CodPessoa, intCodEndereco);
@@ -1187,9 +1290,8 @@ namespace DexComanda
                     decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, intCodEndereco);
                     frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", 0, "0,00",
                                                                     TaxaServico, false, DateTime.Now, 0,
-                                                                    CodPessoa,
-                                                                        "0,00", "", "", "", null, 0.00M, 0, 0, "", intCodEndereco);
-                    frm.ShowDialog();
+                                                                    CodPessoa, "0,00", "Dinheiro", "", "", 0.00M, 0, 0, "", intCodEndereco);
+                    frm.Show(this);
                 }
 
             }
@@ -1201,6 +1303,11 @@ namespace DexComanda
 
         private void MenuAuxiliarCliente(object sender, MouseEventArgs e)
         {
+            if (clientesGridView.Rows.Count==0)
+            {
+                return;
+            }
+
             try
             {
                 DataGridView dgv = sender as DataGridView;
@@ -1214,9 +1321,6 @@ namespace DexComanda
 
                     m.MenuItems.Add(MontarPedido);
                     m.MenuItems.Add(ExcluirCliente);
-                    // Se o caixa estiver aberto ele Libera pra criar PEdido
-
-
                     int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
 
                     m.Show(dgv, new Point(e.X, e.Y));
@@ -1266,18 +1370,20 @@ namespace DexComanda
                 {
                     return;
                 }
-                rowIndex = clientesGridView.CurrentRow.Index;
-                int CodCliente = int.Parse(clientesGridView.Rows[rowIndex].Cells[0].Value.ToString());
+
+                int CodCliente = int.Parse(clientesGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+                // Utils.VerificaPontosFidelidade(CodCliente);
                 if (Sessions.returnConfig.RegistraCancelamentos)
                 {
                     Utils.HistoricoCancelamentos(CodCliente);
                 }
                 AbrirPedido(CodCliente);
+                FiltraTipoPedido(sender, e);
             }
             catch (Exception xx)
             {
 
-                MessageBox.Show(xx.Message);
+                MessageBox.Show(Bibliotecas.cException + xx.Message);
             }
         }
 
@@ -1294,8 +1400,8 @@ namespace DexComanda
                                                                       dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(),
-                                                                      dRowPessoa.ItemArray.GetValue(16).ToString(), 
-                                                                      dRowPessoa.ItemArray.GetValue(19).ToString(),CodEndereco);
+                                                                      dRowPessoa.ItemArray.GetValue(16).ToString(),
+                                                                      dRowPessoa.ItemArray.GetValue(19).ToString(), CodEndereco, int.Parse(dRowPessoa.ItemArray.GetValue(21).ToString()));
 
 
                     Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
@@ -1372,15 +1478,7 @@ namespace DexComanda
 
         private void frmPrincipal_FormClosed(object sender, FormClosedEventArgs e)
         {
-            string strServidor = Sessions.returnEmpresa.Servidor;
-            string strBanco = Sessions.returnEmpresa.Banco;
-            string strCaminhoBkp = Sessions.returnEmpresa.CaminhoBackup;
-            // VerificaRegistroASincronizar();
-            con.BackupBanco(strServidor, strBanco, strCaminhoBkp);
 
-            this.Dispose();
-            con.Close();
-            Utils.Kill();
 
         }
 
@@ -1411,17 +1509,25 @@ namespace DexComanda
         }
         private void ImpressaRapida()
         {
-            int iCodPedido = int.Parse(pedidosGridView.Rows[0].Cells["Codigo"].Value.ToString());
+            int iCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
             DataSet DsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido);
-            DataRow DvPedido = DsPedido.Tables[0].Rows[0];
 
+            DataRow DvPedido = DsPedido.Tables[0].Rows[0];
             string iTipo = DvPedido.ItemArray.GetValue(8).ToString();
             decimal iTrocoPara = decimal.Parse(DvPedido.ItemArray.GetValue(4).ToString());
             decimal iTotalPedido = decimal.Parse(DvPedido.ItemArray.GetValue(3).ToString());
             decimal iValue = 0;
-            if (iTrocoPara != 0.00M && iTrocoPara != 0)
+            int intCodEndereco = DsPedido.Tables[0].Rows[0].Field<int>("CodEndereco");
+
+            decimal dbTotalReceber = iTrocoPara;
+            if (dbTotalReceber == 0)
             {
-                iValue = iTrocoPara - iTotalPedido;
+                dbTotalReceber = iTotalPedido;
+            }
+            decimal dblTroco = iTrocoPara - iTotalPedido;
+            if (dblTroco < 0)
+            {
+                dblTroco = 0;
             }
 
             DateTime iDataPedido = Convert.ToDateTime(DvPedido.ItemArray.GetValue(7).ToString());
@@ -1432,7 +1538,8 @@ namespace DexComanda
             }
             else if (iTipo == "0 - Entrega")
             {
-                Utils.ImpressaoEntreganova(iCodPedido, iValue, iDataPedido.AddMinutes(Convert.ToDouble(Sessions.returnConfig.PrevisaoEntrega)).ToShortTimeString(), false, 1);
+                Utils.ImpressaoEntreganova(iCodPedido, dbTotalReceber,
+                     1, "", intCodEndereco, dblTroco);
             }
             else if (iTipo == "2 - Balcao")
             {
@@ -1448,8 +1555,8 @@ namespace DexComanda
 
         private void tipoOpçãoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmTipoOpcao frm = new frmTipoOpcao();
-            frm.ShowDialog();
+            frmTipoOpcao frmTipo = new frmTipoOpcao();
+            frmTipo.ShowDialog(this);
         }
 
         private void opçõesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1460,9 +1567,9 @@ namespace DexComanda
 
         private void produtoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmCadastrarProduto frm = new frmCadastrarProduto(null);
+            frmCadastrarProduto frm = new frmCadastrarProduto(null, produtosGridView);
             frm.ShowDialog();
-            Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
+            //  Utils.PopulaGrid_Novo("Produto", produtosGridView, Sessions.SqlProduto);
         }
 
         private void usuáriosToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1591,11 +1698,7 @@ namespace DexComanda
 
         private void produtosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AlteraProdutosSN"))
-            {
-                frmAlteracaoProduto frm = new frmAlteracaoProduto();
-                frm.ShowDialog();
-            }
+
 
         }
 
@@ -1675,17 +1778,43 @@ namespace DexComanda
         {
             Utils.SoPermiteNumeros(e);
         }
-        private async void ImpressaoAutomatica(int iCodPedido, int iCodGrupo, string iNomeImpressora)
+        /// <summary>
+        /// Impressão automatica dos pedidos da mesa
+        /// </summary>
+        /// <param name="iCodPedido"> Código do Pedido</param>
+        /// <param name="iCodGrupo"> Codigo do Grupo</param>
+        /// <param name="iNomeImpressora">Nome da impressora</param>
+        private void ImpressaoAutomatica(int iCodPedido, int iCodGrupo, string iNomeImpressora)
         {
             try
             {
-                itemsPedidoNaoImpresso = Utils.ItensSelect(iCodPedido);
+                DataSet itemsPedido;
+                itemsPedidoNaoImpresso = Utils.CarregaItens(iCodPedido);// ItensSelect(iCodPedido, iCodGrupo, iNomeImpressora, Sessions.returnConfig.TipoImpressao);
                 for (int i = 0; i < itemsPedidoNaoImpresso.Tables[0].Rows.Count; i++)
                 {
-                    string lRetorno = "";
-                    Boolean imprimirAgora = false;
-                    DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", iCodPedido, "", iCodGrupo);
-                    lRetorno = Utils.ImpressaMesaNova(iCodPedido, iCodGrupo, false, 1, iNomeImpressora, imprimirAgora);
+                    int intCodGrupo = itemsPedidoNaoImpresso.Tables[0].Rows[i].Field<int>("CodGrupo");
+                    string strNomeImpressora = itemsPedidoNaoImpresso.Tables[0].Rows[i].Field<string>("NomeImpressora");
+
+                    if (Utils.RetornaConfiguracaoMesa().TipoAgrupamento == "Por Cozinha/Grupo")
+                    {
+                        itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorGrupo", iCodPedido, "", intCodGrupo);
+                        if (itemsPedido.Tables[0].Rows.Count == 0)
+                        {
+                            return;
+                        }
+                        Utils.ImpressaoCozihanova_SeparadoPorCozinhaGrupo(iCodPedido, strNomeImpressora, intCodGrupo);
+                    }
+                    else
+                    {
+                        itemsPedido = con.SelectItensPorImpressora(iCodPedido, strNomeImpressora);
+                        if (itemsPedido.Tables[0].Rows.Count == 0)
+                        {
+                            return;
+                        }
+                        Utils.ImpressaoCozihanova_SeparadoPorImpressora(iCodPedido, strNomeImpressora);
+                    }
+
+                    //Atualiza o item informando que foi impresso
                     for (int intFor = 0; intFor < itemsPedido.Tables[0].Rows.Count; intFor++)
                     {
                         AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
@@ -1694,10 +1823,16 @@ namespace DexComanda
                         Atualiza.ImpressoSN = true;
                         con.Update("spInformaItemImpresso", Atualiza);
                     }
-                    itemsPedidoNaoImpresso = Utils.ItensSelect(iCodPedido);
+
+                    if (con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", iCodPedido).Tables[0].Rows.Count > 0)
+                    {
+                        ImpressaoAutomatica(iCodPedido, intCodGrupo, strNomeImpressora);
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
-
-
 
             }
             catch (Exception erro)
@@ -1780,6 +1915,12 @@ namespace DexComanda
                     break;
             }
         }
+
+        /// <summary>
+        /// Faz uma varredura na grid para imprimir os itens
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AtualizaGrid_Tick(object sender, EventArgs e)
         {
             try
@@ -1788,21 +1929,33 @@ namespace DexComanda
                 DataSet dsPedidosAbertos = con.SelectAll("Pedido", "spObterPedido");
                 int iPedidosAberto = dsPedidosAbertos.Tables["Pedido"].Rows.Count;
 
-                if (iPedidosAberto != pedidosGridView.Rows.Count && cbxFiltroTipo.Text == "")
+                // Executa impressão balcao
+                for (int intFor = 0; intFor < dsPedidosAbertos.Tables[0].Rows.Count; intFor++)
+                {
+                    if (dsPedidosAbertos.Tables[0].Rows[intFor].Field<string>("Tipo") == "2 - Balcao" &&
+                      !dsPedidosAbertos.Tables[0].Rows[intFor].Field<Boolean>("ImpressoSN") && ImprimeViaBalcao)
+                    {
+                        AtualizaGrid.Enabled = false;
+                        ImpressaoViaBalcao(dsPedidosAbertos.Tables[0].Rows[intFor].Field<int>("Codigo"));
+                        AtualizaGrid.Enabled = true;
+                    }
+                }
+
+
+                if (iPedidosAberto != pedidosGridView.Rows.Count && cbxFiltroTipo.Text == "" && cbxStatusPedido.SelectedIndex == 0)
                 {
                     TotalizaPedidos();
                     Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
 
                 }
                 string iSql = " select distinct (IT.CodProduto) ,PE.*,  " +
-                              " CodGrupo, " +
+                              " G.Codigo as CodGrupo, " +
                               " NomeImpressora " +
                               " from Pedido PE " +
-                              " join ItemsPedido IT ON PE.Codigo = IT.CodPedido and IT.IMPRESSOSN = 0 " +
+                              " join ItemsPedido IT ON PE.Codigo = IT.CodPedido " +
                               " left join Produto P on P.Codigo = It.CodProduto " +
                               " LEFT JOIN GRUPO G ON G.Codigo = P.CodGrupo " +
-                              " where PE.CodigoMesa > 0 and Finalizado = 0 ";
-
+                              " where PE.CodigoMesa > 0 and Finalizado = 0 and G.ImprimeCozinhaSN=1  and IT.IMPRESSOSN = 0 ";
 
                 DataSet dsItemsNaoImpresso = con.SelectAll("ItemsPedido", "", iSql);
 
@@ -1810,22 +1963,57 @@ namespace DexComanda
                 {
                     return;
                 }
-                DataRow dRowPedido = dsItemsNaoImpresso.Tables[0].Rows[0];
-                Boolean iMesa = dRowPedido.ItemArray.GetValue(8).ToString() == "1 - Mesa";
-                if (iMesa && chkGerenciaImpressao.Checked && dsItemsNaoImpresso.Tables[0].Rows.Count > 0)
-                {
-                    int CodPedido = int.Parse(dRowPedido.ItemArray.GetValue(1).ToString());
-                    int CodGrupo = int.Parse(dRowPedido.ItemArray.GetValue(23).ToString());
-                    string iNomeImpressora = dRowPedido.ItemArray.GetValue(24).ToString();
-                    ImpressaoAutomatica(CodPedido, CodGrupo, iNomeImpressora);
-                }
 
+
+
+
+                Boolean iMesa = dsItemsNaoImpresso.Tables[0].Rows[0].Field<string>("Tipo") == "1 - Mesa";
+                for (int i = 0; i < dsItemsNaoImpresso.Tables[0].Rows.Count; i++)
+                {
+                    if (iMesa && chkGerenciaImpressao.Checked)
+                    {
+                        int CodPedido = dsItemsNaoImpresso.Tables[0].Rows[i].Field<int>("Codigo");
+                        int CodGrupo = dsItemsNaoImpresso.Tables[0].Rows[i].Field<int>("CodGrupo");
+                        string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].Field<string>("NomeImpressora");
+                        AtualizaGrid.Enabled = false;
+                        ImpressaoAutomatica(CodPedido, CodGrupo, iNomeImpressora);
+                        AtualizaGrid.Enabled = true;
+                        break;
+                    }
+
+                }
 
             }
             catch (Exception erro)
             {
 
                 MessageBox.Show("Erro ao atualizar pedidos" + erro.Message);
+            }
+        }
+        private async void ImpressaoViaBalcao(int codPedido)
+        {
+            try
+            {
+                Utils.ImpressaoBalcao(codPedido, QtdViasBalcao);
+
+                if (ImprimeViaCozinha)
+                {
+                    if (TipoAgrupamentoCozinha == "Sem Agrupamento")
+                    {
+                        Utils.ImpressaoCozihanova(codPedido);
+                    }
+                    else
+                    {
+                        Utils.ImpressaoPorCozinha(codPedido);
+                    }
+
+                }
+                con.AtualizaImpressaoBalcao(codPedido);
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
@@ -1867,8 +2055,10 @@ namespace DexComanda
 
         private void notificaçõesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmNotificacao frm = new frmNotificacao();
+            frmEnvioPush frm = new frmEnvioPush();
             frm.Show();
+            //frmNotificacao frm = new frmNotificacao();
+            //frm.Show();
         }
 
         private void alterarSenhaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1971,6 +2161,167 @@ namespace DexComanda
         {
             frmReporVendaOnline frmVenOn = new frmReporVendaOnline();
             frmVenOn.Show();
+        }
+
+        private void envioDeSmsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmEnvioSms frmEnv = new frmEnvioSms();
+            frmEnv.Show();
+        }
+
+        private void envioDePushNotificationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmEnvioPush frmPus = new frmEnvioPush();
+            frmPus.Show();
+        }
+
+        private void origemDoClienteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadastroOrigem frmCad = new frmCadastroOrigem();
+            frmCad.Show();
+        }
+
+        private void classificadoPorOrigemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmReportClientePorOrigem frmCl = new frmReportClientePorOrigem();
+            frmCl.Show();
+        }
+
+        private void insumosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadastroInsumo frmIns = new frmCadastroInsumo();
+            frmIns.Show();
+        }
+
+        private void produtoToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "AlteraProdutosSN"))
+            {
+                frmAlteracaoProduto frm = new frmAlteracaoProduto();
+                frm.ShowDialog();
+            }
+        }
+
+        private void FiltraPedidoPorStatus(object sender, EventArgs e)
+        {
+            if (cbxStatusPedido.SelectedIndex > 0)
+            {
+                int intStatusPedio = int.Parse(cbxStatusPedido.SelectedValue.ToString());
+                pedidosGridView.DataSource = null;
+                pedidosGridView.AutoGenerateColumns = true;
+                pedidosGridView.DataSource = Utils.PopularGridPedido(con.MontaGridPedido(intStatusPedio));
+                pedidosGridView.DataMember = "Pedido";
+                pedidosGridView.Refresh();
+            }
+        }
+
+        private void cadastrosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void produtoToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            frmLancaEstoqueProd frm = new frmLancaEstoqueProd();
+            frm.Show(this);
+        }
+
+        private void consultaMovimentoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaEstoque frm = new frmConsultaEstoque();
+            frm.Show(this);
+        }
+
+        private void frmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                if (!Utils.MessageBoxQuestion("Você tem certeza que deseja sair?"))
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                string strServidor = Sessions.returnEmpresa.Servidor;
+                string strBanco = Sessions.returnEmpresa.Banco;
+                string strCaminhoBkp = Sessions.returnEmpresa.CaminhoBackup;
+                // VerificaRegistroASincronizar();
+                con.BackupBanco(strServidor, strBanco, strCaminhoBkp);
+
+                this.Dispose();
+                con.Close();
+                Utils.Kill();
+            }
+        }
+
+        private void MudaStatusPraEntrega(object sender, EventArgs e)
+        {
+            try
+            {
+                //for (int i = 0; i < pedidosGridView.Rows.Count; i++)
+                ////{
+                //    if (!pedidosGridView.Rows[i].Selected)
+                //    {
+                //        return;
+                //    }
+
+                if (pedidosGridView.SelectedRows.Count == 0)
+                {
+                    return;
+                }
+
+                int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+                CodPedidoWS = VerificaPedidoOnline(intCodPedido);
+
+
+                if (CodPedidoWS > 0)
+                {
+                    // se for pedido online
+                    AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaEntrega, RetornaPessoa(intCodPedido));
+                }
+                if (Sessions.returnConfig.ControlaEntregador)
+                {
+                    InformaMotoboyPedido(intCodPedido);
+                }
+
+                con.AtualizaSituacao(intCodPedido, Sessions.retunrUsuario.Codigo, StatusPedido.cPedidoNaEntrega, pedidosGridView);
+
+                //}
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+        }
+
+        private void MudaStatusCozinha(object sender, EventArgs e)
+        {
+            try
+            {
+                if (pedidosGridView.SelectedRows.Count==0)
+                {
+                    return;
+                }
+                int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+                CodPedidoWS = VerificaPedidoOnline(intCodPedido);
+
+                if (CodPedidoWS > 0)
+                {
+                    // se for pedido online
+                    AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaCozinha, RetornaPessoa(intCodPedido));
+                }
+                //if (Sessions.returnConfig.ControlaEntregador)
+                //{
+                //    InformaMotoboyPedido(intCodPedido);
+                //}
+
+                con.AtualizaSituacao(intCodPedido, Sessions.retunrUsuario.Codigo, StatusPedido.cPedidoNaCozinha, pedidosGridView);
+
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message);
+            }
         }
     }
 }

@@ -15,6 +15,7 @@ using System.Configuration;
 using Newtonsoft.Json;
 using DexComanda.Models.WS;
 using DexComanda.Models.Operacoes;
+using DexComanda.Models.Configuracoes;
 
 namespace DexComanda
 {
@@ -42,11 +43,6 @@ namespace DexComanda
 
             Conexao con = new Conexao();
             con.OpenConection(servidor, banco);
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
 
         }
         private List<CidadesAtendidas> CidadesAtendidas()
@@ -99,9 +95,254 @@ namespace DexComanda
             return JsonConvert.SerializeObject(listHorario, Formatting.None);
 
         }
+        private string ConfiguracaoSMS()
+        {
+            string strReturn = "";
+            try
+            {
+                if (rbLocaSMS.Checked)
+                {
+                    DadosEnvioLocaSMS locaSms = new DadosEnvioLocaSMS()
+                    {
+                        api = "locasms",
+                        login = txtLogin.Text,
+                        senha = txtSenha.Text
+                    };
+                    strReturn = JsonConvert.SerializeObject(locaSms, Formatting.None);
+                }
+                else if (rbZenvia.Checked)
+                {
+                    DadosEnvioZenvia zenviaSMS = new DadosEnvioZenvia()
+                    {
+                        api = "zenvia",
+                        id = txtIDZenvia.Text,
+                        agrupador = txtAgrZenvia.Text
+                    };
+                    strReturn = JsonConvert.SerializeObject(zenviaSMS, Formatting.None);
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return strReturn;
+        }
+        private void MarcaDias(string iValores)
+        {
+            try
+            {
+                if (iValores == "")
+                {
+                    return;
+                }
+                List<FidelidadeDias> fidelidade = Utils.DeserializaObjetoFidelidade(iValores);
+                foreach (var item in fidelidade)
+                {
+                    foreach (Control check in grpControleFidelidade.Controls)
+                    {
+                        if (object.ReferenceEquals(check.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                        {
+                            if (((System.Windows.Forms.CheckBox)check).Tag.ToString() == item.DiaSemana)
+                            {
+                                ((System.Windows.Forms.CheckBox)check).Checked = true;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+
+        }
+        private void MarcaConfiguracao(string iConfig)
+        {
+            try
+            {
+                if (iConfig == "" || iConfig == null)
+                {
+                    return;
+                }
+                Fidelidade fidelida = new Fidelidade();
+                fidelida = Utils.DeserializaObjeto5(iConfig);
+
+                MarcaDias(fidelida.Dias);
+                chkFidelidade.Checked = fidelida.AtivoSN == true;
+                rbPorPonto.Checked = fidelida.Tipo == "Por Ponto";
+                rbPorValor.Checked = fidelida.Tipo == "Por Valor";
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
+        private List<FidelidadeDias> DiasFidelidadeMarcados()
+        {
+            List<FidelidadeDias> listFidelidade = new List<FidelidadeDias>();
+            try
+            {
+                foreach (Control item in grpControleFidelidade.Controls)
+                {
+                    if (object.ReferenceEquals(item.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                    {
+                        //Check to see if it's a textbox 
+                        if (((System.Windows.Forms.CheckBox)item).Checked)
+                        {
+                            var fidelidade = new FidelidadeDias()
+                            {
+                                DiaSemana = (((System.Windows.Forms.CheckBox)item).Tag.ToString()),
+                            };
+                            listFidelidade.Add(fidelidade);
+                        }
+
+                    }
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return listFidelidade;
+        }
+        private string ConfigFidelidade()
+        {
+            string iReturn = "";
+            if (!chkFidelidade.Checked)
+            {
+                return iReturn;
+            }
+
+            Fidelidade fidelidade = new Fidelidade();
+            fidelidade.AtivoSN = true;
+            fidelidade.Multiplicador = int.Parse(txtMultiplicador.Text);
+            fidelidade.Dias = Utils.SerializaObjeto(DiasFidelidadeMarcados());
+            if (rbPorPonto.Checked)
+            {
+                fidelidade.Tipo = "Por Ponto";
+            }
+            else
+            {
+                fidelidade.Tipo = "Por Valor";
+            }
+
+            return Utils.SerializaObjeto(fidelidade);
+        }
+        private string RetornaTipoBuscaProduto()
+        {
+            ConfiguracaoBuscaPorCodigo conf = new ConfiguracaoBuscaPorCodigo();
+            try
+            {
+                conf = new ConfiguracaoBuscaPorCodigo()
+                {
+                    PorCodigo = chkProdutoCodigo.Checked,
+                    TipoCodigo = cbxTipoCodigo.Text
+                };
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return Utils.SerializaObjeto(conf);
+        }
+        public string ConfiguracaoCozinha()
+        {
+            ImpressaoMesa impressora = new ImpressaoMesa();
+            try
+            {
+                impressora = new ImpressaoMesa()
+                {
+                    ImprimeSN = chkViaCozinha.Checked,
+                    TipoAgrupamento = cbxAgrupamentoCozinha.Text,
+                    ViaCozinha = txtViasCozinha.Text
+                };
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return Utils.SerializaObjeto(impressora);
+        }
+        public string ConfiguracaoDelivery()
+        {
+            ImpressaoDelivery impressora = new ImpressaoDelivery();
+            try
+            {
+                impressora = new ImpressaoDelivery()
+                {
+                    ImprimeSN = chkViaEntrega.Checked,
+                    TipoAgrupamento = cbxAgrupamentoDelivery.Text,
+                    ViaDelivery = txtViasEntrega.Text
+                };
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return Utils.SerializaObjeto(impressora);
+        }
+        public string ConfiguracaoBalcao()
+        {
+            ImpressaoBalcao impressora = new ImpressaoBalcao();
+            try
+            {
+                impressora = new ImpressaoBalcao()
+                {
+                    ImprimeSN = chkViaBalcao.Checked,
+                    TipoAgrupamento = cbxAgrupamentoBalcao.Text,
+                    ViaBalcao = txtViasBalcao.Text
+                };
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+            return Utils.SerializaObjeto(impressora);
+        }
+        private string GravaConfiguracaoImpressora()
+        {
+            DadosImpressoras impressoras = new DadosImpressoras();
+            try
+            {
+                impressoras = new DadosImpressoras()
+                {
+                    ImpressoraBalcao = cbxImpressoraBalcao.Text,
+                    ImpressoraContaMesa = cbxImpressoraMesa.Text,
+                    ImpressoraDelivery = cbxImpressoraDelivery.Text,
+                };
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return Utils.SerializaObjeto(impressoras);
+        }
+        private string GravaDadosPush()
+        {
+            DadosPush dadosPush = new DadosPush();
+            try
+            {
+                dadosPush = new DadosPush()
+                {
+                    GCM = txtGoogleProjetc.Text,
+                    Pushapp_id = txtAPPID.Text,
+                    Pushauthorization = txtCodAutorização.Text
+                };
+
+            }
+            catch (Exception)
+            {
+                //  MessageBox.Show()
+            }
+
+            return Utils.SerializaObjetoDadosPush(dadosPush);
+        }
         private void SalvaConfig(object sender, EventArgs e)
         {
-            //con = new Conexao(); 
+            con = new Conexao(); 
             Empresa empresa = new Empresa()
             {
                 Nome = txtNomeEmpresa.Text,
@@ -122,81 +363,33 @@ namespace DexComanda
                 VersaoBanco = "1",
                 CaminhoBackup = txtCaminhoBkp.Text,
                 UrlServidor = txtURL.Text,
-                HorarioFuncionamento = HorariosFuncionamento()
-
-
+                HorarioFuncionamento = HorariosFuncionamento(),
+                ConfiguracaoSMS = ConfiguracaoSMS()
             };
+
             // Grava as configurações
-            config.ImpViaCozinha = chkViaCozinha.Checked;
+            config.ImprimeViaBalcao = ConfiguracaoBalcao();
+            config.ImpViaCozinha = ConfiguracaoCozinha();
+            config.ImprimeViaEntrega = ConfiguracaoDelivery();
             config.UsaLoginSenha = chkLoginSenha.Checked;
             config.UsaDataNascimento = chkDataNAscimento.Checked;
             config.ControlaEntregador = chkEntregadores.Checked;
-            config.ProdutoPorCodigo = chkProdutoCodigo.Checked;
+            config.ProdutoPorCodigo = RetornaTipoBuscaProduto();
             config.Usa2Telefones = chk2Telefones.Checked;
             config.UsaControleMesa = chkControlaMesas.Checked;
-            config.ImprimeViaEntrega = chkImprimeViaEntrega.Checked;
+            
             config.DescontoDiaSemana = chkDescontoDiasemana.Checked;
-            config.ControlaFidelidade = chkFidelidade.Checked;
+            config.ControlaFidelidade = ConfigFidelidade();
             config.EnviaSMS = chkEnviaSms.Checked;
             config.RegistraCancelamentos = chkRegCancelamentos.Checked;
-            config.DadosApp = Utils.GravaJson(cbxPlataforma1.Text, txtLink2.Text);// + cbxPlataforma2.Text + txtLink2.Text);
-            config.Pushapp_id = txtAPPID.Text;
-            config.Pushauthorization = txtCodAutorização.Text;
+            config.DadosApp = Utils.GravaJson(cbxPlataforma1.Text, txtLink2.Text);
             config.RepeteUltimoPedido = chkUltPedido.Checked;
             config.CidadesAtendidas = Utils.SerializaObjeto(CidadesAtendidas());
             config.ExigeVendedorSN = chkVendedor.Checked;
-            config.GCM = txtGoogleProjetc.Text;
-            config.ImpressoraEntrega = cbxImpressoraDelivery.Text;
-            config.ImpressoraCozinha = cbxImpressoraMesa.Text;
-            config.ImpressoraCopaBalcao = cbxImpressoraBalcao.Text;
             config.CobrancaProporcionalSN = chkProporcional.Checked;
-            //empresa.HorarioFuncionamento = "";
-            if (chkEnviaSms.Checked)
-            {
-                Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
-            }
-            if (chkFidelidade.Checked)
-            {
-
-                config.PedidosParaFidelidade = int.Parse(txtNumeroPedidos.Text);
-            }
-            else
-            {
-                config.PedidosParaFidelidade = 0;
-            }
-
-            config.PrevisaoEntregaSN = chkPrevisao.Checked;
-            if (chkPrevisao.Checked)
-            {
-                config.PrevisaoEntrega = txtPrevisao.Text;
-            }
-            else
-            {
-                config.PrevisaoEntrega = "0";
-            }
-            if (txtTamanhoFont.Text != "")
-            {
-                config.TamanhoFont = txtTamanhoFont.Text;
-            }
-            else
-            {
-                config.TamanhoFont = "8"; // Font Defaul
-            }
-            config.ImpLPT = chkImpLPT.Checked;
-            if (chkImpLPT.Checked && txtPortaLPT.Text != "")
-            {
-                config.PortaLPT = txtPortaLPT.Text;
-            }
-            else
-            {
-                config.PortaLPT = "0";
-            }
-
-            if (txtCaracterImpressora.Text != "")
-            {
-                config.QtdCaracteresImp = int.Parse(txtCaracterImpressora.Text.ToString());
-            }
-
+            config.QtdCaracteresImp = int.Parse(cbxColunas.Text);
+            config.Impressoras = GravaConfiguracaoImpressora();
+            config.DadosPush = GravaDadosPush();
             if (chkLoginSenha.Checked && txtUsuarioPadrao.Text.Trim() != "" && txtSenhaPadrao.Text.Trim() != "")
             {
                 string _senha = Utils.EncryptMd5(this.txtUsuarioPadrao.Text.ToString(), this.txtSenhaPadrao.Text.ToString());
@@ -216,11 +409,6 @@ namespace DexComanda
             this.btnSalvar.Click += SalvaConfig;
             if (empresa.Nome != "" && empresa.Contato != "" && empresa.Telefone != "" && txtViasBalcao.Text != "" && txtViasCozinha.Text != "" && txtViasEntrega.Text != "" && txtCaminhoBkp.Text != "")
             {
-
-                config.ViasEntrega = txtViasEntrega.Text;
-                config.ViasBalcao = txtViasBalcao.Text;
-                config.ViasCozinha = txtViasCozinha.Text;
-
                 con.Insert("spAdicionarEmpresa", empresa);
                 // MessageBox.Show("Empresa Adicionada com sucesso");
                 con.Insert("spAdicionarConfiguracao", config);
@@ -256,57 +444,37 @@ namespace DexComanda
                 VersaoBanco = "0",
                 CaminhoBackup = txtCaminhoBkp.Text,
                 UrlServidor = txtURL.Text,
-                HorarioFuncionamento = HorariosFuncionamento()
+                HorarioFuncionamento = HorariosFuncionamento(),
+                ConfiguracaoSMS = ConfiguracaoSMS()
             };
 
             config.cod = Sessions.returnConfig.cod;
-            config.ImpViaCozinha = chkViaCozinha.Checked;
+            config.ImpViaCozinha = ConfiguracaoCozinha();
             config.UsaLoginSenha = chkLoginSenha.Checked;
             config.UsaDataNascimento = chkDataNAscimento.Checked;
             config.ControlaEntregador = chkEntregadores.Checked;
-            config.ProdutoPorCodigo = chkProdutoCodigo.Checked;
+            config.ProdutoPorCodigo = RetornaTipoBuscaProduto();
             config.Usa2Telefones = chk2Telefones.Checked;
             config.UsaControleMesa = chkControlaMesas.Checked;
-            config.ImprimeViaEntrega = chkImprimeViaEntrega.Checked;
-            config.ControlaFidelidade = chkFidelidade.Checked;
+            config.ImprimeViaEntrega = ConfiguracaoDelivery();
+            config.ImprimeViaBalcao = ConfiguracaoBalcao();
+            config.ControlaFidelidade = ConfigFidelidade();
             config.DescontoDiaSemana = chkDescontoDiasemana.Checked;
-            config.PedidosParaFidelidade = int.Parse(txtNumeroPedidos.Text);
-            config.QtdCaracteresImp = int.Parse(txtCaracterImpressora.Text.ToString());
-            config.PrevisaoEntregaSN = chkPrevisao.Checked;
-            config.PrevisaoEntrega = txtPrevisao.Text;
+            config.QtdCaracteresImp = int.Parse(cbxColunas.Text);
             config.CobraTaxaGarcon = chk10Garcon.Checked;
             config.EnviaSMS = chkEnviaSms.Checked;
-            config.ViasEntrega = txtViasEntrega.Text;
-            config.TamanhoFont = txtTamanhoFont.Text;
-            config.ViasBalcao = txtViasBalcao.Text;
-            config.ViasCozinha = txtViasCozinha.Text;
-            config.ImpLPT = chkImpLPT.Checked;
             config.RepeteUltimoPedido = chkUltPedido.Checked;
             config.RegistraCancelamentos = chkRegCancelamentos.Checked;
             config.DadosApp = Utils.GravaJson(cbxPlataforma1.Text, txtLink1.Text);
-            config.Pushauthorization = txtCodAutorização.Text;
-            config.Pushapp_id = txtAPPID.Text;
             config.RepeteUltimoPedido = chkUltPedido.Checked;
             config.CidadesAtendidas = Utils.SerializaObjeto(CidadesAtendidas());
             config.ExigeVendedorSN = chkVendedor.Checked;
-            config.GCM = txtGoogleProjetc.Text;
-            config.ImpressoraEntrega = cbxImpressoraDelivery.Text;
-            config.ImpressoraCozinha = cbxImpressoraMesa.Text;
-            config.ImpressoraCopaBalcao = cbxImpressoraBalcao.Text;
             config.CobrancaProporcionalSN = chkProporcional.Checked;
+            config.Impressoras = GravaConfiguracaoImpressora();
+            config.DadosPush = GravaDadosPush();
             if (chkEnviaSms.Checked)
             {
                 Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
-            }
-
-
-            if (chkImpLPT.Checked && txtPortaLPT.Text != "")
-            {
-                config.PortaLPT = txtPortaLPT.Text;
-            }
-            else
-            {
-                config.PortaLPT = "0";
             }
 
             if (chkLoginSenha.Checked && txtUsuarioPadrao.Text.Trim() != "" && txtSenhaPadrao.Text.Trim() != "")
@@ -317,7 +485,8 @@ namespace DexComanda
                     Nome = this.txtUsuarioPadrao.Text.ToString(),
                     senha = _senha,
                     AdministradorSN = true
-                    ,AbreFechaCaixaSN = true
+                    ,
+                    AbreFechaCaixaSN = true
                 };
                 con.Insert("spAdicionarUsuarioDefault", usuario);
             }
@@ -357,54 +526,88 @@ namespace DexComanda
             }
 
         }
+        private void CarregaConfigSMS(string iValores)
+        {
+            if (!Sessions.returnConfig.EnviaSMS)
+            {
+                return;
+            }
+            chkEnviaSms.Checked = true;
+            if (iValores.Contains("zenvia"))
+            {
+                DadosEnvioZenvia zenvia = Utils.DeserializaObjetoZenvia(iValores);
+                txtAgrZenvia.Text = zenvia.agrupador;
+                txtIDZenvia.Text = zenvia.id;
+                rbZenvia.Checked = true;
+            }
+            else
+            {
+                DadosEnvioLocaSMS locasms = Utils.DeserializaObjetoLocaSMS(iValores);
+                txtLogin.Text = locasms.login;
+                txtSenha.Text = locasms.senha;
+                rbLocaSMS.Checked = true;
+            }
 
+        }
         private void frmConfiguracoes_Load(object sender, EventArgs e)
         {
-            // Utils.RetornoTxt();//cbxCozinha.Text= cbxMesas.Text= cbxEntregas.Text = ListaImpressoras();
+            if (con.statusConexao != ConnectionState.Open)
+            {
+                return;
+            }
+            MarcaConfiguracaoExibicao();
             if (Sessions.returnConfig != null)
             {
                 grpFidelidade.Enabled = chkFidelidade.Checked;
-                chkViaCozinha.Checked = Sessions.returnConfig.ImpViaCozinha;
                 chkDataNAscimento.Checked = Sessions.returnConfig.UsaDataNascimento;
                 chkLoginSenha.Checked = Sessions.returnConfig.UsaLoginSenha;
                 chkEntregadores.Checked = Sessions.returnConfig.ControlaEntregador;
-                chkProdutoCodigo.Checked = Sessions.returnConfig.ProdutoPorCodigo;
+                chkProdutoCodigo.Checked = Utils.MarcaTipoConfiguracaoProduto().PorCodigo;
+                cbxTipoCodigo.Text = Utils.MarcaTipoConfiguracaoProduto().TipoCodigo;
                 chk2Telefones.Checked = Sessions.returnConfig.Usa2Telefones;
                 chkControlaMesas.Checked = Sessions.returnConfig.UsaControleMesa;
-                chkImprimeViaEntrega.Checked = Sessions.returnConfig.ImprimeViaEntrega;
-                chkFidelidade.Checked = Sessions.returnConfig.ControlaFidelidade;
+                MarcaConfiguracao(Sessions.returnConfig.ControlaFidelidade);
                 chkDescontoDiasemana.Checked = Sessions.returnConfig.DescontoDiaSemana;
-                txtNumeroPedidos.Text = Sessions.returnConfig.PedidosParaFidelidade.ToString();
-                this.txtCaracterImpressora.Text = Sessions.returnConfig.QtdCaracteresImp.ToString();
-                chkPrevisao.Checked = Sessions.returnConfig.PrevisaoEntregaSN;
-                txtPrevisao.Text = Sessions.returnConfig.PrevisaoEntrega.ToString();
+                cbxColunas.Text = Sessions.returnConfig.QtdCaracteresImp.ToString();
                 chk10Garcon.Checked = Sessions.returnConfig.CobraTaxaGarcon;
-                txtTamanhoFont.Text = Sessions.returnConfig.TamanhoFont.ToString();
-                txtPortaLPT.Text = Sessions.returnConfig.PortaLPT.ToString();
-                chkImpLPT.Checked = Sessions.returnConfig.ImpLPT;
                 chkEnviaSms.Checked = Sessions.returnConfig.EnviaSMS;
-                txtViasEntrega.Text = Sessions.returnConfig.ViasEntrega;
-                txtViasCozinha.Text = Sessions.returnConfig.ViasCozinha;
-                txtViasBalcao.Text = Sessions.returnConfig.ViasBalcao;
                 chkUltPedido.Checked = Sessions.returnConfig.RepeteUltimoPedido;
                 chkRegCancelamentos.Checked = Sessions.returnConfig.RegistraCancelamentos;
-                txtAPPID.Text = Sessions.returnConfig.Pushapp_id;
-                txtCodAutorização.Text = Sessions.returnConfig.Pushauthorization;
+                txtAPPID.Text = Utils.RetornaConfiguracaoPush().Pushapp_id;
+                txtCodAutorização.Text = Utils.RetornaConfiguracaoPush().Pushauthorization;
                 chkVendedor.Checked = Sessions.returnConfig.ExigeVendedorSN;
                 PreencheCidades(Sessions.returnConfig.CidadesAtendidas);
-                txtGoogleProjetc.Text = Sessions.returnConfig.GCM;
-
-                cbxImpressoraDelivery.Text = Sessions.returnConfig.ImpressoraEntrega;
-                cbxImpressoraMesa.Text = Sessions.returnConfig.ImpressoraCozinha;
-                cbxImpressoraBalcao.Text = Sessions.returnConfig.ImpressoraCopaBalcao;
+                txtGoogleProjetc.Text = Utils.RetornaConfiguracaoPush().GCM;
+                cbxPlataforma1.Text = Utils.RetornaDadosApp().plataforma;
+                txtLink1.Text = Utils.RetornaDadosApp().url;
                 chkProporcional.Checked = Sessions.returnConfig.CobrancaProporcionalSN;
+                grpSms.Enabled = Sessions.returnConfig.EnviaSMS;
+
+
+                chkViaBalcao.Checked = Utils.RetornaConfiguracaoBalcao().ImprimeSN;
+                cbxAgrupamentoBalcao.Text = Utils.RetornaConfiguracaoBalcao().TipoAgrupamento;
+                txtViasBalcao.Text = Utils.RetornaConfiguracaoBalcao().ViaBalcao;
+                cbxImpressoraBalcao.Text = Utils.RetornaImpressoras().ImpressoraBalcao;
+
+                chkViaCozinha.Checked = Utils.RetornaConfiguracaoMesa().ImprimeSN;
+                cbxAgrupamentoCozinha.Text = Utils.RetornaConfiguracaoMesa().TipoAgrupamento;
+                txtViasCozinha.Text = Utils.RetornaConfiguracaoMesa().ViaCozinha;
+                cbxImpressoraMesa.Text = Utils.RetornaImpressoras().ImpressoraContaMesa;
+
+                chkViaEntrega.Checked = Utils.RetornaConfiguracaoDelivery().ImprimeSN;
+                cbxAgrupamentoDelivery.Text = Utils.RetornaConfiguracaoDelivery().TipoAgrupamento;
+                txtViasEntrega.Text = Utils.RetornaConfiguracaoDelivery().ViaDelivery;
+                cbxImpressoraDelivery.Text = Utils.RetornaImpressoras().ImpressoraDelivery;
+
                 this.btnSalvar.Text = "Alterar";
                 this.btnSalvar.Click -= SalvaConfig;
                 this.btnSalvar.Click += AlterarConfig;
+
             }
+
             //  Exibir DataLiberação Sistema
-            var servidorLocal = con.SelectAll("Empresa", "spObterEmpresa");
-            if (servidorLocal != null)
+            DataSet servidorLocal = con.SelectAll("Empresa", "spObterEmpresa");
+            if (servidorLocal.Tables[0].Rows.Count > 0)
             {
                 DataRow Linha = servidorLocal.Tables["Empresa"].Rows[0];
                 txtNomeEmpresa.Text = Linha.ItemArray.GetValue(1).ToString();
@@ -423,20 +626,24 @@ namespace DexComanda
                 txtServidor.Text = Linha.ItemArray.GetValue(15).ToString();
                 txtCaminhoBkp.Text = Linha.ItemArray.GetValue(16).ToString();
                 txtURL.Text = Sessions.returnEmpresa.UrlServidor;
+                CarregaConfigSMS(Sessions.returnEmpresa.ConfiguracaoSMS);
 
-
-                if (con.IsConnected())
-                {
-                    var Dados = Utils.DadosLicenca(txtCNPJ.Text, Utils.EnderecoMAC(), Utils.RetornaNomePc());
-                    DataRow LinhasLicenca = Dados.Tables["Licenca"].Rows[0];
-                    lblDataExpiracao.Text = LinhasLicenca.ItemArray.GetValue(3).ToString().Substring(0, 10);
-                    txtLicenca.Text = LinhasLicenca.ItemArray.GetValue(1).ToString() + LinhasLicenca.ItemArray.GetValue(9).ToString();
-                }
-                else
-                {
-                    txtLicenca.Text = txtCNPJ.Text + Utils.EnderecoMAC();
-                    lblDataExpiracao.Text = DateTime.Now.AddMonths(1).ToString();
-                }
+                //if (con.IsConnected())
+                //{
+                //    DataSet Dados = Utils.DadosLicenca(txtCNPJ.Text, Utils.EnderecoMAC(), Utils.RetornaNomePc());
+                //    if (Dados.Tables.Count==0)
+                //    {
+                //        return;
+                //    }
+                //    DataRow LinhasLicenca = Dados.Tables["Licenca"].Rows[0];
+                //    lblDataExpiracao.Text = LinhasLicenca.ItemArray.GetValue(3).ToString().Substring(0, 10);
+                //    txtLicenca.Text = LinhasLicenca.ItemArray.GetValue(1).ToString() + LinhasLicenca.ItemArray.GetValue(9).ToString();
+                //}
+                //else
+                //{
+                //    txtLicenca.Text = txtCNPJ.Text + Utils.EnderecoMAC();
+                //    lblDataExpiracao.Text = DateTime.Now.AddMonths(1).ToString();
+                //}
 
             }
 
@@ -496,39 +703,27 @@ namespace DexComanda
 
         private void BuscarCep(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (txtCEP.Text.Trim().Length == 8 && e.KeyCode != Keys.Back)
             {
-                if (txtCEP.Text.Length == 8)
+                DataSet endereco = con.SelectEnderecoPorCep("base_cep", "spObterEnderecoPorCep", int.Parse(txtCEP.Text));
+                if (endereco.Tables["base_cep"].Rows.Count > 0)
                 {
-                    DataSet endereco = con.SelectEnderecoPorCep("base_cep", "spObterEnderecoPorCep", int.Parse(txtCEP.Text));
-
-                    if (endereco.Tables["base_cep"].Rows.Count > 0)
-                    {
-
-                        DataRow dRow = endereco.Tables["base_cep"].Rows[0];
-
-                        this.txtLogradouro.Text = dRow.ItemArray.GetValue(0).ToString();
-                        this.txtBairro.Text = dRow.ItemArray.GetValue(1).ToString();
-                        this.txtCidade.Text = dRow.ItemArray.GetValue(2).ToString();
-                        this.txtUF.Text = dRow.ItemArray.GetValue(3).ToString();
-                    }
-                    else
-                    {
-                        MessageBox.Show("CEP não encontrado");
-                    }
+                    DataRow dRow = endereco.Tables["base_cep"].Rows[0];
+                    this.txtLogradouro.Text = dRow.ItemArray.GetValue(0).ToString();
+                    this.txtBairro.Text = dRow.ItemArray.GetValue(1).ToString();
+                    this.txtCidade.Text = dRow.ItemArray.GetValue(2).ToString();
+                    this.txtUF.Text = dRow.ItemArray.GetValue(3).ToString();
                 }
                 else
                 {
-                    MessageBox.Show("CEP menor que 8 caracteres , favor verificar");
-                    txtCEP.Focus();
+                    MessageBox.Show("CEP não encontrado");
                 }
-
             }
         }
 
         private void chkFidelidade_CheckedChanged(object sender, EventArgs e)
         {
-            grpFidelidade.Enabled = chkFidelidade.Checked;
+            //grpFidelidade.Enabled = chkFidelidade.Checked;
         }
 
         private void chkEnviaSms_CheckedChanged(object sender, EventArgs e)
@@ -539,20 +734,6 @@ namespace DexComanda
         private void chkDescontoDiasemana_CheckedChanged(object sender, EventArgs e)
         {
 
-        }
-
-        private void ControlaPrevisao(object sender, EventArgs e)
-        {
-            lbltempo.Visible = txtPrevisao.Visible = chkPrevisao.Checked;
-            if (chkPrevisao.Checked)
-            {
-                lbltempo.Focus();
-            }
-        }
-
-        private void ImpressoaMatricial(object sender, EventArgs e)
-        {
-            txtPortaLPT.Enabled = chkImpLPT.Checked;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -698,39 +879,18 @@ namespace DexComanda
         {
             string strConfiProduto = "Codigo";
 
-            if (chkNomeProd.Checked)
+            foreach (Control item in grpProdutos.Controls)
             {
-                strConfiProduto = strConfiProduto + ",NomeProduto";
-            }
-            if (chkDescricao.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",DescricaoProduto";
-            }
-            if (chkPreco.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",PrecoProduto";
-            }
-            if (chkPrDesconto.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",PrecoDesconto";
-            }
-            if (chkGrupo.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",GrupoProduto";
-            }
-            if (chkAtivo.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",AtivoSN";
-            }
-            if (chkDtAlteracao.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",DataAlteracao";
-            }
-            if (chkDtSincronismo.Checked)
-            {
-                strConfiProduto = strConfiProduto + ",DataSincronismo";
-            }
 
+                if (object.ReferenceEquals(item.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                {
+                    //Check to see if it's a checkbox e Checked 
+                    if (((System.Windows.Forms.CheckBox)item).Checked)
+                    {
+                        strConfiProduto = strConfiProduto + "," + ((System.Windows.Forms.CheckBox)item).Tag;
+                    }
+                }
+            }
             Utils.SalvarConfiguracao("GridProduto", strConfiProduto);
 
         }
@@ -740,7 +900,7 @@ namespace DexComanda
             string strConfigPedido = "Pd.Codigo,";
             if (chkNomeCliente.Checked)
             {
-                strConfigPedido = strConfigPedido + "(select Nome from Pessoa P where P.Codigo = Pd.CodPessoa) as 'Nome Cliente'";
+                strConfigPedido = strConfigPedido + " case PD.Tipo when '1 - Mesa' then P.Nome + ' - ' + PD.NumeroMesa when '2 - Balcao' then 'Cliente Balcao ' + PD.Senha +' '+Pd.Observacao when '0 - Entrega' then P.Nome end as  'Nome Cliente'";
             }
             if (chkFinalizado.Checked)
             {
@@ -796,57 +956,71 @@ namespace DexComanda
             {
                 strConfigPedido = strConfigPedido + ",(Select Nome from Usuario where Cod = PD.CodUsuario) as 'Atendente'";
             }
+            if (chkSenha.Checked)
+            {
+                strConfigPedido = strConfigPedido + ",Senha";
+            }
 
             Utils.SalvarConfiguracao("GridPedido", strConfigPedido);
+        }
+        /// <summary>
+        /// Marca os checkBox de configuração da tela de Exibição
+        /// </summary>
+        private void MarcaConfiguracaoExibicao()
+        {
+            string strProduto = Sessions.SqlProduto;
+            string strSqlPessoa = Sessions.SqlPessoa;
+
+            if (strProduto == null || strSqlPessoa == null)
+            {
+                return;
+            }
+            string[] strListaProduto = strProduto.Split(new char[] { ',' });
+            string[] strListaPessoa = strSqlPessoa.Split(new char[] { ',' });
+            foreach (var item in strListaProduto)
+            {
+                foreach (Control controlProduto in grpProdutos.Controls)
+                {
+                    if (object.ReferenceEquals(controlProduto.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                    {
+                        if (((System.Windows.Forms.CheckBox)controlProduto).Tag.ToString() == item)
+                        {
+                            ((System.Windows.Forms.CheckBox)controlProduto).Checked = true;
+                        }
+                    }
+
+                }
+            }
+            foreach (var item in strListaPessoa)
+            {
+                foreach (Control controlPessoa in grpPessoas.Controls)
+                {
+                    if (object.ReferenceEquals(controlPessoa.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                    {
+                        if (item == ((System.Windows.Forms.CheckBox)controlPessoa).Tag.ToString())
+                        {
+                            ((System.Windows.Forms.CheckBox)controlPessoa).Checked = true;
+                        }
+                    }
+
+                }
+            }
         }
 
         private void btnSalvarConfigPessoas_Click(object sender, EventArgs e)
         {
             string strConfiPessoa = "Codigo";
 
-            if (chkNomePessoa.Checked)
+            foreach (Control controPessoa in grpPessoas.Controls)
             {
-                strConfiPessoa = strConfiPessoa + ",Nome";
-            }
-            if (chkEndereco.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Endereco";
-            }
-            if (chkBairro.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Bairro";
-            }
-            if (chkCidade.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Cidade";
-            }
-            if (chkUF.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",UF";
-            }
-            if (chkPreferencia.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",PontoReferencia";
-            }
-            if (chkTicket.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",TicketFidelidade";
-            }
-            if (chkNUmero.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Numero";
-            }
-            if (chkCep.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Cep";
-            }
-            if (chkTelefone.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Telefone";
-            }
-            if (chkTelefone2.Checked)
-            {
-                strConfiPessoa = strConfiPessoa + ",Telefone2";
+                if (object.ReferenceEquals(controPessoa.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                {
+                    //Check to see if it's a checkbox e Checked 
+                    if (((System.Windows.Forms.CheckBox)controPessoa).Checked)
+                    {
+                        strConfiPessoa += "," + ((System.Windows.Forms.CheckBox)controPessoa).Tag;
+                    }
+                }
             }
 
             Utils.SalvarConfiguracao("GridPessoa", strConfiPessoa);
@@ -877,16 +1051,9 @@ namespace DexComanda
         {
             LoadImpressoras(cbxImpressoraMesa);
         }
-
-        private void chk2Telefones_CheckedChanged(object sender, EventArgs e)
-        {
-
-
-        }
-
         private void chkImprimeViaEntrega_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkImprimeViaEntrega.Checked)
+            if (chkViaEntrega.Checked)
             {
                 txtViasEntrega.Text = "1";
             }
@@ -895,5 +1062,49 @@ namespace DexComanda
                 txtViasEntrega.Text = "0";
             }
         }
+
+        private void SalvaLocaSMS(object sender, EventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbZenvia_CheckedChanged(object sender, EventArgs e)
+        {
+            grpZenvia.Enabled = rbZenvia.Checked;
+        }
+
+        private void rbLocaSMS_CheckedChanged(object sender, EventArgs e)
+        {
+            grpLocaSMS.Enabled = rbLocaSMS.Checked;
+        }
+
+        private void chkProdutoCodigo_CheckStateChanged(object sender, EventArgs e)
+        {
+            cbxTipoCodigo.Enabled = chkProdutoCodigo.Checked;
+        }
+
+        private void chkFidelidade_CheckStateChanged(object sender, EventArgs e)
+        {
+            grpControleFidelidade.Enabled = chkFidelidade.Checked;
+        }
+
+        private void chkViaBalcao_CheckedChanged(object sender, EventArgs e)
+        {
+            txtViasBalcao.Text = "1";
+        }
+
     }
 }

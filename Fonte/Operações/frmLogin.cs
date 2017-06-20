@@ -26,6 +26,7 @@ namespace DexComanda
         {
             cbxTurno.SelectedIndex = 0;
             DataSet dsCaixa = con.SelectAll("CaixaCadastro", "spObterCaixa");
+           
             if (dsCaixa.Tables[0].Rows.Count > 0)
             {
                 cbxCaixas.DataSource = dsCaixa.Tables[0];
@@ -34,13 +35,8 @@ namespace DexComanda
             }
             else
             {
-                MessageBox.Show("Não há caixas cadastrados , favor efetuar o cadastro para continuar");
-                frmCadCaixa frm = new frmCadCaixa();
-                frm.ShowDialog();
-                if (frm.DialogResult == DialogResult.OK)
-                {
-                    Utils.Restart();
-                }
+                con.ExecutaInsertBasico();
+                frmLogin_Load(sender, e);
             }
 
         }
@@ -70,7 +66,7 @@ namespace DexComanda
             }
             else
             {
-                MessageBox.Show("Selecione o Caixa  e turno para entrar", "[XSistemas] Aviso");
+                MessageBox.Show("Selecione o Caixa  e turno para entrar", "[xSistemas] Aviso");
                 return;
             }
 

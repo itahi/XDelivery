@@ -44,7 +44,7 @@
             this.chkAtivo.Location = new System.Drawing.Point(181, 23);
             this.chkAtivo.Name = "chkAtivo";
             this.chkAtivo.Size = new System.Drawing.Size(56, 17);
-            this.chkAtivo.TabIndex = 19;
+            this.chkAtivo.TabIndex = 2;
             this.chkAtivo.Text = "Ativo?";
             this.chkAtivo.UseVisualStyleBackColor = true;
             // 
@@ -54,7 +54,7 @@
             this.chkOnline.Location = new System.Drawing.Point(104, 23);
             this.chkOnline.Name = "chkOnline";
             this.chkOnline.Size = new System.Drawing.Size(62, 17);
-            this.chkOnline.TabIndex = 18;
+            this.chkOnline.TabIndex = 1;
             this.chkOnline.Text = "Online?";
             this.chkOnline.UseVisualStyleBackColor = true;
             // 
@@ -73,7 +73,7 @@
             this.btnEditarGrupo.Location = new System.Drawing.Point(181, 77);
             this.btnEditarGrupo.Name = "btnEditarGrupo";
             this.btnEditarGrupo.Size = new System.Drawing.Size(131, 35);
-            this.btnEditarGrupo.TabIndex = 16;
+            this.btnEditarGrupo.TabIndex = 4;
             this.btnEditarGrupo.Text = "Editar [F11]";
             this.btnEditarGrupo.UseVisualStyleBackColor = true;
             this.btnEditarGrupo.Click += new System.EventHandler(this.EditarFamilia);
@@ -86,14 +86,14 @@
             this.txtNome.Location = new System.Drawing.Point(11, 45);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(299, 26);
-            this.txtNome.TabIndex = 13;
+            this.txtNome.TabIndex = 0;
             // 
             // btnAdicionarGrupo
             // 
             this.btnAdicionarGrupo.Location = new System.Drawing.Point(11, 77);
             this.btnAdicionarGrupo.Name = "btnAdicionarGrupo";
             this.btnAdicionarGrupo.Size = new System.Drawing.Size(115, 35);
-            this.btnAdicionarGrupo.TabIndex = 15;
+            this.btnAdicionarGrupo.TabIndex = 3;
             this.btnAdicionarGrupo.Text = "Adicionar [F12]";
             this.btnAdicionarGrupo.UseVisualStyleBackColor = true;
             this.btnAdicionarGrupo.Click += new System.EventHandler(this.btnAdicionarGrupo_Click);
@@ -130,9 +130,12 @@
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.btnAdicionarGrupo);
             this.Controls.Add(this.FamiliaGridView);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.KeyPreview = true;
             this.Name = "frmFamilia";
             this.Text = "[xDelivery] Cadastro de Familia";
             this.Load += new System.EventHandler(this.frmFamilia_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmFamilia_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.FamiliaGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

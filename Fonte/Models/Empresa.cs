@@ -28,7 +28,6 @@ namespace DexComanda.Models
         public string CaminhoBackup { get; set; }
         public string UrlServidor { get; set; }
         public string HorarioFuncionamento { get; set; }
-
-
+        public string ConfiguracaoSMS { get; set; }
     }
 }

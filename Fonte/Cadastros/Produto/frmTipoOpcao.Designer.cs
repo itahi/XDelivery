@@ -75,7 +75,7 @@
             this.grpTipo.Location = new System.Drawing.Point(15, 68);
             this.grpTipo.Name = "grpTipo";
             this.grpTipo.Size = new System.Drawing.Size(216, 67);
-            this.grpTipo.TabIndex = 2;
+            this.grpTipo.TabIndex = 4;
             this.grpTipo.TabStop = false;
             this.grpTipo.Text = "Tipo de Seleção";
             // 
@@ -197,7 +197,7 @@
             this.btnEditar.TabIndex = 16;
             this.btnEditar.Text = "Editar [F11]";
             this.btnEditar.UseVisualStyleBackColor = true;
-            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            this.btnEditar.Click += new System.EventHandler(this.EditarRegistro);
             // 
             // btnAdicionar
             // 
@@ -230,7 +230,7 @@
             this.cbxOrdem.Location = new System.Drawing.Point(246, 39);
             this.cbxOrdem.Name = "cbxOrdem";
             this.cbxOrdem.Size = new System.Drawing.Size(42, 26);
-            this.cbxOrdem.TabIndex = 63;
+            this.cbxOrdem.TabIndex = 3;
             // 
             // chkOnlineSN
             // 
@@ -240,7 +240,7 @@
             this.chkOnlineSN.Location = new System.Drawing.Point(140, 22);
             this.chkOnlineSN.Name = "chkOnlineSN";
             this.chkOnlineSN.Size = new System.Drawing.Size(71, 17);
-            this.chkOnlineSN.TabIndex = 64;
+            this.chkOnlineSN.TabIndex = 2;
             this.chkOnlineSN.Text = "OnlineSN";
             this.chkOnlineSN.UseVisualStyleBackColor = true;
             // 
@@ -252,7 +252,7 @@
             this.chkAtivoSN.Location = new System.Drawing.Point(69, 21);
             this.chkAtivoSN.Name = "chkAtivoSN";
             this.chkAtivoSN.Size = new System.Drawing.Size(65, 17);
-            this.chkAtivoSN.TabIndex = 65;
+            this.chkAtivoSN.TabIndex = 1;
             this.chkAtivoSN.Text = "AtivoSN";
             this.chkAtivoSN.UseVisualStyleBackColor = true;
             // 
@@ -273,10 +273,13 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtNome);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "frmTipoOpcao";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[xDelivery] Tipo Opção";
             this.Load += new System.EventHandler(this.frmTipoOpcao_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmTipoOpcao_KeyDown);
             this.grpTipo.ResumeLayout(false);
             this.grpTipo.PerformLayout();
             this.grpMaxMin.ResumeLayout(false);

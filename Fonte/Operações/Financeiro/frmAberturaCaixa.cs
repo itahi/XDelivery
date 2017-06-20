@@ -15,6 +15,7 @@ namespace DexComanda.Operações.Financeiro
     {
         private Conexao con;
         private int CodUser;
+
         public frmAberturaCaixa()
         {
             con = new Conexao();
@@ -23,6 +24,7 @@ namespace DexComanda.Operações.Financeiro
 
         private void frmAberturaCaixa_Load(object sender, EventArgs e)
         {
+            //horafechamento.Value = DateTime.Now;
             dtAbertura.Value = DateTime.Now;
             DataSet dsUsuario = con.SelectAll("Usuario", "spObterUsuario");
             cbxFuncionario.DataSource = dsUsuario.Tables[0];
@@ -32,7 +34,6 @@ namespace DexComanda.Operações.Financeiro
             cbxCaixas.DataSource = dsCaixas.Tables["CaixaCadastro"];
             cbxCaixas.DisplayMember = "Numero";
             cbxCaixas.ValueMember = "Codigo";
-
             cbxFuncionario.Text = Sessions.retunrUsuario.Nome;
         }
 
@@ -40,16 +41,17 @@ namespace DexComanda.Operações.Financeiro
         {
             try
             {
-                if (cbxTurno.Text=="")
+                if (cbxTurno.Text == "")
                 {
                     MessageBox.Show("Selecione o turno que deseja abrir");
+                    cbxTurno.Focus();
                     return;
                 }
 
                 DataSet dsCaixa = con.RetornaCaixaPorTurno(int.Parse(cbxCaixas.Text), cbxTurno.Text, Convert.ToDateTime(dtAbertura.Value.ToShortDateString()));
-                if (dsCaixa.Tables[0].Rows.Count>0)
+                if (dsCaixa.Tables[0].Rows.Count > 0)
                 {
-                    if (Boolean.Parse(dsCaixa.Tables[0].Rows[0].ItemArray.GetValue(7).ToString())==false)
+                    if (Boolean.Parse(dsCaixa.Tables[0].Rows[0].ItemArray.GetValue(7).ToString()) == false)
                     {
                         MessageBox.Show(Bibliotecas.cCaixaAbertoTurno);
                         return;
@@ -67,13 +69,11 @@ namespace DexComanda.Operações.Financeiro
                     {
                         Data = dtAbertura.Value,
                         Estado = false /*Caixa Aber*/,
-                        Historico = "Abertura Inicial",
+                        Historico = "Abertura Caixa",
                         Numero = cbxCaixas.Text,
                         Turno = cbxTurno.Text.ToString(),
-                        ValorAbertura = decimal.Parse(txtValor.Text)    
-
+                        ValorAbertura = decimal.Parse(txtValor.Text),
                     };
-                
 
                     if (cbxFuncionario.Text != "")
                     {
@@ -81,7 +81,7 @@ namespace DexComanda.Operações.Financeiro
 
                         CaixaMovimento cxMovi = new CaixaMovimento()
                         {
-                            CodCaixa = int.Parse(caixa.Numero),
+                            //CodCaixa = int.Parse(caixa.Numero),
                             CodFormaPagamento = 1,
                             Data = caixa.Data,
                             Historico = "Abertura de Caixa",
@@ -95,24 +95,21 @@ namespace DexComanda.Operações.Financeiro
                         // Lança movimento no Caixa de abertura
                         con.Insert("spAbrirCaixa", caixa);
                         con.Insert("spInserirMovimentoCaixa", cxMovi);
-
-                        con.LimpaTabela("Produto_Estoque", "spLimparEstoque");
+                        // con.LimpaTabela("Produto_Estoque", "spLimparEstoque");
                         MessageBox.Show("Caixa aberto", "[xSistemas] Aviso");
-                        Utils.Restart();
                         this.Close();
                     }
                     else
                     {
                         MessageBox.Show("Usuario não selecionado", "[xSistemas] Aviso");
+                        cbxFuncionario.Focus();
                     }
 
                 }
             }
             catch (Exception erro)
             {
-
-
-                MessageBox.Show(erro.Message);
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
 
         }
@@ -132,6 +129,11 @@ namespace DexComanda.Operações.Financeiro
         private void txtValor_KeyPress(object sender, KeyPressEventArgs e)
         {
             Utils.SoDecimais(e);
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

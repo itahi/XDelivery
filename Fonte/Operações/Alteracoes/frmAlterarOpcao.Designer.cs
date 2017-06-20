@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbxOpcao = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnFiltro = new System.Windows.Forms.Button();
             this.cbxTipoOpcao = new System.Windows.Forms.ComboBox();
@@ -46,8 +48,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cbxOpcao = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridView)).BeginInit();
@@ -69,6 +69,26 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(203, 21);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(42, 13);
+            this.label4.TabIndex = 4;
+            this.label4.Text = " Opção";
+            // 
+            // cbxOpcao
+            // 
+            this.cbxOpcao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxOpcao.FormattingEnabled = true;
+            this.cbxOpcao.Location = new System.Drawing.Point(201, 40);
+            this.cbxOpcao.Name = "cbxOpcao";
+            this.cbxOpcao.Size = new System.Drawing.Size(205, 21);
+            this.cbxOpcao.TabIndex = 3;
+            this.cbxOpcao.DropDown += new System.EventHandler(this.cbxOpcao_DropDown);
+            this.cbxOpcao.SelectedIndexChanged += new System.EventHandler(this.cbxOpcao_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -97,6 +117,7 @@
             this.cbxTipoOpcao.Name = "cbxTipoOpcao";
             this.cbxTipoOpcao.Size = new System.Drawing.Size(155, 21);
             this.cbxTipoOpcao.TabIndex = 0;
+            this.cbxTipoOpcao.DropDown += new System.EventHandler(this.cbxTipoOpcao_DropDown);
             this.cbxTipoOpcao.SelectionChangeCommitted += new System.EventHandler(this.BuscaOpcao);
             // 
             // groupBox2
@@ -257,24 +278,6 @@
             this.button2.TabIndex = 34;
             this.button2.Text = "Cancelar";
             this.button2.UseVisualStyleBackColor = true;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(203, 21);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(42, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = " Opção";
-            // 
-            // cbxOpcao
-            // 
-            this.cbxOpcao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxOpcao.FormattingEnabled = true;
-            this.cbxOpcao.Location = new System.Drawing.Point(201, 40);
-            this.cbxOpcao.Name = "cbxOpcao";
-            this.cbxOpcao.Size = new System.Drawing.Size(155, 21);
-            this.cbxOpcao.TabIndex = 3;
             // 
             // frmAlterarOpcao
             // 

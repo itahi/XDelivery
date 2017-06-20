@@ -23,39 +23,24 @@ namespace DexComanda
             con = new Conexao();
             ListaRegioes();
         }
-
-        private void Acao(object sender, EventArgs e)
-        {
-
-        }
         private void ListaRegioes()
         {
             this.RegioesGridView.DataSource = null;
-            this.RegioesGridView.AutoGenerateColumns = true;
-            this.RegioesGridView.DataSource = con.SelectAll("RegiaoEntrega", "spObterRegioes");
-            this.RegioesGridView.DataMember = "RegiaoEntrega";
+            RegioesGridView.AutoGenerateColumns = true;
+            RegioesGridView.DataSource = con.SelectAll("RegiaoEntrega", "spObterRegioes");
+            RegioesGridView.DataMember = "RegiaoEntrega";
 
         }
-
-        private void ConsultarCEP(object sender, KeyEventArgs e)
-        {
-
-        }
-
         private void RegioesGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
                 rowIndex = e.RowIndex;
             }
-            catch (Exception)
+            catch (Exception erro)
             {
-
-                throw;
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-
-
-
         }
 
         private void Editar(object sender, EventArgs e)
@@ -92,21 +77,15 @@ namespace DexComanda
                         DataAlteracao = DateTime.Now,
                         OnlineSN = chkOnline.Checked,
                         AtivoSN = chkAtivo.Checked
-
                     };
                     if (txtTaxaGratis.Text != "")
                     {
                         valorFrete = double.Parse(txtTaxaGratis.Text);
                     }
-                    if (txtPrevisao.Text != "")
-                    {
-                        regioes.PrevisaoEntrega = txtPrevisao.Text;
-                    }
-
+                    regioes.PrevisaoEntrega = txtPrevisao.Text;
                     regioes.valorMinimoFreteGratis = valorFrete;
 
                     con.Update("spAlteraRegiao", regioes);
-
                     Utils.ControlaEventos("Altera", this.Name);
                     this.btnSalvar.Text = "Adicionar [F12]";
                     this.btnSalvar.Click += new System.EventHandler(this.AdicionarRegiao);

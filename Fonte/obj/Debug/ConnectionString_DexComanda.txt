@@ -1,1 +1,0 @@
-Data Source=MARCOS-PC;Initial Catalog=DBExpert; User ID=dex; Password=1234; Trusted_Connection=False; 

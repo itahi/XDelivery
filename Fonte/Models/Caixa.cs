@@ -17,5 +17,6 @@ namespace DexComanda.Models
         public decimal ValorFechamento { get; set; }
         public bool Estado { get; set; }
         public string Turno { get; set; }
+      //  public DateTime HorarioFechamento { get; set;}
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label label6;
             System.Windows.Forms.Label label5;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAlteracaoProduto));
@@ -81,6 +82,7 @@
             this.Valor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CodTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             this.grpFiltros.SuspendLayout();
@@ -129,7 +131,7 @@
             // chkTodos
             // 
             this.chkTodos.AutoSize = true;
-            this.chkTodos.Location = new System.Drawing.Point(237, 40);
+            this.chkTodos.Location = new System.Drawing.Point(301, 41);
             this.chkTodos.Name = "chkTodos";
             this.chkTodos.Size = new System.Drawing.Size(101, 17);
             this.chkTodos.TabIndex = 27;
@@ -139,11 +141,11 @@
             // 
             // btnFiltrar
             // 
-            this.btnFiltrar.Location = new System.Drawing.Point(358, 34);
+            this.btnFiltrar.Location = new System.Drawing.Point(231, 35);
             this.btnFiltrar.Name = "btnFiltrar";
             this.btnFiltrar.Size = new System.Drawing.Size(64, 26);
             this.btnFiltrar.TabIndex = 26;
-            this.btnFiltrar.Text = "Filtros";
+            this.btnFiltrar.Text = "Buscar";
             this.btnFiltrar.UseVisualStyleBackColor = true;
             this.btnFiltrar.Click += new System.EventHandler(this.Filtro);
             // 
@@ -194,7 +196,7 @@
             this.GridViewProdutos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.GridViewProdutos.Size = new System.Drawing.Size(784, 170);
             this.GridViewProdutos.TabIndex = 2;
-            this.GridViewProdutos.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxiliar);
+            this.GridViewProdutos.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GridViewProdutos_MouseClick);
             // 
             // btnExecutar
             // 
@@ -250,9 +252,10 @@
             this.chkAtivaDesconto.AutoSize = true;
             this.chkAtivaDesconto.Location = new System.Drawing.Point(389, 11);
             this.chkAtivaDesconto.Name = "chkAtivaDesconto";
-            this.chkAtivaDesconto.Size = new System.Drawing.Size(105, 17);
+            this.chkAtivaDesconto.Size = new System.Drawing.Size(104, 17);
             this.chkAtivaDesconto.TabIndex = 35;
-            this.chkAtivaDesconto.Text = "Ativa Desconto?";
+            this.chkAtivaDesconto.Text = "Ativar Promoção";
+            this.toolTip1.SetToolTip(this.chkAtivaDesconto, "Ativa o desconto em porcetagem no filtro de produtos ");
             this.chkAtivaDesconto.UseVisualStyleBackColor = true;
             this.chkAtivaDesconto.CheckedChanged += new System.EventHandler(this.chkAtivaDesconto_CheckedChanged);
             // 
@@ -325,6 +328,7 @@
             this.txtPorcentagem.Name = "txtPorcentagem";
             this.txtPorcentagem.Size = new System.Drawing.Size(75, 26);
             this.txtPorcentagem.TabIndex = 23;
+            this.toolTip1.SetToolTip(this.txtPorcentagem, "Preencha a pocentagem de desconto que deseja dar nos produtos.");
             // 
             // ChkSexta
             // 
@@ -491,6 +495,7 @@
             this.btnOpcao.TabIndex = 30;
             this.btnOpcao.Text = "Vincular Opção";
             this.btnOpcao.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.btnOpcao, "Selecione as opções que serão vinculadas aos produtos do filtro");
             this.btnOpcao.UseVisualStyleBackColor = true;
             this.btnOpcao.Click += new System.EventHandler(this.btnOpcao_Click);
             // 
@@ -536,7 +541,7 @@
             // 
             this.cbxTipoOpcao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxTipoOpcao.FormattingEnabled = true;
-            this.cbxTipoOpcao.Location = new System.Drawing.Point(47, 4);
+            this.cbxTipoOpcao.Location = new System.Drawing.Point(46, 5);
             this.cbxTipoOpcao.Name = "cbxTipoOpcao";
             this.cbxTipoOpcao.Size = new System.Drawing.Size(130, 21);
             this.cbxTipoOpcao.TabIndex = 46;
@@ -636,6 +641,7 @@
             this.AdicionaisGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.AdicionaisGridView.Size = new System.Drawing.Size(370, 103);
             this.AdicionaisGridView.TabIndex = 38;
+            this.AdicionaisGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxilarOpcoes);
             // 
             // CodOpcao
             // 
@@ -751,5 +757,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Valor;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nome;
         private System.Windows.Forms.DataGridViewTextBoxColumn CodTipo;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

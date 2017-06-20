@@ -82,9 +82,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(114, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(138, 29);
+            this.label1.Size = new System.Drawing.Size(139, 29);
             this.label1.TabIndex = 0;
-            this.label1.Text = "XSistemas";
+            this.label1.Text = "xSistemas ";
             // 
             // frmContato
             // 

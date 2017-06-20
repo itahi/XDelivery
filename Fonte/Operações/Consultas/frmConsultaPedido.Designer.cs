@@ -28,15 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dtFim = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtCodPedido = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -52,12 +54,30 @@
             this.groupBox1.Controls.Add(this.txtCodPedido);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.dtInicio);
-            this.groupBox1.Location = new System.Drawing.Point(1, 3);
+            this.groupBox1.Location = new System.Drawing.Point(47, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(592, 80);
+            this.groupBox1.Size = new System.Drawing.Size(537, 80);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
+            // 
+            // dtFim
+            // 
+            this.dtFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtFim.Location = new System.Drawing.Point(286, 42);
+            this.dtFim.Name = "dtFim";
+            this.dtFim.Size = new System.Drawing.Size(87, 20);
+            this.dtFim.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.dtFim, "Data que e o pedido foi feito");
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(225, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(85, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Data inicio e Fim";
             // 
             // label1
             // 
@@ -74,6 +94,7 @@
             this.txtCodPedido.Name = "txtCodPedido";
             this.txtCodPedido.Size = new System.Drawing.Size(100, 20);
             this.txtCodPedido.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.txtCodPedido, "Código do pedido que deseja buscar");
             this.txtCodPedido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodPedido_KeyPress);
             // 
             // button1
@@ -93,6 +114,7 @@
             this.dtInicio.Name = "dtInicio";
             this.dtInicio.Size = new System.Drawing.Size(87, 20);
             this.dtInicio.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.dtInicio, "Data que e o pedido foi feito");
             this.dtInicio.ValueChanged += new System.EventHandler(this.dtInicio_ValueChanged);
             // 
             // groupBox2
@@ -108,23 +130,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Pedidos";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(230, 26);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(85, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Data inicio e Fim";
-            // 
-            // dtFim
-            // 
-            this.dtFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtFim.Location = new System.Drawing.Point(286, 42);
-            this.dtFim.Name = "dtFim";
-            this.dtFim.Size = new System.Drawing.Size(87, 20);
-            this.dtFim.TabIndex = 1;
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -136,7 +141,9 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(623, 332);
             this.dataGridView1.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.dataGridView1, "Lista de pedidos que foram BAIXADOS /Cancelados");
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AbrePedido);
+            this.dataGridView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxiliar);
             // 
             // frmConsultaPedido
             // 
@@ -171,5 +178,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtFim;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

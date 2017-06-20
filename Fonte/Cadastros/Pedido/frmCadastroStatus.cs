@@ -84,13 +84,13 @@ namespace DexComanda.Cadastros
             chkAlertar.Checked = StatusGridView.CurrentRow.Cells["Alerta Cliente"].Value.ToString() == "SIM";
             cbxOrder.Text = StatusGridView.CurrentRow.Cells["Status"].Value.ToString();
 
-            this.btnAdicionarGrupo.Text = "Salvar [F12]";
-            this.btnAdicionarGrupo.Click += new System.EventHandler(this.Salvar);
-            this.btnAdicionarGrupo.Click -= new System.EventHandler(this.btnAdicionarGrupo_Click);
+            this.btnAdicionar.Text = "Salvar [F12]";
+            this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
+            this.btnAdicionar.Click -= new System.EventHandler(this.btnAdicionarGrupo_Click);
 
-            this.btnEditarGrupo.Text = "Cancelar [ESC]";
-            this.btnEditarGrupo.Click += new System.EventHandler(this.Cancelar);
-            this.btnEditarGrupo.Click -= new System.EventHandler(this.btnEditarGrupo_Click);
+            this.btnEditar.Text = "Cancelar [ESC]";
+            this.btnEditar.Click += new System.EventHandler(this.Cancelar);
+            this.btnEditar.Click -= new System.EventHandler(this.btnEditarGrupo_Click);
 
         }
         private void Salvar(object sender, EventArgs e)
@@ -108,13 +108,13 @@ namespace DexComanda.Cadastros
             {
                 con.Update("spAlterarPedidoStatus", pedido);
                 Utils.ControlaEventos("Alterar", this.Name);
-                this.btnAdicionarGrupo.Text = "Adicionar [F12]";
-                this.btnAdicionarGrupo.Click += new System.EventHandler(this.btnAdicionarGrupo_Click);
-                this.btnAdicionarGrupo.Click -= new System.EventHandler(this.Salvar);
+                this.btnAdicionar.Text = "Adicionar [F12]";
+                this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionarGrupo_Click);
+                this.btnAdicionar.Click -= new System.EventHandler(this.Salvar);
 
-                this.btnEditarGrupo.Text = "Editar [F11]";
-                this.btnEditarGrupo.Click += new System.EventHandler(this.btnEditarGrupo_Click);
-                this.btnEditarGrupo.Click -= new System.EventHandler(this.Cancelar);
+                this.btnEditar.Text = "Editar [F11]";
+                this.btnEditar.Click += new System.EventHandler(this.btnEditarGrupo_Click);
+                this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
 
                 ListaStauts();
             }
@@ -130,14 +130,29 @@ namespace DexComanda.Cadastros
 
             Button iButton = (Button)sender;
             ListaStauts();
-            this.btnAdicionarGrupo.Text = "Adicionar";
-            this.btnAdicionarGrupo.Click += new System.EventHandler(this.btnAdicionarGrupo_Click);
-            this.btnAdicionarGrupo.Click -= new System.EventHandler(this.Salvar);
+            this.btnAdicionar.Text = "Adicionar";
+            this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionarGrupo_Click);
+            this.btnAdicionar.Click -= new System.EventHandler(this.Salvar);
 
-            this.btnEditarGrupo.Text = "Editar";
-            this.btnEditarGrupo.Click += new System.EventHandler(this.btnEditarGrupo_Click);
-            this.btnEditarGrupo.Click -= new System.EventHandler(this.Cancelar);
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.Click += new System.EventHandler(this.btnEditarGrupo_Click);
+            this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
         }
 
+        private void frmCadastroStatus_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12 && btnAdicionar.Text == "Adicionar [F12]")
+            {
+                btnAdicionarGrupo_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.F12 && btnAdicionar.Text == "Salvar [F12]")
+            {
+                Salvar(sender, e);
+            }
+            else if (e.KeyCode == Keys.F11 && btnEditar.Text == "Editar [F11]")
+            {
+                btnEditarGrupo_Click(sender, e);
+            }
+        }
     }
 }

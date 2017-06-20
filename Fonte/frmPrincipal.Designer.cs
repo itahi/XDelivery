@@ -40,6 +40,7 @@
             this.tipoOpçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.opçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.produtoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insumosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.empresaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotasDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuáriosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +53,7 @@
             this.mesasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.motivosCancelamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusPedidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.origemDoClienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.relatórioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.porPessoaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,14 +63,15 @@
             this.crediárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.melhoresClientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vendasPorAtendenteVendedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vendasOnlineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maisVendidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.promoçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vendidosNoPeriodoAgrupadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mensalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.envioDeSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.classificadoPorOrigemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportarDadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.impressãoTermicaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vendasPorVendedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,6 +87,7 @@
             this.alteraçõesMultiplasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.produtosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.opçãoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.produtoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.taxasDeEntregaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alterarSenhaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,26 +100,33 @@
             this.sincronizaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.controleDeEstoqueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lançarMovimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.produtoToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.insumoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaMovimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pedidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastroStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alteracaoStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.notificaçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pedidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.açõesDePublicidadeEMarketingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.envioDeSmsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.envioDePushNotificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.envioDeEmailMarketingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoAtivaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlPrincipal = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.lblValor = new System.Windows.Forms.Label();
-            this.lblQtd = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.grpAndamentoPedido = new System.Windows.Forms.GroupBox();
+            this.btnCozinha = new System.Windows.Forms.Button();
+            this.btnEntrega = new System.Windows.Forms.Button();
             this.chkGerenciaImpressao = new System.Windows.Forms.CheckBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.pnlPedido = new System.Windows.Forms.Panel();
+            this.grpTipoPedido = new System.Windows.Forms.GroupBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtCodBusca = new System.Windows.Forms.TextBox();
+            this.cbxStatusPedido = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbxFiltroTipo = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -151,12 +162,13 @@
             this.txbTelefoneCliente = new System.Windows.Forms.TextBox();
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
-            this.vendasOnlineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.grpAndamentoPedido.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pnlPedido.SuspendLayout();
+            this.grpTipoPedido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pedidosGridView)).BeginInit();
             this.pnlBuscaProduto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.produtosGridView)).BeginInit();
@@ -178,7 +190,7 @@
             this.contatoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1044, 29);
+            this.menuStrip1.Size = new System.Drawing.Size(1052, 29);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -194,18 +206,21 @@
             this.regiõesDeEntregaToolStripMenuItem,
             this.mesasToolStripMenuItem,
             this.motivosCancelamentoToolStripMenuItem,
-            this.statusPedidoToolStripMenuItem});
+            this.statusPedidoToolStripMenuItem,
+            this.origemDoClienteToolStripMenuItem});
             this.cadastrosToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.cadastrosToolStripMenuItem.Name = "cadastrosToolStripMenuItem";
             this.cadastrosToolStripMenuItem.Size = new System.Drawing.Size(91, 25);
             this.cadastrosToolStripMenuItem.Text = "Cadastros";
+            this.cadastrosToolStripMenuItem.Click += new System.EventHandler(this.cadastrosToolStripMenuItem_Click);
             // 
             // produtosToolStripMenuItem
             // 
             this.produtosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gruposCategoriasToolStripMenuItem,
             this.opçãoToolStripMenuItem,
-            this.produtoToolStripMenuItem});
+            this.produtoToolStripMenuItem,
+            this.insumosToolStripMenuItem});
             this.produtosToolStripMenuItem.Name = "produtosToolStripMenuItem";
             this.produtosToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
             this.produtosToolStripMenuItem.Text = "Items / Cardápio";
@@ -263,6 +278,13 @@
             this.produtoToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
             this.produtoToolStripMenuItem.Text = "Produto";
             this.produtoToolStripMenuItem.Click += new System.EventHandler(this.produtoToolStripMenuItem_Click);
+            // 
+            // insumosToolStripMenuItem
+            // 
+            this.insumosToolStripMenuItem.Name = "insumosToolStripMenuItem";
+            this.insumosToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+            this.insumosToolStripMenuItem.Text = "Insumos";
+            this.insumosToolStripMenuItem.Click += new System.EventHandler(this.insumosToolStripMenuItem_Click);
             // 
             // empresaToolStripMenuItem
             // 
@@ -352,6 +374,13 @@
             this.statusPedidoToolStripMenuItem.Text = "Status Pedido";
             this.statusPedidoToolStripMenuItem.Click += new System.EventHandler(this.statusPedidoToolStripMenuItem_Click);
             // 
+            // origemDoClienteToolStripMenuItem
+            // 
+            this.origemDoClienteToolStripMenuItem.Name = "origemDoClienteToolStripMenuItem";
+            this.origemDoClienteToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
+            this.origemDoClienteToolStripMenuItem.Text = "Origem do Cliente";
+            this.origemDoClienteToolStripMenuItem.Click += new System.EventHandler(this.origemDoClienteToolStripMenuItem_Click);
+            // 
             // relatórioToolStripMenuItem
             // 
             this.relatórioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -434,6 +463,13 @@
             this.vendasPorAtendenteVendedorToolStripMenuItem.Text = "Vendas por Atendente/Vendedor";
             this.vendasPorAtendenteVendedorToolStripMenuItem.Click += new System.EventHandler(this.vendasPorAtendenteVendedorToolStripMenuItem_Click);
             // 
+            // vendasOnlineToolStripMenuItem
+            // 
+            this.vendasOnlineToolStripMenuItem.Name = "vendasOnlineToolStripMenuItem";
+            this.vendasOnlineToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
+            this.vendasOnlineToolStripMenuItem.Text = "Vendas Online";
+            this.vendasOnlineToolStripMenuItem.Click += new System.EventHandler(this.vendasOnlineToolStripMenuItem_Click);
+            // 
             // diárioToolStripMenuItem
             // 
             this.diárioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -476,24 +512,24 @@
             // mensalToolStripMenuItem
             // 
             this.mensalToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.envioDeSMSToolStripMenuItem,
-            this.geralToolStripMenuItem1});
+            this.geralToolStripMenuItem1,
+            this.classificadoPorOrigemToolStripMenuItem});
             this.mensalToolStripMenuItem.Name = "mensalToolStripMenuItem";
             this.mensalToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.mensalToolStripMenuItem.Text = "Clientes";
             // 
-            // envioDeSMSToolStripMenuItem
-            // 
-            this.envioDeSMSToolStripMenuItem.Name = "envioDeSMSToolStripMenuItem";
-            this.envioDeSMSToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
-            this.envioDeSMSToolStripMenuItem.Text = "Envio de SMS ";
-            this.envioDeSMSToolStripMenuItem.Click += new System.EventHandler(this.envioDeSMSToolStripMenuItem_Click);
-            // 
             // geralToolStripMenuItem1
             // 
             this.geralToolStripMenuItem1.Name = "geralToolStripMenuItem1";
-            this.geralToolStripMenuItem1.Size = new System.Drawing.Size(179, 26);
+            this.geralToolStripMenuItem1.Size = new System.Drawing.Size(247, 26);
             this.geralToolStripMenuItem1.Text = "Geral";
+            // 
+            // classificadoPorOrigemToolStripMenuItem
+            // 
+            this.classificadoPorOrigemToolStripMenuItem.Name = "classificadoPorOrigemToolStripMenuItem";
+            this.classificadoPorOrigemToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
+            this.classificadoPorOrigemToolStripMenuItem.Text = "Classificado por Origem";
+            this.classificadoPorOrigemToolStripMenuItem.Click += new System.EventHandler(this.classificadoPorOrigemToolStripMenuItem_Click);
             // 
             // exportarDadosToolStripMenuItem
             // 
@@ -589,8 +625,8 @@
             this.sincronizaçãoToolStripMenuItem,
             this.controleDeEstoqueToolStripMenuItem,
             this.pedidoToolStripMenuItem,
-            this.notificaçõesToolStripMenuItem,
-            this.consultasToolStripMenuItem});
+            this.consultasToolStripMenuItem,
+            this.açõesDePublicidadeEMarketingToolStripMenuItem});
             this.operaçõesToolStripMenuItem.Name = "operaçõesToolStripMenuItem";
             this.operaçõesToolStripMenuItem.Size = new System.Drawing.Size(96, 25);
             this.operaçõesToolStripMenuItem.Text = "Operações";
@@ -602,24 +638,32 @@
             this.clientesToolStripMenuItem1,
             this.taxasDeEntregaToolStripMenuItem});
             this.alteraçõesMultiplasToolStripMenuItem.Name = "alteraçõesMultiplasToolStripMenuItem";
-            this.alteraçõesMultiplasToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.alteraçõesMultiplasToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.alteraçõesMultiplasToolStripMenuItem.Text = "Alterações Multiplas";
             // 
             // produtosToolStripMenuItem1
             // 
             this.produtosToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.opçãoToolStripMenuItem1});
+            this.opçãoToolStripMenuItem1,
+            this.produtoToolStripMenuItem1});
             this.produtosToolStripMenuItem1.Name = "produtosToolStripMenuItem1";
             this.produtosToolStripMenuItem1.Size = new System.Drawing.Size(184, 26);
-            this.produtosToolStripMenuItem1.Text = "Produtos";
+            this.produtosToolStripMenuItem1.Text = "Itens";
             this.produtosToolStripMenuItem1.Click += new System.EventHandler(this.produtosToolStripMenuItem1_Click);
             // 
             // opçãoToolStripMenuItem1
             // 
             this.opçãoToolStripMenuItem1.Name = "opçãoToolStripMenuItem1";
-            this.opçãoToolStripMenuItem1.Size = new System.Drawing.Size(125, 26);
+            this.opçãoToolStripMenuItem1.Size = new System.Drawing.Size(136, 26);
             this.opçãoToolStripMenuItem1.Text = "Opção";
             this.opçãoToolStripMenuItem1.Click += new System.EventHandler(this.opçãoToolStripMenuItem1_Click);
+            // 
+            // produtoToolStripMenuItem1
+            // 
+            this.produtoToolStripMenuItem1.Name = "produtoToolStripMenuItem1";
+            this.produtoToolStripMenuItem1.Size = new System.Drawing.Size(136, 26);
+            this.produtoToolStripMenuItem1.Text = "Produto";
+            this.produtoToolStripMenuItem1.Click += new System.EventHandler(this.produtoToolStripMenuItem1_Click);
             // 
             // clientesToolStripMenuItem1
             // 
@@ -637,7 +681,7 @@
             // alterarSenhaToolStripMenuItem
             // 
             this.alterarSenhaToolStripMenuItem.Name = "alterarSenhaToolStripMenuItem";
-            this.alterarSenhaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.alterarSenhaToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.alterarSenhaToolStripMenuItem.Text = "Alterar Senha";
             this.alterarSenhaToolStripMenuItem.Click += new System.EventHandler(this.alterarSenhaToolStripMenuItem_Click);
             // 
@@ -649,7 +693,7 @@
             this.cadastroCaixaToolStripMenuItem,
             this.fecharCaixaToolStripMenuItem});
             this.FinanceiroToolStripMenuItem.Name = "FinanceiroToolStripMenuItem";
-            this.FinanceiroToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.FinanceiroToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.FinanceiroToolStripMenuItem.Text = "Financeiro";
             // 
             // lançamentoAvulsoToolStripMenuItem
@@ -684,14 +728,14 @@
             // 
             this.aberturaCaixaToolStripMenuItem.Enabled = false;
             this.aberturaCaixaToolStripMenuItem.Name = "aberturaCaixaToolStripMenuItem";
-            this.aberturaCaixaToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.aberturaCaixaToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.aberturaCaixaToolStripMenuItem.Text = "Abertura Caixa";
             this.aberturaCaixaToolStripMenuItem.Click += new System.EventHandler(this.aberturaCaixaToolStripMenuItem_Click);
             // 
             // sincronizaçãoToolStripMenuItem
             // 
             this.sincronizaçãoToolStripMenuItem.Name = "sincronizaçãoToolStripMenuItem";
-            this.sincronizaçãoToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.sincronizaçãoToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.sincronizaçãoToolStripMenuItem.Text = "Sincronização";
             this.sincronizaçãoToolStripMenuItem.Click += new System.EventHandler(this.sincronizaçãoToolStripMenuItem_Click);
             // 
@@ -701,20 +745,37 @@
             this.lançarMovimentoToolStripMenuItem,
             this.consultaMovimentoToolStripMenuItem});
             this.controleDeEstoqueToolStripMenuItem.Name = "controleDeEstoqueToolStripMenuItem";
-            this.controleDeEstoqueToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.controleDeEstoqueToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.controleDeEstoqueToolStripMenuItem.Text = "Controle de Estoque";
             // 
             // lançarMovimentoToolStripMenuItem
             // 
+            this.lançarMovimentoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.produtoToolStripMenuItem2,
+            this.insumoToolStripMenuItem});
             this.lançarMovimentoToolStripMenuItem.Name = "lançarMovimentoToolStripMenuItem";
             this.lançarMovimentoToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
-            this.lançarMovimentoToolStripMenuItem.Text = "Lançar Movimento";
+            this.lançarMovimentoToolStripMenuItem.Text = "Lançamento Estoque";
+            // 
+            // produtoToolStripMenuItem2
+            // 
+            this.produtoToolStripMenuItem2.Name = "produtoToolStripMenuItem2";
+            this.produtoToolStripMenuItem2.Size = new System.Drawing.Size(136, 26);
+            this.produtoToolStripMenuItem2.Text = "Produto";
+            this.produtoToolStripMenuItem2.Click += new System.EventHandler(this.produtoToolStripMenuItem2_Click);
+            // 
+            // insumoToolStripMenuItem
+            // 
+            this.insumoToolStripMenuItem.Name = "insumoToolStripMenuItem";
+            this.insumoToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.insumoToolStripMenuItem.Text = "Insumo";
             // 
             // consultaMovimentoToolStripMenuItem
             // 
             this.consultaMovimentoToolStripMenuItem.Name = "consultaMovimentoToolStripMenuItem";
             this.consultaMovimentoToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
             this.consultaMovimentoToolStripMenuItem.Text = "Consultar Movimento";
+            this.consultaMovimentoToolStripMenuItem.Click += new System.EventHandler(this.consultaMovimentoToolStripMenuItem_Click);
             // 
             // pedidoToolStripMenuItem
             // 
@@ -723,7 +784,7 @@
             this.alteracaoStatusToolStripMenuItem});
             this.pedidoToolStripMenuItem.Enabled = false;
             this.pedidoToolStripMenuItem.Name = "pedidoToolStripMenuItem";
-            this.pedidoToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.pedidoToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.pedidoToolStripMenuItem.Text = "Pedido";
             // 
             // cadastroStatusToolStripMenuItem
@@ -738,19 +799,12 @@
             this.alteracaoStatusToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.alteracaoStatusToolStripMenuItem.Text = "Alteracao Status";
             // 
-            // notificaçõesToolStripMenuItem
-            // 
-            this.notificaçõesToolStripMenuItem.Name = "notificaçõesToolStripMenuItem";
-            this.notificaçõesToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
-            this.notificaçõesToolStripMenuItem.Text = "Notificações";
-            this.notificaçõesToolStripMenuItem.Click += new System.EventHandler(this.notificaçõesToolStripMenuItem_Click);
-            // 
             // consultasToolStripMenuItem
             // 
             this.consultasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pedidosToolStripMenuItem});
             this.consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
-            this.consultasToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
+            this.consultasToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.consultasToolStripMenuItem.Text = "Consultas";
             // 
             // pedidosToolStripMenuItem
@@ -759,6 +813,36 @@
             this.pedidosToolStripMenuItem.Size = new System.Drawing.Size(134, 26);
             this.pedidosToolStripMenuItem.Text = "Pedidos";
             this.pedidosToolStripMenuItem.Click += new System.EventHandler(this.pedidosToolStripMenuItem_Click);
+            // 
+            // açõesDePublicidadeEMarketingToolStripMenuItem
+            // 
+            this.açõesDePublicidadeEMarketingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.envioDeSmsToolStripMenuItem1,
+            this.envioDePushNotificationToolStripMenuItem,
+            this.envioDeEmailMarketingToolStripMenuItem});
+            this.açõesDePublicidadeEMarketingToolStripMenuItem.Name = "açõesDePublicidadeEMarketingToolStripMenuItem";
+            this.açõesDePublicidadeEMarketingToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
+            this.açõesDePublicidadeEMarketingToolStripMenuItem.Text = "Publicidade e Marketing";
+            // 
+            // envioDeSmsToolStripMenuItem1
+            // 
+            this.envioDeSmsToolStripMenuItem1.Name = "envioDeSmsToolStripMenuItem1";
+            this.envioDeSmsToolStripMenuItem1.Size = new System.Drawing.Size(262, 26);
+            this.envioDeSmsToolStripMenuItem1.Text = "Envio de Sms";
+            this.envioDeSmsToolStripMenuItem1.Click += new System.EventHandler(this.envioDeSmsToolStripMenuItem1_Click);
+            // 
+            // envioDePushNotificationToolStripMenuItem
+            // 
+            this.envioDePushNotificationToolStripMenuItem.Name = "envioDePushNotificationToolStripMenuItem";
+            this.envioDePushNotificationToolStripMenuItem.Size = new System.Drawing.Size(262, 26);
+            this.envioDePushNotificationToolStripMenuItem.Text = "Envio de Push Notification";
+            this.envioDePushNotificationToolStripMenuItem.Click += new System.EventHandler(this.envioDePushNotificationToolStripMenuItem_Click);
+            // 
+            // envioDeEmailMarketingToolStripMenuItem
+            // 
+            this.envioDeEmailMarketingToolStripMenuItem.Name = "envioDeEmailMarketingToolStripMenuItem";
+            this.envioDeEmailMarketingToolStripMenuItem.Size = new System.Drawing.Size(262, 26);
+            this.envioDeEmailMarketingToolStripMenuItem.Text = "Envio de Email Marketing";
             // 
             // contatoToolStripMenuItem
             // 
@@ -778,7 +862,7 @@
             // pnlPrincipal
             // 
             this.pnlPrincipal.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.pnlPrincipal.Controls.Add(this.panel1);
+            this.pnlPrincipal.Controls.Add(this.grpAndamentoPedido);
             this.pnlPrincipal.Controls.Add(this.chkGerenciaImpressao);
             this.pnlPrincipal.Controls.Add(this.statusStrip1);
             this.pnlPrincipal.Controls.Add(this.pnlPedido);
@@ -789,66 +873,55 @@
             this.pnlPrincipal.ForeColor = System.Drawing.Color.Black;
             this.pnlPrincipal.Location = new System.Drawing.Point(0, 29);
             this.pnlPrincipal.Name = "pnlPrincipal";
-            this.pnlPrincipal.Size = new System.Drawing.Size(1044, 481);
+            this.pnlPrincipal.Size = new System.Drawing.Size(1052, 536);
             this.pnlPrincipal.TabIndex = 2;
             // 
-            // panel1
+            // grpAndamentoPedido
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.lblValor);
-            this.panel1.Controls.Add(this.lblQtd);
-            this.panel1.Controls.Add(this.label12);
-            this.panel1.Controls.Add(this.label13);
-            this.panel1.Location = new System.Drawing.Point(537, 455);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(499, 23);
-            this.panel1.TabIndex = 26;
+            this.grpAndamentoPedido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpAndamentoPedido.Controls.Add(this.btnCozinha);
+            this.grpAndamentoPedido.Controls.Add(this.btnEntrega);
+            this.grpAndamentoPedido.Location = new System.Drawing.Point(537, 484);
+            this.grpAndamentoPedido.Name = "grpAndamentoPedido";
+            this.grpAndamentoPedido.Size = new System.Drawing.Size(512, 44);
+            this.grpAndamentoPedido.TabIndex = 21;
+            this.grpAndamentoPedido.TabStop = false;
+            this.grpAndamentoPedido.Text = "[Andamento Pedido]";
             // 
-            // lblValor
+            // btnCozinha
             // 
-            this.lblValor.AutoSize = true;
-            this.lblValor.Location = new System.Drawing.Point(420, 2);
-            this.lblValor.Name = "lblValor";
-            this.lblValor.Size = new System.Drawing.Size(13, 13);
-            this.lblValor.TabIndex = 12;
-            this.lblValor.Text = "0";
-            this.lblValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCozinha.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.btnCozinha.Image = ((System.Drawing.Image)(resources.GetObject("btnCozinha.Image")));
+            this.btnCozinha.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCozinha.Location = new System.Drawing.Point(302, 7);
+            this.btnCozinha.Name = "btnCozinha";
+            this.btnCozinha.Size = new System.Drawing.Size(98, 31);
+            this.btnCozinha.TabIndex = 1;
+            this.btnCozinha.Text = "Na Cozinha";
+            this.toolTip1.SetToolTip(this.btnCozinha, "Pedido marcado na tela mudarão o status para Entrega");
+            this.btnCozinha.UseVisualStyleBackColor = true;
+            this.btnCozinha.Click += new System.EventHandler(this.MudaStatusCozinha);
             // 
-            // lblQtd
+            // btnEntrega
             // 
-            this.lblQtd.AutoSize = true;
-            this.lblQtd.Location = new System.Drawing.Point(61, 3);
-            this.lblQtd.Name = "lblQtd";
-            this.lblQtd.Size = new System.Drawing.Size(13, 13);
-            this.lblQtd.TabIndex = 2;
-            this.lblQtd.Text = "0";
-            this.lblQtd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(363, 2);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(51, 13);
-            this.label12.TabIndex = 1;
-            this.label12.Text = "Total R$:";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(7, 2);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(48, 13);
-            this.label13.TabIndex = 0;
-            this.label13.Text = "Pedidos:";
+            this.btnEntrega.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.btnEntrega.Image = ((System.Drawing.Image)(resources.GetObject("btnEntrega.Image")));
+            this.btnEntrega.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEntrega.Location = new System.Drawing.Point(163, 7);
+            this.btnEntrega.Name = "btnEntrega";
+            this.btnEntrega.Size = new System.Drawing.Size(98, 31);
+            this.btnEntrega.TabIndex = 0;
+            this.btnEntrega.Text = "Na Entrega";
+            this.toolTip1.SetToolTip(this.btnEntrega, "Pedido marcado na tela mudarão o status para Entrega");
+            this.btnEntrega.UseVisualStyleBackColor = true;
+            this.btnEntrega.Click += new System.EventHandler(this.MudaStatusPraEntrega);
             // 
             // chkGerenciaImpressao
             // 
             this.chkGerenciaImpressao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkGerenciaImpressao.AutoSize = true;
             this.chkGerenciaImpressao.ForeColor = System.Drawing.Color.Black;
-            this.chkGerenciaImpressao.Location = new System.Drawing.Point(204, 460);
+            this.chkGerenciaImpressao.Location = new System.Drawing.Point(204, 515);
             this.chkGerenciaImpressao.Name = "chkGerenciaImpressao";
             this.chkGerenciaImpressao.Size = new System.Drawing.Size(120, 17);
             this.chkGerenciaImpressao.TabIndex = 20;
@@ -863,7 +936,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.txtUsuarioLogado});
-            this.statusStrip1.Location = new System.Drawing.Point(8, 455);
+            this.statusStrip1.Location = new System.Drawing.Point(8, 510);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(159, 22);
             this.statusStrip1.TabIndex = 19;
@@ -890,6 +963,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlPedido.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlPedido.Controls.Add(this.grpTipoPedido);
             this.pnlPedido.Controls.Add(this.label3);
             this.pnlPedido.Controls.Add(this.cbxFiltroTipo);
             this.pnlPedido.Controls.Add(this.label2);
@@ -897,14 +971,55 @@
             this.pnlPedido.Controls.Add(this.pedidosGridView);
             this.pnlPedido.Location = new System.Drawing.Point(531, 251);
             this.pnlPedido.Name = "pnlPedido";
-            this.pnlPedido.Size = new System.Drawing.Size(510, 201);
+            this.pnlPedido.Size = new System.Drawing.Size(518, 233);
             this.pnlPedido.TabIndex = 2;
+            // 
+            // grpTipoPedido
+            // 
+            this.grpTipoPedido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpTipoPedido.Controls.Add(this.label14);
+            this.grpTipoPedido.Controls.Add(this.txtCodBusca);
+            this.grpTipoPedido.Controls.Add(this.cbxStatusPedido);
+            this.grpTipoPedido.Location = new System.Drawing.Point(324, 3);
+            this.grpTipoPedido.Name = "grpTipoPedido";
+            this.grpTipoPedido.Size = new System.Drawing.Size(183, 58);
+            this.grpTipoPedido.TabIndex = 25;
+            this.grpTipoPedido.TabStop = false;
+            this.grpTipoPedido.Text = "Filtros";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(84, 9);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(93, 13);
+            this.label14.TabIndex = 2;
+            this.label14.Text = "Cód/Senha/Mesa";
+            // 
+            // txtCodBusca
+            // 
+            this.txtCodBusca.Enabled = false;
+            this.txtCodBusca.Location = new System.Drawing.Point(120, 27);
+            this.txtCodBusca.Name = "txtCodBusca";
+            this.txtCodBusca.Size = new System.Drawing.Size(58, 20);
+            this.txtCodBusca.TabIndex = 1;
+            // 
+            // cbxStatusPedido
+            // 
+            this.cbxStatusPedido.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxStatusPedido.FormattingEnabled = true;
+            this.cbxStatusPedido.Location = new System.Drawing.Point(6, 25);
+            this.cbxStatusPedido.Name = "cbxStatusPedido";
+            this.cbxStatusPedido.Size = new System.Drawing.Size(96, 21);
+            this.cbxStatusPedido.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.cbxStatusPedido, "Filtra pedidos de acordo com tipo");
+            this.cbxStatusPedido.SelectionChangeCommitted += new System.EventHandler(this.FiltraPedidoPorStatus);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(155, 6);
+            this.label3.Location = new System.Drawing.Point(142, 8);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(123, 16);
             this.label3.TabIndex = 24;
@@ -920,9 +1035,9 @@
             "1 - Mesa",
             "2 - Balcao",
             "Todos "});
-            this.cbxFiltroTipo.Location = new System.Drawing.Point(4, 33);
+            this.cbxFiltroTipo.Location = new System.Drawing.Point(7, 27);
             this.cbxFiltroTipo.Name = "cbxFiltroTipo";
-            this.cbxFiltroTipo.Size = new System.Drawing.Size(139, 30);
+            this.cbxFiltroTipo.Size = new System.Drawing.Size(132, 30);
             this.cbxFiltroTipo.TabIndex = 18;
             this.cbxFiltroTipo.SelectedIndexChanged += new System.EventHandler(this.FiltraTipoPedido);
             // 
@@ -932,7 +1047,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label2.Location = new System.Drawing.Point(6, 9);
+            this.label2.Location = new System.Drawing.Point(3, 4);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 21);
             this.label2.TabIndex = 17;
@@ -945,10 +1060,11 @@
             this.txtBuscaPedido.BackColor = System.Drawing.SystemColors.Window;
             this.txtBuscaPedido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBuscaPedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.txtBuscaPedido.Location = new System.Drawing.Point(158, 34);
+            this.txtBuscaPedido.Location = new System.Drawing.Point(145, 27);
             this.txtBuscaPedido.Name = "txtBuscaPedido";
-            this.txtBuscaPedido.Size = new System.Drawing.Size(260, 29);
+            this.txtBuscaPedido.Size = new System.Drawing.Size(173, 29);
             this.txtBuscaPedido.TabIndex = 16;
+            this.toolTip1.SetToolTip(this.txtBuscaPedido, "Busca clientes na lista de pedidos");
             this.txtBuscaPedido.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BuscaPedidoCliente);
             // 
             // pedidosGridView
@@ -961,11 +1077,11 @@
             this.pedidosGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.pedidosGridView.BackgroundColor = System.Drawing.Color.White;
             this.pedidosGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.pedidosGridView.Location = new System.Drawing.Point(4, 67);
+            this.pedidosGridView.Location = new System.Drawing.Point(4, 66);
             this.pedidosGridView.Name = "pedidosGridView";
             this.pedidosGridView.ReadOnly = true;
             this.pedidosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.pedidosGridView.Size = new System.Drawing.Size(499, 127);
+            this.pedidosGridView.Size = new System.Drawing.Size(507, 159);
             this.pedidosGridView.TabIndex = 8;
             this.pedidosGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MarcarPedidos);
             this.pedidosGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.EditarPedido);
@@ -987,7 +1103,7 @@
             this.pnlBuscaProduto.Controls.Add(this.produtosGridView);
             this.pnlBuscaProduto.Location = new System.Drawing.Point(3, 251);
             this.pnlBuscaProduto.Name = "pnlBuscaProduto";
-            this.pnlBuscaProduto.Size = new System.Drawing.Size(522, 201);
+            this.pnlBuscaProduto.Size = new System.Drawing.Size(530, 256);
             this.pnlBuscaProduto.TabIndex = 1;
             // 
             // chkSEmFotos
@@ -1032,7 +1148,7 @@
             this.txtNomeProd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
             this.txtNomeProd.Location = new System.Drawing.Point(245, 31);
             this.txtNomeProd.Name = "txtNomeProd";
-            this.txtNomeProd.Size = new System.Drawing.Size(270, 29);
+            this.txtNomeProd.Size = new System.Drawing.Size(278, 29);
             this.txtNomeProd.TabIndex = 10;
             this.txtNomeProd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BuscaProduto);
             // 
@@ -1078,7 +1194,7 @@
             this.produtosGridView.Name = "produtosGridView";
             this.produtosGridView.ReadOnly = true;
             this.produtosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.produtosGridView.Size = new System.Drawing.Size(515, 127);
+            this.produtosGridView.Size = new System.Drawing.Size(515, 182);
             this.produtosGridView.TabIndex = 7;
             this.produtosGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.produtosGridView_CellClick);
             this.produtosGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.produtosGridView_CellMouseDoubleClick);
@@ -1096,7 +1212,7 @@
             this.pnlBuscaCliente.Controls.Add(this.clientesGridView);
             this.pnlBuscaCliente.Location = new System.Drawing.Point(531, 3);
             this.pnlBuscaCliente.Name = "pnlBuscaCliente";
-            this.pnlBuscaCliente.Size = new System.Drawing.Size(510, 240);
+            this.pnlBuscaCliente.Size = new System.Drawing.Size(518, 295);
             this.pnlBuscaCliente.TabIndex = 1;
             // 
             // label10
@@ -1152,7 +1268,7 @@
             this.clientesGridView.Name = "clientesGridView";
             this.clientesGridView.ReadOnly = true;
             this.clientesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.clientesGridView.Size = new System.Drawing.Size(499, 193);
+            this.clientesGridView.Size = new System.Drawing.Size(507, 193);
             this.clientesGridView.TabIndex = 11;
             this.clientesGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.clientesGridView_CellContentClick);
             this.clientesGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.EditarCliente);
@@ -1348,7 +1464,7 @@
             this.lblCaixa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCaixa.ForeColor = System.Drawing.Color.White;
             this.lblCaixa.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblCaixa.Location = new System.Drawing.Point(913, 6);
+            this.lblCaixa.Location = new System.Drawing.Point(921, 6);
             this.lblCaixa.Name = "lblCaixa";
             this.lblCaixa.Size = new System.Drawing.Size(128, 20);
             this.lblCaixa.TabIndex = 9;
@@ -1360,18 +1476,11 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // vendasOnlineToolStripMenuItem
-            // 
-            this.vendasOnlineToolStripMenuItem.Name = "vendasOnlineToolStripMenuItem";
-            this.vendasOnlineToolStripMenuItem.Size = new System.Drawing.Size(312, 26);
-            this.vendasOnlineToolStripMenuItem.Text = "Vendas Online";
-            this.vendasOnlineToolStripMenuItem.Click += new System.EventHandler(this.vendasOnlineToolStripMenuItem_Click);
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1044, 510);
+            this.ClientSize = new System.Drawing.Size(1052, 565);
             this.Controls.Add(this.lblCaixa);
             this.Controls.Add(this.pnlPrincipal);
             this.Controls.Add(this.menuStrip1);
@@ -1381,6 +1490,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "[xDelivery] Controle e gestão  - www.xsistemas.com.br";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmPrincipal_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPrincipal_FormClosed);
             this.Load += new System.EventHandler(this.frmPrincipal_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmPrincipal_KeyDown);
@@ -1388,12 +1498,13 @@
             this.menuStrip1.PerformLayout();
             this.pnlPrincipal.ResumeLayout(false);
             this.pnlPrincipal.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.grpAndamentoPedido.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.pnlPedido.ResumeLayout(false);
             this.pnlPedido.PerformLayout();
+            this.grpTipoPedido.ResumeLayout(false);
+            this.grpTipoPedido.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pedidosGridView)).EndInit();
             this.pnlBuscaProduto.ResumeLayout(false);
             this.pnlBuscaProduto.PerformLayout();
@@ -1441,7 +1552,6 @@
         private System.Windows.Forms.ToolStripMenuItem promoçõesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vendidosNoPeriodoAgrupadoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mensalToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem envioDeSMSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem geralToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exportarDadosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configuraçãoToolStripMenuItem;
@@ -1511,15 +1621,9 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Timer AtualizaGrid;
         private System.Windows.Forms.CheckBox chkGerenciaImpressao;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label lblValor;
-        private System.Windows.Forms.Label lblQtd;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ToolStripMenuItem familiaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grupoToolStripMenuItem;
         private System.Windows.Forms.CheckBox chkSEmFotos;
-        private System.Windows.Forms.ToolStripMenuItem notificaçõesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem impressãoTermicaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vendasPorVendedorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cancelamentosToolStripMenuItem;
@@ -1533,5 +1637,23 @@
         private System.Windows.Forms.ToolStripMenuItem pedidosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vendasPorAtendenteVendedorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vendasOnlineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem açõesDePublicidadeEMarketingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem envioDeSmsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem envioDePushNotificationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem envioDeEmailMarketingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem origemDoClienteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem classificadoPorOrigemToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem insumosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem produtoToolStripMenuItem1;
+        private System.Windows.Forms.GroupBox grpTipoPedido;
+        private System.Windows.Forms.ComboBox cbxStatusPedido;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.TextBox txtCodBusca;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ToolStripMenuItem produtoToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem insumoToolStripMenuItem;
+        private System.Windows.Forms.GroupBox grpAndamentoPedido;
+        private System.Windows.Forms.Button btnCozinha;
+        private System.Windows.Forms.Button btnEntrega;
     }
 }
