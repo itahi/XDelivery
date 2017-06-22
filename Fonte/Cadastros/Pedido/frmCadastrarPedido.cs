@@ -1872,7 +1872,7 @@ namespace DexComanda
 
                 }
                 // Impressão de Venda Balcão
-                if (cbxTipoPedido.Text == "2 - Balcao")
+                if (cbxTipoPedido.Text == "2 - Balcao" && ImprimeViaBalcao)
                 {
                     int iCodigo;
                     if (con.getLastCodigo() != 0)

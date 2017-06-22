@@ -30,27 +30,13 @@ namespace DexComanda.Operações.Financeiro
 
         private void FiltraCaixa(object sender, EventArgs e)
         {
-            iDataFiltro = DateTime.Now.ToShortDateString();
-            DataSet dsCaixa = con.RetornaCaixaPorTurno(int.Parse(cbxCaixas.Text), cbxTurno.Text, Convert.ToDateTime(iDataFiltro));
-            if (dsCaixa.Tables[0].Rows.Count > 0)
-            {
-                btnExecutar.Enabled = true;
-                DataRow dRow = dsCaixa.Tables[0].Rows[0];
-
-                txtDtAbertura.Text = dRow.ItemArray.GetValue(1).ToString();
-                txtVlrAbertura.Text = dRow.ItemArray.GetValue(4).ToString();
-
-                txtUFechamento.Text = Sessions.retunrUsuario.Nome;
-                // txtVlrAbertura.Text  
-                ConsultaMovimentoCaixa();
-
-            }
+          
         }
         private void ConsultaMovimentoCaixa()
         {
             decimal vlrEntrada = 0.00M;
             decimal vlrSaida = 0.00M;
-            DataSet dsMovimento = con.SelectCaixaFechamento(iDataFiltro + " 00:00:00", iDataFiltro + " 23:59:59", cbxCaixas.Text, "CaixaMovimento");
+            DataSet dsMovimento = con.SelectCaixaFechamento(iDataFiltro + " 00:00:00", iDataFiltro + " 23:59:59", cbxTurno.Text, "CaixaMovimento");
             if (dsMovimento.Tables[0].Rows.Count > 0)
             {
                 FechamentosGrid.DataSource = null;
@@ -121,6 +107,38 @@ namespace DexComanda.Operações.Financeiro
             }
             FechaCaixa();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (cbxCaixas.SelectedIndex<0)
+            {
+                MessageBox.Show("Selecione o caixa que deseja filtrar");
+                cbxCaixas.Focus();
+                return;
+            }
+            if (cbxTurno.SelectedIndex < 0)
+            {
+                MessageBox.Show("Selecione o turno que deseja filtrar");
+                cbxTurno.Focus();
+                return;
+            }
+            iDataFiltro = DateTime.Now.ToShortDateString();
+            DataSet dsCaixa = con.RetornaCaixaPorTurno(int.Parse(cbxCaixas.Text), cbxTurno.Text, Convert.ToDateTime(iDataFiltro));
+            if (dsCaixa.Tables[0].Rows.Count > 0)
+            {
+                btnExecutar.Enabled = true;
+                DataRow dRow = dsCaixa.Tables[0].Rows[0];
+
+                txtDtAbertura.Text = dRow.ItemArray.GetValue(1).ToString();
+                txtVlrAbertura.Text = dRow.ItemArray.GetValue(4).ToString();
+
+                txtUFechamento.Text = Sessions.retunrUsuario.Nome;
+                // txtVlrAbertura.Text  
+                ConsultaMovimentoCaixa();
+
+            }
+        }
+
         private void FechaCaixa()
         {
             DialogResult resultado = MessageBox.Show("Deseja finalizar o Caixa Nº: " + cbxCaixas.Text + " Essa operação não poderá ser desfeita , os movimentos serão lançados apenas no próximo dia! Deseja continuar?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);

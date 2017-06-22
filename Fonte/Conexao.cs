@@ -410,24 +410,41 @@ namespace DexComanda
                 };
                 Insert("spAdicionarCaixa", cx);
 
-                //----Status Pedido Padrão ----
-                PedidoStatus pedS = new PedidoStatus()
-                {
-                    Nome = "Aberto",
-                    AlertarSN = false,
-                    Status = 1,
-                    EnviarSN = true,
-                    // DataAlteracao = DateTime.Now
-                };
-                Insert("spAdicionarPedidoStatus", pedS);
+                //----Status Pedido Padrão ----]
+                //for (int i = 1; i < 5; i++)
+                //{
+                    PedidoStatus pedS = new PedidoStatus()
+                    {
+                        Nome = "Aberto",
+                        AlertarSN = false,
+                        Status = 1,
+                        EnviarSN = true,
+                        // DataAlteracao = DateTime.Now
+                    };
+                    Insert("spAdicionarPedidoStatus", pedS);
+
+                //}
+               
 
                 // ---- Origem Cadastro " ----
                 Pessoa_OrigemCadastro pess = new Pessoa_OrigemCadastro()
                 {
                     AtivoSN = true,
-                    Nome = "Padrão"
+                    Nome = "Não Respondeu"
                 };
                 Insert("spAdicionarPessoa_OrigemCadastro", pess);
+
+                // ---- Usuario  " ----
+                string _senha = Utils.EncryptMd5("caixa", "1");
+                Usuario usuario = new Usuario()
+                {
+                    Nome = "caixa",
+                    Senha = _senha,
+                    FinalizaPedidoSN = true,
+                    AdministradorSN = true,
+                    AbreFechaCaixaSN = true
+                };
+                Insert("spAdicionarUsuario", usuario);
             }
             catch (Exception erro)
             {
@@ -463,16 +480,17 @@ namespace DexComanda
         public DataSet RetornaCaixaPorTurno(int iCodCaixa, string iTurno, DateTime iData)
         {
             string iSqlConsulta = "select top 1 * from Caixa " +
-                                   " where Numero=@Numero and " +
-                                   " Turno=@Turno and Data=@Data " +
+                                   " where "+ 
+                                   //" Numero=@Numero and " +
+                                   "  Turno=@Turno "+
+                                   //" and Data=@Data " +
                                    " and Estado=0"+
                                   // " HorarioFechamento>@HorarioFechamento" +
                                    " order by Codigo desc";
             command = new SqlCommand(iSqlConsulta, conn);
             command.CommandType = CommandType.Text;
-            command.Parameters.AddWithValue("@Numero", iCodCaixa);
             command.Parameters.AddWithValue("@Turno", iTurno);
-            command.Parameters.AddWithValue("@Data", DateTime.Now.ToShortDateString());
+           // command.Parameters.AddWithValue("@Data", DateTime.Now.ToShortDateString());
            // command.Parameters.AddWithValue("@HorarioFechamento", DateTime.Now);
 
             adapter = new SqlDataAdapter(command);
@@ -664,17 +682,25 @@ namespace DexComanda
 
             return iReturnPreco;
         }
-        public void OpenConection(string servidor, string banco)
+        /// <summary>
+        /// Cria uma conexão com banco de dados e caso consiga ele cria o arquivo ConnectionString na pasa do sistema
+        /// </summary>
+        /// <param name="servidor">Nome do Servidor ou Servidor/Instancia</param>
+        /// <param name="banco">Nome do banco de dados instanciado</param>
+        public bool OpenConection(string servidor, string banco)
         {
             connectionString = @"Data Source=" + servidor + ";Initial Catalog=" + banco + "; User ID=dex; Password=1234; Trusted_Connection=False; ";
             conn = new SqlConnection(connectionString);
             try
             {
                 conn.Open();
-
+                if (conn.State !=ConnectionState.Open)
+                {
+                    MessageBox.Show("Não foi possivel conectar ao Banco:"+banco + Bibliotecas.cException);
+                    return false;
+                }
                 MessageBox.Show("Conectado ao banco de dados.");
-                // Utils.CriarUsuario(connectionString, "dex", "1234");
-
+                Utils.CriarUsuario(connectionString, "dex", "1234");
                 var temp = Directory.GetCurrentDirectory() + @"\ConnectionString_DexComanda.txt";
 
                 if (!System.IO.File.Exists(temp))
@@ -687,6 +713,8 @@ namespace DexComanda
             {
                 MessageBox.Show(msg.Message + "Não pode ser aberta um conexão com o banco de dados.");
             }
+
+            return conn.State == ConnectionState.Open;
         }
 
         public void Close()
@@ -1015,7 +1043,7 @@ namespace DexComanda
             adapter.Fill(ds, table);
             return ds;
         }
-        public DataSet SelectCaixaFechamento(string iDataI, string iDataF, string iNumCaixa, string table = "CaixaMovimento")
+        public DataSet SelectCaixaFechamento(string iDataI, string iDataF, string iTurno, string table = "CaixaMovimento")
         {
             string lSqlConsulta = " select " +
                                  " case Tipo " +
@@ -1029,16 +1057,16 @@ namespace DexComanda
                                 " from CaixaMovimento CX" +
                                 " left join FormaPagamento FP on FP.Codigo = Cx.CodFormaPagamento" +
                                 " where " +
-                                " CX.CodCaixa = @Numero AND" +
-                                "  CX.Data BETWEEN @DataI  AND @DataF " +
+                                " CX.CodCaixa = (select Codigo from Caixa where Turno=@Turno and Estado=0) "+
+                                //" AND CX.Data BETWEEN @DataI  AND @DataF " +
                                 " group by CodCaixa,Fp.Descricao,Tipo";
 
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
-            command.Parameters.AddWithValue("@Numero", iNumCaixa);
-            command.Parameters.AddWithValue("@DataI", iDataI);
-            command.Parameters.AddWithValue("@DataF", iDataF);
+            command.Parameters.AddWithValue("@Turno", iTurno);
+           // command.Parameters.AddWithValue("@DataI", iDataI);
+           // command.Parameters.AddWithValue("@DataF", iDataF);
 
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();

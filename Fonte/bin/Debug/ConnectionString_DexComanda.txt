@@ -1,1 +1,0 @@
-Data Source=LAZAROSHEV;Initial Catalog=xSistemas_Developer; User ID=dex; Password=1234; Trusted_Connection=False; 

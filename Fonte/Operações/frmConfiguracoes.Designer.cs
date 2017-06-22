@@ -79,6 +79,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.txtBanco = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.cbxTipoCodigo = new System.Windows.Forms.ComboBox();
             this.chkProporcional = new System.Windows.Forms.CheckBox();
@@ -237,7 +238,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -605,6 +606,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.label29);
             this.groupBox1.Controls.Add(this.txtURL);
             this.groupBox1.Controls.Add(this.btnBackup);
@@ -719,6 +721,15 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Configurações Gerais";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Location = new System.Drawing.Point(7, 105);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(640, 60);
+            this.groupBox7.TabIndex = 12;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Controle de Estoque";
             // 
             // groupBox4
             // 
@@ -2401,14 +2412,15 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // groupBox7
+            // button1
             // 
-            this.groupBox7.Location = new System.Drawing.Point(7, 105);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(640, 60);
-            this.groupBox7.TabIndex = 12;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Controle de Estoque";
+            this.button1.Location = new System.Drawing.Point(237, 79);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(63, 20);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "Conectar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // frmConfiguracoes
             // 
@@ -2698,5 +2710,6 @@
         private System.Windows.Forms.CheckBox chkViaBalcao;
         private System.Windows.Forms.CheckBox chkSenha;
         private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Button button1;
     }
 }

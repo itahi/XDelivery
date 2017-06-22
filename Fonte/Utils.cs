@@ -2345,13 +2345,13 @@ namespace DexComanda
             conexao = new Conexao();
             try
             {
-                if (conexao.CaixaAbertoAnterior(iTurno).Tables[0].Rows.Count>0)
-                {
-                    MessageBox.Show("O Caixa do dia anterior ainda esta aberto, favor execute o fechamento");
-                    frmCaixaFechamento frm = new frmCaixaFechamento();
-                    frm.ShowDialog();
-                    CaixaAberto(iDataRegistro, iNumero, iTurno);
-                }
+                //if (conexao.CaixaAbertoAnterior(iTurno).Tables[0].Rows.Count>0)
+                //{
+                //    MessageBox.Show("O Caixa do dia anterior ainda esta aberto, favor execute o fechamento","[xSistemas] Aviso ");
+                //    frmCaixaFechamento frm = new frmCaixaFechamento();
+                //    frm.ShowDialog();
+                //    //CaixaAberto(iDataRegistro, iNumero, iTurno);
+                //}
                 dsCaixa = conexao.RetornaCaixaPorTurno(iNumero, iTurno, DateTime.Parse(iDataRegistro.ToShortDateString()));
                 if (dsCaixa.Tables[0].Rows.Count > 0)
                 {
@@ -3180,19 +3180,26 @@ namespace DexComanda
         {
             try
             {
-                SqlConnection SqlConnection = new SqlConnection(iConexao);
-                SqlCommand SqlCommand = new SqlCommand();
-                SqlCommand.Connection = SqlConnection;
+                //Conexao.connectionString = iConexao;
+                //Conexao conexao = new Conexao();
+                SqlConnection conn = new SqlConnection(iConexao);
+                conn.Open();
+                string iSqlConsulta = " use [master] go "+ "\n"+
+                                         " create login dex with password='1234' "+ "\n"+
+                                         " grant control server to dex";
 
-                SqlCommand.CommandText = "create login dex with password='1234'; CREATE USER [digital] FOR LOGIN dex WITH DEFAULT_SCHEMA=[dbo]";
-
-                SqlConnection.Open();
-                SqlCommand.ExecuteNonQuery();
-                MessageBox.Show("Usuario Criado");
+                SqlCommand command = new SqlCommand(iSqlConsulta, conn);
+                command.CommandType = CommandType.Text;
+                command.ExecuteNonQuery();
+               
+                //if (command.ExecuteNonQueryAsync().Result >0)
+                //{
+                //    MessageBox.Show("Usuario dex criado");
+                //}
             }
             catch (Exception e)
             {
-                MessageBox.Show("" + e.Message);
+                MessageBox.Show(Bibliotecas.cException + e.Message);
 
             }
 

@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using DexComanda.Models.WS;
 using DexComanda.Models.Operacoes;
 using DexComanda.Models.Configuracoes;
+using DexComanda.Operações;
 
 namespace DexComanda
 {
@@ -1106,5 +1107,10 @@ namespace DexComanda
             txtViasBalcao.Text = "1";
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            frmConectaBanco frm = new frmConectaBanco();
+            frm.Show();
+        }
     }
 }

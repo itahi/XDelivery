@@ -99,7 +99,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNome.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNome.Location = new System.Drawing.Point(4, 26);
-            this.txtNome.MaxLength = 30;
+            this.txtNome.MaxLength = 40;
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(298, 26);
             this.txtNome.TabIndex = 0;

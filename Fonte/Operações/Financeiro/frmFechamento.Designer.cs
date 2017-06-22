@@ -47,6 +47,7 @@
             this.cbxCaixas = new System.Windows.Forms.ComboBox();
             this.btnExecutar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FechamentosGrid)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -55,9 +56,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.FechamentosGrid);
-            this.groupBox1.Location = new System.Drawing.Point(1, 118);
+            this.groupBox1.Location = new System.Drawing.Point(1, 134);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(448, 154);
+            this.groupBox1.Size = new System.Drawing.Size(448, 138);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Valores Somados";
@@ -92,7 +93,7 @@
             this.groupBox3.Controls.Add(this.cbxCaixas);
             this.groupBox3.Location = new System.Drawing.Point(1, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(448, 109);
+            this.groupBox3.Size = new System.Drawing.Size(448, 97);
             this.groupBox3.TabIndex = 12;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Filtro Caixa";
@@ -240,17 +241,30 @@
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(165, 106);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(115, 31);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Consultar [F12]";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmCaixaFechamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(452, 315);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnExecutar);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "frmCaixaFechamento";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "[XDelivery] Fechamento Caixa";
             this.Load += new System.EventHandler(this.frmCaixaFechamento_Load);
             this.groupBox1.ResumeLayout(false);
@@ -281,5 +295,6 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbxTurno;
+        private System.Windows.Forms.Button button1;
     }
 }

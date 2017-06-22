@@ -1,1 +1,0 @@
-Data Source=XSISTEMASCOMERC;Initial Catalog=xSistemas_Comercial; User ID=dex; Password=1234; Trusted_Connection=False; 

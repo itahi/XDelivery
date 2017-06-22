@@ -478,6 +478,12 @@
     <Compile Include="Operações\Financeiro\frmCaixaMovimento.Designer.cs">
       <DependentUpon>frmCaixaMovimento.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operações\frmConectaBanco.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\frmConectaBanco.Designer.cs">
+      <DependentUpon>frmConectaBanco.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operações\frmConfigurarImpressao.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1183,6 +1189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\Financeiro\frmCaixaMovimento.resx">
       <DependentUpon>frmCaixaMovimento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operações\frmConectaBanco.resx">
+      <DependentUpon>frmConectaBanco.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmExibeCancelamentos.resx">
       <DependentUpon>frmExibeCancelamentos.cs</DependentUpon>

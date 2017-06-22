@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Windows.Forms;
 using System.Configuration;
+using DexComanda.Operações;
 
 namespace DexComanda
 {
@@ -35,7 +36,7 @@ namespace DexComanda
 
             if (!File.Exists(temp))
             {
-                MessageBox.Show("Preencha os dados para conexão ao banco de dados", "Aviso XSistemas");
+                MessageBox.Show("Preencha os dados para conexão ao banco de dados", "[xSistemas] Aviso");
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new frmConfiguracoes());
@@ -45,13 +46,9 @@ namespace DexComanda
                 try
                 {
                     StreamReader tempDex = new StreamReader(temp);
-
                     string sLine = "";
                     ArrayList arrText = new ArrayList();
-
                     sLine = tempDex.ReadLine();
-
-
                     Conexao.connectionString = sLine;
                     string[] words = sLine.Split(';');
                     string[] iText = words[0].Split('\'');
