@@ -57,7 +57,7 @@ namespace DexComanda
                     // Verifica se o Serviço do SQLSERVER está Ativo para inicia-lo
                     //if (strNomePC == iText[0].Replace("Data Source=", ""))
                     //{
-                        Utils.ServicoSQLATIVO(iText[0]);
+                       // Utils.ServicoSQLATIVO(iText[0]);
                     //}
 
                     con = new Conexao();

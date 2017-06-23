@@ -2345,13 +2345,13 @@ namespace DexComanda
             conexao = new Conexao();
             try
             {
-                //if (conexao.CaixaAbertoAnterior(iTurno).Tables[0].Rows.Count>0)
-                //{
-                //    MessageBox.Show("O Caixa do dia anterior ainda esta aberto, favor execute o fechamento","[xSistemas] Aviso ");
-                //    frmCaixaFechamento frm = new frmCaixaFechamento();
-                //    frm.ShowDialog();
-                //    //CaixaAberto(iDataRegistro, iNumero, iTurno);
-                //}
+                    if (conexao.CaixaAbertoAnterior(iTurno).Tables[0].Rows.Count > 0)
+                {
+                    MessageBox.Show("O Caixa do dia anterior ainda esta aberto, favor execute o fechamento", "[xSistemas] Aviso ");
+                    frmCaixaFechamento frm = new frmCaixaFechamento();
+                    frm.ShowDialog();
+                    //CaixaAberto(iDataRegistro, iNumero, iTurno);
+                }
                 dsCaixa = conexao.RetornaCaixaPorTurno(iNumero, iTurno, DateTime.Parse(iDataRegistro.ToShortDateString()));
                 if (dsCaixa.Tables[0].Rows.Count > 0)
                 {

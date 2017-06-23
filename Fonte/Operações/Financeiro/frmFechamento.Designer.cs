@@ -213,7 +213,6 @@
             this.cbxCaixas.Name = "cbxCaixas";
             this.cbxCaixas.Size = new System.Drawing.Size(66, 21);
             this.cbxCaixas.TabIndex = 0;
-            this.cbxCaixas.SelectionChangeCommitted += new System.EventHandler(this.FiltraCaixa);
             this.cbxCaixas.Click += new System.EventHandler(this.cbxCaixas_Click);
             // 
             // btnExecutar

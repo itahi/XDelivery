@@ -27,11 +27,6 @@ namespace DexComanda.Operações.Financeiro
         {
             cbxTurno.SelectedIndex = 0;
         }
-
-        private void FiltraCaixa(object sender, EventArgs e)
-        {
-          
-        }
         private void ConsultaMovimentoCaixa()
         {
             decimal vlrEntrada = 0.00M;
@@ -165,7 +160,8 @@ namespace DexComanda.Operações.Financeiro
                    //Utils.GerarReportSoDatas(rel, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(txtDtAbertura.Text));
                    // Utils.ImpressaoCaixa(int.Parse(caixa.Numero), caixa.Turno, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(dtFechamento.Text));
                 }
-                Utils.Restart();
+                this.Close();
+               // Utils.Restart();
             }
 
         }
