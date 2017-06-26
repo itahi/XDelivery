@@ -337,6 +337,7 @@ namespace DexComanda
         }
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
+            dtFiltro.Value = DateTime.Now;
             Utils.MontaCombox(cbxStatusPedido, "Nome", "Status", "PedidoStatus", "spObterPedidoStatus");
             Utils.MontaCombox(cbxGrupoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
             int iNumeroCaixa = Sessions.retunrUsuario.CaixaLogado;
@@ -535,6 +536,11 @@ namespace DexComanda
                 if (cbxFiltroTipo.Text.Contains("Todos") || cbxFiltroTipo.Text == "")
                 {
                     ds = Utils.PopularGrid("Pedido", pedidosGridView, Sessions.SqlPedido);
+                    //DataView dtView = ds.Tables[0].DefaultView;
+                    //dtView.RowFilter = "RealizadoEm >= '" + dtFiltro.Value.ToShortDateString() + " 00:00:00' and RealizadoEm <='" + dtFiltro.Value.ToShortDateString() + " 23:59:59'";
+                    //DataSet newData = new DataSet("Pedido");
+                    //DataTable newDataTable = dtView.ToTable();
+                    //ds.Tables.Add(newDataTable);
                 }
                 else
                 {
@@ -542,7 +548,7 @@ namespace DexComanda
                     DataSet result = con.SelectAll("Pedido", "spObterPedido");
                     Consulta = cbxFiltroTipo.Text;
 
-                    Consulta = "Tipo='" + cbxFiltroTipo.Text + "'";
+                    Consulta = "Tipo='" + cbxFiltroTipo.Text + "' and  RealizadoEm >= '" + dtFiltro.Value.ToShortDateString()+ " 00:00:00' and RealizadoEm <='" + dtFiltro.Value.ToShortDateString()+" 23:59:59'";
 
                     var Linhas = result.Tables[0].DefaultView;
                     Linhas.RowFilter = Consulta;
@@ -2321,6 +2327,18 @@ namespace DexComanda
             {
 
                 MessageBox.Show(erro.Message);
+            }
+        }
+
+        private void FiltraPedidoData(object sender, EventArgs e)
+        {
+            try
+            {
+                FiltraTipoPedido(sender, e);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
     }

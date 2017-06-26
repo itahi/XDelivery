@@ -100,5 +100,6 @@
         private System.Windows.Forms.TextBox txtSenha;
         private System.Windows.Forms.Label lblSenha;
         private System.Windows.Forms.Label lblDébito;
+        private System.Windows.Forms.DateTimePicker dtPedido;
     }
 }

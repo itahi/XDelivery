@@ -34,6 +34,13 @@ namespace DexComanda.Operações.Financeiro
             DataSet dsMovimento = con.SelectCaixaFechamento(iDataFiltro + " 00:00:00", iDataFiltro + " 23:59:59", cbxTurno.Text, "CaixaMovimento");
             if (dsMovimento.Tables[0].Rows.Count > 0)
             {
+                 for (int i = 0; i < FechamentosGrid.Columns.Count; i++)
+                {
+                    if (FechamentosGrid.Columns[i].HeaderText != "Total Somado")
+                    {
+                        FechamentosGrid.Columns[i].ReadOnly = false;
+                    }
+                }
                 FechamentosGrid.DataSource = null;
                 FechamentosGrid.AutoGenerateColumns = true;
                 FechamentosGrid.DataSource = dsMovimento;
@@ -72,6 +79,11 @@ namespace DexComanda.Operações.Financeiro
             }
             for (int i = 0; i < FechamentosGrid.Rows.Count; i++)
             {
+                if (FechamentosGrid.Rows[i].Cells["ValorInformado"].Value==null|| FechamentosGrid.Rows[i].Cells["ValorInformado"].Value.ToString()=="")
+                {
+                    MessageBox.Show("Informe o valor de fechamento para cada forma de pagamento");
+                    return;
+                }
                 vlrValorSomado = decimal.Parse(FechamentosGrid.Rows[i].Cells["Total Somado"].Value.ToString());
                 vlrValorInformado = decimal.Parse(FechamentosGrid.Rows[i].Cells["ValorInformado"].Value.ToString());
                 if (vlrValorSomado != vlrValorInformado)
@@ -121,6 +133,8 @@ namespace DexComanda.Operações.Financeiro
             DataSet dsCaixa = con.RetornaCaixaPorTurno(int.Parse(cbxCaixas.Text), cbxTurno.Text, Convert.ToDateTime(iDataFiltro));
             if (dsCaixa.Tables[0].Rows.Count > 0)
             {
+
+               
                 btnExecutar.Enabled = true;
                 DataRow dRow = dsCaixa.Tables[0].Rows[0];
 
@@ -151,15 +165,15 @@ namespace DexComanda.Operações.Financeiro
 
                 };
                 con.Update("spFecharCaixa", caixa);
-                if (Utils.MessageBoxQuestion("Deseja imprimir o fechamento de caixa ?"))
-                {
-                    RelFechamentoCaixaCompleto rel;
-                    rel = new RelFechamentoCaixaCompleto();
-                    Utils.GerarReportSoDatas(rel, Convert.ToDateTime(txtDtAbertura.Text));
+                //if (Utils.MessageBoxQuestion("Deseja imprimir o fechamento de caixa ?"))
+                //{
+                //    RelFechamentoCaixaCompleto rel;
+                //    rel = new RelFechamentoCaixaCompleto();
+                //    Utils.GerarReportSoDatas(rel, Convert.ToDateTime(txtDtAbertura.Text));
 
-                   //Utils.GerarReportSoDatas(rel, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(txtDtAbertura.Text));
-                   // Utils.ImpressaoCaixa(int.Parse(caixa.Numero), caixa.Turno, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(dtFechamento.Text));
-                }
+                //   //Utils.GerarReportSoDatas(rel, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(txtDtAbertura.Text));
+                //   // Utils.ImpressaoCaixa(int.Parse(caixa.Numero), caixa.Turno, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(dtFechamento.Text));
+                //}
                 this.Close();
                // Utils.Restart();
             }

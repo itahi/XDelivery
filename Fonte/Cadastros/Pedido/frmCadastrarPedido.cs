@@ -203,6 +203,7 @@ namespace DexComanda
 
         public void frmCadastrarPedido_Load(object sender, EventArgs e)
         {
+            dtPedido.Value = DateTime.Now;
             grpVendedor.Enabled = Sessions.returnConfig.ExigeVendedorSN;
             cbxTipoPedido.Visible = ContraMesas;
             DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
@@ -1154,15 +1155,13 @@ namespace DexComanda
                                 CodPessoa = codPessoa,
                                 TotalPedido = decimal.Parse(lbTotal.Text.Replace("R$", "")),
                                 FormaPagamento = this.cmbFPagamento.Text,
-                                RealizadoEm = DateTime.Now,
+                                RealizadoEm = dtPedido.Value,
                                 Status = "Aberto",
                                 PedidoOrigem = "Balcao",
                                 CodigoPedidoWS = 0,
                                 CodUsuario = RetornaCodVendedor(),
                                 Observacao = txtObsPedido.Text,
                                 CodEndereco = prvCodEndecoSelecionado,
-
-
                             };
                             if (txtSenha.Text != "")
                             {
@@ -2583,6 +2582,7 @@ namespace DexComanda
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.txtSenha = new System.Windows.Forms.TextBox();
             this.lblSenha = new System.Windows.Forms.Label();
+            this.dtPedido = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewItemsPedido)).BeginInit();
@@ -2920,6 +2920,7 @@ namespace DexComanda
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel2.Controls.Add(this.dtPedido);
             this.panel2.Controls.Add(this.lblStatusPedido);
             this.panel2.Controls.Add(this.btnMultiploPagamento);
             this.panel2.Controls.Add(this.label10);
@@ -2955,7 +2956,7 @@ namespace DexComanda
             this.btnMultiploPagamento.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnMultiploPagamento.FlatAppearance.BorderSize = 5;
             this.btnMultiploPagamento.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnMultiploPagamento.Location = new System.Drawing.Point(275, 82);
+            this.btnMultiploPagamento.Location = new System.Drawing.Point(313, 82);
             this.btnMultiploPagamento.Name = "btnMultiploPagamento";
             this.btnMultiploPagamento.Size = new System.Drawing.Size(178, 31);
             this.btnMultiploPagamento.TabIndex = 61;
@@ -3608,6 +3609,15 @@ namespace DexComanda
             this.lblSenha.TabIndex = 80;
             this.lblSenha.Text = "Senha:";
             this.lblSenha.Visible = false;
+            // 
+            // dtPedido
+            // 
+            this.dtPedido.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtPedido.Location = new System.Drawing.Point(174, 90);
+            this.dtPedido.Name = "dtPedido";
+            this.dtPedido.Size = new System.Drawing.Size(95, 20);
+            this.dtPedido.TabIndex = 67;
+            this.toolTip1.SetToolTip(this.dtPedido, "Data do pedido \"Usado para lançar pedido com data futura\"");
             // 
             // frmCadastrarPedido
             // 

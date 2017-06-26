@@ -124,8 +124,6 @@
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.pnlPedido = new System.Windows.Forms.Panel();
             this.grpTipoPedido = new System.Windows.Forms.GroupBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.txtCodBusca = new System.Windows.Forms.TextBox();
             this.cbxStatusPedido = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbxFiltroTipo = new System.Windows.Forms.ComboBox();
@@ -163,6 +161,8 @@
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.dtFiltro = new System.Windows.Forms.DateTimePicker();
+            this.label12 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.grpAndamentoPedido.SuspendLayout();
@@ -977,8 +977,8 @@
             // grpTipoPedido
             // 
             this.grpTipoPedido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpTipoPedido.Controls.Add(this.label14);
-            this.grpTipoPedido.Controls.Add(this.txtCodBusca);
+            this.grpTipoPedido.Controls.Add(this.label12);
+            this.grpTipoPedido.Controls.Add(this.dtFiltro);
             this.grpTipoPedido.Controls.Add(this.cbxStatusPedido);
             this.grpTipoPedido.Location = new System.Drawing.Point(324, 3);
             this.grpTipoPedido.Name = "grpTipoPedido";
@@ -987,30 +987,13 @@
             this.grpTipoPedido.TabStop = false;
             this.grpTipoPedido.Text = "Filtros";
             // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(84, 9);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(93, 13);
-            this.label14.TabIndex = 2;
-            this.label14.Text = "Cód/Senha/Mesa";
-            // 
-            // txtCodBusca
-            // 
-            this.txtCodBusca.Enabled = false;
-            this.txtCodBusca.Location = new System.Drawing.Point(120, 27);
-            this.txtCodBusca.Name = "txtCodBusca";
-            this.txtCodBusca.Size = new System.Drawing.Size(58, 20);
-            this.txtCodBusca.TabIndex = 1;
-            // 
             // cbxStatusPedido
             // 
             this.cbxStatusPedido.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxStatusPedido.FormattingEnabled = true;
             this.cbxStatusPedido.Location = new System.Drawing.Point(6, 25);
             this.cbxStatusPedido.Name = "cbxStatusPedido";
-            this.cbxStatusPedido.Size = new System.Drawing.Size(96, 21);
+            this.cbxStatusPedido.Size = new System.Drawing.Size(84, 21);
             this.cbxStatusPedido.TabIndex = 0;
             this.toolTip1.SetToolTip(this.cbxStatusPedido, "Filtra pedidos de acordo com tipo");
             this.cbxStatusPedido.SelectionChangeCommitted += new System.EventHandler(this.FiltraPedidoPorStatus);
@@ -1476,6 +1459,25 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
+            // dtFiltro
+            // 
+            this.dtFiltro.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtFiltro.Location = new System.Drawing.Point(96, 25);
+            this.dtFiltro.Name = "dtFiltro";
+            this.dtFiltro.Size = new System.Drawing.Size(81, 20);
+            this.dtFiltro.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.dtFiltro, "Filtre a data do pedido que deseja exibir");
+            this.dtFiltro.ValueChanged += new System.EventHandler(this.FiltraPedidoData);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(93, 8);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(54, 13);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "Dt Pedido";
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1648,12 +1650,12 @@
         private System.Windows.Forms.GroupBox grpTipoPedido;
         private System.Windows.Forms.ComboBox cbxStatusPedido;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.TextBox txtCodBusca;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ToolStripMenuItem produtoToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem insumoToolStripMenuItem;
         private System.Windows.Forms.GroupBox grpAndamentoPedido;
         private System.Windows.Forms.Button btnCozinha;
         private System.Windows.Forms.Button btnEntrega;
+        private System.Windows.Forms.DateTimePicker dtFiltro;
+        private System.Windows.Forms.Label label12;
     }
 }
