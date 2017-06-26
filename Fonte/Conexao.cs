@@ -2198,19 +2198,28 @@ namespace DexComanda
 
         public DataSet SelectEnderecoPorCep(string table, string spName, int cep)
         {
-            if (statusConexao != ConnectionState.Open)
+            try
             {
-                MessageBox.Show(Bibliotecas.cSemConexao);
-                return new DataSet();
-            }
-            command = new SqlCommand(spName, conn);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@Cep", cep);
-            adapter = new SqlDataAdapter(command);
-            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                Conexao con = new Conexao();
+                if (con.statusConexao!=ConnectionState.Open)
+                {
+                    MessageBox.Show(Bibliotecas.cSemConexao);
+                    return new DataSet();
+                }
+                command = new SqlCommand(spName, conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Cep", cep);
+                adapter = new SqlDataAdapter(command);
+                adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-            ds = new DataSet();
-            adapter.Fill(ds, table);
+                ds = new DataSet();
+                adapter.Fill(ds, table);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+           
 
             return ds;
         }

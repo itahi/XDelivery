@@ -664,7 +664,22 @@ namespace DexComanda
 
         private void ConsultarCEP(object sender, KeyEventArgs e)
         {
-
+            if (txtCEP.Text.Trim().Length == 8 && e.KeyCode != Keys.Back)
+            {
+                DataSet endereco = con.SelectEnderecoPorCep("base_cep", "spObterEnderecoPorCep", int.Parse(txtCEP.Text));
+                if (endereco.Tables["base_cep"].Rows.Count > 0)
+                {
+                    DataRow dRow = endereco.Tables["base_cep"].Rows[0];
+                    this.txtLogradouro.Text = dRow.ItemArray.GetValue(0).ToString();
+                    this.txtBairro.Text = dRow.ItemArray.GetValue(1).ToString();
+                    this.txtCidade.Text = dRow.ItemArray.GetValue(2).ToString();
+                    this.txtUF.Text = dRow.ItemArray.GetValue(3).ToString();
+                }
+                else
+                {
+                    MessageBox.Show("CEP não encontrado");
+                }
+            }
         }
         private void PreencheCidades(string iListaJson)
         {
@@ -702,25 +717,6 @@ namespace DexComanda
 
         }
 
-        private void BuscarCep(object sender, KeyEventArgs e)
-        {
-            if (txtCEP.Text.Trim().Length == 8 && e.KeyCode != Keys.Back)
-            {
-                DataSet endereco = con.SelectEnderecoPorCep("base_cep", "spObterEnderecoPorCep", int.Parse(txtCEP.Text));
-                if (endereco.Tables["base_cep"].Rows.Count > 0)
-                {
-                    DataRow dRow = endereco.Tables["base_cep"].Rows[0];
-                    this.txtLogradouro.Text = dRow.ItemArray.GetValue(0).ToString();
-                    this.txtBairro.Text = dRow.ItemArray.GetValue(1).ToString();
-                    this.txtCidade.Text = dRow.ItemArray.GetValue(2).ToString();
-                    this.txtUF.Text = dRow.ItemArray.GetValue(3).ToString();
-                }
-                else
-                {
-                    MessageBox.Show("CEP não encontrado");
-                }
-            }
-        }
 
         private void chkFidelidade_CheckedChanged(object sender, EventArgs e)
         {
@@ -730,16 +726,6 @@ namespace DexComanda
         private void chkEnviaSms_CheckedChanged(object sender, EventArgs e)
         {
             grpSms.Enabled = chkEnviaSms.Checked;
-        }
-
-        private void chkDescontoDiasemana_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void txtNumero_KeyPress(object sender, KeyPressEventArgs e)

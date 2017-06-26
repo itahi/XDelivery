@@ -557,7 +557,6 @@
             this.txtCEP.Name = "txtCEP";
             this.txtCEP.Size = new System.Drawing.Size(76, 20);
             this.txtCEP.TabIndex = 3;
-            this.txtCEP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BuscarCep);
             this.txtCEP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCEP_KeyPress);
             this.txtCEP.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ConsultarCEP);
             // 
@@ -1585,7 +1584,6 @@
             this.chkDescontoDiasemana.Text = "Desconto em dia da semana";
             this.toolTip1.SetToolTip(this.chkDescontoDiasemana, "Habilita a possibilidade do produto ter preço diferente por dia");
             this.chkDescontoDiasemana.UseVisualStyleBackColor = true;
-            this.chkDescontoDiasemana.CheckedChanged += new System.EventHandler(this.chkDescontoDiasemana_CheckedChanged);
             // 
             // tabPage4
             // 

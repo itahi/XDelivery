@@ -2003,14 +2003,14 @@ namespace DexComanda
                         }
                         Utils.ImpressaoDeliveryCoziha_SeparadoPorImpressora(iCodPedido, iNomeImpressora);
                     }
-                    for (int intfor = 0; intfor < itemsPedido.Tables["ItemsPedido"].Rows.Count; intfor++)
-                    {
-                        AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
-                        Atualiza.CodPedido = iCodPedido;
-                        Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[intfor].Field<int>("CodProduto");
-                        Atualiza.ImpressoSN = true;
-                        con.Update("spInformaItemImpresso", Atualiza);
-                    }
+                    //for (int intfor = 0; intfor < itemsPedido.Tables["ItemsPedido"].Rows.Count; intfor++)
+                    //{
+                    //    AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
+                    //    Atualiza.CodPedido = iCodPedido;
+                    //    Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[intfor].Field<int>("CodProduto");
+                    //    Atualiza.ImpressoSN = true;
+                    //    con.Update("spInformaItemImpresso", Atualiza);
+                    //}
 
                 }
 
