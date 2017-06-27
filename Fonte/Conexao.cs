@@ -772,7 +772,8 @@ namespace DexComanda
                                   " PoT.Nome as NomeTipo, " +
                                   " P.PrecoProduto as PrecoProduto,  " +
                                   " Prod.Preco as PrecoSoOpcao,  " +
-                                  " Prod.CodOpcao " +
+                                  " Prod.CodOpcao, " +
+                                  " Pot.Nome as NomeTipo"+
                                   " from Produto_Opcao Prod" +
                                   " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
                                   " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
@@ -799,7 +800,8 @@ namespace DexComanda
                                  " ISNULL((select MaximoAdicionais from Produto P where P.Codigo = Prod.CodProduto  ),0) as MaximoAdicionais," +
                                  " PoT.Nome as NomeTipo, " +
                                   " Prod.CodOpcao, " +
-                                 " Prod.Preco as PrecoSoOpcao  " +
+                                 " Prod.Preco as PrecoSoOpcao , " +
+                                 " Pot.Nome as NomeTipo" +
                                  "  from Produto_Opcao Prod join Opcao Op on Op.Codigo = Prod.CodOpcao" +
                                  "  join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
                                   " join Produto P on P.Codigo = Prod.CodProduto" +
