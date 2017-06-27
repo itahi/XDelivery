@@ -50,16 +50,9 @@ namespace DexComanda
                     ArrayList arrText = new ArrayList();
                     sLine = tempDex.ReadLine();
                     Conexao.connectionString = sLine;
-                    string[] words = sLine.Split(';');
-                    string[] iText = words[0].Split('\'');
                     string strNomePC = Utils.RetornaNomePc();
-                    
                     // Verifica se o Serviço do SQLSERVER está Ativo para inicia-lo
-                    //if (strNomePC == iText[0].Replace("Data Source=", ""))
-                    //{
-                       // Utils.ServicoSQLATIVO(iText[0]);
-                    //}
-
+                    Utils.ServicoSQLATIVO();
                     con = new Conexao();
 
                     // Le o arquivo de configuração para montar a grid

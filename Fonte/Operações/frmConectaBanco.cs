@@ -30,21 +30,18 @@ namespace DexComanda.Operações
                 cbxServidor.Items.Clear();
                 for (int i = 0; i < servers.Rows.Count; i++)
                 {
-                    //if (strNomePc == servers.Rows[i]["ServerName"].ToString()) ///// Usado para obter os servidores na máquina local////
-                    //{
-                        if ((servers.Rows[i]["InstanceName"] as string) != null)
-                            cbxServidor.Items.Add(servers.Rows[i]["ServerName"] + "\\" + servers.Rows[i]["InstanceName"]);
-                        else
-                            cbxServidor.Items.Add(servers.Rows[i]["ServerName"]);
-                    //}
+                    if ((servers.Rows[i]["InstanceName"] as string) != null)
+                        cbxServidor.Items.Add(servers.Rows[i]["ServerName"] + "\\" + servers.Rows[i]["InstanceName"]);
+                    else
+                        cbxServidor.Items.Add(servers.Rows[i]["ServerName"]);
                 }
             }
             catch (Exception erro)
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-            
-          
+
+
         }
 
         private void ListBancoDados(object sender, EventArgs e)
@@ -71,7 +68,7 @@ namespace DexComanda.Operações
                     cbxServidor.Focus();
                     return;
                 }
-                if (cbxListaBanco.SelectedIndex <0)
+                if (cbxListaBanco.SelectedIndex < 0)
                 {
                     MessageBox.Show("Selecione antes o Servidor");
                     cbxListaBanco.Focus();
@@ -82,7 +79,7 @@ namespace DexComanda.Operações
                 {
                     Utils.Restart();
                 }
-                
+
             }
             catch (SqlException erro)
             {

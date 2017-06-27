@@ -39,6 +39,7 @@ using DexComanda.Cadastros.Pedido;
 using DexComanda.Relatorios.Caixa;
 using DexComanda.Models.Configuracoes;
 using XIntegrador.Classe;
+using System.Data.Sql;
 
 namespace DexComanda
 {
@@ -1338,6 +1339,29 @@ namespace DexComanda
             }
 
             return iReport;
+        }
+        public static string ListaServidoresSQL()
+        {
+
+            string strRetur = "";
+            try
+            {
+                DataTable servers;
+                servers = SqlDataSourceEnumerator.Instance.GetDataSources();
+                for (int i = 0; i < servers.Rows.Count; i++)
+                {
+                    if ((servers.Rows[i]["InstanceName"] as string) != null)
+                        strRetur = servers.Rows[i]["ServerName"] + "\\" + servers.Rows[i]["InstanceName"];
+                    else
+                        strRetur = servers.Rows[i]["ServerName"].ToString();
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return strRetur;
         }
         public static ReportClass GerarReportSoDatas(ReportClass iReport, DateTime dtInicio, DateTime dtFim)
         {
@@ -3384,17 +3408,17 @@ namespace DexComanda
             return iContraSenha;
         }
 
-        public static string ServicoSQLATIVO(string iNomePC)
+        public static string ServicoSQLATIVO()
         {
             string status = "";
             try
             {
-                iNomePC = iNomePC.Replace("Data Source=", "");
+               // iNomePC = iNomePC.Replace("Data Source=", "");
                 //Process[] remoteByName = Process.GetProcessesByName("MySQL", "NomeMaquina");
                 // MSSQLSERVER
                 //// 2. Using an IP address to specify the machineName parameter.
                 //Process[] ipByName = Process.GetProcessesByName("notepad", "192.168.xx.x");
-                ServiceController MeuServico = new ServiceController("MSSQLSERVER", iNomePC);
+                ServiceController MeuServico = new ServiceController("MSSQLSERVER", ListaServidoresSQL());
 
                 status = MeuServico.Status.ToString();
 
