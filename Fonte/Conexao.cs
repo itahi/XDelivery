@@ -539,7 +539,8 @@ namespace DexComanda
         {
             string lSqlConsulta = " select R.Codigo , " +
                                   " R.TaxaServico , " +
-                                  " R.NomeRegiao " +
+                                  " R.NomeRegiao ,"+
+                                  " RG.Nome" +
                                   " from RegiaoEntrega R " +
                                   " left join RegiaoEntrega_Bairros RG on RG.CodRegiao = R.Codigo " +
                                   "  where RG.Nome like '%" + iNOmeBairro + "%'";
@@ -554,7 +555,7 @@ namespace DexComanda
         }
         public DataSet RetornaCEPPorBairro(string iNOmeBairro)
         {
-            string lSqlConsulta = " select top 1 cep from base_cep " +
+            string lSqlConsulta = " select top 1 cep,bairro from base_cep " +
                                   " where bairro like '%" + iNOmeBairro + "%'"+
                                   " and cidade ='"+Sessions.returnEmpresa.Cidade +"'";
 

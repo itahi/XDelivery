@@ -267,7 +267,7 @@ namespace DexComanda
             DataSet ds = con.RetornarTaxaPorBairro(iBairro);
             if (ds.Tables[0].Rows.Count== 0)
             {
-                MessageBox.Show("Bairro não pertence a nenhuma região cadastrada", "[xSistemas]");
+                MessageBox.Show("Bairro não pertence a nenhuma região cadastrada", "[xSistemas] Aviso");
                 return;
             }
             Utils.MontaCombox(iCbxName, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioesPorCodigo", ds.Tables[0].Rows[0].Field<int>("Codigo"));
@@ -1200,6 +1200,7 @@ namespace DexComanda
                 return;
             }
             Utils.MontaCombox(cbxRegiao, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioesPorCodigo", ds.Tables[0].Rows[0].Field<int>("Codigo"));
+            txtBairro.Text = ds.Tables[0].Rows[0].Field<string>("Nome").ToString();
             txtTaxaEntrega.Text = ds.Tables[0].Rows[0].Field<decimal>("TaxaServico").ToString();
         }
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net.Http;
+using System.Windows.Forms;
+
 namespace DexComanda.Integração
 {
     /// <summary>
@@ -47,10 +49,9 @@ namespace DexComanda.Integração
                 }
 
             }
-            catch (Exception)
+            catch (Exception erro)
             {
-
-                throw;
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
 
@@ -78,10 +79,9 @@ namespace DexComanda.Integração
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception erro)
             {
-
-                throw;
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
     }

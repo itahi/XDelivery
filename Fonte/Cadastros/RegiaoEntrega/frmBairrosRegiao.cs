@@ -320,12 +320,7 @@ namespace DexComanda.Cadastros
 
         private void txtBairro_Leave(object sender, EventArgs e)
         {
-            DataSet ds = con.RetornaCEPPorBairro(txtBairro.Text);
-            if (ds.Tables[0].Rows.Count == 0)
-            {
-                return;
-            }
-            txtCEP.Text = ds.Tables[0].Rows[0].Field<string>("Cep");
+            
         }
 
         private void RetornaCEP(object sender, KeyEventArgs e)
@@ -351,6 +346,21 @@ namespace DexComanda.Cadastros
                 }
                 txtCEP.Text = ds.Tables[0].Rows[0].Field<string>("Cep");
             }
+        }
+
+        private void txtBairro_TextChanged(object sender, EventArgs e)
+        {
+            if (txtBairro.Text.Length<=3)
+            {
+                return;
+            }
+            DataSet ds = con.RetornaCEPPorBairro(txtBairro.Text);
+            if (ds.Tables[0].Rows.Count == 0)
+            {
+                return;
+            }
+            txtCEP.Text = ds.Tables[0].Rows[0].Field<string>("Cep");
+            txtBairro.Text = ds.Tables[0].Rows[0].Field<string>("Bairro");
         }
     }
 }

@@ -803,6 +803,7 @@ namespace DexComanda
             }
 
         }
+
         public static CepUtil BuscaCEPOnline(string iCEP)
         {
             CepUtil cep = new CepUtil();
@@ -811,7 +812,7 @@ namespace DexComanda
                 Correios.AtendeClienteClient consulta = new Correios.AtendeClienteClient("AtendeClientePort");
 
                 var resultado = consulta.consultaCEP(iCEP.Replace("-", ""));
-
+            
                 //Insere o CEP no Banco Local caso retorne do WS
                 if (resultado != null)
                 {
@@ -1340,6 +1341,10 @@ namespace DexComanda
 
             return iReport;
         }
+        /// <summary>
+        /// Função para listar o nome da instancia e servidores SQLSERVER , presentes na maquina na rede
+        /// </summary>
+        /// <returns>Nome da Maquina ou Nome da Maquina +Instancia</returns>
         public static string ListaServidoresSQL()
         {
 
@@ -3413,15 +3418,8 @@ namespace DexComanda
             string status = "";
             try
             {
-               // iNomePC = iNomePC.Replace("Data Source=", "");
-                //Process[] remoteByName = Process.GetProcessesByName("MySQL", "NomeMaquina");
-                // MSSQLSERVER
-                //// 2. Using an IP address to specify the machineName parameter.
-                //Process[] ipByName = Process.GetProcessesByName("notepad", "192.168.xx.x");
                 ServiceController MeuServico = new ServiceController("MSSQLSERVER", ListaServidoresSQL());
-
                 status = MeuServico.Status.ToString();
-
                 if (status.Equals("Stopped") || (status.Equals("Paused")))
                 {
                     try

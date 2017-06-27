@@ -179,13 +179,14 @@
             // 
             // txtBairro
             // 
-            this.txtBairro.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.txtBairro.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtBairro.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtBairro.Location = new System.Drawing.Point(4, 104);
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(177, 20);
             this.txtBairro.TabIndex = 4;
             this.toolTip1.SetToolTip(this.txtBairro, "d");
+            this.txtBairro.TextChanged += new System.EventHandler(this.txtBairro_TextChanged);
             this.txtBairro.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RetornaCEP);
             this.txtBairro.Leave += new System.EventHandler(this.txtBairro_Leave);
             // 

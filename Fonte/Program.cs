@@ -51,6 +51,7 @@ namespace DexComanda
                     sLine = tempDex.ReadLine();
                     Conexao.connectionString = sLine;
                     string strNomePC = Utils.RetornaNomePc();
+                    
                     // Verifica se o Serviço do SQLSERVER está Ativo para inicia-lo
                     Utils.ServicoSQLATIVO();
                     con = new Conexao();

@@ -485,7 +485,7 @@
             // 
             // txtBairro
             // 
-            this.txtBairro.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.txtBairro.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtBairro.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtBairro.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBairro.Location = new System.Drawing.Point(15, 146);
