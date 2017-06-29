@@ -124,6 +124,8 @@
             this.txtUsuarioLogado = new System.Windows.Forms.ToolStripStatusLabel();
             this.pnlPedido = new System.Windows.Forms.Panel();
             this.grpTipoPedido = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.dtFiltro = new System.Windows.Forms.DateTimePicker();
             this.cbxStatusPedido = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbxFiltroTipo = new System.Windows.Forms.ComboBox();
@@ -161,8 +163,8 @@
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.dtFiltro = new System.Windows.Forms.DateTimePicker();
-            this.label12 = new System.Windows.Forms.Label();
+            this.produtoToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.insumoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.grpAndamentoPedido.SuspendLayout();
@@ -769,9 +771,13 @@
             this.insumoToolStripMenuItem.Name = "insumoToolStripMenuItem";
             this.insumoToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
             this.insumoToolStripMenuItem.Text = "Insumo";
+            this.insumoToolStripMenuItem.Click += new System.EventHandler(this.insumoToolStripMenuItem_Click);
             // 
             // consultaMovimentoToolStripMenuItem
             // 
+            this.consultaMovimentoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.produtoToolStripMenuItem3,
+            this.insumoToolStripMenuItem1});
             this.consultaMovimentoToolStripMenuItem.Name = "consultaMovimentoToolStripMenuItem";
             this.consultaMovimentoToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
             this.consultaMovimentoToolStripMenuItem.Text = "Consultar Movimento";
@@ -986,6 +992,25 @@
             this.grpTipoPedido.TabIndex = 25;
             this.grpTipoPedido.TabStop = false;
             this.grpTipoPedido.Text = "Filtros";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(93, 8);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(54, 13);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "Dt Pedido";
+            // 
+            // dtFiltro
+            // 
+            this.dtFiltro.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtFiltro.Location = new System.Drawing.Point(96, 25);
+            this.dtFiltro.Name = "dtFiltro";
+            this.dtFiltro.Size = new System.Drawing.Size(81, 20);
+            this.dtFiltro.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.dtFiltro, "Filtre a data do pedido que deseja exibir");
+            this.dtFiltro.ValueChanged += new System.EventHandler(this.FiltraPedidoData);
             // 
             // cbxStatusPedido
             // 
@@ -1459,24 +1484,19 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // dtFiltro
+            // produtoToolStripMenuItem3
             // 
-            this.dtFiltro.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtFiltro.Location = new System.Drawing.Point(96, 25);
-            this.dtFiltro.Name = "dtFiltro";
-            this.dtFiltro.Size = new System.Drawing.Size(81, 20);
-            this.dtFiltro.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.dtFiltro, "Filtre a data do pedido que deseja exibir");
-            this.dtFiltro.ValueChanged += new System.EventHandler(this.FiltraPedidoData);
+            this.produtoToolStripMenuItem3.Name = "produtoToolStripMenuItem3";
+            this.produtoToolStripMenuItem3.Size = new System.Drawing.Size(152, 26);
+            this.produtoToolStripMenuItem3.Text = "Produto";
+            this.produtoToolStripMenuItem3.Click += new System.EventHandler(this.produtoToolStripMenuItem3_Click);
             // 
-            // label12
+            // insumoToolStripMenuItem1
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(93, 8);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(54, 13);
-            this.label12.TabIndex = 2;
-            this.label12.Text = "Dt Pedido";
+            this.insumoToolStripMenuItem1.Name = "insumoToolStripMenuItem1";
+            this.insumoToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
+            this.insumoToolStripMenuItem1.Text = "Insumo";
+            this.insumoToolStripMenuItem1.Click += new System.EventHandler(this.insumoToolStripMenuItem1_Click);
             // 
             // frmPrincipal
             // 
@@ -1657,5 +1677,7 @@
         private System.Windows.Forms.Button btnEntrega;
         private System.Windows.Forms.DateTimePicker dtFiltro;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ToolStripMenuItem produtoToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem insumoToolStripMenuItem1;
     }
 }

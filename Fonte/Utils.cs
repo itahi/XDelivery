@@ -370,7 +370,7 @@ namespace DexComanda
 
             return user;
         }
-        public static Boolean ValidaPermissao(int iCodUser, string iNomePermissao)
+        public static Boolean ValidaPermissao(int iCodUser=0, string iNomePermissao="")
         {
             Boolean retur = false;
             Conexao con = new Conexao();
@@ -389,7 +389,6 @@ namespace DexComanda
                 if (MessageBoxQuestion(Bibliotecas.cSolicitarPermissao))
                 {
                     frmLiberação frm = new frmLiberação(iNomePermissao);
-                    //frm.ShowDialog();
                     if (frm.Autorizacao)
                     {
                         intCodUserAutorizador = frm.CodUser;

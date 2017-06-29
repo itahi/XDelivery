@@ -29,10 +29,10 @@ namespace DexComanda.Cadastros.Produto
         {
             Utils.LimpaForm(this);
             con = new Conexao();
-            this.registrosGridView.DataSource = null;
-            this.registrosGridView.AutoGenerateColumns = true;
-            this.registrosGridView.DataSource = Utils.PopularGrid_SP("Insumo", registrosGridView, "spObterInsumo");
-            this.registrosGridView.DataMember = "Insumo";
+            registrosGridView.DataSource = null;
+            registrosGridView.AutoGenerateColumns = true;
+            registrosGridView.DataSource = Utils.PopularGrid_SP("Insumo", registrosGridView, "spObterInsumo");
+            registrosGridView.DataMember = "Insumo";
         }
 
         private void AdicionarRegistro(object sender, EventArgs e)
@@ -43,7 +43,8 @@ namespace DexComanda.Cadastros.Produto
                 {
                     AtivoSN = chkAtivoSN.Checked,
                     Nome = txtNome.Text,
-                    UnidadeMedida = cbxUndMedida.Text
+                    UnidadeMedida = cbxUndMedida.Text,
+                    Preco = decimal.Parse(txtPreco.Text)
                 };
                 con.Insert("spAdicionarInsumo", insumo);
                 ExibirRegistros();
@@ -113,7 +114,7 @@ namespace DexComanda.Cadastros.Produto
                 txtNome.Text = registrosGridView.CurrentRow.Cells["Nome"].Value.ToString();
                 cbxUndMedida.Text =registrosGridView.CurrentRow.Cells["UnidadeMedida"].Value.ToString();
                 chkAtivoSN.Checked = Convert.ToBoolean(registrosGridView.CurrentRow.Cells["AtivoSN"].Value.ToString());
-
+                txtPreco.Text = registrosGridView.CurrentRow.Cells["Preco"].Value.ToString();
                 this.btnAdicionar.Text = "Salvar [F12]";
                 this.btnAdicionar.Click += new System.EventHandler(this.SalvarRegistro);
                 this.btnAdicionar.Click -= new System.EventHandler(this.AdicionarRegistro);
@@ -193,6 +194,11 @@ namespace DexComanda.Cadastros.Produto
             {
                 Cancelar(sender, e);
             }
+        }
+
+        private void txtPreco_KeyPress_1(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoDecimais(e);
         }
     }
 }

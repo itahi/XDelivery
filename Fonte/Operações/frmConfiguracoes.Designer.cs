@@ -79,7 +79,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.txtBanco = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.cbxTipoCodigo = new System.Windows.Forms.ComboBox();
             this.chkProporcional = new System.Windows.Forms.CheckBox();
@@ -92,13 +91,6 @@
             this.chkProdutoCodigo = new System.Windows.Forms.CheckBox();
             this.chkEntregadores = new System.Windows.Forms.CheckBox();
             this.chkDataNAscimento = new System.Windows.Forms.CheckBox();
-            this.grpLoginSenha = new System.Windows.Forms.GroupBox();
-            this.pInfoUserDefault = new System.Windows.Forms.Panel();
-            this.txtSenhaPadrao = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtUsuarioPadrao = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.chkLoginSenha = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label27 = new System.Windows.Forms.Label();
@@ -247,8 +239,6 @@
             this.groupBox1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.grpLoginSenha.SuspendLayout();
-            this.pInfoUserDefault.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.grpEntrega.SuspendLayout();
@@ -707,9 +697,7 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.groupBox7);
             this.tabPage3.Controls.Add(this.groupBox4);
-            this.tabPage3.Controls.Add(this.grpLoginSenha);
             this.tabPage3.Controls.Add(this.groupBox2);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
@@ -718,15 +706,6 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Configurações Gerais";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Location = new System.Drawing.Point(7, 105);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(640, 60);
-            this.groupBox7.TabIndex = 12;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Controle de Estoque";
             // 
             // groupBox4
             // 
@@ -871,72 +850,6 @@
             this.chkDataNAscimento.Text = "Dt nasc. no cadastro?";
             this.chkDataNAscimento.UseVisualStyleBackColor = true;
             // 
-            // grpLoginSenha
-            // 
-            this.grpLoginSenha.Controls.Add(this.pInfoUserDefault);
-            this.grpLoginSenha.Controls.Add(this.chkLoginSenha);
-            this.grpLoginSenha.Location = new System.Drawing.Point(6, 167);
-            this.grpLoginSenha.Name = "grpLoginSenha";
-            this.grpLoginSenha.Size = new System.Drawing.Size(640, 60);
-            this.grpLoginSenha.TabIndex = 11;
-            this.grpLoginSenha.TabStop = false;
-            this.grpLoginSenha.Text = "Login do Sistema";
-            // 
-            // pInfoUserDefault
-            // 
-            this.pInfoUserDefault.Controls.Add(this.txtSenhaPadrao);
-            this.pInfoUserDefault.Controls.Add(this.label3);
-            this.pInfoUserDefault.Controls.Add(this.txtUsuarioPadrao);
-            this.pInfoUserDefault.Controls.Add(this.label1);
-            this.pInfoUserDefault.Location = new System.Drawing.Point(179, 11);
-            this.pInfoUserDefault.Name = "pInfoUserDefault";
-            this.pInfoUserDefault.Size = new System.Drawing.Size(455, 45);
-            this.pInfoUserDefault.TabIndex = 10;
-            // 
-            // txtSenhaPadrao
-            // 
-            this.txtSenhaPadrao.Location = new System.Drawing.Point(330, 14);
-            this.txtSenhaPadrao.Name = "txtSenhaPadrao";
-            this.txtSenhaPadrao.PasswordChar = 'X';
-            this.txtSenhaPadrao.Size = new System.Drawing.Size(100, 20);
-            this.txtSenhaPadrao.TabIndex = 3;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(237, 17);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(78, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Senha Padrão:";
-            // 
-            // txtUsuarioPadrao
-            // 
-            this.txtUsuarioPadrao.Location = new System.Drawing.Point(107, 14);
-            this.txtUsuarioPadrao.Name = "txtUsuarioPadrao";
-            this.txtUsuarioPadrao.Size = new System.Drawing.Size(100, 20);
-            this.txtUsuarioPadrao.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Usuário Padrão:";
-            // 
-            // chkLoginSenha
-            // 
-            this.chkLoginSenha.AutoSize = true;
-            this.chkLoginSenha.Location = new System.Drawing.Point(20, 28);
-            this.chkLoginSenha.Name = "chkLoginSenha";
-            this.chkLoginSenha.Size = new System.Drawing.Size(119, 17);
-            this.chkLoginSenha.TabIndex = 9;
-            this.chkLoginSenha.Text = "Usa Login/Senha ?";
-            this.chkLoginSenha.UseVisualStyleBackColor = true;
-            this.chkLoginSenha.CheckedChanged += new System.EventHandler(this.ExibirCamposParaLogin);
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.groupBox3);
@@ -946,7 +859,7 @@
             this.groupBox2.Controls.Add(this.grpCozinha);
             this.groupBox2.Controls.Add(this.grpImpressoras);
             this.groupBox2.Controls.Add(this.grpViasImpressao);
-            this.groupBox2.Location = new System.Drawing.Point(5, 245);
+            this.groupBox2.Location = new System.Drawing.Point(6, 105);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(640, 193);
             this.groupBox2.TabIndex = 10;
@@ -2435,10 +2348,6 @@
             this.tabPage3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.grpLoginSenha.ResumeLayout(false);
-            this.grpLoginSenha.PerformLayout();
-            this.pInfoUserDefault.ResumeLayout(false);
-            this.pInfoUserDefault.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -2499,18 +2408,11 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.CheckBox chkLoginSenha;
         private System.Windows.Forms.CheckBox chkDataNAscimento;
         private System.Windows.Forms.CheckBox chkViaCozinha;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox grpLoginSenha;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Panel pInfoUserDefault;
-        private System.Windows.Forms.TextBox txtSenhaPadrao;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtUsuarioPadrao;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chkEntregadores;
         private System.Windows.Forms.CheckBox chkProdutoCodigo;
         private System.Windows.Forms.CheckBox chk2Telefones;
@@ -2695,6 +2597,5 @@
         private System.Windows.Forms.ComboBox cbxAgrupamentoBalcao;
         private System.Windows.Forms.CheckBox chkViaBalcao;
         private System.Windows.Forms.CheckBox chkSenha;
-        private System.Windows.Forms.GroupBox groupBox7;
     }
 }

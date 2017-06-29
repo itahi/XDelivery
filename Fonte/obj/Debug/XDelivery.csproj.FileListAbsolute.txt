@@ -227,7 +227,6 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmExibeCancelamen
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmHistoricoCancelamento.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmInformaMotoboy.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmLancaEstoqueProd.resources
-D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmNotificacao.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmSincronizacao.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Funções.frmLiberação.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Pedido.frmAlterarStatusPedido.resources
@@ -278,3 +277,5 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.pdb
 D:\#Projetos\xDelivery\Fonte\obj\Debug\XDelivery.csprojResolveAssemblyReference.cache
 D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.pdb
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmConectaBanco.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Estoque.frmLancaEstoqueInsumo.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Estoque.frmConsultaInsumo.resources

@@ -2234,8 +2234,7 @@ namespace DexComanda
 
         private void consultaMovimentoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmConsultaEstoque frm = new frmConsultaEstoque();
-            frm.Show(this);
+            
         }
 
         private void frmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
@@ -2340,6 +2339,24 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
+        }
+
+        private void insumoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmLancaEstoqueInsumo frmIns = new frmLancaEstoqueInsumo();
+            frmIns.Show(this);
+        }
+
+        private void insumoToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmConsultaInsumo frmCons = new frmConsultaInsumo();
+            frmCons.Show(this);
+        }
+
+        private void produtoToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            frmConsultaEstoque frm = new frmConsultaEstoque();
+            frm.Show(this);
         }
     }
 }

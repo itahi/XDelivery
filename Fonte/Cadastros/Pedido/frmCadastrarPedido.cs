@@ -673,6 +673,7 @@ namespace DexComanda
 
         private void MontaMenuOpcoes(int intCodProduto = 0)
         {
+            grpBoxTamanhos.Enabled = false;
             int intCodProduto1 = intCodProduto;
             int intCodProduto2 = 0;
             DataSet dsOpcoes = new DataSet();
@@ -741,6 +742,7 @@ namespace DexComanda
                         lTipo = int.Parse(dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Tipo"));
                         if (lTipo == 1)
                         {
+                            grpBoxTamanhos.Enabled = true;
                             grpBoxTamanhos.Text = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("NomeTipo");
                             lNomeOpcao = dsOpcoes.Tables["Produto_Opcao"].Rows[i].Field<string>("Nome").Trim();
 
@@ -1269,6 +1271,7 @@ namespace DexComanda
                                 };
                                 itemDoPedido.DataAtualizacao = DateTime.Now;
                                 con.Insert("spCriarPedido", itemDoPedido);
+                                con.ConsultaInsumos(itemDoPedido.CodProduto, itemDoPedido.Quantidade);
                                 Utils.ControlaEventos("Inserir", this.Name);
 
 
@@ -2056,7 +2059,7 @@ namespace DexComanda
         }
         private void LimpaTamanhosSabores()
         {
-
+            grpBoxTamanhos.Enabled = false;
             // Percorre o GroupBox dos tamanhos e e  desmarca todos pra obrigar o usuario marcar o tamanho depois de selecionar os tamanhos
             foreach (System.Windows.Forms.Control ctrControl in grpBoxTamanhos.Controls)
             {
@@ -3290,6 +3293,7 @@ namespace DexComanda
             this.grpBoxTamanhos.Controls.Add(this.radioButton3);
             this.grpBoxTamanhos.Controls.Add(this.radioButton2);
             this.grpBoxTamanhos.Controls.Add(this.radioButton1);
+            this.grpBoxTamanhos.Enabled = false;
             this.grpBoxTamanhos.Location = new System.Drawing.Point(6, 3);
             this.grpBoxTamanhos.Name = "grpBoxTamanhos";
             this.grpBoxTamanhos.Size = new System.Drawing.Size(350, 177);
@@ -4217,7 +4221,7 @@ namespace DexComanda
      
         private void chkListAdicionais_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (!RadiosMarcos())
+            if (grpBoxTamanhos.Enabled&& !RadiosMarcos())
             {
                 MessageBox.Show("Selecione o " + grpBoxTamanhos.Text + " para continuar");
                 chkListAdicionais.SetSelected(e.Index, false);

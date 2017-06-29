@@ -34,7 +34,7 @@ namespace DexComanda
             con = new Conexao();
             config = new Configuracao();
             InitializeComponent();
-            this.pInfoUserDefault.Visible = false;
+          //  this.pInfoUserDefault.Visible = false;
         }
 
         private void ConectarBanco(object sender, EventArgs e)
@@ -372,7 +372,7 @@ namespace DexComanda
             config.ImprimeViaBalcao = ConfiguracaoBalcao();
             config.ImpViaCozinha = ConfiguracaoCozinha();
             config.ImprimeViaEntrega = ConfiguracaoDelivery();
-            config.UsaLoginSenha = chkLoginSenha.Checked;
+            config.UsaLoginSenha = true;//chkLoginSenha.Checked;
             config.UsaDataNascimento = chkDataNAscimento.Checked;
             config.ControlaEntregador = chkEntregadores.Checked;
             config.ProdutoPorCodigo = RetornaTipoBuscaProduto();
@@ -391,19 +391,19 @@ namespace DexComanda
             config.QtdCaracteresImp = int.Parse(cbxColunas.Text);
             config.Impressoras = GravaConfiguracaoImpressora();
             config.DadosPush = GravaDadosPush();
-            if (chkLoginSenha.Checked && txtUsuarioPadrao.Text.Trim() != "" && txtSenhaPadrao.Text.Trim() != "")
-            {
-                string _senha = Utils.EncryptMd5(this.txtUsuarioPadrao.Text.ToString(), this.txtSenhaPadrao.Text.ToString());
-                Usuario usuario = new Usuario()
-                {
-                    Nome = this.txtUsuarioPadrao.Text.ToString(),
-                    Senha = _senha,
-                    FinalizaPedidoSN = true,
-                    AdministradorSN = true,
-                    AbreFechaCaixaSN = true
-                };
-                con.Insert("spAdicionarUsuario", usuario);
-            }
+            //if (chkLoginSenha.Checked && txtUsuarioPadrao.Text.Trim() != "" && txtSenhaPadrao.Text.Trim() != "")
+            //{
+            //    string _senha = Utils.EncryptMd5(this.txtUsuarioPadrao.Text.ToString(), this.txtSenhaPadrao.Text.ToString());
+            //    Usuario usuario = new Usuario()
+            //    {
+            //        Nome = this.txtUsuarioPadrao.Text.ToString(),
+            //        Senha = _senha,
+            //        FinalizaPedidoSN = true,
+            //        AdministradorSN = true,
+            //        AbreFechaCaixaSN = true
+            //    };
+            //    con.Insert("spAdicionarUsuario", usuario);
+            //}
 
 
             this.btnSalvar.Click -= AlterarConfig;
@@ -451,7 +451,7 @@ namespace DexComanda
 
             config.cod = Sessions.returnConfig.cod;
             config.ImpViaCozinha = ConfiguracaoCozinha();
-            config.UsaLoginSenha = chkLoginSenha.Checked;
+            config.UsaLoginSenha = true;//chkLoginSenha.Checked;
             config.UsaDataNascimento = chkDataNAscimento.Checked;
             config.ControlaEntregador = chkEntregadores.Checked;
             config.ProdutoPorCodigo = RetornaTipoBuscaProduto();
@@ -478,19 +478,19 @@ namespace DexComanda
                 Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
             }
 
-            if (chkLoginSenha.Checked && txtUsuarioPadrao.Text.Trim() != "" && txtSenhaPadrao.Text.Trim() != "")
-            {
-                string _senha = Utils.EncryptMd5(this.txtUsuarioPadrao.Text.ToString(), this.txtSenhaPadrao.Text.ToString());
-                UsuarioDefault usuario = new UsuarioDefault()
-                {
-                    Nome = this.txtUsuarioPadrao.Text.ToString(),
-                    senha = _senha,
-                    AdministradorSN = true
-                    ,
-                    AbreFechaCaixaSN = true
-                };
-                con.Insert("spAdicionarUsuarioDefault", usuario);
-            }
+            //if (chkLoginSenha.Checked && txtUsuarioPadrao.Text.Trim() != "" && txtSenhaPadrao.Text.Trim() != "")
+            //{
+            //    string _senha = Utils.EncryptMd5(this.txtUsuarioPadrao.Text.ToString(), this.txtSenhaPadrao.Text.ToString());
+            //    UsuarioDefault usuario = new UsuarioDefault()
+            //    {
+            //        Nome = this.txtUsuarioPadrao.Text.ToString(),
+            //        senha = _senha,
+            //        AdministradorSN = true
+            //        ,
+            //        AbreFechaCaixaSN = true
+            //    };
+            //    con.Insert("spAdicionarUsuarioDefault", usuario);
+            //}
 
             if (empresa.Nome != "" && empresa.Contato != "" && empresa.Telefone != "" && txtCaminhoBkp.Text != "")
             {
@@ -561,7 +561,6 @@ namespace DexComanda
             {
                 grpFidelidade.Enabled = chkFidelidade.Checked;
                 chkDataNAscimento.Checked = Sessions.returnConfig.UsaDataNascimento;
-                chkLoginSenha.Checked = Sessions.returnConfig.UsaLoginSenha;
                 chkEntregadores.Checked = Sessions.returnConfig.ControlaEntregador;
                 chkProdutoCodigo.Checked = Utils.MarcaTipoConfiguracaoProduto().PorCodigo;
                 cbxTipoCodigo.Text = Utils.MarcaTipoConfiguracaoProduto().TipoCodigo;
@@ -648,18 +647,6 @@ namespace DexComanda
 
             }
 
-        }
-
-        private void ExibirCamposParaLogin(object sender, EventArgs e)
-        {
-            if (this.chkLoginSenha.Checked == true)
-            {
-                this.pInfoUserDefault.Visible = true;
-            }
-            else
-            {
-                this.pInfoUserDefault.Visible = false;
-            }
         }
 
         private void ConsultarCEP(object sender, KeyEventArgs e)

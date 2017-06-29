@@ -141,6 +141,44 @@ namespace DexComanda
 
 
         }
+        public void ConsultaInsumos(int intCodProdut,decimal dQtdProduto)
+        {
+            try
+            {
+                string strSql = " select * from Produto_Insumo where CodProduto=@CodProduto ";
+                command = new SqlCommand(strSql, conn);
+                command.CommandType = CommandType.Text;
+                command.Parameters.AddWithValue("@CodProduto", intCodProdut);
+                adapter = new SqlDataAdapter(command);
+                ds = new DataSet();
+                adapter.Fill(ds, "Produto_Insumo");
+                for (int i = 0; i < ds.Tables["Produto_Insumo"].Rows.Count; i++)
+                {
+                    BaixarEstoque(ds.Tables["Produto_Insumo"].Rows[i].Field<int>("CodInsumo"), dQtdProduto, ds.Tables[0].Rows[i].Field<decimal>("Quantidade"));
+                }
+            }
+            catch (SqlException erro )
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
+        private void BaixarEstoque(int intCodInsumo,decimal dcQuantidade,decimal dcQuantidadeBaixar)
+        {
+            try
+            {
+                command = new SqlCommand("spBaixaEstoqueInsumo", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@CodInsumo", intCodInsumo);
+                command.Parameters.AddWithValue("@Quantidade", dcQuantidade);
+                command.Parameters.AddWithValue("@QuantidadeBaixar", dcQuantidadeBaixar);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+           
+        }
         public DataSet ContaEstoque(string strNomeProduto)
         {
             try
@@ -701,7 +739,7 @@ namespace DexComanda
                     return false;
                 }
                 MessageBox.Show("Conectado ao banco de dados.");
-                Utils.CriarUsuario(connectionString, "dex", "1234");
+              //  Utils.CriarUsuario(connectionString, "dex", "1234");
                 var temp = Directory.GetCurrentDirectory() + @"\ConnectionString_DexComanda.txt";
 
                 if (!System.IO.File.Exists(temp))

@@ -12,5 +12,6 @@ namespace DexComanda.Models.Produto
         public string Nome { get; set; }
         public string UnidadeMedida { get; set; }
         public bool AtivoSN { get; set; }
+        public decimal Preco { get; set; }
     }
 }

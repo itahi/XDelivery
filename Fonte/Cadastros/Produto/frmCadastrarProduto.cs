@@ -1185,7 +1185,7 @@ namespace DexComanda
                     {
                         CodInsumo = int.Parse(cbxInsumo.SelectedValue.ToString()),
                         CodProduto = codigoProdutoParaAlterar,
-                        Quantidade = int.Parse(txtQtd.Text)
+                        Quantidade = decimal.Parse(txtQtd.Text)
                     };
                     con.Insert("spAdicionarProdutoInsumo", insPro);
                     ListaInsumos();
@@ -1259,7 +1259,7 @@ namespace DexComanda
 
         private void txtQtd_KeyPress(object sender, KeyPressEventArgs e)
         {
-            Utils.SoPermiteNumeros(e);
+            Utils.SoDecimais(e);
         }
 
         private void EditarRegistro(object sender, MouseEventArgs e)

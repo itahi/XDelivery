@@ -339,6 +339,7 @@
     <Compile Include="Models\Pessoa_Endereco.cs" />
     <Compile Include="Models\Produto\Insumo.cs" />
     <Compile Include="Models\Produto\InsumoProduto.cs" />
+    <Compile Include="Models\Produto\Insumo_Estoque.cs" />
     <Compile Include="Models\Produto\Opcao.cs" />
     <Compile Include="Models\Produto\OpcaoDia.cs" />
     <Compile Include="Models\Produto\OpcaoItem.cs" />
@@ -412,6 +413,18 @@
     </Compile>
     <Compile Include="Operações\Estoque\frmConsultaEstoque.Designer.cs">
       <DependentUpon>frmConsultaEstoque.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operações\Estoque\frmConsultaInsumo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Estoque\frmConsultaInsumo.Designer.cs">
+      <DependentUpon>frmConsultaInsumo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operações\Estoque\frmLancaEstoqueInsumo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Estoque\frmLancaEstoqueInsumo.Designer.cs">
+      <DependentUpon>frmLancaEstoqueInsumo.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\Financeiro\frmAberturaCaixa.cs">
       <SubType>Form</SubType>
@@ -538,12 +551,6 @@
     </Compile>
     <Compile Include="Models\Mesas.cs" />
     <Compile Include="Models\RegioesEntrega.cs" />
-    <Compile Include="Operações\frmNotificacao.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Operações\frmNotificacao.Designer.cs">
-      <DependentUpon>frmNotificacao.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operações\frmSincronizacao.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -646,6 +653,18 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelCaixaHistorico2.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Estoque\RelEstoqueDetalhado.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelEstoqueDetalhado.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Estoque\RelEstoqueResumido.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelEstoqueResumido.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboyAgrupado.cs">
@@ -1172,6 +1191,12 @@
     <EmbeddedResource Include="Operações\Estoque\frmConsultaEstoque.resx">
       <DependentUpon>frmConsultaEstoque.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Estoque\frmConsultaInsumo.resx">
+      <DependentUpon>frmConsultaInsumo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Estoque\frmLancaEstoqueInsumo.resx">
+      <DependentUpon>frmLancaEstoqueInsumo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Operações\Financeiro\frmAberturaCaixa.resx">
       <DependentUpon>frmAberturaCaixa.cs</DependentUpon>
     </EmbeddedResource>
@@ -1204,9 +1229,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\Estoque\frmLancaEstoqueProd.resx">
       <DependentUpon>frmLancaEstoqueProd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Operações\frmNotificacao.resx">
-      <DependentUpon>frmNotificacao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmSincronizacao.resx">
       <DependentUpon>frmSincronizacao.cs</DependentUpon>
@@ -1311,6 +1333,14 @@
     <EmbeddedResource Include="Relatorios\Caixa\RelCaixaHistorico2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelCaixaHistorico2.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Estoque\RelEstoqueDetalhado.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelEstoqueDetalhado.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Estoque\RelEstoqueResumido.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelEstoqueResumido.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboyAgrupado.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
