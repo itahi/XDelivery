@@ -263,7 +263,7 @@ namespace DexComanda
 
                         cancelPedid.status = "Cancelado";
                         cancelPedid.CodUsuario = Sessions.retunrUsuario.Codigo;
-                        if (Sessions.returnConfig.RegistraCancelamentos)
+                        if (Sessions.returnConfig.RegistraCancelamentos && con.SelectAll("MotivoCancelamento", "spObterMotivoCancelamento").Tables[0].Rows.Count>0)
                         {
                             frmHistoricoCancelamento frm = new frmHistoricoCancelamento();
                             int CodPessoa;

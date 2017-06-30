@@ -388,6 +388,51 @@ namespace DexComanda
             return ds;
 
         }
+
+        public DataSet RetornaMaioresPrecosCodPersonalizado(int iCod1, int iCod2, string iCod3,
+           string iCod4, string iCodOpcao, Boolean iPrecoMar = true)
+        {
+            string iSqlConsulta = "";
+            string sqlWhere = "";
+            
+            //Retorna o maior preço entre os produtos
+            if (!iPrecoMar)
+            {
+                iSqlConsulta = "select" +
+                                    " max(PO.Preco + P.PrecoProduto) as PrecoOpcao" +
+                                    " from" +
+                                    " Produto_Opcao PO" +
+                                    " left join Produto P on P.Codigo = PO.CodProduto or P.CodigoPersonalizado=PO.CodProduto" +
+                                    " left join Opcao O on O.Codigo = PO.CodOpcao and O.Tipo = 1" +
+                                    " where (P.CodigoPersonalizado in (@Cod1,@Cod2,@Cod3,@Cod4) AND p.CodigoPersonalizado>0) and CodOpcao =@CodOpcao";
+            }
+            //Retorna o preço médio entre os produtos
+            else
+            {
+                iSqlConsulta = "select " +
+                                     " AVG(PO.Preco + P.PrecoProduto) as PrecoOpcao " +
+                                     " from " +
+                                     " Produto_Opcao PO" +
+                                     " left" +
+                                     " join Produto P on P.Codigo = PO.CodProduto" +
+                                     " left join Opcao O on O.Codigo = PO.CodOpcao and O.Tipo = 1" +
+                                     " where ( P.CodigoPersonalizado in (@Cod1,@Cod2,@Cod3,@Cod4) AND p.CodigoPersonalizado>0   )and CodOpcao =@CodOpcao";
+            }
+
+
+            command = new SqlCommand(iSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@Cod1", iCod1);
+            command.Parameters.AddWithValue("@Cod2", iCod2);
+            command.Parameters.AddWithValue("@Cod3", iCod3);
+            command.Parameters.AddWithValue("@Cod4", iCod4);
+            command.Parameters.AddWithValue("@CodOpcao", iCodOpcao);
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Produto_Opcao");
+            return ds;
+
+        }
         public int BuscaPaiGrupo(int iCodGrupo)
         {
             DataSet dsGrupo;
@@ -843,7 +888,7 @@ namespace DexComanda
                                  " Pot.Nome as NomeTipo" +
                                  "  from Produto_Opcao Prod join Opcao Op on Op.Codigo = Prod.CodOpcao" +
                                  "  join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
-                                  " join Produto P on P.Codigo = Prod.CodProduto" +
+                                  " join Produto P on P.CodigoPersonalizado = Prod.CodProduto" +
                                  " where P.CodigoPersonalizado = @Codigo order by PoT.OrdenExibicao,Op.Nome";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
