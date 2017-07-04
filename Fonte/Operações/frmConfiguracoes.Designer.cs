@@ -2401,9 +2401,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button btnConectarAoBanco;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox txtBanco;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox txtServidor;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnSalvar;
@@ -2597,5 +2595,7 @@
         private System.Windows.Forms.ComboBox cbxAgrupamentoBalcao;
         private System.Windows.Forms.CheckBox chkViaBalcao;
         private System.Windows.Forms.CheckBox chkSenha;
+        public System.Windows.Forms.TextBox txtBanco;
+        public System.Windows.Forms.TextBox txtServidor;
     }
 }

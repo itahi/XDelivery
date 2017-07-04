@@ -165,15 +165,19 @@ namespace DexComanda.Operações.Financeiro
 
                 };
                 con.Update("spFecharCaixa", caixa);
-                //if (Utils.MessageBoxQuestion("Deseja imprimir o fechamento de caixa ?"))
-                //{
-                //    RelFechamentoCaixaCompleto rel;
-                //    rel = new RelFechamentoCaixaCompleto();
-                //    Utils.GerarReportSoDatas(rel, Convert.ToDateTime(txtDtAbertura.Text));
+                if (Utils.MessageBoxQuestion("Deseja imprimir o fechamento de caixa ?"))
+                {
 
-                //   //Utils.GerarReportSoDatas(rel, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(txtDtAbertura.Text));
-                //   // Utils.ImpressaoCaixa(int.Parse(caixa.Numero), caixa.Turno, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(dtFechamento.Text));
-                //}
+                    //RelCaixaHistorico report;
+                    //report = new RelCaixaHistorico();
+                    //report.SetParameterValue("@Turno", cbxTurno.Text);
+                    //report.SetParameterValue("@DataI", txtDtAbertura.Text);
+                    //report.SetParameterValue("@DataF", dtFechamento.Text);
+                    //report.SetParameterValue("@EntradaSaida", "ES");
+                    //Utils.GerarReport(report);
+
+                    Utils.ImpressaoCaixa(caixa.Turno, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(dtFechamento.Text));
+                }
                 this.Close();
                // Utils.Restart();
             }

@@ -39,7 +39,7 @@ namespace DexComanda
                 MessageBox.Show("Preencha os dados para conexão ao banco de dados", "[xSistemas] Aviso");
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new frmConfiguracoes());
+                Application.Run(new frmConectaBanco());
             }
             else
             {

@@ -625,8 +625,8 @@ namespace DexComanda
                 txtContato.Text = Linha.ItemArray.GetValue(13).ToString();
                 txtServidor.Text = Linha.ItemArray.GetValue(15).ToString();
                 txtCaminhoBkp.Text = Linha.ItemArray.GetValue(16).ToString();
-                txtURL.Text = Sessions.returnEmpresa.UrlServidor;
-                CarregaConfigSMS(Sessions.returnEmpresa.ConfiguracaoSMS);
+                txtURL.Text = servidorLocal.Tables[0].Rows[0].Field<string>("UrlServidor");//Sessions.returnEmpresa.UrlServidor;
+                CarregaConfigSMS(servidorLocal.Tables[0].Rows[0].Field<string>("ConfiguracaoSMS"));
 
                 //if (con.IsConnected())
                 //{

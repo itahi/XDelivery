@@ -94,7 +94,7 @@ namespace DexComanda
                     {
                         MessageBox.Show("Usuário o senha incorretos");
                         Logado = false;
-                        
+
                     }
                     else if (hashSenha == dsUsuario.Tables[0].Rows[0].Field<string>("Senha").ToString())
                     {
@@ -370,7 +370,7 @@ namespace DexComanda
 
             return user;
         }
-        public static Boolean ValidaPermissao(int iCodUser=0, string iNomePermissao="")
+        public static Boolean ValidaPermissao(int iCodUser = 0, string iNomePermissao = "")
         {
             Boolean retur = false;
             Conexao con = new Conexao();
@@ -781,7 +781,7 @@ namespace DexComanda
             {
                 if (iCod == -1)
                 {
-                    icbxName.DataSource = null; 
+                    icbxName.DataSource = null;
                     icbxName.DataSource = conexao.SelectAll(iTable, iSP).Tables[iTable];
                 }
                 else
@@ -798,7 +798,7 @@ namespace DexComanda
             catch (Exception erro)
             {
 
-                MessageBox.Show("Erro ao listar itens tabela "  + iTable + erro.Message);
+                MessageBox.Show("Erro ao listar itens tabela " + iTable + erro.Message);
             }
 
         }
@@ -811,7 +811,7 @@ namespace DexComanda
                 Correios.AtendeClienteClient consulta = new Correios.AtendeClienteClient("AtendeClientePort");
 
                 var resultado = consulta.consultaCEP(iCEP.Replace("-", ""));
-            
+
                 //Insere o CEP no Banco Local caso retorne do WS
                 if (resultado != null)
                 {
@@ -1042,7 +1042,7 @@ namespace DexComanda
         }
         public static string ImpressaoEntreganova(int iCodPedido, decimal iTotalReceber,
             int iNumCopias = 0, string iNomeImpressora = "",
-            int CodEndereco = 0,decimal iTroco=0)
+            int CodEndereco = 0, decimal iTroco = 0)
         {
             string iRetorno = ""; ;
 
@@ -1273,7 +1273,7 @@ namespace DexComanda
         /// <param name="iReport"> Relatório a ser montando</param>
         /// <param name="inCodigo">Código do registro a ser filtrado</param>
         /// <returns></returns>
-        public static ReportClass GerarReportCodigo(ReportClass iReport,int inCodigo)
+        public static ReportClass GerarReportCodigo(ReportClass iReport, int inCodigo)
         {
             try
             {
@@ -2172,8 +2172,8 @@ namespace DexComanda
             try
             {
 
-        string TipoAgrupamentoDelivery = Utils.RetornaConfiguracaoDelivery().TipoAgrupamento;
-        DataSet itemsPedido, dsItemsNaoImpresso, dsItems;
+                string TipoAgrupamentoDelivery = Utils.RetornaConfiguracaoDelivery().TipoAgrupamento;
+                DataSet itemsPedido, dsItemsNaoImpresso, dsItems;
                 DataSet dsI = new DataSet();
                 dsItemsNaoImpresso = Utils.CarregaItens(iCodPedido);
 
@@ -2241,7 +2241,7 @@ namespace DexComanda
 
                 PrinterSettings printersettings = new PrinterSettings();
                 printersettings.PrinterName = iNomeImpressora;
-              //  printersettings.Copies = short.Parse(iNumCopias.ToString());
+                //  printersettings.Copies = short.Parse(iNumCopias.ToString());
                 printersettings.Collate = false;
 
                 report.Load(Directory.GetCurrentDirectory() + @"\RelBalcao.rpt");
@@ -2280,1355 +2280,1345 @@ namespace DexComanda
             return iRetorno;
         }
 
-        public static string ImpressaoCaixa(int iCaixa, string iTurno, DateTime dtInicio, DateTime dtFim)
+        public static void ImpressaoCaixa(string iTurno, DateTime dtInicio, DateTime dtFim)
         {
-            string iRetorno = ""; ;
+          
 
-            RelFechamentoCaixa report;
-            report = new RelFechamentoCaixa();
             try
             {
-
+                RelFechamentoCaixa report;
+                report = new RelFechamentoCaixa();
                 TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
                 TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
                 ConnectionInfo crConnectionInfo = new ConnectionInfo();
                 Tables CrTables;
+                string str = Directory.GetCurrentDirectory();
+                report.Load(str + @"\RelFechamentoCaixa.rpt");
+                crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
+                crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
+                crConnectionInfo.UserID = "dex";
+                crConnectionInfo.Password = "1234";
 
-                try
+                CrTables = report.Database.Tables;
+                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
                 {
-
-                    string str = Directory.GetCurrentDirectory();
-                    report.Load(Directory.GetCurrentDirectory() + @"\RelFechamentoCaixa.rpt");
-                    crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
-                    crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                    crConnectionInfo.UserID = "dex";
-                    crConnectionInfo.Password = "1234";
-
-                    CrTables = report.Database.Tables;
-                    foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
-                    {
-                        crtableLogoninfo = CrTable.LogOnInfo;
-                        crtableLogoninfo.ConnectionInfo = crConnectionInfo;
-                        CrTable.ApplyLogOnInfo(crtableLogoninfo);
-                    }
-
-                    report.SetParameterValue("@Caixa", iCaixa);
-                    report.SetParameterValue("@Turno", iTurno);
-                    report.SetParameterValue("@DataI", dtInicio);
-                    report.SetParameterValue("@DataF", dtFim);
-
-                    report.PrintToPrinter(1, false, 0, 0);
-
-
-
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
-                catch (Exception erro)
-                {
 
-                    MessageBox.Show("Erro na impressao :" + erro.Message);
-                }
-            }
-            finally
-            {
-                report.Dispose();
+                report.SetParameterValue("@Turno", iTurno);
+                report.PrintToPrinter(1, false, 0, 0);
+
+
 
             }
-            return iRetorno;
-        }
-        public static Boolean LicencaSomenteOnline(string iCNPJ)
-        {
-            Boolean iReturn = false;
-
-
-            return iReturn;
-        }
-        public static void LancarMovimentoCaixa(CaixaMovimento caixa)
-        {
-            caixa = new Models.CaixaMovimento()
+            catch (Exception erro)
             {
-                //CodCaixa = caixa.CodCaixa,
-                CodFormaPagamento = caixa.CodFormaPagamento,
-                Data = caixa.Data,
-                Historico = caixa.Historico,
-                NumeroDocumento = caixa.NumeroDocumento,
-                Tipo = caixa.Tipo,
-                Valor = caixa.Valor
-            };
-            conexao.Insert("spInserirMovimentoCaixa", caixa);
+
+                MessageBox.Show("Erro na impressao :" + erro.Message);
+            }
         }
-        public static void IniciaSistema()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Splashcreen());
+           
+       
+    public static Boolean LicencaSomenteOnline(string iCNPJ)
+    {
+        Boolean iReturn = false;
 
 
-        }
-        
-        public static bool CaixaAberto(DateTime iDataRegistro, int iNumero, string iTurno)
+        return iReturn;
+    }
+    public static void LancarMovimentoCaixa(CaixaMovimento caixa)
+    {
+        caixa = new Models.CaixaMovimento()
         {
-            bool iRetorno = false;
-            DataRow dRow;
-            DataSet dsCaixa;
-            conexao = new Conexao();
-            try
+            //CodCaixa = caixa.CodCaixa,
+            CodFormaPagamento = caixa.CodFormaPagamento,
+            Data = caixa.Data,
+            Historico = caixa.Historico,
+            NumeroDocumento = caixa.NumeroDocumento,
+            Tipo = caixa.Tipo,
+            Valor = caixa.Valor
+        };
+        conexao.Insert("spInserirMovimentoCaixa", caixa);
+    }
+    public static void IniciaSistema()
+    {
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        Application.Run(new Splashcreen());
+
+
+    }
+
+    public static bool CaixaAberto(DateTime iDataRegistro, int iNumero, string iTurno)
+    {
+        bool iRetorno = false;
+        DataRow dRow;
+        DataSet dsCaixa;
+        conexao = new Conexao();
+        try
+        {
+            if (conexao.CaixaAbertoAnterior(iTurno).Tables[0].Rows.Count > 0)
             {
-                    if (conexao.CaixaAbertoAnterior(iTurno).Tables[0].Rows.Count > 0)
+                MessageBox.Show("O Caixa do dia anterior ainda esta aberto, favor execute o fechamento", "[xSistemas] Aviso ");
+                frmCaixaFechamento frm = new frmCaixaFechamento();
+                frm.ShowDialog();
+                //CaixaAberto(iDataRegistro, iNumero, iTurno);
+            }
+            dsCaixa = conexao.RetornaCaixaPorTurno(iNumero, iTurno, DateTime.Parse(iDataRegistro.ToShortDateString()));
+            if (dsCaixa.Tables[0].Rows.Count > 0)
+            {
+                dRow = dsCaixa.Tables[0].Rows[0];
+                iRetorno = dRow.ItemArray.GetValue(7).ToString() == Convert.ToString(false);
+            }
+            else
+            {
+                if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus && Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai && Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday && Sessions.returnEmpresa.CNPJ != Bibliotecas.cCarangoVix)
                 {
-                    MessageBox.Show("O Caixa do dia anterior ainda esta aberto, favor execute o fechamento", "[xSistemas] Aviso ");
-                    frmCaixaFechamento frm = new frmCaixaFechamento();
-                    frm.ShowDialog();
-                    //CaixaAberto(iDataRegistro, iNumero, iTurno);
-                }
-                dsCaixa = conexao.RetornaCaixaPorTurno(iNumero, iTurno, DateTime.Parse(iDataRegistro.ToShortDateString()));
-                if (dsCaixa.Tables[0].Rows.Count > 0)
-                {
-                    dRow = dsCaixa.Tables[0].Rows[0];
-                    iRetorno = dRow.ItemArray.GetValue(7).ToString() == Convert.ToString(false);
-                }
-                else
-                {
-                    if (Sessions.returnEmpresa.CNPJ != Bibliotecas.cCasteloPlus && Sessions.returnEmpresa.CNPJ != Bibliotecas.cTopsAcai && Sessions.returnEmpresa.CNPJ != Bibliotecas.cElShaday && Sessions.returnEmpresa.CNPJ != Bibliotecas.cCarangoVix)
+                    if (ValidaPermissao(Sessions.retunrUsuario.Codigo, "AbreFechaCaixaSN"))
                     {
-                        if (ValidaPermissao(Sessions.retunrUsuario.Codigo, "AbreFechaCaixaSN"))
+                        if (MessageBoxQuestion("O Caixa não esta aberto sistema funcionará somente no modo consulta, deseja abrir agora?"))
                         {
-                            if (MessageBoxQuestion("O Caixa não esta aberto sistema funcionará somente no modo consulta, deseja abrir agora?"))
-                            {
-                                frmAberturaCaixa frm = new frmAberturaCaixa();
-                                frm.ShowDialog();
-                            }
-                            else
-                            {
-                                iRetorno = false;
-                            }
+                            frmAberturaCaixa frm = new frmAberturaCaixa();
+                            frm.ShowDialog();
+                        }
+                        else
+                        {
+                            iRetorno = false;
                         }
                     }
-                    else
-                    {
-                        iRetorno = true;
-                    }
-
-                    // MessageBox.Show("O Caixa não esta aberto, sistema funcionará somente no modo consulta");
-                }
-
-                //}
-                //else
-                //{
-                //    iRetorno = true;
-                //}
-            }
-            catch (Exception erro)
-            {
-                if (erro.Message.ToString().Equals("There is no row at position 0."))
-                {
-                    MessageBox.Show("Numero de caixa Inexiste , favor verificar");
-                    // Environment.Exit(0);
-
                 }
                 else
                 {
-                    MessageBox.Show(erro.Message, "[xSistemas] Algo de errado aconteceu");
+                    iRetorno = true;
                 }
 
+                // MessageBox.Show("O Caixa não esta aberto, sistema funcionará somente no modo consulta");
             }
 
-
-            return iRetorno;
+            //}
+            //else
+            //{
+            //    iRetorno = true;
+            //}
         }
-        public async static void BuscaPedido(int iCodPedido)
+        catch (Exception erro)
         {
-            try
+            if (erro.Message.ToString().Equals("There is no row at position 0."))
             {
-                DataSet ds;
-                conexao = new Conexao();
-                ds = conexao.SelectRegistroPorCodigo("Pedido", "spObterPedidoFinalizadoPorCodigo", iCodPedido);
-                if (ds != null)
-                {
-                    DataRow dRowPedido = ds.Tables[0].Rows[0];
-                    int CodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
-                    string FormaPagamento = dRowPedido.ItemArray.GetValue(5).ToString();
-                    string DescPedido = dRowPedido.ItemArray.GetValue(14).ToString();
-                    int NumMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
-                    string strTrocoPara = dRowPedido.ItemArray.GetValue(4).ToString();
-                    string strTotalPedido = dRowPedido.ItemArray.GetValue(3).ToString();
-                    string strTipoPedido = dRowPedido.ItemArray.GetValue(8).ToString();
-                    string strMesa = dRowPedido.ItemArray.GetValue(9).ToString();
-                    DateTime dtPedido = Convert.ToDateTime(dRowPedido.ItemArray.GetValue(7).ToString());
-                    string strTroco = "0,00";
+                MessageBox.Show("Numero de caixa Inexiste , favor verificar");
+                // Environment.Exit(0);
 
-                    if (strTrocoPara != "0,00" && strTrocoPara != "0")
-                    {
-                        strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
-                    }
-
-                    // Retorna a Taxa de Entrega do cadastro do Cliente
-                    decimal TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
-                    frmCadastrarPedido frm = new frmCadastrarPedido(true, DescPedido, NumMesa, strTroco, TaxaEntrega,
-                                                     false, dtPedido, iCodPedido, CodPessoa, strTrocoPara, FormaPagamento,
-                                                     strTipoPedido, strMesa, decimal.Parse(strTotalPedido));
-
-
-                    frm.Show();
-                    DesabilitaControls(frm);
-                }
             }
-            catch (Exception erro)
+            else
             {
-                MessageBox.Show(Bibliotecas.cException + erro.Message);
+                MessageBox.Show(erro.Message, "[xSistemas] Algo de errado aconteceu");
             }
 
         }
-        //Desativa todos controles da tela 
-        private static void DesabilitaControls(Control frm)
-        {
-            foreach (Control ctrControl in frm.Controls)
-            {
-                foreach (Control ctl in frm.Controls)
-                    if (ctl.Controls.Count > 0)
-                        DesabilitaControls(ctl);
-                    else
-                    {
-                        ctl.Enabled = false;
-                    }
-            }
 
-        }
-        public void ClearForm(System.Windows.Forms.Control parent)
-        {
-            foreach (System.Windows.Forms.Control ctrControl in parent.Controls)
-            {
-                //Loop through all controls
-                if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.TextBox)))
-                {
-                    //Check to see if it's a textbox
-                    ((System.Windows.Forms.TextBox)ctrControl).Text = string.Empty;
-                    //If it is then set the text to String.Empty (empty textbox)
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.Button)))
-                {
-                    ((System.Windows.Forms.Button)ctrControl).Enabled = false;
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RichTextBox)))
-                {
-                    //If its a RichTextBox clear the text
-                    ((System.Windows.Forms.RichTextBox)ctrControl).Text = string.Empty;
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.ComboBox)))
-                {
-                    //Next check if it's a dropdown list
-                    ((System.Windows.Forms.ComboBox)ctrControl).SelectedIndex = -1;
-                    //If it is then set its SelectedIndex to 0
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.CheckBox)))
-                {
-                    //Next uncheck all checkboxes
-                    ((System.Windows.Forms.CheckBox)ctrControl).Checked = false;
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))
-                {
-                    //Unselect all RadioButtons
-                    ((System.Windows.Forms.RadioButton)ctrControl).Checked = false;
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.PictureBox)))
-                {
-                    //Unselect all RadioButtons
-                    ((System.Windows.Forms.PictureBox)ctrControl).Image = null;
-                }
-                if (ctrControl.Controls.Count > 0)
-                {
-                    //Call itself to get all other controls in other containers
-                    ClearForm(ctrControl);
-                }
-            }
-        }
-        public static void RepetirUltimoPedido(int iCodCliente, int CodEndereco)
+
+        return iRetorno;
+    }
+    public async static void BuscaPedido(int iCodPedido)
+    {
+        try
         {
             DataSet ds;
-            int CodPessoa, CodPedido;
-            string FormaPagamento;
-            decimal TaxaEntrega;
-            // Retorna o Ultimo Pedido do Cliente
             conexao = new Conexao();
-            ds = conexao.SelectObterUltimoPedido(iCodCliente);
+            ds = conexao.SelectRegistroPorCodigo("Pedido", "spObterPedidoFinalizadoPorCodigo", iCodPedido);
             if (ds != null)
             {
-                DataRow Linhas = ds.Tables[0].Rows[0];
-                CodPedido = int.Parse(Linhas.ItemArray.GetValue(0).ToString());
-                CodPessoa = int.Parse(Linhas.ItemArray.GetValue(1).ToString());
-                FormaPagamento = Linhas.ItemArray.GetValue(3).ToString();
-                int iCodEndereco = ds.Tables[0].Rows[0].Field<int>("CodEndereco");
+                DataRow dRowPedido = ds.Tables[0].Rows[0];
+                int CodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
+                string FormaPagamento = dRowPedido.ItemArray.GetValue(5).ToString();
+                string DescPedido = dRowPedido.ItemArray.GetValue(14).ToString();
+                int NumMesa = int.Parse(dRowPedido.ItemArray.GetValue(12).ToString());
+                string strTrocoPara = dRowPedido.ItemArray.GetValue(4).ToString();
+                string strTotalPedido = dRowPedido.ItemArray.GetValue(3).ToString();
+                string strTipoPedido = dRowPedido.ItemArray.GetValue(8).ToString();
+                string strMesa = dRowPedido.ItemArray.GetValue(9).ToString();
+                DateTime dtPedido = Convert.ToDateTime(dRowPedido.ItemArray.GetValue(7).ToString());
+                string strTroco = "0,00";
+
+                if (strTrocoPara != "0,00" && strTrocoPara != "0")
+                {
+                    strTroco = Convert.ToString(decimal.Parse(strTrocoPara) - decimal.Parse(strTotalPedido));
+                }
 
                 // Retorna a Taxa de Entrega do cadastro do Cliente
-                TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
-                frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", 0, "0,00", TaxaEntrega, false,
-                                                                            DateTime.Now, CodPedido, CodPessoa,
-                                                                            "", FormaPagamento, "", "Balcao", 0.00M, 0, 0, "", iCodEndereco);
-                frmRepetePedido.ShowDialog();
+                decimal TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
+                frmCadastrarPedido frm = new frmCadastrarPedido(true, DescPedido, NumMesa, strTroco, TaxaEntrega,
+                                                 false, dtPedido, iCodPedido, CodPessoa, strTrocoPara, FormaPagamento,
+                                                 strTipoPedido, strMesa, decimal.Parse(strTotalPedido));
 
 
+                frm.Show();
+                DesabilitaControls(frm);
             }
-
-
+        }
+        catch (Exception erro)
+        {
+            MessageBox.Show(Bibliotecas.cException + erro.Message);
         }
 
-        public static void AtualizaMesa(int iCodigoMesa, int iStatus)
+    }
+    //Desativa todos controles da tela 
+    private static void DesabilitaControls(Control frm)
+    {
+        foreach (Control ctrControl in frm.Controls)
         {
-            try
-            {
-                conexao = new Conexao();
-                Mesas mesas = new Mesas()
+            foreach (Control ctl in frm.Controls)
+                if (ctl.Controls.Count > 0)
+                    DesabilitaControls(ctl);
+                else
                 {
-                    Codigo = iCodigoMesa,
-                    //NumeroMesa = iNumeroMesa,
-                    StatusMesa = iStatus
-                };
-                // conexao.Update("spAlteraStatusMesa", mesas);
-            }
-            catch (Exception erro)
-            {
+                    ctl.Enabled = false;
+                }
+        }
 
-                MessageBox.Show("Não foi possível alterar o Status da mesa " + erro.Message);
+    }
+    public void ClearForm(System.Windows.Forms.Control parent)
+    {
+        foreach (System.Windows.Forms.Control ctrControl in parent.Controls)
+        {
+            //Loop through all controls
+            if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.TextBox)))
+            {
+                //Check to see if it's a textbox
+                ((System.Windows.Forms.TextBox)ctrControl).Text = string.Empty;
+                //If it is then set the text to String.Empty (empty textbox)
             }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.Button)))
+            {
+                ((System.Windows.Forms.Button)ctrControl).Enabled = false;
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RichTextBox)))
+            {
+                //If its a RichTextBox clear the text
+                ((System.Windows.Forms.RichTextBox)ctrControl).Text = string.Empty;
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.ComboBox)))
+            {
+                //Next check if it's a dropdown list
+                ((System.Windows.Forms.ComboBox)ctrControl).SelectedIndex = -1;
+                //If it is then set its SelectedIndex to 0
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.CheckBox)))
+            {
+                //Next uncheck all checkboxes
+                ((System.Windows.Forms.CheckBox)ctrControl).Checked = false;
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))
+            {
+                //Unselect all RadioButtons
+                ((System.Windows.Forms.RadioButton)ctrControl).Checked = false;
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.PictureBox)))
+            {
+                //Unselect all RadioButtons
+                ((System.Windows.Forms.PictureBox)ctrControl).Image = null;
+            }
+            if (ctrControl.Controls.Count > 0)
+            {
+                //Call itself to get all other controls in other containers
+                ClearForm(ctrControl);
+            }
+        }
+    }
+    public static void RepetirUltimoPedido(int iCodCliente, int CodEndereco)
+    {
+        DataSet ds;
+        int CodPessoa, CodPedido;
+        string FormaPagamento;
+        decimal TaxaEntrega;
+        // Retorna o Ultimo Pedido do Cliente
+        conexao = new Conexao();
+        ds = conexao.SelectObterUltimoPedido(iCodCliente);
+        if (ds != null)
+        {
+            DataRow Linhas = ds.Tables[0].Rows[0];
+            CodPedido = int.Parse(Linhas.ItemArray.GetValue(0).ToString());
+            CodPessoa = int.Parse(Linhas.ItemArray.GetValue(1).ToString());
+            FormaPagamento = Linhas.ItemArray.GetValue(3).ToString();
+            int iCodEndereco = ds.Tables[0].Rows[0].Field<int>("CodEndereco");
+
+            // Retorna a Taxa de Entrega do cadastro do Cliente
+            TaxaEntrega = Utils.RetornaTaxaPorCliente(CodPessoa, 0);
+            frmCadastrarPedido frmRepetePedido = new frmCadastrarPedido(true, "0,00", 0, "0,00", TaxaEntrega, false,
+                                                                        DateTime.Now, CodPedido, CodPessoa,
+                                                                        "", FormaPagamento, "", "Balcao", 0.00M, 0, 0, "", iCodEndereco);
+            frmRepetePedido.ShowDialog();
+
 
         }
 
-        public static int RetornaCodigoMesa(string iNumMesa)
+
+    }
+
+    public static void AtualizaMesa(int iCodigoMesa, int iStatus)
+    {
+        try
         {
-            DataSet iDados;
-            int iRetorno = 0;
             conexao = new Conexao();
-            iDados = conexao.SelectRegistroPorCodigo("Mesas", "spObterCodigoMesa", 0, iNumMesa);
-            if (iDados != null)
+            Mesas mesas = new Mesas()
             {
-                DataRow iLinha = iDados.Tables[0].Rows[0];
-                iRetorno = int.Parse(iLinha.ItemArray.GetValue(0).ToString());
-            }
+                Codigo = iCodigoMesa,
+                //NumeroMesa = iNumeroMesa,
+                StatusMesa = iStatus
+            };
+            // conexao.Update("spAlteraStatusMesa", mesas);
+        }
+        catch (Exception erro)
+        {
 
-            return iRetorno;
-
+            MessageBox.Show("Não foi possível alterar o Status da mesa " + erro.Message);
         }
 
-        public static string RetornaNumeroMesa(int iCodigo)
+    }
+
+    public static int RetornaCodigoMesa(string iNumMesa)
+    {
+        DataSet iDados;
+        int iRetorno = 0;
+        conexao = new Conexao();
+        iDados = conexao.SelectRegistroPorCodigo("Mesas", "spObterCodigoMesa", 0, iNumMesa);
+        if (iDados != null)
         {
-            DataSet iDados;
-            string iRetorno = "";
-            conexao = new Conexao();
-            iDados = conexao.SelectRegistroPorCodigo("Mesas", "spObterNumeroMesa", iCodigo);
-            if (iDados != null)
-            {
-                DataRow iLinha = iDados.Tables[0].Rows[0];
-                iRetorno = iLinha.ItemArray.GetValue(0).ToString();
-            }
-
-            return iRetorno;
-
-        }
-        public static bool SoPermiteNumeros(KeyPressEventArgs Evento)
-        {
-            bool iRetorno = true;
-            Keys back = Keys.Back;
-            char[] whitespace = { '\x09', '\x20', '\xA0' };
-            if (!Char.IsNumber(Evento.KeyChar) && Evento.KeyChar != Convert.ToChar(back)
-                && Evento.KeyChar != Convert.ToChar(Keys.Enter) && Evento.KeyChar != Convert.ToChar(Keys.Escape))
-            {
-                Evento.Handled = true;
-                iRetorno = false;
-                MessageBox.Show("Esse campo só permite números", "Aviso Dex");
-
-            }
-            return iRetorno;
-
-        }
-        /// <summary>
-        /// Função para permitir a digitação apenas de Valores numericos no Evento KeypRess
-        /// </summary>
-        /// <param name="Evento"> Evento da tecla</param>
-        /// <returns></returns>
-        public static bool SoDecimais(KeyPressEventArgs Evento)
-        {
-            bool iRetorno = true;
-            Keys back = Keys.Back;
-            char[] whitespace = { '\x09', '\x20', '\xA0' };
-            if (!Char.IsNumber(Evento.KeyChar) && Evento.KeyChar != Convert.ToChar(back)
-                && Evento.KeyChar != Convert.ToChar(Keys.Enter) && Evento.KeyChar != Convert.ToChar(","))
-            {
-                Evento.Handled = true;
-                iRetorno = false;
-                MessageBox.Show("Esse campo só permite números", "Aviso Dex");
-
-            }
-            return iRetorno;
-
-        }
-        public static void ExibirDadosForm(Control parent, Boolean iExibir)
-        {
-            foreach (System.Windows.Forms.Control ctrControl in parent.Controls)
-            {
-                //Loop through all controls 
-                if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.TextBox)))
-                {
-                    //Check to see if it's a textbox 
-                    if (!iExibir && ((System.Windows.Forms.TextBox)ctrControl).Name != "txtNomeCliente")
-                    {
-                        ((System.Windows.Forms.TextBox)ctrControl).PasswordChar = 'X';
-
-                    }
-
-                    //If it is then set the text to String.Empty (empty textbox) 
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RichTextBox)))
-                {
-                    //If its a RichTextBox clear the text
-                    ((System.Windows.Forms.RichTextBox)ctrControl).Visible = iExibir;
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.ComboBox)))
-                {
-                    //Next check if it's a dropdown list 
-                    ((System.Windows.Forms.ComboBox)ctrControl).Visible = iExibir;
-                    //If it is then set its SelectedIndex to 0 
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.CheckBox)))
-                {
-                    //Next uncheck all checkboxes
-                    ((System.Windows.Forms.CheckBox)ctrControl).Visible = iExibir;
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))
-                {
-                    //Unselect all RadioButtons
-                    ((System.Windows.Forms.RadioButton)ctrControl).Visible = iExibir;
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.PictureBox)))
-                {
-                    ((System.Windows.Forms.PictureBox)ctrControl).Visible = iExibir;
-                    // (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))(
-                }
-            }
-        }
-        public static void LimpaForm(Control parent)
-        {
-            foreach (Control ctrControl in parent.Controls)
-            {
-                //Loop through all controls 
-                if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.TextBox)))
-                {
-                    //Check to see if it's a textbox 
-                    ((System.Windows.Forms.TextBox)ctrControl).Text = "";
-                    //If it is then set the text to String.Empty (empty textbox) 
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RichTextBox)))
-                {
-                    //If its a RichTextBox clear the text
-                    ((System.Windows.Forms.RichTextBox)ctrControl).Text = string.Empty;
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.ComboBox)))
-                {
-                    //If its a RichTextBox clear the text
-                    ((System.Windows.Forms.ComboBox)ctrControl).Text = "";
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.ComboBox)))
-                {
-                    //Next check if it's a dropdown list 
-                    ((System.Windows.Forms.ComboBox)ctrControl).SelectedIndex = -1;
-                    //If it is then set its SelectedIndex to 0 
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.CheckBox)))
-                {
-                    //Next uncheck all checkboxes
-                    ((System.Windows.Forms.CheckBox)ctrControl).Checked = false;
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))
-                {
-                    //Unselect all RadioButtons
-                    ((System.Windows.Forms.RadioButton)ctrControl).Checked = false;
-                }
-                else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.PictureBox)))
-                {
-                    ((System.Windows.Forms.PictureBox)ctrControl).Image = null;
-                    // (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))(
-                }
-
-                if (ctrControl.Controls.Count > 0)
-                {
-                    //Call itself to get all other controls in other containers
-                    LimpaForm(ctrControl);
-                }
-            }
+            DataRow iLinha = iDados.Tables[0].Rows[0];
+            iRetorno = int.Parse(iLinha.ItemArray.GetValue(0).ToString());
         }
 
-        public static string CriaArquivoTxt(string iNomeArquivo, string iText)
+        return iRetorno;
+
+    }
+
+    public static string RetornaNumeroMesa(int iCodigo)
+    {
+        DataSet iDados;
+        string iRetorno = "";
+        conexao = new Conexao();
+        iDados = conexao.SelectRegistroPorCodigo("Mesas", "spObterNumeroMesa", iCodigo);
+        if (iDados != null)
         {
-            try
+            DataRow iLinha = iDados.Tables[0].Rows[0];
+            iRetorno = iLinha.ItemArray.GetValue(0).ToString();
+        }
+
+        return iRetorno;
+
+    }
+    public static bool SoPermiteNumeros(KeyPressEventArgs Evento)
+    {
+        bool iRetorno = true;
+        Keys back = Keys.Back;
+        char[] whitespace = { '\x09', '\x20', '\xA0' };
+        if (!Char.IsNumber(Evento.KeyChar) && Evento.KeyChar != Convert.ToChar(back)
+            && Evento.KeyChar != Convert.ToChar(Keys.Enter) && Evento.KeyChar != Convert.ToChar(Keys.Escape))
+        {
+            Evento.Handled = true;
+            iRetorno = false;
+            MessageBox.Show("Esse campo só permite números", "Aviso Dex");
+
+        }
+        return iRetorno;
+
+    }
+    /// <summary>
+    /// Função para permitir a digitação apenas de Valores numericos no Evento KeypRess
+    /// </summary>
+    /// <param name="Evento"> Evento da tecla</param>
+    /// <returns></returns>
+    public static bool SoDecimais(KeyPressEventArgs Evento)
+    {
+        bool iRetorno = true;
+        Keys back = Keys.Back;
+        char[] whitespace = { '\x09', '\x20', '\xA0' };
+        if (!Char.IsNumber(Evento.KeyChar) && Evento.KeyChar != Convert.ToChar(back)
+            && Evento.KeyChar != Convert.ToChar(Keys.Enter) && Evento.KeyChar != Convert.ToChar(","))
+        {
+            Evento.Handled = true;
+            iRetorno = false;
+            MessageBox.Show("Esse campo só permite números", "Aviso Dex");
+
+        }
+        return iRetorno;
+
+    }
+    public static void ExibirDadosForm(Control parent, Boolean iExibir)
+    {
+        foreach (System.Windows.Forms.Control ctrControl in parent.Controls)
+        {
+            //Loop through all controls 
+            if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.TextBox)))
             {
-                temp = Directory.GetCurrentDirectory() + @"\" + iNomeArquivo + ".txt";
-
-                if (!System.IO.File.Exists(temp))
+                //Check to see if it's a textbox 
+                if (!iExibir && ((System.Windows.Forms.TextBox)ctrControl).Name != "txtNomeCliente")
                 {
-                    System.IO.File.Create(temp).Close();
-                    System.IO.File.AppendAllText(temp, iText);
+                    ((System.Windows.Forms.TextBox)ctrControl).PasswordChar = 'X';
 
+                }
+
+                //If it is then set the text to String.Empty (empty textbox) 
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RichTextBox)))
+            {
+                //If its a RichTextBox clear the text
+                ((System.Windows.Forms.RichTextBox)ctrControl).Visible = iExibir;
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.ComboBox)))
+            {
+                //Next check if it's a dropdown list 
+                ((System.Windows.Forms.ComboBox)ctrControl).Visible = iExibir;
+                //If it is then set its SelectedIndex to 0 
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.CheckBox)))
+            {
+                //Next uncheck all checkboxes
+                ((System.Windows.Forms.CheckBox)ctrControl).Visible = iExibir;
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))
+            {
+                //Unselect all RadioButtons
+                ((System.Windows.Forms.RadioButton)ctrControl).Visible = iExibir;
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.PictureBox)))
+            {
+                ((System.Windows.Forms.PictureBox)ctrControl).Visible = iExibir;
+                // (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))(
+            }
+        }
+    }
+    public static void LimpaForm(Control parent)
+    {
+        foreach (Control ctrControl in parent.Controls)
+        {
+            //Loop through all controls 
+            if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.TextBox)))
+            {
+                //Check to see if it's a textbox 
+                ((System.Windows.Forms.TextBox)ctrControl).Text = "";
+                //If it is then set the text to String.Empty (empty textbox) 
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RichTextBox)))
+            {
+                //If its a RichTextBox clear the text
+                ((System.Windows.Forms.RichTextBox)ctrControl).Text = string.Empty;
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.ComboBox)))
+            {
+                //If its a RichTextBox clear the text
+                ((System.Windows.Forms.ComboBox)ctrControl).Text = "";
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.ComboBox)))
+            {
+                //Next check if it's a dropdown list 
+                ((System.Windows.Forms.ComboBox)ctrControl).SelectedIndex = -1;
+                //If it is then set its SelectedIndex to 0 
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.CheckBox)))
+            {
+                //Next uncheck all checkboxes
+                ((System.Windows.Forms.CheckBox)ctrControl).Checked = false;
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))
+            {
+                //Unselect all RadioButtons
+                ((System.Windows.Forms.RadioButton)ctrControl).Checked = false;
+            }
+            else if (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.PictureBox)))
+            {
+                ((System.Windows.Forms.PictureBox)ctrControl).Image = null;
+                // (object.ReferenceEquals(ctrControl.GetType(), typeof(System.Windows.Forms.RadioButton)))(
+            }
+
+            if (ctrControl.Controls.Count > 0)
+            {
+                //Call itself to get all other controls in other containers
+                LimpaForm(ctrControl);
+            }
+        }
+    }
+
+    public static string CriaArquivoTxt(string iNomeArquivo, string iText)
+    {
+        try
+        {
+            temp = Directory.GetCurrentDirectory() + @"\" + iNomeArquivo + ".txt";
+
+            if (!System.IO.File.Exists(temp))
+            {
+                System.IO.File.Create(temp).Close();
+                System.IO.File.AppendAllText(temp, iText);
+
+            }
+            else
+            {
+
+                StreamReader tempDex = new StreamReader(temp);
+                ArrayList arrText = new ArrayList();
+                iText = tempDex.ReadLine();
+
+            }
+        }
+        catch (Exception Erro)
+        {
+
+            MessageBox.Show("Não foi possivel criar o arquivo em :" + temp + " favor verificar se possui privilégios no destino" +
+                            " Informar o erro ao suporte " + Erro.Message);
+        }
+        return iText;
+    }
+    //public static string[] RetornoTxt()
+    //{
+    //    string []linhas;
+    //    int cont = 0;
+    //    string Caminho;
+
+    //    try
+    //    {
+    //        Caminho = Directory.GetCurrentDirectory() +@"\ConfigSMS.txt";
+    //        System.IO.StreamReader file = new System.IO.StreamReader(Caminho);
+
+    //        while ((linhas = file.ReadLine()) != null)
+    //        {
+    //            Arquivo.Add(linhas);
+    //            cont++;
+    //        }
+
+    //        file.Close();
+    //    }
+    //    catch (Exception e)
+    //    {
+
+    //        MessageBox.Show("Arquivo para envio de SMS não encontrado em" + e.Message);
+    //    }
+
+    //    return Arquivo;
+
+    //}
+
+    public static void ImpressaoLPT1(string iArquivo, string iPorta)
+    {
+        try
+        {
+            string iCaminho = Directory.GetCurrentDirectory() + @"\" + "Impressao.txt";
+            System.IO.File.Copy(iCaminho, iPorta);
+            System.IO.File.Copy("#10" + "#17", iPorta);
+            System.IO.File.Delete(iCaminho);
+        }
+        catch (Exception E)
+        {
+
+            MessageBox.Show("Não foi possivel imprimir o Pedido, favor tentar novamente ou informar o erro ao suporter " + E.Message, "Aviso Dex");
+        }
+
+    }
+    public static void ImpressaoSerial(string iArquivo, string iPorta, int iVelocidade)
+    {
+        try
+        {
+            SerialPort _serialPort = new SerialPort(iPorta);
+            _serialPort.PortName = iPorta;
+            _serialPort.BaudRate = iVelocidade;
+            _serialPort.Parity = Parity.None;
+            _serialPort.DataBits = 8;
+            _serialPort.StopBits = StopBits.One;
+            _serialPort.ReadTimeout = 300;
+            //_serialPort.WriteTimeout = 500;
+            _serialPort.NewLine = System.Environment.NewLine;
+
+            _serialPort.Open();
+
+            if (_serialPort.IsOpen)
+            {
+                _serialPort.WriteLine(iArquivo);
+                _serialPort.Close();
+                Thread.Sleep(15);
+            }
+            else
+            {
+                MessageBox.Show("Porta " + iPorta + " Não aberta");
+            }
+
+        }
+        catch (Exception E)
+        {
+
+            MessageBox.Show("Não foi possivel imprimir o Pedido, favor tentar novamente ou informar o erro ao suporte " + E.Message, "Aviso Dex");
+        }
+
+
+
+    }
+    public string EnviaEmail(string iProvedor, string iFrom, string iPara, string iAssunto, string iMensagem, bool iSSL, string iUsuario, string ISenha)
+    {
+        System.Net.Mail.MailMessage Email = new System.Net.Mail.MailMessage();
+        Email.To.Add(iPara);
+        Email.Subject = iMensagem;
+        Email.From = new System.Net.Mail.MailAddress(iFrom);
+        Email.Body = iMensagem;
+
+        System.Net.Mail.SmtpClient smpt = new System.Net.Mail.SmtpClient();
+        smpt.Host = iProvedor;
+        smpt.EnableSsl = iSSL;
+
+        smpt.Credentials = new System.Net.NetworkCredential(iUsuario, ISenha);
+        smpt.Send(Email);
+
+        return smpt.ToString();
+    }
+    public static string EnvioSMS(string iPara, string iMessagem, string iFrom)
+    {
+        cliente = new SimpleSending("xsistemas", "IdJQcMl5DU");
+        mensagem = new SimpleMessage();
+        mensagem.To = iPara;
+        mensagem.From = iFrom;
+        mensagem.Message = iMessagem;
+        mensagem.Schedule = DateTime.Now.ToString();
+        List<String> retorno = cliente.send(mensagem);
+
+        return RetornoServ = retorno[0].ToString();
+    }
+    public static string EnviaSMS_LOCASMS(DataSet ds, string iMessagem, string iNomeCampanha, string iUser, string iSenha)
+    {
+        string strRetorno = "";
+
+        if (Utils.MessageBoxQuestion("O Sistema enviará SMS para " + ds.Tables[0].Rows.Count + " Clientes , deseja continuar?"))
+        {
+            List<ListaSms> newListaSMS = new List<ListaSms>();
+            ListaSms listaTransformada;
+            for (int i = 0; i < ds.Tables["Pessoa"].Rows.Count; i++)
+            {
+                DataRow dRow = ds.Tables["Pessoa"].Rows[i];
+                string iNumero = dRow.ItemArray.GetValue(0).ToString();
+                NomeCliente = dRow.ItemArray.GetValue(1).ToString();
+
+                listaTransformada = new ListaSms();
+                if (iNumero.Length == 8)
+                {
+                    listaTransformada.Numero = "279" + iNumero;
                 }
                 else
                 {
-
-                    StreamReader tempDex = new StreamReader(temp);
-                    ArrayList arrText = new ArrayList();
-                    iText = tempDex.ReadLine();
-
+                    listaTransformada.Numero = "27" + iNumero;
                 }
+                listaTransformada.Nome = NomeCliente;
+                newListaSMS.Add(listaTransformada);
             }
-            catch (Exception Erro)
-            {
-
-                MessageBox.Show("Não foi possivel criar o arquivo em :" + temp + " favor verificar se possui privilégios no destino" +
-                                " Informar o erro ao suporte " + Erro.Message);
-            }
-            return iText;
+            EnviaSMS_LOCASMS EnviarSMS = new EnviaSMS_LOCASMS();
+            EnviarSMS.EnviaSMSLista(newListaSMS, iUser, iSenha, iMessagem, iNomeCampanha);
         }
-        //public static string[] RetornoTxt()
-        //{
-        //    string []linhas;
-        //    int cont = 0;
-        //    string Caminho;
+        return strRetorno;
+    }
 
-        //    try
-        //    {
-        //        Caminho = Directory.GetCurrentDirectory() +@"\ConfigSMS.txt";
-        //        System.IO.StreamReader file = new System.IO.StreamReader(Caminho);
+    public static bool EHCelular(string iNumero)
+    {
+        bool IRETORNO = false;
 
-        //        while ((linhas = file.ReadLine()) != null)
-        //        {
-        //            Arquivo.Add(linhas);
-        //            cont++;
-        //        }
-
-        //        file.Close();
-        //    }
-        //    catch (Exception e)
-        //    {
-
-        //        MessageBox.Show("Arquivo para envio de SMS não encontrado em" + e.Message);
-        //    }
-
-        //    return Arquivo;
-
-        //}
-
-        public static void ImpressaoLPT1(string iArquivo, string iPorta)
+        if (iNumero.Substring(0, 1).Contains("8") || iNumero.Substring(0, 1).Contains("9"))
         {
-            try
-            {
-                string iCaminho = Directory.GetCurrentDirectory() + @"\" + "Impressao.txt";
-                System.IO.File.Copy(iCaminho, iPorta);
-                System.IO.File.Copy("#10" + "#17", iPorta);
-                System.IO.File.Delete(iCaminho);
-            }
-            catch (Exception E)
-            {
-
-                MessageBox.Show("Não foi possivel imprimir o Pedido, favor tentar novamente ou informar o erro ao suporter " + E.Message, "Aviso Dex");
-            }
-
+            IRETORNO = true;
         }
-        public static void ImpressaoSerial(string iArquivo, string iPorta, int iVelocidade)
+        return IRETORNO;
+    }
+    public static int ClientesSemPedidos(string iDataInicial, string iDataFinal, string iMessagem, string iPorta)
+    {
+        conexao = new Conexao();
+        DBExpertDataSet dbExpert = new DBExpertDataSet();
+        DataInicial = Convert.ToDateTime(iDataInicial + "/" + DateTime.Now.Year + " 00:00:00");
+        DataFinal = Convert.ToDateTime(iDataFinal + "/" + DateTime.Now.Year + " 23:59:59");
+
+        DataSet ListaClientes = conexao.SelectObterClientesSemPedido("spObterClientesSemPedido", DataInicial, DataFinal);
+        TotalSelecionado = ListaClientes.Tables["Pessoa"].Rows.Count;
+        DialogResult resultado = MessageBox.Show("O Sistema enviará SMS para " + TotalSelecionado + " Clientes , deseja continuar?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        if (resultado == DialogResult.Yes)
         {
-            try
+            foreach (DataRow item in ListaClientes.Tables["Pedido"].Rows)
             {
-                SerialPort _serialPort = new SerialPort(iPorta);
-                _serialPort.PortName = iPorta;
-                _serialPort.BaudRate = iVelocidade;
-                _serialPort.Parity = Parity.None;
-                _serialPort.DataBits = 8;
-                _serialPort.StopBits = StopBits.One;
-                _serialPort.ReadTimeout = 300;
-                //_serialPort.WriteTimeout = 500;
-                _serialPort.NewLine = System.Environment.NewLine;
+                string Telefone = item["Telefone"].ToString();
+                NomeCliente = item["Nome"].ToString();
 
-                _serialPort.Open();
-
-                if (_serialPort.IsOpen)
+                if (Telefone.Length == 8)
                 {
-                    _serialPort.WriteLine(iArquivo);
-                    _serialPort.Close();
-                    Thread.Sleep(15);
+                    EnvioSMSModen.EnviaSMS(9600, iPorta, "+55279" + Telefone, AdicionaNomeCliente(iMessagem));
                 }
                 else
                 {
-                    MessageBox.Show("Porta " + iPorta + " Não aberta");
-                }
-
-            }
-            catch (Exception E)
-            {
-
-                MessageBox.Show("Não foi possivel imprimir o Pedido, favor tentar novamente ou informar o erro ao suporte " + E.Message, "Aviso Dex");
-            }
-
-
-
-        }
-        public string EnviaEmail(string iProvedor, string iFrom, string iPara, string iAssunto, string iMensagem, bool iSSL, string iUsuario, string ISenha)
-        {
-            System.Net.Mail.MailMessage Email = new System.Net.Mail.MailMessage();
-            Email.To.Add(iPara);
-            Email.Subject = iMensagem;
-            Email.From = new System.Net.Mail.MailAddress(iFrom);
-            Email.Body = iMensagem;
-
-            System.Net.Mail.SmtpClient smpt = new System.Net.Mail.SmtpClient();
-            smpt.Host = iProvedor;
-            smpt.EnableSsl = iSSL;
-
-            smpt.Credentials = new System.Net.NetworkCredential(iUsuario, ISenha);
-            smpt.Send(Email);
-
-            return smpt.ToString();
-        }
-        public static string EnvioSMS(string iPara, string iMessagem, string iFrom)
-        {
-            cliente = new SimpleSending("xsistemas", "IdJQcMl5DU");
-            mensagem = new SimpleMessage();
-            mensagem.To = iPara;
-            mensagem.From = iFrom;
-            mensagem.Message = iMessagem;
-            mensagem.Schedule = DateTime.Now.ToString();
-            List<String> retorno = cliente.send(mensagem);
-
-            return RetornoServ = retorno[0].ToString();
-        }
-        public static string EnviaSMS_LOCASMS(DataSet ds, string iMessagem, string iNomeCampanha, string iUser, string iSenha)
-        {
-            string strRetorno = "";
-
-            if (Utils.MessageBoxQuestion("O Sistema enviará SMS para " + ds.Tables[0].Rows.Count + " Clientes , deseja continuar?"))
-            {
-                List<ListaSms> newListaSMS = new List<ListaSms>();
-                ListaSms listaTransformada;
-                for (int i = 0; i < ds.Tables["Pessoa"].Rows.Count; i++)
-                {
-                    DataRow dRow = ds.Tables["Pessoa"].Rows[i];
-                    string iNumero = dRow.ItemArray.GetValue(0).ToString();
-                    NomeCliente = dRow.ItemArray.GetValue(1).ToString();
-
-                    listaTransformada = new ListaSms();
-                    if (iNumero.Length == 8)
-                    {
-                        listaTransformada.Numero = "279" + iNumero;
-                    }
-                    else
-                    {
-                        listaTransformada.Numero = "27" + iNumero;
-                    }
-                    listaTransformada.Nome = NomeCliente;
-                    newListaSMS.Add(listaTransformada);
-                }
-                EnviaSMS_LOCASMS EnviarSMS = new EnviaSMS_LOCASMS();
-                EnviarSMS.EnviaSMSLista(newListaSMS, iUser, iSenha, iMessagem, iNomeCampanha);
-            }
-            return strRetorno;
-        }
-
-        public static bool EHCelular(string iNumero)
-        {
-            bool IRETORNO = false;
-
-            if (iNumero.Substring(0, 1).Contains("8") || iNumero.Substring(0, 1).Contains("9"))
-            {
-                IRETORNO = true;
-            }
-            return IRETORNO;
-        }
-        public static int ClientesSemPedidos(string iDataInicial, string iDataFinal, string iMessagem, string iPorta)
-        {
-            conexao = new Conexao();
-            DBExpertDataSet dbExpert = new DBExpertDataSet();
-            DataInicial = Convert.ToDateTime(iDataInicial + "/" + DateTime.Now.Year + " 00:00:00");
-            DataFinal = Convert.ToDateTime(iDataFinal + "/" + DateTime.Now.Year + " 23:59:59");
-
-            DataSet ListaClientes = conexao.SelectObterClientesSemPedido("spObterClientesSemPedido", DataInicial, DataFinal);
-            TotalSelecionado = ListaClientes.Tables["Pessoa"].Rows.Count;
-            DialogResult resultado = MessageBox.Show("O Sistema enviará SMS para " + TotalSelecionado + " Clientes , deseja continuar?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (resultado == DialogResult.Yes)
-            {
-                foreach (DataRow item in ListaClientes.Tables["Pedido"].Rows)
-                {
-                    string Telefone = item["Telefone"].ToString();
-                    NomeCliente = item["Nome"].ToString();
-
-                    if (Telefone.Length == 8)
-                    {
-                        EnvioSMSModen.EnviaSMS(9600, iPorta, "+55279" + Telefone, AdicionaNomeCliente(iMessagem));
-                    }
-                    else
-                    {
-                        EnvioSMSModen.EnviaSMS(9600, iPorta, "+5527" + Telefone, AdicionaNomeCliente(iMessagem));
-                    }
+                    EnvioSMSModen.EnviaSMS(9600, iPorta, "+5527" + Telefone, AdicionaNomeCliente(iMessagem));
                 }
             }
-
-            return TotalSelecionado;
-
-        }
-        private static string AdicionaNomeCliente(string iMensagem)
-        {
-            if (iMensagem.Contains("@Cliente"))
-            {
-                iMensagem = iMensagem.Replace("@Cliente", NomeCliente);
-            }
-            return iMensagem;
         }
 
-        public static string EncryptMd5(string _login, string _senha)
+        return TotalSelecionado;
+
+    }
+    private static string AdicionaNomeCliente(string iMensagem)
+    {
+        if (iMensagem.Contains("@Cliente"))
         {
-            MD5 md5Hasher = MD5.Create();
-            byte[] valorCriptografado = md5Hasher.ComputeHash(Encoding.Default.GetBytes(_login + "_" + _senha));
-            StringBuilder strBuilder = new StringBuilder();
+            iMensagem = iMensagem.Replace("@Cliente", NomeCliente);
+        }
+        return iMensagem;
+    }
 
-            for (int i = 0; i < valorCriptografado.Length; i++)
-            {
-                strBuilder.Append(valorCriptografado[i].ToString("x2"));
-            }
+    public static string EncryptMd5(string _login, string _senha)
+    {
+        MD5 md5Hasher = MD5.Create();
+        byte[] valorCriptografado = md5Hasher.ComputeHash(Encoding.Default.GetBytes(_login + "_" + _senha));
+        StringBuilder strBuilder = new StringBuilder();
 
+        for (int i = 0; i < valorCriptografado.Length; i++)
+        {
+            strBuilder.Append(valorCriptografado[i].ToString("x2"));
+        }
+
+        return strBuilder.ToString().ToUpper();
+    }
+    public static string CriptografarArquivo(string iArquivo, Boolean iUUPER = true)
+    {
+        MD5 md5Hasher = MD5.Create();
+        byte[] valorCriptografado = md5Hasher.ComputeHash(Encoding.Default.GetBytes(iArquivo));
+        StringBuilder strBuilder = new StringBuilder();
+
+        for (int i = 0; i < valorCriptografado.Length; i++)
+        {
+            strBuilder.Append(valorCriptografado[i].ToString("x2"));
+        }
+        if (iUUPER)
+        {
             return strBuilder.ToString().ToUpper();
         }
-        public static string CriptografarArquivo(string iArquivo, Boolean iUUPER = true)
+        else
         {
-            MD5 md5Hasher = MD5.Create();
-            byte[] valorCriptografado = md5Hasher.ComputeHash(Encoding.Default.GetBytes(iArquivo));
-            StringBuilder strBuilder = new StringBuilder();
-
-            for (int i = 0; i < valorCriptografado.Length; i++)
-            {
-                strBuilder.Append(valorCriptografado[i].ToString("x2"));
-            }
-            if (iUUPER)
-            {
-                return strBuilder.ToString().ToUpper();
-            }
-            else
-            {
-                return strBuilder.ToString();
-            }
-
-        }
-        public static string CriptoGrafarOnExecute(string iNomeMaquina, string iCNPJ)
-        {
-            MD5 md5Hasher = MD5.Create();
-            byte[] valorCriptografado = md5Hasher.ComputeHash(Encoding.Default.GetBytes(iCNPJ));
-            StringBuilder strBuilder = new StringBuilder();
-
-            for (int i = 0; i < valorCriptografado.Length; i++)
-            {
-                strBuilder.Append(valorCriptografado[i].ToString("x2"));
-            }
-
-            return strBuilder.ToString().ToUpper();
+            return strBuilder.ToString();
         }
 
-        public static void Restart()
-        {
-            MessageBox.Show("A aplicação será reiniciada.");
+    }
+    public static string CriptoGrafarOnExecute(string iNomeMaquina, string iCNPJ)
+    {
+        MD5 md5Hasher = MD5.Create();
+        byte[] valorCriptografado = md5Hasher.ComputeHash(Encoding.Default.GetBytes(iCNPJ));
+        StringBuilder strBuilder = new StringBuilder();
 
-            // Application.Exit();
-            //Kill();
-            Application.Restart();
+        for (int i = 0; i < valorCriptografado.Length; i++)
+        {
+            strBuilder.Append(valorCriptografado[i].ToString("x2"));
         }
-        public static void GeraHistorico(DateTime iData, int iCodPessoa, decimal iValor, int iCodUsuario, string iHistorico, char iTipo, string iFormaPagamento)
+
+        return strBuilder.ToString().ToUpper();
+    }
+
+    public static void Restart()
+    {
+        MessageBox.Show("A aplicação será reiniciada.");
+
+        // Application.Exit();
+        //Kill();
+        Application.Restart();
+    }
+    public static void GeraHistorico(DateTime iData, int iCodPessoa, decimal iValor, int iCodUsuario, string iHistorico, char iTipo, string iFormaPagamento)
+    {
+        Conexao con = new Conexao();
+
+        DataSet dsFormaPagamento = con.SelectObterFormaPagamentoPorNOme(iFormaPagamento, "FormaPagamento");
+        if (dsFormaPagamento.Tables[0].Rows.Count > 0)
         {
-            Conexao con = new Conexao();
+            DataRow dRowFpagamento = dsFormaPagamento.Tables[0].Rows[0];
 
-            DataSet dsFormaPagamento = con.SelectObterFormaPagamentoPorNOme(iFormaPagamento, "FormaPagamento");
-            if (dsFormaPagamento.Tables[0].Rows.Count > 0)
+            if (Convert.ToBoolean(dRowFpagamento.ItemArray.GetValue(3).ToString()) == true)
             {
-                DataRow dRowFpagamento = dsFormaPagamento.Tables[0].Rows[0];
-
-                if (Convert.ToBoolean(dRowFpagamento.ItemArray.GetValue(3).ToString()) == true)
+                HistoricoPessoa hist = new Models.HistoricoPessoa()
                 {
-                    HistoricoPessoa hist = new Models.HistoricoPessoa()
-                    {
-                        CodPessoa = iCodPessoa,
-                        CodUsuario = iCodUsuario,
-                        Data = iData,
-                        Historico = iHistorico,
-                        Tipo = iTipo,
-                        Valor = -iValor
-                    };
-                    con.Insert("spAdicionaHistorico", hist);
-                }
-            }
-
-        }
-
-        public static DataSet PopularGrid(string table, DataGridView gridView, string iCamposConsulta)
-        {
-            Conexao con = new Conexao();
-            DataSet Dados = null;
-            Dados = con.SelectMontaGrid(table, iCamposConsulta);
-
-            gridView.DataSource = null;
-            gridView.AutoGenerateColumns = true;
-            gridView.DataSource = Dados;
-            gridView.DataMember = table;
-            con.Close();
-
-            return Dados;
-        }
-        public static DataSet PopularGridPedido(string iCamposConsulta)
-        {
-            Conexao con = new Conexao();
-            return con.SelectAll("Pedido", "", iCamposConsulta);
-
-            //gridView.DataSource = null;
-            //gridView.AutoGenerateColumns = true;
-            //gridView.DataSource = Dados;
-            //gridView.DataMember = "Pedido";
-
-        }
-        public static DataSet PopulaGrid_Novo(string table, DataGridView gridView, string iParametrosConsulta, bool iAtivo = true, string iFiltrosAd = "", int iRowIndex = 0)
-        {
-            Conexao con = new Conexao();
-            DataSet Dados = null;
-            Dados = con.SelectMontaGrid(table, iParametrosConsulta, iAtivo, iFiltrosAd);
-
-            if (gridView != null)
-            {
-                gridView.DataSource = null;
-                gridView.AutoGenerateColumns = true;
-                gridView.DataSource = Dados;
-                gridView.DataMember = table;
-            }
-
-
-            con.Close();
-
-            return Dados;
-        }
-
-        public static DataSet PopularGrid_SP(string table, DataGridView gridView, string spName, int CodRegistro = -1)
-        {
-            Conexao con = new Conexao();
-            DataSet Dados = null;
-            if (CodRegistro == -1)
-            {
-                Dados = con.SelectAll(table, spName);
-            }
-
-            else
-            {
-                Dados = con.SelectRegistroPorCodigo(table, spName, CodRegistro);
-            }
-
-
-            gridView.DataSource = null;
-            gridView.AutoGenerateColumns = true;
-            gridView.DataSource = Dados;
-            gridView.DataMember = table;
-            con.Close();
-
-            return Dados;
-        }
-
-
-        public static DataSet PopularGrid(string table, DataGridView gridView)
-        {
-            Conexao con = new Conexao();
-            DataSet Dados = con.SelectAll(table, "spObter" + table);
-
-            gridView.DataSource = null;
-            gridView.AutoGenerateColumns = true;
-            gridView.DataSource = Dados;
-            gridView.DataMember = table;
-            con.Close();
-
-            return Dados;
-        }
-
-        public static void Kill()
-        {
-            System.Diagnostics.Process[] process = System.Diagnostics.Process.GetProcessesByName("DexComanda");
-            // Before starting the new process make sure no other MyProcessName is running.
-            foreach (System.Diagnostics.Process p in process)
-            {
-                p.Kill();
-            }
-
-
-        }
-
-        public static void ScripAtualizar(string caminho, string script, string ConectionString)
-        {
-            //Pega o caminho completo
-            string fullPath = Directory.GetDirectoryRoot(caminho);
-
-            //
-            string arquivo = caminho + "\\" + script;
-
-            FileStream fileToRead = File.Open(arquivo, FileMode.Open);
-            string linhas = "";
-            string line;
-            StreamReader sr = new StreamReader(fileToRead);
-
-            while ((line = sr.ReadLine()) != null)
-            {
-                linhas += line + "\r\n";
-            }
-
-            SqlConnection SqlConnection = new SqlConnection(ConectionString);
-            SqlCommand SqlCommand = new SqlCommand();
-            SqlCommand.Connection = SqlConnection;
-            try
-            {
-                SqlCommand.CommandText = linhas;
-
-                SqlConnection.Open();
-                SqlCommand.ExecuteNonQuery();
-                MessageBox.Show("Banco de Dados Atualizado com sucesso");
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Ocorreu um erro ao executar a atualizacao favor entrar em contato com suporte  e informar a Mensagem a seguir:" +
-                e.Message);
-                throw;
-            }
-
-        }
-        public static Boolean ValidaData(DateTime DataInicio, DateTime dataFim)
-        {
-            DataInicio = DataInicio.AddMonths(1);
-            if (DataInicio >= dataFim)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-        public static void CriarUsuario(string iConexao, string iNomeUser, string iSenha)
-        {
-            try
-            {
-                //Conexao.connectionString = iConexao;
-                //Conexao conexao = new Conexao();
-                SqlConnection conn = new SqlConnection(iConexao);
-                conn.Open();
-                string iSqlConsulta = " use [master] go "+ "\n"+
-                                         " create login dex with password='1234' "+ "\n"+
-                                         " grant control server to dex";
-
-                SqlCommand command = new SqlCommand(iSqlConsulta, conn);
-                command.CommandType = CommandType.Text;
-                command.ExecuteNonQuery();
-               
-                //if (command.ExecuteNonQueryAsync().Result >0)
-                //{
-                //    MessageBox.Show("Usuario dex criado");
-                //}
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(Bibliotecas.cException + e.Message);
-
-            }
-
-        }
-        public static string EnderecoMAC()
-        {
-            return (from nic in NetworkInterface.GetAllNetworkInterfaces()
-                    where nic.OperationalStatus == OperationalStatus.Up
-                    select nic.GetPhysicalAddress().ToString()
-                         ).FirstOrDefault();
-
-        }
-
-        public string Registro()
-        {
-            string lStrResultado = "";
-            Microsoft.Win32.RegistryKey regKey;
-            regKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\DexSistemas\\", true);
-            lStrResultado = regKey.GetValue("Validade").ToString();
-            return lStrResultado;
-        }
-        public static void ExcluiRegistro()
-        {
-            RegistryKey RegistroKey;
-            try
-            {
-                // RegistroKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\DexSistemas\\", true);
-                //RegistroKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\DexSistemas\\", true); //<--over here!
-                //reg.DeleteSubKey("{" + RegistroKey.GetValue().ToString() + "}");
-                //if (RegistroKey.ValueCount>0)
-                //{
-                //    RegistroKey.DeleteSubKey("RegistroDex");
-                //    RegistroKey.DeleteSubKey("Validade");
-                //    RegistroKey.Close();
-                //}
-
-            }
-            catch (Exception er)
-            {
-
-                MessageBox.Show(er.Message);
-            }
-        }
-
-        public static string GravaDataLiberacao(string iDataLiberacao)
-        {
-            string iRetorno;
-            RegistryKey RegistroKey;
-            try
-            {
-                RegistroKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\DexSistemas\\", true);
-
-
-                if (RegistroKey.GetValue("Validade").ToString() != "")
-                {
-                    iRetorno = RegistroKey.GetValue("Validade").ToString();
-                }
-                else
-                {
-                    RegistroKey = Registry.LocalMachine.OpenSubKey("Software", true);
-                    RegistroKey = RegistroKey.CreateSubKey("DexSistemas");
-                    RegistroKey.SetValue("RegistroDex", CriptografarArquivo(iDataLiberacao));
-
-                    RegistroKey.Close();
-                    iRetorno = RegistroKey.GetValue("Validade").ToString();
-                }
-                return iRetorno;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
-
-        public static Boolean GravaRegistro(string iArquivo)
-        {
-            bool Retorno = false;
-            try
-            {
-                // Cria Registro Inicial 
-
-                string lArquivoRegistro = CriptografarArquivo(iArquivo);
-                RegistryKey RegistroKey = Registry.LocalMachine.OpenSubKey("Software", false);
-                RegistroKey = RegistroKey.CreateSubKey("xSistemas",RegistryKeyPermissionCheck.ReadSubTree);
-                RegistroKey.SetValue("xDelivery", lArquivoRegistro);
-                RegistroKey.Close();
-
-                Retorno = true;
-
-            }
-            catch (Exception deuruim)
-            {
-
-                MessageBox.Show("Não foi possivel verificar a existencia do Registro entre em contato com suporte " + deuruim.Message);
-            }
-
-            return Retorno;
-        }
-
-        public static string RetornaNomePc()
-        {
-            string strNome = "";
-            try
-            {
-                strNome= System.Net.Dns.GetHostName();
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(erro.Message); 
-            }
-            return strNome;
-        }
-        public static bool LeArquivoRegistro()
-        {
-            string iRetorno, iRegistroCritografado, strDataLimiteRegistro;
-            bool OK = false;
-            try
-            {
-                RegistryKey RegistroKey = Registry.LocalMachine.OpenSubKey("Software", true);
-                iRetorno = RegistroKey.OpenSubKey("xSistemas", true).GetValue("xDelivery", true).ToString().ToString();
-                strDataLimiteRegistro = RegistroKey.OpenSubKey("xSistemas", true).GetValue("Expiracao", true).ToString().ToString();
-                iRegistroCritografado = CriptografarArquivo(RetornaNomePc() + Sessions.returnEmpresa.CNPJ + Sessions.returnEmpresa.Cidade + Sessions.returnEmpresa.Nome);
-                OK = iRegistroCritografado == iRetorno;
-            }
-            catch (Exception erro)
-            {
-
-                MessageBox.Show("Erro de falta de memória , tente executar como administrador :" + erro.Message, "[xSistemas]");
-            }
-
-            return OK;
-        }
-
-        public static int ContaRegistro(string iRegistroMD5)
-        {
-            int iRetorno = 0;
-            Conexao con;
-            int iContRegistro;
-            DataRow dRow;
-            con = new Conexao();
-
-            dRow = con.SelectView("vwObterXSistemas", "XSistemas").Tables["XSistemas"].Rows[0];
-            iRetorno = int.Parse(dRow.ItemArray.GetValue(0).ToString());
-
-            iContRegistro = con.SelectRegistroPorData("XSistemas", "spObterDados", DateTime.Now.Date).Tables[0].Rows.Count;
-
-            if ((iRetorno < 15) && (iContRegistro == 0))
-            {
-                AtualizaData data = new Models.AtualizaData()
-                {
-                    Data = DateTime.Now.Date,
-                    RegistroMD5 = CriptografarArquivo(iRegistroMD5 + DateTime.Now.ToString())
+                    CodPessoa = iCodPessoa,
+                    CodUsuario = iCodUsuario,
+                    Data = iData,
+                    Historico = iHistorico,
+                    Tipo = iTipo,
+                    Valor = -iValor
                 };
-                con.Insert("spInsereRegistro", data);
+                con.Insert("spAdicionaHistorico", hist);
             }
-
-            return iRetorno;
-
         }
 
-        public static string GeraRetornaContraSenha(string iSenha)
+    }
+
+    public static DataSet PopularGrid(string table, DataGridView gridView, string iCamposConsulta)
+    {
+        Conexao con = new Conexao();
+        DataSet Dados = null;
+        Dados = con.SelectMontaGrid(table, iCamposConsulta);
+
+        gridView.DataSource = null;
+        gridView.AutoGenerateColumns = true;
+        gridView.DataSource = Dados;
+        gridView.DataMember = table;
+        con.Close();
+
+        return Dados;
+    }
+    public static DataSet PopularGridPedido(string iCamposConsulta)
+    {
+        Conexao con = new Conexao();
+        return con.SelectAll("Pedido", "", iCamposConsulta);
+
+        //gridView.DataSource = null;
+        //gridView.AutoGenerateColumns = true;
+        //gridView.DataSource = Dados;
+        //gridView.DataMember = "Pedido";
+
+    }
+    public static DataSet PopulaGrid_Novo(string table, DataGridView gridView, string iParametrosConsulta, bool iAtivo = true, string iFiltrosAd = "", int iRowIndex = 0)
+    {
+        Conexao con = new Conexao();
+        DataSet Dados = null;
+        Dados = con.SelectMontaGrid(table, iParametrosConsulta, iAtivo, iFiltrosAd);
+
+        if (gridView != null)
         {
-            string iContraSenha = "";
-            string iPrimeiraPosicao, iSegundaPosicao, iUltimaPosicao = null;
-
-            try
-            {
-                iPrimeiraPosicao = iSenha.Substring(1, 1) + 1;
-                iSegundaPosicao = iSenha.Substring(2, 1) + 2;
-                iUltimaPosicao = iSenha.Substring(13, 1) + 13;
-
-                // iContraSenha = CriptografarArquivo(iSenha + iPrimeiraPosicao + iSegundaPosicao + iUltimaPosicao);
-                iContraSenha = CriptografarArquivo(iSenha);
-            }
-            catch (Exception er)
-            {
-
-                MessageBox.Show(Bibliotecas.cException + er.Message);
-            }
-            return iContraSenha;
+            gridView.DataSource = null;
+            gridView.AutoGenerateColumns = true;
+            gridView.DataSource = Dados;
+            gridView.DataMember = table;
         }
 
-        public static string ServicoSQLATIVO()
+
+        con.Close();
+
+        return Dados;
+    }
+
+    public static DataSet PopularGrid_SP(string table, DataGridView gridView, string spName, int CodRegistro = -1)
+    {
+        Conexao con = new Conexao();
+        DataSet Dados = null;
+        if (CodRegistro == -1)
         {
-            string status = "";
-            try
-            {
-                ServiceController MeuServico = new ServiceController("MSSQLSERVER", ListaServidoresSQL());
-                status = MeuServico.Status.ToString();
-                if (status.Equals("Stopped") || (status.Equals("Paused")))
-                {
-                    try
-                    {
-                        MeuServico.Start();
-                        MeuServico.WaitForStatus(ServiceControllerStatus.Running);
-                    }
-                    catch (Exception ErroServico)
-                    {
-
-                        MessageBox.Show("Não foi possivel iniciar o serviço do SQLSERVER pois:" + ErroServico.Message);
-                    }
-
-                }
-            }
-            catch (Exception Erro1)
-            {
-
-                MessageBox.Show(Erro1.Message);
-            }
-
-            return status;
+            Dados = con.SelectAll(table, spName);
         }
 
-        public static void CriaUsuario(string iConexao)
+        else
         {
-            string iScript = "create login dex with password='1234' CREATE USER [digital] FOR LOGIN dex WITH DEFAULT_SCHEMA=[dbo]";
-            SqlConnection sqlConection = new SqlConnection(iConexao);
-            SqlCommand sqlCommand = new SqlCommand(iScript);
-            sqlConection.Open();
-            sqlCommand.ExecuteNonQuery();
-        }
-        public static Boolean CriaLicencaFree(string iCnpj, string iNome, string iEmail, string iTelefone)
-        {
-            DateTime DataLib = DateTime.Now;
-            string iDataLiberacao = string.Format(DataLib.ToString("yyyyMMddHHmmss"));
-
-            DateTime DataExp = DataLib.AddMonths(1);
-            string iDataExpiracao = string.Format(DataExp.ToString("yyyyMMddHHmmss"));
-
-            string NomePC = RetornaNomePc();
-            string MacPc = EnderecoMAC();
-            Boolean iCriouLicenca = false;
-            bool iAtivo = true;
-            try
-            {
-                MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
-                MysqlConnection.Open();
-                if (MysqlConnection.State == ConnectionState.Open)
-                {
-                    // MessageBox.Show("Abriu Conexão");
-                    MysqlCommand = new MySqlCommand("insert into  Licenca (CNPJ,DataLiberacao,DataExpiracao,AtivoSn,Nome,Telefone,Email,NomePC,MACPC) values " +
-                                                    "('" + iCnpj + "','" + iDataLiberacao + "','" + iDataExpiracao + "'," + iAtivo + ",'" + iNome + "','" +
-                                                    iTelefone + "','" + iEmail + "','" + NomePC + "','" + MacPc + "')", MysqlConnection);
-                    MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
-                    MysqlDataAdapter.InsertCommand = MysqlCommand;
-                    if (MysqlCommand.ExecuteNonQuery() == 1)
-                    {
-                        iCriouLicenca = true;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Erro DexCommanda" + "Não foi possivel conectar ao servidor para geração de Licença Free,#13" +
-                                    "verifique sua coneão com a internet /Firewall/Anti-Virus - e tente novamente");
-                }
-                MysqlConnection.Close();
-            }
-            catch (Exception e)
-            {
-
-                MessageBox.Show("Conexão com Servidor de Licença" + e.Message, "DexAViso");
-            }
-            return iCriouLicenca;
-        }
-        public static Boolean JaUsouFree(string iCnpj, string iMACPC, string iNomePC)
-        {
-            Boolean lEncontrou = false;
-            MySqlConnection iConexao;
-            mRetornoWS = new DataSet();
-            string lConsulta = "select * from Licenca where CNPJ='" + iCnpj + "' and MACPC='" + iMACPC + "' and NomePC='" + iNomePC + "'";
-            try
-            {
-                iConexao = new MySqlConnection(LinkServidor);
-                iConexao.Open();
-                if (iConexao.State == ConnectionState.Open)
-                {
-                    MysqlCommand = new MySqlCommand(lConsulta, iConexao);
-                    MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
-                    MysqlCommand.ExecuteNonQuery();
-                    MysqlDataAdapter.Fill(mRetornoWS, "Licenca");
-                    if (mRetornoWS.Tables["Licenca"].Rows.Count > 0)
-                    {
-                        lEncontrou = true;
-                    }
-
-                }
-            }
-            catch (Exception erro)
-            {
-
-                MessageBox.Show(erro.Message);
-            }
-            return lEncontrou;
+            Dados = con.SelectRegistroPorCodigo(table, spName, CodRegistro);
         }
 
-        public static DataSet DadosLicenca(string iCnpj, string iMACPC, string iNomePC)
+
+        gridView.DataSource = null;
+        gridView.AutoGenerateColumns = true;
+        gridView.DataSource = Dados;
+        gridView.DataMember = table;
+        con.Close();
+
+        return Dados;
+    }
+
+
+    public static DataSet PopularGrid(string table, DataGridView gridView)
+    {
+        Conexao con = new Conexao();
+        DataSet Dados = con.SelectAll(table, "spObter" + table);
+
+        gridView.DataSource = null;
+        gridView.AutoGenerateColumns = true;
+        gridView.DataSource = Dados;
+        gridView.DataMember = table;
+        con.Close();
+
+        return Dados;
+    }
+
+    public static void Kill()
+    {
+        System.Diagnostics.Process[] process = System.Diagnostics.Process.GetProcessesByName("DexComanda");
+        // Before starting the new process make sure no other MyProcessName is running.
+        foreach (System.Diagnostics.Process p in process)
         {
-            MySqlConnection iConexao;
-            mRetornoWS = new DataSet();
-            string lConsulta = "select * from Licenca where CNPJ='" + iCnpj + "' and MACPC='" + iMACPC + "' and NomePC='" + iNomePC + "'";
-            try
-            {
-                iConexao = new MySqlConnection(LinkServidor);
-                 iConexao.OpenAsync();
-                if (iConexao.State == ConnectionState.Open)
-                {
-                    MysqlCommand = new MySqlCommand(lConsulta, iConexao);
-                    MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
-                    MysqlCommand.ExecuteNonQuery();
-                    MysqlDataAdapter.Fill(mRetornoWS, "Licenca");
-
-                }
-            }
-            catch (Exception erro)
-            {
-
-                MessageBox.Show(Bibliotecas.cException + erro.Message);
-            }
-
-            return mRetornoWS;
-
-        }
-        /// <summary>
-        ///  Retorna a taxa de entrega do cliente
-        /// </summary>
-        /// <param name="iCodPessoa">
-        /// Código do cliente</param>
-        /// <param name="iCodEndereco">
-        /// Codigo do Endereco</param>
-        /// <returns></returns>
-        public static decimal RetornaTaxaPorCliente(int iCodPessoa, int iCodEndereco)
-        {
-            decimal iRetorno = 0.00M;
-            DataTable Regiao;
-            if (iCodEndereco == 0)
-            {
-                Regiao = conexao.SelectRegistroPorCodigo("RegiaoEntrega", "spObterTaxaPorCliente", iCodPessoa).Tables["RegiaoEntrega"];
-            }
-            else
-            {
-                Regiao = conexao.SelectRegistroPorCodigo("RegiaoEntrega", "spObterTaxaPorClienteEndereco", iCodEndereco).Tables["RegiaoEntrega"];
-            }
-
-            if (Regiao.Rows.Count > 0)
-            {
-                iRetorno = decimal.Parse(Regiao.Rows[0]["TaxaServico"].ToString());
-            }
-
-            return iRetorno;
+            p.Kill();
         }
 
-        public static void ControlaEventos(string iTipoEvento, string LocalEvento, int CodUser = 1)
+
+    }
+
+    public static void ScripAtualizar(string caminho, string script, string ConectionString)
+    {
+        //Pega o caminho completo
+        string fullPath = Directory.GetDirectoryRoot(caminho);
+
+        //
+        string arquivo = caminho + "\\" + script;
+
+        FileStream fileToRead = File.Open(arquivo, FileMode.Open);
+        string linhas = "";
+        string line;
+        StreamReader sr = new StreamReader(fileToRead);
+
+        while ((line = sr.ReadLine()) != null)
         {
-
-            try
-            {
-                EventosSistema eventos = new EventosSistema()
-                {
-                    CodUsuario = CodUser,
-                    TipoEvento = iTipoEvento,
-                    DataEvento = DateTime.Now,
-                    LocalEvento = LocalEvento,
-
-                };
-                conexao.Insert("spAdicionarEvento", eventos);
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(Bibliotecas.cException + erro.Message);
-            }
-
+            linhas += line + "\r\n";
         }
-        public static void SalvarConfiguracao(string iChave, string iValue)
+
+        SqlConnection SqlConnection = new SqlConnection(ConectionString);
+        SqlCommand SqlCommand = new SqlCommand();
+        SqlCommand.Connection = SqlConnection;
+        try
         {
-            try
-            {
-                System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            SqlCommand.CommandText = linhas;
 
-                // Add an Application Setting.
-                config.AppSettings.Settings.Remove(iChave);
-                config.AppSettings.Settings.Add(iChave, iValue);
+            SqlConnection.Open();
+            SqlCommand.ExecuteNonQuery();
+            MessageBox.Show("Banco de Dados Atualizado com sucesso");
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show("Ocorreu um erro ao executar a atualizacao favor entrar em contato com suporte  e informar a Mensagem a seguir:" +
+            e.Message);
+            throw;
+        }
 
-                // Save the configuration file.
-                //config.Save(ConfigurationSaveMode.Full);
-                string meuProcesso = Process.GetCurrentProcess().ProcessName;
-                config.Save(ConfigurationSaveMode.Full);
+    }
+    public static Boolean ValidaData(DateTime DataInicio, DateTime dataFim)
+    {
+        DataInicio = DataInicio.AddMonths(1);
+        if (DataInicio >= dataFim)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 
-                // Force a reload of a changed section.
-                //    ConfigurationManager.RefreshSection("appSettings");
+    }
+    public static void CriarUsuario(string iConexao)
+    {
+        try
+        {
+            //Conexao.connectionString = iConexao;
+            //Conexao conexao = new Conexao();
+            SqlConnection conn = new SqlConnection(iConexao);
+            conn.Open();
+                string iSqlConsulta = "If not Exists (select loginname from master.dbo.syslogins"+
+                                      "  where name = 'dex' and dbname = 'master') "+
+                                      "  begin "+
+                                      " use[master]"+
+                                      " create login dex with password = '1234'"+
+                                      " grant control server to dex"+
+                                      " end";
 
-            }
-            catch (Exception erro)
-            {
+            SqlCommand command = new SqlCommand(iSqlConsulta, conn);
+            command.CommandType = CommandType.Text;
+            command.ExecuteNonQuery();
 
-                MessageBox.Show("Não foi possível carregar o arquivo de configuração " + erro.Message);
-            }
+            //if (command.ExecuteNonQueryAsync().Result >0)
+            //{
+            //    MessageBox.Show("Usuario dex criado");
+            //}
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show(Bibliotecas.cException + e.Message);
 
         }
 
     }
+    public static string EnderecoMAC()
+    {
+        return (from nic in NetworkInterface.GetAllNetworkInterfaces()
+                where nic.OperationalStatus == OperationalStatus.Up
+                select nic.GetPhysicalAddress().ToString()
+                     ).FirstOrDefault();
+
+    }
+
+    public string Registro()
+    {
+        string lStrResultado = "";
+        Microsoft.Win32.RegistryKey regKey;
+        regKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\DexSistemas\\", true);
+        lStrResultado = regKey.GetValue("Validade").ToString();
+        return lStrResultado;
+    }
+    public static void ExcluiRegistro()
+    {
+        RegistryKey RegistroKey;
+        try
+        {
+            // RegistroKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\DexSistemas\\", true);
+            //RegistroKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\DexSistemas\\", true); //<--over here!
+            //reg.DeleteSubKey("{" + RegistroKey.GetValue().ToString() + "}");
+            //if (RegistroKey.ValueCount>0)
+            //{
+            //    RegistroKey.DeleteSubKey("RegistroDex");
+            //    RegistroKey.DeleteSubKey("Validade");
+            //    RegistroKey.Close();
+            //}
+
+        }
+        catch (Exception er)
+        {
+
+            MessageBox.Show(er.Message);
+        }
+    }
+
+    public static string GravaDataLiberacao(string iDataLiberacao)
+    {
+        string iRetorno;
+        RegistryKey RegistroKey;
+        try
+        {
+            RegistroKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\DexSistemas\\", true);
+
+
+            if (RegistroKey.GetValue("Validade").ToString() != "")
+            {
+                iRetorno = RegistroKey.GetValue("Validade").ToString();
+            }
+            else
+            {
+                RegistroKey = Registry.LocalMachine.OpenSubKey("Software", true);
+                RegistroKey = RegistroKey.CreateSubKey("DexSistemas");
+                RegistroKey.SetValue("RegistroDex", CriptografarArquivo(iDataLiberacao));
+
+                RegistroKey.Close();
+                iRetorno = RegistroKey.GetValue("Validade").ToString();
+            }
+            return iRetorno;
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+
+    }
+
+    public static Boolean GravaRegistro(string iArquivo)
+    {
+        bool Retorno = false;
+        try
+        {
+            // Cria Registro Inicial 
+
+            string lArquivoRegistro = CriptografarArquivo(iArquivo);
+            RegistryKey RegistroKey = Registry.LocalMachine.OpenSubKey("Software", false);
+            RegistroKey = RegistroKey.CreateSubKey("xSistemas", RegistryKeyPermissionCheck.ReadSubTree);
+            RegistroKey.SetValue("xDelivery", lArquivoRegistro);
+            RegistroKey.Close();
+
+            Retorno = true;
+
+        }
+        catch (Exception deuruim)
+        {
+
+            MessageBox.Show("Não foi possivel verificar a existencia do Registro entre em contato com suporte " + deuruim.Message);
+        }
+
+        return Retorno;
+    }
+
+    public static string RetornaNomePc()
+    {
+        string strNome = "";
+        try
+        {
+            strNome = System.Net.Dns.GetHostName();
+        }
+        catch (Exception erro)
+        {
+            MessageBox.Show(erro.Message);
+        }
+        return strNome;
+    }
+    public static bool LeArquivoRegistro()
+    {
+        string iRetorno, iRegistroCritografado, strDataLimiteRegistro;
+        bool OK = false;
+        try
+        {
+            RegistryKey RegistroKey = Registry.LocalMachine.OpenSubKey("Software", true);
+            iRetorno = RegistroKey.OpenSubKey("xSistemas", true).GetValue("xDelivery", true).ToString().ToString();
+            strDataLimiteRegistro = RegistroKey.OpenSubKey("xSistemas", true).GetValue("Expiracao", true).ToString().ToString();
+            iRegistroCritografado = CriptografarArquivo(RetornaNomePc() + Sessions.returnEmpresa.CNPJ + Sessions.returnEmpresa.Cidade + Sessions.returnEmpresa.Nome);
+            OK = iRegistroCritografado == iRetorno;
+        }
+        catch (Exception erro)
+        {
+
+            MessageBox.Show("Erro de falta de memória , tente executar como administrador :" + erro.Message, "[xSistemas]");
+        }
+
+        return OK;
+    }
+
+    public static int ContaRegistro(string iRegistroMD5)
+    {
+        int iRetorno = 0;
+        Conexao con;
+        int iContRegistro;
+        DataRow dRow;
+        con = new Conexao();
+
+        dRow = con.SelectView("vwObterXSistemas", "XSistemas").Tables["XSistemas"].Rows[0];
+        iRetorno = int.Parse(dRow.ItemArray.GetValue(0).ToString());
+
+        iContRegistro = con.SelectRegistroPorData("XSistemas", "spObterDados", DateTime.Now.Date).Tables[0].Rows.Count;
+
+        if ((iRetorno < 15) && (iContRegistro == 0))
+        {
+            AtualizaData data = new Models.AtualizaData()
+            {
+                Data = DateTime.Now.Date,
+                RegistroMD5 = CriptografarArquivo(iRegistroMD5 + DateTime.Now.ToString())
+            };
+            con.Insert("spInsereRegistro", data);
+        }
+
+        return iRetorno;
+
+    }
+
+    public static string GeraRetornaContraSenha(string iSenha)
+    {
+        string iContraSenha = "";
+        string iPrimeiraPosicao, iSegundaPosicao, iUltimaPosicao = null;
+
+        try
+        {
+            iPrimeiraPosicao = iSenha.Substring(1, 1) + 1;
+            iSegundaPosicao = iSenha.Substring(2, 1) + 2;
+            iUltimaPosicao = iSenha.Substring(13, 1) + 13;
+
+            // iContraSenha = CriptografarArquivo(iSenha + iPrimeiraPosicao + iSegundaPosicao + iUltimaPosicao);
+            iContraSenha = CriptografarArquivo(iSenha);
+        }
+        catch (Exception er)
+        {
+
+            MessageBox.Show(Bibliotecas.cException + er.Message);
+        }
+        return iContraSenha;
+    }
+
+    public static string ServicoSQLATIVO()
+    {
+        string status = "";
+        try
+        {
+            ServiceController MeuServico = new ServiceController("MSSQLSERVER", ListaServidoresSQL());
+            status = MeuServico.Status.ToString();
+            if (status.Equals("Stopped") || (status.Equals("Paused")))
+            {
+                try
+                {
+                    MeuServico.Start();
+                    MeuServico.WaitForStatus(ServiceControllerStatus.Running);
+                }
+                catch (Exception ErroServico)
+                {
+
+                    MessageBox.Show("Não foi possivel iniciar o serviço do SQLSERVER pois:" + ErroServico.Message);
+                }
+
+            }
+        }
+        catch (Exception Erro1)
+        {
+
+            MessageBox.Show(Erro1.Message);
+        }
+
+        return status;
+    }
+
+    public static void CriaUsuario(string iConexao)
+    {
+        string iScript = "create login dex with password='1234' CREATE USER [digital] FOR LOGIN dex WITH DEFAULT_SCHEMA=[dbo]";
+        SqlConnection sqlConection = new SqlConnection(iConexao);
+        SqlCommand sqlCommand = new SqlCommand(iScript);
+        sqlConection.Open();
+        sqlCommand.ExecuteNonQuery();
+    }
+    public static Boolean CriaLicencaFree(string iCnpj, string iNome, string iEmail, string iTelefone)
+    {
+        DateTime DataLib = DateTime.Now;
+        string iDataLiberacao = string.Format(DataLib.ToString("yyyyMMddHHmmss"));
+
+        DateTime DataExp = DataLib.AddMonths(1);
+        string iDataExpiracao = string.Format(DataExp.ToString("yyyyMMddHHmmss"));
+
+        string NomePC = RetornaNomePc();
+        string MacPc = EnderecoMAC();
+        Boolean iCriouLicenca = false;
+        bool iAtivo = true;
+        try
+        {
+            MysqlConnection = new MySqlConnection("Server=mysql.expertsistemas.com.br;Port=3306;Database=exper194_lazaro;Uid=exper194_lazaro;Pwd=@@3412064;");
+            MysqlConnection.Open();
+            if (MysqlConnection.State == ConnectionState.Open)
+            {
+                // MessageBox.Show("Abriu Conexão");
+                MysqlCommand = new MySqlCommand("insert into  Licenca (CNPJ,DataLiberacao,DataExpiracao,AtivoSn,Nome,Telefone,Email,NomePC,MACPC) values " +
+                                                "('" + iCnpj + "','" + iDataLiberacao + "','" + iDataExpiracao + "'," + iAtivo + ",'" + iNome + "','" +
+                                                iTelefone + "','" + iEmail + "','" + NomePC + "','" + MacPc + "')", MysqlConnection);
+                MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
+                MysqlDataAdapter.InsertCommand = MysqlCommand;
+                if (MysqlCommand.ExecuteNonQuery() == 1)
+                {
+                    iCriouLicenca = true;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Erro DexCommanda" + "Não foi possivel conectar ao servidor para geração de Licença Free,#13" +
+                                "verifique sua coneão com a internet /Firewall/Anti-Virus - e tente novamente");
+            }
+            MysqlConnection.Close();
+        }
+        catch (Exception e)
+        {
+
+            MessageBox.Show("Conexão com Servidor de Licença" + e.Message, "DexAViso");
+        }
+        return iCriouLicenca;
+    }
+    public static Boolean JaUsouFree(string iCnpj, string iMACPC, string iNomePC)
+    {
+        Boolean lEncontrou = false;
+        MySqlConnection iConexao;
+        mRetornoWS = new DataSet();
+        string lConsulta = "select * from Licenca where CNPJ='" + iCnpj + "' and MACPC='" + iMACPC + "' and NomePC='" + iNomePC + "'";
+        try
+        {
+            iConexao = new MySqlConnection(LinkServidor);
+            iConexao.Open();
+            if (iConexao.State == ConnectionState.Open)
+            {
+                MysqlCommand = new MySqlCommand(lConsulta, iConexao);
+                MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
+                MysqlCommand.ExecuteNonQuery();
+                MysqlDataAdapter.Fill(mRetornoWS, "Licenca");
+                if (mRetornoWS.Tables["Licenca"].Rows.Count > 0)
+                {
+                    lEncontrou = true;
+                }
+
+            }
+        }
+        catch (Exception erro)
+        {
+
+            MessageBox.Show(erro.Message);
+        }
+        return lEncontrou;
+    }
+
+    public static DataSet DadosLicenca(string iCnpj, string iMACPC, string iNomePC)
+    {
+        MySqlConnection iConexao;
+        mRetornoWS = new DataSet();
+        string lConsulta = "select * from Licenca where CNPJ='" + iCnpj + "' and MACPC='" + iMACPC + "' and NomePC='" + iNomePC + "'";
+        try
+        {
+            iConexao = new MySqlConnection(LinkServidor);
+            iConexao.OpenAsync();
+            if (iConexao.State == ConnectionState.Open)
+            {
+                MysqlCommand = new MySqlCommand(lConsulta, iConexao);
+                MysqlDataAdapter = new MySqlDataAdapter(MysqlCommand);
+                MysqlCommand.ExecuteNonQuery();
+                MysqlDataAdapter.Fill(mRetornoWS, "Licenca");
+
+            }
+        }
+        catch (Exception erro)
+        {
+
+            MessageBox.Show(Bibliotecas.cException + erro.Message);
+        }
+
+        return mRetornoWS;
+
+    }
+    /// <summary>
+    ///  Retorna a taxa de entrega do cliente
+    /// </summary>
+    /// <param name="iCodPessoa">
+    /// Código do cliente</param>
+    /// <param name="iCodEndereco">
+    /// Codigo do Endereco</param>
+    /// <returns></returns>
+    public static decimal RetornaTaxaPorCliente(int iCodPessoa, int iCodEndereco)
+    {
+        decimal iRetorno = 0.00M;
+        DataTable Regiao;
+        if (iCodEndereco == 0)
+        {
+            Regiao = conexao.SelectRegistroPorCodigo("RegiaoEntrega", "spObterTaxaPorCliente", iCodPessoa).Tables["RegiaoEntrega"];
+        }
+        else
+        {
+            Regiao = conexao.SelectRegistroPorCodigo("RegiaoEntrega", "spObterTaxaPorClienteEndereco", iCodEndereco).Tables["RegiaoEntrega"];
+        }
+
+        if (Regiao.Rows.Count > 0)
+        {
+            iRetorno = decimal.Parse(Regiao.Rows[0]["TaxaServico"].ToString());
+        }
+
+        return iRetorno;
+    }
+
+    public static void ControlaEventos(string iTipoEvento, string LocalEvento, int CodUser = 1)
+    {
+
+        try
+        {
+            EventosSistema eventos = new EventosSistema()
+            {
+                CodUsuario = CodUser,
+                TipoEvento = iTipoEvento,
+                DataEvento = DateTime.Now,
+                LocalEvento = LocalEvento,
+
+            };
+            conexao.Insert("spAdicionarEvento", eventos);
+        }
+        catch (Exception erro)
+        {
+            MessageBox.Show(Bibliotecas.cException + erro.Message);
+        }
+
+    }
+    public static void SalvarConfiguracao(string iChave, string iValue)
+    {
+        try
+        {
+            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            // Add an Application Setting.
+            config.AppSettings.Settings.Remove(iChave);
+            config.AppSettings.Settings.Add(iChave, iValue);
+
+            // Save the configuration file.
+            //config.Save(ConfigurationSaveMode.Full);
+            string meuProcesso = Process.GetCurrentProcess().ProcessName;
+            config.Save(ConfigurationSaveMode.Full);
+
+            // Force a reload of a changed section.
+            //    ConfigurationManager.RefreshSection("appSettings");
+
+        }
+        catch (Exception erro)
+        {
+
+            MessageBox.Show("Não foi possível carregar o arquivo de configuração " + erro.Message);
+        }
+
+    }
+
+}
 
 }

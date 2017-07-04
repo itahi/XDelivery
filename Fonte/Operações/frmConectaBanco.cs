@@ -77,7 +77,11 @@ namespace DexComanda.Operações
                 Conexao con = new Conexao();
                 if (con.OpenConection(cbxServidor.Text, cbxListaBanco.Text))
                 {
-                    Utils.Restart();
+                    frmConfiguracoes frm = new frmConfiguracoes();
+                    frm.txtBanco.Text = cbxListaBanco.Text;
+                    frm.txtServidor.Text = cbxServidor.Text;
+                    frm.Show();
+                    //Utils.Restart();
                 }
 
             }

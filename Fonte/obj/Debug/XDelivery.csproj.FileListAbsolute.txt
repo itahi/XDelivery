@@ -147,9 +147,7 @@ C:\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmReporVendasPorV
 C:\xDelivery\Fonte\obj\Debug\XDelivery.csproj.GenerateResource.Cache
 C:\xDelivery\Fonte\obj\Debug\DexComanda.exe.manifest
 C:\xDelivery\Fonte\obj\Debug\DexComanda.application
-D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.rpt
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Caixa\RelCaixaHistorico.rpt
-D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.cs
 D:\#Projetos\xDelivery\Fonte\bin\Debug\Relatorios\Caixa\RelCaixaHistorico.cs
 D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.exe.config
 D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.exe.manifest

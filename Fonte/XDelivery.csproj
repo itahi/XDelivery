@@ -577,6 +577,12 @@
       <DependentUpon>frmCadastrarStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="PromocoesFidelidade.cs" />
+    <Compile Include="Relatorios\Caixa\RelFechamentoCaixa.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelFechamentoCaixa.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Caixa\RelFechamentoCaixaCompleto.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -974,13 +980,6 @@
     <Compile Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportCancelamentos.Designer.cs">
       <DependentUpon>frmReportCancelamentos.cs</DependentUpon>
     </Compile>
-    <Compile Include="Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RelFechamentoCaixa.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Relatorios\Caixa\RelCaixaHistorico.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1242,6 +1241,10 @@
     <EmbeddedResource Include="Operações\Pedido\frmCadastrarStatus.resx">
       <DependentUpon>frmCadastrarStatus.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Caixa\RelFechamentoCaixa.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelFechamentoCaixa.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Caixa\RelFechamentoCaixaCompleto.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelFechamentoCaixaCompleto.cs</LastGenOutput>
@@ -1389,11 +1392,6 @@
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\frmReportItensVendidos.resx">
       <DependentUpon>frmReportItensVendidos.cs</DependentUpon>
     </EmbeddedResource>
-    <Content Include="Relatorios\Fechamentos\Novos\Impressao Termica\RelFechamentoCaixa.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelFechamentoCaixa.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\Impressao Termica\frmReportCancelamentos.resx">
       <DependentUpon>frmReportCancelamentos.cs</DependentUpon>
     </EmbeddedResource>

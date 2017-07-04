@@ -357,9 +357,9 @@ namespace DexComanda
                                     " max(PO.Preco + P.PrecoProduto) as PrecoOpcao" +
                                     " from" +
                                     " Produto_Opcao PO" +
-                                    " left join Produto P on P.Codigo = PO.CodProduto or P.CodigoPersonalizado=PO.CodProduto" +
+                                    " left join Produto P on P.Codigo = PO.CodProduto " +
                                     " left join Opcao O on O.Codigo = PO.CodOpcao and O.Tipo = 1" +
-                                    " where ( CodProduto in (@Cod1,@Cod2,@Cod3,@Cod4) or P.CodigoPersonalizado in (@Cod1,@Cod2,@Cod3,@Cod4) AND p.CodigoPersonalizado>0   )and CodOpcao =@CodOpcao";
+                                    " where ( CodProduto in (@Cod1,@Cod2,@Cod3,@Cod4) ) and CodOpcao =@CodOpcao";
             }
             //Retorna o preço médio entre os produtos
             else
@@ -371,7 +371,7 @@ namespace DexComanda
                                      " left" +
                                      " join Produto P on P.Codigo = PO.CodProduto" +
                                      " left join Opcao O on O.Codigo = PO.CodOpcao and O.Tipo = 1" +
-                                     " where ( CodProduto in (@Cod1,@Cod2,@Cod3,@Cod4) or P.CodigoPersonalizado in (@Cod1,@Cod2,@Cod3,@Cod4) AND p.CodigoPersonalizado>0   )and CodOpcao =@CodOpcao";
+                                     " where ( CodProduto in (@Cod1,@Cod2,@Cod3,@Cod4)) and CodOpcao =@CodOpcao";
             }
 
 
@@ -783,8 +783,8 @@ namespace DexComanda
                     MessageBox.Show("Não foi possivel conectar ao Banco:"+banco + Bibliotecas.cException);
                     return false;
                 }
-                MessageBox.Show("Conectado ao banco de dados.");
-              //  Utils.CriarUsuario(connectionString, "dex", "1234");
+                MessageBox.Show("Conectado ao banco de dados "+ banco);
+                Utils.CriarUsuario(connectionString);
                 var temp = Directory.GetCurrentDirectory() + @"\ConnectionString_DexComanda.txt";
 
                 if (!System.IO.File.Exists(temp))
@@ -795,7 +795,7 @@ namespace DexComanda
             }
             catch (Exception msg)
             {
-                MessageBox.Show(msg.Message + "Não pode ser aberta um conexão com o banco de dados.");
+                MessageBox.Show(msg.Message + " Não pode ser aberta um conexão com o banco de dados.");
             }
 
             return conn.State == ConnectionState.Open;

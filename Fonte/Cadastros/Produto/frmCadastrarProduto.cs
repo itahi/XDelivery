@@ -356,7 +356,6 @@ namespace DexComanda
                 {
                     intPontosFidelidadeTroca = int.Parse(txtPontosTroca.Text);
                 }
-
                 produto.PontoFidelidadeTroca = intPontosFidelidadeTroca;
                 produto.PontoFidelidadeVenda = intPontosFidelidadeVenda;
                 if (txtPrecoCusto.Text != "")

@@ -35,7 +35,6 @@ namespace DexComanda.Operações
                 DateTime dtFimFiltro = Convert.ToDateTime(dtFim.Value.ToShortDateString() + " " + horaFim.Value.ToShortTimeString());
                 if (!rbEntradaSaida.Checked)
                 {
-                    string iRetorno = ""; ;
                     RelCaixaHistorico report;
                     report = new RelCaixaHistorico();
                     TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
@@ -59,7 +58,6 @@ namespace DexComanda.Operações
                     }
 
                     report.SetParameterValue("@Turno", cbxTurno.Text);
-                    //report.SetParameterValue("@CodCaixa", cbxNumCaixa.Text);
                     report.SetParameterValue("@DataI", dtInicioFiltro);
                     report.SetParameterValue("@DataF", dtFimFiltro);
                     report.SetParameterValue("@EntradaSaida", OperacaoMarcada());
@@ -68,7 +66,6 @@ namespace DexComanda.Operações
                 }
                 else
                 {
-                    string iRetorno = ""; ;
                     RelCaixaHistorico2 report;
                     report = new RelCaixaHistorico2();
                     TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();

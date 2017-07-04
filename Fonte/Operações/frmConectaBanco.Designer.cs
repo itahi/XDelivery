@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.cbxListaBanco = new System.Windows.Forms.ComboBox();
+            this.cbxServidor = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.btnConectarAoBanco = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
-            this.cbxServidor = new System.Windows.Forms.ComboBox();
-            this.cbxListaBanco = new System.Windows.Forms.ComboBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,12 +52,31 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Conexão Banco de Dados";
             // 
+            // cbxListaBanco
+            // 
+            this.cbxListaBanco.FormattingEnabled = true;
+            this.cbxListaBanco.Location = new System.Drawing.Point(43, 109);
+            this.cbxListaBanco.Name = "cbxListaBanco";
+            this.cbxListaBanco.Size = new System.Drawing.Size(235, 21);
+            this.cbxListaBanco.TabIndex = 26;
+            this.cbxListaBanco.DropDown += new System.EventHandler(this.cbxListaBanco_DropDown);
+            // 
+            // cbxServidor
+            // 
+            this.cbxServidor.FormattingEnabled = true;
+            this.cbxServidor.Location = new System.Drawing.Point(43, 51);
+            this.cbxServidor.Name = "cbxServidor";
+            this.cbxServidor.Size = new System.Drawing.Size(235, 21);
+            this.cbxServidor.TabIndex = 25;
+            this.cbxServidor.DropDown += new System.EventHandler(this.ListaServidores);
+            // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(135, 30);
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(116, 28);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(49, 13);
+            this.label12.Size = new System.Drawing.Size(80, 20);
             this.label12.TabIndex = 21;
             this.label12.Text = "Servidor:";
             // 
@@ -74,37 +93,26 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(135, 83);
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(116, 81);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(41, 13);
+            this.label13.Size = new System.Drawing.Size(65, 20);
             this.label13.TabIndex = 23;
             this.label13.Text = "Banco:";
-            // 
-            // cbxServidor
-            // 
-            this.cbxServidor.FormattingEnabled = true;
-            this.cbxServidor.Location = new System.Drawing.Point(43, 51);
-            this.cbxServidor.Name = "cbxServidor";
-            this.cbxServidor.Size = new System.Drawing.Size(235, 21);
-            this.cbxServidor.TabIndex = 25;
-            this.cbxServidor.DropDown += new System.EventHandler(this.ListaServidores);
-            // 
-            // cbxListaBanco
-            // 
-            this.cbxListaBanco.FormattingEnabled = true;
-            this.cbxListaBanco.Location = new System.Drawing.Point(43, 109);
-            this.cbxListaBanco.Name = "cbxListaBanco";
-            this.cbxListaBanco.Size = new System.Drawing.Size(235, 21);
-            this.cbxListaBanco.TabIndex = 26;
-            this.cbxListaBanco.DropDown += new System.EventHandler(this.cbxListaBanco_DropDown);
             // 
             // frmConectaBanco
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(321, 211);
+            this.ClientSize = new System.Drawing.Size(318, 205);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmConectaBanco";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "[xSistemas]  Banco de Dados";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
