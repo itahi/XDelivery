@@ -505,9 +505,36 @@ namespace DexComanda
                         // DataAlteracao = DateTime.Now
                     };
                     Insert("spAdicionarPedidoStatus", pedS);
+                PedidoStatus pedS2 = new PedidoStatus()
+                {
+                    Nome = "CONFIRMADO",
+                    AlertarSN = false,
+                    Status = 2,
+                    EnviarSN = true,
+                    // DataAlteracao = DateTime.Now
+                };
+                Insert("spAdicionarPedidoStatus", pedS);
+                PedidoStatus pedS3 = new PedidoStatus()
+                {
+                    Nome = "NA COZINHA",
+                    AlertarSN = false,
+                    Status = 3,
+                    EnviarSN = true,
+                    // DataAlteracao = DateTime.Now
+                };
+                Insert("spAdicionarPedidoStatus", pedS);
+                PedidoStatus pedS4 = new PedidoStatus()
+                {
+                    Nome = "NA ENTREGA",
+                    AlertarSN = false,
+                    Status = 4,
+                    EnviarSN = true,
+                    // DataAlteracao = DateTime.Now
+                };
+                Insert("spAdicionarPedidoStatus", pedS);
 
                 //}
-               
+
 
                 // ---- Origem Cadastro " ----
                 Pessoa_OrigemCadastro pess = new Pessoa_OrigemCadastro()
