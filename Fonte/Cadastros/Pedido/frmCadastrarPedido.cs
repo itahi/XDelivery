@@ -908,7 +908,8 @@ namespace DexComanda
                         && !radioButton4.Checked && !radioButton5.Checked && !radioButton6.Checked && !rb7.Checked
                          && !rb8.Checked && !rb9.Checked && !rb10.Checked && !rb11.Checked && !rb12.Checked)
                     {
-                        MessageBox.Show("É obrigatório selecionar o tamanho ", "[xSistemas]", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("É obrigatório selecionar o "+ grpBoxTamanhos.Text , " [xSistemas] Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        grpBoxTamanhos.Focus();
                         return;
                     }
                 }

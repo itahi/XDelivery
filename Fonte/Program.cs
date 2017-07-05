@@ -90,13 +90,6 @@ namespace DexComanda
 
                         if (servidor.Tables[0].Rows.Count > 0)
                         {
-                            //con = new Conexao();
-                            // Preenchendo campo caso retorne Null
-                            bool i = false;      //
-                            int Inteiro = 0;     //
-                            string String = "0"; //
-                            // Fim do Preenchimento dos campos
-
                             DataSet dsconfiguracao = con.SelectAll("Configuracao", "spObterConfiguracao");
                             if (dsconfiguracao.Tables["Configuracao"].Rows.Count > 0)
                             {
@@ -149,7 +142,6 @@ namespace DexComanda
                                     {
                                         // Cria Registro Para Usar Off
                                         Utils.GravaRegistro(Utils.RetornaNomePc() + empresas.CNPJ + empresas.Cidade + empresas.Nome);
-                                        // Inicia Sistema
 
                                         // Verifica se Abriu o Sistema 15 dias sem internet e limpa dando mais 5 dias  
                                         int intAbriu15Vezes = Utils.ContaRegistro(empresas.Nome + empresas.CNPJ);
@@ -223,7 +215,7 @@ namespace DexComanda
 
                                 }
                                 // CNPJ OSVALDO
-                                else if (empresas.Servidor == "DESKTOP-TGEH425" || empresas.Servidor == "DESKTOP-5K2U4E8" || empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "10512501000100" || empresas.CNPJ == "11291880000119")
+                                else if (empresas.Servidor == "XSISTEMASCOMERC" || empresas.Servidor == "LAZAROSHEV" || empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "10512501000100" || empresas.CNPJ == "11291880000119")
                                 {
                                     Utils.IniciaSistema();
                                 }

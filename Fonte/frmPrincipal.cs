@@ -774,8 +774,12 @@ namespace DexComanda
         {
             try
             {
-                bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
+                if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
+                {
+                    return;
+                }
 
+                bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
                 if (Utils.MessageBoxQuestion("Deseja ** FINALIZAR ** Todos Pedidos Selecionado?"))
                 {
                     if (!Utils.ValidaPermissao(Sessions.retunrUsuario.Codigo, "FinalizaPedidoSN"))
@@ -799,10 +803,7 @@ namespace DexComanda
                         ExecutaFinalizacaoMultipla();
                     }
 
-
-
                 }
-
 
             }
             catch (Exception erro)
@@ -813,6 +814,7 @@ namespace DexComanda
         }
         private void ExecutaFinalizacaoMultipla()
         {
+          
 
             for (int i = 0; i < pedidosGridView.Rows.Count; i++)
             {
@@ -822,8 +824,6 @@ namespace DexComanda
                 if (Marcado)
                 {
                     codigo = int.Parse(pedidosGridView.Rows[i].Cells["Codigo"].Value.ToString());
-                    //int.Parse(pedidosGridView.CurrentRow[i].Cells["Codigo"].Value.ToString());
-
                     DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
                     if (dsPedido.Tables[0].Rows[0].Field<int>("CodigoMesa") != 0)
                     {
@@ -883,6 +883,10 @@ namespace DexComanda
                 int codigo, iCodMesa;
                 decimal dblTotalPedido;
 
+                if (!Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
+                {
+                    return;
+                }
                 if (Utils.MessageBoxQuestion("Deseja ** FINALIZAR ** este pedido?"))
                 {
                     codigo = int.Parse(this.pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
