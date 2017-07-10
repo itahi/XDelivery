@@ -110,6 +110,7 @@
     <Reference Include="Microsoft.SqlServer.Management.Utility, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Management.Utility.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Management.UtilityEnum, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -355,6 +356,7 @@
     </Compile>
     <Compile Include="Models\Produto\ProdutoGrupo.cs" />
     <Compile Include="Models\Produto\ProdutoOpcao_Tipo.cs" />
+    <Compile Include="Models\Produto\Produto_DiaDisponivelSite.cs" />
     <Compile Include="Models\Produto\Produto_Estoque.cs" />
     <Compile Include="Models\Produto\Produto_Opcao.cs" />
     <Compile Include="Models\RegiaoEntrega_Bairros.cs" />

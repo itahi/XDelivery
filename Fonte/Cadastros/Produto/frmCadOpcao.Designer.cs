@@ -39,7 +39,6 @@
             this.chkAtivoSN = new System.Windows.Forms.CheckBox();
             this.chkOnlineSN = new System.Windows.Forms.CheckBox();
             this.grpDiasDisponivel = new System.Windows.Forms.GroupBox();
-            this.btnEdit = new System.Windows.Forms.Button();
             this.chkDomingo = new System.Windows.Forms.CheckBox();
             this.ChkSexta = new System.Windows.Forms.CheckBox();
             this.chkQuinta = new System.Windows.Forms.CheckBox();
@@ -166,7 +165,6 @@
             // 
             // grpDiasDisponivel
             // 
-            this.grpDiasDisponivel.Controls.Add(this.btnEdit);
             this.grpDiasDisponivel.Controls.Add(this.chkDomingo);
             this.grpDiasDisponivel.Controls.Add(this.ChkSexta);
             this.grpDiasDisponivel.Controls.Add(this.chkQuinta);
@@ -181,16 +179,6 @@
             this.grpDiasDisponivel.TabStop = false;
             this.grpDiasDisponivel.Text = "Disponibilidade";
             this.toolTip1.SetToolTip(this.grpDiasDisponivel, "Marque os dias em que o produto estará disponivel no site/app");
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Location = new System.Drawing.Point(216, 19);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(71, 34);
-            this.btnEdit.TabIndex = 71;
-            this.btnEdit.Text = "Ed. Multipla";
-            this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // chkDomingo
             // 
@@ -348,6 +336,5 @@
         private System.Windows.Forms.CheckBox chkSegunda;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Button btnEdit;
     }
 }

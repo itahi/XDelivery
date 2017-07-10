@@ -130,7 +130,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.horaInicio = new System.Windows.Forms.DateTimePicker();
             this.HoraFim = new System.Windows.Forms.DateTimePicker();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpDiasDisponivel = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
@@ -176,7 +176,7 @@
             this.groupBox3.SuspendLayout();
             this.grpPrecosDia.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.grpDiasDisponivel.SuspendLayout();
             this.tbInsumo.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridInsumo)).BeginInit();
@@ -889,7 +889,7 @@
             this.tabPage4.Controls.Add(this.groupBox3);
             this.tabPage4.Controls.Add(this.grpPrecosDia);
             this.tabPage4.Controls.Add(this.groupBox2);
-            this.tabPage4.Controls.Add(this.groupBox1);
+            this.tabPage4.Controls.Add(this.grpDiasDisponivel);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -1261,22 +1261,21 @@
             this.HoraFim.Size = new System.Drawing.Size(86, 20);
             this.HoraFim.TabIndex = 12;
             // 
-            // groupBox1
+            // grpDiasDisponivel
             // 
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Controls.Add(this.checkBox2);
-            this.groupBox1.Controls.Add(this.checkBox3);
-            this.groupBox1.Controls.Add(this.checkBox4);
-            this.groupBox1.Controls.Add(this.checkBox5);
-            this.groupBox1.Controls.Add(this.checkBox6);
-            this.groupBox1.Controls.Add(this.checkBox7);
-            this.groupBox1.Enabled = false;
-            this.groupBox1.Location = new System.Drawing.Point(3, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(594, 50);
-            this.groupBox1.TabIndex = 6;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Dias que o produto estará disponivel";
+            this.grpDiasDisponivel.Controls.Add(this.checkBox1);
+            this.grpDiasDisponivel.Controls.Add(this.checkBox2);
+            this.grpDiasDisponivel.Controls.Add(this.checkBox3);
+            this.grpDiasDisponivel.Controls.Add(this.checkBox4);
+            this.grpDiasDisponivel.Controls.Add(this.checkBox5);
+            this.grpDiasDisponivel.Controls.Add(this.checkBox6);
+            this.grpDiasDisponivel.Controls.Add(this.checkBox7);
+            this.grpDiasDisponivel.Location = new System.Drawing.Point(42, 5);
+            this.grpDiasDisponivel.Name = "grpDiasDisponivel";
+            this.grpDiasDisponivel.Size = new System.Drawing.Size(593, 50);
+            this.grpDiasDisponivel.TabIndex = 6;
+            this.grpDiasDisponivel.TabStop = false;
+            this.grpDiasDisponivel.Text = "Dias disponivel no site";
             // 
             // checkBox1
             // 
@@ -1285,6 +1284,7 @@
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(68, 17);
             this.checkBox1.TabIndex = 32;
+            this.checkBox1.Tag = "Sunday";
             this.checkBox1.Text = "Domingo";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
@@ -1295,6 +1295,7 @@
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(53, 17);
             this.checkBox2.TabIndex = 31;
+            this.checkBox2.Tag = "Friday";
             this.checkBox2.Text = "Sexta";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
@@ -1305,6 +1306,7 @@
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(57, 17);
             this.checkBox3.TabIndex = 30;
+            this.checkBox3.Tag = "Thursday";
             this.checkBox3.Text = "Quinta";
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
@@ -1315,6 +1317,7 @@
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(63, 17);
             this.checkBox4.TabIndex = 26;
+            this.checkBox4.Tag = "Saturday";
             this.checkBox4.Text = "Sabado";
             this.checkBox4.UseVisualStyleBackColor = true;
             // 
@@ -1325,6 +1328,7 @@
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(58, 17);
             this.checkBox5.TabIndex = 29;
+            this.checkBox5.Tag = "Wednesday";
             this.checkBox5.Text = "Quarta";
             this.checkBox5.UseVisualStyleBackColor = true;
             // 
@@ -1335,6 +1339,7 @@
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(54, 17);
             this.checkBox6.TabIndex = 28;
+            this.checkBox6.Tag = "Tuesday";
             this.checkBox6.Text = "Terça";
             this.checkBox6.UseVisualStyleBackColor = true;
             // 
@@ -1345,6 +1350,7 @@
             this.checkBox7.Name = "checkBox7";
             this.checkBox7.Size = new System.Drawing.Size(69, 17);
             this.checkBox7.TabIndex = 27;
+            this.checkBox7.Tag = "Monday";
             this.checkBox7.Text = "Segunda";
             this.checkBox7.UseVisualStyleBackColor = true;
             // 
@@ -1497,8 +1503,8 @@
             this.grpPrecosDia.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.grpDiasDisponivel.ResumeLayout(false);
+            this.grpDiasDisponivel.PerformLayout();
             this.tbInsumo.ResumeLayout(false);
             this.tbInsumo.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -1557,7 +1563,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DateTimePicker horaInicio;
         private System.Windows.Forms.DateTimePicker HoraFim;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpDiasDisponivel;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;

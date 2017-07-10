@@ -83,7 +83,7 @@ namespace DexComanda.Operações.Financeiro
                         {
                             //CodCaixa = int.Parse(caixa.Numero),
                             CodFormaPagamento = 1,
-                            Data = caixa.Data,
+                            //Data = caixa.Data,
                             Historico = "Abertura de Caixa",
                             NumeroDocumento = caixa.Numero,
                             Tipo = 'E',

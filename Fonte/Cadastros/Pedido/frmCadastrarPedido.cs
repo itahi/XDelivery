@@ -921,7 +921,6 @@ namespace DexComanda
                 if (txtQuantidade.Text != "")
                 {
                     var quantidade = decimal.Parse(this.txtQuantidade.Text.ToString());
-
                     if (!quantidade.Equals(""))
                     {
                         ItemPedido item = null;
@@ -974,15 +973,6 @@ namespace DexComanda
                                     CodProduto = intCodigoProdutoBusca
                                 };
 
-                                //if (!ProdutosPorCodigo)
-                                //{
-                                //    item.CodProduto = int.Parse(this.cbxProdutosGrid.SelectedValue.ToString());
-                                //}
-                                //else
-                                //{
-                                //    item.CodProduto = intCodProduto;
-                                //}
-
                                 pedido.HorarioEntrega = "";
                                 if (cbxHorarioEntrega.Text != "")
                                 {
@@ -997,7 +987,6 @@ namespace DexComanda
                                 con.Insert("spAdicionarItemAoPedido", item);
 
                                 AlteraTotalPedido();
-                                //  con.Update("spAlterarTotalPedido", pedido);
                                 items.Add(item);
                                 atualizarGrid(item);
                                 SemMeiaPizza();
@@ -1020,24 +1009,11 @@ namespace DexComanda
                                 CodProduto = intCodigoProdutoBusca
 
                             };
-                            //if (!ProdutosPorCodigo)
-                            //{
-                            //    item.CodProduto = int.Parse(this.cbxProdutosGrid.SelectedValue.ToString());
-                            //}
-                            //else
-                            //{
-                            //    item.CodProduto = int.Parse(this.txtCodProduto1.Text);
-                            //}
-
                             items.Add(item);
-
                             atualizarGrid(item);
 
                         }
-                        //this.cbxProdutosGrid.Text = "";
-                        //this.txtPrecoUnitario.Text = "";
-                        this.txtQuantidade.Text = "1";
-                        //this.txtPrecoTotal.Text = "";
+                        txtQuantidade.Text = "1";
                         this.txtItemDescricao.Text = "";
                         this.txtCodProduto1.Text = "";
                         if (ProdutosPorCodigo)
@@ -1049,12 +1025,12 @@ namespace DexComanda
                             cbxTipoProduto.Focus();
                         }
 
-
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Não foi possível adicionar o produto, verifique a quantidade digitada", "Aviso Dex");
+                    MessageBox.Show("Não foi possível adicionar o produto, verifique a quantidade digitada", "[xSistemas] Aviso");
+                    txtQuantidade.Focus();
 
                 }
             }
@@ -1073,6 +1049,7 @@ namespace DexComanda
         }
         private void btnCancelarPedido_Click(object sender, EventArgs e)
         {
+            gridViewItemsPedido.Rows.Clear();
             this.Close();
             //EXCLUIR ITEMS DO PEDIDO E DEPOIS REMOVER PEDIDO
         }
@@ -1116,7 +1093,6 @@ namespace DexComanda
         }
         public void btnGerarPedido_Click(object sender, EventArgs e)
         {
-            int iRetur = 0;
             btnGerarPedido.Enabled = false;
             try
             {

@@ -20,7 +20,7 @@ namespace DexComanda
         private int rowIndex;
         private int codigo = 0;
         private int prvCodEndereco;
-
+        private AutoCompleteStringCollection listabairro;
         public frmCadastroCliente()
         {
             InitializeComponent();
@@ -802,6 +802,10 @@ namespace DexComanda
         private void cbxRegiao_SelectedIndexChanged(object sender, EventArgs e)
         {
             // var TaxaEntrega;
+            if (cbxRegiao.SelectedValue.ToString()=="0")
+            {
+                return;
+            }
             var Regiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", int.Parse(this.cbxRegiao.SelectedValue.ToString())).Tables["RegiaoEntrega"];
             mCodRegiao = int.Parse(Regiao.Rows[0]["Codigo"].ToString());
             txtTaxaEntrega.Text = Convert.ToString(Regiao.Rows[0]["TaxaServico"].ToString());
@@ -1167,47 +1171,34 @@ namespace DexComanda
 
         private void txtBairro_KeyUp(object sender, KeyEventArgs e)
         {
-            AutoCompleteStringCollection lista = new AutoCompleteStringCollection();
-            if (txtBairro.Text.Length<=3)
+            
+            if (txtBairro.Text.Length >= 3)
             {
-                return;
-            }
-            DataSet dsBairros = con.ListaBairro();
-           
-            for (int i = 0; i < dsBairros.Tables[0].Rows.Count; i++)
-            {
-               // lista = new AutoCompleteStringCollection();
-                lista.Add(dsBairros.Tables[0].Rows[i].Field<string>("bairro"));
-            }
-            txtBairro.AutoCompleteCustomSource = lista;
-            if (e.KeyCode == Keys.Enter)
-            {
-                DataSet ds = con.RetornarTaxaPorBairro(txtBairro.Text);
-                if (ds.Tables[0].Rows.Count==0)
+                listabairro = new AutoCompleteStringCollection();
+                DataSet dsBairros = con.ListaBairro(txtBairro.Text);
+                for (int i = 0; i < dsBairros.Tables[0].Rows.Count; i++)
                 {
-                    return;
+                    listabairro.Add(dsBairros.Tables[0].Rows[i].Field<string>("bairro"));
                 }
-                Utils.MontaCombox(cbxRegiao, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioesPorCodigo", ds.Tables[0].Rows[0].Field<int>("Codigo"));
-                txtTaxaEntrega.Text = ds.Tables[0].Rows[0].Field<decimal>("TaxaServico").ToString();
+                txtBairro.AutoCompleteCustomSource = listabairro;
+                if (e.KeyCode == Keys.Enter)
+                {
+                    DataSet ds = con.RetornarTaxaPorBairro(txtBairro.Text);
+                    if (ds.Tables[0].Rows.Count == 0)
+                    {
+                        return;
+                    }
+                    Utils.MontaCombox(cbxRegiao, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioesPorCodigo", ds.Tables[0].Rows[0].Field<int>("Codigo"));
+                    txtTaxaEntrega.Text = ds.Tables[0].Rows[0].Field<decimal>("TaxaServico").ToString();
+                }
             }
         }
 
         private void txtBairro_Leave(object sender, EventArgs e)
         {
-            DataSet ds = con.RetornarTaxaPorBairro(txtBairro.Text);
-            if (ds.Tables[0].Rows.Count == 0)
-            {
-                return;
-            }
-            Utils.MontaCombox(cbxRegiao, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioesPorCodigo", ds.Tables[0].Rows[0].Field<int>("Codigo"));
-            txtBairro.Text = ds.Tables[0].Rows[0].Field<string>("Nome").ToString();
-            txtTaxaEntrega.Text = ds.Tables[0].Rows[0].Field<decimal>("TaxaServico").ToString();
+           
         }
 
-        private void txtBairro_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 
 }

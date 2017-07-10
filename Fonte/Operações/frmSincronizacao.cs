@@ -622,7 +622,6 @@ namespace DexComanda.Operações
             try
             {
                 MudaLabel("Produto");
-                decimal iPrecoProduto = 0;
                 DataRow dRow;
                 prgBarProduto.Value = 0;
                 prgBarProduto.Maximum = ds.Tables[0].Rows.Count;
@@ -659,16 +658,14 @@ namespace DexComanda.Operações
                     request.AddParameter("token", iParamToken);
                     request.AddParameter("idReferencia", dRow.ItemArray.GetValue(0).ToString());
                     request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
+                    request.AddParameter("dias_exibicao", ds.Tables[0].Rows[i].Field<string>("DiaDisponivelSite"));
 
-                
                     //Caso o grupo esteja marcado como multi sabores ele enviará esse parametro
                     if (ds.Tables[0].Rows[i].Field<int>("MultiploSabores")==1)
                     {
                         request.AddParameter("multi_product_id", dRow.ItemArray.GetValue(15).ToString());
                         request.AddParameter("multi_product_max", strMultisabores);
                     }
-
-
                     if (Sessions.returnEmpresa.CNPJ == "09395874000160")
                     {
                         prProduto = prProduto + con.RetornaPrecoComEmbalagem(dRow.ItemArray.GetValue(4).ToString(), int.Parse(dRow.ItemArray.GetValue(0).ToString()));
@@ -706,9 +703,7 @@ namespace DexComanda.Operações
                     request.AddParameter("maxOptions", dRow.ItemArray.GetValue(10).ToString());
                     request.AddParameter("pontos_fidelidade", dRow.ItemArray.GetValue(22).ToString());
                     request.AddParameter("pontos_para_troca", dRow.ItemArray.GetValue(23).ToString());
-
                     prgBarProduto.Increment(i + 1);
-
                     RestResponse response = (RestResponse)client.Execute(request);
 
                     if (response.Content.Contains("true"))

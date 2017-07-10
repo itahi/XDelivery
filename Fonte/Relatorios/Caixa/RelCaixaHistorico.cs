@@ -106,7 +106,7 @@ namespace DexComanda.Relatorios.Caixa {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_DataF {
+        public CrystalDecisions.Shared.IParameterField Parameter_EntradaSaida {
             get {
                 return this.DataDefinition.ParameterFields[2];
             }
@@ -114,7 +114,7 @@ namespace DexComanda.Relatorios.Caixa {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_EntradaSaida {
+        public CrystalDecisions.Shared.IParameterField Parameter_Estado {
             get {
                 return this.DataDefinition.ParameterFields[3];
             }

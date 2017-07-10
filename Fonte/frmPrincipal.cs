@@ -454,7 +454,7 @@ namespace DexComanda
                                                                   Convert.ToBoolean(dRowProduto.ItemArray.GetValue(13).ToString()), dRowProduto.ItemArray.GetValue(14).ToString(), dRowProduto.ItemArray.GetValue(15).ToString(), dRowProduto.ItemArray.GetValue(16).ToString()
                                                                   , int.Parse(dRowProduto.ItemArray.GetValue(18).ToString()), int.Parse(dRowProduto.ItemArray.GetValue(19).ToString()),
                                                                   dsProduto.Tables[0].Rows[0].Field<Boolean>("ControlaEstoque"), dsProduto.Tables[0].Rows[0].Field<decimal>("EstoqueMinimo"), produtosGridView,
-                                                                  dsProduto.Tables[0].Rows[0].Field<string>("PalavrasChaves"));
+                                                                  dsProduto.Tables[0].Rows[0].Field<string>("PalavrasChaves"), dsProduto.Tables[0].Rows[0].Field<string>("DiaDisponivelSite"));
                 frm.StartPosition = FormStartPosition.CenterParent;
                 frm.ShowDialog();
             }
@@ -906,7 +906,8 @@ namespace DexComanda
 
                     //Caso O Pedido for Entrega e o Sistema controle 
                     //os entregadores ele abre a tela pedido pra informar quem entregou
-                    if (Sessions.returnConfig.ControlaEntregador && iTipo == "0 - Entrega")
+                    if (Sessions.returnConfig.ControlaEntregador && iTipo == "0 - Entrega"
+                        && con.SelectAll("Entregador", "spObterEntregadores").Tables[0].Rows.Count>0)
                     {
                         InformaMotoboyPedido(codigo);
                     }
@@ -1144,7 +1145,7 @@ namespace DexComanda
                 CaixaMovimento caixa = new CaixaMovimento()
                 {
                     CodFormaPagamento = iFPagamento,    
-                    Data = DateTime.Now,
+                   // Data = DateTime.Now,
                     Historico = "Pedido " + iCodPedido,
                     NumeroDocumento = iCodPedido.ToString(),
                     Tipo = 'E',

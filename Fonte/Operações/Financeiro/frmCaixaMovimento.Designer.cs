@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCaixaMovimento));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.horaFim = new System.Windows.Forms.DateTimePicker();
-            this.horaInicio = new System.Windows.Forms.DateTimePicker();
             this.grpMovimento = new System.Windows.Forms.GroupBox();
             this.rbSaida = new System.Windows.Forms.RadioButton();
             this.rbEntrada = new System.Windows.Forms.RadioButton();
@@ -41,12 +40,11 @@
             this.label6 = new System.Windows.Forms.Label();
             this.cbxNumCaixa = new System.Windows.Forms.ComboBox();
             this.btnFiltrar = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
             this.panel1 = new System.Windows.Forms.Panel();
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.grpMovimento.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -54,17 +52,13 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.horaFim);
-            this.groupBox1.Controls.Add(this.horaInicio);
             this.groupBox1.Controls.Add(this.grpMovimento);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.cbxTurno);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.cbxNumCaixa);
             this.groupBox1.Controls.Add(this.btnFiltrar);
-            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.dtFim);
             this.groupBox1.Controls.Add(this.dtInicio);
             this.groupBox1.Location = new System.Drawing.Point(61, 0);
             this.groupBox1.Name = "groupBox1";
@@ -72,22 +66,6 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
-            // 
-            // horaFim
-            // 
-            this.horaFim.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.horaFim.Location = new System.Drawing.Point(407, 18);
-            this.horaFim.Name = "horaFim";
-            this.horaFim.Size = new System.Drawing.Size(85, 20);
-            this.horaFim.TabIndex = 18;
-            // 
-            // horaInicio
-            // 
-            this.horaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.horaInicio.Location = new System.Drawing.Point(178, 18);
-            this.horaInicio.Name = "horaInicio";
-            this.horaInicio.Size = new System.Drawing.Size(85, 20);
-            this.horaInicio.TabIndex = 17;
             // 
             // grpMovimento
             // 
@@ -189,39 +167,24 @@
             this.btnFiltrar.UseVisualStyleBackColor = true;
             this.btnFiltrar.Click += new System.EventHandler(this.ExecutaFiltro);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(298, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(14, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "A";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(35, 25);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(108, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 13);
+            this.label1.Size = new System.Drawing.Size(122, 20);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Periodo:";
-            // 
-            // dtFim
-            // 
-            this.dtFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtFim.Location = new System.Drawing.Point(316, 19);
-            this.dtFim.Name = "dtFim";
-            this.dtFim.Size = new System.Drawing.Size(85, 20);
-            this.dtFim.TabIndex = 1;
+            this.label1.Text = "Data do Caixa";
             // 
             // dtInicio
             // 
             this.dtInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtInicio.Location = new System.Drawing.Point(87, 19);
+            this.dtInicio.Location = new System.Drawing.Point(243, 19);
             this.dtInicio.Name = "dtInicio";
             this.dtInicio.Size = new System.Drawing.Size(85, 20);
             this.dtInicio.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.dtInicio, "Selecione a data que o caixa foi aberto");
             // 
             // panel1
             // 
@@ -283,9 +246,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dtFim;
         private System.Windows.Forms.DateTimePicker dtInicio;
         private System.Windows.Forms.Button btnFiltrar;
         private System.Windows.Forms.Panel panel1;
@@ -298,7 +259,6 @@
         private System.Windows.Forms.RadioButton rbEntrada;
         private System.Windows.Forms.RadioButton rbEntradaSaida;
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
-        private System.Windows.Forms.DateTimePicker horaFim;
-        private System.Windows.Forms.DateTimePicker horaInicio;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

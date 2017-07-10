@@ -434,6 +434,10 @@ namespace DexComanda
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
         }
+        public static string SerializaObjeto(List<Produto_DiaDisponivelSite> iValores)
+        {
+            return JsonConvert.SerializeObject(iValores, Formatting.None);
+        }
         public static string SerializaObjetoDadosApp(DadosApp iValores)
         {
             return JsonConvert.SerializeObject(iValores, Formatting.None);
@@ -664,6 +668,15 @@ namespace DexComanda
                 return new DadosEnvioLocaSMS();
             }
             return JsonConvert.DeserializeObject<DadosEnvioLocaSMS>(iValores);
+        }
+        public static List<Produto_DiaDisponivelSite> DeserializaObjetoDias(string iValores)
+        {
+            if (iValores == "" || iValores == null)
+            {
+                return new List<Produto_DiaDisponivelSite>();
+            }
+            return JsonConvert.DeserializeObject<List<Produto_DiaDisponivelSite>>(iValores);
+
         }
         public static MultiSabores DeserializaObjeto4(string iValores)
         {
@@ -2334,7 +2347,7 @@ namespace DexComanda
         {
             //CodCaixa = caixa.CodCaixa,
             CodFormaPagamento = caixa.CodFormaPagamento,
-            Data = caixa.Data,
+            //Data = caixa.Data,
             Historico = caixa.Historico,
             NumeroDocumento = caixa.NumeroDocumento,
             Tipo = caixa.Tipo,

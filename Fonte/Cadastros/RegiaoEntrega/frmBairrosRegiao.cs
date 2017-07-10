@@ -330,7 +330,7 @@ namespace DexComanda.Cadastros
             {
                 return;
             }
-            DataSet dsBairros = con.ListaBairro();
+            DataSet dsBairros = con.ListaBairro(txtBairro.Text);
 
             for (int i = 0; i < dsBairros.Tables[0].Rows.Count; i++)
             {

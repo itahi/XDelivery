@@ -81,7 +81,7 @@ namespace DexComanda.Cadastros
                     {
                         //CodCaixa = intNumCaixa,
                         CodFormaPagamento = int.Parse(cbxFormaPagamento.SelectedValue.ToString()),
-                        Data = dtMovimento.Value,
+                        //Data = dtMovimento.Value,
                         CodUser = Sessions.retunrUsuario.Codigo,
                         Historico = txtDescricao.Text,
                         NumeroDocumento = txtDocumento.Text,

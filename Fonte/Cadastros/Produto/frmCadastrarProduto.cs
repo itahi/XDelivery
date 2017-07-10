@@ -40,7 +40,7 @@ namespace DexComanda
                                    decimal iPrecoPromocao, string iDiasPromocao, string iMaximoAdicionais, string iUrlImagem, DateTime idtInicioPromo,
                                    DateTime idtFimPromo, bool iAtivoSN, string iCodInterno, string iMarkup, string iPrecoSugerido,
                                     int iPontoCompra, int iPontoTroca,Boolean iControlaEstoque,decimal iEstMinimo, DataGridView gridProduto=null,
-                                    string iPalavrasCHave="")
+                                    string iPalavrasCHave="",string iDiaDisponivelSite="")
         {
             try
             {
@@ -87,6 +87,7 @@ namespace DexComanda
                 txtPontosTroca.Text = iPontoTroca.ToString();
                 txtMarkup.Text = iMarkup;
                 txtPalavrasChave.Text = iPalavrasCHave;
+                MarcaDiaDisponivelSite(iDiaDisponivelSite);
                 txtPrecoSugerido.Text = iPrecoSugerido;
                 MontaListPrecos(iDiasPromocao);
                 nomeProdutoTextBox.Text = iNomeProduto;
@@ -299,7 +300,62 @@ namespace DexComanda
 
             return retur;
         }
+        private string DiaDisponivelSite()
+        {
+            List<Produto_DiaDisponivelSite> listDias = new List<Produto_DiaDisponivelSite>();
+            // var precosDia = new PrecoDiaProduto();
+            foreach (System.Windows.Forms.Control TEXT in grpDiasDisponivel.Controls)
+            {
+                //Loop through all controls 
+                if (object.ReferenceEquals(TEXT.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                {
+                    var diasDisponiel = new Produto_DiaDisponivelSite()
+                    {
+                        Dia = (((System.Windows.Forms.CheckBox)TEXT).Tag.ToString().Substring(0, 3)),
+                        AtivoSN = Convert.ToInt16((((System.Windows.Forms.CheckBox)TEXT).Checked)),
+                    };
+                    listDias.Add(diasDisponiel);
+                }
+            }
 
+            return Utils.SerializaObjeto(listDias);
+        }
+
+        private void MarcaDiaDisponivelSite (string strDias)
+        {
+            try
+            {
+                List<Produto_DiaDisponivelSite> listaDias = new List<Produto_DiaDisponivelSite>();
+                if (strDias == "")
+                {
+                    return;
+                }
+                listaDias = Utils.DeserializaObjetoDias(strDias);
+                if (listaDias.Count>0)
+                {
+                    foreach (var item in listaDias)
+                    {
+                        foreach (System.Windows.Forms.Control obj in grpDiasDisponivel.Controls)
+                        {
+                            if (object.ReferenceEquals(obj.GetType(), typeof(System.Windows.Forms.CheckBox)))
+                            {
+                                if (((System.Windows.Forms.CheckBox)obj).Tag.ToString().Substring(0, 3) == item.Dia)
+                                {
+                                    ((System.Windows.Forms.CheckBox)obj).Checked = item.AtivoSN == 1;
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         private void AdicionarProduto(object sender, EventArgs e)
         {
 
@@ -333,8 +389,9 @@ namespace DexComanda
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                     DataAlteracao = DateTime.Now,
                     ControlaEstoque = chkControleEstoque.Checked,
-                    PalavrasChaves = txtPalavrasChave.Text
-                
+                    PalavrasChaves = txtPalavrasChave.Text,
+                    DiaDisponivelSite = DiaDisponivelSite()
+
                 };
 
                 if (chkControleEstoque.Checked && txtEstMinimo.Text=="")
@@ -538,7 +595,8 @@ namespace DexComanda
                     DataInicioPromocao = Convert.ToDateTime(dtInicio.Value.ToShortDateString()),
                     DataFimPromocao = Convert.ToDateTime(dtFim.Value.ToShortDateString()),
                     ControlaEstoque = chkControleEstoque.Checked,
-                    PalavrasChaves = txtPalavrasChave.Text
+                    PalavrasChaves = txtPalavrasChave.Text,
+                    DiaDisponivelSite = DiaDisponivelSite()
                 };
                 if (chkControleEstoque.Checked && txtEstMinimo.Text == "")
                 {

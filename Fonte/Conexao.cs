@@ -623,22 +623,20 @@ namespace DexComanda
         /// </summary>
         /// <returns>
         /// Lista de bairros </returns>
-        public DataSet ListaBairro()
+        public DataSet ListaBairro(string iNomeBairro)
         {
             List<CidadesAtendidas> cidades = new List<CidadesAtendidas>();
             cidades = Utils.DeserializaObjeto2(Sessions.returnConfig.CidadesAtendidas);
-            string result = "";
+            string listCidades = "";
             foreach (var item in cidades)
             {
-                result = string.Join(",", item.Cidade);
+                listCidades = string.Join(",", item.Cidade);
             }
-            // string result = string.Join<string>(",", cidades.ToString());
 
-            // string iSql = "select bairro from base_cep where  bairro like '%" + iBairro + "%' and cidade in (@Cidades)";
-            string iSql = "select bairro from base_cep where cidade in (@Cidades)";
+            string iSql = "select DISTINCT(bairro) from base_cep where cidade in (@Cidades) and bairro like '%"+iNomeBairro+"%'";
             command = new SqlCommand(iSql, conn);
             command.CommandType = CommandType.Text;
-            command.Parameters.AddWithValue("@Cidades", result);
+            command.Parameters.AddWithValue("@Cidades", listCidades);
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, "base_cep");
@@ -888,8 +886,8 @@ namespace DexComanda
                                   " from Produto_Opcao Prod" +
                                   " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
                                   " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
-                                 " join Produto P on P.Codigo = Prod.CodProduto" +
-                                  "  where Prod.CodProduto = @CodProduto" +
+                                 "  join Produto P on P.Codigo = Prod.CodProduto" +
+                                  "  where Prod.CodProduto = @CodProduto and Op.AtivoSN=1" +
                                   " order by PoT.OrdenExibicao,Op.Nome";
             //" order by PoT.OrdenExibicao,Op.Nome";
             command = new SqlCommand(lSqlConsulta, conn);

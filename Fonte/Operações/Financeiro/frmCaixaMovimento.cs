@@ -31,8 +31,9 @@ namespace DexComanda.Operações
         {
             try
             {
-                DateTime dtInicioFiltro = Convert.ToDateTime(dtInicio.Value.ToShortDateString() + " " + horaInicio.Value.ToShortTimeString());
-                DateTime dtFimFiltro = Convert.ToDateTime(dtFim.Value.ToShortDateString() + " " + horaFim.Value.ToShortTimeString());
+                //      DateTime dtInicioFiltro = Convert.ToDateTime(dtInicio.Value.ToShortDateString() + " " + horaInicio.Value.ToShortTimeString());
+                //    DateTime dtFimFiltro = Convert.ToDateTime(dtFim.Value.ToShortDateString() + " " + horaFim.Value.ToShortTimeString());
+                bool bEstado = dtInicio.Value.ToShortDateString() != DateTime.Now.ToShortDateString();
                 if (!rbEntradaSaida.Checked)
                 {
                     RelCaixaHistorico report;
@@ -57,9 +58,11 @@ namespace DexComanda.Operações
                         CrTable.ApplyLogOnInfo(crtableLogoninfo);
                     }
 
+                   
                     report.SetParameterValue("@Turno", cbxTurno.Text);
-                    report.SetParameterValue("@DataI", dtInicioFiltro);
-                    report.SetParameterValue("@DataF", dtFimFiltro);
+                    report.SetParameterValue("@Estado", bEstado);
+                    report.SetParameterValue("@DataI", dtInicio.Value.ToShortDateString());
+                  //  report.SetParameterValue("@DataF", dtFim.Value.ToShortDateString());
                     report.SetParameterValue("@EntradaSaida", OperacaoMarcada());
                     crystalReportViewer1.ReportSource = report;
                     crystalReportViewer1.Refresh();
@@ -89,17 +92,16 @@ namespace DexComanda.Operações
                     }
 
                     report.SetParameterValue("@Turno", cbxTurno.Text);
-                   // report.SetParameterValue("@CodCaixa", cbxNumCaixa.Text);
-                    report.SetParameterValue("@DataI", dtInicioFiltro);
-                    report.SetParameterValue("@DataF", dtFimFiltro);
+                    report.SetParameterValue("@DataI", dtInicio.Value);
+                    report.SetParameterValue("@Estado", bEstado); 
                     crystalReportViewer1.ReportSource = report;
                     crystalReportViewer1.Refresh();
                 }
+               
             }
             catch (Exception erro)
             {
-
-                throw;
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
             
         }
