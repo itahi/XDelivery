@@ -230,6 +230,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.txt_IdLoja = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -594,6 +596,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.txt_IdLoja);
             this.groupBox1.Controls.Add(this.label29);
             this.groupBox1.Controls.Add(this.txtURL);
             this.groupBox1.Controls.Add(this.btnBackup);
@@ -614,7 +618,7 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(268, 22);
+            this.label29.Location = new System.Drawing.Point(268, 19);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(53, 13);
             this.label29.TabIndex = 26;
@@ -622,14 +626,14 @@
             // 
             // txtURL
             // 
-            this.txtURL.Location = new System.Drawing.Point(347, 19);
+            this.txtURL.Location = new System.Drawing.Point(327, 16);
             this.txtURL.Name = "txtURL";
-            this.txtURL.Size = new System.Drawing.Size(278, 20);
+            this.txtURL.Size = new System.Drawing.Size(198, 20);
             this.txtURL.TabIndex = 25;
             // 
             // btnBackup
             // 
-            this.btnBackup.Location = new System.Drawing.Point(451, 75);
+            this.btnBackup.Location = new System.Drawing.Point(394, 77);
             this.btnBackup.Name = "btnBackup";
             this.btnBackup.Size = new System.Drawing.Size(65, 24);
             this.btnBackup.TabIndex = 24;
@@ -640,7 +644,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(268, 56);
+            this.label28.Location = new System.Drawing.Point(248, 56);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(73, 13);
             this.label28.TabIndex = 21;
@@ -648,9 +652,9 @@
             // 
             // txtCaminhoBkp
             // 
-            this.txtCaminhoBkp.Location = new System.Drawing.Point(347, 53);
+            this.txtCaminhoBkp.Location = new System.Drawing.Point(327, 53);
             this.txtCaminhoBkp.Name = "txtCaminhoBkp";
-            this.txtCaminhoBkp.Size = new System.Drawing.Size(278, 20);
+            this.txtCaminhoBkp.Size = new System.Drawing.Size(198, 20);
             this.txtCaminhoBkp.TabIndex = 20;
             // 
             // label12
@@ -2321,6 +2325,26 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // txt_IdLoja
+            // 
+            this.txt_IdLoja.Location = new System.Drawing.Point(587, 19);
+            this.txt_IdLoja.Name = "txt_IdLoja";
+            this.txt_IdLoja.Size = new System.Drawing.Size(24, 20);
+            this.txt_IdLoja.TabIndex = 27;
+            this.txt_IdLoja.Text = "1";
+            this.toolTip1.SetToolTip(this.txt_IdLoja, "Usado para casos de matriz/filial");
+            this.txt_IdLoja.DoubleClick += new System.EventHandler(this.txt_IdLoja_DoubleClick);
+            this.txt_IdLoja.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_IdLoja_KeyPress);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(531, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(50, 13);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "ID_LOJA";
+            // 
             // frmConfiguracoes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2597,5 +2621,7 @@
         private System.Windows.Forms.CheckBox chkSenha;
         public System.Windows.Forms.TextBox txtBanco;
         public System.Windows.Forms.TextBox txtServidor;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txt_IdLoja;
     }
 }

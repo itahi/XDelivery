@@ -2296,7 +2296,6 @@ namespace DexComanda
         public static void ImpressaoCaixa(string iTurno, DateTime dtInicio, DateTime dtFim)
         {
           
-
             try
             {
                 RelFechamentoCaixa report;

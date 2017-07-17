@@ -343,7 +343,7 @@ namespace DexComanda
         }
         private void SalvaConfig(object sender, EventArgs e)
         {
-            con = new Conexao(); 
+            con = new Conexao();
             Empresa empresa = new Empresa()
             {
                 Nome = txtNomeEmpresa.Text,
@@ -365,7 +365,8 @@ namespace DexComanda
                 CaminhoBackup = txtCaminhoBkp.Text,
                 UrlServidor = txtURL.Text,
                 HorarioFuncionamento = HorariosFuncionamento(),
-                ConfiguracaoSMS = ConfiguracaoSMS()
+                ConfiguracaoSMS = ConfiguracaoSMS(),
+                Id_loja = int.Parse(txt_IdLoja.Text)
             };
 
             // Grava as configurações
@@ -411,7 +412,6 @@ namespace DexComanda
             if (empresa.Nome != "" && empresa.Contato != "" && empresa.Telefone != "" && txtViasBalcao.Text != "" && txtViasCozinha.Text != "" && txtViasEntrega.Text != "" && txtCaminhoBkp.Text != "")
             {
                 con.Insert("spAdicionarEmpresa", empresa);
-                // MessageBox.Show("Empresa Adicionada com sucesso");
                 con.Insert("spAdicionarConfiguracao", config);
                 MessageBox.Show("Configuração adicionada com sucesso.");
                 Utils.Restart();
@@ -446,12 +446,13 @@ namespace DexComanda
                 CaminhoBackup = txtCaminhoBkp.Text,
                 UrlServidor = txtURL.Text,
                 HorarioFuncionamento = HorariosFuncionamento(),
-                ConfiguracaoSMS = ConfiguracaoSMS()
+                ConfiguracaoSMS = ConfiguracaoSMS(),
+                Id_loja = int.Parse(txt_IdLoja.Text)
             };
 
             config.cod = Sessions.returnConfig.cod;
             config.ImpViaCozinha = ConfiguracaoCozinha();
-            config.UsaLoginSenha = true;//chkLoginSenha.Checked;
+            config.UsaLoginSenha = true;
             config.UsaDataNascimento = chkDataNAscimento.Checked;
             config.ControlaEntregador = chkEntregadores.Checked;
             config.ProdutoPorCodigo = RetornaTipoBuscaProduto();
@@ -627,24 +628,7 @@ namespace DexComanda
                 txtCaminhoBkp.Text = Linha.ItemArray.GetValue(16).ToString();
                 txtURL.Text = servidorLocal.Tables[0].Rows[0].Field<string>("UrlServidor");//Sessions.returnEmpresa.UrlServidor;
                 CarregaConfigSMS(servidorLocal.Tables[0].Rows[0].Field<string>("ConfiguracaoSMS"));
-
-                //if (con.IsConnected())
-                //{
-                //    DataSet Dados = Utils.DadosLicenca(txtCNPJ.Text, Utils.EnderecoMAC(), Utils.RetornaNomePc());
-                //    if (Dados.Tables.Count==0)
-                //    {
-                //        return;
-                //    }
-                //    DataRow LinhasLicenca = Dados.Tables["Licenca"].Rows[0];
-                //    lblDataExpiracao.Text = LinhasLicenca.ItemArray.GetValue(3).ToString().Substring(0, 10);
-                //    txtLicenca.Text = LinhasLicenca.ItemArray.GetValue(1).ToString() + LinhasLicenca.ItemArray.GetValue(9).ToString();
-                //}
-                //else
-                //{
-                //    txtLicenca.Text = txtCNPJ.Text + Utils.EnderecoMAC();
-                //    lblDataExpiracao.Text = DateTime.Now.AddMonths(1).ToString();
-                //}
-
+                txt_IdLoja.Text = servidorLocal.Tables[0].Rows[0].Field<int>("Id_Loja").ToString();
             }
 
         }
@@ -1084,6 +1068,20 @@ namespace DexComanda
         {
             frmConectaBanco frm = new frmConectaBanco();
             frm.Show();
+        }
+
+        private void txt_IdLoja_DoubleClick(object sender, EventArgs e)
+        {
+            if (!Utils.ImputStringQuestion())
+            {
+                return;
+            }
+            txt_IdLoja.Enabled = true;
+        }
+
+        private void txt_IdLoja_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoPermiteNumeros(e);
         }
     }
 }

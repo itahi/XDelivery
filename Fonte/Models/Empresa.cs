@@ -8,7 +8,7 @@ namespace DexComanda.Models
 {
    public class Empresa
     {
-       // public int Codigo { get; set; }
+        public int Codigo { get; set; }
         public string Nome { get; set; }
         public string CNPJ { get; set; }
         public string Telefone { get; set; }
@@ -29,5 +29,6 @@ namespace DexComanda.Models
         public string UrlServidor { get; set; }
         public string HorarioFuncionamento { get; set; }
         public string ConfiguracaoSMS { get; set; }
+        public int Id_loja { get; set; }
     }
 }

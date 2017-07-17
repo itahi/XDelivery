@@ -513,7 +513,7 @@ namespace DexComanda
                     EnviarSN = true,
                     // DataAlteracao = DateTime.Now
                 };
-                Insert("spAdicionarPedidoStatus", pedS);
+                Insert("spAdicionarPedidoStatus", pedS2);
                 PedidoStatus pedS3 = new PedidoStatus()
                 {
                     Nome = "NA COZINHA",
@@ -522,7 +522,7 @@ namespace DexComanda
                     EnviarSN = true,
                     // DataAlteracao = DateTime.Now
                 };
-                Insert("spAdicionarPedidoStatus", pedS);
+                Insert("spAdicionarPedidoStatus", pedS3);
                 PedidoStatus pedS4 = new PedidoStatus()
                 {
                     Nome = "NA ENTREGA",
@@ -531,10 +531,7 @@ namespace DexComanda
                     EnviarSN = true,
                     // DataAlteracao = DateTime.Now
                 };
-                Insert("spAdicionarPedidoStatus", pedS);
-
-                //}
-
+                Insert("spAdicionarPedidoStatus", pedS4);
 
                 // ---- Origem Cadastro " ----
                 Pessoa_OrigemCadastro pess = new Pessoa_OrigemCadastro()
@@ -802,6 +799,7 @@ namespace DexComanda
             conn = new SqlConnection(connectionString);
             try
             {
+                //Utils.CriarUsuario(connectionString);
                 conn.Open();
                 if (conn.State !=ConnectionState.Open)
                 {
@@ -809,7 +807,7 @@ namespace DexComanda
                     return false;
                 }
                 MessageBox.Show("Conectado ao banco de dados "+ banco);
-                Utils.CriarUsuario(connectionString);
+               
                 var temp = Directory.GetCurrentDirectory() + @"\ConnectionString_DexComanda.txt";
 
                 if (!System.IO.File.Exists(temp))

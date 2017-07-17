@@ -20,9 +20,9 @@ namespace DexComanda.Operações
     public partial class frmSincronizacao : Form
     {
         private string iParamToken;
+        private int store_idAtual = Sessions.returnEmpresa.Id_loja;
         private List<Grupo> listGrupos;
         private string iUrlWS;
-        private string strPrevisaoEntrega = "0";
         private Conexao con;
         private List<DadosApp> newDados;
         private string strMultisabores = "2";
@@ -138,6 +138,7 @@ namespace DexComanda.Operações
                 request.AddParameter("nome_cliente", Sessions.returnEmpresa.Nome);
                 request.AddParameter("gcm_sender_id", Utils.RetornaConfiguracaoPush().GCM);
                 request.AddParameter("onesignal_api_key", Utils.RetornaConfiguracaoPush().Pushauthorization);
+                request.AddParameter("store_id", store_idAtual);
                 MudaLabel("Códigos OneSignal");
                 response = (RestResponse)client.Execute(request);
                 ReturnPadrao lRetorno = new ReturnPadrao();
@@ -191,6 +192,7 @@ namespace DexComanda.Operações
                         request.AddParameter("token", iParamToken);
                         request.AddParameter("plataforma", item.plataforma);
                         request.AddParameter("urlBaixarApp", item.url);
+                        request.AddParameter("store_id", store_idAtual);
                         MudaLabel("Link APP");
                         response = (RestResponse)client.Execute(request);
                         prgBarMobile.Increment(1);
@@ -224,6 +226,7 @@ namespace DexComanda.Operações
             RestRequest request = new RestRequest("ws/pedido/minimo", Method.POST);
             request.AddParameter("token", iParamToken);
             request.AddParameter("valor", txtVlrMinimo.Text);
+            request.AddParameter("store_id", store_idAtual);
             MudaLabel("Pedido Mínimo");
             RestResponse response = (RestResponse)client.Execute(request);
             ReturnPadrao lRetorno = new ReturnPadrao();
@@ -274,6 +277,7 @@ namespace DexComanda.Operações
                     request.AddParameter("ordenExibicao", dRow.ItemArray.GetValue(5).ToString());
                     request.AddParameter("minimoSelecao", iMinumum);
                     request.AddParameter("maximoSelecao", iMaxOpcionais);
+                    request.AddParameter("store_id", store_idAtual);
                     RestResponse response = (RestResponse)client.Execute(request);
 
                     ReturnPadrao lRetorno = new ReturnPadrao();
@@ -378,7 +382,7 @@ namespace DexComanda.Operações
                     request.AddParameter("valor", ds.Tables["RegiaoEntrega"].Rows[i].Field<decimal>("TaxaServico"));
                     request.AddParameter("referencia_id", ds.Tables["RegiaoEntrega"].Rows[i].Field<int>("Codigo"));
                     request.AddParameter("ativo", Convert.ToInt16(ds.Tables["RegiaoEntrega"].Rows[i].Field<Boolean>("OnlineSN")));
-
+                    request.AddParameter("store_id", store_idAtual);
                     if (ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("PrevisaoEntrega") != "0")
                     {
                         request.AddParameter("previsao_entrega", ds.Tables["RegiaoEntrega"].Rows[i].Field<string>("PrevisaoEntrega"));
@@ -428,6 +432,7 @@ namespace DexComanda.Operações
                     request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
                     request.AddParameter("referenciaId", dRow.ItemArray.GetValue(0).ToString());
                     request.AddParameter("dias_exibicao", dRow.ItemArray.GetValue(8).ToString());
+                    request.AddParameter("store_id", store_idAtual);
                     RestResponse response = (RestResponse)client.Execute(request);
                     prgBarProduto.Increment(i + 1);
 
@@ -488,6 +493,7 @@ namespace DexComanda.Operações
                     request.AddParameter("nomeCategoria", inome);
                     request.AddParameter("ativo", AtivoSN);
                     request.AddParameter("idReferencia", iCod);
+                    request.AddParameter("store_id", store_idAtual);
                     RestResponse response = (RestResponse)client.Execute(request);
                     prgBarProduto.Increment(i + 1);
 
@@ -534,6 +540,7 @@ namespace DexComanda.Operações
                 RestClient client = new RestClient(iUrlWS);
                 RestRequest request = new RestRequest("ws/v1/lojas/1/mesas", Method.POST);
                 request.AddHeader("token", iParamToken);
+                request.AddHeader("store_id", store_idAtual.ToString());
                 DataSet ds = ObterDados("Mesas");
                 request.AddJsonBody(MontaObjetoMesa(ds));
                 var restResponse = client.Execute(request);
@@ -606,6 +613,7 @@ namespace DexComanda.Operações
                 }
                 string iretur = Utils.SerializaObjeto(horariosList);
                 request.AddParameter("horarios", Utils.SerializaObjeto(horariosList));
+                request.AddParameter("store_id", store_idAtual);
                 RestResponse response = (RestResponse)client.Execute(request);
 
             }
@@ -659,7 +667,8 @@ namespace DexComanda.Operações
                     request.AddParameter("idReferencia", dRow.ItemArray.GetValue(0).ToString());
                     request.AddParameter("nome", dRow.ItemArray.GetValue(1).ToString());
                     request.AddParameter("dias_exibicao", ds.Tables[0].Rows[i].Field<string>("DiaDisponivelSite"));
-
+                    request.AddParameter("keyWords", ds.Tables[0].Rows[i].Field<string>("PalavrasChaves"));
+                    request.AddParameter("store_id", store_idAtual);
                     //Caso o grupo esteja marcado como multi sabores ele enviará esse parametro
                     if (ds.Tables[0].Rows[i].Field<int>("MultiploSabores")==1)
                     {
@@ -719,7 +728,6 @@ namespace DexComanda.Operações
 
                 MessageBox.Show("Erro ao cadastrarar Produto " + er.Message + er.InnerException);
             }
-
 
         }
         private System.IO.Stream RetornaArquivo(string iCaminho)
@@ -828,6 +836,7 @@ namespace DexComanda.Operações
                 {
                     iCod = int.Parse(dRow.ItemArray.GetValue(0).ToString());
                     request.AddFile("cartao[" + i + "]", dRow.ItemArray.GetValue(7).ToString(), "imagem/png");
+                    request.AddParameter("store_id",store_idAtual );
 
                 }
                 prgBarpagamento.Value = prgBarpagamento.Value + 1;

@@ -1,5 +1,8 @@
 alter table Produto add DiaDisponivelSite nvarchar(max);
 go
+update Produto set DiaDisponivelSite=
+'[{"Dia":"Sun","AtivoSN":1},{"Dia":"Fri","AtivoSN":1},{"Dia":"Thu","AtivoSN":1},{"Dia":"Sat","AtivoSN":1},{"Dia":"Wed","AtivoSN":1},{"Dia":"Tue","AtivoSN":1},{"Dia":"Mon","AtivoSN":1}]'
+go
 ALTER PROCEDURE [dbo].[spAdicionarProduto]
 	@Codigo int output,
 	@Nome nvarchar(50),
@@ -176,3 +179,15 @@ as
 	,ControlaEstoque,EstoqueMinimo,DiaDisponivelSite
 	
 	FROM Produto WHERE AtivoSN= @AtivoSN and CodigoPersonalizado = @Codigo ;
+GO
+ALTER PROCEDURE [dbo].[spObterProdutoPorCodigo]
+	@Codigo int,
+	@AtivoSN bit
+as
+	SELECT 
+	NomeProduto,PrecoProduto,DescricaoProduto,GrupoProduto,
+	DiaSemana,PrecoDesconto,OnlineSN,Codigo,MaximoAdicionais,
+	UrlImagem,DataInicioPromocao,DataFimPromocao,CodGrupo,AtivoSN,
+	CodigoPersonalizado,Markup ,PrecoSugerido ,
+	PrecoCusto,PontoFidelidadeVenda,PontoFidelidadeTroca,ControlaEstoque,EstoqueMinimo,PalavrasChaves,DiaDisponivelSite
+	FROM Produto WHERE  AtivoSN= @AtivoSN and Codigo = @Codigo;

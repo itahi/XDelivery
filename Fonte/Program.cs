@@ -53,7 +53,7 @@ namespace DexComanda
                     string strNomePC = Utils.RetornaNomePc();
                     
                     // Verifica se o Serviço do SQLSERVER está Ativo para inicia-lo
-                    Utils.ServicoSQLATIVO();
+                   // Utils.ServicoSQLATIVO();
                     con = new Conexao();
 
                     // Le o arquivo de configuração para montar a grid
@@ -84,9 +84,9 @@ namespace DexComanda
                             DataInicio = servidor.Tables[0].Rows[0].Field<DateTime>("DataInicio"),
                             UrlServidor = servidor.Tables[0].Rows[0].Field<string>("UrlServidor"),
                             ConfiguracaoSMS = servidor.Tables[0].Rows[0].Field<string>("ConfiguracaoSMS"),
+                            Id_loja = servidor.Tables[0].Rows[0].Field<int>("Id_Loja"),
                         };
                         Sessions.returnEmpresa = empresas;
-
 
                         if (servidor.Tables[0].Rows.Count > 0)
                         {
@@ -154,8 +154,6 @@ namespace DexComanda
                                         {
                                             Utils.IniciaSistema();
                                         }
-
-
                                     }
                                     else
                                     {
@@ -239,13 +237,10 @@ namespace DexComanda
                         frm.ShowDialog();
                     }
 
-
                 }
                 catch (Exception e)
                 {
-
-                    MessageBox.Show("Erro ao iniciar as configurações do sistema ," +
-                    "há valores nulos que não podem ser carregados" + " " + e.Message);
+                    MessageBox.Show(Bibliotecas.cException + e.Message);
                 }
 
 

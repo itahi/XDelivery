@@ -392,7 +392,6 @@
             this.imgProduto.Location = new System.Drawing.Point(8, 42);
             this.imgProduto.Name = "imgProduto";
             this.imgProduto.Size = new System.Drawing.Size(659, 226);
-            this.imgProduto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.imgProduto.TabIndex = 0;
             this.imgProduto.TabStop = false;
             // 
