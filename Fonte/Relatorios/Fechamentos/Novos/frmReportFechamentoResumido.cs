@@ -45,8 +45,8 @@ namespace DexComanda.Relatorios.Fechamentos.Novos
                     crtableLogoninfo.ConnectionInfo = crConnectionInfo;
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
-                var dtInicio = Convert.ToDateTime(dtinicio.Value.ToShortDateString() + " 00:00:00");
-                var datFim = Convert.ToDateTime(dtFim.Value.ToShortDateString() + " 23:59:59");
+                var dtInicio = Convert.ToDateTime(dtinicio.Value.ToShortDateString() + " "+ horaInicio.Value.ToShortTimeString());
+                var datFim = Convert.ToDateTime(dtFim.Value.ToShortDateString() + " " + horaFim.Value.ToShortTimeString());
 
                 report.SetParameterValue("@DataInicio", dtInicio);
                 report.SetParameterValue("@DataFim", datFim);

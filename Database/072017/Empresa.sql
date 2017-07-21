@@ -1,7 +1,7 @@
-alter table Empresa add Id_loja int;
-go
-update Empresa set Id_loja =1;
+alter table Empresa add Id_Loja int;
 GO
+update Empresa set Id_Loja=1
+go
 ALTER procedure [dbo].[spAdicionarEmpresa]
 @Nome nvarchar(100),
 @CNPJ varchar(14),

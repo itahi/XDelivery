@@ -726,6 +726,7 @@ namespace DexComanda
             if (result == DialogResult.OK)
             {
                 txtCaminhoBkp.Text = OpenFolder.SelectedPath.ToString();
+                Application.DoEvents();
             }
         }
 

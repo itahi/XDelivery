@@ -35,10 +35,16 @@
             this.rbDetalhado = new System.Windows.Forms.RadioButton();
             this.btnFiltro = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.DtFim = new System.Windows.Forms.DateTimePicker();
-            this.DtInicio = new System.Windows.Forms.DateTimePicker();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.dtFim = new System.Windows.Forms.DateTimePicker();
+            this.horaFim = new System.Windows.Forms.DateTimePicker();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.dtinicio = new System.Windows.Forms.DateTimePicker();
+            this.horaInicio = new System.Windows.Forms.DateTimePicker();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -49,7 +55,7 @@
             this.groupBox2.Controls.Add(this.crystalReportViewer1);
             this.groupBox2.Location = new System.Drawing.Point(5, 86);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(449, 358);
+            this.groupBox2.Size = new System.Drawing.Size(513, 386);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             // 
@@ -69,22 +75,22 @@
             this.crystalReportViewer1.ShowLogo = false;
             this.crystalReportViewer1.ShowParameterPanelButton = false;
             this.crystalReportViewer1.ShowRefreshButton = false;
-            this.crystalReportViewer1.Size = new System.Drawing.Size(443, 339);
+            this.crystalReportViewer1.Size = new System.Drawing.Size(507, 367);
             this.crystalReportViewer1.TabIndex = 2;
             this.crystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
             // 
             // groupBox1
             // 
             this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox1.Controls.Add(this.groupBox3);
+            this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.rbResumido);
             this.groupBox1.Controls.Add(this.rbDetalhado);
             this.groupBox1.Controls.Add(this.btnFiltro);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.DtFim);
-            this.groupBox1.Controls.Add(this.DtInicio);
-            this.groupBox1.Location = new System.Drawing.Point(5, 11);
+            this.groupBox1.Location = new System.Drawing.Point(5, 1);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(449, 69);
+            this.groupBox1.Size = new System.Drawing.Size(513, 85);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
@@ -92,7 +98,7 @@
             // rbResumido
             // 
             this.rbResumido.AutoSize = true;
-            this.rbResumido.Location = new System.Drawing.Point(16, 43);
+            this.rbResumido.Location = new System.Drawing.Point(7, 52);
             this.rbResumido.Name = "rbResumido";
             this.rbResumido.Size = new System.Drawing.Size(72, 17);
             this.rbResumido.TabIndex = 11;
@@ -104,7 +110,7 @@
             // 
             this.rbDetalhado.AutoSize = true;
             this.rbDetalhado.Checked = true;
-            this.rbDetalhado.Location = new System.Drawing.Point(15, 16);
+            this.rbDetalhado.Location = new System.Drawing.Point(7, 29);
             this.rbDetalhado.Name = "rbDetalhado";
             this.rbDetalhado.Size = new System.Drawing.Size(74, 17);
             this.rbDetalhado.TabIndex = 10;
@@ -114,9 +120,9 @@
             // 
             // btnFiltro
             // 
-            this.btnFiltro.Location = new System.Drawing.Point(358, 31);
+            this.btnFiltro.Location = new System.Drawing.Point(432, 19);
             this.btnFiltro.Name = "btnFiltro";
-            this.btnFiltro.Size = new System.Drawing.Size(75, 23);
+            this.btnFiltro.Size = new System.Drawing.Size(75, 57);
             this.btnFiltro.TabIndex = 9;
             this.btnFiltro.Text = "Filtrar";
             this.btnFiltro.UseVisualStyleBackColor = true;
@@ -125,33 +131,71 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(219, 16);
+            this.label1.Location = new System.Drawing.Point(210, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(46, 13);
             this.label1.TabIndex = 8;
             this.label1.Text = "Periodo ";
             // 
-            // DtFim
+            // groupBox3
             // 
-            this.DtFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.DtFim.Location = new System.Drawing.Point(246, 34);
-            this.DtFim.Name = "DtFim";
-            this.DtFim.Size = new System.Drawing.Size(78, 20);
-            this.DtFim.TabIndex = 7;
+            this.groupBox3.Controls.Add(this.dtFim);
+            this.groupBox3.Controls.Add(this.horaFim);
+            this.groupBox3.Location = new System.Drawing.Point(264, 23);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(162, 46);
+            this.groupBox3.TabIndex = 13;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Fim";
             // 
-            // DtInicio
+            // dtFim
             // 
-            this.DtInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.DtInicio.Location = new System.Drawing.Point(144, 34);
-            this.DtInicio.Name = "DtInicio";
-            this.DtInicio.Size = new System.Drawing.Size(78, 20);
-            this.DtInicio.TabIndex = 6;
+            this.dtFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtFim.Location = new System.Drawing.Point(6, 19);
+            this.dtFim.Name = "dtFim";
+            this.dtFim.Size = new System.Drawing.Size(78, 20);
+            this.dtFim.TabIndex = 0;
+            // 
+            // horaFim
+            // 
+            this.horaFim.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.horaFim.Location = new System.Drawing.Point(90, 19);
+            this.horaFim.Name = "horaFim";
+            this.horaFim.Size = new System.Drawing.Size(64, 20);
+            this.horaFim.TabIndex = 6;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.dtinicio);
+            this.groupBox4.Controls.Add(this.horaInicio);
+            this.groupBox4.Location = new System.Drawing.Point(95, 23);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(162, 46);
+            this.groupBox4.TabIndex = 12;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Inicio";
+            // 
+            // dtinicio
+            // 
+            this.dtinicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtinicio.Location = new System.Drawing.Point(6, 19);
+            this.dtinicio.Name = "dtinicio";
+            this.dtinicio.Size = new System.Drawing.Size(78, 20);
+            this.dtinicio.TabIndex = 0;
+            // 
+            // horaInicio
+            // 
+            this.horaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.horaInicio.Location = new System.Drawing.Point(90, 19);
+            this.horaInicio.Name = "horaInicio";
+            this.horaInicio.Size = new System.Drawing.Size(64, 20);
+            this.horaInicio.TabIndex = 6;
             // 
             // frmReportEntregasMotoboy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(462, 447);
+            this.ClientSize = new System.Drawing.Size(526, 475);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "frmReportEntregasMotoboy";
@@ -159,6 +203,8 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -172,7 +218,11 @@
         private System.Windows.Forms.RadioButton rbDetalhado;
         private System.Windows.Forms.Button btnFiltro;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker DtFim;
-        private System.Windows.Forms.DateTimePicker DtInicio;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.DateTimePicker dtFim;
+        private System.Windows.Forms.DateTimePicker horaFim;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.DateTimePicker dtinicio;
+        private System.Windows.Forms.DateTimePicker horaInicio;
     }
 }

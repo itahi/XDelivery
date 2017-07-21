@@ -24,21 +24,19 @@ namespace DexComanda.Relatorios.Fechamentos.Novos
         {
             RelEntregasMotoboy report;
             RelEntregasResumido repor2;
-
             try
             {
                 if (rbDetalhado.Checked)
                 {
                     report = new RelEntregasMotoboy();
-                    crystalReportViewer1.ReportSource = Utils.GerarReportSoDatas(report, DtInicio.Value, DtFim.Value);
+                    crystalReportViewer1.ReportSource = Utils.GerarReportSoDatas(report, dtinicio.Value, dtFim.Value,horaInicio.Value.ToShortTimeString(), horaFim.Value.ToShortTimeString());
                 }
                 else
                 {
                     repor2 = new RelEntregasResumido();
-                    crystalReportViewer1.ReportSource = Utils.GerarReportSoDatas(repor2, DtInicio.Value, DtFim.Value);
+                    crystalReportViewer1.ReportSource = Utils.GerarReportSoDatas(repor2, dtinicio.Value, dtFim.Value, horaInicio.Value.ToShortTimeString(), horaFim.Value.ToShortTimeString());
                 }
                 crystalReportViewer1.Refresh();
-                
             }
             catch (Exception erro)
             {

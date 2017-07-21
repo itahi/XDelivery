@@ -277,3 +277,13 @@ D:\#Projetos\xDelivery\Fonte\bin\Debug\DexComanda.pdb
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmConectaBanco.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Estoque.frmLancaEstoqueInsumo.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Estoque.frmConsultaInsumo.resources
+D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.ConnectionInfo.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Management.Collector.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Management.Sdk.Sfc.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Management.UtilityEnum.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.Smo.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.SmoExtended.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\Microsoft.SqlServer.RegSvrEnum.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.Management.Collector.resources.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.Management.Sdk.Sfc.resources.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\pt\Microsoft.SqlServer.RegSvrEnum.resources.dll

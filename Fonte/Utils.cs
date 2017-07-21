@@ -1380,7 +1380,8 @@ namespace DexComanda
 
             return strRetur;
         }
-        public static ReportClass GerarReportSoDatas(ReportClass iReport, DateTime dtInicio, DateTime dtFim)
+        public static ReportClass GerarReportSoDatas(ReportClass iReport, DateTime dtInicio, DateTime dtFim ,
+            string horaInicio= " 00:00:00", string horaFIm= " 23:59:59")
         {
 
             // iReport = new ReportClass();
@@ -1388,8 +1389,8 @@ namespace DexComanda
             try
             {
                 //     crystalReportViewer1 = new CrystalReportViewer();
-                var datInicio = Convert.ToDateTime(dtInicio.ToShortDateString() + " 00:00:00");
-                var datFim = Convert.ToDateTime(dtFim.ToShortDateString() + " 23:59:59");
+                var datInicio = Convert.ToDateTime(dtInicio.ToShortDateString() +" "+ horaInicio);
+                var datFim = Convert.ToDateTime(dtFim.ToShortDateString() + " " + horaFIm);
 
                 TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
                 TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();

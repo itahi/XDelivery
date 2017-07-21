@@ -1822,10 +1822,10 @@ namespace DexComanda
         {
             try
             {
+                int iCodigo;
                 AtualizaTotalPedido();
                 if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa")
                 {
-                    int iCodigo;
                     string iRetorno;
                     if (con.getLastCodigo() != 0)
                     {
@@ -1849,7 +1849,7 @@ namespace DexComanda
                 // Impressão de Venda Balcão
                 if (cbxTipoPedido.Text == "2 - Balcao" && ImprimeViaBalcao)
                 {
-                    int iCodigo;
+                    
                     if (con.getLastCodigo() != 0)
                     {
                         iCodigo = con.getLastCodigo();
@@ -1860,24 +1860,12 @@ namespace DexComanda
                     }
 
                     string iRetorno = Utils.ImpressaoBalcao(iCodigo, QtdViasBalcao, strNomeImpressoraBalcao);// Sessions.returnConfig.ImpressoraCopaBalcao);
-                    if (ImprimeViaCozinha)
-                    {
-                        if (TipoAgrupamentoCozinha == "Sem Agrupamento")
-                        {
-                            Utils.ImpressaoCozihanova(iCodigo);
-                        }
-                        else
-                        {
-                            ImpressaoPorCozinha(iCodigo);
-                        }
-
-                    }
+                   
                 }
 
                 // Imprimindo via Entrega
                 if (ImprimeViaDelivery && cbxTipoPedido.Text == "0 - Entrega")
                 {
-                    int iCodigo;
                     string iRetorno;
                     if (con.getLastCodigo() != 0)
                     {
@@ -1907,27 +1895,48 @@ namespace DexComanda
                         Utils.ImpressaoEntreganova(iCodigo, dbTotalReceber,
                             QtdViasDelivery, strNomeImpressoraDelivery, prvCodEndecoSelecionado, dblTroco);
                     }
-                    if (ImprimeViaCozinha && cbxTipoPedido.Text.Contains("0 - Entrega"))
+                    //if (ImprimeViaCozinha && cbxTipoPedido.Text.Contains("0 - Entrega"))
+                    //{
+                    //    if (con.getLastCodigo() != 0)
+                    //    {
+                    //        iCodigo = con.getLastCodigo();
+                    //    }
+                    //    else
+                    //    {
+                    //        iCodigo = codPedido;
+                    //    }
+
+                    //    if (TipoAgrupamentoCozinha == "Sem Agrupamento")
+                    //    {
+                    //        Utils.ImpressaoCozihanova(iCodigo);
+                    //    }
+                    //    else
+                    //    {
+                    //        ImpressaoPorCozinha(iCodigo);
+                    //    }
+
+                    //}
+                }
+
+                if (ImprimeViaCozinha)
+                {
+                    if (con.getLastCodigo() != 0)
                     {
-                        if (con.getLastCodigo() != 0)
-                        {
-                            iCodigo = con.getLastCodigo();
-                        }
-                        else
-                        {
-                            iCodigo = codPedido;
-                        }
-
-                        if (TipoAgrupamentoCozinha == "Sem Agrupamento")
-                        {
-                            Utils.ImpressaoCozihanova(iCodigo);
-                        }
-                        else
-                        {
-                            ImpressaoPorCozinha(iCodigo);
-                        }
-
+                        iCodigo = con.getLastCodigo();
                     }
+                    else
+                    {
+                        iCodigo = codPedido;
+                    }
+                    if (TipoAgrupamentoCozinha == "Sem Agrupamento")
+                    {
+                        Utils.ImpressaoCozihanova(iCodigo);
+                    }
+                    else
+                    {
+                        ImpressaoPorCozinha(iCodigo);
+                    }
+
                 }
             }
             catch (Exception E)

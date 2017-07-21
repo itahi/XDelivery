@@ -1975,9 +1975,6 @@ namespace DexComanda
                     return;
                 }
 
-
-
-
                 Boolean iMesa = dsItemsNaoImpresso.Tables[0].Rows[0].Field<string>("Tipo") == "1 - Mesa";
                 for (int i = 0; i < dsItemsNaoImpresso.Tables[0].Rows.Count; i++)
                 {

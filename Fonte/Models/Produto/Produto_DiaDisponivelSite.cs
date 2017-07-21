@@ -10,5 +10,6 @@ namespace DexComanda.Models.Produto
     {
         public string Dia { get; set; }
         public int AtivoSN { get; set; }
+
     }
 }
