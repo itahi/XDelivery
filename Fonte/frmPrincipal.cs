@@ -164,7 +164,7 @@ namespace DexComanda
                     }
                     else
                     {
-                        MessageBox.Show("Caixa Precisa esta aberto", "XSistemas");
+                        MessageBox.Show("Caixa Precisa esta aberto", "[xSistemas]");
                     }
 
 
@@ -2248,15 +2248,23 @@ namespace DexComanda
                     e.Cancel = true;
                     return;
                 }
-                string strServidor = Sessions.returnEmpresa.Servidor;
-                string strBanco = Sessions.returnEmpresa.Banco;
-                string strCaminhoBkp = Sessions.returnEmpresa.CaminhoBackup;
-                // VerificaRegistroASincronizar();
-                con.BackupBanco(strServidor, strBanco, strCaminhoBkp);
 
-                this.Dispose();
-                con.Close();
-                Utils.Kill();
+                if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
+                {
+                   // if (Utils.MessageBoxQuestion("Deseja fechar o caixa agora?")
+ 
+
+
+                string strServidor = Sessions.returnEmpresa.Servidor;
+                    string strBanco = Sessions.returnEmpresa.Banco;
+                    string strCaminhoBkp = Sessions.returnEmpresa.CaminhoBackup;
+                    // VerificaRegistroASincronizar();
+                    con.BackupBanco(strServidor, strBanco, strCaminhoBkp);
+
+                    this.Dispose();
+                    con.Close();
+                    Utils.Kill();
+                }
             }
         }
 

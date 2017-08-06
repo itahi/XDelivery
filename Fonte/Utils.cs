@@ -3617,7 +3617,6 @@ namespace DexComanda
 
             // Save the configuration file.
             //config.Save(ConfigurationSaveMode.Full);
-            string meuProcesso = Process.GetCurrentProcess().ProcessName;
             config.Save(ConfigurationSaveMode.Full);
 
             // Force a reload of a changed section.

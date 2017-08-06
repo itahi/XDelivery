@@ -56,7 +56,12 @@ namespace DexComanda.Operações
 
         private void Sincroniza()
         {
-            iUrlWS = Sessions.returnEmpresa.UrlServidor;
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(Sincroniza));
+                return;
+            }
+                iUrlWS = Sessions.returnEmpresa.UrlServidor;
             GerarToken();
             try
             {
@@ -864,24 +869,20 @@ namespace DexComanda.Operações
 
         private void btnSincronizar_Click(object sender, EventArgs e)
         {
-            Sincroniza();
-            //Thread NovaTread;
-            //try
-            //{
-
-            //    NovaTread = new Thread(new ThreadStart(Sincroniza));
-            //    NovaTread.Start();
-            //    while (!NovaTread.IsAlive)
-            //    {
-            //        Thread.Sleep(1);
-            //        NovaTread.Abort();
-            //        NovaTread.Join();
-            //    }
-            //}
-            //finally
-            //{
-            //    //
-            //}
+            //  Sincroniza();
+            Thread NovaTread;
+            try
+            {
+                lock (this)
+                {
+                    NovaTread = new Thread(new ThreadStart(Sincroniza));
+                    NovaTread.Start();
+                }
+                }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
 
 
         }

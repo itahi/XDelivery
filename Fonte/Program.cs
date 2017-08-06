@@ -50,7 +50,7 @@ namespace DexComanda
                     ArrayList arrText = new ArrayList();
                     sLine = tempDex.ReadLine();
                     Conexao.connectionString = sLine;
-                    string strNomePC = Utils.RetornaNomePc();
+                    //string strNomePC = Utils.RetornaNomePc();
                     
                     // Verifica se o Serviço do SQLSERVER está Ativo para inicia-lo
                    // Utils.ServicoSQLATIVO();

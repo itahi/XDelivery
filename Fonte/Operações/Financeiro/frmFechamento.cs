@@ -46,19 +46,19 @@ namespace DexComanda.Operações.Financeiro
                 FechamentosGrid.DataSource = dsMovimento;
                 FechamentosGrid.DataMember = "CaixaMovimento";
                 FechamentosGrid.Columns["Total Somado"].Visible = false;
-                for (int i = 0; i < FechamentosGrid.Rows.Count; i++)
-                {
-                    if (FechamentosGrid.Rows[i].Cells["Tipo Movimento"].Value.ToString() == "Entradas")
-                    {
-                        vlrEntrada = vlrEntrada + decimal.Parse(FechamentosGrid.Rows[i].Cells["Total Somado"].Value.ToString());
-                    }
-                    else
-                    {
-                        vlrSaida = vlrSaida + decimal.Parse(FechamentosGrid.Rows[i].Cells[2].Value.ToString());
-                    }
-                }
+                //for (int i = 0; i < FechamentosGrid.Rows.Count; i++)
+                //{
+                //    if (FechamentosGrid.Rows[i].Cells["Tipo Movimento"].Value.ToString() == "Entradas")
+                //    {
+                //        vlrEntrada = vlrEntrada + decimal.Parse(FechamentosGrid.Rows[i].Cells["Total Somado"].Value.ToString());
+                //    }
+                //    else
+                //    {
+                //        vlrSaida = vlrSaida + decimal.Parse(FechamentosGrid.Rows[i].Cells[2].Value.ToString());
+                //    }
+                //}
 
-                vlrValorTotal = vlrEntrada - vlrSaida;
+             //   vlrValorTotal = vlrEntrada - vlrSaida;
                 if (!FechamentosGrid.Columns.Contains("ValorInformado"))
                 {
                     FechamentosGrid.Columns.Add("ValorInformado", "ValorInformado");
@@ -99,7 +99,7 @@ namespace DexComanda.Operações.Financeiro
                             ValorInformado = vlrValorInformado,
                             ValorSomado = vlrValorSomado,
                             ValorDiferenca = vlrValorSomado - vlrValorInformado,
-                            Tipo = Convert.ToChar(FechamentosGrid.Rows[i].Cells["Tipo Movimento"].Value.ToString().Substring(0, 1))
+                            Tipo = 'E'
 
                         };
                         con.Insert("spAdicionaDiferenca", caixaD);
@@ -168,6 +168,7 @@ namespace DexComanda.Operações.Financeiro
                 if (Utils.MessageBoxQuestion("Deseja imprimir o fechamento de caixa ?"))
                 {
                     Utils.ImpressaoCaixa(caixa.Turno, Convert.ToDateTime(txtDtAbertura.Text), Convert.ToDateTime(dtFechamento.Text));
+                    Application.DoEvents();
                 }
                 this.Close();
                // Utils.Restart();

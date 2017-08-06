@@ -69,7 +69,7 @@ namespace DexComanda.Operações.Financeiro
                     {
                         Data = dtAbertura.Value,
                         Estado = false /*Caixa Aber*/,
-                        Historico = "Abertura Caixa",
+                        Historico = "Saldo Inicial",
                         Numero = cbxCaixas.Text,
                         Turno = cbxTurno.Text.ToString(),
                         ValorAbertura = decimal.Parse(txtValor.Text),

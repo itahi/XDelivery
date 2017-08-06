@@ -306,14 +306,20 @@ namespace DexComanda
         }
         public DataSet ConsultaPedido(string iCodPedido, DateTime dtInicio, DateTime dtFim)
         {
-            string strCodPedido;
-            string iSql = "select Pd.Codigo," +
-                "(select Nome from Pessoa P where P.Codigo = Pd.CodPessoa) as 'Nome Cliente', " +
-                " Finalizado,TotalPedido,(select top 1 PS.Nome from PedidoStatusMovimento PSM " +
-                " join  PedidoStatus PS on Status = PSM.CodStatus where PSM.CodPedido=PD.Codigo " +
-                " order by PSM.DataAlteracao desc ) as 'Situacao Pedido' ,(select Nome from Entregador " +
-                " where Codigo=PD.CodMotoboy) as 'Entregador',(Select Nome from Usuario where Cod = PD.CodUsuario)" +
-                " as 'Atendente' from Pedido Pd where Pd.Finalizado=1  and Pd.RealizadoEM between '" + dtInicio.ToShortDateString() + " 00:00:00" + "'  and  '" + dtFim.ToShortDateString() + " 23:59:59" + "'";
+            string iSql = " select " +
+                    " Pd.Codigo, " +
+                    " case PD.Tipo " +
+                    " when '1 - Mesa'   then 'Mesa' + ' - ' + PD.NumeroMesa " +
+                    " when '2 - Balcao' then 'Cliente Balcao ' + PD.Senha + ' ' + Pd.Observacao " +
+                    " when '0 - Entrega' then P.Nome " +
+                    " end as  'Nome Cliente' " +
+                    ",Finalizado,TotalPedido, " +
+                    " (select top 1 PS.Nome from PedidoStatusMovimento PSM  join PedidoStatus PS on Status = PSM.CodStatus where PSM.CodPedido = PD.Codigo  order by PSM.DataAlteracao desc ) as 'Situacao Pedido' " +
+                    " ,(select Nome from Entregador where Codigo = PD.CodMotoboy) as 'Entregador', " +
+                    " (Select Nome from Usuario where Cod = PD.CodUsuario) as 'Atendente' " +
+                    " from Pedido Pd " +
+                    " join Pessoa P on P.Codigo = Pd.CodPessoa " +
+                    " and Pd.RealizadoEM between '" + dtInicio.ToShortDateString() + " 00:00:00" + "'  and  '" + dtFim.ToShortDateString() + " 23:59:59" + "'";
 
             if (iCodPedido != "")
             {
@@ -886,7 +892,7 @@ namespace DexComanda
                                   " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
                                  "  join Produto P on P.Codigo = Prod.CodProduto" +
                                   "  where Prod.CodProduto = @CodProduto and Op.AtivoSN=1" +
-                                  " order by PoT.OrdenExibicao,Op.Nome";
+                                  " order by PoT.OrdenExibicao asc";
             //" order by PoT.OrdenExibicao,Op.Nome";
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -1155,11 +1161,11 @@ namespace DexComanda
         public DataSet SelectCaixaFechamento(string iDataI, string iDataF, string iTurno, string table = "CaixaMovimento")
         {
             string lSqlConsulta = " select " +
-                                 " case Tipo " +
-                                 " when 'E' then 'Entradas'" +
-                                 " when 'S' then 'Saidas'" +
-                                 " end" +
-                                 " as 'Tipo Movimento', " +
+                                 //" case Tipo " +
+                                 //" when 'E' then 'Entradas'" +
+                                 //" when 'S' then 'Saidas'" +
+                                 //" end" +
+                                 //" as 'Tipo Movimento', " +
                                 //" Cx.CodCaixa," +
                                 " Fp.Descricao ," +
                                 " sum(cx.Valor) as 'Total Somado'" +
@@ -1168,7 +1174,8 @@ namespace DexComanda
                                 " where " +
                                 " CX.CodCaixa = (select Codigo from Caixa where Turno=@Turno and Estado=0) "+
                                 //" AND CX.Data BETWEEN @DataI  AND @DataF " +
-                                " group by CodCaixa,Fp.Descricao,Tipo";
+                               " group by CodCaixa,Fp.Descricao";
+                                   // " group by CodCaixa,Fp.Descricao,Tipo";
 
 
             command = new SqlCommand(lSqlConsulta, conn);

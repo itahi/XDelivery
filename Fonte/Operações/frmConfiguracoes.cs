@@ -837,7 +837,6 @@ namespace DexComanda
         private void SalvarConfigProduto(object sender, EventArgs e)
         {
             string strConfiProduto = "Codigo";
-
             foreach (Control item in grpProdutos.Controls)
             {
 
@@ -859,7 +858,7 @@ namespace DexComanda
             string strConfigPedido = "Pd.Codigo,";
             if (chkNomeCliente.Checked)
             {
-                strConfigPedido = strConfigPedido + " case PD.Tipo when '1 - Mesa' then P.Nome + ' - ' + PD.NumeroMesa when '2 - Balcao' then 'Cliente Balcao ' + PD.Senha +' '+Pd.Observacao when '0 - Entrega' then P.Nome end as  'Nome Cliente'";
+                strConfigPedido = strConfigPedido + " case PD.Tipo when '1 - Mesa' then 'Mesa' + ' - ' + PD.NumeroMesa when '2 - Balcao' then 'Cliente Balcao ' + PD.Senha +' '+Pd.Observacao when '0 - Entrega' then P.Nome end as  'Nome Cliente'";
             }
             if (chkFinalizado.Checked)
             {
