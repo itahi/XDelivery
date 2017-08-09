@@ -61,7 +61,8 @@ namespace DexComanda.Operações
                 this.Invoke(new MethodInvoker(Sincroniza));
                 return;
             }
-                iUrlWS = Sessions.returnEmpresa.UrlServidor;
+
+            iUrlWS = Sessions.returnEmpresa.UrlServidor;
             GerarToken();
             try
             {
@@ -89,7 +90,7 @@ namespace DexComanda.Operações
                             }
                         }
                     }
-                   
+
                     // Sincronizar Grupos
                     CadastraCategorias(ObterDados("Grupo"));
                     // Sincronizar Tipo Opcao
@@ -153,7 +154,7 @@ namespace DexComanda.Operações
             {
                 MessageBox.Show("Não foi possivel enviados os dados do OneSignal " + erro.Message);
             }
-            
+
 
         }
         private void LimparUrlAmigaveis()
@@ -239,7 +240,7 @@ namespace DexComanda.Operações
             lblMinimo.Visible = true;
             lblMinimo.Text = lRetorno.msg;
         }
-       
+
         private DataSet ObterDados(string iNomeTable)
         {
             if (iNomeTable != "FormaPagamento")
@@ -530,12 +531,12 @@ namespace DexComanda.Operações
                     status = Convert.ToInt16(ds.Tables[0].Rows[i].Field<string>("StatusMesa"))
                 };
                 listmesas.Add(mesas);
-               
+
             }
             return listmesas;
         }
 
-            
+
         private void CadastraMesas()
         {
             try
@@ -556,22 +557,22 @@ namespace DexComanda.Operações
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
-        private void ConfirmaObjeto(string strObjetRetur,DataSet dsObjetEnvio,string strNomeTable)
+        private void ConfirmaObjeto(string strObjetRetur, DataSet dsObjetEnvio, string strNomeTable)
         {
             try
             {
                 ObjetoRetornoWSBLL list = JsonConvert.DeserializeObject<ObjetoRetornoWSBLL>(strObjetRetur);
                 int[] lista = list.id;
-                if (list.status==true)
+                if (list.status == true)
                 {
                     for (int i = 0; i < dsObjetEnvio.Tables[0].Rows.Count; i++)
                     {
-                        con.AtualizaDataSincronismo(strNomeTable,int.Parse(dsObjetEnvio.Tables[0].Rows[i].ItemArray.GetValue(0).ToString()));
+                        con.AtualizaDataSincronismo(strNomeTable, int.Parse(dsObjetEnvio.Tables[0].Rows[i].ItemArray.GetValue(0).ToString()));
                         prgBarMesa.Increment(1);
                     }
                 }
-                
-                
+
+
             }
             catch (Exception erro)
             {
@@ -675,7 +676,7 @@ namespace DexComanda.Operações
                     request.AddParameter("keyWords", ds.Tables[0].Rows[i].Field<string>("PalavrasChaves"));
                     request.AddParameter("store_id", store_idAtual);
                     //Caso o grupo esteja marcado como multi sabores ele enviará esse parametro
-                    if (ds.Tables[0].Rows[i].Field<int>("MultiploSabores")==1)
+                    if (ds.Tables[0].Rows[i].Field<int>("MultiploSabores") == 1)
                     {
                         request.AddParameter("multi_product_id", dRow.ItemArray.GetValue(15).ToString());
                         request.AddParameter("multi_product_max", strMultisabores);
@@ -841,7 +842,7 @@ namespace DexComanda.Operações
                 {
                     iCod = int.Parse(dRow.ItemArray.GetValue(0).ToString());
                     request.AddFile("cartao[" + i + "]", dRow.ItemArray.GetValue(7).ToString(), "imagem/png");
-                    request.AddParameter("store_id",store_idAtual );
+                    request.AddParameter("store_id", store_idAtual);
 
                 }
                 prgBarpagamento.Value = prgBarpagamento.Value + 1;
@@ -878,7 +879,7 @@ namespace DexComanda.Operações
                     NovaTread = new Thread(new ThreadStart(Sincroniza));
                     NovaTread.Start();
                 }
-                }
+            }
             catch (Exception erro)
             {
                 MessageBox.Show(erro.Message);

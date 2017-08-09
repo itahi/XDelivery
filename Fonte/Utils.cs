@@ -21,7 +21,6 @@ using System.Collections;
 using DexComanda.Relatorios.Delivery;
 using CrystalDecisions.Shared;
 using CrystalDecisions.CrystalReports.Engine;
-using System.Diagnostics;
 using System.Configuration;
 using DexComanda.Operações.Financeiro;
 using DexComanda.Operações;
@@ -29,7 +28,6 @@ using Microsoft.VisualBasic;
 using DexComanda.Models.WS;
 using Newtonsoft.Json;
 using DexComanda.Operações.Funções;
-using DexComanda.Relatorios.Fechamentos.Novos.Impressao_Termica;
 using DexComanda.Relatorios.Gerenciais.Cristal;
 using DexComanda.Relatorios.Clientes.Crystal;
 using System.Drawing.Printing;
@@ -38,7 +36,6 @@ using DexComanda.Cadastros.Pessoa;
 using DexComanda.Cadastros.Pedido;
 using DexComanda.Relatorios.Caixa;
 using DexComanda.Models.Configuracoes;
-using XIntegrador.Classe;
 using System.Data.Sql;
 
 namespace DexComanda

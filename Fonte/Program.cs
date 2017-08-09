@@ -191,38 +191,30 @@ namespace DexComanda
                             }
                             else
                             {
-
-                                MessageBox.Show("Não foi encontrado uma conexão com a internet ", "xSistemas - Atenção");
-                                // Utils.IniciaSistema();
-                                if (Utils.LeArquivoRegistro())
-                                {
-                                    int intAbriu15Vezes = Utils.ContaRegistro(empresas.Nome + empresas.CNPJ);
-                                    if (intAbriu15Vezes < 15)
-                                    {
-                                        Utils.IniciaSistema();
-                                    }
-                                    else if (empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "11291880000119")
-                                    {
-                                        Utils.IniciaSistema();
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("Voce precisa se conectar a Internet para obter uma nova Licença", "Aviso Importante");
-                                        Application.Exit();
-                                    }
-
-                                }
-                                // CNPJ OSVALDO
-                                else if (empresas.Servidor == "XSISTEMASCOMERC" || empresas.Servidor == "LAZAROSHEV" || empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "10512501000100" || empresas.CNPJ == "11291880000119")
+                                MessageBox.Show("Não foi encontrado uma conexão com a internet , tentaremos uma validação paralela", "[xSistemas] - Atenção");
+                                if (Utils.ContaRegistro(empresas.Nome + empresas.CNPJ)<=15)
                                 {
                                     Utils.IniciaSistema();
+                                    //int intAbriu15Vezes = Utils.ContaRegistro(empresas.Nome + empresas.CNPJ);
+                                    //if (intAbriu15Vezes < 15)
+                                    //{
+                                    //    Utils.IniciaSistema();
+                                    //}
+                                    //else if (empresas.CNPJ == "14904501000107" || empresas.CNPJ == "11301588709" || empresas.CNPJ == "11291880000119")
+                                    //{
+                                    //    Utils.IniciaSistema();
+                                    //}
+                                    //else
+                                    //{
+                                    //    MessageBox.Show("Voce precisa se conectar a Internet para obter uma nova Licença", "Aviso Importante");
+                                    //    Application.Exit();
+                                    //}
+
                                 }
                                 else
                                 {
-                                    // Utils.IniciaSistema();
-                                    MessageBox.Show("Licença Expirada, conecte-se a internet para uma renovação");
-                                    frmLicencaOFFLINE frm = new frmLicencaOFFLINE();
-                                    frm.ShowDialog();
+                                    MessageBox.Show("Voce precisa se conectar a Internet para obter uma nova Licença", "Aviso Importante");
+                                    Application.Exit();
                                 }
 
                             }

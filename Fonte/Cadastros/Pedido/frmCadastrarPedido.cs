@@ -11,6 +11,7 @@ using System.Drawing.Printing;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 
@@ -87,7 +88,7 @@ namespace DexComanda
             }
         }
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, int iCodMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
-            DateTime DataPedido, int CodigoPedido, int CodPessoa, string tPara, string fPagamento, string TipoPedido, string MesaBalcao,
+            DateTime DataPedido, int CodigoPedido, int CodPessoa, string itrocoPara, string fPagamento, string TipoPedido, string MesaBalcao,
             decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0,
             string iObservacaoPedido = "", int iIntEnderecoSelecionado = 0, string strSenha = "")
         {
@@ -103,8 +104,7 @@ namespace DexComanda
                 codPessoa = CodPessoa;
                 txtSenha.Text = strSenha;
                 codPedido = CodigoPedido;
-                trocoPara = "0,00";
-                txtTrocoPara.Text = "0,00";
+                txtTrocoPara.Text = itrocoPara;
                 formaPagamento = fPagamento;
                 txtObsPedido.Text = iObservacaoPedido;
                 DataPed = DataPedido;
@@ -138,7 +138,6 @@ namespace DexComanda
                 CarregaMesas(iCodMesa);
                 gNUmeroMesa = Convert.ToString(iCodMesa);
                 cbxTipoPedido.Text = TipoPedido;
-                // cbxListaMesas.Items.Add(MesaBalcao);
                 Utils.MontaCombox(cbxVendedor, "Nome", "Codigo", "Usuario", "spObterUsuarioPorCodigo", iCodVendedor);
             }
             catch (Exception mx)
@@ -200,7 +199,6 @@ namespace DexComanda
                 txtCodProduto1.Visible = true;
                 chkCodPersonalizado.Visible = true;
                 chkCodPersonalizado.Checked = Utils.MarcaTipoConfiguracaoProduto().TipoCodigo == "Personalizado";
-
             }
             else
             {
@@ -225,8 +223,6 @@ namespace DexComanda
                     this.btnGerarPedido.Click += btnAtualizar_Click;
                     this.btnReimprimir.Visible = true;
                 }
-                // DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
-                //  DataRow dRow = pessoa.Tables["Pessoa"].Rows[0];
                 pCliente = new Pessoa()
                 {
                     Nome = dRow["Nome"].ToString(),
@@ -239,9 +235,7 @@ namespace DexComanda
                     Telefone = dRow["Telefone"].ToString(),
                     Telefone2 = dRow["Telefone2"].ToString()
                 };
-
                 DataSet itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsPedido", codPedido);
-
                 for (int i = 0; i < itemsPedido.Tables["ItemsPedido"].Rows.Count; i++)
                 {
                     var itemPedido = new ItemPedido()
@@ -256,23 +250,17 @@ namespace DexComanda
                         ImpressoSN = Convert.ToBoolean(itemsPedido.Tables["ItemsPedido"].Rows[i].Field<Boolean>("ImpressoSN"))
                     };
 
-                    this.txtTrocoPara.Text = trocoPara;
                     this.cmbFPagamento.Text = formaPagamento;
                     items.Add(itemPedido);
                     atualizarGrid(itemPedido);
-
                 }
                 if (DMargemGarco != 0.00M)
                 {
                     lbTotal.Text = Convert.ToString(decimal.Parse(lbTotal.Text.Replace("R$", "")) + DMargemGarco);
                 }
-                //   AtualizaClienteTela(this);
             }
             else
             {
-                // DataSet pessoa = con.SelectPessoaPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
-                //DataRow dRow = pessoa.Tables["Pessoa"].Rows[0];
-
                 pCliente = new Pessoa()
                 {
                     Nome = dRow["Nome"].ToString(),
@@ -1264,7 +1252,6 @@ namespace DexComanda
                             iCodPedido = con.getLastCodigo();
                             con.AtualizaSituacao(iCodPedido, Sessions.retunrUsuario.Codigo, 1);
 
-
                             if (ContraMesas && cbxTipoPedido.Text != "1 - Mesa")
                             {
                                 prepareToPrint();
@@ -1274,19 +1261,6 @@ namespace DexComanda
                                 prepareToPrint();
                             }
 
-                            //if (!Utils.bMult && cbxTipoPedido.Text != "1 - Mesa")
-                            //{
-                            //    FinalizaPedido finaliza = new FinalizaPedido()
-                            //    {
-                            //        CodPedido = iCodPedido,
-                            //        CodPagamento = int.Parse(cmbFPagamento.SelectedValue.ToString()),
-                            //        ValorPagamento = pedido.TotalPedido
-                            //    };
-                            //    con.Insert("spAdicionarFinalizaPedido_Pedido", finaliza);
-                            //}
-
-                            // Fecha o Formulario 
-                            // MessageBox.Show("Pedido gerado com sucesso.");
                             this.Close();
 
 
@@ -3717,22 +3691,22 @@ namespace DexComanda
                 CalculaPorcentagemDesconto();
             }
         }
-        private void CalculaTempPedido()
-        {
-            Timer relogio = new Timer();
-            relogio.Interval = 1000;
-            int tempo = DataPed.Hour;
-            relogio.Tick += delegate
-            {
-                tempo -= DateTime.Now.Hour;
-                lblTempo.Text = tempo.ToString();
-                //if (tempo == TempPrevisto)
-                //{
-                //    relogio.Stop();
-                //}
-            };
-            relogio.Start();
-        }
+        //private void CalculaTempPedido()
+        //{
+        //    Timer relogio = new Timer();
+        //    relogio.Interval = 1000;
+        //    int tempo = DataPed.Hour;
+        //    relogio.Tick += delegate
+        //    {
+        //        tempo -= DateTime.Now.Hour;
+        //        lblTempo.Text = tempo.ToString();
+        //        //if (tempo == TempPrevisto)
+        //        //{
+        //        //    relogio.Stop();
+        //        //}
+        //    };
+        //    relogio.Start();
+        //}
 
         private void cbxTipoPedido_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -3784,7 +3758,6 @@ namespace DexComanda
                     MessageBox.Show(Bibliotecas.cCaixaFechado);
                     return;
                 }
-                // CalculaPorcentagemDesconto();
                 NovoTotalPedido pedi = new NovoTotalPedido()
                 {
                     Codigo = codPedido,
@@ -3853,7 +3826,7 @@ namespace DexComanda
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            Timer HoraAtual;
+         //   Timer HoraAtual;
             lblTempo.Text = Convert.ToString(DateTime.Now - DataPed).Substring(0, 8);
         }
 

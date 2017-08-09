@@ -104,7 +104,7 @@ namespace DexComanda
 
             frmCadastrarPedido CadPedido = new frmCadastrarPedido(false, "0,00", 0, "0,00", TaxaEntrega,
                                                                         false, DateTime.Now, 0, CodPessoa,
-                                                                        "", "", "", "", 0.00M, 0.00M, 0, "", iCodEndeco);
+                                                                        "0,00", "", "", "", 0.00M, 0.00M, 0, "", iCodEndeco);
             CadPedido.Show(this);
             Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
             TotalizaPedidos();
@@ -672,7 +672,7 @@ namespace DexComanda
             int intCodEndereco = DsPedido.Tables[0].Rows[0].Field<int>("CodEndereco");
             frmCadastrarPedido frm = new frmCadastrarPedido(false, strDescPedido, iNumMesa,
                                       strTroco, TaxaServico, true, DsPedido.Tables[0].Rows[0].Field<DateTime>("RealizadoEM"),
-                                     DsPedido.Tables[0].Rows[0].Field<int>("Codigo"), DsPedido.Tables[0].Rows[0].Field<int>("CodPessoa"), DvPedido.ItemArray.GetValue(4).ToString(),
+                                     DsPedido.Tables[0].Rows[0].Field<int>("Codigo"), DsPedido.Tables[0].Rows[0].Field<int>("CodPessoa"), strTrocoPara.ToString(),
                                       DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(),
                                       decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao, intCodEndereco, DsPedido.Tables[0].Rows[0].Field<string>("Senha"));
             frm.Show();

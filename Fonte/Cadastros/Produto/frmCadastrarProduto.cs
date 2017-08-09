@@ -402,7 +402,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    txtEstMinimo.Text = "0";
+                    txtEstMinimo.Text = txtEstMinimo.Text;
                 }
                 produto.EstoqueMinimo = decimal.Parse(txtEstMinimo.Text);
                 if (txtPontosFidelidade.Text != "")
@@ -606,7 +606,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    txtEstMinimo.Text = "0";
+                    txtEstMinimo.Text = txtEstMinimo.Text;
                 }
                 produto.EstoqueMinimo = decimal.Parse(txtEstMinimo.Text);
                 if (txtPontosFidelidade.Text != "")

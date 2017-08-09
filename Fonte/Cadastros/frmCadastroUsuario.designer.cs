@@ -136,7 +136,7 @@
             this.chkCancelaPedidos.Size = new System.Drawing.Size(106, 17);
             this.chkCancelaPedidos.TabIndex = 8;
             this.chkCancelaPedidos.Text = "Cancela Pedidos";
-            this.toolTip1.SetToolTip(this.chkCancelaPedidos, "Permite que o usuário \"CANCELE\" pedidos");
+            this.toolTip1.SetToolTip(this.chkCancelaPedidos, "Permite que o usuário \"CANCELAR\" pedidos");
             this.chkCancelaPedidos.UseVisualStyleBackColor = true;
             // 
             // chkAcessaRelat

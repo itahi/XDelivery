@@ -35,7 +35,7 @@ namespace DexComanda
         }
         private Boolean NomeCadastrado(string iNomeUser)
         {
-            Boolean iRetur=true;
+            Boolean iRetur = true;
             for (int i = 0; i < usuariosGridView.Rows.Count; i++)
             {
                 if (iNomeUser == usuariosGridView.Rows[i].Cells["Nome"].Value.ToString())
@@ -67,7 +67,7 @@ namespace DexComanda
                     AlteraDadosClienteSN = chkEditaCliente.Checked,
                     EditaPedidoSN = chkAlteraPedido.Checked,
                     VisualizaDadosClienteSN = chkAbreCliente.Checked,
-                    
+
                 };
 
 
@@ -94,7 +94,6 @@ namespace DexComanda
             {
                 codigo = int.Parse(this.usuariosGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
                 txtNomeUsuario.Text = this.usuariosGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
-                txtSenha.Enabled = false;
                 mSenha = usuariosGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
                 chkCancelaPedidos.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
                 chkAlteraProdutos.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
@@ -133,13 +132,24 @@ namespace DexComanda
         private void SalvarEdicao(object sender, EventArgs e)
         {
 
-            if (txtNomeUsuario.Text != "")
+            if (txtNomeUsuario.Text == "")
             {
+                MessageBox.Show("Preencha o nome do usuario");
+                txtNomeUsuario.Focus();
+                return;
+
+            }
+            if (txtSenha.Text=="")
+            {
+                MessageBox.Show("Preencha a senha do usuario");
+                txtSenha.Focus();
+                return;
+            }
                 Usuario user = new Usuario()
                 {
                     Codigo = codigo,
                     Nome = txtNomeUsuario.Text,
-                    Senha = usuariosGridView.SelectedRows[rowIndex].Cells[2].Value.ToString(),
+                    Senha = Utils.EncryptMd5(this.txtNomeUsuario.Text.ToString(), this.txtSenha.Text.ToString()),
                     CancelaPedidosSN = chkCancelaPedidos.Checked,
                     AlteraProdutosSN = chkAlteraProdutos.Checked,
                     AdministradorSN = chkAdministrador.Checked,
@@ -165,12 +175,6 @@ namespace DexComanda
                 Utils.ControlaEventos("Alterar", this.Name);
                 MessageBox.Show("Usuario alterado com sucesso");
                 Utils.LimpaForm(this);
-            }
-            else
-            {
-                MessageBox.Show("Campos não podem ficar em branco", "Aviso");
-            }
-
         }
 
         private void chkDescSN_CheckedChanged(object sender, EventArgs e)
