@@ -260,10 +260,8 @@ namespace DexComanda
             btnEditar.Enabled = codigoProdutoParaAlterar != 0;
             DiasSelecionados = new List<string>();
             tabPage2.IsAccessible = btnDoProduto.Text == "Alterar [F12]";
-            //    List<Produtos_Adicionais> ProdAdicionais = new List<Produtos_Adicionais>();
             grpDesconto.Visible = DescontoPordia;
             List<Grupo> grupos = new List<Grupo>();
-
             if (produto != null)
             {
                 this.btnDoProduto.Text = "Alterar [F12]";
@@ -278,12 +276,12 @@ namespace DexComanda
                 this.precoProdutoTextBox.Text = produto.Preco.ToString();
                 this.descricaoProdutoTextBox.Text = produto.Descricao.ToString();
                 this.chkAtivo.Checked = produto.AtivoSN;
-                DataSet dsEstoque = con.ContaEstoque(produto.Nome);
-                if (dsEstoque.Tables[0].Rows.Count > 0)
-                {
-                    txtEstoqueAtual.Text = dsEstoque.Tables[0].Rows[0].Field<decimal>("EstoqueAtual").ToString();
+                //DataSet dsEstoque = con.ContaEstoque(produto.Nome);
+                //if (dsEstoque.Tables[0].Rows.Count > 0)
+                //{
+                //    txtEstoqueAtual.Text = dsEstoque.Tables[0].Rows[0].Field<decimal>("EstoqueAtual").ToString();
 
-                }
+                //}
                 // txtEstoqueAtual.Text= con.ContaEstoque(nomeProdutoTextBox.Text).Tables[0].Rows[0].Field<decimal>("EstoqueAtual").ToString();
             }
 
@@ -303,7 +301,6 @@ namespace DexComanda
         private string DiaDisponivelSite()
         {
             List<Produto_DiaDisponivelSite> listDias = new List<Produto_DiaDisponivelSite>();
-            // var precosDia = new PrecoDiaProduto();
             foreach (System.Windows.Forms.Control TEXT in grpDiasDisponivel.Controls)
             {
                 //Loop through all controls 

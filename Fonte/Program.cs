@@ -20,10 +20,6 @@ namespace DexComanda
         private static Conexao con;
         private static DataRow dRow;
         private static DataRow config;
-
-        //   private static Empresa empresa;
-
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -141,7 +137,7 @@ namespace DexComanda
                                     if (con.Liberacao(Sessions.returnEmpresa.Nome, Cnpj, NomePC, MAcPC) != null)
                                     {
                                         // Cria Registro Para Usar Off
-                                        Utils.GravaRegistro(Utils.RetornaNomePc() + empresas.CNPJ + empresas.Cidade + empresas.Nome);
+                                       // Utils.GravaRegistro(Utils.RetornaNomePc() + empresas.CNPJ + empresas.Cidade + empresas.Nome);
 
                                         // Verifica se Abriu o Sistema 15 dias sem internet e limpa dando mais 5 dias  
                                         int intAbriu15Vezes = Utils.ContaRegistro(empresas.Nome + empresas.CNPJ);

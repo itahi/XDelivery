@@ -23,7 +23,6 @@ namespace DexComanda
         private List<Grupo> grupos;
         private int codPessoa;
         private int codPedido;
-        private string trocoPara;
         private string formaPagamento;
         public decimal ValorTotal;
         public decimal ValorTroco;
@@ -36,7 +35,6 @@ namespace DexComanda
         private int rowIndex;
         private int iRowSelecionada;
         private Pessoa pCliente;
-        private bool debug = true;//Sessions.returnConfig.ImpViaCozinha;
         private string itemNome, gNUmeroMesa;
         private bool ContraMesas = Sessions.returnConfig.UsaControleMesa;
         private string DiaDaSema = DateTime.Now.DayOfWeek.ToString();
@@ -60,16 +58,11 @@ namespace DexComanda
         private bool ImprimeViaCozinha = Utils.RetornaConfiguracaoMesa().ImprimeSN;
         private int QtdViasCozinha = int.Parse(Utils.RetornaConfiguracaoMesa().ViaCozinha);
         private string TipoAgrupamentoCozinha = Utils.RetornaConfiguracaoMesa().TipoAgrupamento;
-
-
         private string TipoAgrupamentoDelivery = Utils.RetornaConfiguracaoDelivery().TipoAgrupamento;
         private bool ImprimeViaDelivery = Utils.RetornaConfiguracaoDelivery().ImprimeSN;
         private int QtdViasDelivery = int.Parse(Utils.RetornaConfiguracaoDelivery().ViaDelivery);
-
         private bool ImprimeViaBalcao = Utils.RetornaConfiguracaoBalcao().ImprimeSN;
         private int QtdViasBalcao = int.Parse(Utils.RetornaConfiguracaoBalcao().ViaBalcao);
-
-        private int intCodProduto;
         private string strNomeImpressoraDelivery = Utils.RetornaImpressoras().ImpressoraDelivery;
         private string strNomeImpressoraBalcao = Utils.RetornaImpressoras().ImpressoraBalcao;
         private string strNomeImpressoraContaMesa = Utils.RetornaImpressoras().ImpressoraContaMesa;
@@ -863,19 +856,49 @@ namespace DexComanda
 
         }
 
+        /// <summary>
+        /// Pega o nome de cada item marcado no checkbox 'adicionais' e preenche as observações do produto
+        /// </summary>
+        /// <returns></returns>
         private string PegaCheckBoxMarcado()
         {
-            string strMarcado = txtItemDescricao.Text.Insert(txtItemDescricao.Text.Length, Environment.NewLine);
+
+            string strMarcado = string.Empty;
             try
             {
+                string[] strObs = txtItemDescricao.Text.Trim().Split(Environment.NewLine.ToCharArray());
                 for (int i = 0; i < chkListAdicionais.Items.Count; i++)
                 {
-                    if (chkListAdicionais.GetItemCheckState(i) == CheckState.Checked)
+                    if (chkListAdicionais.GetItemCheckState(i) == CheckState.Checked
+                        && !txtItemDescricao.Text.Contains(ObterSomenteLetras(chkListAdicionais.Items[i].ToString())))
                     {
                         strMarcado += ObterSomenteLetras(chkListAdicionais.Items[i].ToString());
                         strMarcado = strMarcado.Insert(strMarcado.Length, Environment.NewLine);
+                        decimal dValorProduto = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
+                        decimal dValorAdicional = decimal.Parse(ObterSomenteNumerosReais(chkListAdicionais.Items[i].ToString()));
+                        txtPrecoUnitario.Text = Convert.ToString(dValorProduto + dValorAdicional);
+                        CalcularTotalItem();
                     }
-                    
+                    else if (txtItemDescricao.Text.Contains(ObterSomenteLetras(chkListAdicionais.Items[i].ToString()))
+                        && chkListAdicionais.GetItemCheckState(i) == CheckState.Unchecked)
+                    {
+                        decimal dValorProduto = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
+                        decimal dValorAdicional = decimal.Parse(ObterSomenteNumerosReais(chkListAdicionais.Items[i].ToString()));
+
+                        for (int intFor = 0; intFor < strObs.Length; intFor++)
+                        {
+                            if (strObs[intFor].ToString() == ObterSomenteLetras(chkListAdicionais.Items[i].ToString()))
+                            {
+                                txtItemDescricao.Text = txtItemDescricao.Text.Replace(ObterSomenteLetras(chkListAdicionais.Items[i].ToString()), "").Trim();
+                            }
+                          
+                        }
+                        strMarcado = txtItemDescricao.Text;
+                        txtPrecoUnitario.Text = Convert.ToString(dValorProduto - dValorAdicional);
+                        CalcularTotalItem();
+                    }
+
+                   
                 }
             }
             catch (Exception erro)
@@ -887,6 +910,7 @@ namespace DexComanda
         private void btnAdicionarItemNoPedido_Click(object sender, EventArgs e)
         {
             int intCodigoProdutoBusca = 0;
+            string strItemsMarcados = "";
             try
             {
                 if (!ProdutosPorCodigo)
@@ -926,7 +950,6 @@ namespace DexComanda
                 grpBoxTamanhos.Enabled = true;
                 MeiaPizza();
 
-
                 if (txtQuantidade.Text != "")
                 {
                     var quantidade = decimal.Parse(this.txtQuantidade.Text.ToString());
@@ -946,7 +969,6 @@ namespace DexComanda
                             TrocoPara = decimal.Parse(txtTrocoPara.Text),
                             FormaPagamento = this.cmbFPagamento.Text,
                             RealizadoEm = DateTime.Now
-
                         };
 
                         pedido.Tipo = cbxTipoPedido.Text;
@@ -971,6 +993,7 @@ namespace DexComanda
                             }
                             else
                             {
+                                strItemsMarcados = PegaCheckBoxMarcado();
                                 item = new ItemPedido()
                                 {
                                     CodPedido = codPedido,
@@ -978,10 +1001,9 @@ namespace DexComanda
                                     Quantidade = decimal.Parse(this.txtQuantidade.Text),
                                     PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$ ", "")),
                                     PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", "")),
-                                    Item =  PegaCheckBoxMarcado(),
+                                    Item = txtItemDescricao.Text.Insert(txtItemDescricao.Text.Length,Environment.NewLine)+strItemsMarcados ,
                                     CodProduto = intCodigoProdutoBusca
                                 };
-
                                 pedido.HorarioEntrega = "";
                                 if (cbxHorarioEntrega.Text != "")
                                 {
@@ -1007,6 +1029,7 @@ namespace DexComanda
                         else
                         {
 
+                            strItemsMarcados = PegaCheckBoxMarcado();
                             item = new ItemPedido()
                             {
                                 CodPedido = 0,
@@ -1014,7 +1037,7 @@ namespace DexComanda
                                 Quantidade = decimal.Parse(this.txtQuantidade.Text),
                                 PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$", "")),
                                 PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$", "")),
-                                Item = PegaCheckBoxMarcado(),//txtItemDescricao.Text,
+                                Item  = txtItemDescricao.Text.Insert(txtItemDescricao.Text.Length, Environment.NewLine) + strItemsMarcados,
                                 CodProduto = intCodigoProdutoBusca
 
                             };
@@ -1327,6 +1350,11 @@ namespace DexComanda
             //    };
             //    con.Update("spAlteraFinalizaPedido_Pedido", finaliza);
             //}
+            if (txtTrocoPara.Text == "")
+            {
+                txtTrocoPara.Text = "0,00";
+            }
+           
 
             pedido = new Pedido()
             {
@@ -1443,6 +1471,7 @@ namespace DexComanda
                         }
                         else
                         {
+                            string strItens = PegaCheckBoxMarcado();
                             var itemPedido = new ItemPedido()
                             {
                                 CodProduto = codigoItemParaAlterar,
@@ -1451,7 +1480,7 @@ namespace DexComanda
                                 Quantidade = decimal.Parse(this.txtQuantidade.Text),
                                 PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$ ", "")),
                                 PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", "")),
-                                Item = this.txtItemDescricao.Text.ToString()
+                                Item = strItens
 
                             };
 
@@ -1600,6 +1629,7 @@ namespace DexComanda
                     }
                     else
                     {
+                        string strItens = PegaCheckBoxMarcado();
                         var itemPedido = new ItemPedido()
                         {
                             CodProduto = codigoItemParaAlterar,
@@ -1608,7 +1638,7 @@ namespace DexComanda
                             Quantidade = decimal.Parse(this.txtQuantidade.Text),
                             PrecoUnitario = decimal.Parse(this.txtPrecoUnitario.Text.Replace("R$ ", "")),
                             PrecoTotal = decimal.Parse(this.txtPrecoTotal.Text.Replace("R$ ", "")),
-                            Item = this.txtItemDescricao.Text.ToString()
+                            Item = txtItemDescricao.Text.Insert(txtItemDescricao.Text.Length, Environment.NewLine) + strItens
 
                         };
 
@@ -4186,47 +4216,50 @@ namespace DexComanda
      
         private void chkListAdicionais_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (grpBoxTamanhos.Enabled&& !RadiosMarcos())
+            try
             {
-                MessageBox.Show("Selecione o " + grpBoxTamanhos.Text + " para continuar");
-                chkListAdicionais.SetSelected(e.Index, false);
-                return;
-            }
-
-
-            if (chkListAdicionais.CheckedItems.Count + 1 > gMaximoOpcaoProduto)
-            {
-                MessageBox.Show("O Produto " + cbxProdutosGrid.Text + " só permite " + gMaximoOpcaoProduto + " Adicionais");
-                return;
-            }
-
-            string iTextoNovo = "";
-            // iTextoNovo.Insert(iTextoNovo.Length, Environment.NewLine);
-            if (e.CurrentValue == CheckState.Unchecked)
-            {
-                //iTextoNovo = iTextoNovo + txtItemDescricao.Text + " + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString());
-                //txtItemDescricao.Text = iTextoNovo.Insert(iTextoNovo.Length, Environment.NewLine);
-                decimal iValorItem = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
-                decimal iValorAdicional = decimal.Parse(ObterSomenteNumerosReais(chkListAdicionais.SelectedItem.ToString()));
-                decimal iValor = iValorItem + iValorAdicional;
-                txtPrecoUnitario.Text = Convert.ToString(iValor);
-                CalcularTotalItem();
-            }
-            else
-            {
-                decimal iValorItem;
-                decimal iValorAdicional;
-                iValorItem = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
-                iValorAdicional = decimal.Parse(ObterSomenteNumerosReais(chkListAdicionais.SelectedItem.ToString()));
-                if (txtItemDescricao.Text.Contains(" + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString())))
+                if (grpBoxTamanhos.Enabled && !RadiosMarcos())
                 {
-                    decimal iValor = iValorItem - iValorAdicional;
-                    txtPrecoUnitario.Text = Convert.ToString(iValor);
-                    CalcularTotalItem(); 
+                    MessageBox.Show("Selecione o " + grpBoxTamanhos.Text + " para continuar");
+                    chkListAdicionais.SetSelected(e.Index, false);
+                    return;
                 }
-                txtItemDescricao.Text = txtItemDescricao.Text.Replace(" + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString()), string.Empty);
-               
+
+                if (chkListAdicionais.CheckedItems.Count + 1 > gMaximoOpcaoProduto)
+                {
+                    MessageBox.Show("O Produto " + cbxProdutosGrid.Text + " só permite " + gMaximoOpcaoProduto + " Adicionais");
+                    return;
+                }
+
+                //if (e.CurrentValue == CheckState.Unchecked)
+                //{
+                //    decimal iValorItem = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
+                //    decimal iValorAdicional = decimal.Parse(ObterSomenteNumerosReais(chkListAdicionais.SelectedItem.ToString()));
+                //    decimal iValor = iValorItem + iValorAdicional;
+                //    txtPrecoUnitario.Text = Convert.ToString(iValor);
+                //    CalcularTotalItem();
+                //}
+                //else
+                //{
+                //    decimal iValorItem;
+                //    decimal iValorAdicional;
+                //    iValorItem = decimal.Parse(txtPrecoUnitario.Text.Replace("R$", ""));
+                //    iValorAdicional = decimal.Parse(ObterSomenteNumerosReais(chkListAdicionais.SelectedItem.ToString()));
+                //    if (txtItemDescricao.Text.Contains(" + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString())))
+                //    {
+                //        decimal iValor = iValorItem - iValorAdicional;
+                //        txtPrecoUnitario.Text = Convert.ToString(iValor);
+                //        CalcularTotalItem();
+                //    }
+                //    txtItemDescricao.Text = txtItemDescricao.Text.Replace(" + " + ObterSomenteLetras(chkListAdicionais.SelectedItem.ToString()), string.Empty);
+
+                //}
             }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+           
         }
 
         private void MultiplaFormasPagamento(object sender, EventArgs e)
@@ -4418,6 +4451,7 @@ namespace DexComanda
 
                     DataSet dsItemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codItem);
                     string itemNome = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
+                   
                     Utils.MontaCombox(cbxTipoProduto, "Nome", "Codigo", "Grupo", "spObterGrupoPOrCodigo", dsItemCompleto.Tables[0].Rows[0].Field<int>("CodGrupo"));
                     string[] sabores = itemNome.Split('/');
                     List<string> list = new List<string>();
@@ -4441,7 +4475,10 @@ namespace DexComanda
                         this.cbxSabor.Text = "";
                         this.cbxProdutosGrid.Text = gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
                     }
+
+                   
                     MontaMenuOpcoes(codItem);
+                    MarcaRadioButon(itemNome);
                     if (codPedido == 0)
                     {
                         iRowSelecionada = rowIndex;
@@ -4453,7 +4490,7 @@ namespace DexComanda
                     this.txtQuantidade.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[3].Value.ToString();
                     this.txtPrecoTotal.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[5].Value.ToString();
                     this.txtItemDescricao.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[6].Value.ToString();
-
+                    MarcaListBoxMarcados(txtItemDescricao.Text);
                     this.btnAdicionarItemNoPedido.Text = "Alterar Item";
                     this.btnAdicionarItemNoPedido.Click += new System.EventHandler(this.AlterarItem);
                     this.btnAdicionarItemNoPedido.Click -= new System.EventHandler(this.btnAdicionarItemNoPedido_Click);
@@ -4464,8 +4501,48 @@ namespace DexComanda
             {
                 MessageBox.Show("Não foi possivel selecionar o Item para edição " + erro.Message);
             }
-            // DataGridView dgv = sender as DataGridView;
+        }
+        private void MarcaRadioButon(string strNomeProduto)
+        {
+            foreach (var item in grpBoxTamanhos.Controls)
+            {
+                if (object.ReferenceEquals(item.GetType(), typeof(System.Windows.Forms.RadioButton)))
+                {
+                    if (strNomeProduto.Contains((((System.Windows.Forms.RadioButton)item).Text)))
+                    {
+                        (((System.Windows.Forms.RadioButton)item).Checked) = true;
+                    }
+                }
+            }
 
+           
+        }
+        /// <summary>
+        /// Marca os checkbox de acordo com a lista
+        /// </summary>
+        /// <param name="strAdicionais">
+        /// String de observações</param>
+        private void MarcaListBoxMarcados(string strAdicionais)
+        {
+            try
+            {
+                string[] list = strAdicionais.Trim().Split(Environment.NewLine.ToCharArray());
+                for (int i = 0; i < list.Length; i++)
+                {
+                    for (int intfor = 0; intfor < chkListAdicionais.Items.Count; intfor++)
+                    {
+                        if (ObterSomenteLetras(chkListAdicionais.Items[intfor].ToString()) == list[i].ToString())
+                        {
+                            chkListAdicionais.SetItemChecked(intfor, true);
+                        }
+                    }
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+            
         }
 
 
