@@ -13,6 +13,7 @@ using DexComanda.Operações.Consultas;
 using DexComanda.Operações.Estoque;
 using DexComanda.Operações.Financeiro;
 using DexComanda.Operações.Funções;
+using DexComanda.Operações.Pedido;
 using DexComanda.Push;
 using DexComanda.Relatorios;
 using DexComanda.Relatorios.Clientes;
@@ -717,6 +718,7 @@ namespace DexComanda
                 MenuItem FinalizarPed = new MenuItem(" 1 - Finalizar Este Pedido?");
                 MenuItem FinalizaSelecionados = new MenuItem(" 2 - Finalizar Todos Selecionado?");
                 MenuItem InformaEntregador = new MenuItem(" 3 - Informar Entregador");
+                MenuItem InformaEntregadorColetivo = new MenuItem(" 3.1 - Informar entregador (varios pedidos)");
                 MenuItem StatusConcluido = new MenuItem(" 4 - Concluído/Entregue");
                 MenuItem ImprimeConferenciaMesa = new MenuItem(" Imprimir Conferencia desta Mesa");
                 MenuItem PedidoONline = new MenuItem(" X - Status Pedido");
@@ -726,7 +728,7 @@ namespace DexComanda
                 {
                     PedidoONline = new MenuItem(" X - Status Pedido");
 
-                    DataSet dsStatus = con.SelectAll("PedidoStatus", "", "select * from PedidoStatus");
+                  //  DataSet dsStatus = con.SelectAll("PedidoStatus", "", "select * from PedidoStatus");
                     MenuItem StatusNaCozinha = new MenuItem(" 0 - Pedido na Cozinha");
                     MenuItem StatusNaEntrega = new MenuItem(" 1 - Saiu pra entrega");
                     MenuItem StatusCancelado = new MenuItem(" 2 - Cancelado");
@@ -745,6 +747,7 @@ namespace DexComanda
                 FinalizarPed.Click += FinalizaCancelaPEdidos;
                 FinalizaSelecionados.Click += FinalizaTodos;
                 InformaEntregador.Click += SelecionaBoy;
+                InformaEntregadorColetivo.Click += SelecionaMotoboyColetivo;
                 StatusConcluido.Click += PEdidoConcluido;
 
 
@@ -752,6 +755,7 @@ namespace DexComanda
                 m.MenuItems.Add(FinalizarPed);
                 m.MenuItems.Add(FinalizaSelecionados);
                 m.MenuItems.Add(InformaEntregador);
+                m.MenuItems.Add(InformaEntregadorColetivo);
                 m.MenuItems.Add(StatusConcluido);
 
                 if (pedidosGridView.Rows.Count > 0)
@@ -1059,8 +1063,13 @@ namespace DexComanda
             InformaMotoboyPedido(intCodPedido,true);
              
         }
+        private void SelecionaMotoboyColetivo(object sender, EventArgs e)
+        {
+            frmInformaEntregador_Coletivo frm = new frmInformaEntregador_Coletivo();
+            frm.Show();
+        }
         /// <summary>
-        /// Verifica se o motoboy já foi informado 
+        /// Verifica se o motoboy já foi informado  
         /// </summary>
         /// <param name="iCodPedido">Código do pedido</param>
         /// <returns></returns>
@@ -1083,7 +1092,7 @@ namespace DexComanda
         {
             try
             {
-                if (!PermiteEntregador(iCodPedido))
+                if (!Utils.PermiteEntregador(iCodPedido))
                 {
                     MessageBox.Show("Este pedido não permite entregadores");
                     return;
@@ -1109,7 +1118,6 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-
         }
         public void LimpaCampos()
         {

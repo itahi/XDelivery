@@ -165,6 +165,25 @@ namespace DexComanda
                 return false;
             }
         }
+
+        public static Boolean PermiteEntregador(int iCodPedido)
+        {
+            Boolean iRetur = false;
+            try
+            {
+                DataRow dROw = conexao.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).Tables[0].Rows[0];
+                if (dROw.ItemArray.GetValue(8).ToString() == "0 - Entrega")
+                {
+                    iRetur = true;
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+
+            return iRetur;
+        }
         public static void AtualizaPessoa(int iCodPessoa, string iNome, string iCEP, string iEndereco,
             string iNumero, string iBairro, string iCidade, string iUF, string iPRerefencia, string iObservacao,
             string iTelefone, string iTelefone2, DateTime iDtNas, DateTime iDtCad, int iTickFid, int iCodRegiao,

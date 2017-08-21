@@ -333,6 +333,38 @@ namespace DexComanda
             return ds;
         }
         /// <summary>
+        /// Consulta se o pedido esta aberto
+        /// </summary>
+        /// <param name="iCodPedido">
+        /// Codigo do pedido</param>
+        /// <returns></returns>
+        public DataSet ConsultaPedido(string iCodPedido)
+        {
+            string iSql = " select " +
+                    " Pd.Codigo, " +
+                    " case PD.Tipo " +
+                    " when '1 - Mesa'   then 'Mesa' + ' - ' + PD.NumeroMesa " +
+                    " when '2 - Balcao' then 'Cliente Balcao ' + PD.Senha + ' ' + Pd.Observacao " +
+                    " when '0 - Entrega' then P.Nome " +
+                    " end as  'Nome Cliente' " +
+                    ",Finalizado,TotalPedido, " +
+                    " (select top 1 PS.Nome from PedidoStatusMovimento PSM  join PedidoStatus PS on Status = PSM.CodStatus where PSM.CodPedido = PD.Codigo  order by PSM.DataAlteracao desc ) as 'Situacao Pedido' " +
+                    " ,(select Nome from Entregador where Codigo = PD.CodMotoboy) as 'Entregador', " +
+                    " (Select Nome from Usuario where Cod = PD.CodUsuario) as 'Atendente' " +
+                    " from Pedido Pd " +
+                    " join Pessoa P on P.Codigo = Pd.CodPessoa " +
+                    " where Pd.Codigo=@Codigo and Finalizado=0";
+
+            
+            command = new SqlCommand(iSql, conn);
+            command.Parameters.AddWithValue("@Codigo", iCodPedido);
+            command.CommandType = CommandType.Text;
+            adapter = new SqlDataAdapter(command);
+            ds = new DataSet();
+            adapter.Fill(ds, "Pedido");
+            return ds;
+        }
+        /// <summary>
         /// Retornas informações dos produto filtrados
         /// </summary>
         /// <param name="iCod1"></param>

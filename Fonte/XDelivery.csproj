@@ -517,10 +517,16 @@
     <Compile Include="Operações\frmHistoricoCancelamento.Designer.cs">
       <DependentUpon>frmHistoricoCancelamento.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operações\frmInformaMotoboy.cs">
+    <Compile Include="Operações\Pedido\frmInformaEntregador_Coletivo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Operações\frmInformaMotoboy.Designer.cs">
+    <Compile Include="Operações\Pedido\frmInformaEntregador_Coletivo.Designer.cs">
+      <DependentUpon>frmInformaEntregador_Coletivo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operações\Pedido\frmInformaMotoboy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Pedido\frmInformaMotoboy.Designer.cs">
       <DependentUpon>frmInformaMotoboy.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\Estoque\frmLancaEstoqueProd.cs">
@@ -1225,7 +1231,10 @@
     <EmbeddedResource Include="Operações\frmHistoricoCancelamento.resx">
       <DependentUpon>frmHistoricoCancelamento.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Operações\frmInformaMotoboy.resx">
+    <EmbeddedResource Include="Operações\Pedido\frmInformaEntregador_Coletivo.resx">
+      <DependentUpon>frmInformaEntregador_Coletivo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Pedido\frmInformaMotoboy.resx">
       <DependentUpon>frmInformaMotoboy.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\Estoque\frmLancaEstoqueProd.resx">
