@@ -1057,7 +1057,7 @@ namespace DexComanda
         {
             int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
             InformaMotoboyPedido(intCodPedido,true);
-
+             
         }
         /// <summary>
         /// Verifica se o motoboy já foi informado
