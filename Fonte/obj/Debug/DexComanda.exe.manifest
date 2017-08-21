@@ -4,7 +4,7 @@
   <description asmv2:iconFile="xD-grey-inverse.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="DexComanda" version="2.0.0.23062" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="DexComanda" version="2.0.0.26119" language="neutral" processorArchitecture="msil" />
     <commandLine file="DexComanda.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -361,13 +361,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DexComanda.exe" size="6223872">
-      <assemblyIdentity name="DexComanda" version="2.0.0.23062" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="DexComanda" version="2.0.0.26119" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Wtz5FytOB43VIc+15XuQBAQZXcj/gUMW10Mu07Q10N0=</dsig:DigestValue>
+        <dsig:DigestValue>/e2d+QPca8NmNwc8ao4R93iGKsqIwfv8kvlFjtfDdPo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
