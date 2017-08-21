@@ -1056,9 +1056,7 @@ namespace DexComanda
         private void SelecionaBoy(object sender, EventArgs e)
         {
             int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
-
-
-            InformaMotoboyPedido(intCodPedido);
+            InformaMotoboyPedido(intCodPedido,true);
 
         }
         /// <summary>
@@ -1066,22 +1064,22 @@ namespace DexComanda
         /// </summary>
         /// <param name="iCodPedido">Código do pedido</param>
         /// <returns></returns>
-        private Boolean VerificaSeMotoboyFoiInformado(int iCodPedido)
+        private Boolean VerificaSeMotoboyFoiInformado(int iCodPedido,Boolean iAlterar=false)
         {
             Boolean iReturn = false;
-            return iReturn = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).
+             iReturn = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).
                 Tables[0].Rows[0].Field<int>("CodMotoboy") > 0;
-
-            //if (iReturn)
-            //{
-            //    iReturn = Utils.MessageBoxQuestion("Motoboy já foi informado nesse pedido deseja alterar?");
-            //}
+            if (iAlterar && iReturn)
+            {
+                iReturn =! Utils.MessageBoxQuestion("Entregador já foi informado deseja alterar?");
+            }
+            return iReturn;
         }
         /// <summary>
         /// Informa o entregador no pedido
         /// </summary>
         /// <param name="iCodPedido">Código do pedido a ser alterado</param>
-        private void InformaMotoboyPedido(int iCodPedido)
+        private void InformaMotoboyPedido(int iCodPedido,Boolean iAlterar=false)
         {
             try
             {
@@ -1091,7 +1089,7 @@ namespace DexComanda
                     return;
                 }
 
-                if (VerificaSeMotoboyFoiInformado(iCodPedido))
+                if (VerificaSeMotoboyFoiInformado(iCodPedido,iAlterar))
                 {
                     return;
                 }
