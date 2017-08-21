@@ -1,3 +1,6 @@
-Fonte/bin/
-Fonte/obj/
-Fonte/.vs/
+Fonte/bin
+Fonte/obj
+Fonte/.vs
+*.exe
+*.bkp
+/bin

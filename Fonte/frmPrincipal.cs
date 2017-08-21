@@ -1060,7 +1060,7 @@ namespace DexComanda
              
         }
         /// <summary>
-        /// Verifica se o motoboy já foi informado
+        /// Verifica se o motoboy já foi informado 
         /// </summary>
         /// <param name="iCodPedido">Código do pedido</param>
         /// <returns></returns>
