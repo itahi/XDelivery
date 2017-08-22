@@ -66,6 +66,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnOpcao = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.pnlAdicionais = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -82,7 +83,21 @@
             this.Valor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CodTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.pnlInsumos = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnInsumoSalvar = new System.Windows.Forms.Button();
+            this.btnInsumoEditar = new System.Windows.Forms.Button();
+            this.btnInsumoAdd = new System.Windows.Forms.Button();
+            this.txtQtdInsumo = new System.Windows.Forms.TextBox();
+            this.cbxInsumo = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.InsumoGridView = new System.Windows.Forms.DataGridView();
+            this.label11 = new System.Windows.Forms.Label();
+            this.CodInsumo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Insumo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Quantidade = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnInsumoVincular = new System.Windows.Forms.Button();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             this.grpFiltros.SuspendLayout();
@@ -93,6 +108,8 @@
             this.grpPrecos.SuspendLayout();
             this.pnlAdicionais.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AdicionaisGridView)).BeginInit();
+            this.pnlInsumos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.InsumoGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // label6
@@ -489,7 +506,7 @@
             // btnOpcao
             // 
             this.btnOpcao.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnOpcao.Location = new System.Drawing.Point(694, 467);
+            this.btnOpcao.Location = new System.Drawing.Point(18, 470);
             this.btnOpcao.Name = "btnOpcao";
             this.btnOpcao.Size = new System.Drawing.Size(93, 23);
             this.btnOpcao.TabIndex = 30;
@@ -513,10 +530,10 @@
             this.pnlAdicionais.Controls.Add(this.cbxOpcao);
             this.pnlAdicionais.Controls.Add(this.label7);
             this.pnlAdicionais.Controls.Add(this.AdicionaisGridView);
-            this.pnlAdicionais.Location = new System.Drawing.Point(210, 241);
+            this.pnlAdicionais.Location = new System.Drawing.Point(18, 238);
             this.pnlAdicionais.Name = "pnlAdicionais";
             this.pnlAdicionais.Size = new System.Drawing.Size(382, 210);
-            this.pnlAdicionais.TabIndex = 31;
+            this.pnlAdicionais.TabIndex = 32;
             this.pnlAdicionais.Visible = false;
             // 
             // label9
@@ -545,7 +562,7 @@
             this.cbxTipoOpcao.Name = "cbxTipoOpcao";
             this.cbxTipoOpcao.Size = new System.Drawing.Size(130, 21);
             this.cbxTipoOpcao.TabIndex = 46;
-            this.cbxTipoOpcao.DropDown += new System.EventHandler(this.ListaTipos);
+            this.cbxTipoOpcao.DropDown += new System.EventHandler(this.cbxTipoOpcao_DropDown);
             // 
             // btnCancel
             // 
@@ -557,7 +574,7 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click_1);
             // 
             // btnSalvar
             // 
@@ -569,7 +586,7 @@
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSalvar.UseVisualStyleBackColor = true;
-            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click_1);
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // btnEditar
             // 
@@ -592,7 +609,7 @@
             this.btnAdicionarOpcao.TabIndex = 42;
             this.btnAdicionarOpcao.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAdicionarOpcao.UseVisualStyleBackColor = true;
-            this.btnAdicionarOpcao.Click += new System.EventHandler(this.btnAdicionarOpcao_Click_1);
+            this.btnAdicionarOpcao.Click += new System.EventHandler(this.btnAdicionarOpcao_Click_2);
             // 
             // txtPrecoOpcao
             // 
@@ -610,7 +627,7 @@
             this.cbxOpcao.Name = "cbxOpcao";
             this.cbxOpcao.Size = new System.Drawing.Size(158, 21);
             this.cbxOpcao.TabIndex = 40;
-            this.cbxOpcao.DropDown += new System.EventHandler(this.ListaOpcao);
+            this.cbxOpcao.DropDown += new System.EventHandler(this.cbxOpcao_DropDown);
             // 
             // label7
             // 
@@ -641,7 +658,7 @@
             this.AdicionaisGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.AdicionaisGridView.Size = new System.Drawing.Size(370, 103);
             this.AdicionaisGridView.TabIndex = 38;
-            this.AdicionaisGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxilarOpcoes);
+            this.AdicionaisGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuAuxiliarOpcao);
             // 
             // CodOpcao
             // 
@@ -667,11 +684,178 @@
             this.CodTipo.Name = "CodTipo";
             this.CodTipo.ReadOnly = true;
             // 
+            // pnlInsumos
+            // 
+            this.pnlInsumos.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlInsumos.Controls.Add(this.label11);
+            this.pnlInsumos.Controls.Add(this.label10);
+            this.pnlInsumos.Controls.Add(this.button1);
+            this.pnlInsumos.Controls.Add(this.btnInsumoSalvar);
+            this.pnlInsumos.Controls.Add(this.btnInsumoEditar);
+            this.pnlInsumos.Controls.Add(this.btnInsumoAdd);
+            this.pnlInsumos.Controls.Add(this.txtQtdInsumo);
+            this.pnlInsumos.Controls.Add(this.cbxInsumo);
+            this.pnlInsumos.Controls.Add(this.label12);
+            this.pnlInsumos.Controls.Add(this.InsumoGridView);
+            this.pnlInsumos.Location = new System.Drawing.Point(406, 227);
+            this.pnlInsumos.Name = "pnlInsumos";
+            this.pnlInsumos.Size = new System.Drawing.Size(382, 220);
+            this.pnlInsumos.TabIndex = 50;
+            this.pnlInsumos.Visible = false;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(3, 43);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(41, 13);
+            this.label10.TabIndex = 48;
+            this.label10.Text = "Insumo";
+            // 
+            // button1
+            // 
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.button1.Location = new System.Drawing.Point(309, 190);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(64, 23);
+            this.button1.TabIndex = 45;
+            this.button1.Text = "Cancel";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btnInsumoSalvar
+            // 
+            this.btnInsumoSalvar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnInsumoSalvar.Location = new System.Drawing.Point(239, 190);
+            this.btnInsumoSalvar.Name = "btnInsumoSalvar";
+            this.btnInsumoSalvar.Size = new System.Drawing.Size(64, 23);
+            this.btnInsumoSalvar.TabIndex = 44;
+            this.btnInsumoSalvar.Text = "Salvar";
+            this.btnInsumoSalvar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnInsumoSalvar.UseVisualStyleBackColor = true;
+            this.btnInsumoSalvar.Click += new System.EventHandler(this.btnInsumoSalvar_Click);
+            // 
+            // btnInsumoEditar
+            // 
+            this.btnInsumoEditar.Image = ((System.Drawing.Image)(resources.GetObject("btnInsumoEditar.Image")));
+            this.btnInsumoEditar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnInsumoEditar.Location = new System.Drawing.Point(334, 36);
+            this.btnInsumoEditar.Name = "btnInsumoEditar";
+            this.btnInsumoEditar.Size = new System.Drawing.Size(41, 26);
+            this.btnInsumoEditar.TabIndex = 43;
+            this.btnInsumoEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnInsumoEditar.UseVisualStyleBackColor = true;
+            // 
+            // btnInsumoAdd
+            // 
+            this.btnInsumoAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnInsumoAdd.Image")));
+            this.btnInsumoAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnInsumoAdd.Location = new System.Drawing.Point(291, 36);
+            this.btnInsumoAdd.Name = "btnInsumoAdd";
+            this.btnInsumoAdd.Size = new System.Drawing.Size(35, 26);
+            this.btnInsumoAdd.TabIndex = 42;
+            this.btnInsumoAdd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnInsumoAdd.UseVisualStyleBackColor = true;
+            this.btnInsumoAdd.Click += new System.EventHandler(this.btnInsumoAdd_Click);
+            // 
+            // txtQtdInsumo
+            // 
+            this.txtQtdInsumo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtQtdInsumo.Location = new System.Drawing.Point(210, 35);
+            this.txtQtdInsumo.Name = "txtQtdInsumo";
+            this.txtQtdInsumo.Size = new System.Drawing.Size(77, 26);
+            this.txtQtdInsumo.TabIndex = 41;
+            // 
+            // cbxInsumo
+            // 
+            this.cbxInsumo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxInsumo.FormattingEnabled = true;
+            this.cbxInsumo.Location = new System.Drawing.Point(46, 39);
+            this.cbxInsumo.Name = "cbxInsumo";
+            this.cbxInsumo.Size = new System.Drawing.Size(158, 21);
+            this.cbxInsumo.TabIndex = 40;
+            this.cbxInsumo.DropDown += new System.EventHandler(this.cbxInsumo_DropDown);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 63);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(110, 13);
+            this.label12.TabIndex = 39;
+            this.label12.Text = "Adicionais do Produto";
+            // 
+            // InsumoGridView
+            // 
+            this.InsumoGridView.AllowUserToAddRows = false;
+            this.InsumoGridView.AllowUserToDeleteRows = false;
+            this.InsumoGridView.AllowUserToOrderColumns = true;
+            this.InsumoGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.InsumoGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.InsumoGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.InsumoGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.CodInsumo,
+            this.Insumo,
+            this.Quantidade});
+            this.InsumoGridView.Location = new System.Drawing.Point(3, 80);
+            this.InsumoGridView.MultiSelect = false;
+            this.InsumoGridView.Name = "InsumoGridView";
+            this.InsumoGridView.ReadOnly = true;
+            this.InsumoGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.InsumoGridView.Size = new System.Drawing.Size(370, 103);
+            this.InsumoGridView.TabIndex = 38;
+            this.InsumoGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.InsumoGridView_MouseClick);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(115, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(197, 24);
+            this.label11.TabIndex = 49;
+            this.label11.Text = "Insumos do Produto";
+            // 
+            // CodInsumo
+            // 
+            this.CodInsumo.HeaderText = "Column1CodInsumo";
+            this.CodInsumo.Name = "CodInsumo";
+            this.CodInsumo.ReadOnly = true;
+            this.CodInsumo.Visible = false;
+            // 
+            // Insumo
+            // 
+            this.Insumo.HeaderText = "Insumo";
+            this.Insumo.Name = "Insumo";
+            this.Insumo.ReadOnly = true;
+            // 
+            // Quantidade
+            // 
+            this.Quantidade.HeaderText = "Quantidade";
+            this.Quantidade.Name = "Quantidade";
+            this.Quantidade.ReadOnly = true;
+            // 
+            // btnInsumoVincular
+            // 
+            this.btnInsumoVincular.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnInsumoVincular.Location = new System.Drawing.Point(701, 467);
+            this.btnInsumoVincular.Name = "btnInsumoVincular";
+            this.btnInsumoVincular.Size = new System.Drawing.Size(93, 23);
+            this.btnInsumoVincular.TabIndex = 51;
+            this.btnInsumoVincular.Text = "Vincular Insumo";
+            this.btnInsumoVincular.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.btnInsumoVincular, "Selecione as opções que serão vinculadas aos produtos do filtro");
+            this.btnInsumoVincular.UseVisualStyleBackColor = true;
+            this.btnInsumoVincular.Click += new System.EventHandler(this.btnInsumoVincular_Click);
+            // 
             // frmAlteracaoProduto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(803, 544);
+            this.Controls.Add(this.btnInsumoVincular);
+            this.Controls.Add(this.pnlInsumos);
             this.Controls.Add(this.pnlAdicionais);
             this.Controls.Add(this.btnOpcao);
             this.Controls.Add(this.label4);
@@ -700,6 +884,9 @@
             this.pnlAdicionais.ResumeLayout(false);
             this.pnlAdicionais.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AdicionaisGridView)).EndInit();
+            this.pnlInsumos.ResumeLayout(false);
+            this.pnlInsumos.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.InsumoGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -741,7 +928,11 @@
         private System.Windows.Forms.Button btnOpcao;
         private System.Windows.Forms.CheckBox chkTodos;
         private System.Windows.Forms.CheckBox chkAlteraPreco;
+        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Panel pnlAdicionais;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cbxTipoOpcao;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Button btnEditar;
@@ -750,13 +941,24 @@
         private System.Windows.Forms.ComboBox cbxOpcao;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridView AdicionaisGridView;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox cbxTipoOpcao;
         private System.Windows.Forms.DataGridViewTextBoxColumn CodOpcao;
         private System.Windows.Forms.DataGridViewTextBoxColumn Valor;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nome;
         private System.Windows.Forms.DataGridViewTextBoxColumn CodTipo;
-        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Panel pnlInsumos;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnInsumoSalvar;
+        private System.Windows.Forms.Button btnInsumoEditar;
+        private System.Windows.Forms.Button btnInsumoAdd;
+        private System.Windows.Forms.TextBox txtQtdInsumo;
+        private System.Windows.Forms.ComboBox cbxInsumo;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.DataGridView InsumoGridView;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CodInsumo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Insumo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Quantidade;
+        private System.Windows.Forms.Button btnInsumoVincular;
     }
 }

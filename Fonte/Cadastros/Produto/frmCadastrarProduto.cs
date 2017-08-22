@@ -399,7 +399,7 @@ namespace DexComanda
                 }
                 else
                 {
-                    txtEstMinimo.Text = txtEstMinimo.Text;
+                    txtEstMinimo.Text = "0";
                 }
                 produto.EstoqueMinimo = decimal.Parse(txtEstMinimo.Text);
                 if (txtPontosFidelidade.Text != "")

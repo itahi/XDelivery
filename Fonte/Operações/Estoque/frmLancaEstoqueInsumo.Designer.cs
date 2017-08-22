@@ -39,13 +39,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.gridviewinsumo = new System.Windows.Forms.DataGridView();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnConfirmar = new System.Windows.Forms.Button();
-            this.btnCancelar = new System.Windows.Forms.Button();
             this.Codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Quantidade = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Preco = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnConfirmar = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridviewinsumo)).BeginInit();
@@ -78,6 +78,7 @@
             this.cbxNomeInsumo.Name = "cbxNomeInsumo";
             this.cbxNomeInsumo.Size = new System.Drawing.Size(217, 21);
             this.cbxNomeInsumo.TabIndex = 7;
+            this.cbxNomeInsumo.DropDown += new System.EventHandler(this.cbxNomeInsumo_DropDown);
             this.cbxNomeInsumo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cbxNomeInsumo_KeyUp);
             // 
             // btnLançar
@@ -164,27 +165,6 @@
             this.gridviewinsumo.Size = new System.Drawing.Size(472, 210);
             this.gridviewinsumo.TabIndex = 0;
             // 
-            // btnConfirmar
-            // 
-            this.btnConfirmar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnConfirmar.Location = new System.Drawing.Point(142, 310);
-            this.btnConfirmar.Name = "btnConfirmar";
-            this.btnConfirmar.Size = new System.Drawing.Size(76, 25);
-            this.btnConfirmar.TabIndex = 7;
-            this.btnConfirmar.Text = "Confirmar";
-            this.btnConfirmar.UseVisualStyleBackColor = true;
-            this.btnConfirmar.Click += new System.EventHandler(this.ConfirmarLançamento);
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnCancelar.Location = new System.Drawing.Point(240, 310);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 25);
-            this.btnCancelar.TabIndex = 8;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            // 
             // Codigo
             // 
             this.Codigo.HeaderText = "Codigo";
@@ -211,6 +191,27 @@
             this.Preco.HeaderText = "Preco";
             this.Preco.Name = "Preco";
             this.Preco.ReadOnly = true;
+            // 
+            // btnConfirmar
+            // 
+            this.btnConfirmar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnConfirmar.Location = new System.Drawing.Point(142, 310);
+            this.btnConfirmar.Name = "btnConfirmar";
+            this.btnConfirmar.Size = new System.Drawing.Size(76, 25);
+            this.btnConfirmar.TabIndex = 7;
+            this.btnConfirmar.Text = "Confirmar";
+            this.btnConfirmar.UseVisualStyleBackColor = true;
+            this.btnConfirmar.Click += new System.EventHandler(this.ConfirmarLançamento);
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnCancelar.Location = new System.Drawing.Point(240, 310);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(75, 25);
+            this.btnCancelar.TabIndex = 8;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
             // 
             // frmLancaEstoqueInsumo
             // 
