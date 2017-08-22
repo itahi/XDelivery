@@ -1,5 +1,6 @@
 ﻿using DexComanda.Models;
 using DexComanda.Models.Alteracoes_Multiplas;
+using DexComanda.Models.Produto;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -182,6 +183,19 @@ namespace DexComanda.Operações.Alteracoes
                                     int.Parse(AdicionaisGridView.Rows[intFor].Cells["CodTipo"].Value.ToString()));
                             }
                         }
+                        //if (InsumoGridView.Rows.Count>0)
+                        //{
+                            for (int intInsumo = 0; intInsumo < InsumoGridView.Rows.Count; intInsumo++)
+                            {
+                                InsumoProduto insPro = new InsumoProduto()
+                                {
+                                    CodInsumo = int.Parse(InsumoGridView.Rows[intInsumo].Cells["COdInsumo"].Value.ToString()),
+                                    CodProduto = int.Parse(GridViewProdutos.Rows[i].Cells["Codigo"].Value.ToString()),
+                                    Quantidade = decimal.Parse(InsumoGridView.Rows[intInsumo].Cells["Quantidade"].Value.ToString())
+                                };
+                                con.Insert("spAdicionarProdutoInsumo", insPro);
+                            }
+                        //}
                     }
                 }
                 catch (Exception erro)
@@ -281,13 +295,14 @@ namespace DexComanda.Operações.Alteracoes
             grpDesconto.Enabled = chkAtivaDesconto.Checked;
         }
 
-        private void RemoveColunas(DataGridView dv)
+        private void RemoveColunas(DataGridView dv,Panel pnl)
         {
             for (int i = 0; i < dv.Rows.Count; i++)
             {
                 dv.Rows.Clear();
             }
-
+            pnl.Visible = false;
+            pnl.Hide();
         }
         private void btnOpcao_Click(object sender, EventArgs e)
         {
@@ -337,10 +352,8 @@ namespace DexComanda.Operações.Alteracoes
             {
                 ContextMenu m = new ContextMenu();
                 MenuItem Excluir = new MenuItem(" 0 - Remover Produto da Lista de Alterações ");
-                //  MenuItem Excluir2 = new MenuItem("  ");
                 Excluir.Click += RemoverLinha;
                 m.MenuItems.Add(Excluir);
-                ///   m.MenuItems.Add(Excluir2);
 
                 int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
                 m.Show(dgv, new Point(e.X, e.Y));
@@ -351,10 +364,30 @@ namespace DexComanda.Operações.Alteracoes
         {
             try
             {
-
                 if (AdicionaisGridView.SelectedRows.Count > 0)
                 {
                     AdicionaisGridView.Rows.RemoveAt(AdicionaisGridView.CurrentRow.Index);
+                }
+
+                else
+                {
+                    MessageBox.Show("Selecione o registro para excluir");
+                }
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(erro.Message);
+            }
+
+        }
+        private void RemoverLinhaInsumo(object sender, EventArgs e)
+        {
+            try
+            {
+                if (InsumoGridView.SelectedRows.Count > 0)
+                {
+                    InsumoGridView.Rows.RemoveAt(InsumoGridView.CurrentRow.Index);
                 }
 
                 else
@@ -449,7 +482,7 @@ namespace DexComanda.Operações.Alteracoes
         private void btnCancel_Click(object sender, EventArgs e)
         {
             pnlAdicionais.Visible = false;
-            RemoveColunas(AdicionaisGridView);
+            RemoveColunas(AdicionaisGridView, pnlAdicionais);
         }
         private void MenuAuxilarOpcoes(object sender, MouseEventArgs e)
         {
@@ -486,6 +519,167 @@ namespace DexComanda.Operações.Alteracoes
         private void GridViewProdutos_MouseClick(object sender, MouseEventArgs e)
         {
             MenuAuxiliar(sender, e);
+        }
+
+        private void btnInsumoVincular_Click(object sender, EventArgs e)
+        {
+            pnlInsumos.Visible = true;
+            pnlInsumos.Show();
+        }
+
+        private void cbxInsumo_DropDown(object sender, EventArgs e)
+        {
+            try
+            {
+                Utils.MontaCombox(cbxInsumo, "Nome", "Codigo", "Insumo", "spObterInsumo");
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
+
+        private void btnSalvar_Click(object sender, EventArgs e)
+        {
+            if (!Utils.MessageBoxQuestion(" Todos Produtos Selecionados no Filtro receberão esses items adicionais, Deseja continuar?"))
+            {
+                return;
+            }
+            else
+            {
+                pnlAdicionais.Visible = false;
+            }
+        }
+
+        private void btnInsumoSalvar_Click(object sender, EventArgs e)
+        {
+            if (!Utils.MessageBoxQuestion(" Todos Produtos Selecionados no Filtro receberão esses insumos, Deseja continuar?"))
+            {
+                return;
+            }
+            else
+            {
+                pnlInsumos.Visible = false;
+            }
+        }
+
+        private void cbxTipoOpcao_DropDown(object sender, EventArgs e)
+        {
+            Utils.MontaCombox(cbxTipoOpcao, "Nome", "Codigo", "Produto_OpcaoTipo", "spObterTipoOpcao");
+        }
+
+        private void cbxOpcao_DropDown(object sender, EventArgs e)
+        {
+            if (cbxTipoOpcao.SelectedIndex <= -1)
+            {
+                Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcao");
+            }
+            else
+            {
+                Utils.MontaCombox(cbxOpcao, "Nome", "Codigo", "Opcao", "spObterOpcaoPorTipo", int.Parse(cbxTipoOpcao.SelectedValue.ToString()));
+            }
+        }
+
+        private void btnAdicionarOpcao_Click_2(object sender, EventArgs e)
+        {
+            try
+            {
+                int iCountLinhas = AdicionaisGridView.Rows.Count;
+                if (AdicionaisGridView.DataSource != null)
+                {
+                    AdicionaisGridView.AutoGenerateColumns = false;
+                    AdicionaisGridView.DataSource = null;
+                    AdicionaisGridView.DataMember = null;
+                }
+
+                for (int i = 0; i < AdicionaisGridView.Rows.Count; i++)
+                {
+                    if (cbxOpcao.SelectedValue.ToString() == AdicionaisGridView.Rows[i].Cells["CodOpcao"].Value.ToString())
+                    {
+                        if (!Utils.MessageBoxQuestion("Essa opção já esta vinculada a esse produto , deseja adicionar novamente?"))
+                        {
+                            return;
+                        }
+                    }
+                }
+                AdicionaisGridView.Rows.Add();
+                AdicionaisGridView.Rows[iCountLinhas].Cells[0].Value = int.Parse(cbxOpcao.SelectedValue.ToString());
+                AdicionaisGridView.Rows[iCountLinhas].Cells[1].Value = decimal.Parse(txtPrecoOpcao.Text);
+                AdicionaisGridView.Rows[iCountLinhas].Cells[2].Value = cbxOpcao.Text.ToString();
+                AdicionaisGridView.Rows[iCountLinhas].Cells["CodTipo"].Value = int.Parse(cbxTipoOpcao.SelectedValue.ToString());
+                iCountLinhas = AdicionaisGridView.Rows.Count;
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
+
+        private void btnInsumoAdd_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int iCountLinhas = InsumoGridView.Rows.Count;
+                if (InsumoGridView.DataSource != null)
+                {
+                    InsumoGridView.AutoGenerateColumns = false;
+                    InsumoGridView.DataSource = null;
+                    InsumoGridView.DataMember = null;
+                }
+
+                for (int i = 0; i < InsumoGridView.Rows.Count; i++)
+                {
+                    if (cbxInsumo.SelectedValue.ToString() == InsumoGridView.Rows[i].Cells["CodInsumo"].Value.ToString())
+                    {
+                        if (!Utils.MessageBoxQuestion("Este insumo já foi vinculado, deseja vincular novamente?"))
+                        {
+                            return;
+                        }
+                    }
+                }
+                InsumoGridView.Rows.Add();
+                InsumoGridView.Rows[iCountLinhas].Cells["CodInsumo"].Value = int.Parse(cbxInsumo.SelectedValue.ToString());
+                InsumoGridView.Rows[iCountLinhas].Cells["Insumo"].Value = cbxInsumo.Text;
+                InsumoGridView.Rows[iCountLinhas].Cells["Quantidade"].Value = txtQtdInsumo.Text;
+                iCountLinhas = AdicionaisGridView.Rows.Count;
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
+
+        private void MenuAuxiliarOpcao(object sender, MouseEventArgs e)
+        {
+            Excluir(sender, e);
+        }
+
+        private void InsumoGridView_MouseClick(object sender, MouseEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu m = new ContextMenu();
+                MenuItem Excluir = new MenuItem(" 0 - Remover Insumo ");
+                Excluir.Click += RemoverLinhaInsumo;
+                m.MenuItems.Add(Excluir);
+
+                int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
+                m.Show(dgv, new Point(e.X, e.Y));
+
+            }
+        }
+
+        private void btnCancel_Click_1(object sender, EventArgs e)
+        {
+            RemoveColunas(AdicionaisGridView, pnlAdicionais);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RemoveColunas(InsumoGridView, pnlInsumos);
         }
     }
 }

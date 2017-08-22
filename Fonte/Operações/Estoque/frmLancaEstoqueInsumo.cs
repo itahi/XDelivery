@@ -121,5 +121,17 @@ namespace DexComanda.Operações.Estoque
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
+
+        private void cbxNomeInsumo_DropDown(object sender, EventArgs e)
+        {
+            try
+            {
+                Utils.MontaCombox(cbxNomeInsumo, "Nome", "Codigo", "Insumo", "spObterInsumo");
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+        }
     }
 }

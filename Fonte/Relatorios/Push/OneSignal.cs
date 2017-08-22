@@ -1,5 +1,6 @@
 ﻿using DexComanda.Models.Operacoes;
 using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,6 +14,8 @@ namespace DexComanda.Push
     public class OneSignal
     {
         private Conexao con;
+        private string cUrlWs = "";
+        private string iParamToken;
         /// <summary>
         /// Busca o idOneSignal do cliente no banco e envia o push para ele 
         /// </summary>
@@ -261,6 +264,41 @@ namespace DexComanda.Push
             }
 
             return iReturn;
+        }
+        public void AlteraStatusPedido(int iCodPedidows, int iStatus, int iIdCliente = 0)
+        {
+            try
+            {
+                GerarToken();
+                RestClient client = new RestClient(cUrlWs);
+                RestRequest request = new RestRequest("ws/pedidos/status", Method.POST);
+                request.AddParameter("idPedido", iCodPedidows);
+                request.AddParameter("idStatus", iStatus);
+                request.AddParameter("token", iParamToken);
+                RestResponse response = (RestResponse)client.Execute(request);
+                OneSignal on = new OneSignal();
+
+                on.BuscaCliente(iIdCliente, iStatus);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+        }
+        private void GerarToken()
+        {
+            try
+            {
+                cUrlWs = Sessions.returnEmpresa.UrlServidor;
+                iParamToken = Utils.CriptografarArquivo("xsistemas", false);
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show("Geração do Token de validação " + e.Message);
+            }
+
         }
     }
 }
