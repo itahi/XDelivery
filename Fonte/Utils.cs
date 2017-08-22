@@ -165,7 +165,17 @@ namespace DexComanda
                 return false;
             }
         }
-
+      
+        public static int VerificaPedidoOnline(int CodPedido)
+        {
+            int iCodWs = 0;
+            DataSet dPedido = conexao.SelectRegistroPorCodigo("Pedido", "spObterPedidoOnline", CodPedido);
+            if (dPedido.Tables[0].Rows.Count > 0)
+            {
+                iCodWs = dPedido.Tables[0].Rows[0].Field<int>("CodigoPedidoWS");
+            }
+            return iCodWs;
+        }
         public static Boolean PermiteEntregador(int iCodPedido)
         {
             Boolean iRetur = false;
@@ -3621,7 +3631,12 @@ namespace DexComanda
         }
 
     }
-    public static void SalvarConfiguracao(string iChave, string iValue)
+        public static int RetornaPessoa(int iCodPedido)
+        {
+            return int.Parse(conexao.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).Tables[0].Rows[0].ItemArray.GetValue(2).ToString());
+        }
+
+        public static void SalvarConfiguracao(string iChave, string iValue)
     {
         try
         {

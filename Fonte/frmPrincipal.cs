@@ -42,7 +42,6 @@ namespace DexComanda
     {
         private Conexao con;
         private int rowIndex;
-        private List<ItemPedido> items;
         private int CodPedidoWS = 0;
         private Boolean RepeteUltimoPedido = Sessions.returnConfig.RepeteUltimoPedido;
         private int iCaixaAberto;
@@ -50,12 +49,10 @@ namespace DexComanda
         private string iParamToken;
         private CancelarPedido cancelPedid;
         private bool ControlaMesas = Sessions.returnConfig.UsaControleMesa;
-        private DataSet dsPedidosAbertos;
         private DataSet itemsPedidoNaoImpresso;
         private int intCodEndereco;
         private bool ImprimeViaBalcao = Utils.RetornaConfiguracaoBalcao().ImprimeSN;
         private int QtdViasBalcao = int.Parse(Utils.RetornaConfiguracaoBalcao().ViaBalcao);
-
         private bool ImprimeViaCozinha = Utils.RetornaConfiguracaoMesa().ImprimeSN;
         private int QtdViasCozinha = int.Parse(Utils.RetornaConfiguracaoMesa().ViaCozinha);
         private string TipoAgrupamentoCozinha = Utils.RetornaConfiguracaoMesa().TipoAgrupamento;
@@ -244,13 +241,14 @@ namespace DexComanda
                             }
                         }
 
-                        CodPedidoWS = VerificaPedidoOnline(Codigo);
+                        CodPedidoWS = Utils.VerificaPedidoOnline(Codigo);
 
                         if (CodPedidoWS > 0)
                         {
                             if (Utils.MessageBoxQuestion("Este é um pedido gerado/recebido na plataforma Online , tem certeza que deseja cancela-lo?"))
                             {
-                                AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoCancelado, iCodPessoa);
+                                OneSignal on = new OneSignal();
+                                on.AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoCancelado, iCodPessoa);
                                 // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
                             }
                         }
@@ -838,10 +836,11 @@ namespace DexComanda
 
                     DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
                     int iCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
-                    CodPedidoWS = VerificaPedidoOnline(codigo);
+                    CodPedidoWS = Utils.VerificaPedidoOnline(codigo);
                     if (CodPedidoWS > 0)
                     {
-                        AlteraStatusPedido(CodPedidoWS, 5, iCodPessoa);
+                        OneSignal on = new OneSignal();
+                        on.AlteraStatusPedido(CodPedidoWS, 5, iCodPessoa);
                         // MessageBox.Show("Atualização Realizada com Sucesso, pedido entregue");
                     }
                     int intCodPessoa = int.Parse(dRowPedido.ItemArray.GetValue(2).ToString());
@@ -897,10 +896,11 @@ namespace DexComanda
                     DataSet dsPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", codigo);
                     //  DataRow dRowPedido = dsPedido.Tables[0].Rows[0];
                     int intCodPessoa = dsPedido.Tables[0].Rows[0].Field<int>("CodPessoa");
-                    CodPedidoWS = VerificaPedidoOnline(codigo);
+                    CodPedidoWS = Utils.VerificaPedidoOnline(codigo);
                     if (CodPedidoWS > 0)
                     {
-                        AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoConcluido, intCodPessoa);
+                        OneSignal on = new OneSignal();
+                        on.AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoConcluido, intCodPessoa);
                     }
 
                     iCodMesa = dsPedido.Tables[0].Rows[0].Field<int>("CodigoMesa");
@@ -1065,7 +1065,7 @@ namespace DexComanda
         }
         private void SelecionaMotoboyColetivo(object sender, EventArgs e)
         {
-            frmInformaEntregador_Coletivo frm = new frmInformaEntregador_Coletivo();
+            frmInformaEntregador_Coletivo frm = new frmInformaEntregador_Coletivo(pedidosGridView);
             frm.Show();
         }
         /// <summary>
@@ -1185,25 +1185,17 @@ namespace DexComanda
                 MessageBox.Show("Não foi possivel **CANCELAR O PEDIDO**" + ER.Message);
             }
         }
-        private int VerificaPedidoOnline(int CodPedido)
-        {
-            int iCodWs = 0;
-            DataSet dPedido = con.SelectRegistroPorCodigo("Pedido", "spObterPedidoOnline", CodPedido);
-            if (dPedido.Tables[0].Rows.Count > 0)
-            {
-                iCodWs = dPedido.Tables[0].Rows[0].Field<int>("CodigoPedidoWS");
-            }
-            return iCodWs;
-        }
+       
         private void PedidoNaCozinha(object sender, EventArgs e)
         {
             try
             {
                 int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
-                CodPedidoWS = VerificaPedidoOnline(intCodPedido);
+                CodPedidoWS = Utils.VerificaPedidoOnline(intCodPedido);
                 if (CodPedidoWS > 0)
                 {
-                    AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaCozinha, RetornaPessoa(intCodPedido));
+                    OneSignal on = new OneSignal();
+                    on.AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaCozinha, Utils.RetornaPessoa(intCodPedido));
                 }
 
                 con.AtualizaSituacao(intCodPedido, Sessions.retunrUsuario.Codigo, StatusPedido.cPedidoNaCozinha, pedidosGridView);
@@ -1216,21 +1208,17 @@ namespace DexComanda
             }
 
         }
-        private int RetornaPessoa(int iCodPedido)
-        {
-            return int.Parse(con.SelectRegistroPorCodigo("Pedido", "spObterPedidoPorCodigo", iCodPedido).Tables[0].Rows[0].ItemArray.GetValue(2).ToString());
-
-        }
+    
         private void PedidoNaEntrega(object sender, EventArgs e)
         {
             try
             {
                 int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
-                CodPedidoWS = VerificaPedidoOnline(intCodPedido);
+                CodPedidoWS = Utils.VerificaPedidoOnline(intCodPedido);
                 if (CodPedidoWS > 0)
                 {
-
-                    AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaEntrega, RetornaPessoa(intCodPedido));
+                    OneSignal on = new OneSignal();
+                    on.AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaEntrega, Utils.RetornaPessoa(intCodPedido));
                 }
                 if (Sessions.returnConfig.ControlaEntregador)
                 {
@@ -1246,53 +1234,9 @@ namespace DexComanda
             }
 
         }
-        private void GerarToken()
-        {
-            try
-            {
-                cUrlWs = Sessions.returnEmpresa.UrlServidor;
-                iParamToken = Utils.CriptografarArquivo("xsistemas", false);
-            }
-            catch (Exception e)
-            {
+       
 
-                MessageBox.Show("Geração do Token de validação " + e.Message);
-            }
-
-        }
-
-        private void AlteraStatusPedido(int iCodPedidows, int iStatus, int iIdCliente = 0)
-        {
-            try
-            {
-                GerarToken();
-                RestClient client = new RestClient(cUrlWs);
-                RestRequest request = new RestRequest("ws/pedidos/status", Method.POST);
-                request.AddParameter("idPedido", iCodPedidows);
-                request.AddParameter("idStatus", iStatus);
-                request.AddParameter("token", iParamToken);
-                RestResponse response = (RestResponse)client.Execute(request);
-                OneSignal on = new OneSignal();
-
-                on.BuscaCliente(iIdCliente, iStatus);
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(Bibliotecas.cException + erro.Message);
-            }
-
-            //if (response.Content.Contains("true"))
-            //{
-            //    MessageBox.Show("Alteração realizada com sucesso");
-
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Alteração não pode ser realizada, favor tentar novamente mais tarde");
-            //}
-
-
-        }
+       
         private void AbrirPedido(int CodPessoa, int CodEnde = 0)
         {
             try
@@ -2278,26 +2222,20 @@ namespace DexComanda
         {
             try
             {
-                //for (int i = 0; i < pedidosGridView.Rows.Count; i++)
-                ////{
-                //    if (!pedidosGridView.Rows[i].Selected)
-                //    {
-                //        return;
-                //    }
-
                 if (pedidosGridView.SelectedRows.Count == 0)
                 {
                     return;
                 }
 
                 int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
-                CodPedidoWS = VerificaPedidoOnline(intCodPedido);
+                CodPedidoWS = Utils.VerificaPedidoOnline(intCodPedido);
 
 
                 if (CodPedidoWS > 0)
                 {
+                    OneSignal one = new OneSignal();
                     // se for pedido online
-                    AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaEntrega, RetornaPessoa(intCodPedido));
+                    one.AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaEntrega, Utils.RetornaPessoa(intCodPedido));
                 }
                 if (Sessions.returnConfig.ControlaEntregador)
                 {
@@ -2323,12 +2261,13 @@ namespace DexComanda
                     return;
                 }
                 int intCodPedido = int.Parse(pedidosGridView.CurrentRow.Cells["Codigo"].Value.ToString());
-                CodPedidoWS = VerificaPedidoOnline(intCodPedido);
+                CodPedidoWS = Utils.VerificaPedidoOnline(intCodPedido);
 
                 if (CodPedidoWS > 0)
                 {
+                    OneSignal on = new OneSignal();
                     // se for pedido online
-                    AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaCozinha, RetornaPessoa(intCodPedido));
+                    on.AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaCozinha, Utils.RetornaPessoa(intCodPedido));
                 }
                 //if (Sessions.returnConfig.ControlaEntregador)
                 //{

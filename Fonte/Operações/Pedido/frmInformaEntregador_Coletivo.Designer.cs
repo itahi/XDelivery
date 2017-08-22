@@ -31,16 +31,16 @@
             this.components = new System.ComponentModel.Container();
             this.grpPedidos = new System.Windows.Forms.GroupBox();
             this.PedidosGridView = new System.Windows.Forms.DataGridView();
+            this.Codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CodEntregador = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Entregador = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cbxEntregador = new System.Windows.Forms.ComboBox();
             this.txtCodPedido = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnConfirma = new System.Windows.Forms.Button();
             this.Add = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.Codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CodEntregador = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Entregador = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpPedidos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PedidosGridView)).BeginInit();
             this.SuspendLayout();
@@ -71,6 +71,25 @@
             this.PedidosGridView.ReadOnly = true;
             this.PedidosGridView.Size = new System.Drawing.Size(256, 176);
             this.PedidosGridView.TabIndex = 0;
+            // 
+            // Codigo
+            // 
+            this.Codigo.HeaderText = "CodPedido";
+            this.Codigo.Name = "Codigo";
+            this.Codigo.ReadOnly = true;
+            // 
+            // CodEntregador
+            // 
+            this.CodEntregador.HeaderText = "CodEntregador";
+            this.CodEntregador.Name = "CodEntregador";
+            this.CodEntregador.ReadOnly = true;
+            this.CodEntregador.Visible = false;
+            // 
+            // Entregador
+            // 
+            this.Entregador.HeaderText = "Entregador";
+            this.Entregador.Name = "Entregador";
+            this.Entregador.ReadOnly = true;
             // 
             // cbxEntregador
             // 
@@ -109,15 +128,16 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Entregador";
             // 
-            // button1
+            // btnConfirma
             // 
-            this.button1.Location = new System.Drawing.Point(199, 250);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Confirmar";
-            this.toolTip1.SetToolTip(this.button1, "Confirme todas alteracoes?");
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnConfirma.Location = new System.Drawing.Point(199, 250);
+            this.btnConfirma.Name = "btnConfirma";
+            this.btnConfirma.Size = new System.Drawing.Size(75, 23);
+            this.btnConfirma.TabIndex = 5;
+            this.btnConfirma.Text = "Confirmar";
+            this.toolTip1.SetToolTip(this.btnConfirma, "Confirme todas alteracoes?");
+            this.btnConfirma.UseVisualStyleBackColor = true;
+            this.btnConfirma.Click += new System.EventHandler(this.btnConfirma_Click);
             // 
             // Add
             // 
@@ -129,32 +149,13 @@
             this.Add.UseVisualStyleBackColor = true;
             this.Add.Click += new System.EventHandler(this.AdicionaPedido);
             // 
-            // Codigo
-            // 
-            this.Codigo.HeaderText = "CodPedido";
-            this.Codigo.Name = "Codigo";
-            this.Codigo.ReadOnly = true;
-            // 
-            // CodEntregador
-            // 
-            this.CodEntregador.HeaderText = "CodEntregador";
-            this.CodEntregador.Name = "CodEntregador";
-            this.CodEntregador.ReadOnly = true;
-            this.CodEntregador.Visible = false;
-            // 
-            // Entregador
-            // 
-            this.Entregador.HeaderText = "Entregador";
-            this.Entregador.Name = "Entregador";
-            this.Entregador.ReadOnly = true;
-            // 
             // frmInformaEntregador_Coletivo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(286, 279);
             this.Controls.Add(this.Add);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnConfirma);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtCodPedido);
@@ -162,6 +163,7 @@
             this.Controls.Add(this.grpPedidos);
             this.MaximizeBox = false;
             this.Name = "frmInformaEntregador_Coletivo";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[xSistemas] Inf. Entregador";
             this.grpPedidos.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PedidosGridView)).EndInit();
@@ -179,7 +181,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView PedidosGridView;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnConfirma;
         private System.Windows.Forms.Button Add;
         private System.Windows.Forms.DataGridViewTextBoxColumn Codigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn CodEntregador;

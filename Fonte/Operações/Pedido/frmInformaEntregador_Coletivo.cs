@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DexComanda.Models;
+using DexComanda.Models.WS;
+using DexComanda.Push;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,9 +16,15 @@ namespace DexComanda.Operações.Pedido
     public partial class frmInformaEntregador_Coletivo : Form
     {
         private Conexao con;
+        private DataGridView dtGridPedido;
         public frmInformaEntregador_Coletivo()
         {
             InitializeComponent();
+        }
+        public frmInformaEntregador_Coletivo(DataGridView gridView)
+        {
+            InitializeComponent();
+            dtGridPedido = gridView;
         }
 
         private void cbxEntregador_DropDown(object sender, EventArgs e)
@@ -90,6 +99,50 @@ namespace DexComanda.Operações.Pedido
             {
                 MessageBox.Show(erro.Message);
             }
+        }
+        private void MudaStatusPraEntrega(int intCodPedido)
+        {
+            try
+            {
+                int CodPedidoWS = Utils.VerificaPedidoOnline(intCodPedido);
+
+
+                if (CodPedidoWS > 0)
+                {
+                    OneSignal one = new OneSignal();
+                    // se for pedido online
+                    one.AlteraStatusPedido(CodPedidoWS, StatusPedido.cPedidoNaEntrega, Utils.RetornaPessoa(intCodPedido));
+                }
+                con.AtualizaSituacao(intCodPedido, Sessions.retunrUsuario.Codigo, StatusPedido.cPedidoNaEntrega, dtGridPedido);
+
+                //}
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+        }
+
+        private void btnConfirma_Click(object sender, EventArgs e)
+        {
+            if (!Utils.MessageBoxQuestion("Deseja continuar com essa alteração em "+ PedidosGridView.Rows.Count.ToString() + " Pedidos"))
+            {
+                return;
+            }
+            for (int i = 0; i < PedidosGridView.Rows.Count; i++)
+            {
+                InserirMotoboyPedido MotoBoy = new InserirMotoboyPedido()
+                {
+                    CodMotoBoy = int.Parse(PedidosGridView.Rows[i].Cells["CodEntregador"].Value.ToString()),
+                    CodPedido = int.Parse(PedidosGridView.Rows[i].Cells["Codigo"].Value.ToString())
+                };
+                MudaStatusPraEntrega(MotoBoy.CodPedido);
+                con.Update("spInsereBoyPedido", MotoBoy);
+                
+            }
+            PedidosGridView.AutoGenerateColumns = false;
+            PedidosGridView.DataSource = null;
+            PedidosGridView.DataMember = null;
         }
     }
 }
