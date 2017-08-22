@@ -32,6 +32,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
@@ -1745,56 +1746,63 @@ namespace DexComanda
         /// <param name="iCodPedido"> Código do Pedido</param>
         /// <param name="iCodGrupo"> Codigo do Grupo</param>
         /// <param name="iNomeImpressora">Nome da impressora</param>
-        private void ImpressaoAutomatica(int iCodPedido, int iCodGrupo, string iNomeImpressora)
+        //private void ImpressaoAutomatica(int iCodPedido, int iCodGrupo, string iNomeImpressora)
+        private void ImpressaoAutomatica(object iObject)
         {
             try
             {
-                DataSet itemsPedido;
-                itemsPedidoNaoImpresso = Utils.CarregaItens(iCodPedido);// ItensSelect(iCodPedido, iCodGrupo, iNomeImpressora, Sessions.returnConfig.TipoImpressao);
-                for (int i = 0; i < itemsPedidoNaoImpresso.Tables[0].Rows.Count; i++)
-                {
-                    int intCodGrupo = itemsPedidoNaoImpresso.Tables[0].Rows[i].Field<int>("CodGrupo");
-                    string strNomeImpressora = itemsPedidoNaoImpresso.Tables[0].Rows[i].Field<string>("NomeImpressora");
-
-                    if (Utils.RetornaConfiguracaoMesa().TipoAgrupamento == "Por Cozinha/Grupo")
-                    {
-                        itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorGrupo", iCodPedido, "", intCodGrupo);
-                        if (itemsPedido.Tables[0].Rows.Count == 0)
-                        {
-                            return;
-                        }
-                        Utils.ImpressaoCozihanova_SeparadoPorCozinhaGrupo(iCodPedido, strNomeImpressora, intCodGrupo);
-                    }
-                    else
-                    {
-                        itemsPedido = con.SelectItensPorImpressora(iCodPedido, strNomeImpressora);
-                        if (itemsPedido.Tables[0].Rows.Count == 0)
-                        {
-                            return;
-                        }
-                        Utils.ImpressaoCozihanova_SeparadoPorImpressora(iCodPedido, strNomeImpressora);
-                    }
-
-                    //Atualiza o item informando que foi impresso
-                    for (int intFor = 0; intFor < itemsPedido.Tables[0].Rows.Count; intFor++)
-                    {
-                        AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
-                        Atualiza.CodPedido = iCodPedido;
-                        Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[intFor].Field<int>("CodProduto");
-                        Atualiza.ImpressoSN = true;
-                        con.Update("spInformaItemImpresso", Atualiza);
-                    }
-
-                    if (con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", iCodPedido).Tables[0].Rows.Count > 0)
-                    {
-                        ImpressaoAutomatica(iCodPedido, intCodGrupo, strNomeImpressora);
-                    }
-                    else
+                //lock (this)
+                //{
+                    DataSet itemsPedido;
+                    int iCodPedido = Convert.ToInt16(iObject.ToString());
+                    itemsPedidoNaoImpresso = Utils.CarregaItens(iCodPedido);
+                    if (itemsPedidoNaoImpresso.Tables.Count==0)
                     {
                         return;
                     }
-                }
+                    for (int i = 0; i < itemsPedidoNaoImpresso.Tables[0].Rows.Count; i++)
+                    {
+                        int intCodGrupo = itemsPedidoNaoImpresso.Tables[0].Rows[i].Field<int>("CodGrupo");
+                        string strNomeImpressora = itemsPedidoNaoImpresso.Tables[0].Rows[i].Field<string>("NomeImpressora");
 
+                        if (Utils.RetornaConfiguracaoMesa().TipoAgrupamento == "Por Cozinha/Grupo")
+                        {
+                            itemsPedido = con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorGrupo", iCodPedido, "", intCodGrupo);
+                            if (itemsPedido.Tables[0].Rows.Count == 0)
+                            {
+                                return;
+                            }
+                            Utils.ImpressaoCozihanova_SeparadoPorCozinhaGrupo(iCodPedido, strNomeImpressora, intCodGrupo);
+                        }
+                        else
+                        {
+                            itemsPedido = con.SelectItensPorImpressora(iCodPedido, strNomeImpressora);
+                            if (itemsPedido.Tables[0].Rows.Count == 0)
+                            {
+                                return;
+                            }
+                            Utils.ImpressaoCozihanova_SeparadoPorImpressora(iCodPedido, strNomeImpressora);
+                        }
+                        //Atualiza o item informando que foi impresso
+                        for (int intFor = 0; intFor < itemsPedido.Tables[0].Rows.Count; intFor++)
+                        {
+                            AtualizaItemsImpresso Atualiza = new AtualizaItemsImpresso();
+                            Atualiza.CodPedido = iCodPedido;
+                            Atualiza.CodProduto = itemsPedido.Tables["ItemsPedido"].Rows[intFor].Field<int>("CodProduto");
+                            Atualiza.ImpressoSN = true;
+                            con.Update("spInformaItemImpresso", Atualiza);
+                        }
+
+                        if (con.SelectRegistroPorCodigo("ItemsPedido", "spObterItemsNaoImpressoPorCodigo", iCodPedido).Tables[0].Rows.Count > 0)
+                        {
+                            ImpressaoAutomatica(iObject);
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+               // }
             }
             catch (Exception erro)
             {
@@ -1886,7 +1894,14 @@ namespace DexComanda
         {
             try
             {
-
+                if (this.InvokeRequired)
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        AtualizaGrid_Tick(sender, e);
+                    });
+                    return;
+                }
                 DataSet dsPedidosAbertos = con.SelectAll("Pedido", "spObterPedido");
                 int iPedidosAberto = dsPedidosAbertos.Tables["Pedido"].Rows.Count;
 
@@ -1934,7 +1949,10 @@ namespace DexComanda
                         int CodGrupo = dsItemsNaoImpresso.Tables[0].Rows[i].Field<int>("CodGrupo");
                         string iNomeImpressora = dsItemsNaoImpresso.Tables[0].Rows[i].Field<string>("NomeImpressora");
                         AtualizaGrid.Enabled = false;
-                        ImpressaoAutomatica(CodPedido, CodGrupo, iNomeImpressora);
+
+                        Thread newTread = new Thread(new ParameterizedThreadStart(ImpressaoAutomatica));
+                        newTread.Start(CodPedido);
+
                         AtualizaGrid.Enabled = true;
                         break;
                     }
