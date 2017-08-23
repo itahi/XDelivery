@@ -187,8 +187,7 @@
             this.txtBairro.TabIndex = 4;
             this.toolTip1.SetToolTip(this.txtBairro, "d");
             this.txtBairro.TextChanged += new System.EventHandler(this.txtBairro_TextChanged);
-            this.txtBairro.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RetornaCEP);
-            this.txtBairro.Leave += new System.EventHandler(this.txtBairro_Leave);
+            this.txtBairro.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBairro_KeyPress);
             // 
             // chkAtivo
             // 
