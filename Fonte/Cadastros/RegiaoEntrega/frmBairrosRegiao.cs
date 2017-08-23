@@ -318,39 +318,9 @@ namespace DexComanda.Cadastros
             }
         }
 
-        private void txtBairro_Leave(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void RetornaCEP(object sender, KeyEventArgs e)
-        {
-            AutoCompleteStringCollection lista = new AutoCompleteStringCollection();
-            if (txtBairro.Text.Length <= 3)
-            {
-                return;
-            }
-            DataSet dsBairros = con.ListaBairro(txtBairro.Text);
-
-            for (int i = 0; i < dsBairros.Tables[0].Rows.Count; i++)
-            {
-                lista.Add(dsBairros.Tables[0].Rows[i].Field<string>("bairro"));
-            }
-            txtBairro.AutoCompleteCustomSource = lista;
-            if (e.KeyCode == Keys.Enter)
-            {
-                DataSet ds = con.RetornaCEPPorBairro(txtBairro.Text);
-                if (ds.Tables[0].Rows.Count == 0)
-                {
-                    return;
-                }
-                txtCEP.Text = ds.Tables[0].Rows[0].Field<string>("Cep");
-            }
-        }
-
         private void txtBairro_TextChanged(object sender, EventArgs e)
         {
-            if (txtBairro.Text.Length<=3)
+            if (txtBairro.Text.Length <= 3)
             {
                 return;
             }
@@ -360,7 +330,32 @@ namespace DexComanda.Cadastros
                 return;
             }
             txtCEP.Text = ds.Tables[0].Rows[0].Field<string>("Cep");
-            txtBairro.Text = ds.Tables[0].Rows[0].Field<string>("Bairro");
+            //txtBairro.Text = ds.Tables[0].Rows[0].Field<string>("Bairro");
+        }
+
+        private void txtBairro_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            AutoCompleteStringCollection lista = new AutoCompleteStringCollection();
+            DataSet dsBairros;
+            if (txtBairro.Text.Length >= 3 && (e.KeyChar != 8 && e.KeyChar != 46))
+            {
+                dsBairros = con.ListaBairro(txtBairro.Text);
+                for (int i = 0; i < dsBairros.Tables[0].Rows.Count; i++)
+                {
+                    lista.Add(dsBairros.Tables[0].Rows[i].Field<string>("bairro"));
+                }
+                txtBairro.AutoCompleteCustomSource = lista;
+                if (e.KeyChar == 13)
+                {
+                    DataSet ds = con.RetornaCEPPorBairro(txtBairro.Text);
+                    if (ds.Tables[0].Rows.Count == 0)
+                    {
+                        return;
+                    }
+                    txtCEP.Text = ds.Tables[0].Rows[0].Field<string>("Cep");
+                }
+            }
+          
         }
     }
 }

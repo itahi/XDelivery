@@ -1171,17 +1171,22 @@ namespace DexComanda
 
         private void txtBairro_KeyUp(object sender, KeyEventArgs e)
         {
-            
-            if (txtBairro.Text.Length >= 3)
+           
+        }
+
+        private void txtBairro_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            listabairro = new AutoCompleteStringCollection();
+            DataSet dsBairros;
+            if (txtBairro.Text.Length >= 3 && (e.KeyChar!= 8 && e.KeyChar !=46))
             {
-                listabairro = new AutoCompleteStringCollection();
-                DataSet dsBairros = con.ListaBairro(txtBairro.Text);
+                dsBairros = con.ListaBairro(txtBairro.Text);
                 for (int i = 0; i < dsBairros.Tables[0].Rows.Count; i++)
                 {
                     listabairro.Add(dsBairros.Tables[0].Rows[i].Field<string>("bairro"));
                 }
                 txtBairro.AutoCompleteCustomSource = listabairro;
-                if (e.KeyCode == Keys.Enter)
+                if (e.KeyChar == Convert.ToChar(Keys.Enter))
                 {
                     DataSet ds = con.RetornarTaxaPorBairro(txtBairro.Text);
                     if (ds.Tables[0].Rows.Count == 0)
@@ -1193,12 +1198,6 @@ namespace DexComanda
                 }
             }
         }
-
-        private void txtBairro_Leave(object sender, EventArgs e)
-        {
-           
-        }
-
     }
 
 }
