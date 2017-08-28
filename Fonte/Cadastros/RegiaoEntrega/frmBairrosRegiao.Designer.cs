@@ -186,7 +186,7 @@
             this.txtBairro.Size = new System.Drawing.Size(177, 20);
             this.txtBairro.TabIndex = 4;
             this.toolTip1.SetToolTip(this.txtBairro, "d");
-            this.txtBairro.TextChanged += new System.EventHandler(this.txtBairro_TextChanged);
+            this.txtBairro.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBairro_KeyDown);
             this.txtBairro.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBairro_KeyPress);
             // 
             // chkAtivo

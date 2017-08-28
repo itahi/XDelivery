@@ -318,20 +318,6 @@ namespace DexComanda.Cadastros
             }
         }
 
-        private void txtBairro_TextChanged(object sender, EventArgs e)
-        {
-            if (txtBairro.Text.Length <= 3)
-            {
-                return;
-            }
-            DataSet ds = con.RetornaCEPPorBairro(txtBairro.Text);
-            if (ds.Tables[0].Rows.Count == 0)
-            {
-                return;
-            }
-            txtCEP.Text = ds.Tables[0].Rows[0].Field<string>("Cep");
-            //txtBairro.Text = ds.Tables[0].Rows[0].Field<string>("Bairro");
-        }
 
         private void txtBairro_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -345,17 +331,22 @@ namespace DexComanda.Cadastros
                     lista.Add(dsBairros.Tables[0].Rows[i].Field<string>("bairro"));
                 }
                 txtBairro.AutoCompleteCustomSource = lista;
-                if (e.KeyChar == 13)
-                {
-                    DataSet ds = con.RetornaCEPPorBairro(txtBairro.Text);
-                    if (ds.Tables[0].Rows.Count == 0)
-                    {
-                        return;
-                    }
-                    txtCEP.Text = ds.Tables[0].Rows[0].Field<string>("Cep");
-                }
+                
             }
           
+        }
+
+        private void txtBairro_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                DataSet ds = con.RetornaCEPPorBairro(txtBairro.Text);
+                if (ds.Tables[0].Rows.Count == 0)
+                {
+                    return;
+                }
+                txtCEP.Text = ds.Tables[0].Rows[0].Field<string>("Cep");
+            }
         }
     }
 }
