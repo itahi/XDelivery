@@ -68,6 +68,8 @@
             this.txtCNPJ = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txt_IdLoja = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
             this.txtURL = new System.Windows.Forms.TextBox();
             this.btnBackup = new System.Windows.Forms.Button();
@@ -122,6 +124,9 @@
             this.txtViasEntrega = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.grpControleFidelidade = new System.Windows.Forms.GroupBox();
+            this.grpFidelidade = new System.Windows.Forms.GroupBox();
+            this.rbPorValor = new System.Windows.Forms.RadioButton();
+            this.rbPorPonto = new System.Windows.Forms.RadioButton();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
@@ -131,9 +136,6 @@
             this.chkSegunda = new System.Windows.Forms.CheckBox();
             this.label23 = new System.Windows.Forms.Label();
             this.txtMultiplicador = new System.Windows.Forms.TextBox();
-            this.grpFidelidade = new System.Windows.Forms.GroupBox();
-            this.rbPorValor = new System.Windows.Forms.RadioButton();
-            this.rbPorPonto = new System.Windows.Forms.RadioButton();
             this.grpSms = new System.Windows.Forms.GroupBox();
             this.rbLocaSMS = new System.Windows.Forms.RadioButton();
             this.rbZenvia = new System.Windows.Forms.RadioButton();
@@ -230,8 +232,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.txt_IdLoja = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -583,6 +583,7 @@
             this.txtCNPJ.Name = "txtCNPJ";
             this.txtCNPJ.Size = new System.Drawing.Size(123, 20);
             this.txtCNPJ.TabIndex = 1;
+            this.txtCNPJ.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCNPJ_KeyDown);
             this.txtCNPJ.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCNPJ_KeyPress);
             // 
             // label7
@@ -614,6 +615,26 @@
             this.groupBox1.TabIndex = 25;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Servidor/Banco de Dados";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(531, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(50, 13);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "ID_LOJA";
+            // 
+            // txt_IdLoja
+            // 
+            this.txt_IdLoja.Location = new System.Drawing.Point(587, 19);
+            this.txt_IdLoja.Name = "txt_IdLoja";
+            this.txt_IdLoja.Size = new System.Drawing.Size(24, 20);
+            this.txt_IdLoja.TabIndex = 27;
+            this.txt_IdLoja.Text = "1";
+            this.toolTip1.SetToolTip(this.txt_IdLoja, "Usado para casos de matriz/filial");
+            this.txt_IdLoja.DoubleClick += new System.EventHandler(this.txt_IdLoja_DoubleClick);
+            this.txt_IdLoja.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_IdLoja_KeyPress);
             // 
             // label29
             // 
@@ -1182,6 +1203,7 @@
             // 
             // grpControleFidelidade
             // 
+            this.grpControleFidelidade.Controls.Add(this.grpFidelidade);
             this.grpControleFidelidade.Controls.Add(this.checkBox6);
             this.grpControleFidelidade.Controls.Add(this.checkBox3);
             this.grpControleFidelidade.Controls.Add(this.checkBox4);
@@ -1191,13 +1213,49 @@
             this.grpControleFidelidade.Controls.Add(this.chkSegunda);
             this.grpControleFidelidade.Controls.Add(this.label23);
             this.grpControleFidelidade.Controls.Add(this.txtMultiplicador);
-            this.grpControleFidelidade.Controls.Add(this.grpFidelidade);
             this.grpControleFidelidade.Location = new System.Drawing.Point(6, 29);
             this.grpControleFidelidade.Name = "grpControleFidelidade";
             this.grpControleFidelidade.Size = new System.Drawing.Size(350, 124);
             this.grpControleFidelidade.TabIndex = 6;
             this.grpControleFidelidade.TabStop = false;
             this.grpControleFidelidade.Text = "Controle de Fidelidade";
+            this.toolTip1.SetToolTip(this.grpControleFidelidade, "Configure seus parametros de fidelidade");
+            // 
+            // grpFidelidade
+            // 
+            this.grpFidelidade.Controls.Add(this.rbPorValor);
+            this.grpFidelidade.Controls.Add(this.rbPorPonto);
+            this.grpFidelidade.Location = new System.Drawing.Point(9, 12);
+            this.grpFidelidade.Name = "grpFidelidade";
+            this.grpFidelidade.Size = new System.Drawing.Size(113, 68);
+            this.grpFidelidade.TabIndex = 14;
+            this.grpFidelidade.TabStop = false;
+            this.grpFidelidade.Text = "Tipos de Fidelidade";
+            this.toolTip1.SetToolTip(this.grpFidelidade, "Numero de pedidos que o cliente atingirá a fidelidade");
+            // 
+            // rbPorValor
+            // 
+            this.rbPorValor.AutoSize = true;
+            this.rbPorValor.Location = new System.Drawing.Point(6, 19);
+            this.rbPorValor.Name = "rbPorValor";
+            this.rbPorValor.Size = new System.Drawing.Size(85, 17);
+            this.rbPorValor.TabIndex = 1;
+            this.rbPorValor.TabStop = true;
+            this.rbPorValor.Text = "Por Valor R$";
+            this.toolTip1.SetToolTip(this.rbPorValor, "Cada R$1,00 vale um ponto ");
+            this.rbPorValor.UseVisualStyleBackColor = true;
+            // 
+            // rbPorPonto
+            // 
+            this.rbPorPonto.AutoSize = true;
+            this.rbPorPonto.Location = new System.Drawing.Point(6, 45);
+            this.rbPorPonto.Name = "rbPorPonto";
+            this.rbPorPonto.Size = new System.Drawing.Size(77, 17);
+            this.rbPorPonto.TabIndex = 0;
+            this.rbPorPonto.TabStop = true;
+            this.rbPorPonto.Text = "Por Pontos";
+            this.toolTip1.SetToolTip(this.rbPorPonto, "Cada produto tem sua pontuação.");
+            this.rbPorPonto.UseVisualStyleBackColor = true;
             // 
             // checkBox6
             // 
@@ -1294,42 +1352,6 @@
             this.txtMultiplicador.Text = "1";
             this.toolTip1.SetToolTip(this.txtMultiplicador, "Use o multiplicador para fazer com que os pontos sejam \r\nmaiores em determinados " +
         "dias da semana.");
-            // 
-            // grpFidelidade
-            // 
-            this.grpFidelidade.Controls.Add(this.rbPorValor);
-            this.grpFidelidade.Controls.Add(this.rbPorPonto);
-            this.grpFidelidade.Location = new System.Drawing.Point(6, 20);
-            this.grpFidelidade.Name = "grpFidelidade";
-            this.grpFidelidade.Size = new System.Drawing.Size(113, 68);
-            this.grpFidelidade.TabIndex = 4;
-            this.grpFidelidade.TabStop = false;
-            this.grpFidelidade.Text = "Tipos de Fidelidade";
-            this.toolTip1.SetToolTip(this.grpFidelidade, "Numero de pedidos que o cliente atingirá a fidelidade");
-            // 
-            // rbPorValor
-            // 
-            this.rbPorValor.AutoSize = true;
-            this.rbPorValor.Location = new System.Drawing.Point(6, 19);
-            this.rbPorValor.Name = "rbPorValor";
-            this.rbPorValor.Size = new System.Drawing.Size(85, 17);
-            this.rbPorValor.TabIndex = 1;
-            this.rbPorValor.TabStop = true;
-            this.rbPorValor.Text = "Por Valor R$";
-            this.toolTip1.SetToolTip(this.rbPorValor, "Cada R$1,00 vale um ponto ");
-            this.rbPorValor.UseVisualStyleBackColor = true;
-            // 
-            // rbPorPonto
-            // 
-            this.rbPorPonto.AutoSize = true;
-            this.rbPorPonto.Location = new System.Drawing.Point(6, 45);
-            this.rbPorPonto.Name = "rbPorPonto";
-            this.rbPorPonto.Size = new System.Drawing.Size(77, 17);
-            this.rbPorPonto.TabIndex = 0;
-            this.rbPorPonto.TabStop = true;
-            this.rbPorPonto.Text = "Por Pontos";
-            this.toolTip1.SetToolTip(this.rbPorPonto, "Cada produto tem sua pontuação.");
-            this.rbPorPonto.UseVisualStyleBackColor = true;
             // 
             // grpSms
             // 
@@ -2325,26 +2347,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // txt_IdLoja
-            // 
-            this.txt_IdLoja.Location = new System.Drawing.Point(587, 19);
-            this.txt_IdLoja.Name = "txt_IdLoja";
-            this.txt_IdLoja.Size = new System.Drawing.Size(24, 20);
-            this.txt_IdLoja.TabIndex = 27;
-            this.txt_IdLoja.Text = "1";
-            this.toolTip1.SetToolTip(this.txt_IdLoja, "Usado para casos de matriz/filial");
-            this.txt_IdLoja.DoubleClick += new System.EventHandler(this.txt_IdLoja_DoubleClick);
-            this.txt_IdLoja.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_IdLoja_KeyPress);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(531, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 13);
-            this.label1.TabIndex = 28;
-            this.label1.Text = "ID_LOJA";
-            // 
             // frmConfiguracoes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2479,7 +2481,6 @@
         private System.Windows.Forms.CheckBox chkFidelidade;
         private System.Windows.Forms.GroupBox grpSms;
         private System.Windows.Forms.CheckBox chkEnviaSms;
-        private System.Windows.Forms.GroupBox grpFidelidade;
         private System.Windows.Forms.CheckBox chk10Garcon;
         private System.Windows.Forms.GroupBox grpViasImpressao;
         private System.Windows.Forms.Label label26;
@@ -2595,8 +2596,6 @@
         private System.Windows.Forms.TextBox txtAgrZenvia;
         private System.Windows.Forms.RadioButton rbLocaSMS;
         private System.Windows.Forms.RadioButton rbZenvia;
-        private System.Windows.Forms.RadioButton rbPorValor;
-        private System.Windows.Forms.RadioButton rbPorPonto;
         private System.Windows.Forms.GroupBox grpControleFidelidade;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox txtMultiplicador;
@@ -2623,5 +2622,8 @@
         public System.Windows.Forms.TextBox txtServidor;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txt_IdLoja;
+        private System.Windows.Forms.GroupBox grpFidelidade;
+        private System.Windows.Forms.RadioButton rbPorValor;
+        private System.Windows.Forms.RadioButton rbPorPonto;
     }
 }

@@ -8,7 +8,7 @@ namespace DexComanda
 {
     public class Bibliotecas
     {
-        public static string cException = "Exeção de tratamento em , comunique a xSistemas ";
+        public static string cException = "Exeção de tratamento, comunique a xSistemas ";
         public const string cGravacaoOK = "Registro gravado com sucesso";
         public const string cEdicaoOK = "Registro editado com sucesso";
         public const string cDeleteOK = "Registro deletado com sucesso";

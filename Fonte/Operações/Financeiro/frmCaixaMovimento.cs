@@ -60,7 +60,7 @@ namespace DexComanda.Operações
 
                    
                     report.SetParameterValue("@Turno", cbxTurno.Text);
-                    report.SetParameterValue("@Estado", bEstado);
+                    report.SetParameterValue("@Estado", 0);
                     report.SetParameterValue("@DataI", dtInicio.Value.ToShortDateString());
                   //  report.SetParameterValue("@DataF", dtFim.Value.ToShortDateString());
                     report.SetParameterValue("@EntradaSaida", OperacaoMarcada());

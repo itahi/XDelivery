@@ -12,14 +12,11 @@ namespace DexComanda
 
     public static class Program
     {
-        private static string CNPJ = null;
         private static DateTime DataInicio = DateTime.Now;
         public static DateTime DataExpiracao;// = DateTime.Now;
         public static DateTime DiaMesAtual = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-        private static string Versao = null;
         private static Conexao con;
-        private static DataRow dRow;
-        private static DataRow config;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -158,7 +155,6 @@ namespace DexComanda
                                             MessageBox.Show("Licença não está ativa , favor entrar em contato com suporte" +
                                                               "(27) 9 8166-7827 / lazaro.shev@gmail.com ", "DEX Licença Expirada");
 
-                                            Utils.ExcluiRegistro();
                                             Application.Exit();
                                         }
                                         else if (Utils.CriaLicencaFree(empresas.CNPJ, empresas.Nome, empresas.Contato, empresas.Telefone))
@@ -171,7 +167,6 @@ namespace DexComanda
                                         }
                                         else
                                         {
-                                            Utils.ExcluiRegistro();
                                             MessageBox.Show("Não foi possivel validar a licença , favor entrar em contato com suporte" +
                                                              "(27) 9 81667827 / lazaro.shev@gmail.com ", "[xSistemas] Licença Expirada");
                                         }

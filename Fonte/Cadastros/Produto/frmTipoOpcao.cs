@@ -188,6 +188,8 @@ namespace DexComanda.Cadastros.Produto
             this.btnAdicionar.Click -= new System.EventHandler(this.SalvarRegistro);
 
             this.btnEditar.Text = "Editar [F11]";
+            this.btnEditar.Click += new System.EventHandler(this.EditarRegistro);
+            this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
             //   this.btnEditar.Click -= new System.EventHandler(this.Cancelar);
             Utils.LimpaForm(this);
             ListaTipoOpcao();

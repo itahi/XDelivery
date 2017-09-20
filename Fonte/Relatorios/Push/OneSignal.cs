@@ -74,16 +74,17 @@ namespace DexComanda.Push
                 request.ContentType = "application/json";
                 string irul = Sessions.returnEmpresa.UrlServidor;
                 request.Headers.Add("authorization", "Basic " + Utils.RetornaConfiguracaoPush().Pushauthorization);
-
+                string appID = Utils.RetornaConfiguracaoPush().Pushapp_id;
+                
                 byte[] byteArray = Encoding.UTF8.GetBytes("{"
-                                                        + "\"app_id\": \"" + Utils.RetornaConfiguracaoPush().Pushapp_id + "\","
-                                                        + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
-                                                        + "\"contents\": {\"en\": \"" + iTexto + "\"},"
-                                                         + "\"include_player_ids\": [\"" + iUserID + "\"]}");
+                                              + "\"app_id\": \"" + appID + "\","
+                                              + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"
+                                              + "\"contents\": {\"en\": \"" + iTexto + "\"},"
+                                               + "\"include_player_ids\": [\"" + iUserID + "\"]}");
 
 
 
-                string responseContent = null;
+    string responseContent = null;
 
                 try
                 {
@@ -108,10 +109,10 @@ namespace DexComanda.Push
                     }
 
                 }
-                catch (WebException ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-                    MessageBox.Show(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
+                 //   MessageBox.Show(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
 
                 }
 
@@ -143,6 +144,9 @@ namespace DexComanda.Push
                 string pushAut = Utils.RetornaConfiguracaoPush().Pushauthorization;
                 string pushAppID = Utils.RetornaConfiguracaoPush().Pushapp_id;
                 request.Headers.Add("authorization", "Basic "+ pushAut);
+
+
+
                 byte[] byteArray = Encoding.UTF8.GetBytes("{"
                                                         + "\"app_id\": \"" + pushAppID + "\","
                                                         + "\"headings\": {\"en\": \"" + iTituloMsg + "\"},"

@@ -29,45 +29,38 @@ namespace DexComanda.Operações.Financeiro
         }
         private void ConsultaMovimentoCaixa()
         {
-            decimal vlrEntrada = 0.00M;
-            decimal vlrSaida = 0.00M;
-            DataSet dsMovimento = con.SelectCaixaFechamento(iDataFiltro + " 00:00:00", iDataFiltro + " 23:59:59", cbxTurno.Text, "CaixaMovimento");
-            if (dsMovimento.Tables[0].Rows.Count > 0)
+            try
             {
-                 for (int i = 0; i < FechamentosGrid.Columns.Count; i++)
+                DataSet dsMovimento = con.SelectCaixaFechamento(iDataFiltro + " 00:00:00", iDataFiltro + " 23:59:59", cbxTurno.Text, "CaixaMovimento");
+                if (dsMovimento.Tables[0].Rows.Count > 0)
                 {
-                    if (FechamentosGrid.Columns[i].HeaderText != "Total Somado")
+                    for (int i = 0; i < FechamentosGrid.Columns.Count; i++)
                     {
-                        FechamentosGrid.Columns[i].ReadOnly = false;
+                        if (FechamentosGrid.Columns[i].HeaderText != "Total Somado")
+                        {
+                            FechamentosGrid.Columns[i].ReadOnly = false;
+                        }
                     }
-                }
-                FechamentosGrid.DataSource = null;
-                FechamentosGrid.AutoGenerateColumns = true;
-                FechamentosGrid.DataSource = dsMovimento;
-                FechamentosGrid.DataMember = "CaixaMovimento";
-                FechamentosGrid.Columns["Total Somado"].Visible = false;
-                //for (int i = 0; i < FechamentosGrid.Rows.Count; i++)
-                //{
-                //    if (FechamentosGrid.Rows[i].Cells["Tipo Movimento"].Value.ToString() == "Entradas")
-                //    {
-                //        vlrEntrada = vlrEntrada + decimal.Parse(FechamentosGrid.Rows[i].Cells["Total Somado"].Value.ToString());
-                //    }
-                //    else
-                //    {
-                //        vlrSaida = vlrSaida + decimal.Parse(FechamentosGrid.Rows[i].Cells[2].Value.ToString());
-                //    }
-                //}
+                    FechamentosGrid.DataSource = null;
+                    FechamentosGrid.AutoGenerateColumns = true;
+                    FechamentosGrid.DataSource = dsMovimento;
+                    FechamentosGrid.DataMember = "CaixaMovimento";
+                    FechamentosGrid.Columns["Total Somado"].Visible = false;
+                    if (!FechamentosGrid.Columns.Contains("ValorInformado"))
+                    {
+                        FechamentosGrid.Columns.Add("ValorInformado", "ValorInformado");
+                        FechamentosGrid.Refresh();
+                    }
 
-             //   vlrValorTotal = vlrEntrada - vlrSaida;
-                if (!FechamentosGrid.Columns.Contains("ValorInformado"))
-                {
-                    FechamentosGrid.Columns.Add("ValorInformado", "ValorInformado");
-                    FechamentosGrid.Refresh();
-                }
+                    con.Close();
 
-                con.Close();
-                
+                }
             }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+           
 
         }
         private void btnExecutar_Click(object sender, EventArgs e)

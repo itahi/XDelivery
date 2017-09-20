@@ -31,17 +31,17 @@ namespace DexComanda.Cadastros
             this.cbxRegiao.DataSource = con.SelectAll("RegiaoEntrega", "spObterRegioes").Tables["RegiaoEntrega"];
             this.cbxRegiao.DisplayMember = "NomeRegiao";
             this.cbxRegiao.ValueMember = "Codigo";
-            if (cbxRegiao.SelectedValue.ToString()!="")
+            if (cbxRegiao.SelectedValue.ToString() != "")
             {
                 ListaBairrosPorRegiao(int.Parse(cbxRegiao.SelectedValue.ToString()));
             }
-            
+
 
         }
-        
+
         private void Adicionar(object sender, EventArgs e)
         {
-           
+
             if (cbxRegiao.SelectedIndex != -1 && txtCEP.Text != "")
             {
                 try
@@ -49,7 +49,7 @@ namespace DexComanda.Cadastros
                     RegiaoEntrega_Bairros reg = new RegiaoEntrega_Bairros()
                     {
                         CodRegiao = int.Parse(cbxRegiao.SelectedValue.ToString()),
-                        CEP = txtCEP.Text.Replace("-",""),
+                        CEP = txtCEP.Text.Replace("-", ""),
                         Nome = txtBairro.Text,
                         DataCadastro = DateTime.Now,
                         AtivoSN = chkAtivo.Checked,
@@ -58,7 +58,7 @@ namespace DexComanda.Cadastros
                     con.Insert("spAdicionaBairrosRegiao", reg);
                     con.AtualizaDataSincronismo("RegiaoEntrega", reg.CodRegiao, "DataAlteracao");
                     Utils.ControlaEventos("Inserir", this.Name);
-                  ///  Utils.LimpaForm(this);
+                    ///  Utils.LimpaForm(this);
                     ListaBairrosPorRegiao(int.Parse(cbxRegiao.SelectedValue.ToString()));
                     txtBairro.Text = "";
                     txtCEP.Text = "";
@@ -91,7 +91,7 @@ namespace DexComanda.Cadastros
 
         private void txtCEP_KeyDown(object sender, KeyEventArgs e)
         {
-         
+
 
         }
 
@@ -131,7 +131,7 @@ namespace DexComanda.Cadastros
 
                 MessageBox.Show(erro.Message);
             }
-           
+
         }
         private void Cancelar(object sender, EventArgs e)
         {
@@ -155,12 +155,12 @@ namespace DexComanda.Cadastros
             string iCodSelecionado = cbxRegiao.SelectedValue.ToString();
             try
             {
-                if (cbxRegiao.Text=="" || txtCEP.Text=="" || txtBairro.Text=="")
+                if (cbxRegiao.Text == "" || txtCEP.Text == "" || txtBairro.Text == "")
                 {
                     MessageBox.Show("Campos obrigatórios não preenchidos");
                     return;
                 }
-              
+
                 RegiaoEntrega_Bairros reg = new RegiaoEntrega_Bairros()
                 {
                     CEP = txtCEP.Text,
@@ -176,7 +176,7 @@ namespace DexComanda.Cadastros
                     return;
                 }
                 con.Update("spAlterarBairrosRegiao", reg);
-                con.AtualizaDataSincronismo("RegiaoEntrega_Bairros", reg.CodRegiao, "DataCadastro","CodRegiao");
+                con.AtualizaDataSincronismo("RegiaoEntrega_Bairros", reg.CodRegiao, "DataCadastro", "CodRegiao");
                 Utils.ControlaEventos("Alterar", this.Name);
                 txtBairro.Text = "";
                 txtCEP.Text = "";
@@ -214,8 +214,8 @@ namespace DexComanda.Cadastros
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-                    
-           
+
+
         }
 
         private void ListaBairrosPorRegiao(int iCodRegiao)
@@ -241,10 +241,10 @@ namespace DexComanda.Cadastros
             }
             catch (Exception erro)
             {
-               MessageBox.Show("Não foi possivel listar os bairros dessa região");   
-            }            
-        
-            
+                MessageBox.Show("Não foi possivel listar os bairros dessa região");
+            }
+
+
         }
 
         private void MenuAuxiliar(object sender, MouseEventArgs e)
@@ -321,6 +321,7 @@ namespace DexComanda.Cadastros
 
         private void txtBairro_KeyPress(object sender, KeyPressEventArgs e)
         {
+
             AutoCompleteStringCollection lista = new AutoCompleteStringCollection();
             DataSet dsBairros;
             if (txtBairro.Text.Length >= 3 && (e.KeyChar != 8 && e.KeyChar != 46))
@@ -331,9 +332,8 @@ namespace DexComanda.Cadastros
                     lista.Add(dsBairros.Tables[0].Rows[i].Field<string>("bairro"));
                 }
                 txtBairro.AutoCompleteCustomSource = lista;
-                
             }
-          
+
         }
 
         private void txtBairro_KeyDown(object sender, KeyEventArgs e)
