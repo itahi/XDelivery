@@ -1748,8 +1748,8 @@ namespace DexComanda
         {
             try
             {
-                //lock (this)
-                //{
+                lock (this)
+                {
                     DataSet itemsPedido;
                     int iCodPedido = Convert.ToInt32(iObject.ToString());
                     itemsPedidoNaoImpresso = Utils.CarregaItens(iCodPedido);
@@ -1799,7 +1799,7 @@ namespace DexComanda
                             return;
                         }
                     }
-               // }
+                }
             }
             catch (Exception erro)
             {
