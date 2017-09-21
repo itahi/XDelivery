@@ -50,7 +50,6 @@
         private System.Windows.Forms.TextBox txtCodProduto1;
         private System.Windows.Forms.TextBox txtCodProduto2;
         private System.Windows.Forms.ComboBox cbxTipoPedido;
-        private System.Windows.Forms.Label lblFidelidade;
         private System.Windows.Forms.Label lblTempo;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label lblEntrega;
@@ -101,5 +100,6 @@
         private System.Windows.Forms.Label lblSenha;
         private System.Windows.Forms.Label lblDébito;
         private System.Windows.Forms.DateTimePicker dtPedido;
+        private System.Windows.Forms.Label label15;
     }
 }

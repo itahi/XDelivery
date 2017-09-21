@@ -164,6 +164,7 @@ namespace DexComanda
             {
                 if (iConfig == "" || iConfig == null)
                 {
+                    chkFidelidade.CheckState = CheckState.Unchecked;
                     return;
                 }
                 Fidelidade fidelida = new Fidelidade();
@@ -560,7 +561,7 @@ namespace DexComanda
             MarcaConfiguracaoExibicao();
             if (Sessions.returnConfig != null)
             {
-                grpFidelidade.Enabled = chkFidelidade.Checked;
+              //  grpFidelidade.Enabled = chkFidelidade.Checked;
                 chkDataNAscimento.Checked = Sessions.returnConfig.UsaDataNascimento;
                 chkEntregadores.Checked = Sessions.returnConfig.ControlaEntregador;
                 chkProdutoCodigo.Checked = Utils.MarcaTipoConfiguracaoProduto().PorCodigo;
@@ -687,13 +688,6 @@ namespace DexComanda
             }
 
         }
-
-
-        private void chkFidelidade_CheckedChanged(object sender, EventArgs e)
-        {
-            //grpFidelidade.Enabled = chkFidelidade.Checked;
-        }
-
         private void chkEnviaSms_CheckedChanged(object sender, EventArgs e)
         {
             grpSms.Enabled = chkEnviaSms.Checked;
@@ -1054,11 +1048,6 @@ namespace DexComanda
             cbxTipoCodigo.Enabled = chkProdutoCodigo.Checked;
         }
 
-        private void chkFidelidade_CheckStateChanged(object sender, EventArgs e)
-        {
-            grpControleFidelidade.Enabled = chkFidelidade.Checked;
-        }
-
         private void chkViaBalcao_CheckedChanged(object sender, EventArgs e)
         {
             txtViasBalcao.Text = "1";
@@ -1082,6 +1071,23 @@ namespace DexComanda
         private void txt_IdLoja_KeyPress(object sender, KeyPressEventArgs e)
         {
             Utils.SoPermiteNumeros(e);
+        }
+        private void txtCNPJ_KeyDown(object sender, KeyEventArgs e)
+        {
+            //if (txtCNPJ.Text.Trim().Length==14 && (e.KeyCode != Keys.Back && e.KeyCode !=Keys.Delete))
+            //{
+            //  e.Handled =!  Utils.ValidaCNPJ(txtCNPJ.Text);
+            //}
+        }
+
+        private void chkFidelidade_CheckedChanged(object sender, EventArgs e)
+        {
+            grpControleFidelidade.Enabled = chkFidelidade.CheckState == CheckState.Checked;
+        }
+
+        private void chkFidelidade_CheckStateChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

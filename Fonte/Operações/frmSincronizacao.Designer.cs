@@ -213,6 +213,7 @@
             this.lblSinc.Size = new System.Drawing.Size(74, 13);
             this.lblSinc.TabIndex = 17;
             this.lblSinc.Text = "Sincronizando";
+            this.lblSinc.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lblSinc.Visible = false;
             // 
             // btnSincronizar

@@ -10,6 +10,8 @@ namespace DexComanda.Models
     {
         public int CodPessoa { get; set; }
         public int CodPedido { get; set; }
-        public int Ponto { get; set; }
+        public int CodProduto { get; set; }
+        public int CodUsuario { get; set; }
+        public int Pontos { get; set; }
     }
 }

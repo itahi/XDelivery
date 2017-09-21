@@ -103,6 +103,8 @@
             this.produtoToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.insumoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaMovimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.produtoToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.insumoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pedidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastroStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alteracaoStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -163,8 +165,6 @@
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.produtoToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.insumoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.grpAndamentoPedido.SuspendLayout();
@@ -782,6 +782,20 @@
             this.consultaMovimentoToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
             this.consultaMovimentoToolStripMenuItem.Text = "Consultar Movimento";
             this.consultaMovimentoToolStripMenuItem.Click += new System.EventHandler(this.consultaMovimentoToolStripMenuItem_Click);
+            // 
+            // produtoToolStripMenuItem3
+            // 
+            this.produtoToolStripMenuItem3.Name = "produtoToolStripMenuItem3";
+            this.produtoToolStripMenuItem3.Size = new System.Drawing.Size(136, 26);
+            this.produtoToolStripMenuItem3.Text = "Produto";
+            this.produtoToolStripMenuItem3.Click += new System.EventHandler(this.produtoToolStripMenuItem3_Click);
+            // 
+            // insumoToolStripMenuItem1
+            // 
+            this.insumoToolStripMenuItem1.Name = "insumoToolStripMenuItem1";
+            this.insumoToolStripMenuItem1.Size = new System.Drawing.Size(136, 26);
+            this.insumoToolStripMenuItem1.Text = "Insumo";
+            this.insumoToolStripMenuItem1.Click += new System.EventHandler(this.insumoToolStripMenuItem1_Click);
             // 
             // pedidoToolStripMenuItem
             // 
@@ -1449,7 +1463,7 @@
             this.btnConsultarTelefone.Name = "btnConsultarTelefone";
             this.btnConsultarTelefone.Size = new System.Drawing.Size(124, 40);
             this.btnConsultarTelefone.TabIndex = 1;
-            this.btnConsultarTelefone.Text = "Consultar / Cadastra [F12] ";
+            this.btnConsultarTelefone.Text = " Buscar / Cadastrar Cliente";
             this.btnConsultarTelefone.UseVisualStyleBackColor = true;
             this.btnConsultarTelefone.Click += new System.EventHandler(this.ConsultarCliente);
             // 
@@ -1483,20 +1497,6 @@
             this.AtualizaGrid.Enabled = true;
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
-            // 
-            // produtoToolStripMenuItem3
-            // 
-            this.produtoToolStripMenuItem3.Name = "produtoToolStripMenuItem3";
-            this.produtoToolStripMenuItem3.Size = new System.Drawing.Size(152, 26);
-            this.produtoToolStripMenuItem3.Text = "Produto";
-            this.produtoToolStripMenuItem3.Click += new System.EventHandler(this.produtoToolStripMenuItem3_Click);
-            // 
-            // insumoToolStripMenuItem1
-            // 
-            this.insumoToolStripMenuItem1.Name = "insumoToolStripMenuItem1";
-            this.insumoToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
-            this.insumoToolStripMenuItem1.Text = "Insumo";
-            this.insumoToolStripMenuItem1.Click += new System.EventHandler(this.insumoToolStripMenuItem1_Click);
             // 
             // frmPrincipal
             // 

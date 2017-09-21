@@ -34,7 +34,6 @@ namespace DexComanda
         public string strSqlExecutado;
         private int lastCodigo;
         public static string connectionString = null;
-        private object iNumeroPessoas;
         public ConnectionState statusConexao;
         public Conexao()
         {
@@ -44,7 +43,7 @@ namespace DexComanda
                 ////{
                 ////    return;
                 ////}
-              
+
                 if (connectionString != null)
                 {
                     conn = new SqlConnection(connectionString);
@@ -141,7 +140,7 @@ namespace DexComanda
 
 
         }
-        public void ConsultaInsumos(int intCodProdut,decimal dQtdProduto)
+        public void ConsultaInsumos(int intCodProdut, decimal dQtdProduto)
         {
             try
             {
@@ -157,12 +156,12 @@ namespace DexComanda
                     BaixarEstoque(ds.Tables["Produto_Insumo"].Rows[i].Field<int>("CodInsumo"), dQtdProduto, ds.Tables[0].Rows[i].Field<decimal>("Quantidade"));
                 }
             }
-            catch (SqlException erro )
+            catch (SqlException erro)
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
         }
-        private void BaixarEstoque(int intCodInsumo,decimal dcQuantidade,decimal dcQuantidadeBaixar)
+        private void BaixarEstoque(int intCodInsumo, decimal dcQuantidade, decimal dcQuantidadeBaixar)
         {
             try
             {
@@ -177,7 +176,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-           
+
         }
         public DataSet ContaEstoque(string strNomeProduto)
         {
@@ -189,7 +188,7 @@ namespace DexComanda
                 adapter = new SqlDataAdapter(command);
                 ds = new DataSet();
                 adapter.Fill(ds, "Produto_Estoque");
-                
+
             }
             catch (Exception erro)
             {
@@ -216,7 +215,7 @@ namespace DexComanda
             }
             return ds.Tables[0].Rows[0].Field<Boolean>("ControlaEstoque");
         }
-        public Boolean ValidaEstoque(int intCodProduto,string strNomeProd)
+        public Boolean ValidaEstoque(int intCodProduto, string strNomeProd)
         {
             Boolean breturn = true;
 
@@ -239,7 +238,7 @@ namespace DexComanda
                         breturn = false;
                     }
                 }
-                
+
             }
             catch (Exception erro)
             {
@@ -355,7 +354,7 @@ namespace DexComanda
                     " join Pessoa P on P.Codigo = Pd.CodPessoa " +
                     " where Pd.Codigo=@Codigo and Finalizado=0";
 
-            
+
             command = new SqlCommand(iSql, conn);
             command.Parameters.AddWithValue("@Codigo", iCodPedido);
             command.CommandType = CommandType.Text;
@@ -432,7 +431,7 @@ namespace DexComanda
         {
             string iSqlConsulta = "";
             string sqlWhere = "";
-            
+
             //Retorna o maior preço entre os produtos
             if (!iPrecoMar)
             {
@@ -534,15 +533,15 @@ namespace DexComanda
                 //----Status Pedido Padrão ----]
                 //for (int i = 1; i < 5; i++)
                 //{
-                    PedidoStatus pedS = new PedidoStatus()
-                    {
-                        Nome = "Aberto",
-                        AlertarSN = false,
-                        Status = 1,
-                        EnviarSN = true,
-                        // DataAlteracao = DateTime.Now
-                    };
-                    Insert("spAdicionarPedidoStatus", pedS);
+                PedidoStatus pedS = new PedidoStatus()
+                {
+                    Nome = "Aberto",
+                    AlertarSN = false,
+                    Status = 1,
+                    EnviarSN = true,
+                    // DataAlteracao = DateTime.Now
+                };
+                Insert("spAdicionarPedidoStatus", pedS);
                 PedidoStatus pedS2 = new PedidoStatus()
                 {
                     Nome = "CONFIRMADO",
@@ -625,18 +624,18 @@ namespace DexComanda
         public DataSet RetornaCaixaPorTurno(int iCodCaixa, string iTurno, DateTime iData)
         {
             string iSqlConsulta = "select top 1 * from Caixa " +
-                                   " where "+ 
+                                   " where " +
                                    //" Numero=@Numero and " +
-                                   "  Turno=@Turno "+
+                                   "  Turno=@Turno " +
                                    //" and Data=@Data " +
-                                   " and Estado=0"+
-                                  // " HorarioFechamento>@HorarioFechamento" +
+                                   " and Estado=0" +
+                                   // " HorarioFechamento>@HorarioFechamento" +
                                    " order by Codigo desc";
             command = new SqlCommand(iSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@Turno", iTurno);
-           // command.Parameters.AddWithValue("@Data", DateTime.Now.ToShortDateString());
-           // command.Parameters.AddWithValue("@HorarioFechamento", DateTime.Now);
+            // command.Parameters.AddWithValue("@Data", DateTime.Now.ToShortDateString());
+            // command.Parameters.AddWithValue("@HorarioFechamento", DateTime.Now);
 
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
@@ -668,7 +667,7 @@ namespace DexComanda
                 listCidades = string.Join(",", item.Cidade);
             }
 
-            string iSql = "select DISTINCT(bairro) from base_cep where cidade in (@Cidades) and bairro like '%"+iNomeBairro+"%'";
+            string iSql = "select DISTINCT(bairro) from base_cep where cidade in (@Cidades) and bairro like '%" + iNomeBairro + "%'";
             command = new SqlCommand(iSql, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@Cidades", listCidades);
@@ -682,7 +681,7 @@ namespace DexComanda
         {
             string lSqlConsulta = " select R.Codigo , " +
                                   " R.TaxaServico , " +
-                                  " R.NomeRegiao ,"+
+                                  " R.NomeRegiao ," +
                                   " RG.Nome" +
                                   " from RegiaoEntrega R " +
                                   " left join RegiaoEntrega_Bairros RG on RG.CodRegiao = R.Codigo " +
@@ -696,11 +695,35 @@ namespace DexComanda
             return ds;
 
         }
+
+        //public void AdicionaPontosFidelidade (int intCodPedido,int intCodUsuario)
+        //{
+        //    try
+        //    {
+        //        DataSet dsItensPedido = SelectRegistroPorCodigo("Produto", "spObterItensPedidoPonto", intCodPedido);
+        //        for (int i = 0; i < dsItensPedido.Tables[0].Rows.Count; i++)
+        //        {
+        //            PessoaFidelidade pess = new PessoaFidelidade()
+        //            {
+        //                CodPedido = intCodPedido,
+        //                CodPessoa = dsItensPedido.Tables[0].Rows[i].Field<int>("CodPessoa"),
+        //                CodProduto = dsItensPedido.Tables[0].Rows[i].Field<int>("Codigo"),
+        //                CodUsuario = intCodUsuario,
+        //                Pontos = dsItensPedido.Tables[0].Rows[i].Field<int>("PontoFidelidadeVenda")
+        //            };
+        //            Insert("spAdicionarPontosFidelidade", pess);
+        //        }
+        //    }
+        //    catch (Exception erro)
+        //    {
+        //        MessageBox.Show(erro.Message);
+        //    }
+        //}
         public DataSet RetornaCEPPorBairro(string iNOmeBairro)
         {
             string lSqlConsulta = " select top 1 cep,bairro from base_cep " +
-                                  " where bairro like '%" + iNOmeBairro + "%'"+
-                                  " and cidade ='"+Sessions.returnEmpresa.Cidade +"'";
+                                  " where bairro like '%" + iNOmeBairro + "%'" +
+                                  " and cidade ='" + Sessions.returnEmpresa.Cidade + "'";
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -762,6 +785,12 @@ namespace DexComanda
 
             Utils.PopulaGrid_Novo("Pedido", grid, Sessions.SqlPedido);
         }
+        /// <summary>
+        /// Exclusivo para Aja Aja
+        /// </summary>
+        /// <param name="iGrupoProduto"></param>
+        /// <param name="iCodProduto"></param>
+        /// <returns></returns>
         public decimal RetornaPrecoComEmbalagem(string iGrupoProduto, int iCodProduto)
         {
             decimal iReturnPreco = 0;
@@ -839,13 +868,13 @@ namespace DexComanda
             {
                 //Utils.CriarUsuario(connectionString);
                 conn.Open();
-                if (conn.State !=ConnectionState.Open)
+                if (conn.State != ConnectionState.Open)
                 {
-                    MessageBox.Show("Não foi possivel conectar ao Banco:"+banco + Bibliotecas.cException);
+                    MessageBox.Show("Não foi possivel conectar ao Banco:" + banco + Bibliotecas.cException);
                     return false;
                 }
-                MessageBox.Show("Conectado ao banco de dados "+ banco);
-               
+                MessageBox.Show("Conectado ao banco de dados " + banco);
+
                 var temp = Directory.GetCurrentDirectory() + @"\ConnectionString_DexComanda.txt";
 
                 if (!System.IO.File.Exists(temp))
@@ -918,7 +947,8 @@ namespace DexComanda
                                   " P.PrecoProduto as PrecoProduto,  " +
                                   " Prod.Preco as PrecoSoOpcao,  " +
                                   " Prod.CodOpcao, " +
-                                  " Pot.Nome as NomeTipo"+
+                                  " Pot.Nome as NomeTipo," +
+                                  " P.DiaSemana as DiaSemana" +
                                   " from Produto_Opcao Prod" +
                                   " join Opcao Op  on Op.Codigo = Prod.CodOpcao" +
                                   " join Produto_OpcaoTipo PoT on PoT.Codigo = Op.Tipo" +
@@ -1023,7 +1053,7 @@ namespace DexComanda
             decimal qtdEstoque = 0;
             try
             {
-                
+
             }
             catch (Exception erro)
             {
@@ -1193,28 +1223,28 @@ namespace DexComanda
         public DataSet SelectCaixaFechamento(string iDataI, string iDataF, string iTurno, string table = "CaixaMovimento")
         {
             string lSqlConsulta = " select " +
-                                 //" case Tipo " +
-                                 //" when 'E' then 'Entradas'" +
-                                 //" when 'S' then 'Saidas'" +
-                                 //" end" +
-                                 //" as 'Tipo Movimento', " +
+                                //" case Tipo " +
+                                //" when 'E' then 'Entradas'" +
+                                //" when 'S' then 'Saidas'" +
+                                //" end" +
+                                //" as 'Tipo Movimento', " +
                                 //" Cx.CodCaixa," +
                                 " Fp.Descricao ," +
                                 " sum(cx.Valor) as 'Total Somado'" +
                                 " from CaixaMovimento CX" +
                                 " left join FormaPagamento FP on FP.Codigo = Cx.CodFormaPagamento" +
                                 " where " +
-                                " CX.CodCaixa = (select Codigo from Caixa where Turno=@Turno and Estado=0) "+
-                                //" AND CX.Data BETWEEN @DataI  AND @DataF " +
+                                " CX.CodCaixa = (select Codigo from Caixa where Turno=@Turno and Estado=0) " +
+                               //" AND CX.Data BETWEEN @DataI  AND @DataF " +
                                " group by CodCaixa,Fp.Descricao";
-                                   // " group by CodCaixa,Fp.Descricao,Tipo";
+            // " group by CodCaixa,Fp.Descricao,Tipo";
 
 
             command = new SqlCommand(lSqlConsulta, conn);
             command.CommandType = CommandType.Text;
             command.Parameters.AddWithValue("@Turno", iTurno);
-           // command.Parameters.AddWithValue("@DataI", iDataI);
-           // command.Parameters.AddWithValue("@DataF", iDataF);
+            // command.Parameters.AddWithValue("@DataI", iDataI);
+            // command.Parameters.AddWithValue("@DataF", iDataF);
 
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
@@ -1302,7 +1332,7 @@ namespace DexComanda
             return ds;
 
         }
-        public DataSet RetornaCEPporBairro(string iCEP, Boolean iCidadePadrao=false)
+        public DataSet RetornaCEPporBairro(string iCEP, Boolean iCidadePadrao = false)
         {
             string lSqlConsulta = "select cep,bairro cep from base_cep where cep=" + iCEP;
             if (iCidadePadrao)
@@ -2349,7 +2379,7 @@ namespace DexComanda
             try
             {
                 Conexao con = new Conexao();
-                if (con.statusConexao!=ConnectionState.Open)
+                if (con.statusConexao != ConnectionState.Open)
                 {
                     MessageBox.Show(Bibliotecas.cSemConexao);
                     return new DataSet();
@@ -2367,7 +2397,7 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
-           
+
 
             return ds;
         }
@@ -2406,6 +2436,26 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
+            return ds;
+        }
+        public DataSet SelectRegistroPorCodigo(string table, string spName, List<string>listCodigo)
+        {
+            try
+            {
+                string strLista = string.Join(",", listCodigo);
+                string iSqlConsulta = "select Codigo,NomeProduto from Produto where Codigo in ("+strLista+")";
+                command = new SqlCommand(iSqlConsulta, conn);
+                command.CommandType = CommandType.Text;
+                adapter = new SqlDataAdapter(command);
+                ds = new DataSet();
+                adapter.Fill(ds, table);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+
             return ds;
         }
         public DataSet SelectRegistroPorCodigo(string table, string spName, int codigo, string iCodString = "0", int iCodigo2 = 0)
@@ -2597,7 +2647,7 @@ namespace DexComanda
 
             return ds;
         }
-        public  DataSet Liberacao(string iNomeEmpresa, string CNPJ, string iNomePC, string iMAC)
+        public DataSet Liberacao(string iNomeEmpresa, string CNPJ, string iNomePC, string iMAC)
         {
             try
             {
@@ -2637,7 +2687,6 @@ namespace DexComanda
                         else
                         {
                             ds = null;
-                            Utils.ExcluiRegistro();
                         }
 
 

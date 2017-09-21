@@ -45,7 +45,7 @@ namespace DexComanda
         public frmCadastroCliente(int iCodPessoa, string iNomeCliente, string iTelefone, string iTelefone2,
                               string iCEP, string iEndereco, string inumero, string iBairro, string iCidade,
                               string iEstado, string iPontoReferencia, string iObservacao, int iCodRegiao,
-                              string iDataCadastro, string iDataNascimento, string iUserID, string iPJPF, int intCodEndereco,int intCodOrigem)
+                              string iDataCadastro, string iDataNascimento, string iUserID, string iPJPF, int intCodEndereco, int intCodOrigem)
         {
             InitializeComponent();
             codigoClienteParaAlterar = iCodPessoa;
@@ -182,7 +182,7 @@ namespace DexComanda
             {
                 Utils.MontaCombox(cbxOrigemCadastro, "Nome", "Codigo", "Pessoa_OrigemCadastro", "spObterPessoa_OrigemCadastroPorCodigo", iCodOrigem);
             }
-          
+
         }
         private void CarregaRegiao(int iCodRegiao, ComboBox iCbx, TextBox itext)
         {
@@ -208,7 +208,7 @@ namespace DexComanda
                 cbxRegiao.Text = Regiao.Tables["RegiaoEntrega"].Rows[0].Field<string>("NomeRegiao");
             }
         }
-        
+
         /// <summary>
         /// Busca o CEP no banco de dados local caso não encontre ele busca nos correios e insere no banco local
         /// 
@@ -261,11 +261,11 @@ namespace DexComanda
             }
 
         }
-        
+
         private void PreencheRegiao(string iBairro, ComboBox iCbxName, TextBox iTextBox)
         {
             DataSet ds = con.RetornarTaxaPorBairro(iBairro);
-            if (ds.Tables[0].Rows.Count== 0)
+            if (ds.Tables[0].Rows.Count == 0)
             {
                 MessageBox.Show("Bairro não pertence a nenhuma região cadastrada", "[xSistemas] Aviso");
                 return;
@@ -308,7 +308,7 @@ namespace DexComanda
                     DDD = "",
                     PFPJ = 'F'
                 };
-                if (cbxOrigemCadastro.SelectedIndex>0)
+                if (cbxOrigemCadastro.SelectedIndex > 0)
                 {
                     pessoa.CodOrigemCadastro = int.Parse(cbxOrigemCadastro.SelectedValue.ToString());
                 }
@@ -414,7 +414,7 @@ namespace DexComanda
 
                         var TaxaEntrega = Utils.RetornaTaxaPorCliente(iCodPessoa, 0);
                         frmCadastrarPedido frmCadastrarPedido = new frmCadastrarPedido(false, "0,00", 0, "", TaxaEntrega, false, DateTime.Now, 0, int.Parse(dRow.ItemArray.GetValue(0).ToString()),
-                                                                                       "", "", "", "",0, 0, 0, "", iCodEndereco);
+                                                                                       "", "", "", "", 0, 0, 0, "", iCodEndereco);
                         frmCadastrarPedido.ShowDialog();
                     }
                 }
@@ -503,7 +503,7 @@ namespace DexComanda
         }
         private void this_FormClosing()
         {
-          //  Utils.PopulaGrid_Novo("Pessoa", Sessions.SqlPessoa);
+            //  Utils.PopulaGrid_Novo("Pessoa", Sessions.SqlPessoa);
         }
         //private void CadastraCEP()
         //{
@@ -802,7 +802,7 @@ namespace DexComanda
         private void cbxRegiao_SelectedIndexChanged(object sender, EventArgs e)
         {
             // var TaxaEntrega;
-            if (cbxRegiao.SelectedValue.ToString()=="0")
+            if (cbxRegiao.SelectedValue.ToString() == "0")
             {
                 return;
             }
@@ -977,7 +977,7 @@ namespace DexComanda
                     iValue = iTrocoPara - iTotalPedido;
                 }
 
-                Utils.ImpressaoEntreganova(codPedido, iValue,int.Parse(Utils.RetornaConfiguracaoDelivery().ViaDelivery));
+                Utils.ImpressaoEntreganova(codPedido, iValue, int.Parse(Utils.RetornaConfiguracaoDelivery().ViaDelivery));
             }
 
         }
@@ -1168,17 +1168,11 @@ namespace DexComanda
         {
             CarregaRegiao(int.Parse(cbxRegiaoEnd.SelectedValue.ToString()), cbxRegiaoEnd, txtTaxaEntregaEnd);
         }
-
-        private void txtBairro_KeyUp(object sender, KeyEventArgs e)
-        {
-           
-        }
-
         private void txtBairro_KeyPress(object sender, KeyPressEventArgs e)
         {
             listabairro = new AutoCompleteStringCollection();
             DataSet dsBairros;
-            if (txtBairro.Text.Length >= 3 && (e.KeyChar!= 8 && e.KeyChar !=46))
+            if (txtBairro.Text.Trim().Length >= 3 && (e.KeyChar != 8 && e.KeyChar != 46))
             {
                 dsBairros = con.ListaBairro(txtBairro.Text);
                 for (int i = 0; i < dsBairros.Tables[0].Rows.Count; i++)
@@ -1186,17 +1180,35 @@ namespace DexComanda
                     listabairro.Add(dsBairros.Tables[0].Rows[i].Field<string>("bairro"));
                 }
                 txtBairro.AutoCompleteCustomSource = listabairro;
-                if (e.KeyChar == Convert.ToChar(Keys.Enter))
-                {
-                    DataSet ds = con.RetornarTaxaPorBairro(txtBairro.Text);
-                    if (ds.Tables[0].Rows.Count == 0)
-                    {
-                        return;
-                    }
-                    Utils.MontaCombox(cbxRegiao, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioesPorCodigo", ds.Tables[0].Rows[0].Field<int>("Codigo"));
-                    txtTaxaEntrega.Text = ds.Tables[0].Rows[0].Field<decimal>("TaxaServico").ToString();
-                }
             }
+            //if (listabairro.Count>0)
+            //{
+            //    txtBairro.AutoCompleteCustomSource = listabairro;
+            //}
+
+            //else
+            //{
+            //    e.Handled = false;
+            //}
+        }
+
+        private void txtBairro_KeyDown_1(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                DataSet ds = con.RetornarTaxaPorBairro(txtBairro.Text);
+                if (ds.Tables[0].Rows.Count == 0)
+                {
+                    return;
+                }
+                Utils.MontaCombox(cbxRegiao, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioesPorCodigo", ds.Tables[0].Rows[0].Field<int>("Codigo"));
+                txtTaxaEntrega.Text = ds.Tables[0].Rows[0].Field<decimal>("TaxaServico").ToString();
+            }
+        }
+
+        private void txtBairro_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

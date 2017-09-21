@@ -645,17 +645,29 @@
       <DependentUpon>RelDelivery.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.cs">
+    <Compile Include="Relatorios\Delivery\RelBalcaoCozinhaGrupoCozinha.cs">
+      <DependentUpon>RelBalcaoCozinhaGrupoCozinha.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelBalcaoCozinhaPorImpressora.cs">
+      <DependentUpon>RelBalcaoCozinhaPorImpressora.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Relatorios\Delivery\RelDeliveryCozinhaPorImpressora.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RelDeliveryCozinhaPorImpressora.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Delivery\RelBalcao_Cozinha.cs">
+      <DependentUpon>RelBalcao_Cozinha.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Relatorios\Delivery\RelVendasOnline.cs">
       <AutoGen>True</AutoGen>
@@ -1328,17 +1340,25 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDelivery.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelBalcaoCozinhaGrupoCozinha.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelBalcaoCozinhaGrupoCozinha.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinha.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDeliveryCozinhaGrupoCozinha.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Delivery\RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.rpt">
+    <EmbeddedResource Include="Relatorios\Delivery\RelBalcaoCozinhaPorImpressora.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelDeliveryCozinhaGrupoCozinhaCodPersonalizado.cs</LastGenOutput>
+      <LastGenOutput>RelBalcaoCozinhaPorImpressora.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelDeliveryCozinhaPorImpressora.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelDeliveryCozinhaPorImpressora.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Delivery\RelBalcao_Cozinha.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelBalcao_Cozinha.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Delivery\RelVendasOnline.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
