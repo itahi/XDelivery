@@ -165,6 +165,7 @@
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.cupomPromocionalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.grpAndamentoPedido.SuspendLayout();
@@ -209,7 +210,8 @@
             this.mesasToolStripMenuItem,
             this.motivosCancelamentoToolStripMenuItem,
             this.statusPedidoToolStripMenuItem,
-            this.origemDoClienteToolStripMenuItem});
+            this.origemDoClienteToolStripMenuItem,
+            this.cupomPromocionalToolStripMenuItem});
             this.cadastrosToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.cadastrosToolStripMenuItem.Name = "cadastrosToolStripMenuItem";
             this.cadastrosToolStripMenuItem.Size = new System.Drawing.Size(91, 25);
@@ -1498,6 +1500,13 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
+            // cupomPromocionalToolStripMenuItem
+            // 
+            this.cupomPromocionalToolStripMenuItem.Name = "cupomPromocionalToolStripMenuItem";
+            this.cupomPromocionalToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
+            this.cupomPromocionalToolStripMenuItem.Text = "Cupom Promocional";
+            this.cupomPromocionalToolStripMenuItem.Click += new System.EventHandler(this.cupomPromocionalToolStripMenuItem_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1679,5 +1688,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ToolStripMenuItem produtoToolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem insumoToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem cupomPromocionalToolStripMenuItem;
     }
 }

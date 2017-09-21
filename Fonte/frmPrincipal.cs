@@ -720,8 +720,7 @@ namespace DexComanda
                 MenuItem FinalizarPed = new MenuItem(" 1 - Finalizar Este Pedido?");
                 MenuItem FinalizaSelecionados = new MenuItem(" 2 - Finalizar Todos Selecionado?");
                 MenuItem InformaEntregador = new MenuItem(" 3 - Informar Entregador");
-                MenuItem InformaEntregadorColetivo = new MenuItem(" 3.1 - Informar entregador (varios pedidos)");
-                MenuItem StatusConcluido = new MenuItem(" 4 - Concluído/Entregue");
+                MenuItem InformaEntregadorColetivo = new MenuItem(" 3.1 - Informar entregadores (varios pedidos)");
                 MenuItem ImprimeConferenciaMesa = new MenuItem(" Imprimir Conferencia desta Mesa");
                 MenuItem PedidoONline = new MenuItem(" X - Status Pedido");
                 MenuItem TransMesa = new MenuItem("5 - Transferir Mesa");
@@ -750,7 +749,7 @@ namespace DexComanda
                 FinalizaSelecionados.Click += FinalizaTodos;
                 InformaEntregador.Click += SelecionaBoy;
                 InformaEntregadorColetivo.Click += SelecionaMotoboyColetivo;
-                StatusConcluido.Click += PEdidoConcluido;
+             
 
 
                 m.MenuItems.Add(CancPedido);
@@ -758,7 +757,6 @@ namespace DexComanda
                 m.MenuItems.Add(FinalizaSelecionados);
                 m.MenuItems.Add(InformaEntregador);
                 m.MenuItems.Add(InformaEntregadorColetivo);
-                m.MenuItems.Add(StatusConcluido);
 
                 if (pedidosGridView.Rows.Count > 0)
                 {
@@ -908,7 +906,6 @@ namespace DexComanda
                     }
 
                     iCodMesa = dsPedido.Tables[0].Rows[0].Field<int>("CodigoMesa");
-
                     dblTotalPedido = dsPedido.Tables[0].Rows[0].Field<decimal>("TotalPedido");
                     string iTipo = dsPedido.Tables[0].Rows[0].Field<string>("Tipo");
 
@@ -920,10 +917,12 @@ namespace DexComanda
                         InformaMotoboyPedido(codigo);
                     }
 
-                    // Caso o pedido for mesa ele altera o Status da Mesa
+                    // Caso o pedido nao for entrega
                     Boolean bFinalizouViaMesa = false;
-                    if (ControlaMesas && iCodMesa != 0)
-                    {
+                    if (iTipo != "0 - Entrega")
+                    { 
+                    //if (ControlaMesas && iCodMesa != 0)
+                    //{
                         frmFinalizacaoPedido frm = new frmFinalizacaoPedido(dblTotalPedido, false, codigo, iCodMesa);
                         frm.StartPosition = FormStartPosition.CenterParent;
                         frm.ShowDialog();
@@ -2329,6 +2328,12 @@ namespace DexComanda
         {
             frmConsultaEstoque frm = new frmConsultaEstoque();
             frm.Show(this);
+        }
+
+        private void cupomPromocionalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCupom frm = new frmCupom();
+            frm.Show();
         }
     }
 }
