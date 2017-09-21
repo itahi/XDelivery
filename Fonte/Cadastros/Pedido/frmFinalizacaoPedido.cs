@@ -20,6 +20,7 @@ namespace DexComanda.Cadastros
         private frmCadastrarPedido iFrm;
         private int intCodPedido;
         private decimal iTotalSomado = 0;
+        private int intCodigoMesa = 0;
         public frmFinalizacaoPedido()
         {
             InitializeComponent();
@@ -35,6 +36,13 @@ namespace DexComanda.Cadastros
             try
             {
                 InitializeComponent();
+                intCodigoMesa = iCodMesa;
+                if (iCodMesa==0)
+                {
+                    lblFinalizacao.Text = "Fechamento Pedido:" + iCodPedido.ToString();
+                    lblNumeroMesa.Visible = false;
+                }
+              
                 bInserir = iInserir;
                 intCodPedido = iCodPedido;
                 lblNumeroMesa.Text = iCodMesa.ToString();
@@ -129,10 +137,15 @@ namespace DexComanda.Cadastros
                     }
                     boolFinalizou = true;
                     con.SinalizarPedidoConcluido("Pedido", "spSinalizarPedidoConcluido", intCodPedido, int.Parse(txtNumero.Text));
-                    if (Utils.MessageBoxQuestion("Deseja imprimir a conferencia desta dessa mesa?"))
+
+                    if (intCodigoMesa>0)
                     {
-                        Utils.ImpressaoFechamentoNovo(intCodPedid,1);
+                        if (Utils.MessageBoxQuestion("Deseja imprimir a conferencia desta dessa mesa?"))
+                        {
+                            Utils.ImpressaoFechamentoNovo(intCodPedid, 1);
+                        }
                     }
+                    
                     this.Close();
                 }
             }

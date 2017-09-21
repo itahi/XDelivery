@@ -956,7 +956,7 @@ namespace DexComanda
                         }
                         else
                         {
-                            iQuantidadePonto =- dsItems.Tables[0].Rows[i].Field<int>("PontoFidelidadeVenda");
+                            iQuantidadePonto =- dsItems.Tables[0].Rows[i].Field<int>("PontoFidelidadeTroca");
                         }
                        
                         // Se tipo de fidelidade for por valor ele pega o total do pedido
@@ -3561,19 +3561,15 @@ namespace DexComanda
             {
                 Dados = con.SelectAll(table, spName);
             }
-
             else
             {
                 Dados = con.SelectRegistroPorCodigo(table, spName, CodRegistro);
             }
-
-
             gridView.DataSource = null;
             gridView.AutoGenerateColumns = true;
             gridView.DataSource = Dados;
             gridView.DataMember = table;
             con.Close();
-
             return Dados;
         }
 
