@@ -81,15 +81,13 @@ namespace DexComanda.Cadastros
             }
             catch (Exception erro)
             {
-
-                throw;
+                MessageBox.Show("ListaRegistros " + erro.Message);
             }
         }
 
         private void frmCupom_Load(object sender, EventArgs e)
         {
-            con
-                = new Conexao();
+            con= new Conexao();
             ListaRegistros();
         }
 

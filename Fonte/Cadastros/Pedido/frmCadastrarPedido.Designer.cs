@@ -101,5 +101,8 @@
         private System.Windows.Forms.Label lblDébito;
         private System.Windows.Forms.DateTimePicker dtPedido;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnValidarCupom;
+        private System.Windows.Forms.TextBox txtCupom;
     }
 }

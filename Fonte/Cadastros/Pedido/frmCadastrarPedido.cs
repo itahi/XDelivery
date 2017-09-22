@@ -84,7 +84,8 @@ namespace DexComanda
         public frmCadastrarPedido(Boolean iPedidoRepetio, string iDescontoPedido, int iCodMesa, string iTroco, decimal iTaxaEntrega, Boolean IniciaTempo,
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string itrocoPara, string fPagamento, string TipoPedido, string MesaBalcao,
             decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0,
-            string iObservacaoPedido = "", int iIntEnderecoSelecionado = 0, string strSenha = "", List<string> iCodProdutosFidelidade = null)
+            string iObservacaoPedido = "", int iIntEnderecoSelecionado = 0, string strSenha = "", List<string> iCodProdutosFidelidade = null,
+            string iCupom="")
         {
             try
             {
@@ -97,6 +98,7 @@ namespace DexComanda
                 prvCodEndecoSelecionado = iIntEnderecoSelecionado;
                 prvListProdutosFidelidade = iCodProdutosFidelidade;
                 codPessoa = CodPessoa;
+                txtCupom.Text = iCupom;
                 txtSenha.Text = strSenha;
                 codPedido = CodigoPedido;
                 txtTrocoPara.Text = itrocoPara;
@@ -1197,6 +1199,14 @@ namespace DexComanda
                                 Observacao = txtObsPedido.Text,
                                 CodEndereco = prvCodEndecoSelecionado,
                             };
+                            if (txtCupom.Text!="")
+                            {
+                                pedido.Cupom = txtCupom.Text;
+                            }
+                            else
+                            {
+                                pedido.Cupom = "";
+                            }
                             if (txtSenha.Text != "")
                             {
                                 pedido.Senha = txtSenha.Text;
@@ -2613,6 +2623,9 @@ namespace DexComanda
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.txtSenha = new System.Windows.Forms.TextBox();
             this.lblSenha = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtCupom = new System.Windows.Forms.TextBox();
+            this.btnValidarCupom = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewItemsPedido)).BeginInit();
@@ -2622,6 +2635,7 @@ namespace DexComanda
             this.panel5.SuspendLayout();
             this.grpBoxTamanhos.SuspendLayout();
             this.grpVendedor.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // itemsPedidoBindingSource
@@ -3504,7 +3518,7 @@ namespace DexComanda
             this.grpVendedor.Controls.Add(this.txtCodVendedor);
             this.grpVendedor.Location = new System.Drawing.Point(12, 448);
             this.grpVendedor.Name = "grpVendedor";
-            this.grpVendedor.Size = new System.Drawing.Size(218, 44);
+            this.grpVendedor.Size = new System.Drawing.Size(208, 44);
             this.grpVendedor.TabIndex = 69;
             this.grpVendedor.TabStop = false;
             this.grpVendedor.Text = "Vendedor / Atendente";
@@ -3597,16 +3611,16 @@ namespace DexComanda
             // txtObsPedido
             // 
             this.txtObsPedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.txtObsPedido.Location = new System.Drawing.Point(287, 439);
+            this.txtObsPedido.Location = new System.Drawing.Point(264, 441);
             this.txtObsPedido.Multiline = true;
             this.txtObsPedido.Name = "txtObsPedido";
-            this.txtObsPedido.Size = new System.Drawing.Size(365, 52);
+            this.txtObsPedido.Size = new System.Drawing.Size(201, 52);
             this.txtObsPedido.TabIndex = 76;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(246, 447);
+            this.label14.Location = new System.Drawing.Point(223, 449);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(40, 39);
             this.label14.TabIndex = 77;
@@ -3645,12 +3659,44 @@ namespace DexComanda
             this.lblSenha.Text = "Senha:";
             this.lblSenha.Visible = false;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnValidarCupom);
+            this.groupBox1.Controls.Add(this.txtCupom);
+            this.groupBox1.Location = new System.Drawing.Point(471, 441);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(181, 51);
+            this.groupBox1.TabIndex = 81;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Cupom Promocional";
+            this.toolTip1.SetToolTip(this.groupBox1, "Aplique aqui o cupom de desconto");
+            // 
+            // txtCupom
+            // 
+            this.txtCupom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCupom.Location = new System.Drawing.Point(9, 18);
+            this.txtCupom.Name = "txtCupom";
+            this.txtCupom.Size = new System.Drawing.Size(108, 26);
+            this.txtCupom.TabIndex = 6;
+            // 
+            // btnValidarCupom
+            // 
+            this.btnValidarCupom.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnValidarCupom.Location = new System.Drawing.Point(120, 18);
+            this.btnValidarCupom.Name = "btnValidarCupom";
+            this.btnValidarCupom.Size = new System.Drawing.Size(55, 26);
+            this.btnValidarCupom.TabIndex = 57;
+            this.btnValidarCupom.Text = "Validar";
+            this.btnValidarCupom.UseVisualStyleBackColor = true;
+            this.btnValidarCupom.Click += new System.EventHandler(this.ValidarCupom);
+            // 
             // frmCadastrarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1051, 626);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lblSenha);
             this.Controls.Add(this.txtSenha);
             this.Controls.Add(this.chkCodPersonalizado);
@@ -3714,6 +3760,8 @@ namespace DexComanda
             this.grpBoxTamanhos.PerformLayout();
             this.grpVendedor.ResumeLayout(false);
             this.grpVendedor.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -4905,6 +4953,19 @@ namespace DexComanda
             {
                 AtualizaClienteTela(prvCodEndecoSelecionado);
             }
+        }
+
+        private void ValidarCupom(object sender, EventArgs e)
+        {
+            if (txtCupom.Text=="")
+            {
+                MessageBox.Show("Preencha o campo 'Cupom'");
+                txtCupom.Focus();
+                return;
+            }
+            decimal iPorcetagemDesconto = con.RetornaDescontoCupom(txtCupom.Text, 0);
+            txtDesconto.Text = Convert.ToString(SomaItensPedido() * iPorcetagemDesconto / 100);
+            CalculaDesconto(sender, new KeyPressEventArgs(Convert.ToChar(Keys.Enter)));
         }
 
         private void txtPorcentagemDesconto_KeyDown(object sender, KeyEventArgs e)

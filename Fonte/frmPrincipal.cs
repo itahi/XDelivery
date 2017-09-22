@@ -668,6 +668,7 @@ namespace DexComanda
             int intCodVendedor = DsPedido.Tables[0].Rows[0].Field<int>("CodUsuario");
             string iObservacao = DsPedido.Tables[0].Rows[0].Field<string>("Observacao");
             int iNumMesa = DsPedido.Tables[0].Rows[0].Field<int>("CodigoMesa");
+            string strCupom = DsPedido.Tables[0].Rows[0].Field<string>("Cupom");
             if (strTrocoPara != 0.00M)
             {
                 strTroco = Convert.ToString(strTrocoPara - decimal.Parse(strTotalPedido));
@@ -677,7 +678,8 @@ namespace DexComanda
                                       strTroco, TaxaServico, true, DsPedido.Tables[0].Rows[0].Field<DateTime>("RealizadoEM"),
                                      DsPedido.Tables[0].Rows[0].Field<int>("Codigo"), DsPedido.Tables[0].Rows[0].Field<int>("CodPessoa"), strTrocoPara.ToString(),
                                       DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(),
-                                      decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao, intCodEndereco, DsPedido.Tables[0].Rows[0].Field<string>("Senha"),new List<string>());
+                                      decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao, intCodEndereco, DsPedido.Tables[0].Rows[0].Field<string>("Senha"),new List<string>(),
+                                      strCupom);
             frm.Show();
 
         }

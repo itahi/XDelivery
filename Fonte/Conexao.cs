@@ -62,6 +62,30 @@ namespace DexComanda
             }
 
         }
+        public decimal RetornaDescontoCupom(string iCupom,int intCodPessoa)
+        {
+            decimal iReturn = 0;
+            try
+            {
+                string iSqlCupom = "select Desconto from Cupom where AtivoSN=1 and CodCupom='"+iCupom+"' and cast(GETDATE() as date) between DataValidade_Inicio and DataValidade_Fim and Quantidade> 0";
+                command = new SqlCommand(iSqlCupom, conn);
+                command.CommandType = CommandType.Text;
+                adapter = new SqlDataAdapter(command);
+                ds = new DataSet();
+                adapter.Fill(ds, "Cupom");
+                if (ds.Tables[0].Rows.Count<=0)
+                {
+                    MessageBox.Show("Cupom inválido ou expirado");
+                    return 0;
+                }
+                iReturn = ds.Tables[0].Rows[0].Field<decimal>("Desconto");
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("RetornaDescontoCupom " + erro.Message);
+            }
+            return iReturn;
+        }
 
         /// <summary>
         /// Verifica se há uma versão do SQLServer Instalado

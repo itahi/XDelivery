@@ -72,4 +72,6 @@ as
  begin
    insert into Pedido_Cupom (CodPedido,CodCupom,DataCadastro)
                values (@CodPedido,@CodCupom,Getdate())
+   update Cupom
+   set Quantidade=Quantidade-1
  end
