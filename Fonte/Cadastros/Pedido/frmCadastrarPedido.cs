@@ -1569,7 +1569,6 @@ namespace DexComanda
                                 Utils.ControlaEventos("Alterar", this.Name);
                             }
 
-
                             this.cbxProdutosGrid.Text = "";
                             this.txtPrecoUnitario.Text = "";
                             this.txtQuantidade.Text = "";
@@ -1578,7 +1577,7 @@ namespace DexComanda
 
                             // MessageBox.Show("Item alterado com sucesso.", "[xSistemas]");
 
-                            Utils.MontaCombox(cbxTipoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
+                            
                             txtPorcentagemDesconto.Text = "0";
                             this.btnAdicionarItemNoPedido.Text = "Adicionar";
                             this.btnAdicionarItemNoPedido.Click += new System.EventHandler(this.btnAdicionarItemNoPedido_Click);
@@ -4515,7 +4514,6 @@ namespace DexComanda
                 if (gridViewItemsPedido.SelectedRows.Count > 0)
                 {
                     int codItem = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells["CodProduto"].Value.ToString());
-                    // txtPorcentagemDesconto.Text = gridViewItemsPedido.Rows[rowIndex].Cells[""]
                     DataSet dsItemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codItem);
                     string itemNome = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
 
@@ -4560,10 +4558,11 @@ namespace DexComanda
                     this.txtItemDescricao.Text = this.gridViewItemsPedido.Rows[rowIndex].Cells[6].Value.ToString();
                     txtPorcentagemDesconto.Text = gridViewItemsPedido.Rows[rowIndex].Cells["DescontoPorcetagem"].Value.ToString();
                     MarcaListBoxMarcados(txtItemDescricao.Text);
+
                     this.btnAdicionarItemNoPedido.Text = "Alterar Item";
                     this.btnAdicionarItemNoPedido.Click += new System.EventHandler(this.AlterarItem);
                     this.btnAdicionarItemNoPedido.Click -= new System.EventHandler(this.btnAdicionarItemNoPedido_Click);
-
+                   // Utils.MontaCombox(cbxTipoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoAtivo");
                 }
             }
             catch (Exception erro)

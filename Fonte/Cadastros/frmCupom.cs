@@ -62,7 +62,7 @@ namespace DexComanda.Cadastros
                     DataValidade_Fim = dtFim.Value,
                     Desconto = decimal.Parse(txtDesc.Text),
                     Quantidade = int.Parse(txtQdtCupom.Text),
-                    QuantidadePessoa = int.Parse(txtQtdPessoa.Text)
+                    QuantidadePessoa = 1
                 };
                 con.Insert("spAdicionarCupom", _newCupom);
                 ListaRegistros();
@@ -78,6 +78,7 @@ namespace DexComanda.Cadastros
             try
             {
                 Utils.PopularGrid_SP("Cupom", CuponGridView, "spObterCupom");
+                Utils.PopularGrid_SP("Pedido_Cupom", gridViewCupons, "spObterHistoricoCupomPorCodigo", int.Parse(CuponGridView.Rows[0].Cells["Codigo"].Value.ToString()));
             }
             catch (Exception erro)
             {
@@ -114,14 +115,19 @@ namespace DexComanda.Cadastros
                 return;
             }
             codigo = int.Parse(CuponGridView.CurrentRow.Cells["Codigo"].Value.ToString());
-            txtCodCupom.Text = CuponGridView.CurrentRow.Cells["CodCupom"].Value.ToString();
-            txtDesc.Text = CuponGridView.CurrentRow.Cells["Desconto"].Value.ToString();
-            txtQdtCupom.Text = CuponGridView.CurrentRow.Cells["Quantidade"].Value.ToString();
-            txtQtdPessoa.Text = CuponGridView.CurrentRow.Cells["QuantidadePessoa"].Value.ToString();
-            chkAtivo.Checked = bool.Parse(CuponGridView.CurrentRow.Cells["AtivoSN"].Value.ToString());
-            dtInicio.Value = DateTime.Parse(CuponGridView.CurrentRow.Cells["DataValidade_Inicio"].Value.ToString());
-            dtFim.Value = DateTime.Parse(CuponGridView.CurrentRow.Cells["DataValidade_Fim"].Value.ToString());
-
+            DataSet dsCupom = con.SelectRegistroPorCodigo("Cupom", "spObterCupomPorCodigo", codigo);
+            if (dsCupom.Tables[0].Rows.Count<=0)
+            {
+                return;
+            }
+            Utils.PopularGrid_SP("Pedido_Cupom", gridViewCupons, "spObterHistoricoCupomPorCodigo", codigo);
+            txtCodCupom.Text = dsCupom.Tables[0].Rows[0].Field<string>("CodCupom");
+            txtDesc.Text = dsCupom.Tables[0].Rows[0].Field<decimal>("Desconto").ToString(); 
+            txtQdtCupom.Text = dsCupom.Tables[0].Rows[0].Field<int>("Quantidade").ToString();
+            txtQtdPessoa.Text = dsCupom.Tables[0].Rows[0].Field<int>("QuantidadePessoa").ToString(); 
+            chkAtivo.Checked = dsCupom.Tables[0].Rows[0].Field<Boolean>("AtivoSN");
+            dtInicio.Value = dsCupom.Tables[0].Rows[0].Field<DateTime>("DataValidade_Inicio"); 
+            dtFim.Value = dsCupom.Tables[0].Rows[0].Field<DateTime>("DataValidade_Fim"); 
 
             this.btnAdicionar.Text = "Salvar [F12]";
             this.btnAdicionar.Click += new System.EventHandler(this.Salvar);
@@ -185,7 +191,7 @@ namespace DexComanda.Cadastros
                     DataValidade_Fim = dtFim.Value,
                     Desconto = decimal.Parse(txtDesc.Text),
                     Quantidade = int.Parse(txtQdtCupom.Text),
-                    QuantidadePessoa = int.Parse(txtQtdPessoa.Text)
+                    QuantidadePessoa = 1
                 };
                 con.Update("spAlterarCupom", _newCupom);
                 ListaRegistros();
@@ -205,5 +211,10 @@ namespace DexComanda.Cadastros
                 MessageBox.Show("Salvar " + erro.Message);
             }
         }
+
+        private void CuponGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            EditarRegistro(sender, e);
         }
+    }
 }

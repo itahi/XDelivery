@@ -1139,7 +1139,12 @@ namespace DexComanda
             // Retornando o IDFpagamento
             try
             {
-
+                // Tratamento para verificar se a forma de pagamento gera financeiro , caso sim ele não insere no caixa
+                if (con.SelectRegistroPorCodigo("FormaPagamento", "spObterFPPorCodigo",iFPagamento).Tables[0].Rows[0].
+                    Field<Boolean>("GeraFinanceiro"))
+                {
+                    return;
+                }
                 CaixaMovimento caixa = new CaixaMovimento()
                 {
                     CodFormaPagamento = iFPagamento,    

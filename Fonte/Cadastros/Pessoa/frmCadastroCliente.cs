@@ -859,8 +859,6 @@ namespace DexComanda
                 MessageBox.Show("Campos obrigatórios não podem ser vazios");
                 return;
             }
-            double dblTotalCredito = 0.00;
-            double dblTotalDebito = 0.00;
 
             HistoricoPessoa histPessoa = new HistoricoPessoa()
             {
@@ -880,14 +878,48 @@ namespace DexComanda
                 histPessoa.Tipo = 'D';
                 histPessoa.Valor = -histPessoa.Valor;
             }
+            if (histPessoa.Tipo=='C')
+            {
+                GravaMOvimentoCaixa(1, histPessoa.Valor,histPessoa.Historico);
+            }
             con.Insert("spAdicionaHistorico", histPessoa);
             Utils.PopularGrid_SP("HistoricoPessoa", HistoricoGridView, "spObterHistoricoPorPessoa", histPessoa.CodPessoa);
-            // Utils.PopularGrid("HistoricoPessoa", HistoricoGridView, "spObterHistoricoPorPessoa", histPessoa.CodPessoa);
             CalculaValores();
+        }
+        private void GravaMOvimentoCaixa(int iFPagamento, decimal iValor,string iHistorico)
+        {
+            // Retornando o IDFpagamento
+            try
+            {
+                // Tratamento para verificar se a forma de pagamento gera financeiro , caso sim ele não insere no caixa
+                if (con.SelectRegistroPorCodigo("FormaPagamento", "spObterFPPorCodigo", iFPagamento).Tables[0].Rows[0].
+                    Field<Boolean>("GeraFinanceiro"))
+                {
+                    return;
+                }
+                CaixaMovimento caixa = new CaixaMovimento()
+                {
+                    CodFormaPagamento = iFPagamento,
+                    // Data = DateTime.Now,
+                    Historico = iHistorico,
+                    NumeroDocumento = "",
+                    Tipo = 'E',
+                    Valor = iValor,
+                    CodUser = Sessions.retunrUsuario.Codigo,
+                    Turno = Sessions.retunrUsuario.Turno
+                };
+                con.Insert("spInserirMovimentoCaixa", caixa);
+
+            }
+            catch (Exception erro)
+            {
+
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
         }
         private void CalculaValores()
         {
-            Decimal dblTotalCredito = 0.00M;
             Decimal dblTotalDebito = 0.00M;
             for (int i = 0; i < HistoricoGridView.Rows.Count; i++)
             {
