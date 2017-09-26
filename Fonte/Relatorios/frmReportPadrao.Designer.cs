@@ -58,14 +58,14 @@
             this.btnImprimir.Name = "btnImprimir";
             this.btnImprimir.Size = new System.Drawing.Size(69, 23);
             this.btnImprimir.TabIndex = 4;
-            this.btnImprimir.Text = "Imprimir";
+            this.btnImprimir.Text = "Gerar";
             this.btnImprimir.UseVisualStyleBackColor = true;
             this.btnImprimir.Click += new System.EventHandler(this.GerarReport);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(123, 31);
+            this.label2.Location = new System.Drawing.Point(127, 31);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 3;

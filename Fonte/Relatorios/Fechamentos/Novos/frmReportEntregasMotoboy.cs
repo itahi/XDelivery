@@ -22,18 +22,18 @@ namespace DexComanda.Relatorios.Fechamentos.Novos
 
         private void Filtrar(object sender, EventArgs e)
         {
-            RelEntregasMotoboy report;
-            RelEntregasResumido repor2;
             try
             {
-                if (rbDetalhado.Checked)
+                if (rbResumido.Checked)
                 {
+                    RelEntregasMotoboy report;
                     report = new RelEntregasMotoboy();
                     crystalReportViewer1.ReportSource = Utils.GerarReportSoDatas(report, dtinicio.Value, dtFim.Value,horaInicio.Value.ToShortTimeString(), horaFim.Value.ToShortTimeString());
                 }
                 else
                 {
-                    repor2 = new RelEntregasResumido();
+                    RelEntregasDetalhado repor2;
+                    repor2 = new RelEntregasDetalhado();
                     crystalReportViewer1.ReportSource = Utils.GerarReportSoDatas(repor2, dtinicio.Value, dtFim.Value, horaInicio.Value.ToShortTimeString(), horaFim.Value.ToShortTimeString());
                 }
                 crystalReportViewer1.Refresh();

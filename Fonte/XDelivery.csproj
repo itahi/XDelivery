@@ -706,6 +706,12 @@
       <DependentUpon>RelEntregasMotoboyAgrupado.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\RelEntregasMotoboy.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelEntregasMotoboy.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Gerenciais\Cristal\RelEstoque.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1014,16 +1020,10 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboy.cs">
+    <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasDetalhado.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RelEntregasMotoboy.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasResumido.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RelEntregasResumido.rpt</DependentUpon>
+      <DependentUpon>RelEntregasDetalhado.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\RelFechamentoResumido.cs">
@@ -1390,6 +1390,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelEntregasMotoboyAgrupado.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\RelEntregasMotoboy.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelEntregasMotoboy.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\frmReportPadrao.resx">
       <DependentUpon>frmReportPadrao.cs</DependentUpon>
     </EmbeddedResource>
@@ -1441,13 +1445,9 @@
       <LastGenOutput>RelCaixaHistorico.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboy.rpt">
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasDetalhado.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelEntregasMotoboy.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasResumido.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelEntregasResumido.cs</LastGenOutput>
+      <LastGenOutput>RelEntregasDetalhado.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelFechamentoResumido.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
