@@ -279,3 +279,4 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Estoque.frmLancaEs
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Estoque.frmConsultaInsumo.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Pedido.frmInformaEntregador_Coletivo.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmCupom.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmReportGeral.resources

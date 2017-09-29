@@ -685,16 +685,16 @@ namespace DexComanda
         {
             List<CidadesAtendidas> cidades = new List<CidadesAtendidas>();
             cidades = Utils.DeserializaObjeto2(Sessions.returnConfig.CidadesAtendidas);
-            string listCidades = "";
+            List<string> listCidades = new List<string>();
             foreach (var item in cidades)
             {
-                listCidades = string.Join(",", item.Cidade);
+                listCidades.Add("'"+item.Cidade+"'");
             }
 
-            string iSql = "select DISTINCT(bairro) from base_cep where cidade in (@Cidades) and bairro like '%" + iNomeBairro + "%'";
+            string iSqlCidades = string.Join(",", listCidades);
+            string iSql = "select DISTINCT(bairro) from base_cep where cidade in ("+ iSqlCidades + ") and bairro like '%" + iNomeBairro + "%'";
             command = new SqlCommand(iSql, conn);
             command.CommandType = CommandType.Text;
-            command.Parameters.AddWithValue("@Cidades", listCidades);
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, "base_cep");

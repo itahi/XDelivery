@@ -161,7 +161,7 @@ namespace DexComanda
                         }
                         else
                         {
-                            IniciaPedido(CodigoPessoa, intCodEndereco);
+                            IniciaPedido(CodigoPessoa, intCodEndereco,new List<string>());
                         }
                     }
                     else
@@ -1591,7 +1591,7 @@ namespace DexComanda
 
         private void geralToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            frmReportPedidosPorPeriodo frm = new frmReportPedidosPorPeriodo();
+            frmReportGeral frm = new frmReportGeral();
             frm.ShowDialog();
         }
 
@@ -1927,7 +1927,6 @@ namespace DexComanda
                     {
                         TotalizaPedidos();
                         Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
-
                     }
                     string iSql = " select distinct (IT.CodProduto) ,PE.*,  " +
                                   " G.Codigo as CodGrupo, " +

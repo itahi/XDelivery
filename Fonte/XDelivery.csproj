@@ -724,6 +724,18 @@
       <DependentUpon>RelTickeMedio.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Gerenciais\Cristal\RelVendasGeral.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelVendasGeral.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\frmReportGeral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\frmReportGeral.Designer.cs">
+      <DependentUpon>frmReportGeral.cs</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\Gerenciais\frmReporVendasPorVendedor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1559,6 +1571,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelTickeMedio.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelVendasGeral.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelVendasGeral.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelVendasPorVendedores.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelVendasPorVendedores.cs</LastGenOutput>
@@ -1568,6 +1584,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\frmPedidosCancelados.resx">
       <DependentUpon>frmPedidosCancelados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\frmReportGeral.resx">
+      <DependentUpon>frmReportGeral.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\frmReportTickeMedio.resx">
       <DependentUpon>frmReportTickeMedio.cs</DependentUpon>

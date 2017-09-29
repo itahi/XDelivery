@@ -1973,7 +1973,7 @@ namespace DexComanda
                     }
                 }
 
-                if (ImprimeViaCozinha)
+                if (ImprimeViaCozinha && cbxTipoPedido.Text== "0 - Entrega")
                 {
                     if (con.getLastCodigo() != 0)
                     {
@@ -2620,11 +2620,11 @@ namespace DexComanda
             this.label14 = new System.Windows.Forms.Label();
             this.chkCodPersonalizado = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnValidarCupom = new System.Windows.Forms.Button();
+            this.txtCupom = new System.Windows.Forms.TextBox();
             this.txtSenha = new System.Windows.Forms.TextBox();
             this.lblSenha = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtCupom = new System.Windows.Forms.TextBox();
-            this.btnValidarCupom = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.itemsPedidoBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewItemsPedido)).BeginInit();
@@ -2888,6 +2888,7 @@ namespace DexComanda
             this.gridViewItemsPedido.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridViewItemsPedido.Location = new System.Drawing.Point(12, 230);
             this.gridViewItemsPedido.Name = "gridViewItemsPedido";
+            this.gridViewItemsPedido.ReadOnly = true;
             this.gridViewItemsPedido.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridViewItemsPedido.Size = new System.Drawing.Size(640, 142);
             this.gridViewItemsPedido.TabIndex = 47;
@@ -3637,6 +3638,37 @@ namespace DexComanda
             this.chkCodPersonalizado.UseVisualStyleBackColor = true;
             this.chkCodPersonalizado.Visible = false;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnValidarCupom);
+            this.groupBox1.Controls.Add(this.txtCupom);
+            this.groupBox1.Location = new System.Drawing.Point(471, 441);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(181, 51);
+            this.groupBox1.TabIndex = 81;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Cupom Promocional";
+            this.toolTip1.SetToolTip(this.groupBox1, "Aplique aqui o cupom de desconto");
+            // 
+            // btnValidarCupom
+            // 
+            this.btnValidarCupom.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnValidarCupom.Location = new System.Drawing.Point(120, 18);
+            this.btnValidarCupom.Name = "btnValidarCupom";
+            this.btnValidarCupom.Size = new System.Drawing.Size(55, 26);
+            this.btnValidarCupom.TabIndex = 57;
+            this.btnValidarCupom.Text = "Validar";
+            this.btnValidarCupom.UseVisualStyleBackColor = true;
+            this.btnValidarCupom.Click += new System.EventHandler(this.ValidarCupom);
+            // 
+            // txtCupom
+            // 
+            this.txtCupom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCupom.Location = new System.Drawing.Point(9, 18);
+            this.txtCupom.Name = "txtCupom";
+            this.txtCupom.Size = new System.Drawing.Size(108, 26);
+            this.txtCupom.TabIndex = 6;
+            // 
             // txtSenha
             // 
             this.txtSenha.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -3657,37 +3689,6 @@ namespace DexComanda
             this.lblSenha.TabIndex = 80;
             this.lblSenha.Text = "Senha:";
             this.lblSenha.Visible = false;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.btnValidarCupom);
-            this.groupBox1.Controls.Add(this.txtCupom);
-            this.groupBox1.Location = new System.Drawing.Point(471, 441);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(181, 51);
-            this.groupBox1.TabIndex = 81;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Cupom Promocional";
-            this.toolTip1.SetToolTip(this.groupBox1, "Aplique aqui o cupom de desconto");
-            // 
-            // txtCupom
-            // 
-            this.txtCupom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCupom.Location = new System.Drawing.Point(9, 18);
-            this.txtCupom.Name = "txtCupom";
-            this.txtCupom.Size = new System.Drawing.Size(108, 26);
-            this.txtCupom.TabIndex = 6;
-            // 
-            // btnValidarCupom
-            // 
-            this.btnValidarCupom.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnValidarCupom.Location = new System.Drawing.Point(120, 18);
-            this.btnValidarCupom.Name = "btnValidarCupom";
-            this.btnValidarCupom.Size = new System.Drawing.Size(55, 26);
-            this.btnValidarCupom.TabIndex = 57;
-            this.btnValidarCupom.Text = "Validar";
-            this.btnValidarCupom.UseVisualStyleBackColor = true;
-            this.btnValidarCupom.Click += new System.EventHandler(this.ValidarCupom);
             // 
             // frmCadastrarPedido
             // 
@@ -4513,11 +4514,11 @@ namespace DexComanda
             {
                 if (gridViewItemsPedido.SelectedRows.Count > 0)
                 {
-                    int codItem = int.Parse(this.gridViewItemsPedido.Rows[rowIndex].Cells["CodProduto"].Value.ToString());
+                    int codItem = int.Parse(this.gridViewItemsPedido.CurrentRow.Cells["CodProduto"].Value.ToString());
                     DataSet dsItemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codItem);
                     string itemNome = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
-
-                    Utils.MontaCombox(cbxTipoProduto, "Nome", "Codigo", "Grupo", "spObterGrupoPOrCodigo", dsItemCompleto.Tables[0].Rows[0].Field<int>("CodGrupo"));
+                    int intCodGrupo = dsItemCompleto.Tables[0].Rows[0].Field<int>("CodGrupo");
+                    Utils.MontaCombox(cbxTipoProduto, "Nome", "Codigo", "Grupo", "spObterGrupoPOrCodigo", intCodGrupo);
                     string[] sabores = itemNome.Split('/');
                     List<string> list = new List<string>();
 

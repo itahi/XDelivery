@@ -17,5 +17,6 @@ namespace DexComanda.Models
         public Boolean AtivoSN { get; set; }
         public Double valorMinimoFreteGratis { get; set; }
         public string PrevisaoEntrega { get; set; }
+        public decimal TaxaEntregador { get; set; }
     }
 }

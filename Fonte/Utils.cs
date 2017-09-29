@@ -1029,6 +1029,9 @@ namespace DexComanda
         {
             try
             {
+                icbxName.DataSource = null;
+                icbxName.DisplayMember = null;
+                icbxName.ValueMember = null;
                 if (iCod == -1)
                 {
                     icbxName.DataSource = null;
@@ -2704,8 +2707,8 @@ namespace DexComanda
                 report.Load(Directory.GetCurrentDirectory() + @"\RelBalcao.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                crConnectionInfo.UserID = "dex";
-                crConnectionInfo.Password = "1234";
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
 
                 CrTables = report.Database.Tables;
                 foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
