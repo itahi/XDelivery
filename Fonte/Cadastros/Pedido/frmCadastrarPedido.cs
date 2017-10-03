@@ -278,7 +278,6 @@ namespace DexComanda
                         PrecoTotal = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<decimal>("PrecoTotalItem"),
                         Item = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<string>("Item"),
                         ImpressoSN = Convert.ToBoolean(itemsPedido.Tables["ItemsPedido"].Rows[i].Field<Boolean>("ImpressoSN")),
-                       
                         DescontoPorcetagem = itemsPedido.Tables["ItemsPedido"].Rows[i].Field<decimal>("DescontoPorcetagem")
                     };
 
@@ -4518,7 +4517,7 @@ namespace DexComanda
                     DataSet dsItemCompleto = con.SelectProdutoCompleto("Produto", "spObterProdutoCompleto", codItem);
                     string itemNome = this.gridViewItemsPedido.Rows[rowIndex].Cells[2].Value.ToString();
                     int intCodGrupo = dsItemCompleto.Tables[0].Rows[0].Field<int>("CodGrupo");
-                    Utils.MontaCombox(cbxTipoProduto, "Nome", "Codigo", "Grupo", "spObterGrupoPOrCodigo", intCodGrupo);
+                    Utils.MontaCombox(cbxTipoProduto, "NomeGrupo", "Codigo", "Grupo", "spObterGrupoPOrCodigo", intCodGrupo);
                     string[] sabores = itemNome.Split('/');
                     List<string> list = new List<string>();
 
