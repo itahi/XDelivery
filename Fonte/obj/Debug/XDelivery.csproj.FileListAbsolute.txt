@@ -280,3 +280,13 @@ D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Estoque.frmConsult
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Pedido.frmInformaEntregador_Coletivo.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Cadastros.frmCupom.resources
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Relatorios.Gerenciais.frmReportGeral.resources
+D:\#Projetos\xDelivery\Fonte\bin\Debug\EntityFramework.SqlServer.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\GMap.NET.Core.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\GMap.NET.WindowsForms.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\System.Data.SQLite.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\System.Data.SQLite.EF6.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\System.Data.SQLite.Linq.dll
+D:\#Projetos\xDelivery\Fonte\bin\Debug\EntityFramework.SqlServer.xml
+D:\#Projetos\xDelivery\Fonte\bin\Debug\GMap.NET.WindowsForms.xml
+D:\#Projetos\xDelivery\Fonte\bin\Debug\System.Data.SQLite.xml
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Ações.frmMapaClientes.resources

@@ -113,6 +113,7 @@
             this.envioDeSmsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.envioDePushNotificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.envioDeEmailMarketingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mapaDeClientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoAtivaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlPrincipal = new System.Windows.Forms.Panel();
@@ -830,7 +831,8 @@
             this.açõesDePublicidadeEMarketingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.envioDeSmsToolStripMenuItem1,
             this.envioDePushNotificationToolStripMenuItem,
-            this.envioDeEmailMarketingToolStripMenuItem});
+            this.envioDeEmailMarketingToolStripMenuItem,
+            this.mapaDeClientesToolStripMenuItem});
             this.açõesDePublicidadeEMarketingToolStripMenuItem.Name = "açõesDePublicidadeEMarketingToolStripMenuItem";
             this.açõesDePublicidadeEMarketingToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.açõesDePublicidadeEMarketingToolStripMenuItem.Text = "Publicidade e Marketing";
@@ -854,6 +856,13 @@
             this.envioDeEmailMarketingToolStripMenuItem.Name = "envioDeEmailMarketingToolStripMenuItem";
             this.envioDeEmailMarketingToolStripMenuItem.Size = new System.Drawing.Size(262, 26);
             this.envioDeEmailMarketingToolStripMenuItem.Text = "Envio de Email Marketing";
+            // 
+            // mapaDeClientesToolStripMenuItem
+            // 
+            this.mapaDeClientesToolStripMenuItem.Name = "mapaDeClientesToolStripMenuItem";
+            this.mapaDeClientesToolStripMenuItem.Size = new System.Drawing.Size(262, 26);
+            this.mapaDeClientesToolStripMenuItem.Text = "Mapa de Clientes";
+            this.mapaDeClientesToolStripMenuItem.Click += new System.EventHandler(this.mapaDeClientesToolStripMenuItem_Click);
             // 
             // contatoToolStripMenuItem
             // 
@@ -1669,5 +1678,6 @@
         private System.Windows.Forms.ToolStripMenuItem produtoToolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem insumoToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem cupomPromocionalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mapaDeClientesToolStripMenuItem;
     }
 }

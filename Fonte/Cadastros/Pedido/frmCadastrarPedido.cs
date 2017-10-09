@@ -1,6 +1,7 @@
 ﻿
 using DexComanda.Cadastros;
 using DexComanda.Cadastros.Pedido;
+using DexComanda.Integração;
 using DexComanda.Models;
 using DexComanda.Models.Operacoes;
 using System;
@@ -1197,6 +1198,7 @@ namespace DexComanda
                                 CodUsuario = RetornaCodVendedor(),
                                 Observacao = txtObsPedido.Text,
                                 CodEndereco = prvCodEndecoSelecionado,
+                               // ImpressoSN = false
                             };
                             if (txtCupom.Text!="")
                             {
@@ -1313,16 +1315,20 @@ namespace DexComanda
                             iCodPedido = con.getLastCodigo();
                             con.AtualizaSituacao(iCodPedido, Sessions.retunrUsuario.Codigo, 1);
 
-                            if (ContraMesas && cbxTipoPedido.Text != "1 - Mesa")
-                            {
-                                prepareToPrint();
-                            }
-                            else if (!ContraMesas)
-                            {
-                                prepareToPrint();
-                            }
-
-                            this.Close();
+                            Thread newTreadImpressao = new Thread(new ThreadStart(prepareToPrint));
+                            newTreadImpressao.Start();
+                            //if (ContraMesas && cbxTipoPedido.Text != "1 - Mesa")
+                            //{
+                            //    prepareToPrint();
+                            //}
+                            //else if (!ContraMesas)
+                            //{
+                            //    prepareToPrint();
+                            //}
+                            Maps maps = new Maps();
+                            Thread newTread = new Thread(new ParameterizedThreadStart(maps.BuscarCoordenadasAtualizar));
+                            newTread.Start(codPessoa);
+                            //this.Close();
 
 
                         }
@@ -1898,6 +1904,11 @@ namespace DexComanda
         {
             try
             {
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(new MethodInvoker(prepareToPrint));
+                    return;
+                }
                 int iCodigo;
                 AtualizaTotalPedido();
                 if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa")
@@ -1923,20 +1934,20 @@ namespace DexComanda
 
                 }
                 // Impressão de Venda Balcão
-                if (cbxTipoPedido.Text == "2 - Balcao" && ImprimeViaBalcao)
-                {
+                //if (cbxTipoPedido.Text == "2 - Balcao" && ImprimeViaBalcao)
+                //{
 
-                    if (con.getLastCodigo() != 0)
-                    {
-                        iCodigo = con.getLastCodigo();
-                    }
-                    else
-                    {
-                        iCodigo = codPedido;
-                    }
+                //    if (con.getLastCodigo() != 0)
+                //    {
+                //        iCodigo = con.getLastCodigo();
+                //    }
+                //    else
+                //    {
+                //        iCodigo = codPedido;
+                //    }
 
-                    string iRetorno = Utils.ImpressaoBalcao(iCodigo, QtdViasBalcao, strNomeImpressoraBalcao);
-                }
+                //    string iRetorno = Utils.ImpressaoBalcao(iCodigo, QtdViasBalcao, strNomeImpressoraBalcao);
+                //}
 
                 // Imprimindo via Entrega
                 if (ImprimeViaDelivery && cbxTipoPedido.Text == "0 - Entrega")
@@ -1992,13 +2003,14 @@ namespace DexComanda
                     }
 
                 }
+
             }
             catch (Exception E)
             {
 
                 MessageBox.Show("Não foi possivel imprimir " + E.Message, " [xSistemas] ");
             }
-
+            this.Close();
         }
         /// <summary>
         /// Impressão separada do ticket de cozinha de acordo com o tipo de agrupamento

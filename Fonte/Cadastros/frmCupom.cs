@@ -78,6 +78,10 @@ namespace DexComanda.Cadastros
             try
             {
                 Utils.PopularGrid_SP("Cupom", CuponGridView, "spObterCupom");
+                if (CuponGridView.Rows.Count==0)
+                {
+                    return;
+                }
                 Utils.PopularGrid_SP("Pedido_Cupom", gridViewCupons, "spObterHistoricoCupomPorCodigo", int.Parse(CuponGridView.Rows[0].Cells["Codigo"].Value.ToString()));
             }
             catch (Exception erro)

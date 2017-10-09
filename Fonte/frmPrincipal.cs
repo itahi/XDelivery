@@ -1014,6 +1014,12 @@ namespace DexComanda
 
                 frmTransfereMesa frmMe = new frmTransfereMesa(codPedidtransfe, totalPedido, codPessoa);
                 frmMe.ShowDialog();
+                string strTipoPedido = "";
+                if (cbxFiltroTipo.Text != "")
+                {
+                    strTipoPedido = "And Pd.Tipo='" + cbxFiltroTipo.Text + "'";
+                }
+                Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido, false, strTipoPedido);
             }
 
 
@@ -1254,7 +1260,7 @@ namespace DexComanda
                     decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, intCodEndereco);
                     frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", 0, "0,00",
                                                                     TaxaServico, false, DateTime.Now, 0,
-                                                                    CodPessoa, "0,00", "Dinheiro", "", "", 0.00M, 0, 0, "", intCodEndereco);
+                                                                    CodPessoa, "0,00", "Dinheiro", "", "", 0.00M, 0, 0, "", intCodEndereco,"",new List<string>());
                     frm.Show(this);
                 }
 
@@ -1961,7 +1967,6 @@ namespace DexComanda
                             AtualizaGrid.Enabled = true;
                             break;
                         }
-
                     }
                 }
             }
@@ -1969,6 +1974,10 @@ namespace DexComanda
             {
 
                 MessageBox.Show("Erro ao atualizar pedidos" + erro.Message);
+            }
+            finally
+            {
+                con.Close();
             }
         }
         private async void ImpressaoViaBalcao(int codPedido)
@@ -2339,6 +2348,12 @@ namespace DexComanda
         private void cupomPromocionalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCupom frm = new frmCupom();
+            frm.Show();
+        }
+
+        private void mapaDeClientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmMapaClientes frm = new frmMapaClientes();
             frm.Show();
         }
     }

@@ -334,6 +334,7 @@
             this.cbxRegiao.ValueMember = "Codigo";
             this.cbxRegiao.DropDown += new System.EventHandler(this.cbxRegiao_DropDown);
             this.cbxRegiao.SelectedIndexChanged += new System.EventHandler(this.cbxRegiao_SelectedIndexChanged);
+            this.cbxRegiao.SelectionChangeCommitted += new System.EventHandler(this.cbxRegiao_SelectionChangeCommitted);
             // 
             // txtDataNascimento
             // 
@@ -500,11 +501,11 @@
             // txtEndereco
             // 
             this.txtEndereco.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEndereco.Location = new System.Drawing.Point(140, 88);
+            this.txtEndereco.Location = new System.Drawing.Point(123, 88);
             this.txtEndereco.MaxLength = 100;
             this.txtEndereco.Multiline = true;
             this.txtEndereco.Name = "txtEndereco";
-            this.txtEndereco.Size = new System.Drawing.Size(356, 30);
+            this.txtEndereco.Size = new System.Drawing.Size(373, 30);
             this.txtEndereco.TabIndex = 33;
             // 
             // txtCEP
@@ -513,7 +514,7 @@
             this.txtCEP.Location = new System.Drawing.Point(15, 88);
             this.txtCEP.MaxLength = 8;
             this.txtCEP.Name = "txtCEP";
-            this.txtCEP.Size = new System.Drawing.Size(119, 29);
+            this.txtCEP.Size = new System.Drawing.Size(105, 29);
             this.txtCEP.TabIndex = 30;
             this.txtCEP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ConsultarEnderecoPorCep);
             this.txtCEP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCEP_KeyPress);

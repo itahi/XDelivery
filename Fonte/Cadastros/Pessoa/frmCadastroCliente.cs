@@ -6,6 +6,8 @@ using DexComanda.Models;
 using DexComanda.Relatorios.Delivery;
 using DexComanda.Models.WS;
 using System.Collections.Generic;
+using DexComanda.Integração;
+using System.Threading;
 
 namespace DexComanda
 {
@@ -271,7 +273,8 @@ namespace DexComanda
                 return;
             }
             Utils.MontaCombox(iCbxName, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioesPorCodigo", ds.Tables[0].Rows[0].Field<int>("Codigo"));
-            txtTaxaEntregaEnd.Text = ds.Tables[0].Rows[0].Field<decimal>("TaxaServico").ToString();
+            txtTaxaEntrega.Text = ds.Tables[0].Rows[0].Field<decimal>("TaxaServico").ToString();
+            cbxRegiao.Text = ds.Tables[0].Rows[0].Field<string>("NomeRegiao").ToString();
         }
 
         private void AdicionarCliente(object sender, EventArgs e)
@@ -363,7 +366,10 @@ namespace DexComanda
                     MessageBox.Show("Cliente cadastrado com sucesso.", "[xSistemas] Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
                     this.Close();
                     con.Insert("spAdicionarEndereco", pessEnd);
-
+                   
+                    Maps maps = new Maps();
+                    Thread newTread = new Thread(new ParameterizedThreadStart(maps.BuscarCoordenadas));
+                    newTread.Start(pessEnd.CodPessoa);
                     if (Utils.CaixaAberto(DateTime.Now, Sessions.retunrUsuario.CaixaLogado, Sessions.retunrUsuario.Turno))
                     {
                         RealizarPedidoAgora(Convert.ToString(pessoa.Telefone));
@@ -492,6 +498,9 @@ namespace DexComanda
                 AtualizaEndereco();
                 Utils.ControlaEventos("Altera", this.Name);
                 MessageBox.Show("Cliente alterado com sucesso.");
+                Maps maps = new Maps();
+                Thread newTread = new Thread(new ParameterizedThreadStart(maps.BuscarCoordenadasAtualizar));
+                newTread.Start(pessoa.Codigo);
 
                 this.Close();
             }
@@ -802,13 +811,7 @@ namespace DexComanda
         private void cbxRegiao_SelectedIndexChanged(object sender, EventArgs e)
         {
             // var TaxaEntrega;
-            if (cbxRegiao.SelectedValue.ToString() == "0")
-            {
-                return;
-            }
-            var Regiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", int.Parse(this.cbxRegiao.SelectedValue.ToString())).Tables["RegiaoEntrega"];
-            mCodRegiao = int.Parse(Regiao.Rows[0]["Codigo"].ToString());
-            txtTaxaEntrega.Text = Convert.ToString(Regiao.Rows[0]["TaxaServico"].ToString());
+            
 
         }
 
@@ -1241,6 +1244,17 @@ namespace DexComanda
         private void txtBairro_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void cbxRegiao_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (cbxRegiao.SelectedValue.ToString() == "0" || cbxRegiao.SelectedValue.ToString()=="")
+            {
+                return;
+            }
+            var Regiao = con.SelectRegistroPorCodigo("RegiaoEntrega", "spObterRegioesPorCodigo", int.Parse(this.cbxRegiao.SelectedValue.ToString())).Tables["RegiaoEntrega"];
+            mCodRegiao = int.Parse(Regiao.Rows[0]["Codigo"].ToString());
+            txtTaxaEntrega.Text = Convert.ToString(Regiao.Rows[0]["TaxaServico"].ToString());
         }
     }
 

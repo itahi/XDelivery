@@ -24,7 +24,6 @@ namespace DexComanda
         private MySqlCommand MysqlCommand;
         private MySqlConnection MysqlConnection;
         private MySqlDataAdapter MysqlDataAdapter;
-        //   private const int CmysqlTimeOut = 50000;
         private static string dataMember;
         private DataSet ds;
         private DataSet Dados;
@@ -43,18 +42,19 @@ namespace DexComanda
                 ////{
                 ////    return;
                 ////}
-
-                if (connectionString != null)
-                {
-                    conn = new SqlConnection(connectionString);
-
-                    if (conn.State != ConnectionState.Open)
+                //lock (this)
+                //{
+                    if (connectionString != null)
                     {
-                        conn.Open();
-                    }
+                        conn = new SqlConnection(connectionString);
 
-                    statusConexao = conn.State;
-                }
+                        if (conn.State != ConnectionState.Open)
+                        {
+                            conn.Open();
+                        }
+                        statusConexao = conn.State;
+                    }
+                //}
             }
             catch (Exception msg)
             {
@@ -62,18 +62,48 @@ namespace DexComanda
             }
 
         }
-        public decimal RetornaDescontoCupom(string iCupom,int intCodPessoa)
+        public void GravaLatLong(int intCodPessoa, double lat, double longi)
+        {
+            try
+            {
+                lock (this)
+                {
+                    command = new SqlCommand();
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        conn.Open();
+                    }
+                    // conn = new SqlConnection();
+                    string iSql = "update pessoa set latitude=@Latitude ,longitude=@Longitude where Codigo=" + intCodPessoa;
+                    command = new SqlCommand(iSql, conn);
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.AddWithValue("@Latitude", lat);
+                    command.Parameters.AddWithValue("@Longitude", longi);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+            finally
+            {
+                conn.Close();
+
+            }
+        }
+        public decimal RetornaDescontoCupom(string iCupom, int intCodPessoa)
         {
             decimal iReturn = 0;
             try
             {
-                string iSqlCupom = "select Desconto from Cupom where AtivoSN=1 and CodCupom='"+iCupom+"' and cast(GETDATE() as date) between DataValidade_Inicio and DataValidade_Fim and Quantidade> 0";
+                string iSqlCupom = "select Desconto from Cupom where AtivoSN=1 and CodCupom='" + iCupom + "' and cast(GETDATE() as date) between DataValidade_Inicio and DataValidade_Fim and Quantidade> 0";
                 command = new SqlCommand(iSqlCupom, conn);
                 command.CommandType = CommandType.Text;
                 adapter = new SqlDataAdapter(command);
                 ds = new DataSet();
                 adapter.Fill(ds, "Cupom");
-                if (ds.Tables[0].Rows.Count<=0)
+                if (ds.Tables[0].Rows.Count <= 0)
                 {
                     MessageBox.Show("Cupom inválido ou expirado");
                     return 0;
@@ -272,6 +302,7 @@ namespace DexComanda
         }
         public async void AtualizaImpressaoBalcao(int intCodPedido)
         {
+            new Conexao();
             string iSqlConsulta = " update Pedido set ImpressoSN=1 where Codigo=@Codigo";
             command = new SqlCommand(iSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -688,11 +719,11 @@ namespace DexComanda
             List<string> listCidades = new List<string>();
             foreach (var item in cidades)
             {
-                listCidades.Add("'"+item.Cidade+"'");
+                listCidades.Add("'" + item.Cidade + "'");
             }
 
             string iSqlCidades = string.Join(",", listCidades);
-            string iSql = "select DISTINCT(bairro) from base_cep where cidade in ("+ iSqlCidades + ") and bairro like '%" + iNomeBairro + "%'";
+            string iSql = "select DISTINCT(bairro) from base_cep where cidade in (" + iSqlCidades + ") and bairro like '%" + iNomeBairro + "%'";
             command = new SqlCommand(iSql, conn);
             command.CommandType = CommandType.Text;
             adapter = new SqlDataAdapter(command);
@@ -915,9 +946,9 @@ namespace DexComanda
             return conn.State == ConnectionState.Open;
         }
 
-        public void Close()
+        public async void Close()
         {
-            // conn.Close();
+             conn.Close();
         }
 
         public void SalvarAdicionais(int iCodProduto, int iCodOpcao, decimal iPreco, int iCodTipo)
@@ -939,6 +970,7 @@ namespace DexComanda
         {
             try
             {
+                new Conexao();
                 command = new SqlCommand(spName, conn);
                 if (iSqlSelect != "")
                 {
@@ -1404,6 +1436,7 @@ namespace DexComanda
         public void AtualizaDataSincronismo(string iNomeTable, int iCodigo, string iDataAtualizar = "DataSincronismo", string NomeCod = "Codigo")
         {
             string lSqlConsulta;
+            new Conexao();
             if (iCodigo != -1)
             {
                 lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where " + NomeCod + "= " + iCodigo;
@@ -1714,6 +1747,7 @@ namespace DexComanda
 
         public void Insert(string spName, Object obj)
         {
+            new Conexao();
             if (statusConexao != ConnectionState.Open)
             {
                 MessageBox.Show("Você precisa estar conectado ao banco de dados para continuar");
@@ -1933,7 +1967,7 @@ namespace DexComanda
 
         public void Update(string spName, Object obj)
         {
-
+            new Conexao();
             if (statusConexao != ConnectionState.Open)
             {
                 MessageBox.Show("Você precisa estar conectado ao banco de dados para continuar");
@@ -2462,12 +2496,12 @@ namespace DexComanda
             }
             return ds;
         }
-        public DataSet SelectRegistroPorCodigo(string table, string spName, List<string>listCodigo)
+        public DataSet SelectRegistroPorCodigo(string table, string spName, List<string> listCodigo)
         {
             try
             {
                 string strLista = string.Join(",", listCodigo);
-                string iSqlConsulta = "select Codigo,NomeProduto from Produto where Codigo in ("+strLista+")";
+                string iSqlConsulta = "select Codigo,NomeProduto from Produto where Codigo in (" + strLista + ")";
                 command = new SqlCommand(iSqlConsulta, conn);
                 command.CommandType = CommandType.Text;
                 adapter = new SqlDataAdapter(command);

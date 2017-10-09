@@ -619,7 +619,7 @@ namespace DexComanda.Operações
                 }
                 string iretur = Utils.SerializaObjeto(horariosList);
                 request.AddParameter("horarios", Utils.SerializaObjeto(horariosList));
-                request.AddParameter("store_id", store_idAtual);
+                request.AddParameter("store_id", 0);
                 RestResponse response = (RestResponse)client.Execute(request);
 
             }
