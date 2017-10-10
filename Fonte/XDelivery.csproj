@@ -340,6 +340,7 @@
     </Compile>
     <Compile Include="Integração\Maps.cs" />
     <Compile Include="Integração\MP2032.cs" />
+    <Compile Include="Integração\smsTWW.cs" />
     <Compile Include="Integração\Zenvia.cs" />
     <Compile Include="Models\Acoes\PointsModel.cs" />
     <Compile Include="Models\Alteracoes Multiplas\AlteracaoCliente.cs" />
@@ -397,6 +398,7 @@
     <Compile Include="Models\RemoveDezPorcento.cs" />
     <Compile Include="Models\RemoveFinalizacao.cs" />
     <Compile Include="Models\ReturnPadrao.cs" />
+    <Compile Include="Models\Tww.cs" />
     <Compile Include="Models\WS\CidadesAtendidas.cs" />
     <Compile Include="Models\WS\DadosApp.cs" />
     <Compile Include="Models\WS\HorariosEntregaJson.cs" />
@@ -1173,6 +1175,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\wsreluz\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Sessions.cs" />
     <Compile Include="Operações\Splashcreen.cs">
       <SubType>Form</SubType>
@@ -1743,6 +1750,7 @@
     <None Include="Properties\DataSources\Sessions.datasource" />
     <None Include="Properties\DataSources\Splashcreen.datasource" />
     <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
+    <None Include="Properties\DataSources\System.Xml.XmlNode1.datasource" />
     <None Include="Properties\DataSources\Utils.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -1770,7 +1778,10 @@
     <None Include="Service References\Correios\DexComanda.Correios.assuntoPIMaster.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\Correios\DexComanda.Correios.atualizaPLPResponse.datasource">
+    <None Include="Service References\Correios\DexComanda.Correios.atualizaPagamentoNaEntregaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Correios\DexComanda.Correios.atualizaRemessaAgrupadaResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Correios\DexComanda.Correios.bloquearObjetoResponse.datasource">
@@ -1785,7 +1796,22 @@
     <None Include="Service References\Correios\DexComanda.Correios.buscaPagamentoEntregaResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\Correios\DexComanda.Correios.buscaServicosAdicionaisAtivosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\Correios\DexComanda.Correios.buscaServicosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Correios\DexComanda.Correios.buscaServicosValorDeclaradoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Correios\DexComanda.Correios.buscaServicosXServicosAdicionaisResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Correios\DexComanda.Correios.buscaTarifaValeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Correios\DexComanda.Correios.calculaTarifaServicoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Correios\DexComanda.Correios.cancelarObjetoResponse.datasource">
@@ -1860,7 +1886,10 @@
     <None Include="Service References\Correios\DexComanda.Correios.retorno.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\Correios\DexComanda.Correios.retornoCancelamentoTO.datasource">
+    <None Include="Service References\Correios\DexComanda.Correios.retornoCancelamento.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Correios\DexComanda.Correios.servicoAdicionalXML.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Correios\DexComanda.Correios.servicoERP.datasource">
@@ -1884,6 +1913,9 @@
     <None Include="Service References\Correios\DexComanda.Correios.statusPlp.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\Correios\DexComanda.Correios.valePostal.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\Correios\DexComanda.Correios.validaEtiquetaPLPResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -1899,7 +1931,14 @@
     <None Include="Service References\Correios\DexComanda.Correios.verificaDisponibilidadeServicoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\Correios\DexComanda.Correios.VerificaSeTodosObjetosCanceladosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\LOCASMS\ServiceSms.wsdl" />
+    <None Include="Service References\wsreluz\DexComanda.wsreluz.MONLIDOQUANT.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsreluz\wsreluzcap.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -2136,6 +2175,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\wsreluz\wsreluzcap.disco" />
+    <None Include="Service References\wsreluz\configuration91.svcinfo" />
+    <None Include="Service References\wsreluz\configuration.svcinfo" />
+    <None Include="Service References\wsreluz\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Splash.png" />
     <Content Include="xD-grey-inverse.ico" />
     <Content Include="XSistemas.ico" />
@@ -2149,6 +2195,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\Correios\" />
     <WCFMetadataStorage Include="Service References\LOCASMS\" />
+    <WCFMetadataStorage Include="Service References\wsreluz\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />

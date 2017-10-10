@@ -4,7 +4,7 @@
   <description asmv2:iconFile="xD-grey-inverse.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="DexComanda" version="2.0.0.35852" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="DexComanda" version="2.0.0.28541" language="neutral" processorArchitecture="msil" />
     <commandLine file="DexComanda.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -360,14 +360,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DexComanda.exe" size="6343168">
-      <assemblyIdentity name="DexComanda" version="2.0.0.35852" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DexComanda.exe" size="6386688">
+      <assemblyIdentity name="DexComanda" version="2.0.0.28541" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>NQJtJcvXxvicmzGKLqS2Xe2n4SBvVCIsnMVo9k3/8Ik=</dsig:DigestValue>
+        <dsig:DigestValue>LvZhWAzgkhk29feqOAoeLt1s1WNStXjKE2WMfrKFvgA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -647,13 +647,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="DexComanda.exe.config" size="3457">
+  <file name="DexComanda.exe.config" size="4908">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>bBqATRts/UuO1x7OFIgY8mR6B5rlcU/yWpiN9v8KJBQ=</dsig:DigestValue>
+      <dsig:DigestValue>R/XevLGwQVomwE9EZvUHL9lB4qEwsK2HyfW+fE2u8ws=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Dlls\HumanAPIClient.dll" size="16384">

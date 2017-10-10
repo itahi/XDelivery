@@ -30,20 +30,26 @@ namespace DexComanda.Operações.Ações
         private string RetornaSqlFiltro()
         {
             string sqlReturn = "";
+            string sqlPadrao = "select Codigo,Nome,isnull(latitude,0) as latitude , isnull(longitude,0) as longitude ,Endereco +' ,'+isnull(Numero,'')+' - '+isnull(Bairro,'')+', ' +isnull(Cidade,'')+'-'+isnull(Uf,'')+', '+isnull(Cep,'') as Endereco from Pessoa ";
             try
             {
                 if (rbSumido.Checked)
                 {
 
-                    sqlReturn = "select Codigo,Nome,isnull(latitude,0) as latitude , isnull(longitude,0) as longitude ,Endereco +' ,'+isnull(Numero,'')+' - '+isnull(Bairro,'')+', ' +isnull(Cidade,'')+'-'+isnull(Uf,'')+', '+isnull(Cep,'') as Endereco from Pessoa " +
-                                "where Pessoa.Codigo not in (select CodPessoa from Pedido PD where cast(PD.RealizadoEm as date) between '" + dtInicio.Value + "' and '" + dtFim.Value + "') " +
+                    sqlReturn = sqlPadrao+
+                                " where Pessoa.Codigo not in (select CodPessoa from Pedido PD where cast(PD.RealizadoEm as date) between '" + dtInicio.Value + "' and '" + dtFim.Value + "') " +
                                 "  and Endereco is not null or Endereco<>''";
+                }
+                else if (rbComprandoAgora.Checked)
+                {
+                    sqlReturn = sqlPadrao +
+                                " where Pessoa.Codigo in ( Select CodPessoa from Pedido where Finalizado=0 and [status]='Aberto') " +
+                                "  and Endereco is not null or Endereco<>'' ";
                 }
                 else
                 {
-                    sqlReturn = "select Codigo,Nome, lsnull(latitude,0) as latitude , isnull(longitude,0) as longitude  ,Endereco + ' ,' + Numero + ' - ' + Bairro + ', ' + Cidade + '-' + Uf + ', ' + Cep as Endereco from Pessoa " +
-                                " where Pessoa.Codigo in ( Select CodPessoa from Pedido where Finalizado=0 and [status]='Aberto') " +
-                                "  and Endereco is not null or Endereco<>'' ";
+                    sqlReturn = sqlPadrao +
+                               " where CodOrigemCadastro = " + cbxOrigem.SelectedValue.ToString() + " and DataCadastro between '" + dtInicio.Value + "' and '" + dtFim.Value + "'";
                 }
             }
             catch (Exception erro)
@@ -247,9 +253,9 @@ namespace DexComanda.Operações.Ações
 
 
         }
-        private void frmMapaClientes_Load(object sender, EventArgs e)
+        private void rbOrigem_CheckedChanged_1(object sender, EventArgs e)
         {
-
+            Utils.MontaCombox(cbxOrigem, "Nome", "Codigo", "Pessoa_OrigemCadastro", "spObterPessoa_OrigemCadastro");
         }
     }
 }

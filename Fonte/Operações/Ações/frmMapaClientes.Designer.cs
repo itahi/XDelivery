@@ -28,7 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.grpTipoFiltro = new System.Windows.Forms.GroupBox();
+            this.cbxOrigem = new System.Windows.Forms.ComboBox();
+            this.rbOrigem = new System.Windows.Forms.RadioButton();
             this.rbComprandoAgora = new System.Windows.Forms.RadioButton();
             this.rbSumido = new System.Windows.Forms.RadioButton();
             this.grpMapa = new System.Windows.Forms.GroupBox();
@@ -40,6 +43,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.dtInicio = new System.Windows.Forms.DateTimePicker();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.grpTipoFiltro.SuspendLayout();
             this.grpMapa.SuspendLayout();
             this.panel.SuspendLayout();
@@ -48,6 +52,8 @@
             // 
             // grpTipoFiltro
             // 
+            this.grpTipoFiltro.Controls.Add(this.cbxOrigem);
+            this.grpTipoFiltro.Controls.Add(this.rbOrigem);
             this.grpTipoFiltro.Controls.Add(this.rbComprandoAgora);
             this.grpTipoFiltro.Controls.Add(this.rbSumido);
             this.grpTipoFiltro.Location = new System.Drawing.Point(12, 4);
@@ -57,14 +63,36 @@
             this.grpTipoFiltro.TabStop = false;
             this.grpTipoFiltro.Text = "Filtros";
             // 
+            // cbxOrigem
+            // 
+            this.cbxOrigem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxOrigem.FormattingEnabled = true;
+            this.cbxOrigem.Location = new System.Drawing.Point(26, 59);
+            this.cbxOrigem.Name = "cbxOrigem";
+            this.cbxOrigem.Size = new System.Drawing.Size(121, 21);
+            this.cbxOrigem.TabIndex = 15;
+            this.toolTip1.SetToolTip(this.cbxOrigem, "Clientes por origem cadastro");
+            // 
+            // rbOrigem
+            // 
+            this.rbOrigem.AutoSize = true;
+            this.rbOrigem.Location = new System.Drawing.Point(6, 62);
+            this.rbOrigem.Name = "rbOrigem";
+            this.rbOrigem.Size = new System.Drawing.Size(14, 13);
+            this.rbOrigem.TabIndex = 14;
+            this.toolTip1.SetToolTip(this.rbOrigem, "Clientes por origem cadastro");
+            this.rbOrigem.UseVisualStyleBackColor = true;
+            this.rbOrigem.CheckedChanged += new System.EventHandler(this.rbOrigem_CheckedChanged_1);
+            // 
             // rbComprandoAgora
             // 
             this.rbComprandoAgora.AutoSize = true;
-            this.rbComprandoAgora.Location = new System.Drawing.Point(6, 53);
+            this.rbComprandoAgora.Location = new System.Drawing.Point(6, 40);
             this.rbComprandoAgora.Name = "rbComprandoAgora";
             this.rbComprandoAgora.Size = new System.Drawing.Size(109, 17);
             this.rbComprandoAgora.TabIndex = 13;
             this.rbComprandoAgora.Text = "Comprando agora";
+            this.toolTip1.SetToolTip(this.rbComprandoAgora, "Clientes com pedido em aberto");
             this.rbComprandoAgora.UseVisualStyleBackColor = true;
             // 
             // rbSumido
@@ -77,6 +105,7 @@
             this.rbSumido.TabIndex = 4;
             this.rbSumido.TabStop = true;
             this.rbSumido.Text = "Cliente \'Sumido\'";
+            this.toolTip1.SetToolTip(this.rbSumido, "Clientes que não compram por determinado periodo");
             this.rbSumido.UseVisualStyleBackColor = true;
             // 
             // grpMapa
@@ -158,7 +187,7 @@
             // 
             // btnFiltrar
             // 
-            this.btnFiltrar.Location = new System.Drawing.Point(433, 35);
+            this.btnFiltrar.Location = new System.Drawing.Point(415, 35);
             this.btnFiltrar.Name = "btnFiltrar";
             this.btnFiltrar.Size = new System.Drawing.Size(75, 39);
             this.btnFiltrar.TabIndex = 0;
@@ -203,8 +232,9 @@
             this.Controls.Add(this.btnFiltrar);
             this.Controls.Add(this.grpTipoFiltro);
             this.Name = "frmMapaClientes";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "[xSistemas] Mapa de Clientes";
-            this.Load += new System.EventHandler(this.frmMapaClientes_Load);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.grpTipoFiltro.ResumeLayout(false);
             this.grpTipoFiltro.PerformLayout();
             this.grpMapa.ResumeLayout(false);
@@ -230,5 +260,8 @@
         private System.Windows.Forms.Panel panel;
         private System.Windows.Forms.Label lblmsg;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.RadioButton rbOrigem;
+        private System.Windows.Forms.ComboBox cbxOrigem;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
