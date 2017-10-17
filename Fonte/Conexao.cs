@@ -1539,6 +1539,7 @@ namespace DexComanda
         }
         public DataSet DeleteAll(string table, string spName, int CodigoDeletar)
         {
+            new Conexao();
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Codigo", CodigoDeletar);
@@ -1572,6 +1573,7 @@ namespace DexComanda
 
         public DataSet Delete(string table, string spName, int CodProduto, int CodOpcao)
         {
+            new Conexao();
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@CodProduto", CodProduto);
@@ -2098,6 +2100,7 @@ namespace DexComanda
         {
             try
             {
+                new Conexao();
                 if (statusConexao != ConnectionState.Open)
                 {
                     MessageBox.Show("Você precisa estar conectado ao banco de dados para continuar");

@@ -625,6 +625,14 @@ namespace DexComanda
             }
             return JsonConvert.DeserializeObject<List<PrecoDiaProduto>>(iValores);
         }
+        public  static DadosSMS DeserializaObjetoSMS(string iValores)
+        {
+            if (iValores == "")
+            {
+                return new DadosSMS();
+            }
+            return JsonConvert.DeserializeObject<DadosSMS>(iValores);
+        }
         public static ImpressaoBalcao RetornaConfiguracaoBalcao()
         {
             ImpressaoBalcao imprBalcao = new Models.Configuracoes.ImpressaoBalcao();
@@ -639,6 +647,7 @@ namespace DexComanda
 
             return imprBalcao;
         }
+
         public static ImpressaoMesa RetornaConfiguracaoMesa()
         {
             ImpressaoMesa imprCozinha = new ImpressaoMesa();
@@ -666,6 +675,20 @@ namespace DexComanda
             }
 
             return imprDelivery;
+        }
+        public static DadosSMS RetornaConfiguracaoSMS()
+        {
+            DadosSMS sms = new DadosSMS();
+            try
+            {
+                sms = Utils.DeserializaObjetoSMS(Sessions.returnEmpresa.ConfiguracaoSMS);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return sms;
         }
         public static DadosPush RetornaConfiguracaoPush()
         {
@@ -721,22 +744,22 @@ namespace DexComanda
             }
             return JsonConvert.DeserializeObject<DadosApp>(iValores);
         }
-        public static DadosEnvioZenvia DeserializaObjetoZenvia(string iValores)
-        {
-            if (iValores == "" || iValores == null)
-            {
-                return new DadosEnvioZenvia();
-            }
-            return JsonConvert.DeserializeObject<DadosEnvioZenvia>(iValores);
-        }
-        public static DadosEnvioLocaSMS DeserializaObjetoLocaSMS(string iValores)
-        {
-            if (iValores == "" || iValores == null)
-            {
-                return new DadosEnvioLocaSMS();
-            }
-            return JsonConvert.DeserializeObject<DadosEnvioLocaSMS>(iValores);
-        }
+        //public static DadosEnvioZenvia DeserializaObjetoZenvia(string iValores)
+        //{
+        //    if (iValores == "" || iValores == null)
+        //    {
+        //        return new DadosEnvioZenvia();
+        //    }
+        //    return JsonConvert.DeserializeObject<DadosEnvioZenvia>(iValores);
+        //}
+        //public static DadosEnvioLocaTWW DeserializaObjetoLocaSMS(string iValores)
+        //{
+        //    if (iValores == "" || iValores == null)
+        //    {
+        //        return new DadosEnvioLocaTWW();
+        //    }
+        //    return JsonConvert.DeserializeObject<DadosEnvioLocaTWW>(iValores);
+        //}
         public static List<Produto_DiaDisponivelSite> DeserializaObjetoDias(string iValores)
         {
             if (iValores == "" || iValores == null)

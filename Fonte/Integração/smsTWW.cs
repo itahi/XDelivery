@@ -1,4 +1,5 @@
 ﻿using DexComanda.Models;
+using DexComanda.wsreluz;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,13 +9,13 @@ namespace DexComanda.Integração
 {
     public class smsTWW
     {
-        public async Task<string> EnviaSMSUnico(string iUser,string strSenha,string strSeuNumero,string strNumCliente,
+        public async void EnviaSMSUnico(string iUser,string strSenha,string strSeuNumero,string strNumCliente,
             string strMsg)
         {
             try
             {
-                wsreluz.ReluzCapWebServiceSoapClient rcw = new wsreluz.ReluzCapWebServiceSoapClient();
-                return await rcw.EnviaSMSAsync(iUser, strSenha,strSeuNumero, strNumCliente, strMsg);
+                ReluzCapWebService rcw = new ReluzCapWebService();
+                rcw.EnviaSMSAsync(iUser, strSenha,strSeuNumero, strNumCliente, strMsg);
             }
             catch (Exception)
             {
@@ -22,24 +23,35 @@ namespace DexComanda.Integração
                 throw;
             }
         }
-        public async Task<string> EnviaSMSList(string iUser, string strSenha , DataSet ds)
+        /// <summary>
+        /// Envia sms através da TWW 
+        /// </summary>
+        /// <param name="iUser">usuario de integração</param>
+        /// <param name="strSenha">senha de integração</param>
+        /// <param name="ds">Dataset com a lista de msg e numeros</param>
+        public async void EnviaSMSList(string iUser, string strSenha , DataSet ds)
         {
             try
             {
                 DataSet newDs = new DataSet();
+                newDs.Tables.Add();
                 newDs.Tables[0].Columns.Add("seunum");
                 newDs.Tables[0].Columns.Add("celular");
                 newDs.Tables[0].Columns.Add("mensagem");
+
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    newDs.Tables[0].Rows[i].SetField("seunum", ds.Tables[0].Rows[i].Field<string>("SeuTelefone"));
-                    newDs.Tables[0].Rows[i].SetField("celular", ds.Tables[0].Rows[i].Field<string>("Telefone"));
-                    newDs.Tables[0].Rows[i].SetField("mensagem", ds.Tables[0].Rows[i].Field<string>("msg"));
+                    newDs.Tables[0].Rows.Add();
+                    string tel = "5527" + ds.Tables[0].Rows[i].Field<string>("Telefone");
+                    string msg = ds.Tables[0].Rows[i].Field<string>("msg");
+                    newDs.Tables[0].Rows[i].SetField("seunum", "998124549");
+                    newDs.Tables[0].Rows[i].SetField("celular","5527"+ds.Tables[0].Rows[i].Field<string>("Telefone"));
+                    newDs.Tables[0].Rows[i].SetField("mensagem",ds.Tables[0].Rows[i].Field<string>("msg"));
                 }
-                wsreluz.ReluzCapWebServiceSoapClient rcw = new wsreluz.ReluzCapWebServiceSoapClient();
-                return await rcw.EnviaSMSDataSetAsync(iUser, strSenha, newDs);
+                ReluzCapWebService rcw = new wsreluz.ReluzCapWebService();
+                var teste = rcw.EnviaSMSDataSet(iUser, strSenha, newDs);
             }
-            catch (Exception)
+            catch (Exception erro)
             {
 
                 throw;

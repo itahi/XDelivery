@@ -96,31 +96,49 @@ namespace DexComanda
             return JsonConvert.SerializeObject(listHorario, Formatting.None);
 
         }
-        private string ConfiguracaoSMS()
+        //private string LeConfiguracaoSMS(string strJson)
+        //{
+        //    try
+        //    {
+        //        foreach (var item in Utils.DeserializaObjetoSMS(strJson))
+        //        {
+        //            foreach (var item in collection)
+        //            {
+
+        //            }
+        //        }
+               
+        //    }
+        //    catch (Exception erro)
+        //    {
+        //        MessageBox.Show(erro.Message);
+        //    }
+        //}
+        private string GravaConfiguracaoSMS()
         {
             string strReturn = "";
             try
             {
-                if (rbLocaSMS.Checked)
+                DadosSMS sms = new DadosSMS();
+                if (rbTww.Checked)
                 {
-                    DadosEnvioLocaSMS locaSms = new DadosEnvioLocaSMS()
+                    sms = new DadosSMS
                     {
-                        api = "locasms",
-                        login = txtLogin.Text,
-                        senha = txtSenha.Text
+                        api = "tww",
+                        login = txtLoginTww.Text,
+                        senha = txtSenhaTww.Text
                     };
-                    strReturn = JsonConvert.SerializeObject(locaSms, Formatting.None);
                 }
                 else if (rbZenvia.Checked)
                 {
-                    DadosEnvioZenvia zenviaSMS = new DadosEnvioZenvia()
+                     sms = new DadosSMS()
                     {
                         api = "zenvia",
-                        id = txtIDZenvia.Text,
-                        agrupador = txtAgrZenvia.Text
+                        login = txtIDZenvia.Text,
+                        senha = txtAgrZenvia.Text
                     };
-                    strReturn = JsonConvert.SerializeObject(zenviaSMS, Formatting.None);
                 }
+                strReturn = JsonConvert.SerializeObject(sms, Formatting.None);
             }
             catch (Exception erro)
             {
@@ -366,7 +384,7 @@ namespace DexComanda
                 CaminhoBackup = txtCaminhoBkp.Text,
                 UrlServidor = txtURL.Text,
                 HorarioFuncionamento = HorariosFuncionamento(),
-                ConfiguracaoSMS = ConfiguracaoSMS(),
+                ConfiguracaoSMS = GravaConfiguracaoSMS(),
                 Id_loja = int.Parse(txt_IdLoja.Text)
             };
 
@@ -447,7 +465,7 @@ namespace DexComanda
                 CaminhoBackup = txtCaminhoBkp.Text,
                 UrlServidor = txtURL.Text,
                 HorarioFuncionamento = HorariosFuncionamento(),
-                ConfiguracaoSMS = ConfiguracaoSMS(),
+                ConfiguracaoSMS = GravaConfiguracaoSMS(),
                 Id_loja = int.Parse(txt_IdLoja.Text)
             };
 
@@ -477,7 +495,7 @@ namespace DexComanda
             config.DadosPush = GravaDadosPush();
             if (chkEnviaSms.Checked)
             {
-                Utils.CriaArquivoTxt("ConfigSMS", txtLogin.Text + "-" + txtSenha.Text);
+                Utils.CriaArquivoTxt("ConfigSMS", txtLoginTww.Text + "-" + txtSenhaTww.Text);
             }
 
             //if (chkLoginSenha.Checked && txtUsuarioPadrao.Text.Trim() != "" && txtSenhaPadrao.Text.Trim() != "")
@@ -535,20 +553,21 @@ namespace DexComanda
             {
                 return;
             }
+            DadosSMS sms = new DadosSMS();
+            sms = Utils.DeserializaObjetoSMS(iValores);
             chkEnviaSms.Checked = true;
             if (iValores.Contains("zenvia"))
             {
-                DadosEnvioZenvia zenvia = Utils.DeserializaObjetoZenvia(iValores);
-                txtAgrZenvia.Text = zenvia.agrupador;
-                txtIDZenvia.Text = zenvia.id;
+
+                txtAgrZenvia.Text = sms.api;
+                txtIDZenvia.Text = sms.login;
                 rbZenvia.Checked = true;
             }
             else
             {
-                DadosEnvioLocaSMS locasms = Utils.DeserializaObjetoLocaSMS(iValores);
-                txtLogin.Text = locasms.login;
-                txtSenha.Text = locasms.senha;
-                rbLocaSMS.Checked = true;
+                txtLoginTww.Text = sms.login;
+                txtSenhaTww.Text = sms.senha;
+                rbTww.Checked = true;
             }
 
         }
@@ -686,7 +705,6 @@ namespace DexComanda
             {
                 MessageBox.Show(Bibliotecas.cException + erros.Message);
             }
-
         }
         private void chkEnviaSms_CheckedChanged(object sender, EventArgs e)
         {
@@ -980,7 +998,7 @@ namespace DexComanda
 
         private void btnSalvarSMS_Click(object sender, EventArgs e)
         {
-            Utils.SalvarConfiguracao("ConfigSMS", txtLogin.Text + "," + txtSenha.Text);
+            Utils.SalvarConfiguracao("ConfigSMS", txtLoginTww.Text + "," + txtSenhaTww.Text);
             MessageBox.Show("Senha gravada", "[xSistemas]");
         }
 
@@ -1035,12 +1053,12 @@ namespace DexComanda
 
         private void rbZenvia_CheckedChanged(object sender, EventArgs e)
         {
-            grpZenvia.Enabled = rbZenvia.Checked;
+            grpTww.Enabled = rbZenvia.Checked;
         }
 
         private void rbLocaSMS_CheckedChanged(object sender, EventArgs e)
         {
-            grpLocaSMS.Enabled = rbLocaSMS.Checked;
+            grpLocaTww.Enabled = rbTww.Checked;
         }
 
         private void chkProdutoCodigo_CheckStateChanged(object sender, EventArgs e)

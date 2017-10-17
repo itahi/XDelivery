@@ -102,7 +102,6 @@ namespace DexComanda.Push
                         if (response.StatusCode == HttpStatusCode.OK)
                         {
                             Notificacao notify = new Notificacao();
-
                             notify = JsonConvert.DeserializeObject<Notificacao>(responseContent);
 
                         }
