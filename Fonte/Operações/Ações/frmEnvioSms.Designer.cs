@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.tbSelecao = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
             this.lblNumero = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.btnEnviar = new System.Windows.Forms.Button();
@@ -57,7 +58,7 @@
             this.lblRestante = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label2 = new System.Windows.Forms.Label();
+            this.txtDDD = new System.Windows.Forms.TextBox();
             this.tbSelecao.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.grpGrid.SuspendLayout();
@@ -78,6 +79,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.txtDDD);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.lblNumero);
             this.tabPage1.Controls.Add(this.label6);
@@ -94,6 +96,17 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Seleção";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(457, 224);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(103, 39);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "Insira <cliente> \r\nno texto caso queira\r\npersonalizar a msg";
+            this.toolTip1.SetToolTip(this.label2, "Personalize sua mensagem com o nome do cliente \r\ninclua a tag <nome> na parte do " +
+        "texto onde deseja inserir\r\nque o sistema ira personalizar cada msg.");
             // 
             // lblNumero
             // 
@@ -291,7 +304,7 @@
             // 
             // btnEnviarSms
             // 
-            this.btnEnviarSms.Location = new System.Drawing.Point(139, 124);
+            this.btnEnviarSms.Location = new System.Drawing.Point(123, 124);
             this.btnEnviarSms.Name = "btnEnviarSms";
             this.btnEnviarSms.Size = new System.Drawing.Size(96, 28);
             this.btnEnviarSms.TabIndex = 2;
@@ -350,16 +363,15 @@
             this.label3.TabIndex = 10;
             this.label3.Text = "Ainda restam:";
             // 
-            // label2
+            // txtDDD
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(457, 224);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(103, 39);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "Insira <cliente> \r\nno texto caso queira\r\npersonalizar a msg";
-            this.toolTip1.SetToolTip(this.label2, "Personalize sua mensagem com o nome do cliente \r\ninclua a tag <nome> na parte do " +
-        "texto onde deseja inserir\r\nque o sistema ira personalizar cada msg.");
+            this.txtDDD.Location = new System.Drawing.Point(458, 321);
+            this.txtDDD.MaxLength = 2;
+            this.txtDDD.Name = "txtDDD";
+            this.txtDDD.Size = new System.Drawing.Size(53, 20);
+            this.txtDDD.TabIndex = 24;
+            this.toolTip1.SetToolTip(this.txtDDD, "Informe o DDD padrão da sua area");
+            this.txtDDD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDDD_KeyPress);
             // 
             // frmEnvioSms
             // 
@@ -420,5 +432,6 @@
         private System.Windows.Forms.Label lblNumero;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtDDD;
     }
 }

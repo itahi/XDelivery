@@ -412,15 +412,9 @@ namespace DexComanda
 
                         int iCodPessoa = int.Parse(dRow.ItemArray.GetValue(0).ToString());
                         int iCodEndereco = int.Parse(dRow.ItemArray.GetValue(16).ToString());
-                        //this.parentMain.txtNome.Text = dRow.ItemArray.GetValue(1).ToString();
-                        //this.parentMain.txtEndereco.Text = dRow.ItemArray.GetValue(2).ToString();
-                        //this.parentMain.txtBairro.Text = dRow.ItemArray.GetValue(3).ToString();
-                        //this.parentMain.txtCidade.Text = dRow.ItemArray.GetValue(4).ToString();
-                        //this.parentMain.txtPontoReferencia.Text = dRow.ItemArray.GetValue(5).ToString();
-
                         var TaxaEntrega = Utils.RetornaTaxaPorCliente(iCodPessoa, 0);
                         frmCadastrarPedido frmCadastrarPedido = new frmCadastrarPedido(false, "0,00", 0, "", TaxaEntrega, false, DateTime.Now, 0, int.Parse(dRow.ItemArray.GetValue(0).ToString()),
-                                                                                       "", "", "", "", 0, 0, 0, "", iCodEndereco);
+                                                                                       "", "", "", "", 0, 0, 0, "", iCodEndereco,"",new List<string>());
                         frmCadastrarPedido.ShowDialog();
                     }
                 }

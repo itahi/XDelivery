@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DexComanda.Integração
 {
@@ -29,7 +30,7 @@ namespace DexComanda.Integração
         /// <param name="iUser">usuario de integração</param>
         /// <param name="strSenha">senha de integração</param>
         /// <param name="ds">Dataset com a lista de msg e numeros</param>
-        public async void EnviaSMSList(string iUser, string strSenha , DataSet ds)
+        public void EnviaSMSList(string iUser, string strSenha , string strDDDPadrao,DataSet ds,string strDDPadrao)
         {
             try
             {
@@ -42,20 +43,33 @@ namespace DexComanda.Integração
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     newDs.Tables[0].Rows.Add();
-                    string tel = "5527" + ds.Tables[0].Rows[i].Field<string>("Telefone");
+                    string tel = "55"+strDDDPadrao + ds.Tables[0].Rows[i].Field<string>("Telefone");
                     string msg = ds.Tables[0].Rows[i].Field<string>("msg");
-                    newDs.Tables[0].Rows[i].SetField("seunum", "998124549");
-                    newDs.Tables[0].Rows[i].SetField("celular","5527"+ds.Tables[0].Rows[i].Field<string>("Telefone"));
+                    newDs.Tables[0].Rows[i].SetField("seunum", "5527981667827");
+                    newDs.Tables[0].Rows[i].SetField("celular","55"+strDDPadrao + ds.Tables[0].Rows[i].Field<string>("Telefone"));
                     newDs.Tables[0].Rows[i].SetField("mensagem",ds.Tables[0].Rows[i].Field<string>("msg"));
                 }
+
+                //Estanciando WebService
                 ReluzCapWebService rcw = new wsreluz.ReluzCapWebService();
-                var teste = rcw.EnviaSMSDataSet(iUser, strSenha, newDs);
+
+                //Preparo para chamada do método para retorno.
+                rcw.EnviaSMSDataSetCompleted += new EnviaSMSDataSetCompletedEventHandler(callback);
+                rcw.EnviaSMSDataSetAsync(iUser, strSenha, newDs);
+             //   Console.WriteLine("WS Chamado");
+               // Console.ReadLine();
             }
             catch (Exception erro)
             {
-
-                throw;
+               // erro.Message;
             }
+        }
+        //Retorno da Chamada WS.
+        private static void callback(object sender, EnviaSMSDataSetCompletedEventArgs e)
+        {
+            MessageBox.Show("Mensagens Enviadas: " + Utils.ObterSomenteNumeros(e.Result));
+           // Console.Write("Resultado: " + e.Result);
+            //Console.ReadKey();
         }
     }
 }

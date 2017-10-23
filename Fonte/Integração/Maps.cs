@@ -70,6 +70,7 @@ namespace DexComanda.Integração
         {
             try
             {
+
                 string strEndereco = "";
                 string sqlReturn = "select Codigo,Nome,isnull(latitude,0) as latitude , isnull(longitude,0) as longitude ,Endereco +' ,'+isnull(Numero,'')+' - '+isnull(Bairro,'')+', ' +isnull(Cidade,'')+'-'+isnull(Uf,'')+', '+isnull(Cep,'') " +
                                    " as Endereco from Pessoa where Codigo="+intCodPesso.ToString();

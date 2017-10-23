@@ -237,17 +237,23 @@ namespace DexComanda
 
         private void DisparaSMS(object sender, EventArgs e)
         {
-            this.Cursor = Cursors.WaitCursor;
-
+            
+            if (txtDDD.Text=="" || txtDDD.Text.Length!=2)
+            {
+                MessageBox.Show("Preencha corretamente o DDD ");
+                txtDDD.Focus();
+                return;
+            }
             if (gridResultado.Rows.Count == 0)
             {
                 MessageBox.Show(Bibliotecas.cFiltroRetornaVazio);
             }
             else
             {
+                this.Cursor = Cursors.WaitCursor;
                 smsTWW newSMS = new smsTWW();
                 DadosSMS dadosSMS = Utils.RetornaConfiguracaoSMS();
-                newSMS.EnviaSMSList(dadosSMS.login, dadosSMS.senha, PersonalizaMsg(dsResultado));
+                newSMS.EnviaSMSList(dadosSMS.login, dadosSMS.senha, txtDDD.Text,PersonalizaMsg(dsResultado),txtDDD.Text);
                 this.Cursor = Cursors.Default;
 
             }
@@ -257,6 +263,11 @@ namespace DexComanda
         {
             grpPeriodo.Enabled = !rbRegiao.Checked;
             Utils.MontaCombox(cbxRegiao, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioes");
+        }
+
+        private void txtDDD_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoPermiteNumeros(e);
         }
     }
 }

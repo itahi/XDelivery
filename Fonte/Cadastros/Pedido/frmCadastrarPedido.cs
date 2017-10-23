@@ -86,7 +86,7 @@ namespace DexComanda
             DateTime DataPedido, int CodigoPedido, int CodPessoa, string itrocoPara, string fPagamento, string TipoPedido, string MesaBalcao,
             decimal iTotalPedido = 0.00M, decimal MargeGarcon = 0.00M, int iCodVendedor = 0,
             string iObservacaoPedido = "", int iIntEnderecoSelecionado = 0, string strSenha = "", List<string> iCodProdutosFidelidade = null,
-            string iCupom="")
+            string iCupom="",string strHorarioEntrega="")
         {
             try
             {
@@ -100,6 +100,7 @@ namespace DexComanda
                 prvListProdutosFidelidade = iCodProdutosFidelidade;
                 codPessoa = CodPessoa;
                 txtCupom.Text = iCupom;
+                cbxHorarioEntrega.Text = strHorarioEntrega;
                 txtSenha.Text = strSenha;
                 codPedido = CodigoPedido;
                 txtTrocoPara.Text = itrocoPara;
@@ -1315,7 +1316,7 @@ namespace DexComanda
                             iCodPedido = con.getLastCodigo();
                             con.AtualizaSituacao(iCodPedido, Sessions.retunrUsuario.Codigo, 1);
 
-                            Thread newTreadImpressao = new Thread(new ThreadStart(prepareToPrint));
+                            Thread newTreadImpressao = new Thread(new ThreadStart(ExecutaImpressao));
                             newTreadImpressao.Start();
                             //if (ContraMesas && cbxTipoPedido.Text != "1 - Mesa")
                             //{
@@ -1900,13 +1901,13 @@ namespace DexComanda
             this.lbTotal.Text = "R$ " + Convert.ToString(ValorTotal - decimal.Parse(txtDesconto.Text) + Convert.ToDecimal(lblEntrega.Text.Replace("R$", "")));
             this.lblTroco.Text = Convert.ToString(lblTroco.Text);
         }
-        private void prepareToPrint()
+        private void ExecutaImpressao()
         {
             try
             {
                 if (this.InvokeRequired)
                 {
-                    this.Invoke(new MethodInvoker(prepareToPrint));
+                    this.Invoke(new MethodInvoker(ExecutaImpressao));
                     return;
                 }
                 int iCodigo;
@@ -1933,21 +1934,22 @@ namespace DexComanda
 
 
                 }
-                // Impressão de Venda Balcão
-                //if (cbxTipoPedido.Text == "2 - Balcao" && ImprimeViaBalcao)
-                //{
+               // ReiImpressão de Venda Balcão
+                if (cbxTipoPedido.Text == "2 - Balcao" && ImprimeViaBalcao
+                    && btnReimprimir.Enabled)
+                {
 
-                //    if (con.getLastCodigo() != 0)
-                //    {
-                //        iCodigo = con.getLastCodigo();
-                //    }
-                //    else
-                //    {
-                //        iCodigo = codPedido;
-                //    }
+                    if (con.getLastCodigo() != 0)
+                    {
+                        iCodigo = con.getLastCodigo();
+                    }
+                    else
+                    {
+                        iCodigo = codPedido;
+                    }
 
-                //    string iRetorno = Utils.ImpressaoBalcao(iCodigo, QtdViasBalcao, strNomeImpressoraBalcao);
-                //}
+                    string iRetorno = Utils.ImpressaoBalcao(iCodigo, QtdViasBalcao, strNomeImpressoraBalcao);
+                }
 
                 // Imprimindo via Entrega
                 if (ImprimeViaDelivery && cbxTipoPedido.Text == "0 - Entrega")
@@ -2093,7 +2095,7 @@ namespace DexComanda
         }
         private void btnReimprimir_Click(object sender, EventArgs e)
         {
-            prepareToPrint();
+            ExecutaImpressao();
 
         }
         private void LimpaTamanhosSabores()
@@ -3924,7 +3926,7 @@ namespace DexComanda
             }
             else if (e.KeyCode == Keys.F11)
             {
-                prepareToPrint();
+                ExecutaImpressao();
             }
             else if (e.KeyCode == Keys.Escape)
             {

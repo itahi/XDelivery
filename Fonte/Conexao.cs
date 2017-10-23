@@ -699,6 +699,7 @@ namespace DexComanda
         }
         public DataSet CaixaAbertoAnterior(string iTurno)
         {
+            new Conexao();
             command = new SqlCommand("spCaixaAbertoAnterior", conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Turno", iTurno);
@@ -1557,6 +1558,7 @@ namespace DexComanda
         {
             try
             {
+                new Conexao();
                 command = new SqlCommand("spReabrirPedido", conn);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@CodPedido", intCodPedido);
@@ -2146,7 +2148,7 @@ namespace DexComanda
 
         public DataSet SelectPessoaPorTelefone(string table, string spName, string telefone)
         {
-
+            new Conexao();
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Telefone", telefone);
@@ -2482,6 +2484,7 @@ namespace DexComanda
         {
             try
             {
+                new Conexao();
                 command = new SqlCommand("spObterItemsNaoImpressoPorImpressora", conn);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Codigo", intCodPedido);
@@ -2523,6 +2526,7 @@ namespace DexComanda
         {
             try
             {
+                new Conexao();
                 command = new SqlCommand(spName, conn);
                 command.CommandType = CommandType.StoredProcedure;
                 if (spName == "spObterCodigoMesa")

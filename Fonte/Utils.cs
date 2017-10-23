@@ -37,6 +37,7 @@ using DexComanda.Cadastros.Pedido;
 using DexComanda.Relatorios.Caixa;
 using DexComanda.Models.Configuracoes;
 using System.Data.Sql;
+using System.Text.RegularExpressions;
 
 namespace DexComanda
 {
@@ -1525,7 +1526,6 @@ namespace DexComanda
         public static string ImpressaoCozihanova(int iCodPedido, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
-
             RelDelivey_Cozinha report;
             try
             {
@@ -4093,6 +4093,19 @@ namespace DexComanda
             }
 
             return iRetorno;
+        }
+        /// <summary>
+        /// Recebe uma string e remove caracters que não forem numericos
+        /// </summary>
+        /// <param name="iValue"> string qualquer</param>
+        /// <returns>só numero</returns>
+        public static string ObterSomenteNumeros(string iValue)
+        {
+            iValue += ")";
+            iValue = iValue.Substring(iValue.IndexOf("(") + 1);
+            string ire;
+            ire = Regex.Replace(iValue, "[^0-9 ,]+", "");
+            return ire;
         }
 
         public static void ControlaEventos(string iTipoEvento, string LocalEvento, int CodUser = 1)
