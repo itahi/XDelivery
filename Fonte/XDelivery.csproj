@@ -339,6 +339,9 @@
     <Compile Include="frmPrincipal.Designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Integração\iFood\iFoodEventos.cs" />
+    <Compile Include="Integração\iFood\iFoodId.cs" />
+    <Compile Include="Integração\iFood\iFoodToken.cs" />
     <Compile Include="Integração\Maps.cs" />
     <Compile Include="Integração\MP2032.cs" />
     <Compile Include="Integração\smsTWW.cs" />
@@ -367,6 +370,7 @@
     <Compile Include="Models\FinalizaPedido.cs" />
     <Compile Include="Models\HistoricoPessoa.cs" />
     <Compile Include="Models\HorarioEntrega.cs" />
+    <Compile Include="Models\IntegracaoIFood\Integracao_IFood.cs" />
     <Compile Include="Models\ListaSms.cs" />
     <Compile Include="Models\Operacoes\HorarioFuncionamento.cs" />
     <Compile Include="Models\Operacoes\Notificacao.cs" />
@@ -535,6 +539,12 @@
     <Compile Include="Operações\Financeiro\frmCaixaMovimento.Designer.cs">
       <DependentUpon>frmCaixaMovimento.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operações\frmAtivaIntegracao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\frmAtivaIntegracao.Designer.cs">
+      <DependentUpon>frmAtivaIntegracao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operações\frmConectaBanco.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -546,6 +556,12 @@
     </Compile>
     <Compile Include="Operações\frmConfigurarImpressao.Designer.cs">
       <DependentUpon>frmConfigurarImpressao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\frmDadosiFood.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\frmDadosiFood.Designer.cs">
+      <DependentUpon>frmDadosiFood.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\frmExibeCancelamentos.cs">
       <SubType>Form</SubType>
@@ -1299,8 +1315,14 @@
     <EmbeddedResource Include="Operações\Financeiro\frmCaixaMovimento.resx">
       <DependentUpon>frmCaixaMovimento.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Operações\frmAtivaIntegracao.resx">
+      <DependentUpon>frmAtivaIntegracao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmConectaBanco.resx">
       <DependentUpon>frmConectaBanco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\frmDadosiFood.resx">
+      <DependentUpon>frmDadosiFood.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmExibeCancelamentos.resx">
       <DependentUpon>frmExibeCancelamentos.cs</DependentUpon>

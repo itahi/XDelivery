@@ -45,7 +45,7 @@ namespace DexComanda.Integração
                     newDs.Tables[0].Rows.Add();
                     string tel = "55"+strDDDPadrao + ds.Tables[0].Rows[i].Field<string>("Telefone");
                     string msg = ds.Tables[0].Rows[i].Field<string>("msg");
-                    newDs.Tables[0].Rows[i].SetField("seunum", "5527981667827");
+                    newDs.Tables[0].Rows[i].SetField("seunum", Sessions.returnEmpresa.Nome);
                     newDs.Tables[0].Rows[i].SetField("celular","55"+strDDPadrao + ds.Tables[0].Rows[i].Field<string>("Telefone"));
                     newDs.Tables[0].Rows[i].SetField("mensagem",ds.Tables[0].Rows[i].Field<string>("msg"));
                 }

@@ -165,6 +165,8 @@
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.integraçãoIFoodToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ativarIntegraçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.grpAndamentoPedido.SuspendLayout();
@@ -210,7 +212,8 @@
             this.motivosCancelamentoToolStripMenuItem,
             this.statusPedidoToolStripMenuItem,
             this.origemDoClienteToolStripMenuItem,
-            this.cupomPromocionalToolStripMenuItem});
+            this.cupomPromocionalToolStripMenuItem,
+            this.integraçãoIFoodToolStripMenuItem1});
             this.cadastrosToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.cadastrosToolStripMenuItem.Name = "cadastrosToolStripMenuItem";
             this.cadastrosToolStripMenuItem.Size = new System.Drawing.Size(91, 25);
@@ -620,7 +623,8 @@
             this.controleDeEstoqueToolStripMenuItem,
             this.pedidoToolStripMenuItem,
             this.consultasToolStripMenuItem,
-            this.açõesDePublicidadeEMarketingToolStripMenuItem});
+            this.açõesDePublicidadeEMarketingToolStripMenuItem,
+            this.ativarIntegraçãoToolStripMenuItem});
             this.operaçõesToolStripMenuItem.Name = "operaçõesToolStripMenuItem";
             this.operaçõesToolStripMenuItem.Size = new System.Drawing.Size(96, 25);
             this.operaçõesToolStripMenuItem.Text = "Operações";
@@ -1498,6 +1502,20 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
+            // integraçãoIFoodToolStripMenuItem1
+            // 
+            this.integraçãoIFoodToolStripMenuItem1.Name = "integraçãoIFoodToolStripMenuItem1";
+            this.integraçãoIFoodToolStripMenuItem1.Size = new System.Drawing.Size(265, 26);
+            this.integraçãoIFoodToolStripMenuItem1.Text = "Integração iFood";
+            this.integraçãoIFoodToolStripMenuItem1.Click += new System.EventHandler(this.integraçãoIFoodToolStripMenuItem1_Click);
+            // 
+            // ativarIntegraçãoToolStripMenuItem
+            // 
+            this.ativarIntegraçãoToolStripMenuItem.Name = "ativarIntegraçãoToolStripMenuItem";
+            this.ativarIntegraçãoToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
+            this.ativarIntegraçãoToolStripMenuItem.Text = "Ativar Integração";
+            this.ativarIntegraçãoToolStripMenuItem.Click += new System.EventHandler(this.ativarIntegraçãoToolStripMenuItem_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1679,5 +1697,7 @@
         private System.Windows.Forms.ToolStripMenuItem insumoToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem cupomPromocionalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mapaDeClientesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem integraçãoIFoodToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem ativarIntegraçãoToolStripMenuItem;
     }
 }

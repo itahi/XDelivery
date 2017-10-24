@@ -2356,5 +2356,22 @@ namespace DexComanda
             frmMapaClientes frm = new frmMapaClientes();
             frm.Show();
         }
+
+        private void integraçãoIFoodToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void integraçãoIFoodToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmDadosiFood frm = new frmDadosiFood();
+            frm.Show();
+        }
+
+        private void ativarIntegraçãoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAtivaIntegracao frm = new frmAtivaIntegracao();
+            frm.Show();
+        }
     }
 }

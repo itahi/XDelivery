@@ -290,3 +290,5 @@ D:\#Projetos\xDelivery\Fonte\bin\Debug\EntityFramework.SqlServer.xml
 D:\#Projetos\xDelivery\Fonte\bin\Debug\GMap.NET.WindowsForms.xml
 D:\#Projetos\xDelivery\Fonte\bin\Debug\System.Data.SQLite.xml
 D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.Ações.frmMapaClientes.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmDadosiFood.resources
+D:\#Projetos\xDelivery\Fonte\obj\Debug\DexComanda.Operações.frmAtivaIntegracao.resources
