@@ -28,5 +28,8 @@ namespace DexComanda.Models
         public string Sexo { get; set; }
         public char PFPJ { get; set; }
         public int CodOrigemCadastro { get; set; }
+        public double latitude { get; set; }
+        public double longitude { get; set; }
+        public string email { get; set; }
     }
 }

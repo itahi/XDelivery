@@ -38,25 +38,18 @@ namespace DexComanda
         {
             try
             {
-                ////if (!SqlServerInstalado())
-                ////{
-                ////    return;
-                ////}
-                //lock (this)
-                //{
-                    if (connectionString != null)
+                if (connectionString != null)
+                {
+                    conn = new SqlConnection(connectionString);
+                    if (conn.State != ConnectionState.Open)
                     {
-                        conn = new SqlConnection(connectionString);
-
-                        if (conn.State != ConnectionState.Open)
-                        {
-                            conn.Open();
-                        }
-                        statusConexao = conn.State;
+                        conn.Open();
                     }
-                //}
+                    
+                    statusConexao = conn.State;
+                }
             }
-            catch (Exception msg)
+            catch (SqlException msg)
             {
                 MessageBox.Show("Erro conexao com o SQLSERVER " + msg.Message);
             }
@@ -68,7 +61,7 @@ namespace DexComanda
             {
                 lock (this)
                 {
-                    command = new SqlCommand();
+                    new Conexao();
                     if (conn.State != ConnectionState.Open)
                     {
                         conn.Open();
@@ -268,6 +261,50 @@ namespace DexComanda
                 MessageBox.Show(Bibliotecas.cException + erro.Message);
             }
             return ds.Tables[0].Rows[0].Field<Boolean>("ControlaEstoque");
+        }
+        public DataSet ConsultaEnderecoPorCep(int iCodPEssoa, string iCEP)
+        {
+            command = new SqlCommand("spObterEnderecoPessoaCEP", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@CodPessoa", iCodPEssoa);
+            command.Parameters.AddWithValue("@Cep", iCEP);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, "Pessoa_Endereco");
+
+            return ds;
+        }
+        /// <summary>
+        /// Retorna iDRegião baseando-se no CEP
+        /// </summary>
+        /// <param name="strCEP"> cep </param>
+        /// <returns></returns>
+        public int RetornaCodRegiaoPorBairro(string strBairro)
+        {
+            int intReturn = 0;
+            try
+            {
+                new Conexao();
+                string iSqlConsulta = "select CodRegiao from RegiaoEntrega_Bairros where Nome=@Nome";
+                command = new SqlCommand(iSqlConsulta, conn);
+                command.CommandType = CommandType.Text;
+                command.Parameters.AddWithValue("@Nome", strBairro);
+                adapter = new SqlDataAdapter(command);
+                ds = new DataSet();
+                adapter.Fill(ds, "RegiaoEntrega_Bairros");
+                if (ds.Tables.Count == 0)
+                {
+                    return 0;
+                }
+                return ds.Tables[0].Rows[0].Field<int>("CodRegiao");
+            }
+            catch (Exception erro)
+            {
+                return intReturn;
+            }
+
         }
         public Boolean ValidaEstoque(int intCodProduto, string strNomeProd)
         {
@@ -949,7 +986,7 @@ namespace DexComanda
 
         public async void Close()
         {
-             conn.Close();
+            conn.Close();
         }
 
         public void SalvarAdicionais(int iCodProduto, int iCodOpcao, decimal iPreco, int iCodTipo)
@@ -982,7 +1019,10 @@ namespace DexComanda
                 {
                     command.CommandType = CommandType.StoredProcedure;
                 }
-
+                if (conn.State != ConnectionState.Open)
+                {
+                    SelectAll(table, spName, iSqlSelect);
+                }
                 adapter = new SqlDataAdapter(command);
                 ds = new DataSet();
                 adapter.Fill(ds, table);

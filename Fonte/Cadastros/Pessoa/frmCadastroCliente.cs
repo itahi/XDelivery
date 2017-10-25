@@ -23,6 +23,9 @@ namespace DexComanda
         private int codigo = 0;
         private int prvCodEndereco;
         private AutoCompleteStringCollection listabairro;
+        private double prvlatitude;
+        private double prvlongitude;
+        private string prvemail;
         public frmCadastroCliente()
         {
             InitializeComponent();
@@ -47,7 +50,8 @@ namespace DexComanda
         public frmCadastroCliente(int iCodPessoa, string iNomeCliente, string iTelefone, string iTelefone2,
                               string iCEP, string iEndereco, string inumero, string iBairro, string iCidade,
                               string iEstado, string iPontoReferencia, string iObservacao, int iCodRegiao,
-                              string iDataCadastro, string iDataNascimento, string iUserID, string iPJPF, int intCodEndereco, int intCodOrigem)
+                              string iDataCadastro, string iDataNascimento, string iUserID, string iPJPF,
+                              int intCodEndereco, int intCodOrigem,string iEmail,double latitude, double longitude)
         {
             InitializeComponent();
             codigoClienteParaAlterar = iCodPessoa;
@@ -67,6 +71,9 @@ namespace DexComanda
             txtDataNascimento.Text = iDataNascimento;
             txtUserID.Text = iUserID;
             txtPJPF.Text = iPJPF;
+            prvemail = iEmail;
+            prvlatitude = latitude;
+            prvlongitude = longitude;
             CarregaRegiao(iCodRegiao, cbxRegiao, txtTaxaEntrega);
             CarregaOrigem(intCodOrigem);
             this.btnAdicionarCliente.Text = "Alterar [F12]";
@@ -310,6 +317,9 @@ namespace DexComanda
                     Sexo = "1",
                     DDD = "",
                     PFPJ = 'F'
+                    ,latitude=0,
+                    longitude=0
+                    ,email =""
                 };
                 if (cbxOrigemCadastro.SelectedIndex > 0)
                 {
@@ -360,7 +370,8 @@ namespace DexComanda
                         Numero = txtNumero.Text,
                         Complemento = txtObservacaoCliente.Text,
                         PontoReferencia = txtPontoReferencia.Text,
-                        UF = "ES"
+                        UF = "ES",
+                        
                     };
                     Utils.ControlaEventos("Inserir", this.Name);
                     MessageBox.Show("Cliente cadastrado com sucesso.", "[xSistemas] Aviso", MessageBoxButtons.OK, MessageBoxIcon.Question);
@@ -466,6 +477,10 @@ namespace DexComanda
                     Sexo = "1",
                     DDD = "",
                     CodOrigemCadastro = int.Parse(cbxOrigemCadastro.SelectedValue.ToString())
+                    ,
+                    latitude = prvlatitude,
+                    longitude = prvlongitude,
+                    email = prvemail
                 };
                 if (txtTelefone2.Visible == true)
                 {

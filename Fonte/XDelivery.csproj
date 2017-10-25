@@ -342,6 +342,15 @@
     <Compile Include="Integração\iFood\iFoodEventos.cs" />
     <Compile Include="Integração\iFood\iFoodId.cs" />
     <Compile Include="Integração\iFood\iFoodToken.cs" />
+    <Compile Include="Integração\iFood\MetodosWS.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\adress.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\coordinates.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\customer.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\deliveryAddress.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\item.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\merchant.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\payment.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\root.cs" />
     <Compile Include="Integração\Maps.cs" />
     <Compile Include="Integração\MP2032.cs" />
     <Compile Include="Integração\smsTWW.cs" />

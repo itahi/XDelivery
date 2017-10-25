@@ -4105,7 +4105,17 @@ namespace DexComanda
             iValue = iValue.Substring(iValue.IndexOf("(") + 1);
             string ire;
             ire = Regex.Replace(iValue, "[^0-9 ,]+", "");
-            return ire;
+            return RemoverSpacos(ire);
+        }
+        public static string RemoverSpacos(string iValue)
+        {
+            string sem = ""; // Declaramos o futuro resultado
+            foreach (char c in iValue.ToCharArray()) // Para cada 'letra' na frase
+            {
+                if (c != ' ') // Se a letra não for um espaço
+                    sem += c; // É adicionada a string final
+            }
+            return sem;
         }
 
         public static void ControlaEventos(string iTipoEvento, string LocalEvento, int CodUser = 1)

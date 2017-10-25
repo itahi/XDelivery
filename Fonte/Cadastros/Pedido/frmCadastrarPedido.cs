@@ -4476,11 +4476,14 @@ namespace DexComanda
                     DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", codPessoa);
                     DataRow dRowPessoa = dsPessoa.Tables["Pessoa"].Rows[0];
                     int iCodEnd = int.Parse(dRowPessoa.ItemArray.GetValue(20).ToString());
+                    string iEmail = dsPessoa.Tables["Pessoa"].Rows[0].Field<string>("email");
+                    double latitude = dsPessoa.Tables["Pessoa"].Rows[0].Field<double>("latitude");
+                    double longitude = dsPessoa.Tables["Pessoa"].Rows[0].Field<double>("longitude");
                     frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
                                                                       dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
                                                                   , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(),
-                                                                      dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString(), iCodEnd, int.Parse(dRowPessoa.ItemArray.GetValue(21).ToString()));
+                                                                      dRowPessoa.ItemArray.GetValue(16).ToString(), dRowPessoa.ItemArray.GetValue(19).ToString(), iCodEnd, int.Parse(dRowPessoa.ItemArray.GetValue(21).ToString()),iEmail,latitude,longitude);
 
                     AtualizaClienteTela();
                 }
