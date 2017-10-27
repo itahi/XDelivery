@@ -11,6 +11,7 @@ namespace DexComanda.Models.IntegracaoIFood
         public int Codigo { get; set; }
         public string UserName { get; set; }
         public string Senha { get; set; }
+        public int CodOrigem { get; set; }
       //  public DateTime Data { get; set; }
 
     }

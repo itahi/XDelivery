@@ -51,9 +51,7 @@ namespace DexComanda.Operações.Financeiro
                         FechamentosGrid.Columns.Add("ValorInformado", "ValorInformado");
                         FechamentosGrid.Refresh();
                     }
-
                     con.Close();
-
                 }
             }
             catch (Exception erro)

@@ -32,8 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAtivaIntegracao));
             this.btnAtivo = new System.Windows.Forms.Button();
             this.btnDesativo = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btnAtivo
@@ -55,11 +55,6 @@
             this.btnDesativo.Text = "Desativar";
             this.btnDesativo.UseVisualStyleBackColor = true;
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 5000;
-            this.timer1.Tick += new System.EventHandler(this.ExecutaTimer);
-            // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
@@ -67,6 +62,11 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(303, 173);
             this.listBox1.TabIndex = 2;
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 5000;
+            this.timer1.Tick += new System.EventHandler(this.ExecutaTimer);
             // 
             // frmAtivaIntegracao
             // 
@@ -88,7 +88,7 @@
 
         private System.Windows.Forms.Button btnAtivo;
         private System.Windows.Forms.Button btnDesativo;
-        public System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ListBox listBox1;
+        public System.Windows.Forms.Timer timer1;
     }
 }

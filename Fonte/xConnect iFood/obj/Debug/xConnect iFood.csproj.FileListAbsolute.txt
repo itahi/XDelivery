@@ -1,0 +1,45 @@
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\xConnect iFood.exe.config
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\xConnect iFood.exe
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\xConnect iFood.pdb
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\obj\Debug\xConnect iFood.csprojResolveAssemblyReference.cache
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\obj\Debug\xConnect_iFood.frmPrincipal.resources
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\obj\Debug\xConnect_iFood.Properties.Resources.resources
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\obj\Debug\xConnect iFood.csproj.GenerateResource.Cache
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\obj\Debug\xConnect iFood.exe
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\obj\Debug\xConnect iFood.pdb
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\Relatorios\Caixa\RelCaixaHistorico.rpt
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\Relatorios\Caixa\RelCaixaHistorico.cs
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\DexComanda.exe
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\MySql.Data.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\HumanAPIClient.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.Shared.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.CrystalReports.Engine.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\RestSharp.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\Microsoft.ReportViewer.WinForms.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.Windows.Forms.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.ReportSource.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\GMap.NET.WindowsForms.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\Newtonsoft.Json.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\GMap.NET.Core.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.ReportAppServer.Controllers.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.ReportAppServer.DataDefModel.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.ReportAppServer.ClientDoc.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.ReportAppServer.ReportDefModel.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.ReportAppServer.CommLayer.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.ReportAppServer.DataSetConversion.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.ReportAppServer.Prompting.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.ReportAppServer.XmlSerialize.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.ReportAppServer.CubeDefModel.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.ReportAppServer.CommonObjectModel.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.ReportAppServer.ObjectFactory.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\Microsoft.ReportViewer.Common.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\FlashControlV71.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\CrystalDecisions.ReportAppServer.CommonControls.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\stdole.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\Microsoft.SqlServer.Types.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\ShockwaveFlashObjects.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\DexComanda.pdb
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\RestSharp.xml
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\GMap.NET.WindowsForms.xml
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\Newtonsoft.Json.xml

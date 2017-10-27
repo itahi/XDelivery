@@ -39,6 +39,8 @@
             this.btnEditar = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.DadosGridView = new System.Windows.Forms.DataGridView();
+            this.cbxOrigemCliente = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DadosGridView)).BeginInit();
@@ -46,13 +48,15 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.cbxOrigemCliente);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtSenha);
             this.groupBox1.Controls.Add(this.txtUsuario);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(292, 101);
+            this.groupBox1.Size = new System.Drawing.Size(292, 122);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Dados";
@@ -60,7 +64,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(29, 68);
+            this.label2.Location = new System.Drawing.Point(29, 54);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 3;
@@ -69,7 +73,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 33);
+            this.label1.Location = new System.Drawing.Point(29, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(68, 13);
             this.label1.TabIndex = 2;
@@ -77,7 +81,7 @@
             // 
             // txtSenha
             // 
-            this.txtSenha.Location = new System.Drawing.Point(113, 65);
+            this.txtSenha.Location = new System.Drawing.Point(113, 51);
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = 'x';
             this.txtSenha.Size = new System.Drawing.Size(146, 20);
@@ -85,14 +89,14 @@
             // 
             // txtUsuario
             // 
-            this.txtUsuario.Location = new System.Drawing.Point(113, 30);
+            this.txtUsuario.Location = new System.Drawing.Point(113, 16);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(146, 20);
             this.txtUsuario.TabIndex = 0;
             // 
             // btnAdicionar
             // 
-            this.btnAdicionar.Location = new System.Drawing.Point(38, 119);
+            this.btnAdicionar.Location = new System.Drawing.Point(38, 140);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(101, 36);
             this.btnAdicionar.TabIndex = 2;
@@ -102,7 +106,7 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(186, 119);
+            this.btnEditar.Location = new System.Drawing.Point(186, 140);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(103, 36);
             this.btnEditar.TabIndex = 3;
@@ -113,9 +117,9 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.DadosGridView);
-            this.groupBox2.Location = new System.Drawing.Point(15, 161);
+            this.groupBox2.Location = new System.Drawing.Point(15, 179);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(289, 187);
+            this.groupBox2.Size = new System.Drawing.Size(289, 169);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Lista";
@@ -133,8 +137,29 @@
             this.DadosGridView.Name = "DadosGridView";
             this.DadosGridView.ReadOnly = true;
             this.DadosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DadosGridView.Size = new System.Drawing.Size(283, 168);
+            this.DadosGridView.Size = new System.Drawing.Size(283, 150);
             this.DadosGridView.TabIndex = 2;
+            // 
+            // cbxOrigemCliente
+            // 
+            this.cbxOrigemCliente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxOrigemCliente.FormattingEnabled = true;
+            this.cbxOrigemCliente.Location = new System.Drawing.Point(113, 83);
+            this.cbxOrigemCliente.Name = "cbxOrigemCliente";
+            this.cbxOrigemCliente.Size = new System.Drawing.Size(146, 21);
+            this.cbxOrigemCliente.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.cbxOrigemCliente, "Classificação dos clientes do iFood\r\nQuando o cliente for cadastrado via iFood\r\ns" +
+        "erá classificado nesse tipo");
+            this.cbxOrigemCliente.DropDown += new System.EventHandler(this.cbxOrigemCliente_DropDown);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(29, 86);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "O. Cliente";
             // 
             // frmDadosiFood
             // 
@@ -170,5 +195,7 @@
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView DadosGridView;
+        private System.Windows.Forms.ComboBox cbxOrigemCliente;
+        private System.Windows.Forms.Label label3;
     }
 }

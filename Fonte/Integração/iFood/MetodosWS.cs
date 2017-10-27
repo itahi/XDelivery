@@ -1,21 +1,23 @@
 ﻿using DexComanda.Integração.iFood.Pedido;
+using DexComanda.Models.IntegracaoIFood;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 using System.Windows.Forms;
 
 namespace DexComanda.Integração.iFood
 {
-    
+
     public class MetodosWS
     {
         private RestClient cliente = new RestClient("https://pos-api.ifood.com.br/");
         private RestRequest request;
         private iFoodToken newObjetc;
-        private List<iFoodEventos> newListEventos;
+        public List<iFoodEventos> newListEventos;
+        public List<root> listRootPedido = new List<root>();
+        public string strTokenIFood;
+        public bool bLojaOnline = false;
         private Conexao con;
         public MetodosWS()
         {
@@ -24,31 +26,67 @@ namespace DexComanda.Integração.iFood
         /// <summary>
         /// Busca o Token no WS baseando-se no user e senha do iConnect
         /// </summary>
-        /// <param name="strUserName">Usuario do POS</param>
-        /// <param name="strPwd">Senha do POS</param>
-        public async void BuscaToken(string strUserName,string strPwd)
+        public async void BuscaToken()
         {
             try
             {
+                string strUserName = "POS-284683350";
+                string strPwd = "POS-284683350";
+                //string strUserName = RetornaDadosIntegracao().UserName;
+                //string strPwd = RetornaDadosIntegracao().Senha;
+                //if (strUserName== "")
+                //{
+                //    MessageBox.Show("Configure a senha do iConnect para continuar");
+                //    return;
+                //}
+                //if (strPwd == "")
+                //{
+                //    MessageBox.Show("Configure a UserName do iConnect para continuar");
+                //    return;
+                //}
                 request = new RestRequest("oauth/token", Method.POST);
                 request.AddParameter("client_id", "xsistemas");
                 request.AddParameter("client_secret", ")2@$v3JjH9");
                 request.AddParameter("username", strUserName);
                 request.AddParameter("password", strPwd);
                 request.AddParameter("grant_type", "password");
-                var response = await cliente.ExecuteTaskAsync(request);
+                var response =  cliente.Execute(request);
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     newObjetc = new iFoodToken();
                     return;
                 }
                 newObjetc = SimpleJson.DeserializeObject<iFoodToken>(response.Content);
-                VerificaPedidos(newObjetc.access_token);
+                strTokenIFood = newObjetc.access_token;
             }
             catch (Exception erro)
             {
                 newObjetc = new iFoodToken();
                 MessageBox.Show(erro.Message);
+            }
+        }
+        private Integracao_IFood RetornaDadosIntegracao()
+        {
+            try
+            {
+                con = new Conexao();
+                DataSet ds = con.SelectAll("IntegracaoIFood", "spObter_Integracao");
+                if (ds.Tables.Count==0)
+                {
+                    return new Integracao_IFood();
+                }
+                Integracao_IFood newIntegracao = new Integracao_IFood()
+                {
+                    UserName = ds.Tables[0].Rows[0].Field<string>("UserName"),
+                    Senha = ds.Tables[0].Rows[0].Field<string>("Senha")
+                };
+
+                return newIntegracao;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+                return new Integracao_IFood();
             }
         }
         /// <summary>
@@ -60,10 +98,14 @@ namespace DexComanda.Integração.iFood
         {
             try
             {
+                if (strToken=="")
+                {
+                    return;
+                }
                 request = new RestRequest("v1.0/events:polling", Method.GET);
                 request.AddHeader("authorization", "bearer " + strToken);
-                var response = await cliente.ExecuteTaskAsync(request);
-
+                var response =  cliente.Execute(request);
+               // bLojaOnline = response.StatusCode == System.Net.HttpStatusCode.OK;
                 // caso retornou diferente de 404 tem alguma coisa
                 if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
                 {
@@ -80,13 +122,13 @@ namespace DexComanda.Integração.iFood
                             id = eventos.id
                         };
                         newListEventos.Add(item);
-                        CapturandoPedidos(eventos.correlationId);
                     }
+                    
 
-                    if (newListEventos.Count == 0)
-                    {
-                        return;
-                    }
+                    //if (newListEventos.Count == 0)
+                    //{
+                    //    return;
+                    //}
                 }
 
             }
@@ -99,25 +141,24 @@ namespace DexComanda.Integração.iFood
         /// Captura os pedidos do iFood 
         /// </summary>
         /// <param name="strReference">Parametro correlationId de v1.0/events:polling</param>
-        public async void CapturandoPedidos(string strReference)
+        public List<root> CapturandoPedidos(string strReference)
         {
             try
             {
                 request = new RestRequest("v1.0/orders/" + strReference, Method.GET);
                 request.AddHeader("authorization", "bearer " + newObjetc.access_token);
-                var response = await cliente.ExecuteTaskAsync(request);
-                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                var response =  cliente.Execute(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    return;
+                    listRootPedido.Add(SimpleJson.DeserializeObject<root>(response.Content));
                 }
-                root iFoodRootList = new root();
-                //GravaPedidoDatabase(SimpleJson.DeserializeObject<root>(response.Content));
 
             }
             catch (Exception erro)
             {
                 MessageBox.Show(erro.Message);
             }
+            return listRootPedido;
         }
         public async void IntegraPedido(string strReference)
         {
@@ -145,10 +186,15 @@ namespace DexComanda.Integração.iFood
         {
             try
             {
+                if (strToken=="" || listEvents==null)
+                {
+                    return;
+                }
                 request = new RestRequest("v1.0/events/acknowledgment", Method.POST);
                 request.AddHeader("authorization", "bearer " + strToken);
                 request.AddJsonBody(MontaOjbetID(listEvents));
                 var response = await cliente.ExecuteTaskAsync(request);
+
             }
             catch (Exception erro)
             {
