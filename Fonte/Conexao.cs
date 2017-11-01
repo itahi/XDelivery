@@ -38,14 +38,14 @@ namespace DexComanda
         {
             try
             {
+
                 if (connectionString != null)
                 {
                     conn = new SqlConnection(connectionString);
-                    if (conn.State != ConnectionState.Open)
+                    if (conn.State != ConnectionState.Open )
                     {
                         conn.Open();
                     }
-                    
                     statusConexao = conn.State;
                 }
             }
@@ -54,6 +54,37 @@ namespace DexComanda
                 MessageBox.Show("Erro conexao com o SQLSERVER " + msg.Message);
             }
 
+            //finally
+            //{
+            //    conn.Dispose();
+            //}
+
+        }
+        public void AlteraStatusPedido(int iCodPedido, int iCodUser, int iCodStatus)
+        {
+            PedidoStatusMovimento ped = new PedidoStatusMovimento()
+            {
+                CodPedido = iCodPedido,
+                CodStatus = iCodStatus,
+                CodUsuario = iCodUser,
+                DataAlteracao = DateTime.Now
+            };
+            Insert("spAdicionarPedidoStatusMovimento", ped);
+        }
+        public DataSet SelectPedidoPorCodigoiFood(string references)
+        {
+            string iSql = "select * from Pedido where idiFood=@idIFood ";
+            command = new SqlCommand(iSql, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@idIFood", references);
+
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, "Pedido");
+
+            return ds;
         }
         public void GravaLatLong(int intCodPessoa, double lat, double longi)
         {
@@ -986,7 +1017,7 @@ namespace DexComanda
 
         public async void Close()
         {
-            conn.Close();
+           // conn.Close();
         }
 
         public void SalvarAdicionais(int iCodProduto, int iCodOpcao, decimal iPreco, int iCodTipo)
@@ -1008,7 +1039,7 @@ namespace DexComanda
         {
             try
             {
-                new Conexao();
+             //   new Conexao();
                 command = new SqlCommand(spName, conn);
                 if (iSqlSelect != "")
                 {
@@ -1791,7 +1822,10 @@ namespace DexComanda
 
         public void Insert(string spName, Object obj)
         {
-            new Conexao();
+            if (this == null)
+            {
+                new Conexao();
+            }
             if (statusConexao != ConnectionState.Open)
             {
                 MessageBox.Show("Você precisa estar conectado ao banco de dados para continuar");
@@ -2011,6 +2045,10 @@ namespace DexComanda
 
         public void Update(string spName, Object obj)
         {
+            if (this == null)
+            {
+
+            }
             new Conexao();
             if (statusConexao != ConnectionState.Open)
             {
@@ -2716,6 +2754,7 @@ namespace DexComanda
             int iReturn = 0;
             try
             {
+                new Conexao();
                 command = new SqlCommand("spTransfeMesa", conn);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Codigo", intCodPedidoOrigem);
@@ -2759,7 +2798,6 @@ namespace DexComanda
                 int Tabela;
                 Boolean AtivoSn = false;
                 DataRow Colunas;
-
                 try
                 {
 

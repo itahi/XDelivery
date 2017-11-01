@@ -1289,6 +1289,7 @@ namespace DexComanda
                             {
                                 pedido.HorarioEntrega = cbxHorarioEntrega.Text;
                             }
+                            pedido.idiFood = "";
                             con.Insert("spAdicionarPedido", pedido);
 
                             for (int i = 0; i < gridViewItemsPedido.Rows.Count; i++)
@@ -1912,7 +1913,7 @@ namespace DexComanda
                 }
                 int iCodigo;
                 AtualizaTotalPedido();
-                if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa")
+                if (ContraMesas && cbxTipoPedido.Text == "1 - Mesa" && btnGerarPedido.Text!= "Gerar [F12]")
                 {
                     string iRetorno;
                     if (con.getLastCodigo() != 0)
@@ -1931,7 +1932,6 @@ namespace DexComanda
                     {
                         iRetorno = Utils.ImpressaoFechamentoNovo(iCodigo, QtdViasBalcao, strNomeImpressoraContaMesa);
                     }
-
 
                 }
                // ReiImpressão de Venda Balcão

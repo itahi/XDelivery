@@ -351,6 +351,7 @@
     <Compile Include="Integração\iFood\ModelPedido\merchant.cs" />
     <Compile Include="Integração\iFood\ModelPedido\payment.cs" />
     <Compile Include="Integração\iFood\ModelPedido\root.cs" />
+    <Compile Include="Integração\iFood\PedidoTela.cs" />
     <Compile Include="Integração\Maps.cs" />
     <Compile Include="Integração\MP2032.cs" />
     <Compile Include="Integração\smsTWW.cs" />
@@ -383,6 +384,7 @@
     <Compile Include="Models\ListaSms.cs" />
     <Compile Include="Models\Operacoes\HorarioFuncionamento.cs" />
     <Compile Include="Models\Operacoes\Notificacao.cs" />
+    <Compile Include="Models\PedidoiFood.cs" />
     <Compile Include="Models\PessoaFidelidade.cs" />
     <Compile Include="Models\Pessoa_OrigemCadastro.cs" />
     <Compile Include="Models\Pessoa_Endereco.cs" />
@@ -397,8 +399,8 @@
     <Compile Include="Models\Produto\OpcaoPedido.cs" />
     <Compile Include="Models\Operacoes\PedidoStatus.cs" />
     <Compile Include="Models\Operacoes\NovoTotalPedido.cs" />
-    <Compile Include="Models\PedidoStatus.cs" />
-    <Compile Include="Models\PedidoStatusMovimento.cs" />
+    <Compile Include="Models\Pedido\PedidoStatus.cs" />
+    <Compile Include="Models\Pedido\PedidoStatusMovimento.cs" />
     <Compile Include="Models\Produto\PrecoDiaProduto.cs" />
     <Compile Include="Models\Produto\Produto.cs">
       <SubType>Code</SubType>
@@ -1024,11 +1026,11 @@
     <Compile Include="Models\ItemExtra.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\ItemPedido.cs">
+    <Compile Include="Models\Pedido\ItemPedido.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Mensagens.cs" />
-    <Compile Include="Models\Pedido.cs">
+    <Compile Include="Models\Pedido\Pedido.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Pessoa.cs">

@@ -43,3 +43,6 @@ D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\DexComanda.pdb
 D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\RestSharp.xml
 D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\GMap.NET.WindowsForms.xml
 D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\Newtonsoft.Json.xml
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\Tulpep.NotificationWindow.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\System.Data.SQLite.dll
+D:\#Projetos\xDelivery\Fonte\xConnect iFood\bin\Debug\System.Data.SQLite.xml

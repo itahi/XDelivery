@@ -28,7 +28,8 @@ namespace DexComanda.Models
         public string Senha { get; set; }
         public Boolean PagoFidelidade { get; set; }
         public string Cupom { get; set; }
-        
+
+        public string idiFood { get; set; }
 
     }
 }

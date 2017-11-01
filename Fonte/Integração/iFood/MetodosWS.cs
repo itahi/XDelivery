@@ -1,4 +1,5 @@
 ﻿using DexComanda.Integração.iFood.Pedido;
+using DexComanda.Models;
 using DexComanda.Models.IntegracaoIFood;
 using RestSharp;
 using System;
@@ -16,9 +17,12 @@ namespace DexComanda.Integração.iFood
         private iFoodToken newObjetc;
         public List<iFoodEventos> newListEventos;
         public List<root> listRootPedido = new List<root>();
+        public List<PedidoTela> listPedidoTela = new List<PedidoTela>();
         public string strTokenIFood;
-        public bool bLojaOnline = false;
+        public bool bLojaOnline = true;
         private Conexao con;
+        private int prvCodEndereco;
+        private int prvCodPedido;
         public MetodosWS()
         {
 
@@ -30,27 +34,28 @@ namespace DexComanda.Integração.iFood
         {
             try
             {
-                string strUserName = "POS-284683350";
-                string strPwd = "POS-284683350";
-                //string strUserName = RetornaDadosIntegracao().UserName;
-                //string strPwd = RetornaDadosIntegracao().Senha;
-                //if (strUserName== "")
-                //{
-                //    MessageBox.Show("Configure a senha do iConnect para continuar");
-                //    return;
-                //}
-                //if (strPwd == "")
-                //{
-                //    MessageBox.Show("Configure a UserName do iConnect para continuar");
-                //    return;
-                //}
+                //string strUserName = "POS-284683350";
+                //string strPwd = "POS-284683350";
+                Integracao_IFood newDados = RetornaDadosIntegracao();
+                string strUserName = newDados.UserName;
+                string strPwd = newDados.Senha;
+                if (strUserName == "")
+                {
+                    MessageBox.Show("Configure a senha do iConnect para continuar");
+                    return;
+                }
+                if (strPwd == "")
+                {
+                    MessageBox.Show("Configure a UserName do iConnect para continuar");
+                    return;
+                }
                 request = new RestRequest("oauth/token", Method.POST);
                 request.AddParameter("client_id", "xsistemas");
                 request.AddParameter("client_secret", ")2@$v3JjH9");
                 request.AddParameter("username", strUserName);
                 request.AddParameter("password", strPwd);
                 request.AddParameter("grant_type", "password");
-                var response =  cliente.Execute(request);
+                var response = cliente.Execute(request);
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     newObjetc = new iFoodToken();
@@ -71,7 +76,7 @@ namespace DexComanda.Integração.iFood
             {
                 con = new Conexao();
                 DataSet ds = con.SelectAll("IntegracaoIFood", "spObter_Integracao");
-                if (ds.Tables.Count==0)
+                if (ds.Tables.Count == 0)
                 {
                     return new Integracao_IFood();
                 }
@@ -94,18 +99,18 @@ namespace DexComanda.Integração.iFood
         /// Caso o retorno for diferente de 404(ridiculo) tem pedido 
         /// </summary>
         /// <param name="strToken">Token obtido a rota oauth/token</param>
-        public async void VerificaPedidos(string strToken)
+        public void VerificaPedidos(string strToken)
         {
             try
             {
-                if (strToken=="")
+                if (strToken == "")
                 {
                     return;
                 }
                 request = new RestRequest("v1.0/events:polling", Method.GET);
                 request.AddHeader("authorization", "bearer " + strToken);
-                var response =  cliente.Execute(request);
-               // bLojaOnline = response.StatusCode == System.Net.HttpStatusCode.OK;
+                var response = cliente.Execute(request);
+
                 // caso retornou diferente de 404 tem alguma coisa
                 if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
                 {
@@ -123,22 +128,52 @@ namespace DexComanda.Integração.iFood
                         };
                         newListEventos.Add(item);
                     }
-                    
-
-                    //if (newListEventos.Count == 0)
-                    //{
-                    //    return;
-                    //}
                 }
 
             }
             catch (Exception erro)
             {
+                bLojaOnline = false;
                 MessageBox.Show(erro.Message);
             }
         }
+        public void InserePedidoiFood(List<root> list)
+        {
+            try
+            {
+                con = new Conexao();
+                foreach (var item in list)
+                {
+                    string iSql = "select * from Pedido_iFood where idPedido=" + item.reference;
+                    if(con.SelectAll("Pedido_iFood", "", iSql).Tables[0].Rows.Count>0)
+                    {
+                        continue;
+                    }
+
+                    //if (item.code != "PLACED")
+                    //{
+                    //    return;
+                    //}
+                    PedidoiFood newPedido = new PedidoiFood()
+                    {
+                        Data = item.createdAt,
+                        idPedido = item.reference,
+                        status = "PLACED",
+                        Cliente = item.customer.name,
+                        Total = item.totalPrice
+                    };
+                    con.Insert("spAdicionarPedido_iFood", newPedido);
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         /// <summary>
-        /// Captura os pedidos do iFood 
+        /// Captura os pedidos do iFood baseando no reference que é o id do pedido
         /// </summary>
         /// <param name="strReference">Parametro correlationId de v1.0/events:polling</param>
         public List<root> CapturandoPedidos(string strReference)
@@ -147,46 +182,49 @@ namespace DexComanda.Integração.iFood
             {
                 request = new RestRequest("v1.0/orders/" + strReference, Method.GET);
                 request.AddHeader("authorization", "bearer " + newObjetc.access_token);
-                var response =  cliente.Execute(request);
+                var response = cliente.Execute(request);
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    listRootPedido.Add(SimpleJson.DeserializeObject<root>(response.Content));
+                    root newrootPedido = SimpleJson.DeserializeObject<root>(response.Content);
+                    listRootPedido.Add(newrootPedido);
+                    CadastraCliente(newrootPedido);
                 }
+
 
             }
             catch (Exception erro)
             {
                 MessageBox.Show(erro.Message);
             }
+           // InserePedidoiFood(listRootPedido);
             return listRootPedido;
         }
         public async void IntegraPedido(string strReference)
         {
             try
             {
-                request = new RestRequest("v1.0/orders/"+strReference+ "/statuses/integration" + strReference, Method.POST);
+                request = new RestRequest("v1.0/orders/" + strReference + "/statuses/integration", Method.POST);
                 request.AddHeader("authorization", "bearer " + newObjetc.access_token);
                 var response = await cliente.ExecuteTaskAsync(request);
-                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
                 {
                     MessageBox.Show("Não foi possivel integrar o Pedido " + response.Content + response.StatusDescription);
                 }
             }
             catch (Exception erro)
             {
-                MessageBox.Show(erro.Message );
+                MessageBox.Show(erro.Message);
             }
         }
-
         /// <summary>
         /// Remove pedidos da fila de processamento após integralizar o pedido
         /// </summary>
         /// <param name="strToken"></param>
-        public async void ManipulaEventos(string strToken,List<iFoodEventos> listEvents)
+        public async void ManipulaEventos(string strToken, List<iFoodEventos> listEvents)
         {
             try
             {
-                if (strToken=="" || listEvents==null)
+                if (strToken == "" || listEvents == null)
                 {
                     return;
                 }
@@ -201,7 +239,6 @@ namespace DexComanda.Integração.iFood
                 MessageBox.Show(erro.Message);
             }
         }
-
         /// <summary>
         /// Recebe uma lista com os eventos de cada pedido para manipular
         /// </summary>
@@ -225,13 +262,15 @@ namespace DexComanda.Integração.iFood
         {
             try
             {
-                request = new RestRequest("v1.0/orders/" + strReference + "/statuses/confirmation" + strReference, Method.POST);
+                request = new RestRequest("v1.0/orders/" + strReference + "/statuses/confirmation", Method.POST);
                 request.AddHeader("authorization", "bearer " + newObjetc.access_token);
                 var response = await cliente.ExecuteTaskAsync(request);
-                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
                 {
                     MessageBox.Show("Não foi possivel Confirmar o Pedido " + response.Content + response.StatusDescription);
+                    return;
                 }
+
             }
             catch (Exception erro)
             {
@@ -242,10 +281,10 @@ namespace DexComanda.Integração.iFood
         {
             try
             {
-                request = new RestRequest("v1.0/orders/" + strReference + "/statuses/dispatch" + strReference, Method.POST);
+                request = new RestRequest("v1.0/orders/" + strReference + "/statuses/dispatch", Method.POST);
                 request.AddHeader("authorization", "bearer " + newObjetc.access_token);
                 var response = await cliente.ExecuteTaskAsync(request);
-                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
                 {
                     MessageBox.Show("Não foi Mudar o status pra saiu p/ Entrega " + response.Content + response.StatusDescription);
                 }
@@ -255,14 +294,159 @@ namespace DexComanda.Integração.iFood
                 MessageBox.Show(erro.Message);
             }
         }
+        /// <summary>
+        /// Faz o parse no pedido para cadastrar o cliente na base local
+        /// </summary>
+        /// <param name="iRoot"></param>
+        /// <returns>Retorna o ID cliente cadastrado na base local</returns>
+        public int CadastraCliente(root iRoot)
+        {
+            int intCodPessoa = 0;
+            try
+            {
+                lock (this)
+                {
+                    string iNumTelefoneTratado;
+                    DataSet dsPessoa;
+                    int intCodRegiao = con.RetornaCodRegiaoPorBairro(iRoot.deliveryAddress.neighborhood);
+                    string iDDD = iRoot.customer.phone.Substring(0, 2);
+                    iNumTelefoneTratado = Utils.ObterSomenteNumeros(iRoot.customer.phone).TrimEnd();
+                    if (iNumTelefoneTratado.Length == 11)
+                    {
+                        iNumTelefoneTratado = iNumTelefoneTratado.Substring(2, 9);
+                    }
+                    else if (iNumTelefoneTratado.Length == 10)
+                    {
+                        iNumTelefoneTratado = iNumTelefoneTratado.Substring(2, 8);
+                    }
+                    //else
+                    //{
+                    //    iNumTelefoneTratado = iNumTelefoneTratado;
+                    //}
+
+                    dsPessoa = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", iNumTelefoneTratado);
+                    if (dsPessoa.Tables[0].Rows.Count > 0)
+                    {
+                        intCodPessoa = dsPessoa.Tables[0].Rows[0].Field<int>("Codigo");
+                    }
+
+                    Pessoa newPessoa = new Pessoa()
+                    {
+                        Codigo = intCodPessoa,
+                        Nome = iRoot.customer.name.ToUpper(),
+                        Endereco = iRoot.deliveryAddress.streetName.ToUpper(),
+                        Bairro = iRoot.deliveryAddress.neighborhood.ToUpper(),
+                        Cidade = iRoot.deliveryAddress.city.ToUpper(),
+                        Cep = iRoot.deliveryAddress.postalCode,
+                       
+                        Telefone = iNumTelefoneTratado,
+                        DDD = iDDD,
+                        Telefone2 = "",
+                        UF = iRoot.deliveryAddress.state.ToUpper(),
+                        TicketFidelidade = 0,
+                        CodRegiao = intCodRegiao,
+                        DataCadastro = DateTime.Now,
+                        DataNascimento = DateTime.Now,
+                        Sexo = "1",
+                        PFPJ = 'F',
+                        CodOrigemCadastro = 1,
+                        //Observacao = iRoot.deliveryAddress.complement.ToUpper(),
+                        Numero = iRoot.deliveryAddress.streetNumber,
+                        user_id = "",
+                        latitude = iRoot.deliveryAddress.coordinates.latitude,
+                        longitude = iRoot.deliveryAddress.coordinates.longitude,
+                        email = iRoot.customer.email
+                    };
+                    if (iRoot.deliveryAddress.reference!=null)
+                    {
+                        newPessoa.PontoReferencia = iRoot.deliveryAddress.reference.ToUpper();
+                    }
+                    else
+                    {
+                        newPessoa.PontoReferencia = "";
+                    }
+                    if (iRoot.deliveryAddress.complement!=null)
+                    {
+                        newPessoa.Observacao = iRoot.deliveryAddress.complement.ToUpper();
+                    }
+                    else
+                    {
+                        newPessoa.Observacao = "";
+                    }
+                    if (intCodPessoa == 0)
+                    {
+                        con.Insert("spAdicionarClienteDelivery", newPessoa);
+                        intCodPessoa = con.getLastCodigo();
+                    }
+                    else
+                    {
+                        con.Update("spAlterarPessoa", newPessoa);
+                    }
+                }
+
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+
+            return intCodPessoa;
+        }
+        private void CadastraPedido(string strReference, root iPedido)
+        {
+            try
+            {
+                con = new Conexao();
+                if (con.SelectPedidoPorCodigoiFood(strReference).Tables["Pedido"].Rows.Count == 0)
+                {
+                    Models.Pedido newPedido = new Models.Pedido()
+                    {
+                        CodPessoa = 1,
+                        TotalPedido = iPedido.totalPrice,
+                        FormaPagamento = iPedido.payments[0].name,
+                        RealizadoEm = iPedido.createdAt,
+                        NumeroMesa = "0",
+                        Status = "Aberto",
+                        PedidoOrigem = "iFood",
+                        DescontoValor = 0,
+                        CodUsuario = 1,
+                        CodigoPedidoWS = 0,
+                        idiFood = iPedido.reference,
+                        HorarioEntrega = "",
+                        Observacao = "",
+                        CodEndereco = prvCodEndereco,
+                        Senha = "",
+                        PagoFidelidade = false,
+                        Cupom = "",
+                        TrocoPara = iPedido.payments[0].changeFor
+                    };
+                    if (iPedido.type == "DELIVERY")
+                    {
+                        newPedido.Tipo = "0 - Entrega";
+                    }
+                    else
+                    {
+                        newPedido.Tipo = "2 - Balcao";
+                    }
+                    con.Insert("spAdicionarPedido", newPedido);
+                    prvCodPedido = con.getLastCodigo();
+                    con.AlteraStatusPedido(prvCodPedido, 1, 1);
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+
+        }
         public async void Entregue(string strReference)
         {
             try
             {
-                request = new RestRequest("v1.0/orders/" + strReference + "/statuses/delivery" + strReference, Method.POST);
+                request = new RestRequest("v1.0/orders/" + strReference + "/statuses/delivery", Method.POST);
                 request.AddHeader("authorization", "bearer " + newObjetc.access_token);
                 var response = await cliente.ExecuteTaskAsync(request);
-                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
                 {
                     MessageBox.Show("Não foi Mudar o status pra Entregue " + response.Content + response.StatusDescription);
                 }
@@ -272,15 +456,15 @@ namespace DexComanda.Integração.iFood
                 MessageBox.Show(erro.Message);
             }
         }
-        public async void Rejeitar(string strReference,string strMotivoRecusa)
+        public async void Rejeitar(string strReference, string strMotivoRecusa)
         {
             try
             {
-                request = new RestRequest("v1.0/orders/" + strReference + "/statuses/rejection" + strReference, Method.POST);
+                request = new RestRequest("v1.0/orders/" + strReference + "/statuses/rejection", Method.POST);
                 request.AddBody("details", strMotivoRecusa);
                 request.AddHeader("authorization", "bearer " + newObjetc.access_token);
                 var response = await cliente.ExecuteTaskAsync(request);
-                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
                 {
                     MessageBox.Show("Não foi Mudar o status pra Entregue " + response.Content + response.StatusDescription);
                 }
