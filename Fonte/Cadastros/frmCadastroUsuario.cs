@@ -17,20 +17,31 @@ namespace DexComanda
         private Conexao con;
         private Usuario usuario;
         string mSenha;
-        int rowIndex;
         int codigo;
-
         public frmCadastroUsuario()
         {
             // this.parentMain = parent;
 
             InitializeComponent();
         }
+        private void ListaRegistros()
+        {
+            try
+            {
+                con = new Conexao();
+                DataSet dsUser = con.SelectAll("Usuario", "spObterUsuarioGrid");
+                Utils.PopularGrid("Usuario", usuariosGridView, dsUser);
+            }
+            catch (Exception erro)
+            {
+
+                throw;
+            }
+        }
 
         private void frmCadastroUsuario_Load(object sender, EventArgs e)
         {
-            con = new Conexao();
-            Utils.PopularGrid_SP("Usuario", usuariosGridView, "spObterUsuario");
+            ListaRegistros();
 
         }
         private Boolean NomeCadastrado(string iNomeUser)
@@ -67,6 +78,7 @@ namespace DexComanda
                     AlteraDadosClienteSN = chkEditaCliente.Checked,
                     EditaPedidoSN = chkAlteraPedido.Checked,
                     VisualizaDadosClienteSN = chkAbreCliente.Checked,
+                    AtivoSN = chkAtivo.Checked
 
                 };
 
@@ -90,37 +102,51 @@ namespace DexComanda
 
         private void Editar(object sender, EventArgs e)
         {
-            if (usuariosGridView.SelectedRows.Count > 0)
+            try
             {
-                codigo = int.Parse(this.usuariosGridView.SelectedRows[rowIndex].Cells[0].Value.ToString());
-                txtNomeUsuario.Text = this.usuariosGridView.SelectedRows[rowIndex].Cells[1].Value.ToString();
-                mSenha = usuariosGridView.SelectedRows[rowIndex].Cells[2].Value.ToString();
-                chkCancelaPedidos.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[3].Value.ToString());
-                chkAlteraProdutos.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[4].Value.ToString());
-                chkAdministrador.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[5].Value.ToString());
-                chkAcessaRelat.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[6].Value.ToString());
-                chkFechaPedido.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[7].Value.ToString());
-                chkDescSN.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[8].Value.ToString());
-                txtDesconto.Text = usuariosGridView.SelectedRows[rowIndex].Cells[9].Value.ToString();
+                if (usuariosGridView.SelectedRows.Count > 0)
+                {
+                    codigo = int.Parse(usuariosGridView.CurrentRow.Cells[0].Value.ToString());
+                    DataSet dsUserSelecionado = con.SelectRegistroPorCodigo("Usuario", "spObterUsuarioPorCodigo", codigo);
+                    if (dsUserSelecionado.Tables[0].Rows.Count == 0)
+                    {
+                        return;
+                    }
 
-                chkAlteraPedido.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[10].Value.ToString());
-                chkAbreCliente.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[11].Value.ToString());
-                chkAbreCaixa.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[12].Value.ToString());
-                chkEditaCliente.Checked = Convert.ToBoolean(usuariosGridView.SelectedRows[rowIndex].Cells[13].Value.ToString());
+                    txtNomeUsuario.Text = dsUserSelecionado.Tables[0].Rows[0].Field<string>("Nome");
+                    mSenha = dsUserSelecionado.Tables[0].Rows[0].Field<string>("Senha");
+                    chkCancelaPedidos.Checked = dsUserSelecionado.Tables[0].Rows[0].Field<Boolean>("CancelaPedidosSN");
+                    chkAlteraProdutos.Checked = dsUserSelecionado.Tables[0].Rows[0].Field<Boolean>("AlteraProdutosSN");
+                    chkAdministrador.Checked = dsUserSelecionado.Tables[0].Rows[0].Field<Boolean>("AdministradorSN");
+                    chkAcessaRelat.Checked = dsUserSelecionado.Tables[0].Rows[0].Field<Boolean>("AcessaRelatoriosSN");
+                    chkFechaPedido.Checked = dsUserSelecionado.Tables[0].Rows[0].Field<Boolean>("FinalizaPedidoSN");
+                    chkDescSN.Checked = dsUserSelecionado.Tables[0].Rows[0].Field<Boolean>("DescontoPedidoSN");
+                    txtDesconto.Text = dsUserSelecionado.Tables[0].Rows[0].Field<decimal>("DescontoMax").ToString();
 
+                    chkAlteraPedido.Checked = dsUserSelecionado.Tables[0].Rows[0].Field<Boolean>("EditaPedidoSN");
+                    chkAbreCliente.Checked = dsUserSelecionado.Tables[0].Rows[0].Field<Boolean>("VisualizaDadosClienteSN");
+                    chkAbreCaixa.Checked = dsUserSelecionado.Tables[0].Rows[0].Field<Boolean>("AbreFechaCaixaSN");
+                    chkEditaCliente.Checked = dsUserSelecionado.Tables[0].Rows[0].Field<Boolean>("AlteraDadosClienteSN");
+                    chkAtivo.Checked = dsUserSelecionado.Tables[0].Rows[0].Field<Boolean>("AtivoSN");
 
-                btnSalvar.Text = " Salvar ";
-                btnSalvar.Click += new System.EventHandler(this.SalvarEdicao);
-                btnSalvar.Click -= new System.EventHandler(this.AdicionarSalvarUsuario);
+                    btnSalvar.Text = " Salvar ";
+                    btnSalvar.Click += new System.EventHandler(this.SalvarEdicao);
+                    btnSalvar.Click -= new System.EventHandler(this.AdicionarSalvarUsuario);
 
-                btnCancelar.Text = "Cancelar";
-                btnCancelar.Click += new System.EventHandler(this.CancelarEdicao);
-                btnCancelar.Click -= new System.EventHandler(this.Editar);
+                    btnCancelar.Text = "Cancelar";
+                    btnCancelar.Click += new System.EventHandler(this.CancelarEdicao);
+                    btnCancelar.Click -= new System.EventHandler(this.Editar);
+                }
+                else
+                {
+                    MessageBox.Show("Selecione um registro para editar", "Dex Aviso");
+                }
             }
-            else
+            catch (Exception erro)
             {
-                MessageBox.Show("Selecione um registro para editar", "Dex Aviso");
+                MessageBox.Show(erro.Message);
             }
+            
         }
 
         private void CancelarEdicao(object sender, EventArgs e)
@@ -139,42 +165,42 @@ namespace DexComanda
                 return;
 
             }
-            if (txtSenha.Text=="")
+            if (txtSenha.Text == "")
             {
                 MessageBox.Show("Preencha a senha do usuario");
                 txtSenha.Focus();
                 return;
             }
-                Usuario user = new Usuario()
-                {
-                    Codigo = codigo,
-                    Nome = txtNomeUsuario.Text,
-                    Senha = Utils.EncryptMd5(this.txtNomeUsuario.Text.ToString(), this.txtSenha.Text.ToString()),
-                    CancelaPedidosSN = chkCancelaPedidos.Checked,
-                    AlteraProdutosSN = chkAlteraProdutos.Checked,
-                    AdministradorSN = chkAdministrador.Checked,
-                    AcessaRelatoriosSN = chkAcessaRelat.Checked,
-                    FinalizaPedidoSN = chkFechaPedido.Checked,
-                    DescontoPedidoSN = chkDescSN.Checked,
-                    DescontoMax = double.Parse(txtDesconto.Text),
-                    AbreFechaCaixaSN = chkAbreCaixa.Checked,
-                    AlteraDadosClienteSN = chkEditaCliente.Checked,
-                    EditaPedidoSN = chkAlteraPedido.Checked,
-                    VisualizaDadosClienteSN = chkAbreCliente.Checked
-                };
+            Usuario user = new Usuario()
+            {
+                Codigo = codigo,
+                Nome = txtNomeUsuario.Text,
+                Senha = Utils.EncryptMd5(this.txtNomeUsuario.Text.ToString(), this.txtSenha.Text.ToString()),
+                CancelaPedidosSN = chkCancelaPedidos.Checked,
+                AlteraProdutosSN = chkAlteraProdutos.Checked,
+                AdministradorSN = chkAdministrador.Checked,
+                AcessaRelatoriosSN = chkAcessaRelat.Checked,
+                FinalizaPedidoSN = chkFechaPedido.Checked,
+                DescontoPedidoSN = chkDescSN.Checked,
+                DescontoMax = double.Parse(txtDesconto.Text),
+                AbreFechaCaixaSN = chkAbreCaixa.Checked,
+                AlteraDadosClienteSN = chkEditaCliente.Checked,
+                EditaPedidoSN = chkAlteraPedido.Checked,
+                VisualizaDadosClienteSN = chkAbreCliente.Checked
+            };
 
-                con.Update("spAlterarUsuario", user);
+            con.Update("spAlterarUsuario", user);
 
-                btnSalvar.Text = " Adicionar";
-                this.btnSalvar.Click += new System.EventHandler(this.AdicionarSalvarUsuario);
-                this.btnSalvar.Click -= new System.EventHandler(this.SalvarEdicao);
+            btnSalvar.Text = " Adicionar";
+            this.btnSalvar.Click += new System.EventHandler(this.AdicionarSalvarUsuario);
+            this.btnSalvar.Click -= new System.EventHandler(this.SalvarEdicao);
 
-                this.btnCancelar.Text = "Editar";
-                this.btnCancelar.Click += new System.EventHandler(this.Editar);
-                this.btnCancelar.Click -= new System.EventHandler(this.CancelarEdicao);
-                Utils.ControlaEventos("Alterar", this.Name);
-                MessageBox.Show("Usuario alterado com sucesso");
-                Utils.LimpaForm(this);
+            this.btnCancelar.Text = "Editar";
+            this.btnCancelar.Click += new System.EventHandler(this.Editar);
+            this.btnCancelar.Click -= new System.EventHandler(this.CancelarEdicao);
+            Utils.ControlaEventos("Alterar", this.Name);
+            MessageBox.Show("Usuario alterado com sucesso");
+            Utils.LimpaForm(this);
         }
 
         private void chkDescSN_CheckedChanged(object sender, EventArgs e)
@@ -189,6 +215,53 @@ namespace DexComanda
         private void usuariosGridView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Editar(sender, e);
+        }
+
+        private void usuariosGridView_MouseClick(object sender, MouseEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu m = new ContextMenu();
+                MenuItem Excluir = new MenuItem("Excluir Usuário");
+                Excluir.Click += DeletaRegistro;
+                m.MenuItems.Add(Excluir);
+
+                int currentMouseOverRow = dgv.HitTest(e.X, e.Y).RowIndex;
+                m.Show(dgv, new Point(e.X, e.Y));
+
+            }
+        }
+        private void DeletaRegistro(object sender, EventArgs e)
+        {
+            try
+            {
+                if (usuariosGridView.SelectedRows.Count > 0)
+                {
+                    int intCod = int.Parse(this.usuariosGridView.CurrentRow.Cells[0].Value.ToString());
+                    con.DeleteAll("Usuario", "spExcluirUsuario", intCod);
+                    Utils.ControlaEventos("Excluir", this.Name);
+                    MessageBox.Show("Usuario excluído com sucesso.");
+                    ListaRegistros();
+
+                }
+                else
+                {
+                    MessageBox.Show("Selecione o grupo para excluir");
+                }
+            }
+            catch (Exception erro)
+            {
+
+                if (erro.Message.Contains("A instrução DELETE conflitou"))
+                {
+                    MessageBox.Show("Não foi possivel deletar o registro pois o mesmo ja foi usando ", "xSistemas ");
+                    return;
+                }
+                MessageBox.Show(erro.Message);
+            }
+
+
         }
     }
 }

@@ -986,7 +986,7 @@ namespace DexComanda
         /// <param name="banco">Nome do banco de dados instanciado</param>
         public bool OpenConection(string servidor, string banco)
         {
-            connectionString = @"Data Source=" + servidor + ";Initial Catalog=" + banco + "; User ID=dex; Password=1234; Trusted_Connection=False; ";
+            connectionString = @"Data Source=" + servidor + ";Initial Catalog=" + banco + "; User ID=dex; Password=1234; Trusted_Connection=False; MultipleActiveResultSets=True;";
             conn = new SqlConnection(connectionString);
             try
             {

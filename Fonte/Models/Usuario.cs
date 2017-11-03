@@ -24,6 +24,7 @@ namespace DexComanda.Models
         public bool AbreFechaCaixaSN { get; set; }
         public bool AlteraDadosClienteSN { get; set; }
         public string Turno { get; set; }
+        public bool AtivoSN { get; set; }
 
     }
 }

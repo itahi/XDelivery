@@ -55,6 +55,7 @@
             this.statusPedidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.origemDoClienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cupomPromocionalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.integraçãoIFoodToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.relatórioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.porPessoaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -165,8 +166,6 @@
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.integraçãoIFoodToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ativarIntegraçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.grpAndamentoPedido.SuspendLayout();
@@ -393,6 +392,13 @@
             this.cupomPromocionalToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
             this.cupomPromocionalToolStripMenuItem.Text = "Cupom Promocional";
             this.cupomPromocionalToolStripMenuItem.Click += new System.EventHandler(this.cupomPromocionalToolStripMenuItem_Click);
+            // 
+            // integraçãoIFoodToolStripMenuItem1
+            // 
+            this.integraçãoIFoodToolStripMenuItem1.Name = "integraçãoIFoodToolStripMenuItem1";
+            this.integraçãoIFoodToolStripMenuItem1.Size = new System.Drawing.Size(265, 26);
+            this.integraçãoIFoodToolStripMenuItem1.Text = "Integração iFood";
+            this.integraçãoIFoodToolStripMenuItem1.Click += new System.EventHandler(this.integraçãoIFoodToolStripMenuItem1_Click);
             // 
             // relatórioToolStripMenuItem
             // 
@@ -623,8 +629,7 @@
             this.controleDeEstoqueToolStripMenuItem,
             this.pedidoToolStripMenuItem,
             this.consultasToolStripMenuItem,
-            this.açõesDePublicidadeEMarketingToolStripMenuItem,
-            this.ativarIntegraçãoToolStripMenuItem});
+            this.açõesDePublicidadeEMarketingToolStripMenuItem});
             this.operaçõesToolStripMenuItem.Name = "operaçõesToolStripMenuItem";
             this.operaçõesToolStripMenuItem.Size = new System.Drawing.Size(96, 25);
             this.operaçõesToolStripMenuItem.Text = "Operações";
@@ -1502,20 +1507,6 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // integraçãoIFoodToolStripMenuItem1
-            // 
-            this.integraçãoIFoodToolStripMenuItem1.Name = "integraçãoIFoodToolStripMenuItem1";
-            this.integraçãoIFoodToolStripMenuItem1.Size = new System.Drawing.Size(265, 26);
-            this.integraçãoIFoodToolStripMenuItem1.Text = "Integração iFood";
-            this.integraçãoIFoodToolStripMenuItem1.Click += new System.EventHandler(this.integraçãoIFoodToolStripMenuItem1_Click);
-            // 
-            // ativarIntegraçãoToolStripMenuItem
-            // 
-            this.ativarIntegraçãoToolStripMenuItem.Name = "ativarIntegraçãoToolStripMenuItem";
-            this.ativarIntegraçãoToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
-            this.ativarIntegraçãoToolStripMenuItem.Text = "Ativar Integração";
-            this.ativarIntegraçãoToolStripMenuItem.Click += new System.EventHandler(this.ativarIntegraçãoToolStripMenuItem_Click);
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1698,6 +1689,5 @@
         private System.Windows.Forms.ToolStripMenuItem cupomPromocionalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mapaDeClientesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem integraçãoIFoodToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem ativarIntegraçãoToolStripMenuItem;
     }
 }

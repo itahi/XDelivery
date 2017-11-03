@@ -51,6 +51,7 @@
             this.chkEditaCliente = new System.Windows.Forms.CheckBox();
             this.chkAlteraPedido = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.chkAtivo = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.usuariosGridView)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -73,7 +74,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(15, 105);
+            this.btnSalvar.Location = new System.Drawing.Point(5, 129);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(75, 23);
             this.btnSalvar.TabIndex = 2;
@@ -84,7 +85,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 63);
+            this.label2.Location = new System.Drawing.Point(12, 55);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 13);
             this.label2.TabIndex = 3;
@@ -92,7 +93,7 @@
             // 
             // txtSenha
             // 
-            this.txtSenha.Location = new System.Drawing.Point(15, 79);
+            this.txtSenha.Location = new System.Drawing.Point(15, 71);
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = 'X';
             this.txtSenha.Size = new System.Drawing.Size(168, 20);
@@ -101,7 +102,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(108, 105);
+            this.btnCancelar.Location = new System.Drawing.Point(105, 129);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 6;
@@ -126,6 +127,7 @@
             this.usuariosGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.usuariosGridView.Size = new System.Drawing.Size(399, 133);
             this.usuariosGridView.TabIndex = 7;
+            this.usuariosGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.usuariosGridView_MouseClick);
             this.usuariosGridView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.usuariosGridView_MouseDoubleClick);
             // 
             // chkCancelaPedidos
@@ -265,11 +267,23 @@
             this.toolTip1.SetToolTip(this.chkAlteraPedido, "Permite que o usuário altere pedidos lançados");
             this.chkAlteraPedido.UseVisualStyleBackColor = true;
             // 
+            // chkAtivo
+            // 
+            this.chkAtivo.AutoSize = true;
+            this.chkAtivo.Location = new System.Drawing.Point(15, 97);
+            this.chkAtivo.Name = "chkAtivo";
+            this.chkAtivo.Size = new System.Drawing.Size(68, 17);
+            this.chkAtivo.TabIndex = 21;
+            this.chkAtivo.Text = "Ativo SN";
+            this.toolTip1.SetToolTip(this.chkAtivo, "Permite visualizar o cadastro de clientes");
+            this.chkAtivo.UseVisualStyleBackColor = true;
+            // 
             // frmCadastroUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(416, 303);
+            this.Controls.Add(this.chkAtivo);
             this.Controls.Add(this.chkAbreCliente);
             this.Controls.Add(this.chkAbreCaixa);
             this.Controls.Add(this.chkEditaCliente);
@@ -325,5 +339,6 @@
         private System.Windows.Forms.CheckBox chkEditaCliente;
         private System.Windows.Forms.CheckBox chkAlteraPedido;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.CheckBox chkAtivo;
     }
 }

@@ -3643,6 +3643,32 @@ namespace DexComanda
             }
 
         }
+        public static void PopularGrid(string table, DataGridView gridView, DataSet dsName,
+           List<string> strNomeColunas)
+        {
+            try
+            {
+
+                Conexao con = new Conexao();
+                gridView.DataSource = null;
+                gridView.AutoGenerateColumns = true;
+                gridView.DataSource = dsName;
+                gridView.DataMember = table;
+                foreach (var item in strNomeColunas)
+                {
+                    var teste = item.ToString();
+                    gridView.Columns[item.ToString()].Visible = false;
+                }
+              
+                gridView.Refresh();
+                con.Close();
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("PopularGrid " + erro.Message);
+            }
+
+        }
         public static DataSet PopularGrid(string table, DataGridView gridView)
         {
             Conexao con = new Conexao();

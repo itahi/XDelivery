@@ -319,10 +319,6 @@ namespace DexComanda.Integração.iFood
                     {
                         iNumTelefoneTratado = iNumTelefoneTratado.Substring(2, 8);
                     }
-                    //else
-                    //{
-                    //    iNumTelefoneTratado = iNumTelefoneTratado;
-                    //}
 
                     dsPessoa = con.SelectPessoaPorTelefone("Pessoa", "spObterPessoaPorTelefone", iNumTelefoneTratado);
                     if (dsPessoa.Tables[0].Rows.Count > 0)
@@ -392,6 +388,58 @@ namespace DexComanda.Integração.iFood
 
             return intCodPessoa;
         }
+        private int InsereAtualizaEndereco(int iCodPessoa,root iRootPedido)
+        {
+            int intReturnCodEnd = 0;
+            int intCodRegiao = 0;
+            try
+            {
+                DataSet ds = con.ConsultaEnderecoPorCep(iCodPessoa, iRootPedido.deliveryAddress.postalCode);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    prvCodEndereco = ds.Tables[0].Rows[0].Field<int>("CondEndereco");
+                    intReturnCodEnd = prvCodEndereco;
+                }
+                intCodRegiao = con.RetornaCodRegiaoPorBairro(iRootPedido.deliveryAddress.neighborhood);
+                Pessoa_Endereco pessEnd = new Pessoa_Endereco()
+                {
+                    Codigo = prvCodEndereco,
+                    CodPessoa = iCodPessoa,
+                    Bairro = iRootPedido.deliveryAddress.neighborhood,
+                    Cidade = iRootPedido.deliveryAddress.city,
+                    Endereco = iRootPedido.deliveryAddress.streetName,
+                    CodRegiao = intCodRegiao,
+                    NomeEndereco = "Principal",
+                    Numero = iRootPedido.deliveryAddress.streetNumber,
+                    Complemento = iRootPedido.deliveryAddress.complement,
+                    PontoReferencia = iRootPedido.deliveryAddress.reference,
+                    UF = iRootPedido.deliveryAddress.state
+                };
+                if (iRootPedido.deliveryAddress.postalCode == "" || iRootPedido.deliveryAddress.postalCode == null)
+                {
+                    pessEnd.Cep = "";
+                }
+                else
+                {
+                    pessEnd.Cep = iRootPedido.deliveryAddress.postalCode;
+                }
+                if (prvCodEndereco == 0)
+                {
+                    con.Insert("spAdicionarEndereco", pessEnd);
+                    intReturnCodEnd =  con.getLastCodigo();
+                }
+                else
+                {
+                    con.Update("spAlterarEndereco", pessEnd);
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return intReturnCodEnd;
+        }
         private void CadastraPedido(string strReference, root iPedido)
         {
             try
@@ -401,7 +449,7 @@ namespace DexComanda.Integração.iFood
                 {
                     Models.Pedido newPedido = new Models.Pedido()
                     {
-                        CodPessoa = 1,
+                        CodPessoa = CadastraCliente(iPedido),
                         TotalPedido = iPedido.totalPrice,
                         FormaPagamento = iPedido.payments[0].name,
                         RealizadoEm = iPedido.createdAt,
@@ -414,12 +462,13 @@ namespace DexComanda.Integração.iFood
                         idiFood = iPedido.reference,
                         HorarioEntrega = "",
                         Observacao = "",
-                        CodEndereco = prvCodEndereco,
+                       // CodEndereco = InsereAtualizaEndereco(newPedido.CodPessoa, iPedido)
                         Senha = "",
                         PagoFidelidade = false,
                         Cupom = "",
                         TrocoPara = iPedido.payments[0].changeFor
                     };
+                    newPedido.CodEndereco = InsereAtualizaEndereco(newPedido.CodPessoa, iPedido);
                     if (iPedido.type == "DELIVERY")
                     {
                         newPedido.Tipo = "0 - Entrega";

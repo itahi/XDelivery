@@ -944,7 +944,9 @@ namespace DexComanda
 
                 if (con.ControlaEstoque(intCodigoProdutoBusca))
                 {
-                    if (con.ContaEstoque(cbxProdutosGrid.Text).Tables[0].Rows[0].Field<decimal>("EstoqueAtual") == 0)
+                    decimal qtdEstoque = con.ContaEstoque(cbxProdutosGrid.Text).Tables[0].Rows[0].Field<decimal>("EstoqueAtual");
+                    if (qtdEstoque == 0||
+                        decimal.Parse(txtQuantidade.Text)> qtdEstoque)
                     {
                         MessageBox.Show("Produto selecionado não possui estoque");
                         return;

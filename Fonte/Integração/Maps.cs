@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DexComanda.Integração
 {
@@ -70,6 +71,10 @@ namespace DexComanda.Integração
         {
             try
             {
+                if (Sessions.returnEmpresa.CNPJ== "08765591000108")
+                {
+                    return;
+                }
 
                 string strEndereco = "";
                 string sqlReturn = "select Codigo,Nome,isnull(latitude,0) as latitude , isnull(longitude,0) as longitude ,Endereco +' ,'+isnull(Numero,'')+' - '+isnull(Bairro,'')+', ' +isnull(Cidade,'')+'-'+isnull(Uf,'')+', '+isnull(Cep,'') " +
@@ -96,14 +101,16 @@ namespace DexComanda.Integração
                         }
                         catch (Exception ex)
                         {
+                            MessageBox.Show("WebResponse " + ex.Message);
                             return;
                         }
 
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception erro)
             {
+                MessageBox.Show("BuscarCoordenadas " +erro.Message);
                 return;
 
             }
