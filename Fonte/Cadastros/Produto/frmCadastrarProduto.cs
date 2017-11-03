@@ -467,8 +467,7 @@ namespace DexComanda
                 SalvarInsumo(con.getLastCodigo());
                 Utils.ControlaEventos("Inserir", this.Name);
                 nomeProdutoTextBox.Focus();
-
-             //   Utils.PopularGrid("Produto",gridvi)
+                Utils.PopulaGrid_Novo("Produto", gridAtualizada, Sessions.SqlProduto);
             }
             catch (Exception errro)
             {

@@ -24,7 +24,6 @@ namespace DexComanda
         private MySqlCommand MysqlCommand;
         private MySqlConnection MysqlConnection;
         private MySqlDataAdapter MysqlDataAdapter;
-        //   private const int CmysqlTimeOut = 50000;
         private static string dataMember;
         private DataSet ds;
         private DataSet Dados;
@@ -39,28 +38,107 @@ namespace DexComanda
         {
             try
             {
-                ////if (!SqlServerInstalado())
-                ////{
-                ////    return;
-                ////}
 
                 if (connectionString != null)
                 {
                     conn = new SqlConnection(connectionString);
-
-                    if (conn.State != ConnectionState.Open)
+                    if (conn.State != ConnectionState.Open )
                     {
                         conn.Open();
                     }
-
                     statusConexao = conn.State;
                 }
             }
-            catch (Exception msg)
+            catch (SqlException msg)
             {
                 MessageBox.Show("Erro conexao com o SQLSERVER " + msg.Message);
             }
 
+            //finally
+            //{
+            //    conn.Dispose();
+            //}
+
+        }
+        public void AlteraStatusPedido(int iCodPedido, int iCodUser, int iCodStatus)
+        {
+            PedidoStatusMovimento ped = new PedidoStatusMovimento()
+            {
+                CodPedido = iCodPedido,
+                CodStatus = iCodStatus,
+                CodUsuario = iCodUser,
+                DataAlteracao = DateTime.Now
+            };
+            Insert("spAdicionarPedidoStatusMovimento", ped);
+        }
+        public DataSet SelectPedidoPorCodigoiFood(string references)
+        {
+            string iSql = "select * from Pedido where idiFood=@idIFood ";
+            command = new SqlCommand(iSql, conn);
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@idIFood", references);
+
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, "Pedido");
+
+            return ds;
+        }
+        public void GravaLatLong(int intCodPessoa, double lat, double longi)
+        {
+            try
+            {
+                lock (this)
+                {
+                    new Conexao();
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        conn.Open();
+                    }
+                    // conn = new SqlConnection();
+                    string iSql = "update pessoa set latitude=@Latitude ,longitude=@Longitude where Codigo=" + intCodPessoa;
+                    command = new SqlCommand(iSql, conn);
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.AddWithValue("@Latitude", lat);
+                    command.Parameters.AddWithValue("@Longitude", longi);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
+            finally
+            {
+                conn.Close();
+
+            }
+        }
+        public decimal RetornaDescontoCupom(string iCupom, int intCodPessoa)
+        {
+            decimal iReturn = 0;
+            try
+            {
+                string iSqlCupom = "select Desconto from Cupom where AtivoSN=1 and CodCupom='" + iCupom + "' and cast(GETDATE() as date) between DataValidade_Inicio and DataValidade_Fim and Quantidade> 0";
+                command = new SqlCommand(iSqlCupom, conn);
+                command.CommandType = CommandType.Text;
+                adapter = new SqlDataAdapter(command);
+                ds = new DataSet();
+                adapter.Fill(ds, "Cupom");
+                if (ds.Tables[0].Rows.Count <= 0)
+                {
+                    MessageBox.Show("Cupom inválido ou expirado");
+                    return 0;
+                }
+                iReturn = ds.Tables[0].Rows[0].Field<decimal>("Desconto");
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("RetornaDescontoCupom " + erro.Message);
+            }
+            return iReturn;
         }
 
         /// <summary>
@@ -215,6 +293,50 @@ namespace DexComanda
             }
             return ds.Tables[0].Rows[0].Field<Boolean>("ControlaEstoque");
         }
+        public DataSet ConsultaEnderecoPorCep(int iCodPEssoa, string iCEP)
+        {
+            command = new SqlCommand("spObterEnderecoPessoaCEP", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@CodPessoa", iCodPEssoa);
+            command.Parameters.AddWithValue("@Cep", iCEP);
+            adapter = new SqlDataAdapter(command);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            ds = new DataSet();
+            adapter.Fill(ds, "Pessoa_Endereco");
+
+            return ds;
+        }
+        /// <summary>
+        /// Retorna iDRegião baseando-se no CEP
+        /// </summary>
+        /// <param name="strCEP"> cep </param>
+        /// <returns></returns>
+        public int RetornaCodRegiaoPorBairro(string strBairro)
+        {
+            int intReturn = 0;
+            try
+            {
+                new Conexao();
+                string iSqlConsulta = "select CodRegiao from RegiaoEntrega_Bairros where Nome=@Nome";
+                command = new SqlCommand(iSqlConsulta, conn);
+                command.CommandType = CommandType.Text;
+                command.Parameters.AddWithValue("@Nome", strBairro);
+                adapter = new SqlDataAdapter(command);
+                ds = new DataSet();
+                adapter.Fill(ds, "RegiaoEntrega_Bairros");
+                if (ds.Tables.Count == 0)
+                {
+                    return 0;
+                }
+                return ds.Tables[0].Rows[0].Field<int>("CodRegiao");
+            }
+            catch (Exception erro)
+            {
+                return intReturn;
+            }
+
+        }
         public Boolean ValidaEstoque(int intCodProduto, string strNomeProd)
         {
             Boolean breturn = true;
@@ -248,6 +370,7 @@ namespace DexComanda
         }
         public async void AtualizaImpressaoBalcao(int intCodPedido)
         {
+            new Conexao();
             string iSqlConsulta = " update Pedido set ImpressoSN=1 where Codigo=@Codigo";
             command = new SqlCommand(iSqlConsulta, conn);
             command.CommandType = CommandType.Text;
@@ -644,6 +767,7 @@ namespace DexComanda
         }
         public DataSet CaixaAbertoAnterior(string iTurno)
         {
+            new Conexao();
             command = new SqlCommand("spCaixaAbertoAnterior", conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Turno", iTurno);
@@ -661,16 +785,16 @@ namespace DexComanda
         {
             List<CidadesAtendidas> cidades = new List<CidadesAtendidas>();
             cidades = Utils.DeserializaObjeto2(Sessions.returnConfig.CidadesAtendidas);
-            string listCidades = "";
+            List<string> listCidades = new List<string>();
             foreach (var item in cidades)
             {
-                listCidades = string.Join(",", item.Cidade);
+                listCidades.Add("'" + item.Cidade + "'");
             }
 
-            string iSql = "select DISTINCT(bairro) from base_cep where cidade in (@Cidades) and bairro like '%" + iNomeBairro + "%'";
+            string iSqlCidades = string.Join(",", listCidades);
+            string iSql = "select DISTINCT(bairro) from base_cep where cidade in (" + iSqlCidades + ") and bairro like '%" + iNomeBairro + "%'";
             command = new SqlCommand(iSql, conn);
             command.CommandType = CommandType.Text;
-            command.Parameters.AddWithValue("@Cidades", listCidades);
             adapter = new SqlDataAdapter(command);
             ds = new DataSet();
             adapter.Fill(ds, "base_cep");
@@ -862,7 +986,7 @@ namespace DexComanda
         /// <param name="banco">Nome do banco de dados instanciado</param>
         public bool OpenConection(string servidor, string banco)
         {
-            connectionString = @"Data Source=" + servidor + ";Initial Catalog=" + banco + "; User ID=dex; Password=1234; Trusted_Connection=False; ";
+            connectionString = @"Data Source=" + servidor + ";Initial Catalog=" + banco + "; User ID=dex; Password=1234; Trusted_Connection=False; MultipleActiveResultSets=True;";
             conn = new SqlConnection(connectionString);
             try
             {
@@ -891,9 +1015,9 @@ namespace DexComanda
             return conn.State == ConnectionState.Open;
         }
 
-        public void Close()
+        public async void Close()
         {
-            // conn.Close();
+           // conn.Close();
         }
 
         public void SalvarAdicionais(int iCodProduto, int iCodOpcao, decimal iPreco, int iCodTipo)
@@ -915,6 +1039,7 @@ namespace DexComanda
         {
             try
             {
+             //   new Conexao();
                 command = new SqlCommand(spName, conn);
                 if (iSqlSelect != "")
                 {
@@ -925,7 +1050,10 @@ namespace DexComanda
                 {
                     command.CommandType = CommandType.StoredProcedure;
                 }
-
+                if (conn.State != ConnectionState.Open)
+                {
+                    SelectAll(table, spName, iSqlSelect);
+                }
                 adapter = new SqlDataAdapter(command);
                 ds = new DataSet();
                 adapter.Fill(ds, table);
@@ -1380,6 +1508,7 @@ namespace DexComanda
         public void AtualizaDataSincronismo(string iNomeTable, int iCodigo, string iDataAtualizar = "DataSincronismo", string NomeCod = "Codigo")
         {
             string lSqlConsulta;
+            new Conexao();
             if (iCodigo != -1)
             {
                 lSqlConsulta = " update " + iNomeTable + " set " + iDataAtualizar + "=GetDate() where " + NomeCod + "= " + iCodigo;
@@ -1482,6 +1611,7 @@ namespace DexComanda
         }
         public DataSet DeleteAll(string table, string spName, int CodigoDeletar)
         {
+            new Conexao();
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Codigo", CodigoDeletar);
@@ -1499,6 +1629,7 @@ namespace DexComanda
         {
             try
             {
+                new Conexao();
                 command = new SqlCommand("spReabrirPedido", conn);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@CodPedido", intCodPedido);
@@ -1515,6 +1646,7 @@ namespace DexComanda
 
         public DataSet Delete(string table, string spName, int CodProduto, int CodOpcao)
         {
+            new Conexao();
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@CodProduto", CodProduto);
@@ -1690,6 +1822,10 @@ namespace DexComanda
 
         public void Insert(string spName, Object obj)
         {
+            if (this == null)
+            {
+                new Conexao();
+            }
             if (statusConexao != ConnectionState.Open)
             {
                 MessageBox.Show("Você precisa estar conectado ao banco de dados para continuar");
@@ -1909,7 +2045,11 @@ namespace DexComanda
 
         public void Update(string spName, Object obj)
         {
+            if (this == null)
+            {
 
+            }
+            new Conexao();
             if (statusConexao != ConnectionState.Open)
             {
                 MessageBox.Show("Você precisa estar conectado ao banco de dados para continuar");
@@ -2040,6 +2180,7 @@ namespace DexComanda
         {
             try
             {
+                new Conexao();
                 if (statusConexao != ConnectionState.Open)
                 {
                     MessageBox.Show("Você precisa estar conectado ao banco de dados para continuar");
@@ -2085,7 +2226,7 @@ namespace DexComanda
 
         public DataSet SelectPessoaPorTelefone(string table, string spName, string telefone)
         {
-
+            new Conexao();
             command = new SqlCommand(spName, conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Telefone", telefone);
@@ -2421,6 +2562,7 @@ namespace DexComanda
         {
             try
             {
+                new Conexao();
                 command = new SqlCommand("spObterItemsNaoImpressoPorImpressora", conn);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Codigo", intCodPedido);
@@ -2438,12 +2580,12 @@ namespace DexComanda
             }
             return ds;
         }
-        public DataSet SelectRegistroPorCodigo(string table, string spName, List<string>listCodigo)
+        public DataSet SelectRegistroPorCodigo(string table, string spName, List<string> listCodigo)
         {
             try
             {
                 string strLista = string.Join(",", listCodigo);
-                string iSqlConsulta = "select Codigo,NomeProduto from Produto where Codigo in ("+strLista+")";
+                string iSqlConsulta = "select Codigo,NomeProduto from Produto where Codigo in (" + strLista + ")";
                 command = new SqlCommand(iSqlConsulta, conn);
                 command.CommandType = CommandType.Text;
                 adapter = new SqlDataAdapter(command);
@@ -2462,6 +2604,7 @@ namespace DexComanda
         {
             try
             {
+                new Conexao();
                 command = new SqlCommand(spName, conn);
                 command.CommandType = CommandType.StoredProcedure;
                 if (spName == "spObterCodigoMesa")
@@ -2611,6 +2754,7 @@ namespace DexComanda
             int iReturn = 0;
             try
             {
+                new Conexao();
                 command = new SqlCommand("spTransfeMesa", conn);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Codigo", intCodPedidoOrigem);
@@ -2654,7 +2798,6 @@ namespace DexComanda
                 int Tabela;
                 Boolean AtivoSn = false;
                 DataRow Colunas;
-
                 try
                 {
 

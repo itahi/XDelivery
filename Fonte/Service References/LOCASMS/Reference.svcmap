@@ -22,8 +22,8 @@
     <MetadataSource Address="http://54.173.24.177/painel/ServiceSms.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ServiceSms.disco" MetadataType="Disco" ID="08154c01-f1bc-47f8-92b0-bf52bfd8f5eb" SourceId="1" SourceUrl="http://54.173.24.177/painel/ServiceSms.asmx?disco" />
     <MetadataFile FileName="ServiceSms.wsdl" MetadataType="Wsdl" ID="6c317782-639f-4503-bbde-f2d04e7c0a8a" SourceId="1" SourceUrl="http://54.173.24.177/painel/ServiceSms.asmx?wsdl" />
+    <MetadataFile FileName="ServiceSms.disco" MetadataType="Disco" ID="08154c01-f1bc-47f8-92b0-bf52bfd8f5eb" SourceId="1" SourceUrl="http://54.173.24.177/painel/ServiceSms.asmx?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

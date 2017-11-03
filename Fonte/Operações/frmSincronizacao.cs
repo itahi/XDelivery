@@ -404,7 +404,7 @@ namespace DexComanda.Operações
 
                     prgBarRegiao.Value = i + 1;
 
-                    if (response.Content.Contains(" true"))
+                    if (response.Content.Contains("true")|| response.Content.Contains(" true"))
                     {
                         con.AtualizaDataSincronismo("RegiaoEntrega_Bairros", ds.Tables[0].Rows[i].Field<int>("Codigo"), "DataSincronismo", "CodRegiao");
                     }

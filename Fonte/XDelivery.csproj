@@ -31,6 +31,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -84,10 +86,21 @@
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
     <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
     <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="EntityFramework">
-      <HintPath>packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="GMap.NET.Core">
+      <HintPath>..\..\MapsExample\MapsExample\bin\GMap.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.WindowsForms">
+      <HintPath>..\..\MapsExample\MapsExample\bin\GMap.NET.WindowsForms.dll</HintPath>
+    </Reference>
     <Reference Include="HumanAPIClient">
       <HintPath>..\..\..\Google Drive\Projetos em Desenvolvimento\XSistemas\xcommanda\Fonte\HumanAPIClient.dll</HintPath>
     </Reference>
@@ -131,8 +144,8 @@
     <Reference Include="MySql.Data">
       <HintPath>MySql\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Reports, Version=0.9.2507.38892, Culture=neutral, processorArchitecture=MSIL">
@@ -149,6 +162,19 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.SQLite, Version=1.0.105.2, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>packages\System.Data.SQLite.Core.1.0.105.2\lib\net45\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.105.2, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>packages\System.Data.SQLite.EF6.1.0.105.2\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.105.2, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>packages\System.Data.SQLite.Linq.1.0.105.2\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
@@ -313,8 +339,24 @@
     <Compile Include="frmPrincipal.Designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Integração\iFood\iFoodEventos.cs" />
+    <Compile Include="Integração\iFood\iFoodId.cs" />
+    <Compile Include="Integração\iFood\iFoodToken.cs" />
+    <Compile Include="Integração\iFood\MetodosWS.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\adress.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\coordinates.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\customer.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\deliveryAddress.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\item.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\merchant.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\payment.cs" />
+    <Compile Include="Integração\iFood\ModelPedido\root.cs" />
+    <Compile Include="Integração\iFood\PedidoTela.cs" />
+    <Compile Include="Integração\Maps.cs" />
     <Compile Include="Integração\MP2032.cs" />
+    <Compile Include="Integração\smsTWW.cs" />
     <Compile Include="Integração\Zenvia.cs" />
+    <Compile Include="Models\Acoes\PointsModel.cs" />
     <Compile Include="Models\Alteracoes Multiplas\AlteracaoCliente.cs" />
     <Compile Include="Models\Alteracoes Multiplas\AlteracaoMultiplaOpcao.cs" />
     <Compile Include="Models\Alteracoes Multiplas\MultiplaProduto.cs" />
@@ -330,7 +372,7 @@
     <Compile Include="Models\Configuracoes\ImpressaoBalcao.cs" />
     <Compile Include="Models\Configuracoes\ImpressaoCozinha.cs" />
     <Compile Include="Models\Configuracoes\ImpressaoDelivery.cs" />
-    <Compile Include="Models\DadosEnvioLocaSMS.cs" />
+    <Compile Include="Models\DadosSMS.cs" />
     <Compile Include="Models\DescontoPedido.cs" />
     <Compile Include="Models\Familia.cs" />
     <Compile Include="Models\Fidelidade.cs" />
@@ -338,9 +380,11 @@
     <Compile Include="Models\FinalizaPedido.cs" />
     <Compile Include="Models\HistoricoPessoa.cs" />
     <Compile Include="Models\HorarioEntrega.cs" />
+    <Compile Include="Models\IntegracaoIFood\Integracao_IFood.cs" />
     <Compile Include="Models\ListaSms.cs" />
     <Compile Include="Models\Operacoes\HorarioFuncionamento.cs" />
     <Compile Include="Models\Operacoes\Notificacao.cs" />
+    <Compile Include="Models\PedidoiFood.cs" />
     <Compile Include="Models\PessoaFidelidade.cs" />
     <Compile Include="Models\Pessoa_OrigemCadastro.cs" />
     <Compile Include="Models\Pessoa_Endereco.cs" />
@@ -355,8 +399,8 @@
     <Compile Include="Models\Produto\OpcaoPedido.cs" />
     <Compile Include="Models\Operacoes\PedidoStatus.cs" />
     <Compile Include="Models\Operacoes\NovoTotalPedido.cs" />
-    <Compile Include="Models\PedidoStatus.cs" />
-    <Compile Include="Models\PedidoStatusMovimento.cs" />
+    <Compile Include="Models\Pedido\PedidoStatus.cs" />
+    <Compile Include="Models\Pedido\PedidoStatusMovimento.cs" />
     <Compile Include="Models\Produto\PrecoDiaProduto.cs" />
     <Compile Include="Models\Produto\Produto.cs">
       <SubType>Code</SubType>
@@ -370,6 +414,7 @@
     <Compile Include="Models\RemoveDezPorcento.cs" />
     <Compile Include="Models\RemoveFinalizacao.cs" />
     <Compile Include="Models\ReturnPadrao.cs" />
+    <Compile Include="Models\Tww.cs" />
     <Compile Include="Models\WS\CidadesAtendidas.cs" />
     <Compile Include="Models\WS\DadosApp.cs" />
     <Compile Include="Models\WS\HorariosEntregaJson.cs" />
@@ -378,7 +423,6 @@
     <Compile Include="Models\WS\ObjetoRetornoWSBLL.cs" />
     <Compile Include="Models\WS\RetornoWS.cs" />
     <Compile Include="Models\WS\StatusPedido.cs" />
-    <Compile Include="Models\DadosEnvioZenvia.cs" />
     <Compile Include="Models\Zenvia\SendSmsResponse.cs" />
     <Compile Include="Models\Zenvia\sendSmsMultiRequest.cs" />
     <Compile Include="Operações\Alteracoes\frmAlteracaoCliente.cs">
@@ -410,6 +454,12 @@
     </Compile>
     <Compile Include="Operações\Ações\frmEnvioPush.Designer.cs">
       <DependentUpon>frmEnvioPush.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operações\Ações\frmMapaClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\Ações\frmMapaClientes.Designer.cs">
+      <DependentUpon>frmMapaClientes.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\Consultas\frmConsultaPedido.cs">
       <SubType>Form</SubType>
@@ -500,6 +550,12 @@
     <Compile Include="Operações\Financeiro\frmCaixaMovimento.Designer.cs">
       <DependentUpon>frmCaixaMovimento.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operações\frmAtivaIntegracao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operações\frmAtivaIntegracao.Designer.cs">
+      <DependentUpon>frmAtivaIntegracao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operações\frmConectaBanco.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -511,6 +567,12 @@
     </Compile>
     <Compile Include="Operações\frmConfigurarImpressao.Designer.cs">
       <DependentUpon>frmConfigurarImpressao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\frmDadosiFood.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cadastros\frmDadosiFood.Designer.cs">
+      <DependentUpon>frmDadosiFood.cs</DependentUpon>
     </Compile>
     <Compile Include="Operações\frmExibeCancelamentos.cs">
       <SubType>Form</SubType>
@@ -706,6 +768,12 @@
       <DependentUpon>RelEntregasMotoboyAgrupado.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Relatorios\Fechamentos\RelEntregasMotoboy.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelEntregasMotoboy.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\Gerenciais\Cristal\RelEstoque.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -717,6 +785,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RelTickeMedio.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\Cristal\RelVendasGeral.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RelVendasGeral.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\frmReportGeral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Gerenciais\frmReportGeral.Designer.cs">
+      <DependentUpon>frmReportGeral.cs</DependentUpon>
     </Compile>
     <Compile Include="Relatorios\Gerenciais\frmReporVendasPorVendedor.cs">
       <SubType>Form</SubType>
@@ -946,11 +1026,11 @@
     <Compile Include="Models\ItemExtra.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\ItemPedido.cs">
+    <Compile Include="Models\Pedido\ItemPedido.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Mensagens.cs" />
-    <Compile Include="Models\Pedido.cs">
+    <Compile Include="Models\Pedido\Pedido.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Pessoa.cs">
@@ -1014,16 +1094,10 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboy.cs">
+    <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasDetalhado.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RelEntregasMotoboy.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Relatorios\Fechamentos\Novos\RelEntregasResumido.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RelEntregasResumido.rpt</DependentUpon>
+      <DependentUpon>RelEntregasDetalhado.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Relatorios\Fechamentos\Novos\RelFechamentoResumido.cs">
@@ -1136,6 +1210,11 @@
       <DependentUpon>Splashcreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils.cs" />
+    <Compile Include="Web References\wsreluz\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Cadastros\Empresa\frmCadastraFornecedor.resx">
       <DependentUpon>frmCadastraFornecedor.cs</DependentUpon>
     </EmbeddedResource>
@@ -1214,6 +1293,9 @@
     <EmbeddedResource Include="Operações\Ações\frmEnvioPush.resx">
       <DependentUpon>frmEnvioPush.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Operações\Ações\frmMapaClientes.resx">
+      <DependentUpon>frmMapaClientes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Operações\Consultas\frmConsultaPedido.resx">
       <DependentUpon>frmConsultaPedido.cs</DependentUpon>
     </EmbeddedResource>
@@ -1244,8 +1326,14 @@
     <EmbeddedResource Include="Operações\Financeiro\frmCaixaMovimento.resx">
       <DependentUpon>frmCaixaMovimento.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Operações\frmAtivaIntegracao.resx">
+      <DependentUpon>frmAtivaIntegracao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmConectaBanco.resx">
       <DependentUpon>frmConectaBanco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cadastros\frmDadosiFood.resx">
+      <DependentUpon>frmDadosiFood.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operações\frmExibeCancelamentos.resx">
       <DependentUpon>frmExibeCancelamentos.cs</DependentUpon>
@@ -1390,6 +1478,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelEntregasMotoboyAgrupado.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Fechamentos\RelEntregasMotoboy.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelEntregasMotoboy.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\frmReportPadrao.resx">
       <DependentUpon>frmReportPadrao.cs</DependentUpon>
     </EmbeddedResource>
@@ -1441,13 +1533,9 @@
       <LastGenOutput>RelCaixaHistorico.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasMotoboy.rpt">
+    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasDetalhado.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelEntregasMotoboy.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelEntregasResumido.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RelEntregasResumido.cs</LastGenOutput>
+      <LastGenOutput>RelEntregasDetalhado.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Fechamentos\Novos\RelFechamentoResumido.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -1559,6 +1647,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelTickeMedio.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelVendasGeral.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RelVendasGeral.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\Cristal\RelVendasPorVendedores.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RelVendasPorVendedores.cs</LastGenOutput>
@@ -1568,6 +1660,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\frmPedidosCancelados.resx">
       <DependentUpon>frmPedidosCancelados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Gerenciais\frmReportGeral.resx">
+      <DependentUpon>frmReportGeral.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\Gerenciais\frmReportTickeMedio.resx">
       <DependentUpon>frmReportTickeMedio.cs</DependentUpon>
@@ -1688,6 +1783,7 @@
     <None Include="Properties\DataSources\Sessions.datasource" />
     <None Include="Properties\DataSources\Splashcreen.datasource" />
     <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
+    <None Include="Properties\DataSources\System.Xml.XmlNode1.datasource" />
     <None Include="Properties\DataSources\Utils.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -1715,7 +1811,10 @@
     <None Include="Service References\Correios\DexComanda.Correios.assuntoPIMaster.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\Correios\DexComanda.Correios.atualizaPLPResponse.datasource">
+    <None Include="Service References\Correios\DexComanda.Correios.atualizaPagamentoNaEntregaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Correios\DexComanda.Correios.atualizaRemessaAgrupadaResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Correios\DexComanda.Correios.bloquearObjetoResponse.datasource">
@@ -1730,7 +1829,22 @@
     <None Include="Service References\Correios\DexComanda.Correios.buscaPagamentoEntregaResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\Correios\DexComanda.Correios.buscaServicosAdicionaisAtivosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\Correios\DexComanda.Correios.buscaServicosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Correios\DexComanda.Correios.buscaServicosValorDeclaradoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Correios\DexComanda.Correios.buscaServicosXServicosAdicionaisResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Correios\DexComanda.Correios.buscaTarifaValeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Correios\DexComanda.Correios.calculaTarifaServicoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Correios\DexComanda.Correios.cancelarObjetoResponse.datasource">
@@ -1805,7 +1919,10 @@
     <None Include="Service References\Correios\DexComanda.Correios.retorno.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\Correios\DexComanda.Correios.retornoCancelamentoTO.datasource">
+    <None Include="Service References\Correios\DexComanda.Correios.retornoCancelamento.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Correios\DexComanda.Correios.servicoAdicionalXML.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Correios\DexComanda.Correios.servicoERP.datasource">
@@ -1829,6 +1946,9 @@
     <None Include="Service References\Correios\DexComanda.Correios.statusPlp.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\Correios\DexComanda.Correios.valePostal.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\Correios\DexComanda.Correios.validaEtiquetaPLPResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -1844,7 +1964,18 @@
     <None Include="Service References\Correios\DexComanda.Correios.verificaDisponibilidadeServicoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\Correios\DexComanda.Correios.VerificaSeTodosObjetosCanceladosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\LOCASMS\ServiceSms.wsdl" />
+    <None Include="Web References\wsreluz\MONLIDOQUANT.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\wsreluz\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\wsreluz\wsreluzcap.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -2082,6 +2213,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="Splash.png" />
+    <None Include="Web References\wsreluz\wsreluzcap.disco" />
     <Content Include="xD-grey-inverse.ico" />
     <Content Include="XSistemas.ico" />
   </ItemGroup>
@@ -2098,11 +2230,34 @@
   <ItemGroup>
     <Folder Include="bin\" />
   </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://webservices.twwwireless.com.br/reluzcap/">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\wsreluz\</RelPath>
+      <UpdateFromURL>http://webservices.twwwireless.com.br/reluzcap/</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>DexComanda_wsreluz_ReluzCap_x0020_Web_x0020_Service</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
     <Error Condition="!Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="packages\System.Data.SQLite.Core.1.0.105.2\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('packages\System.Data.SQLite.Core.1.0.105.2\build\net45\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\System.Data.SQLite.Core.1.0.105.2\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\System.Data.SQLite.Core.1.0.105.2\build\net45\System.Data.SQLite.Core.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

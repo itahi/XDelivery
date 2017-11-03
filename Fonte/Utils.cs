@@ -37,6 +37,7 @@ using DexComanda.Cadastros.Pedido;
 using DexComanda.Relatorios.Caixa;
 using DexComanda.Models.Configuracoes;
 using System.Data.Sql;
+using System.Text.RegularExpressions;
 
 namespace DexComanda
 {
@@ -625,6 +626,14 @@ namespace DexComanda
             }
             return JsonConvert.DeserializeObject<List<PrecoDiaProduto>>(iValores);
         }
+        public  static DadosSMS DeserializaObjetoSMS(string iValores)
+        {
+            if (iValores == "")
+            {
+                return new DadosSMS();
+            }
+            return JsonConvert.DeserializeObject<DadosSMS>(iValores);
+        }
         public static ImpressaoBalcao RetornaConfiguracaoBalcao()
         {
             ImpressaoBalcao imprBalcao = new Models.Configuracoes.ImpressaoBalcao();
@@ -639,6 +648,7 @@ namespace DexComanda
 
             return imprBalcao;
         }
+
         public static ImpressaoMesa RetornaConfiguracaoMesa()
         {
             ImpressaoMesa imprCozinha = new ImpressaoMesa();
@@ -666,6 +676,20 @@ namespace DexComanda
             }
 
             return imprDelivery;
+        }
+        public static DadosSMS RetornaConfiguracaoSMS()
+        {
+            DadosSMS sms = new DadosSMS();
+            try
+            {
+                sms = Utils.DeserializaObjetoSMS(Sessions.returnEmpresa.ConfiguracaoSMS);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(Bibliotecas.cException + erro.Message);
+            }
+
+            return sms;
         }
         public static DadosPush RetornaConfiguracaoPush()
         {
@@ -721,22 +745,22 @@ namespace DexComanda
             }
             return JsonConvert.DeserializeObject<DadosApp>(iValores);
         }
-        public static DadosEnvioZenvia DeserializaObjetoZenvia(string iValores)
-        {
-            if (iValores == "" || iValores == null)
-            {
-                return new DadosEnvioZenvia();
-            }
-            return JsonConvert.DeserializeObject<DadosEnvioZenvia>(iValores);
-        }
-        public static DadosEnvioLocaSMS DeserializaObjetoLocaSMS(string iValores)
-        {
-            if (iValores == "" || iValores == null)
-            {
-                return new DadosEnvioLocaSMS();
-            }
-            return JsonConvert.DeserializeObject<DadosEnvioLocaSMS>(iValores);
-        }
+        //public static DadosEnvioZenvia DeserializaObjetoZenvia(string iValores)
+        //{
+        //    if (iValores == "" || iValores == null)
+        //    {
+        //        return new DadosEnvioZenvia();
+        //    }
+        //    return JsonConvert.DeserializeObject<DadosEnvioZenvia>(iValores);
+        //}
+        //public static DadosEnvioLocaTWW DeserializaObjetoLocaSMS(string iValores)
+        //{
+        //    if (iValores == "" || iValores == null)
+        //    {
+        //        return new DadosEnvioLocaTWW();
+        //    }
+        //    return JsonConvert.DeserializeObject<DadosEnvioLocaTWW>(iValores);
+        //}
         public static List<Produto_DiaDisponivelSite> DeserializaObjetoDias(string iValores)
         {
             if (iValores == "" || iValores == null)
@@ -1029,6 +1053,9 @@ namespace DexComanda
         {
             try
             {
+                icbxName.DataSource = null;
+                icbxName.DisplayMember = null;
+                icbxName.ValueMember = null;
                 if (iCod == -1)
                 {
                     icbxName.DataSource = null;
@@ -1499,7 +1526,6 @@ namespace DexComanda
         public static string ImpressaoCozihanova(int iCodPedido, int iNumCopias = 0)
         {
             string iRetorno = ""; ;
-
             RelDelivey_Cozinha report;
             try
             {
@@ -2704,8 +2730,8 @@ namespace DexComanda
                 report.Load(Directory.GetCurrentDirectory() + @"\RelBalcao.rpt");
                 crConnectionInfo.ServerName = Sessions.returnEmpresa.Servidor;
                 crConnectionInfo.DatabaseName = Sessions.returnEmpresa.Banco;
-                crConnectionInfo.UserID = "dex";
-                crConnectionInfo.Password = "1234";
+                crConnectionInfo.UserID = "sa";
+                crConnectionInfo.Password = "1001";
 
                 CrTables = report.Database.Tables;
                 foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
@@ -3617,6 +3643,32 @@ namespace DexComanda
             }
 
         }
+        public static void PopularGrid(string table, DataGridView gridView, DataSet dsName,
+           List<string> strNomeColunas)
+        {
+            try
+            {
+
+                Conexao con = new Conexao();
+                gridView.DataSource = null;
+                gridView.AutoGenerateColumns = true;
+                gridView.DataSource = dsName;
+                gridView.DataMember = table;
+                foreach (var item in strNomeColunas)
+                {
+                    var teste = item.ToString();
+                    gridView.Columns[item.ToString()].Visible = false;
+                }
+              
+                gridView.Refresh();
+                con.Close();
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("PopularGrid " + erro.Message);
+            }
+
+        }
         public static DataSet PopularGrid(string table, DataGridView gridView)
         {
             Conexao con = new Conexao();
@@ -4067,6 +4119,29 @@ namespace DexComanda
             }
 
             return iRetorno;
+        }
+        /// <summary>
+        /// Recebe uma string e remove caracters que não forem numericos
+        /// </summary>
+        /// <param name="iValue"> string qualquer</param>
+        /// <returns>só numero</returns>
+        public static string ObterSomenteNumeros(string iValue)
+        {
+            iValue += ")";
+            iValue = iValue.Substring(iValue.IndexOf("(") + 1);
+            string ire;
+            ire = Regex.Replace(iValue, "[^0-9 ,]+", "");
+            return RemoverSpacos(ire);
+        }
+        public static string RemoverSpacos(string iValue)
+        {
+            string sem = ""; // Declaramos o futuro resultado
+            foreach (char c in iValue.ToCharArray()) // Para cada 'letra' na frase
+            {
+                if (c != ' ') // Se a letra não for um espaço
+                    sem += c; // É adicionada a string final
+            }
+            return sem;
         }
 
         public static void ControlaEventos(string iTipoEvento, string LocalEvento, int CodUser = 1)

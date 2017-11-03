@@ -161,7 +161,7 @@ namespace DexComanda
                         }
                         else
                         {
-                            IniciaPedido(CodigoPessoa, intCodEndereco);
+                            IniciaPedido(CodigoPessoa, intCodEndereco,new List<string>());
                         }
                     }
                     else
@@ -668,6 +668,7 @@ namespace DexComanda
             int intCodVendedor = DsPedido.Tables[0].Rows[0].Field<int>("CodUsuario");
             string iObservacao = DsPedido.Tables[0].Rows[0].Field<string>("Observacao");
             int iNumMesa = DsPedido.Tables[0].Rows[0].Field<int>("CodigoMesa");
+            string strCupom = DsPedido.Tables[0].Rows[0].Field<string>("Cupom");
             if (strTrocoPara != 0.00M)
             {
                 strTroco = Convert.ToString(strTrocoPara - decimal.Parse(strTotalPedido));
@@ -677,7 +678,8 @@ namespace DexComanda
                                       strTroco, TaxaServico, true, DsPedido.Tables[0].Rows[0].Field<DateTime>("RealizadoEM"),
                                      DsPedido.Tables[0].Rows[0].Field<int>("Codigo"), DsPedido.Tables[0].Rows[0].Field<int>("CodPessoa"), strTrocoPara.ToString(),
                                       DvPedido.ItemArray.GetValue(5).ToString(), DvPedido.ItemArray.GetValue(8).ToString(), DvPedido.ItemArray.GetValue(9).ToString(),
-                                      decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao, intCodEndereco, DsPedido.Tables[0].Rows[0].Field<string>("Senha"),new List<string>());
+                                      decimal.Parse(strTotalPedido), MargemGarcon, intCodVendedor, iObservacao, intCodEndereco, DsPedido.Tables[0].Rows[0].Field<string>("Senha"),new List<string>(),
+                                      strCupom);
             frm.Show();
 
         }
@@ -1012,6 +1014,12 @@ namespace DexComanda
 
                 frmTransfereMesa frmMe = new frmTransfereMesa(codPedidtransfe, totalPedido, codPessoa);
                 frmMe.ShowDialog();
+                string strTipoPedido = "";
+                if (cbxFiltroTipo.Text != "")
+                {
+                    strTipoPedido = "And Pd.Tipo='" + cbxFiltroTipo.Text + "'";
+                }
+                Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido, false, strTipoPedido);
             }
 
 
@@ -1137,7 +1145,12 @@ namespace DexComanda
             // Retornando o IDFpagamento
             try
             {
-
+                // Tratamento para verificar se a forma de pagamento gera financeiro , caso sim ele não insere no caixa
+                if (con.SelectRegistroPorCodigo("FormaPagamento", "spObterFPPorCodigo",iFPagamento).Tables[0].Rows[0].
+                    Field<Boolean>("GeraFinanceiro"))
+                {
+                    return;
+                }
                 CaixaMovimento caixa = new CaixaMovimento()
                 {
                     CodFormaPagamento = iFPagamento,    
@@ -1247,7 +1260,7 @@ namespace DexComanda
                     decimal TaxaServico = Utils.RetornaTaxaPorCliente(CodPessoa, intCodEndereco);
                     frmCadastrarPedido frm = new frmCadastrarPedido(false, "0,00", 0, "0,00",
                                                                     TaxaServico, false, DateTime.Now, 0,
-                                                                    CodPessoa, "0,00", "Dinheiro", "", "", 0.00M, 0, 0, "", intCodEndereco);
+                                                                    CodPessoa, "0,00", "Dinheiro", "", "", 0.00M, 0, 0, "", intCodEndereco,"",new List<string>());
                     frm.Show(this);
                 }
 
@@ -1354,12 +1367,16 @@ namespace DexComanda
                     DataSet dsPessoa = con.SelectRegistroPorCodigo("Pessoa", "spObterPessoaPorCodigo", int.Parse(clientesGridView.SelectedCells[0].Value.ToString()));
                     DataRow dRowPessoa = dsPessoa.Tables["Pessoa"].Rows[0];
                     int CodEndereco = dsPessoa.Tables["Pessoa"].Rows[0].Field<int>("CodEndereco");
+                    string iEmail = dsPessoa.Tables["Pessoa"].Rows[0].Field<string>("email");
+                    double latitude = dsPessoa.Tables["Pessoa"].Rows[0].Field<double>("latitude");
+                    double longitude = dsPessoa.Tables["Pessoa"].Rows[0].Field<double>("longitude");
                     frmCadastroCliente frm = new frmCadastroCliente(int.Parse(dRowPessoa.ItemArray.GetValue(0).ToString()), dRowPessoa.ItemArray.GetValue(1).ToString(), dRowPessoa.ItemArray.GetValue(10).ToString(),
                                                                       dRowPessoa.ItemArray.GetValue(11).ToString(), dRowPessoa.ItemArray.GetValue(2).ToString(), dRowPessoa.ItemArray.GetValue(3).ToString(), dRowPessoa.ItemArray.GetValue(9).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(4).ToString(), dRowPessoa.ItemArray.GetValue(5).ToString(), dRowPessoa.ItemArray.GetValue(6).ToString(), dRowPessoa.ItemArray.GetValue(7).ToString()
                                                                       , dRowPessoa.ItemArray.GetValue(8).ToString(), int.Parse(dRowPessoa.ItemArray.GetValue(14).ToString()), dRowPessoa.ItemArray.GetValue(15).ToString(), dRowPessoa.ItemArray.GetValue(12).ToString(),
                                                                       dRowPessoa.ItemArray.GetValue(16).ToString(),
-                                                                      dRowPessoa.ItemArray.GetValue(19).ToString(), CodEndereco, int.Parse(dRowPessoa.ItemArray.GetValue(21).ToString()));
+                                                                      dRowPessoa.ItemArray.GetValue(19).ToString(), CodEndereco, int.Parse(dRowPessoa.ItemArray.GetValue(21).ToString()),
+                                                                      iEmail,latitude,longitude);
 
 
                     Utils.PopulaGrid_Novo("Pessoa", clientesGridView, Sessions.SqlPessoa);
@@ -1584,7 +1601,7 @@ namespace DexComanda
 
         private void geralToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            frmReportPedidosPorPeriodo frm = new frmReportPedidosPorPeriodo();
+            frmReportGeral frm = new frmReportGeral();
             frm.ShowDialog();
         }
 
@@ -1920,7 +1937,6 @@ namespace DexComanda
                     {
                         TotalizaPedidos();
                         Utils.PopulaGrid_Novo("Pedido", pedidosGridView, Sessions.SqlPedido);
-
                     }
                     string iSql = " select distinct (IT.CodProduto) ,PE.*,  " +
                                   " G.Codigo as CodGrupo, " +
@@ -1955,7 +1971,6 @@ namespace DexComanda
                             AtualizaGrid.Enabled = true;
                             break;
                         }
-
                     }
                 }
             }
@@ -1963,6 +1978,10 @@ namespace DexComanda
             {
 
                 MessageBox.Show("Erro ao atualizar pedidos" + erro.Message);
+            }
+            finally
+            {
+                con.Close();
             }
         }
         private async void ImpressaoViaBalcao(int codPedido)
@@ -2333,6 +2352,29 @@ namespace DexComanda
         private void cupomPromocionalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCupom frm = new frmCupom();
+            frm.Show();
+        }
+
+        private void mapaDeClientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmMapaClientes frm = new frmMapaClientes();
+            frm.Show();
+        }
+
+        private void integraçãoIFoodToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void integraçãoIFoodToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmDadosiFood frm = new frmDadosiFood();
+            frm.Show();
+        }
+
+        private void ativarIntegraçãoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAtivaIntegracao frm = new frmAtivaIntegracao();
             frm.Show();
         }
     }

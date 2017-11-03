@@ -34,13 +34,18 @@
             // 
             // btnImprimir
             // 
+            this.btnImprimir.Text = "Gerar";
             this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
-            // RelVendasPorVendedor
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(129, 31);
+            // 
+            // frmReporVendasPorVendedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(377, 513);
-            this.Name = "RelVendasPorVendedor";
+            this.Name = "frmReporVendasPorVendedor";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.grmReport.ResumeLayout(false);

@@ -209,7 +209,7 @@ namespace DexComanda
             }
             else
             {
-                MessageBox.Show("Preencha o nome para continuar", "Dex Aviso");
+                MessageBox.Show("Preencha o nome para continuar", "[xSistemas]");
             }
 
 

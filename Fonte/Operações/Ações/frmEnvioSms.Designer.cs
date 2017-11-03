@@ -31,6 +31,9 @@
             this.components = new System.ComponentModel.Container();
             this.tbSelecao = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblNumero = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.btnEnviar = new System.Windows.Forms.Button();
             this.grpGrid = new System.Windows.Forms.GroupBox();
             this.gridResultado = new System.Windows.Forms.DataGridView();
@@ -55,8 +58,7 @@
             this.lblRestante = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label6 = new System.Windows.Forms.Label();
-            this.lblNumero = new System.Windows.Forms.Label();
+            this.txtDDD = new System.Windows.Forms.TextBox();
             this.tbSelecao.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.grpGrid.SuspendLayout();
@@ -77,6 +79,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.txtDDD);
+            this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.lblNumero);
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.btnEnviar);
@@ -93,9 +97,37 @@
             this.tabPage1.Text = "Seleção";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(457, 224);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(103, 39);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "Insira <cliente> \r\nno texto caso queira\r\npersonalizar a msg";
+            this.toolTip1.SetToolTip(this.label2, "Personalize sua mensagem com o nome do cliente \r\ninclua a tag <nome> na parte do " +
+        "texto onde deseja inserir\r\nque o sistema ira personalizar cada msg.");
+            // 
+            // lblNumero
+            // 
+            this.lblNumero.AutoSize = true;
+            this.lblNumero.Location = new System.Drawing.Point(44, 383);
+            this.lblNumero.Name = "lblNumero";
+            this.lblNumero.Size = new System.Drawing.Size(0, 13);
+            this.lblNumero.TabIndex = 22;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(13, 383);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(24, 13);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "Nr,:";
+            // 
             // btnEnviar
             // 
-            this.btnEnviar.Location = new System.Drawing.Point(458, 366);
+            this.btnEnviar.Location = new System.Drawing.Point(458, 347);
             this.btnEnviar.Name = "btnEnviar";
             this.btnEnviar.Size = new System.Drawing.Size(96, 28);
             this.btnEnviar.TabIndex = 19;
@@ -272,7 +304,7 @@
             // 
             // btnEnviarSms
             // 
-            this.btnEnviarSms.Location = new System.Drawing.Point(139, 124);
+            this.btnEnviarSms.Location = new System.Drawing.Point(123, 124);
             this.btnEnviarSms.Name = "btnEnviarSms";
             this.btnEnviarSms.Size = new System.Drawing.Size(96, 28);
             this.btnEnviarSms.TabIndex = 2;
@@ -331,22 +363,15 @@
             this.label3.TabIndex = 10;
             this.label3.Text = "Ainda restam:";
             // 
-            // label6
+            // txtDDD
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(13, 383);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(24, 13);
-            this.label6.TabIndex = 21;
-            this.label6.Text = "Nr,:";
-            // 
-            // lblNumero
-            // 
-            this.lblNumero.AutoSize = true;
-            this.lblNumero.Location = new System.Drawing.Point(44, 383);
-            this.lblNumero.Name = "lblNumero";
-            this.lblNumero.Size = new System.Drawing.Size(0, 13);
-            this.lblNumero.TabIndex = 22;
+            this.txtDDD.Location = new System.Drawing.Point(458, 321);
+            this.txtDDD.MaxLength = 2;
+            this.txtDDD.Name = "txtDDD";
+            this.txtDDD.Size = new System.Drawing.Size(53, 20);
+            this.txtDDD.TabIndex = 24;
+            this.toolTip1.SetToolTip(this.txtDDD, "Informe o DDD padrão da sua area");
+            this.txtDDD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDDD_KeyPress);
             // 
             // frmEnvioSms
             // 
@@ -406,5 +431,7 @@
         private System.Windows.Forms.RadioButton rbRegiao;
         private System.Windows.Forms.Label lblNumero;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtDDD;
     }
 }

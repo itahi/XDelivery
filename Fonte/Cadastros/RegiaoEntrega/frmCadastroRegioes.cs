@@ -52,6 +52,7 @@ namespace DexComanda
             chkOnline.Checked = Convert.ToBoolean(RegioesGridView.CurrentRow.Cells["OnlineSN"].Value.ToString());
             txtTaxaGratis.Text = RegioesGridView.CurrentRow.Cells["valorMinimoFreteGratis"].Value.ToString();
             txtPrevisao.Text = RegioesGridView.CurrentRow.Cells["PrevisaoEntrega"].Value.ToString();
+            txtTaxaEntregador.Text = RegioesGridView.CurrentRow.Cells["TaxaEntregador"].Value.ToString();
 
             this.btnSalvar.Text = "Salvar [F12]";
             this.btnSalvar.Click += new System.EventHandler(this.SalvarRegiao);
@@ -81,6 +82,15 @@ namespace DexComanda
                     if (txtTaxaGratis.Text != "")
                     {
                         valorFrete = double.Parse(txtTaxaGratis.Text);
+                    }
+
+                    if (txtTaxaEntregador.Text != "")
+                    {
+                        regioes.TaxaEntregador = decimal.Parse(txtTaxaEntregador.Text);
+                    }
+                    else
+                    {
+                        regioes.TaxaEntregador = 0;
                     }
                     regioes.PrevisaoEntrega = txtPrevisao.Text;
                     regioes.valorMinimoFreteGratis = valorFrete;
@@ -151,6 +161,14 @@ namespace DexComanda
                         //  valorMinimoFreteGratis = valorFrete
 
                     };
+                    if (txtTaxaEntregador.Text!="")
+                    {
+                        regioes.TaxaEntregador = decimal.Parse(txtTaxaEntregador.Text);
+                    }
+                    else
+                    {
+                        regioes.TaxaEntregador = 0;
+                    }
                     if (txtTaxaGratis.Text != "")
                     {
                         valorFrete = double.Parse(txtTaxaGratis.Text);

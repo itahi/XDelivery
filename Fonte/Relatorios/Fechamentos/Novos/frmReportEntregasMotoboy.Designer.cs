@@ -31,16 +31,16 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rbResumido = new System.Windows.Forms.RadioButton();
-            this.rbDetalhado = new System.Windows.Forms.RadioButton();
-            this.btnFiltro = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dtFim = new System.Windows.Forms.DateTimePicker();
             this.horaFim = new System.Windows.Forms.DateTimePicker();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dtinicio = new System.Windows.Forms.DateTimePicker();
             this.horaInicio = new System.Windows.Forms.DateTimePicker();
+            this.rbResumido = new System.Windows.Forms.RadioButton();
+            this.rbDetalhado = new System.Windows.Forms.RadioButton();
+            this.btnFiltro = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -95,48 +95,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
             // 
-            // rbResumido
-            // 
-            this.rbResumido.AutoSize = true;
-            this.rbResumido.Location = new System.Drawing.Point(7, 52);
-            this.rbResumido.Name = "rbResumido";
-            this.rbResumido.Size = new System.Drawing.Size(72, 17);
-            this.rbResumido.TabIndex = 11;
-            this.rbResumido.TabStop = true;
-            this.rbResumido.Text = "Resumido";
-            this.rbResumido.UseVisualStyleBackColor = true;
-            // 
-            // rbDetalhado
-            // 
-            this.rbDetalhado.AutoSize = true;
-            this.rbDetalhado.Checked = true;
-            this.rbDetalhado.Location = new System.Drawing.Point(7, 29);
-            this.rbDetalhado.Name = "rbDetalhado";
-            this.rbDetalhado.Size = new System.Drawing.Size(74, 17);
-            this.rbDetalhado.TabIndex = 10;
-            this.rbDetalhado.TabStop = true;
-            this.rbDetalhado.Text = "Detalhado";
-            this.rbDetalhado.UseVisualStyleBackColor = true;
-            // 
-            // btnFiltro
-            // 
-            this.btnFiltro.Location = new System.Drawing.Point(432, 19);
-            this.btnFiltro.Name = "btnFiltro";
-            this.btnFiltro.Size = new System.Drawing.Size(75, 57);
-            this.btnFiltro.TabIndex = 9;
-            this.btnFiltro.Text = "Filtrar";
-            this.btnFiltro.UseVisualStyleBackColor = true;
-            this.btnFiltro.Click += new System.EventHandler(this.Filtrar);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(210, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Periodo ";
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.dtFim);
@@ -190,6 +148,48 @@
             this.horaInicio.Name = "horaInicio";
             this.horaInicio.Size = new System.Drawing.Size(64, 20);
             this.horaInicio.TabIndex = 6;
+            // 
+            // rbResumido
+            // 
+            this.rbResumido.AutoSize = true;
+            this.rbResumido.Location = new System.Drawing.Point(7, 52);
+            this.rbResumido.Name = "rbResumido";
+            this.rbResumido.Size = new System.Drawing.Size(72, 17);
+            this.rbResumido.TabIndex = 11;
+            this.rbResumido.TabStop = true;
+            this.rbResumido.Text = "Resumido";
+            this.rbResumido.UseVisualStyleBackColor = true;
+            // 
+            // rbDetalhado
+            // 
+            this.rbDetalhado.AutoSize = true;
+            this.rbDetalhado.Checked = true;
+            this.rbDetalhado.Location = new System.Drawing.Point(7, 29);
+            this.rbDetalhado.Name = "rbDetalhado";
+            this.rbDetalhado.Size = new System.Drawing.Size(74, 17);
+            this.rbDetalhado.TabIndex = 10;
+            this.rbDetalhado.TabStop = true;
+            this.rbDetalhado.Text = "Detalhado";
+            this.rbDetalhado.UseVisualStyleBackColor = true;
+            // 
+            // btnFiltro
+            // 
+            this.btnFiltro.Location = new System.Drawing.Point(434, 30);
+            this.btnFiltro.Name = "btnFiltro";
+            this.btnFiltro.Size = new System.Drawing.Size(75, 34);
+            this.btnFiltro.TabIndex = 9;
+            this.btnFiltro.Text = "Filtrar";
+            this.btnFiltro.UseVisualStyleBackColor = true;
+            this.btnFiltro.Click += new System.EventHandler(this.Filtrar);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(210, 10);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(46, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Periodo ";
             // 
             // frmReportEntregasMotoboy
             // 

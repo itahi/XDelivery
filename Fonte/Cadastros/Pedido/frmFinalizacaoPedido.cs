@@ -91,7 +91,8 @@ namespace DexComanda.Cadastros
 
         {
 
-            if (!char.IsNumber(e.KeyChar) && !char.IsPunctuation(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            if (!char.IsNumber(e.KeyChar) && !char.IsPunctuation(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar)
+                && e.KeyChar!=Convert.ToChar(Keys.Back))
 
                 e.Handled = true;
         }
@@ -100,6 +101,7 @@ namespace DexComanda.Cadastros
         {
             try
             {
+                iTotalSomado = 0;
                 for (int i = 0; i < gridFormasPagamento.Rows.Count; i++)
                 {
                     if (gridFormasPagamento.Rows[i].Cells["Valor"].Value != null)

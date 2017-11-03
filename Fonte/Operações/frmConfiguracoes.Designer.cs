@@ -137,18 +137,18 @@
             this.label23 = new System.Windows.Forms.Label();
             this.txtMultiplicador = new System.Windows.Forms.TextBox();
             this.grpSms = new System.Windows.Forms.GroupBox();
-            this.rbLocaSMS = new System.Windows.Forms.RadioButton();
+            this.rbTww = new System.Windows.Forms.RadioButton();
             this.rbZenvia = new System.Windows.Forms.RadioButton();
-            this.grpZenvia = new System.Windows.Forms.GroupBox();
+            this.grpTww = new System.Windows.Forms.GroupBox();
             this.label38 = new System.Windows.Forms.Label();
             this.txtAgrZenvia = new System.Windows.Forms.TextBox();
             this.label39 = new System.Windows.Forms.Label();
             this.txtIDZenvia = new System.Windows.Forms.TextBox();
-            this.grpLocaSMS = new System.Windows.Forms.GroupBox();
+            this.grpLocaTww = new System.Windows.Forms.GroupBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtSenha = new System.Windows.Forms.TextBox();
-            this.txtLogin = new System.Windows.Forms.TextBox();
+            this.txtSenhaTww = new System.Windows.Forms.TextBox();
+            this.txtLoginTww = new System.Windows.Forms.TextBox();
             this.chkEnviaSms = new System.Windows.Forms.CheckBox();
             this.chkFidelidade = new System.Windows.Forms.CheckBox();
             this.chkDescontoDiasemana = new System.Windows.Forms.CheckBox();
@@ -251,8 +251,8 @@
             this.grpControleFidelidade.SuspendLayout();
             this.grpFidelidade.SuspendLayout();
             this.grpSms.SuspendLayout();
-            this.grpZenvia.SuspendLayout();
-            this.grpLocaSMS.SuspendLayout();
+            this.grpTww.SuspendLayout();
+            this.grpLocaTww.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -1355,10 +1355,10 @@
             // 
             // grpSms
             // 
-            this.grpSms.Controls.Add(this.rbLocaSMS);
+            this.grpSms.Controls.Add(this.rbTww);
             this.grpSms.Controls.Add(this.rbZenvia);
-            this.grpSms.Controls.Add(this.grpZenvia);
-            this.grpSms.Controls.Add(this.grpLocaSMS);
+            this.grpSms.Controls.Add(this.grpTww);
+            this.grpSms.Controls.Add(this.grpLocaTww);
             this.grpSms.Location = new System.Drawing.Point(7, 182);
             this.grpSms.Name = "grpSms";
             this.grpSms.Size = new System.Drawing.Size(238, 203);
@@ -1366,17 +1366,17 @@
             this.grpSms.TabStop = false;
             this.grpSms.Text = "Dados Envio Sms";
             // 
-            // rbLocaSMS
+            // rbTww
             // 
-            this.rbLocaSMS.AutoSize = true;
-            this.rbLocaSMS.Location = new System.Drawing.Point(147, 23);
-            this.rbLocaSMS.Name = "rbLocaSMS";
-            this.rbLocaSMS.Size = new System.Drawing.Size(72, 17);
-            this.rbLocaSMS.TabIndex = 32;
-            this.rbLocaSMS.TabStop = true;
-            this.rbLocaSMS.Text = "LocaSMS";
-            this.rbLocaSMS.UseVisualStyleBackColor = true;
-            this.rbLocaSMS.CheckedChanged += new System.EventHandler(this.rbLocaSMS_CheckedChanged);
+            this.rbTww.AutoSize = true;
+            this.rbTww.Location = new System.Drawing.Point(147, 23);
+            this.rbTww.Name = "rbTww";
+            this.rbTww.Size = new System.Drawing.Size(54, 17);
+            this.rbTww.TabIndex = 32;
+            this.rbTww.TabStop = true;
+            this.rbTww.Text = "TWW";
+            this.rbTww.UseVisualStyleBackColor = true;
+            this.rbTww.CheckedChanged += new System.EventHandler(this.rbLocaSMS_CheckedChanged);
             // 
             // rbZenvia
             // 
@@ -1391,20 +1391,20 @@
             this.rbZenvia.UseVisualStyleBackColor = true;
             this.rbZenvia.CheckedChanged += new System.EventHandler(this.rbZenvia_CheckedChanged);
             // 
-            // grpZenvia
+            // grpTww
             // 
-            this.grpZenvia.Controls.Add(this.label38);
-            this.grpZenvia.Controls.Add(this.txtAgrZenvia);
-            this.grpZenvia.Controls.Add(this.label39);
-            this.grpZenvia.Controls.Add(this.txtIDZenvia);
-            this.grpZenvia.Location = new System.Drawing.Point(6, 125);
-            this.grpZenvia.Name = "grpZenvia";
-            this.grpZenvia.Size = new System.Drawing.Size(226, 72);
-            this.grpZenvia.TabIndex = 30;
-            this.grpZenvia.TabStop = false;
-            this.grpZenvia.Tag = "ZENVIA";
-            this.grpZenvia.Text = "ZENVIA";
-            this.toolTip1.SetToolTip(this.grpZenvia, "Dados de acesso da plataforma Zenvia");
+            this.grpTww.Controls.Add(this.label38);
+            this.grpTww.Controls.Add(this.txtAgrZenvia);
+            this.grpTww.Controls.Add(this.label39);
+            this.grpTww.Controls.Add(this.txtIDZenvia);
+            this.grpTww.Location = new System.Drawing.Point(6, 125);
+            this.grpTww.Name = "grpTww";
+            this.grpTww.Size = new System.Drawing.Size(226, 72);
+            this.grpTww.TabIndex = 30;
+            this.grpTww.TabStop = false;
+            this.grpTww.Tag = "Tww Acesso";
+            this.grpTww.Text = "ZENVIA";
+            this.toolTip1.SetToolTip(this.grpTww, "Dados de acesso da plataforma Zenvia");
             // 
             // label38
             // 
@@ -1439,20 +1439,20 @@
             this.txtIDZenvia.Size = new System.Drawing.Size(150, 20);
             this.txtIDZenvia.TabIndex = 25;
             // 
-            // grpLocaSMS
+            // grpLocaTww
             // 
-            this.grpLocaSMS.Controls.Add(this.label21);
-            this.grpLocaSMS.Controls.Add(this.label6);
-            this.grpLocaSMS.Controls.Add(this.txtSenha);
-            this.grpLocaSMS.Controls.Add(this.txtLogin);
-            this.grpLocaSMS.Location = new System.Drawing.Point(6, 46);
-            this.grpLocaSMS.Name = "grpLocaSMS";
-            this.grpLocaSMS.Size = new System.Drawing.Size(226, 73);
-            this.grpLocaSMS.TabIndex = 25;
-            this.grpLocaSMS.TabStop = false;
-            this.grpLocaSMS.Tag = "LocaSMS";
-            this.grpLocaSMS.Text = "LocaSMS";
-            this.toolTip1.SetToolTip(this.grpLocaSMS, "Configure os dados de acesso a plataforma LocaSMS ");
+            this.grpLocaTww.Controls.Add(this.label21);
+            this.grpLocaTww.Controls.Add(this.label6);
+            this.grpLocaTww.Controls.Add(this.txtSenhaTww);
+            this.grpLocaTww.Controls.Add(this.txtLoginTww);
+            this.grpLocaTww.Location = new System.Drawing.Point(6, 46);
+            this.grpLocaTww.Name = "grpLocaTww";
+            this.grpLocaTww.Size = new System.Drawing.Size(226, 73);
+            this.grpLocaTww.TabIndex = 25;
+            this.grpLocaTww.TabStop = false;
+            this.grpLocaTww.Tag = "Zenvia";
+            this.grpLocaTww.Text = "Tww";
+            this.toolTip1.SetToolTip(this.grpLocaTww, "Configure os dados de acesso a plataforma LocaSMS ");
             // 
             // label21
             // 
@@ -1472,21 +1472,21 @@
             this.label6.TabIndex = 27;
             this.label6.Text = "Login";
             // 
-            // txtSenha
+            // txtSenhaTww
             // 
-            this.txtSenha.Location = new System.Drawing.Point(51, 44);
-            this.txtSenha.Name = "txtSenha";
-            this.txtSenha.PasswordChar = 'X';
-            this.txtSenha.Size = new System.Drawing.Size(150, 20);
-            this.txtSenha.TabIndex = 26;
-            this.txtSenha.UseSystemPasswordChar = true;
+            this.txtSenhaTww.Location = new System.Drawing.Point(51, 44);
+            this.txtSenhaTww.Name = "txtSenhaTww";
+            this.txtSenhaTww.PasswordChar = 'X';
+            this.txtSenhaTww.Size = new System.Drawing.Size(150, 20);
+            this.txtSenhaTww.TabIndex = 26;
+            this.txtSenhaTww.UseSystemPasswordChar = true;
             // 
-            // txtLogin
+            // txtLoginTww
             // 
-            this.txtLogin.Location = new System.Drawing.Point(51, 18);
-            this.txtLogin.Name = "txtLogin";
-            this.txtLogin.Size = new System.Drawing.Size(150, 20);
-            this.txtLogin.TabIndex = 25;
+            this.txtLoginTww.Location = new System.Drawing.Point(51, 18);
+            this.txtLoginTww.Name = "txtLoginTww";
+            this.txtLoginTww.Size = new System.Drawing.Size(150, 20);
+            this.txtLoginTww.TabIndex = 25;
             // 
             // chkEnviaSms
             // 
@@ -2394,10 +2394,10 @@
             this.grpFidelidade.PerformLayout();
             this.grpSms.ResumeLayout(false);
             this.grpSms.PerformLayout();
-            this.grpZenvia.ResumeLayout(false);
-            this.grpZenvia.PerformLayout();
-            this.grpLocaSMS.ResumeLayout(false);
-            this.grpLocaSMS.PerformLayout();
+            this.grpTww.ResumeLayout(false);
+            this.grpTww.PerformLayout();
+            this.grpLocaTww.ResumeLayout(false);
+            this.grpLocaTww.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -2584,17 +2584,17 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Domingo;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.ComboBox cbxAgrupamentoCozinha;
-        private System.Windows.Forms.GroupBox grpZenvia;
+        private System.Windows.Forms.GroupBox grpTww;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.TextBox txtIDZenvia;
-        private System.Windows.Forms.GroupBox grpLocaSMS;
+        private System.Windows.Forms.GroupBox grpLocaTww;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtSenha;
-        private System.Windows.Forms.TextBox txtLogin;
+        private System.Windows.Forms.TextBox txtSenhaTww;
+        private System.Windows.Forms.TextBox txtLoginTww;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.TextBox txtAgrZenvia;
-        private System.Windows.Forms.RadioButton rbLocaSMS;
+        private System.Windows.Forms.RadioButton rbTww;
         private System.Windows.Forms.RadioButton rbZenvia;
         private System.Windows.Forms.GroupBox grpControleFidelidade;
         private System.Windows.Forms.Label label23;

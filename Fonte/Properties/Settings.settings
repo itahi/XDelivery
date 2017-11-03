@@ -18,5 +18,8 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=LAZARO-PC\SQLEXPRESS2012;Initial Catalog=DBExpert_Teste;Integrated Security=True</Value>
     </Setting>
+    <Setting Name="DexComanda_wsreluz_ReluzCap_x0020_Web_x0020_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://webservices.twwwireless.com.br/reluzcap/wsreluzcap.asmx</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

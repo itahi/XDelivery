@@ -54,6 +54,8 @@
             this.motivosCancelamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusPedidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.origemDoClienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cupomPromocionalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.integraçãoIFoodToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.relatórioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.porPessoaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,10 +67,8 @@
             this.vendasPorAtendenteVendedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vendasOnlineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.geralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maisVendidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.promoçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vendidosNoPeriodoAgrupadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mensalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geralToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.classificadoPorOrigemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,6 +114,7 @@
             this.envioDeSmsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.envioDePushNotificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.envioDeEmailMarketingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mapaDeClientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contatoAtivaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlPrincipal = new System.Windows.Forms.Panel();
@@ -165,7 +166,6 @@
             this.lblCaixa = new System.Windows.Forms.Label();
             this.AtualizaGrid = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.cupomPromocionalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlPrincipal.SuspendLayout();
             this.grpAndamentoPedido.SuspendLayout();
@@ -211,7 +211,8 @@
             this.motivosCancelamentoToolStripMenuItem,
             this.statusPedidoToolStripMenuItem,
             this.origemDoClienteToolStripMenuItem,
-            this.cupomPromocionalToolStripMenuItem});
+            this.cupomPromocionalToolStripMenuItem,
+            this.integraçãoIFoodToolStripMenuItem1});
             this.cadastrosToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.cadastrosToolStripMenuItem.Name = "cadastrosToolStripMenuItem";
             this.cadastrosToolStripMenuItem.Size = new System.Drawing.Size(91, 25);
@@ -385,6 +386,20 @@
             this.origemDoClienteToolStripMenuItem.Text = "Origem do Cliente";
             this.origemDoClienteToolStripMenuItem.Click += new System.EventHandler(this.origemDoClienteToolStripMenuItem_Click);
             // 
+            // cupomPromocionalToolStripMenuItem
+            // 
+            this.cupomPromocionalToolStripMenuItem.Name = "cupomPromocionalToolStripMenuItem";
+            this.cupomPromocionalToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
+            this.cupomPromocionalToolStripMenuItem.Text = "Cupom Promocional";
+            this.cupomPromocionalToolStripMenuItem.Click += new System.EventHandler(this.cupomPromocionalToolStripMenuItem_Click);
+            // 
+            // integraçãoIFoodToolStripMenuItem1
+            // 
+            this.integraçãoIFoodToolStripMenuItem1.Name = "integraçãoIFoodToolStripMenuItem1";
+            this.integraçãoIFoodToolStripMenuItem1.Size = new System.Drawing.Size(265, 26);
+            this.integraçãoIFoodToolStripMenuItem1.Text = "Integração iFood";
+            this.integraçãoIFoodToolStripMenuItem1.Click += new System.EventHandler(this.integraçãoIFoodToolStripMenuItem1_Click);
+            // 
             // relatórioToolStripMenuItem
             // 
             this.relatórioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -477,20 +492,11 @@
             // diárioToolStripMenuItem
             // 
             this.diárioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.geralToolStripMenuItem,
             this.maisVendidosToolStripMenuItem,
-            this.promoçõesToolStripMenuItem,
-            this.vendidosNoPeriodoAgrupadoToolStripMenuItem});
+            this.promoçõesToolStripMenuItem});
             this.diárioToolStripMenuItem.Name = "diárioToolStripMenuItem";
             this.diárioToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.diárioToolStripMenuItem.Text = "Produto";
-            // 
-            // geralToolStripMenuItem
-            // 
-            this.geralToolStripMenuItem.Name = "geralToolStripMenuItem";
-            this.geralToolStripMenuItem.Size = new System.Drawing.Size(298, 26);
-            this.geralToolStripMenuItem.Text = "Geral";
-            this.geralToolStripMenuItem.Click += new System.EventHandler(this.geralToolStripMenuItem_Click);
             // 
             // maisVendidosToolStripMenuItem
             // 
@@ -505,13 +511,6 @@
             this.promoçõesToolStripMenuItem.Size = new System.Drawing.Size(298, 26);
             this.promoçõesToolStripMenuItem.Text = "Promoções";
             this.promoçõesToolStripMenuItem.Visible = false;
-            // 
-            // vendidosNoPeriodoAgrupadoToolStripMenuItem
-            // 
-            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Name = "vendidosNoPeriodoAgrupadoToolStripMenuItem";
-            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Size = new System.Drawing.Size(298, 26);
-            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Text = "Vendidos no Periodo Agrupado";
-            this.vendidosNoPeriodoAgrupadoToolStripMenuItem.Click += new System.EventHandler(this.vendidosNoPeriodoAgrupadoToolStripMenuItem_Click);
             // 
             // mensalToolStripMenuItem
             // 
@@ -841,7 +840,8 @@
             this.açõesDePublicidadeEMarketingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.envioDeSmsToolStripMenuItem1,
             this.envioDePushNotificationToolStripMenuItem,
-            this.envioDeEmailMarketingToolStripMenuItem});
+            this.envioDeEmailMarketingToolStripMenuItem,
+            this.mapaDeClientesToolStripMenuItem});
             this.açõesDePublicidadeEMarketingToolStripMenuItem.Name = "açõesDePublicidadeEMarketingToolStripMenuItem";
             this.açõesDePublicidadeEMarketingToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
             this.açõesDePublicidadeEMarketingToolStripMenuItem.Text = "Publicidade e Marketing";
@@ -865,6 +865,13 @@
             this.envioDeEmailMarketingToolStripMenuItem.Name = "envioDeEmailMarketingToolStripMenuItem";
             this.envioDeEmailMarketingToolStripMenuItem.Size = new System.Drawing.Size(262, 26);
             this.envioDeEmailMarketingToolStripMenuItem.Text = "Envio de Email Marketing";
+            // 
+            // mapaDeClientesToolStripMenuItem
+            // 
+            this.mapaDeClientesToolStripMenuItem.Name = "mapaDeClientesToolStripMenuItem";
+            this.mapaDeClientesToolStripMenuItem.Size = new System.Drawing.Size(262, 26);
+            this.mapaDeClientesToolStripMenuItem.Text = "Mapa de Clientes";
+            this.mapaDeClientesToolStripMenuItem.Click += new System.EventHandler(this.mapaDeClientesToolStripMenuItem_Click);
             // 
             // contatoToolStripMenuItem
             // 
@@ -1500,13 +1507,6 @@
             this.AtualizaGrid.Interval = 3000;
             this.AtualizaGrid.Tick += new System.EventHandler(this.AtualizaGrid_Tick);
             // 
-            // cupomPromocionalToolStripMenuItem
-            // 
-            this.cupomPromocionalToolStripMenuItem.Name = "cupomPromocionalToolStripMenuItem";
-            this.cupomPromocionalToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
-            this.cupomPromocionalToolStripMenuItem.Text = "Cupom Promocional";
-            this.cupomPromocionalToolStripMenuItem.Click += new System.EventHandler(this.cupomPromocionalToolStripMenuItem_Click);
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1578,10 +1578,8 @@
         private System.Windows.Forms.ToolStripMenuItem resumidoFormaDePagamentoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ticketMédioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem diárioToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem geralToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem maisVendidosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem promoçõesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem vendidosNoPeriodoAgrupadoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mensalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem geralToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exportarDadosToolStripMenuItem;
@@ -1689,5 +1687,7 @@
         private System.Windows.Forms.ToolStripMenuItem produtoToolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem insumoToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem cupomPromocionalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mapaDeClientesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem integraçãoIFoodToolStripMenuItem1;
     }
 }

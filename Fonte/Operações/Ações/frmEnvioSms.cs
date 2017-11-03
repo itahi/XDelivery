@@ -20,6 +20,7 @@ using DexComanda.Integração;
 using System.Configuration;
 using DexComanda.Models.Zenvia;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace DexComanda
 {
@@ -106,7 +107,7 @@ namespace DexComanda
 
         private DataSet PreencheFiltro()
         {
-             dsResultado = null;
+            dsResultado = null;
             try
             {
                 if (rbAniversariantes.Checked)
@@ -135,6 +136,7 @@ namespace DexComanda
                     dsResultado = con.SelectRegistroPorCodigo("Pessoa", "spObterClientesPorRegiao", int.Parse(cbxRegiao.SelectedValue.ToString()));
                 }
 
+                dsResultado.Tables[0].Columns.Add("msg");
                 PopulaGrid(dsResultado, "Pessoa");
             }
             catch (Exception erro)
@@ -201,8 +203,33 @@ namespace DexComanda
 
             return iMensagem;
         }
-
-
+        private DataSet PersonalizaMsg(DataSet dsResult)
+        {
+            try
+            {
+                if (txtMensagem.Text.Contains("<cliente>"))
+                {
+                    for (int i = 0; i < dsResult.Tables[0].Rows.Count; i++)
+                    {
+                        //dsResult.Tables[0].Rows.Add();
+                        dsResult.Tables[0].Rows[i].SetField("msg", txtMensagem.Text.Replace("<cliente>",
+                            dsResult.Tables[0].Rows[i].Field<string>("Nome")));
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < dsResult.Tables[0].Rows.Count; i++)
+                    {
+                        dsResult.Tables[0].Rows[i].SetField("msg", txtMensagem.Text);
+                    }
+                }
+               
+            }
+            catch (Exception erro)
+            {
+            }
+            return dsResult;
+        }
         private void rbOndeConheceu_CheckedChanged(object sender, EventArgs e)
         {
             cbxOrigemCadastro.Enabled = rbOrigemCadastro.Checked;
@@ -210,16 +237,23 @@ namespace DexComanda
 
         private void DisparaSMS(object sender, EventArgs e)
         {
-            this.Cursor = Cursors.WaitCursor;
-
+            
+            if (txtDDD.Text=="" || txtDDD.Text.Length!=2)
+            {
+                MessageBox.Show("Preencha corretamente o DDD ");
+                txtDDD.Focus();
+                return;
+            }
             if (gridResultado.Rows.Count == 0)
             {
                 MessageBox.Show(Bibliotecas.cFiltroRetornaVazio);
             }
             else
             {
-                Utils.EnviaSMS_LOCASMS(dsResultado, txtMensagem.Text, "Teste", "27981667827", "546936");
-                //lbl.Text = Convert.ToString(TotalSelecionado);
+                this.Cursor = Cursors.WaitCursor;
+                smsTWW newSMS = new smsTWW();
+                DadosSMS dadosSMS = Utils.RetornaConfiguracaoSMS();
+                newSMS.EnviaSMSList(dadosSMS.login, dadosSMS.senha, txtDDD.Text,PersonalizaMsg(dsResultado),txtDDD.Text);
                 this.Cursor = Cursors.Default;
 
             }
@@ -229,6 +263,11 @@ namespace DexComanda
         {
             grpPeriodo.Enabled = !rbRegiao.Checked;
             Utils.MontaCombox(cbxRegiao, "NomeRegiao", "Codigo", "RegiaoEntrega", "spObterRegioes");
+        }
+
+        private void txtDDD_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.SoPermiteNumeros(e);
         }
     }
 }
